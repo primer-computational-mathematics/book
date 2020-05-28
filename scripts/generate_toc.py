@@ -25,7 +25,7 @@ with open('_data/toc.yml', 'w') as outfile:
     for dir, title in dirs.items():
         outfile.write(chapter.substitute(dir=dir,
                                          title=title))
-        notebooks = glob.glob(os.path.join('./content', dir, '*.ipynb'))
+        notebooks = glob.glob(os.path.join('./notebooks', dir, '*.ipynb'))
         if notebooks:
             outfile.write("  sections:\n")
         for notebook in notebooks:
