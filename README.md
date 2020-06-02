@@ -9,7 +9,7 @@ We will assume that your machine has the following software installed
 
 - `git`, e.g. [Git for Windows](https://git-scm.com/downloads)
 - `python3` with `pip`, e.g. from the [Anaconda distibution](https://www.anaconda.com/products/individual)
-- `ruby`, e.g. from the [RubyInstall for Windows](https://rubyinstaller.org/downloads/)
+- `ruby`, e.g. from the [RubyInstall for Windows](https://rubyinstaller.org/downloads/) (you will need a version _with_ the devkit, such as Ruby+Devkit 2.6.6-1 )
 
 #### The first time
 You will need to do the following pre-setup
