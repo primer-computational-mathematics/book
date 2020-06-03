@@ -39,7 +39,8 @@ section = Template("""  - title: ${sec_title}
 
 
 dirs = {'maths':'Mathematics',
-        'coding':'Coding'}
+        'coding':'Coding',
+        'geosciences' 'Geosciences'}
 
 with open('_data/toc.yml', 'w') as outfile:
     outfile.write(template)
