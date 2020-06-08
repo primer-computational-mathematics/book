@@ -5,16 +5,16 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,minimum-scale=1">
 
-  <title>Mathematics</title>
-  <meta name="description" content="# MathematicsLanding page for the mathematics primer">
+  <title>TensorsReview</title>
+  <meta name="description" content="        TensorsReview    Review of tensors We present here an overview of tensors and tensor notations (also called suffix or index notation).Definition. (fr...">
 
-  <link rel="canonical" href="https://primer-computational-mathematics.github.io/book/notebooks/maths/intro.html">
+  <link rel="canonical" href="https://primer-computational-mathematics.github.io/book/maths/TensorsReview.html">
   <link rel="alternate" type="application/rss+xml" title="ESE Jupyter Material" href="https://primer-computational-mathematics.github.io/book/feed.xml">
 
-  <meta property="og:url"         content="https://primer-computational-mathematics.github.io/book/notebooks/maths/intro.html" />
+  <meta property="og:url"         content="https://primer-computational-mathematics.github.io/book/maths/TensorsReview.html" />
 <meta property="og:type"        content="article" />
-<meta property="og:title"       content="Mathematics" />
-<meta property="og:description" content="# MathematicsLanding page for the mathematics primer" />
+<meta property="og:title"       content="TensorsReview" />
+<meta property="og:description" content="        TensorsReview    Review of tensors We present here an overview of tensors and tensor notations (also called suffix or index notation).Definition. (fr..." />
 <meta property="og:image"       content="https://primer-computational-mathematics.github.io//book/images/logo/logo.png" />
 
 <meta name="twitter:card" content="summary">
@@ -24,11 +24,11 @@
   {
   "@context": "http://schema.org",
   "@type": "NewsArticle",
-  "mainEntityOfPage": "https://primer-computational-mathematics.github.io/book/notebooks/maths/intro.html",
-  "headline": "Mathematics",
+  "mainEntityOfPage": "https://primer-computational-mathematics.github.io/book/maths/TensorsReview.html",
+  "headline": "TensorsReview",
   "datePublished": "2020-06-08T12:53:04+00:00",
   "dateModified": "2020-06-08T12:53:04+00:00",
-  "description": "# MathematicsLanding page for the mathematics primer",
+  "description": "        TensorsReview    Review of tensors We present here an overview of tensors and tensor notations (also called suffix or index notation).Definition. (fr...",
   "author": {
     "@type": "Person",
     "name": "Imperial College London"
@@ -410,7 +410,7 @@ initFunction(initPrint)
     },
     kernelOptions: {
     kernelName: "python3",
-    path: ""
+    path: "notebooks/maths"
     }
 }
 </script>
@@ -773,10 +773,20 @@ initFunction(initPrint)
 <div class="download-buttons-dropdown">
     <button id="dropdown-button-trigger" class="interact-button"><img src="/book/assets/images/download-solid.svg" alt="Download" /></button>
     <div class="download-buttons">
+        <a href="/book/notebooks/maths/TensorsReview.ipynb" download>
+        <button id="interact-button-download" class="interact-button">.ipynb</button>
+        </a>
         
         <a id="interact-button-print"><button id="interact-button-download" class="interact-button">.pdf</button></a>
     </div>
 </div>
+
+
+  <button id="interact-button-thebelab" class="interact-button">Thebelab</button>
+
+  
+  
+  
 
 
 </div>
@@ -795,16 +805,107 @@ initFunction(initPrint)
 
       <main class="c-textbook__page" tabindex="-1">
             <div class="c-textbook__content" id="textbook_content">
-              <h1 id="mathematics">Mathematics</h1>
+                  <main class="jupyter-page">
+    <div id="page-info"><div id="page-title">TensorsReview</div>
+</div>
+    <div class="jb_cell">
 
-<p>Landing page for the mathematics primer</p>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Review-of-tensors">Review of tensors<a class="anchor-link" href="#Review-of-tensors"> </a></h2><p>We present here an overview of tensors and tensor notations (also called suffix or index notation).</p>
+<p><strong>Definition.</strong> (from Wolfram) An nth-rank tensor in m-dimensional space is a mathematical object that has n indices and $m^n$ components and obeys certain transformation rules.</p>
+<p>In three-dimensional space, i.e. $m=3$, we can recover some familiar objects:</p>
+<p>$ \quad \quad n = 0$: <strong>scalar</strong> $a$, a 0th order tensor with no intrinsic direction - e.g. temperature</p>
+<p>$ \quad \quad n = 1$: <strong>vector</strong> $a_i$, a 1st order tensor that has a magnitude and direction at each point in space - e.g. acceleration</p>
+<p>$ \quad \quad n = 2$: <strong>2nd order tensor</strong> (dyad) $a_{ij}$, describes the relationship between other algebraic objects related to vector fields - e.g. stress tensor</p>
+<p>Later we will introduce a special rank-3 tensor (triad), the Levi-Civita symbol $\varepsilon_{ijk}$ which therefore has three indices, $i, j, k$.</p>
+<h3 id="Stress-tensor">Stress tensor<a class="anchor-link" href="#Stress-tensor"> </a></h3><p>To introduce the stress tensor, let us assume there is a point P in space where we want to evaluate the stress. We then draw an arbitrarily oriented surface $S$ with area $\Delta S$ around P, with the orientation of the surface being uniquely defined by the unit normal vector $\mathbf{n}$. Instead of dealing with the force $\mathbf{F}$ acting on the surface, we will be dealing with its density, or the <em>stress</em>. That is, the stress is a vector quantity defined by the limit</p>
+$$ \mathbf{T}_n = \lim_{\Delta S \to 0} \frac{\mathbf{F}_n}{\Delta S}$$<p>,</p>
+<p>where the limit $\Delta S \to 0$ means that the surface $S$ shrinks to point M, the point where we want to evaluate the stress. Note that the stress vector $\mathbf{T}_n$ (often called traction vector, hence $T$) depends on the orientation of the surface (and the position of the point P, of course). This is indicated by the suffix $n$.</p>
+<p>Let us now place the origin of our coordinate system into point P and draw a surface $S_x$ around P, such that the surface is normal to the x-axis, like in the figure below. Appropriately, we denote the stress on $S_x$ by $\mathbf{T}_x$.</p>
+<p><img src="images/tensor_surface_element.png" width=400\></p>
+<p>As shown in the figure above, the stress $\mathbf{T}_x$ may be represented in coordinate decomposition form:</p>
+$$ \mathbf{T}_x = \sigma_{xx}\mathbf{i} + \sigma_{xy}\mathbf{j} + \sigma_{xz}\mathbf{k}. $$<p>Similarly, we can draw surfaces $S_y$ and $S_z$ and corresponding stresses $\mathbf{T}_y$ and $\mathbf{T}_z$, whose coordinate decompositions are:</p>
+$$ \mathbf{T}_y = \sigma_{yx}\mathbf{i} + \sigma_{yy}\mathbf{j} + \sigma_{yz}\mathbf{k} \\
+   \mathbf{T}_z = \sigma_{zx}\mathbf{i} + \sigma_{zy}\mathbf{j} + \sigma_{zz}\mathbf{k}. $$<p>Together, these nine components of the stress vectors form the stress tensor $\mathbf{\sigma}$</p>
+$$ \bar{\bar{\sigma}} = \begin{pmatrix}
+\sigma_{xx} &amp; \sigma_{xy} &amp; \sigma_{xz} \\
+\sigma_{yx} &amp; \sigma_{yy} &amp; \sigma_{yz} \\
+\sigma_{zx} &amp; \sigma_{zy} &amp; \sigma_{zz}
+\end{pmatrix}. $$<p>Going back to the above figure, we see that $\sigma_{xx}$ acts normal to the surface $S_x$, while components $\sigma_{xy}$ and $\sigma_{xz}$ are parallel to $S_x$. We can make similar observations about the y- and z- components of the stress vector, where $\sigma_{yy}$ and $\sigma_{zz}$ will be the normal stress components. Therefore, we call the diagonal elements of the stress tensor the <em>normal stresses</em> and the off-diagonal elements the <em>tangential</em> or <em>shear stresses</em>. Often tangential stresses are denoted by $\tau$, e.g. $\tau_{xy}$.</p>
+<p>We will now state without proof that the stress vector $\mathbf{T}_n$ acting on an arbitrary surface can be easily found if we know the stress tensor. This relation is:</p>
+$$ \mathbf{T}_n = \mathbf{n} \bar{\bar{\sigma}}. $$<h3 id="Tensor-indices">Tensor indices<a class="anchor-link" href="#Tensor-indices"> </a></h3><p>We will most often work in three dimensions, where we can then choose an orthonormal coordinate system $(\hat{e}_1, \hat{e}_2, \hat{e}_3)$ to describe any vector <em>v</em> by its three coordinates</p>
+$$ \mathbf{v} = (v_1, v_2, v_3) = v_1\mathbf{\hat{e}}_1 + v_2 \mathbf{\hat{e}}_2 + v_3 \mathbf{\hat{e}}_3 = \sum_{i=1}^3 v_i \mathbf{\hat{e}}_i $$<p>,</p>
+<p>where $i$ is a <em>dummy</em> index and is allowed to take values 1, 2 and 3. We can therefore represent the vector $\mathbf{v}$ as $v_i$. Similarly, we can represent three-dimensional space by the Cartesian coordinates $(x_1, x_2, x_3)$, where $\mathbf{x}$, or equivalently $x_i$, is a general position vector. The gradient $\nabla$ can then be written in tensor notation as $\frac{\partial}{\partial x_i}$, or sometimes even more compactly as $\partial_i$.</p>
+<p>It is convenient to introduce the Einstein summation convention here. If a dummy index is repeated twice, it is implicitly understood that this represents a sum over all possible values of that index. A dummy index cannot appear more than two times in one additive term. Therefore we can simply remove the summation symbol</p>
+$$ \sum_{i=1}^3 v_i \mathbf{\hat{e}}_i = v_i \mathbf{\hat{e}}_i. $$<p><strong>Side note:</strong> The Einstein summation convention states that the sum over an index should only be performed if that index appears once up and once down, i.e. $v_i \hat{e}^i$. However, this notation is often abused when dealing with flat Cartesian space to avoid confusing the up-index for the power (e.g. $v^2$ is not a square of $v$). We can forgive ourselves for this (incorrect) application of the sum convention since raising and lowering an index in flat space in Cartesian coordinates is achieved as follows:</p>
+$$v^i \equiv \delta^{ij}v_j, \quad \quad v_i \equiv \delta_{ij}v^j,$$<p>where $\delta_{ij}$ is the Kronecker delta and $\delta^{ij}$ is its inverse. We will see below that this is a trivial operation and that $v_i = v^i$, as Kronecker delta functions similarly to the identity matrix, its the inverse of the identity matrix is also identity.</p>
+<h3 id="Tensor-operations">Tensor operations<a class="anchor-link" href="#Tensor-operations"> </a></h3><p>In order to be able to perform ... it is necessary to introduce two special tensors: the Kronecker delta $\delta_{ij}$ and the Levi-Civita symbol $\varepsilon_{ijk}$.</p>
+$$ \delta_{ij} = \begin{pmatrix}
+1 &amp; 0 &amp; 0 \\
+0 &amp; 1 &amp; 0 \\
+0 &amp; 0 &amp; 1
+\end{pmatrix} $$$$ \delta_{ij} = \left\{
+    \begin{array}\\
+        1 &amp; \mbox{($i = j$)} \\ 
+        0 &amp; \mbox{($i \neq j$)} 
+    \end{array}
+\right.$$$$\varepsilon_{ijk} = \left\{
+    \begin{array}\\
+        +1 &amp; \mbox{if (ijk) = (123), (231), (312)} \\ %\ x \in \mathbf{N}^* \\
+        -1 &amp; \mbox{if (ijk) = (132), (231), (321)} \\ %\ x = 0 \\
+         0 &amp; \mbox{otherwise}
+    \end{array}
+\right. $$$$ \varepsilon_{ijk} = \left\{
+    \begin{array}\\
+        1 &amp; \mbox{if (ijk) is an even perfmutation of (123)} \\ %\ x \in \mathbf{N}^* \\
+        -1 &amp; \mbox{if (ijk) is an odd perfmutation of (123)} \\ %\ x = 0 \\
+        0 &amp; \mbox{if any two of its indices are the same}
+    \end{array}
+\right. $$<p>We can then see by direct calculation that the cross product of two vectors $\boldsymbol{a}$ and $\boldsymbol{b}$ in tensor notation is</p>
+$$ (\boldsymbol{a} \times \boldsymbol{b} )_i = \varepsilon_{ijk} a_j b_k, $$<p>where j and k are dummy indices, while i is a <em>free</em> index as it only appears once in the term, i.e. it is not summed over. As per the definition of tensors, the number of free indices in a term denotes the rank of that term - in this case there is only one free index so the resulting object is a rank-1 tensor, i.e. a vector.</p>
+<p>Kronecker delta</p>
+$$ v_i = \delta_{ij}v_j $$<p>For demonstration purposes let us express some common vector identities in tensor notation:</p>
+$$ \mbox{Curl of a vector:} \quad \quad \mathbf{a} = \nabla \times \mathbf{b} \quad \quad a_i = \varepsilon_{ijk} \frac{\partial b_k}{\partial x_j} $$$$ \mbox{Dot product rule:} \quad \quad \nabla \cdot (\mathbf{a} \mathbf{b}) = \mathbf{a} \nabla \cdot \mathbf{b} + \nabla \mathbf{a} \cdot \mathbf{b} \quad \mbox{or} \quad \frac{\partial}{\partial x_i}(a_i F_i) = a_i \frac{\partial F_i}{\partial x_i} + \frac{\partial \phi}{\partial x_i}F_i$$$$ \mbox{Triple vector product:} \quad \quad \mathbf{a} \times (\mathbf{b} \times \mathbf{c}) = (\mathbf{a} \cdot \mathbf{c})\mathbf{b} - (\mathbf{a} \cdot \mathbf{b})\mathbf{c} \quad \mbox{or} \quad \varepsilon_{ijk}a_k(\varepsilon_{klm}b_lc_m) = (a_jc_j)b_i - (a_jb_j)c_i $$<p>Here we note that each component of $ \varepsilon_{ijk}a_k(\varepsilon_{klm}b_lc_m) $ when written in index notation is just a number, as it points to one of its elements - i.e. $a_k$ is the kth element of $\mathbf{a}$. This means that we can commute them. The LHS can then be written, for example, as $ \varepsilon_{ijk}\varepsilon_{klm}a_kb_lc_m $, or in any other order we want. This is one of the advantages of tensor notation, as we <strong>cannot</strong> do this in matrix notation!</p>
+$$ \mbox{Determinant in 2D:} \quad \quad \text{det}M = \varepsilon_{ij}m_{1i}m_{2j} $$<p>The two-dimensional Levi-Civita symbol $\varepsilon_{ij}$ is still an anti-symmetric tensor defined as:</p>
+$$ \varepsilon_{ij} = \begin{pmatrix}
+0 &amp; 1 \\
+-1 &amp; 0
+\end{pmatrix} $$<p>Let us check explicitly that this is indeed correct.</p>
+$$ \varepsilon_{ij}m_{1i}m_{2j} = \sum_{i=1}^2 \sum_{j=1}^2 \varepsilon_{ij}m_{1i}m_{2j} \\
+    = \varepsilon_{11}m_{11}m_{21} + \varepsilon_{12}m_{11}m_{22} + \varepsilon_{21}m_{12}m_{21} + \varepsilon_{22}m_{12}m_{22} \\
+    = m_{11}m_{22} - m_{12}m_{21}$$<p>which is indeed correct.</p>
+$$ \mbox{Determinant in 3D:} \quad \quad \text{det}M = \varepsilon_{ijk}m_{1i}m_{2j}m_{3k} $$
+</div>
+</div>
+</div>
+</div>
 
+ 
+
+
+    </main>
+    
             </div>
             <div class="c-textbook__footer" id="textbook_footer">
               
 <nav class="c-page__nav">
   
+    
+    
 
+    <a id="js-page__nav__prev" class="c-page__nav__prev" href="/book/maths/intro.html">
+      〈 <span class="u-margin-right-tiny"></span> Mathematics
+    </a>
+  
+
+  
+    
+
+    
+    <a id="js-page__nav__next" class="c-page__nav__next" href="/book/maths/taylor-series.html">
+      taylor-series <span class="u-margin-right-tiny"></span> 〉
+    </a>
   
 </nav>
 
