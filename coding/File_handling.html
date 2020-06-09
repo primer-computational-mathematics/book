@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width,minimum-scale=1">
 
   <title>File handling</title>
-  <meta name="description" content="        File handling    File handling in Python Suppose we have a text file like below, from which we would like to extract temperature and density data:$# ...">
+  <meta name="description" content="        File handling    File handling in Python Suppose we have a text file like below, from which we would like to extract temperature and density data:$$#...">
 
   <link rel="canonical" href="https://primer-computational-mathematics.github.io/book/coding/File_handling.html">
   <link rel="alternate" type="application/rss+xml" title="ESE Jupyter Material" href="https://primer-computational-mathematics.github.io/book/feed.xml">
@@ -14,7 +14,7 @@
   <meta property="og:url"         content="https://primer-computational-mathematics.github.io/book/coding/File_handling.html" />
 <meta property="og:type"        content="article" />
 <meta property="og:title"       content="File handling" />
-<meta property="og:description" content="        File handling    File handling in Python Suppose we have a text file like below, from which we would like to extract temperature and density data:$# ..." />
+<meta property="og:description" content="        File handling    File handling in Python Suppose we have a text file like below, from which we would like to extract temperature and density data:$$#..." />
 <meta property="og:image"       content="https://primer-computational-mathematics.github.io//book/images/logo/logo.png" />
 
 <meta name="twitter:card" content="summary">
@@ -26,9 +26,9 @@
   "@type": "NewsArticle",
   "mainEntityOfPage": "https://primer-computational-mathematics.github.io/book/coding/File_handling.html",
   "headline": "File handling",
-  "datePublished": "2020-06-09T16:06:23+00:00",
-  "dateModified": "2020-06-09T16:06:23+00:00",
-  "description": "        File handling    File handling in Python Suppose we have a text file like below, from which we would like to extract temperature and density data:$# ...",
+  "datePublished": "2020-06-09T16:12:48+00:00",
+  "dateModified": "2020-06-09T16:12:48+00:00",
+  "description": "        File handling    File handling in Python Suppose we have a text file like below, from which we would like to extract temperature and density data:$$#...",
   "author": {
     "@type": "Person",
     "name": "Imperial College London"
@@ -1022,8 +1022,10 @@ initFunction(initPrint)
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="File-handling-in-Python">File handling in Python<a class="anchor-link" href="#File-handling-in-Python"> </a></h1><p>Suppose we have a text file like below, from which we would like to extract temperature and density data:</p>
-<p>$# Density of air at different temperatures, at 1 atm pressure</p>
-<h1 id="Column-1:-temperature-in-Celsius-degrees">Column 1: temperature in Celsius degrees<a class="anchor-link" href="#Column-1:-temperature-in-Celsius-degrees"> </a></h1><h1 id="Column-2:-density-in-kg/m^3">Column 2: density in kg/m^3<a class="anchor-link" href="#Column-2:-density-in-kg/m^3"> </a></h1><p>.
+$$
+# Density of air at different temperatures, at 1 atm pressure
+# Column 1: temperature in Celsius degrees
+# Column 2: density in kg/m^3
   0.0   999.8425
   4.0   999.9750
  15.0   999.1026
@@ -1031,10 +1033,10 @@ initFunction(initPrint)
  25.0   997.0479
  37.0   993.3316
  50.0   988.04
-100.0   958.3665</p>
-<h1 id="Source:-Wikipedia-(keyword-Density)">Source: Wikipedia (keyword Density)<a class="anchor-link" href="#Source:-Wikipedia-(keyword-Density)"> </a></h1><p>.$</p>
-<h2 id="Python">Python<a class="anchor-link" href="#Python"> </a></h2><p>It is usually best to read and write files using the <strong>with statement</strong> which will improve our syntax and do a lot of things automatically for us (like closing the file we opened).</p>
-<p>Our file contains 4 lines at the beginning and 2 lines at the end which we do not want to extract. Additionally, the temperature and density values are separated by whitespaces. Here is an example of how we could extract the data into two arrays:</p>
+100.0   958.3665
+# Source: Wikipedia (keyword Density)
+$$<h2 id="Python">Python<a class="anchor-link" href="#Python"> </a></h2><p>It is usually best to read and write files using the <strong>with statement</strong> which will improve our syntax and do a lot of things automatically for us (like closing the file we opened).</p>
+<p>Our file contains 3 lines at the beginning and 1 line at the end which we do not want to extract. Additionally, the temperature and density values are separated by whitespaces. Here is an example of how we could extract the data into two arrays:</p>
 
 </div>
 </div>
@@ -1050,7 +1052,7 @@ initFunction(initPrint)
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;density_water.dat&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>  <span class="c1"># r for read</span>
     <span class="c1"># skip extra lines by taking a slice of the file</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">readlines</span><span class="p">()[</span><span class="mi">4</span><span class="p">:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">readlines</span><span class="p">()[</span><span class="mi">3</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
         
     <span class="c1"># initialise 2 empty arrays to store our data</span>
     <span class="n">temp</span><span class="p">,</span> <span class="n">density</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)),</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
@@ -1120,7 +1122,7 @@ initFunction(initPrint)
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="NumPy">NumPy<a class="anchor-link" href="#NumPy"> </a></h1><p>NumPy's <a href="https://numpy.org/doc/1.18/reference/generated/numpy.genfromtxt.html"><strong>genfromtxt</strong></a> (generate from text) function provides full control over the file which we are trying to open. It initialises a numpy array from the data. Some of the parameters include:</p>
+<h2 id="NumPy">NumPy<a class="anchor-link" href="#NumPy"> </a></h2><p>NumPy's <a href="https://numpy.org/doc/1.18/reference/generated/numpy.genfromtxt.html"><strong>genfromtxt</strong></a> (generate from text) function provides full control over the file which we are trying to open. It initialises a numpy array from the data. Some of the parameters include:</p>
 
 <pre><code>- dtype: set a data type. If not set, determines the data type automatically for each column
 - comments: skips every line starting with a string that is set here. '#' by default.
