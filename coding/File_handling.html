@@ -5,16 +5,16 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,minimum-scale=1">
 
-  <title>TensorsReview</title>
-  <meta name="description" content="        TensorsReview    Review of tensors We present here an overview of tensors and tensor notations (also called suffix or index notation).Definition. (fr...">
+  <title>File handling</title>
+  <meta name="description" content="        File handling    File handling in Python Suppose we have a text file like below, from which we would like to extract temperature and density data:$# ...">
 
-  <link rel="canonical" href="https://primer-computational-mathematics.github.io/book/maths/TensorsReview.html">
+  <link rel="canonical" href="https://primer-computational-mathematics.github.io/book/coding/File_handling.html">
   <link rel="alternate" type="application/rss+xml" title="ESE Jupyter Material" href="https://primer-computational-mathematics.github.io/book/feed.xml">
 
-  <meta property="og:url"         content="https://primer-computational-mathematics.github.io/book/maths/TensorsReview.html" />
+  <meta property="og:url"         content="https://primer-computational-mathematics.github.io/book/coding/File_handling.html" />
 <meta property="og:type"        content="article" />
-<meta property="og:title"       content="TensorsReview" />
-<meta property="og:description" content="        TensorsReview    Review of tensors We present here an overview of tensors and tensor notations (also called suffix or index notation).Definition. (fr..." />
+<meta property="og:title"       content="File handling" />
+<meta property="og:description" content="        File handling    File handling in Python Suppose we have a text file like below, from which we would like to extract temperature and density data:$# ..." />
 <meta property="og:image"       content="https://primer-computational-mathematics.github.io//book/images/logo/logo.png" />
 
 <meta name="twitter:card" content="summary">
@@ -24,11 +24,11 @@
   {
   "@context": "http://schema.org",
   "@type": "NewsArticle",
-  "mainEntityOfPage": "https://primer-computational-mathematics.github.io/book/maths/TensorsReview.html",
-  "headline": "TensorsReview",
+  "mainEntityOfPage": "https://primer-computational-mathematics.github.io/book/coding/File_handling.html",
+  "headline": "File handling",
   "datePublished": "2020-06-09T15:57:05+00:00",
   "dateModified": "2020-06-09T15:57:05+00:00",
-  "description": "        TensorsReview    Review of tensors We present here an overview of tensors and tensor notations (also called suffix or index notation).Definition. (fr...",
+  "description": "        File handling    File handling in Python Suppose we have a text file like below, from which we would like to extract temperature and density data:$# ...",
   "author": {
     "@type": "Person",
     "name": "Imperial College London"
@@ -410,7 +410,7 @@ initFunction(initPrint)
     },
     kernelOptions: {
     kernelName: "python3",
-    path: "notebooks/maths"
+    path: "notebooks/coding"
     }
 }
 </script>
@@ -963,7 +963,7 @@ initFunction(initPrint)
 <div class="download-buttons-dropdown">
     <button id="dropdown-button-trigger" class="interact-button"><img src="/book/assets/images/download-solid.svg" alt="Download" /></button>
     <div class="download-buttons">
-        <a href="/book/notebooks/maths/TensorsReview.ipynb" download>
+        <a href="/book/notebooks/coding/File_handling.ipynb" download>
         <button id="interact-button-download" class="interact-button">.ipynb</button>
         </a>
         
@@ -996,75 +996,275 @@ initFunction(initPrint)
       <main class="c-textbook__page" tabindex="-1">
             <div class="c-textbook__content" id="textbook_content">
                   <main class="jupyter-page">
-    <div id="page-info"><div id="page-title">TensorsReview</div>
+    <div id="page-info"><div id="page-title">File handling</div>
 </div>
     <div class="jb_cell">
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Review-of-tensors">Review of tensors<a class="anchor-link" href="#Review-of-tensors"> </a></h1><p>We present here an overview of tensors and tensor notations (also called suffix or index notation).</p>
-<p><strong>Definition.</strong> (from Wolfram) An nth-rank tensor in m-dimensional space is a mathematical object that has n indices and $m^n$ components and obeys certain transformation rules.</p>
-<p>In three-dimensional space, i.e. $m=3$, we can recover some familiar objects:</p>
-<p>$ \quad \quad n = 0$: <strong>scalar</strong> $a$, a 0th order tensor with no intrinsic direction - e.g. temperature</p>
-<p>$ \quad \quad n = 1$: <strong>vector</strong> $a_i$, a 1st order tensor that has a magnitude and direction at each point in space - e.g. acceleration</p>
-<p>$ \quad \quad n = 2$: <strong>2nd order tensor</strong> (dyad) $a_{ij}$, describes the relationship between other algebraic objects related to vector fields - e.g. stress tensor</p>
-<p>Later we will introduce a special rank-3 tensor (triad), the Levi-Civita symbol $\varepsilon_{ijk}$ which therefore has three indices, $i, j, k$.</p>
-<h2 id="Stress-tensor">Stress tensor<a class="anchor-link" href="#Stress-tensor"> </a></h2><p>To introduce the stress tensor, let us assume there is a point P in space where we want to evaluate the stress. We then draw an arbitrarily oriented surface $S$ with area $\Delta S$ around P, with the orientation of the surface being uniquely defined by the unit normal vector $\mathbf{n} = (n_x, n_y, n_z)$. Instead of dealing with the force $\mathbf{F}$ acting on the surface, we will be dealing with its density, or the <em>stress</em>. That is, the stress is a vector quantity defined by the limit</p>
-$$ \mathbf{T}_n = \lim_{\Delta S \to 0} \frac{\mathbf{F}_n}{\Delta S},$$<p>where the limit $\Delta S \to 0$ means that the surface $S$ shrinks to point M, the point where we want to evaluate the stress. Note that the stress vector $\mathbf{T}_n$ (often called traction vector, hence $T$) depends on the orientation of the surface (and the position of the point P, of course). This is indicated by the suffix $n$.</p>
-<p>Let us now place the origin of our coordinate system into point P and draw a surface $S_x$ around P, such that the surface is normal to the x-axis, like in the figure below. Appropriately, we denote the stress on $S_x$ by $\mathbf{T}_x$.</p>
-<p><img src="../notebooks/images/tensor_surface_element.png" width=400\></p>
-<p>As shown in the figure above, the stress $\mathbf{T}_x$ may be represented in coordinate decomposition form:</p>
-$$ \mathbf{T}_x = \sigma_{xx}\mathbf{i} + \sigma_{xy}\mathbf{j} + \sigma_{xz}\mathbf{k}. $$<p>Similarly, we can draw surfaces $S_y$ and $S_z$ and corresponding stresses $\mathbf{T}_y$ and $\mathbf{T}_z$, whose coordinate decompositions are:</p>
-$$ \mathbf{T}_y = \sigma_{yx}\mathbf{i} + \sigma_{yy}\mathbf{j} + \sigma_{yz}\mathbf{k} \\
-   \mathbf{T}_z = \sigma_{zx}\mathbf{i} + \sigma_{zy}\mathbf{j} + \sigma_{zz}\mathbf{k}. $$<p>Together, these nine components of the stress vectors form the stress tensor $\mathbf{\sigma}$</p>
-$$ \bar{\bar{\sigma}} = \begin{pmatrix}
-\sigma_{xx} &amp; \sigma_{xy} &amp; \sigma_{xz} \\
-\sigma_{yx} &amp; \sigma_{yy} &amp; \sigma_{yz} \\
-\sigma_{zx} &amp; \sigma_{zy} &amp; \sigma_{zz}
-\end{pmatrix}. $$<p>Going back to the above figure, we see that $\sigma_{xx}$ acts normal to the surface $S_x$, while components $\sigma_{xy}$ and $\sigma_{xz}$ are parallel to $S_x$. We can make similar observations about the y- and z- components of the stress vector, where $\sigma_{yy}$ and $\sigma_{zz}$ will be the normal stress components. Therefore, we call the diagonal elements of the stress tensor the <em>normal stresses</em> and the off-diagonal elements the <em>tangential</em> or <em>shear stresses</em>. Often tangential stresses are denoted by $\tau$, e.g. $\tau_{xy}$.</p>
-<p>We will now state without proof that the stress vector $\mathbf{T}_n$ acting on an arbitrary surface can be easily found if we know the stress tensor. This relation is:</p>
-$$ \mathbf{T}_n = \mathbf{n} \bar{\bar{\sigma}}, $$<p>or after the multiplication:</p>
-$$ \mathbf{T}_n = n_x \mathbf{T}_x + n_y \mathbf{T}_y + n_z \mathbf{T}_z. $$<h2 id="Tensor-indices">Tensor indices<a class="anchor-link" href="#Tensor-indices"> </a></h2><p>We will most often work in three dimensions, where we can choose an orthonormal coordinate system $(\hat{e}_1, \hat{e}_2, \hat{e}_3)$ to describe any vector <em>v</em> by its three coordinates</p>
-$$ \mathbf{v} = (v_1, v_2, v_3) = v_1\mathbf{\hat{e}}_1 + v_2 \mathbf{\hat{e}}_2 + v_3 \mathbf{\hat{e}}_3 = \sum_{i=1}^3 v_i \mathbf{\hat{e}}_i, $$<p>where $i$ is a <em>dummy</em> index and is allowed to take values 1, 2 and 3. We can therefore represent the vector $\mathbf{v}$ as $v_i$. Similarly, we can represent three-dimensional space by the Cartesian coordinates $(x_1, x_2, x_3)$, where $\mathbf{x}$, or equivalently $x_i$, is a general position vector. In this notation $x_1$ corresponds to $x$, $x_2$ to $y$ and $x_3$ to $z$.The gradient $\nabla$ can therefore be written in tensor notation as $\frac{\partial}{\partial x_i}$, or sometimes even more compactly as $\partial_i$.</p>
-<p>It is convenient to introduce the Einstein summation convention here. If a dummy index is repeated twice, it is implicitly understood that this represents a sum over all possible values of that index. A dummy index cannot appear more than two times in one additive term. Therefore we can simply remove the summation symbol</p>
-$$ \sum_{i=1}^3 v_i \mathbf{\hat{e}}_i = v_i \mathbf{\hat{e}}_i. $$<p><strong>Side note:</strong> For completeness, we note that the Einstein summation convention states that the sum over an index should only be performed if that index appears once up and once down, i.e. $v_i \hat{e}^i$. However, this notation is often abused when dealing with flat Cartesian space to avoid confusing the up-index for the power (e.g. $v^2$ is not a square of $v$). We can forgive ourselves for this (incorrect) application of the sum convention since raising and lowering an index in flat space in Cartesian coordinates is achieved as follows:</p>
-$$v^i \equiv \delta^{ij}v_j, \quad \quad v_i \equiv \delta_{ij}v^j,$$<p>where $\delta_{ij}$ is the Kronecker delta and $\delta^{ij}$ is its inverse. We will see below that this is a trivial operation and that $v_i = v^i$, as Kronecker delta functions similarly to the identity matrix and its inverse is also trivially related to it.</p>
-<h3 id="Tensor-operations">Tensor operations<a class="anchor-link" href="#Tensor-operations"> </a></h3><p>In order to be able to perform operations on tensors that we are probably more used to in matrix notation, it is necessary to introduce two special tensors: the Kronecker delta $\delta_{ij}$ and the Levi-Civita symbol $\varepsilon_{ijk}$.</p>
-<p>Kronecker delta is a function of two variables which has a value of 1 if the two variables are the same, or 0 if they are not.</p>
-$$ \delta_{ij} = \left\{
-    \begin{array}\\
-        1 &amp; \mbox{($i = j$)} \\ 
-        0 &amp; \mbox{($i \neq j$)} 
-    \end{array}
-\right.$$<p>The values can be arranged into a 2x2 matrix, which will be identical to the identity matrix. Kronecker delta can be also expressed as $\delta_{ij}=\mathbf{\hat{e}}_i\cdot\mathbf{\hat{e}}_j$.</p>
-<p>The three-dimensional fully antisymmetric Levi-Civita symbol $\varepsilon_{ijk}$ is defined by:</p>
-$$\varepsilon_{ijk} = \left\{
-    \begin{array}\\
-        +1 &amp; \mbox{if (ijk) = (123), (231), (312)} \\ %\ x \in \mathbf{N}^* \\
-        -1 &amp; \mbox{if (ijk) = (132), (231), (321)} \\ %\ x = 0 \\
-         0 &amp; \mbox{otherwise (i.e. any 2 are equal)}
-    \end{array}
-\right. $$<p>That is, it is 1 if (ijk) is an even permutation of (123), -1 if (ijk) is an odd permutation of 123 and 0 if any index (ijk) is repeated. For example:</p>
-$$ \varepsilon_{ijk} = - \varepsilon_{ikj} = - \varepsilon_{jik} = \varepsilon_{kij}.$$<p><strong>Cross product</strong> $\boldsymbol{c}$ of two vectors $\boldsymbol{a}$ and $\boldsymbol{b}$ in tensor notation can be expressed as:</p>
-$$ c_k \mathbf{\hat{e}}_k=\mathbf{c} = \mathbf{a}\times\mathbf{b} = (a_i\mathbf{\hat{e}}_i)\times (b_j\mathbf{\hat{e}}_j)=a_ib_j(\mathbf{\hat{e}}_i\times\mathbf{\hat{e}}_j)\parallel\cdot \mathbf{\hat{e}}_k,\\
-c_k \mathbf{\hat{e}}_k\cdot\mathbf{\hat{e}}_k=c_k=a_i b_j (\mathbf{\hat{e}}_i\times\mathbf{\hat{e}}_j)\cdot\mathbf{\hat{e}}_k$$<p>.</p>
-<p>The Levi-Civita symbol is then equal to $\varepsilon_{ijk} = (\mathbf{\hat{e}}_i\times\mathbf{\hat{e}}_j)\cdot\mathbf{\hat{e}}_k$ and in general, cross product can be expressed in tensor notation as:</p>
-$$ (\boldsymbol{a} \times \boldsymbol{b} )_i = \varepsilon_{ijk} a_j b_k, $$<p>where j and k are dummy indices, while i is a <em>free</em> index as it only appears once in the term, i.e. it is not summed over. As per the definition of tensors, the number of free indices in a term denotes the rank of that term - in this case there is only one free index so the resulting object is a rank-1 tensor, i.e. a vector.</p>
-<p>The <strong>inner product</strong> was already shown to be simply</p>
-$$ \mathbf{a} \cdot \mathbf{b} = a_i b_i = b_i a_i. $$<p>If A is an $n \times n$ matrix, then $A_{ij} = (A^T)_{ji}$, where $A^T$ is the <strong>transpose</strong> of A. If A is symmetric then $A_{ij} = A_{ji}$.</p>
-<h3 id="Examples">Examples<a class="anchor-link" href="#Examples"> </a></h3><p>For demonstration purposes let us express some common vector identities in tensor notation:</p>
-$$ \mbox{Curl of a vector:} \quad \quad \mathbf{a} = \nabla \times \mathbf{b} \quad or \quad a_i = \varepsilon_{ijk} \frac{\partial b_k}{\partial x_j} $$$$ \mbox{Dot product rule:} \quad \quad \nabla \cdot (\mathbf{a} \mathbf{b}) = \mathbf{a} \nabla \cdot \mathbf{b} + \nabla \mathbf{a} \cdot \mathbf{b} \quad \mbox{or} \quad \frac{\partial}{\partial x_i}(a_i b_i) = a_i \frac{\partial b_i}{\partial x_i} + \frac{\partial a_i}{\partial x_i}b_i$$$$ \mbox{Triple vector product:} \quad \quad \mathbf{a} \times (\mathbf{b} \times \mathbf{c}) = (\mathbf{a} \cdot \mathbf{c})\mathbf{b} - (\mathbf{a} \cdot \mathbf{b})\mathbf{c} \quad \mbox{or} \quad \varepsilon_{ijk}a_k(\varepsilon_{klm}b_lc_m) = (a_jc_j)b_i - (a_jb_j)c_i $$<p>Here we note that each component of $ \varepsilon_{ijk}a_k(\varepsilon_{klm}b_lc_m) $ when written in index notation is just a number, as it points to one of its elements - i.e. $a_k$ is the kth element of $\mathbf{a}$. This means that we can commute them. The LHS can then be written, for example, as $ \varepsilon_{ijk}\varepsilon_{klm}a_kb_lc_m $, or in any other order we want. This is one of the advantages of tensor notation, as we <strong>cannot</strong> do this in matrix notation!</p>
-$$ \mbox{Determinant in 2D:} \quad \quad \text{det}M = \varepsilon_{ij}m_{1i}m_{2j} $$<p>The two-dimensional Levi-Civita symbol $\varepsilon_{ij}$ is still an anti-symmetric tensor defined as:</p>
-$$ \varepsilon_{ij} = \begin{pmatrix}
-0 &amp; 1 \\
--1 &amp; 0
-\end{pmatrix} $$<p>Let us check explicitly that this is indeed correct.</p>
-$$ \varepsilon_{ij}m_{1i}m_{2j} = \sum_{i=1}^2 \sum_{j=1}^2 \varepsilon_{ij}m_{1i}m_{2j} \\
-    = \varepsilon_{11}m_{11}m_{21} + \varepsilon_{12}m_{11}m_{22} + \varepsilon_{21}m_{12}m_{21} + \varepsilon_{22}m_{12}m_{22} \\
-    = m_{11}m_{22} - m_{12}m_{21}$$<p>which is indeed correct.</p>
-$$ \mbox{Determinant in 3D:} \quad \quad \text{det}M = \varepsilon_{ijk}m_{1i}m_{2j}m_{3k} $$
+<h1 id="File-handling-in-Python">File handling in Python<a class="anchor-link" href="#File-handling-in-Python"> </a></h1><p>Suppose we have a text file like below, from which we would like to extract temperature and density data:</p>
+<p>$# Density of air at different temperatures, at 1 atm pressure</p>
+<h1 id="Column-1:-temperature-in-Celsius-degrees">Column 1: temperature in Celsius degrees<a class="anchor-link" href="#Column-1:-temperature-in-Celsius-degrees"> </a></h1><h1 id="Column-2:-density-in-kg/m^3">Column 2: density in kg/m^3<a class="anchor-link" href="#Column-2:-density-in-kg/m^3"> </a></h1><p>.
+  0.0   999.8425
+  4.0   999.9750
+ 15.0   999.1026
+ 20.0   998.2071
+ 25.0   997.0479
+ 37.0   993.3316
+ 50.0   988.04
+100.0   958.3665</p>
+<h1 id="Source:-Wikipedia-(keyword-Density)">Source: Wikipedia (keyword Density)<a class="anchor-link" href="#Source:-Wikipedia-(keyword-Density)"> </a></h1><p>.$</p>
+<h2 id="Python">Python<a class="anchor-link" href="#Python"> </a></h2><p>It is usually best to read and write files using the <strong>with statement</strong> which will improve our syntax and do a lot of things automatically for us (like closing the file we opened).</p>
+<p>Our file contains 4 lines at the beginning and 2 lines at the end which we do not want to extract. Additionally, the temperature and density values are separated by whitespaces. Here is an example of how we could extract the data into two arrays:</p>
+
 </div>
 </div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;density_water.dat&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>  <span class="c1"># r for read</span>
+    <span class="c1"># skip extra lines by taking a slice of the file</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">readlines</span><span class="p">()[</span><span class="mi">4</span><span class="p">:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+        
+    <span class="c1"># initialise 2 empty arrays to store our data</span>
+    <span class="n">temp</span><span class="p">,</span> <span class="n">density</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)),</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)):</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+        <span class="n">temp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">density</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        
+<span class="nb">print</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">density</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[  0.   4.  15.  20.  25.  37.  50. 100.]
+[999.8425 999.975  999.1026 998.2071 997.0479 993.3316 988.04   958.3665]
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The data variable in the above example is a list which contains our lines with numbers, but they are stored as a string - they are not recognised as numbers at this point. Note that the temperature and density arrays are already initialised as arrays of specific length, rather than empty lists which we will then append numbers to. It is good practice to initalise arrays like this when we know exactly how many elements our final array will have. The for loop is used to cycle through all elements of our data list. Each ith element is a string, which we split into a new list with the same number of elements as the number of values that are separated by whitespaces in the line - in our case 2. Finally we can assign those values to elements in the temperature and density arrays, but first we converted them from a string to a float.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;output.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>  <span class="c1"># w for write</span>
+    <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;Hello world!&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="NumPy">NumPy<a class="anchor-link" href="#NumPy"> </a></h1><p>NumPy's <a href="https://numpy.org/doc/1.18/reference/generated/numpy.genfromtxt.html"><strong>genfromtxt</strong></a> (generate from text) function provides full control over the file which we are trying to open. It initialises a numpy array from the data. Some of the parameters include:</p>
+
+<pre><code>- dtype: set a data type. If not set, determines the data type automatically for each column
+- comments: skips every line starting with a string that is set here. '#' by default.
+- skip_header: number of lines to skip at the beginning of the file
+- skip_footer: number of lines to skip at the end of the file
+- delimiter: the string used to separate values. Any whitespaces, by default.
+
+</code></pre>
+<p>For our file, we do not have to change anything since comments are marked by a # at the beginning of the line and the values are separated by whitespaces.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">genfromtxt</span><span class="p">(</span><span class="s1">&#39;density_water.dat&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[[  0.     999.8425]
+ [  4.     999.975 ]
+ [ 15.     999.1026]
+ [ 20.     998.2071]
+ [ 25.     997.0479]
+ [ 37.     993.3316]
+ [ 50.     988.04  ]
+ [100.     958.3665]]
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can save our array to a file in multiple ways - examples below. If we plan on using the array in another python code, perhaps it is best to save it as a .npy file. We can later easily load the .npy file and reconstruct the original array. The reader is encouraged to read about <strong>pickling</strong> in Python, which allows any object in Python to be saved in this way, not only numpy arrays.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="s1">&#39;data.txt&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>  <span class="c1"># save data array to a text file</span>
+<span class="n">np</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;data.npy&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>  <span class="c1"># save data array to a .npy file</span>
+
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;data.npy&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[[  0.     999.8425]
+ [  4.     999.975 ]
+ [ 15.     999.1026]
+ [ 20.     998.2071]
+ [ 25.     997.0479]
+ [ 37.     993.3316]
+ [ 50.     988.04  ]
+ [100.     958.3665]]
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Pandas">Pandas<a class="anchor-link" href="#Pandas"> </a></h2><p>Despite its name, panda's <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html"><strong>read_csv</strong></a> can read many different types of files, including our .dat file. Pandas DataFrame is the primary data structure in pandas, so this function will generate one such DataFrame. It is a very powerful object with many capabilities not even implemented in NumPy - deserving of its own notebook.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">read_csv</span>
+
+<span class="n">file</span> <span class="o">=</span> <span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;density_water.dat&#39;</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="s1">&#39;#&#39;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>                  0
+0    0.0   999.8425
+1    4.0   999.9750
+2   15.0   999.1026
+3   20.0   998.2071
+4   25.0   997.0479
+5   37.0   993.3316
+6     50.0   988.04
+7  100.0   958.3665
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -1081,8 +1281,8 @@ $$ \mbox{Determinant in 3D:} \quad \quad \text{det}M = \varepsilon_{ijk}m_{1i}m_
     
     
 
-    <a id="js-page__nav__prev" class="c-page__nav__prev" href="/book/maths/intro.html">
-      〈 <span class="u-margin-right-tiny"></span> Mathematics
+    <a id="js-page__nav__prev" class="c-page__nav__prev" href="/book/coding/Handling_errors.html">
+      〈 <span class="u-margin-right-tiny"></span> Handling errors
     </a>
   
 
@@ -1090,8 +1290,8 @@ $$ \mbox{Determinant in 3D:} \quad \quad \text{det}M = \varepsilon_{ijk}m_{1i}m_
     
 
     
-    <a id="js-page__nav__next" class="c-page__nav__next" href="/book/maths/taylor-series.html">
-      taylor-series <span class="u-margin-right-tiny"></span> 〉
+    <a id="js-page__nav__next" class="c-page__nav__next" href="/book/coding/While_loops.html">
+      While loops <span class="u-margin-right-tiny"></span> 〉
     </a>
   
 </nav>
