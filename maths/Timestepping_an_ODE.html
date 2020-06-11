@@ -5,16 +5,16 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,minimum-scale=1">
 
-  <title>NumPy Arrays</title>
-  <meta name="description" content="        NumPy Arrays    NumPy Arrays Numerical Python (NumPy) provides excellent support for working with large arrays in python, along with an extensive lib...">
+  <title>Timestepping an ODE</title>
+  <meta name="description" content="        Timestepping an ODE    Table of Contents1&nbsp;&nbsp;What do we mean by timestepping?2&nbsp;&nbsp;Deriving the forward Euler scheme from Taylor serie...">
 
-  <link rel="canonical" href="https://primer-computational-mathematics.github.io/book/coding/NumPy_Arrays.html">
+  <link rel="canonical" href="https://primer-computational-mathematics.github.io/book/maths/Timestepping_an_ODE.html">
   <link rel="alternate" type="application/rss+xml" title="ESE Jupyter Material" href="https://primer-computational-mathematics.github.io/book/feed.xml">
 
-  <meta property="og:url"         content="https://primer-computational-mathematics.github.io/book/coding/NumPy_Arrays.html" />
+  <meta property="og:url"         content="https://primer-computational-mathematics.github.io/book/maths/Timestepping_an_ODE.html" />
 <meta property="og:type"        content="article" />
-<meta property="og:title"       content="NumPy Arrays" />
-<meta property="og:description" content="        NumPy Arrays    NumPy Arrays Numerical Python (NumPy) provides excellent support for working with large arrays in python, along with an extensive lib..." />
+<meta property="og:title"       content="Timestepping an ODE" />
+<meta property="og:description" content="        Timestepping an ODE    Table of Contents1&nbsp;&nbsp;What do we mean by timestepping?2&nbsp;&nbsp;Deriving the forward Euler scheme from Taylor serie..." />
 <meta property="og:image"       content="https://primer-computational-mathematics.github.io//book/images/logo/logo.png" />
 
 <meta name="twitter:card" content="summary">
@@ -24,11 +24,11 @@
   {
   "@context": "http://schema.org",
   "@type": "NewsArticle",
-  "mainEntityOfPage": "https://primer-computational-mathematics.github.io/book/coding/NumPy_Arrays.html",
-  "headline": "NumPy Arrays",
+  "mainEntityOfPage": "https://primer-computational-mathematics.github.io/book/maths/Timestepping_an_ODE.html",
+  "headline": "Timestepping an ODE",
   "datePublished": "2020-06-11T13:11:07+00:00",
   "dateModified": "2020-06-11T13:11:07+00:00",
-  "description": "        NumPy Arrays    NumPy Arrays Numerical Python (NumPy) provides excellent support for working with large arrays in python, along with an extensive lib...",
+  "description": "        Timestepping an ODE    Table of Contents1&nbsp;&nbsp;What do we mean by timestepping?2&nbsp;&nbsp;Deriving the forward Euler scheme from Taylor serie...",
   "author": {
     "@type": "Person",
     "name": "Imperial College London"
@@ -410,7 +410,7 @@ initFunction(initPrint)
     },
     kernelOptions: {
     kernelName: "python3",
-    path: "notebooks/coding"
+    path: "notebooks/maths"
     }
 }
 </script>
@@ -1020,7 +1020,7 @@ initFunction(initPrint)
 <div class="download-buttons-dropdown">
     <button id="dropdown-button-trigger" class="interact-button"><img src="/book/assets/images/download-solid.svg" alt="Download" /></button>
     <div class="download-buttons">
-        <a href="/book/notebooks/coding/NumPy_Arrays.ipynb" download>
+        <a href="/book/notebooks/maths/Timestepping_an_ODE.ipynb" download>
         <button id="interact-button-download" class="interact-button">.ipynb</button>
         </a>
         
@@ -1053,15 +1053,108 @@ initFunction(initPrint)
       <main class="c-textbook__page" tabindex="-1">
             <div class="c-textbook__content" id="textbook_content">
                   <main class="jupyter-page">
-    <div id="page-info"><div id="page-title">NumPy Arrays</div>
+    <div id="page-info"><div id="page-title">Timestepping an ODE</div>
 </div>
     <div class="jb_cell">
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="NumPy-Arrays">NumPy Arrays<a class="anchor-link" href="#NumPy-Arrays"> </a></h1><p>Numerical Python (NumPy) provides excellent support for working with large arrays in python, along with an extensive library of mathematical functions to operate on these arrays. This notebook will introduce data types in NumPy, how to initialise an array of complex numbers, generating random arrays and array manipulation basics.</p>
-<h2 id="Creating-and-manipulating-arrays">Creating and manipulating arrays<a class="anchor-link" href="#Creating-and-manipulating-arrays"> </a></h2><p>It is important to correctly initialize the array, which includes assigning it a data type. The full list of supported data types in NumPy can be found <a href="https://numpy.org/devdocs/user/basics.types.html">here</a>. It is generally a good idea to work in double precision (float64 data type), unless we are confident in what we are doing.</p>
-<p>Each numpy array has an attribute dtype which lets you check its data type. Let us initialise a 2D array of integer numbers and demonstrate this.</p>
+<p><h1>Table of Contents<span class="tocSkip"></span></h1></p>
+<div class="toc"><ul class="toc-item"><li><span><a href="#What-do-we-mean-by-timestepping?" data-toc-modified-id="What-do-we-mean-by-timestepping?-1"><span class="toc-item-num">1&nbsp;&nbsp;</span>What do we mean by timestepping?</a></span></li><li><span><a href="#Deriving-the-forward-Euler-scheme-from-Taylor-series" data-toc-modified-id="Deriving-the-forward-Euler-scheme-from-Taylor-series-2"><span class="toc-item-num">2&nbsp;&nbsp;</span>Deriving the forward Euler scheme from Taylor series</a></span></li></ul></div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Solving-(or-&quot;timestepping&quot;)-an-ordinary-differential-equation-(ODE)">Solving (or "timestepping") an ordinary differential equation (ODE)<a class="anchor-link" href="#Solving-(or-&quot;timestepping&quot;)-an-ordinary-differential-equation-(ODE)"> </a></h1><h2 id="What-do-we-mean-by-timestepping?">What do we mean by timestepping?<a class="anchor-link" href="#What-do-we-mean-by-timestepping?"> </a></h2><p>The numerical solution of ODEs is a big topic.</p>
+<p>A common type of ODE you will come across will only include a <em>first</em> derivative with respect to an independent variable.
+This won't necessarily be time $t$ (it might be space $x$), but we can always "interpret" this indepedent as "time" or a time-like variable. This is why we commonly talk about "timestepping" an ODE even though there are lots of scenarios where
+you will be doing this for problems either where $t$ doesn't appear, or isn't the variable the derivative has been taken with respect to!</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Aside: What would you do with a problem that includes higher than first order derivative. An example comes from Newton's second law, which tells us about acceleration (or rate of change of momentum), but we want to solve for position ($x$), i.e. we're thinking about an ODE in the form $\ddot{x}=f$.  Well we can always convert higher order problems into a <em>system</em> of ODEs only involving first order derivatives by introducing "dummy" variables. In the Newton's second law example just introduce velocity, then we can rewrite our second order problem $\ddot{x}=f$ as the coupled first order problem $\dot{x}=u,\;\dot{u}=f$.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let's suppose we have an ODE of the form</p>
+$$y' = f(t,y) \qquad\left[\text{NB. on the LHS we could also use the notation $\dot{y}$ or $\frac{dy}{dt}$}\right]
+$$<p>This is describing a solution function of the form $y\equiv y(t)$, i.e. the solution $y$ is a function of one variable - $t$.</p>
+<p>$y$ is called the <em>dependent variable</em> and $t$ the <em>dependent variable</em>.</p>
+<p>[NB. in the case where $y$ is multi-dimensional - a vector of unknowns/dependent variables - we would talk about a <em>system of ODEs</em>. For the case where there are more than one independent variables then we need to start thinking about <em>partial differential equations (PDEs)</em>, covered later in this module and in ACSE-3].</p>
+<p>For example</p>
+$$y' = \exp(t), \qquad\text{or equivalently} \qquad y' = y$$<p>the first is an example where the RHS is a function of $t$ only, the second a function of $y$ only.</p>
+<p>This is an example where both $t$ and $y$ appear on the RHS:</p>
+$$y' = y + t^3$$<p>The first two ($y'=y$ or $y'=\exp(t)$) are relatively easy for us to solve analytically, the final case is a bit more challenging and we may need to resort to a numerical approach (or attempt symbolic computation).</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Deriving-the-forward-Euler-scheme-from-Taylor-series">Deriving the forward Euler scheme from Taylor series<a class="anchor-link" href="#Deriving-the-forward-Euler-scheme-from-Taylor-series"> </a></h2><p>There are several approached to motivate and develop numerical solvers for ODEs.</p>
+<p>One common way is to make use of a Taylor series expansion.</p>
+<p>From the notebook on Taylor series we know that (assuming smoothness of the solution) the following is true:</p>
+$$ y(t+\Delta t) = y(t) + \Delta t \, y'(t) + \frac{\Delta t^2}{2!}y''(t) + \frac{\Delta t^3}{3!}y'''(t) + \mathcal{O}(\Delta t^4),$$<p>Using the notation $y_n=y(t_n), \; y'_n=y'(t_n)$ etc, and assuming a uniform time step size $\Delta t$, this is equivalent to</p>
+$$ y_{n+1} = y_n + \Delta t\, y'_n + \frac{\Delta t^2}{2!}y''_n + \frac{\Delta t^3}{3!}y'''_n + \mathcal{O}(\Delta t^4).$$<p>Dropping second-order terms (which we can justify if $y$ is "smooth", which means that $y''$ is "well-behaved", and $\Delta t$ is chosen to be sufficiently small so that the terms containing higher powers of $\Delta t$ are relatively speaking <em>very small</em>),</p>
+<p>and noting that $y'_n = f(t_n,y_n)$ we are left with the discrete relation</p>
+$$y_{n+1} = y_n + \Delta t \, f(t_n,y_n).$$<p><br></p>
+<p>This is a very famous ODE solver, or time-stepping method - termed the <strong>forward Euler</strong> or <strong>explicit Euler</strong> method.</p>
+<p>We have turned the continuous problem into a discrete one - we have discretised. And note that this is in a form similar to our logistic map, so we know that we can write a simple piece of code that iterates over $n$ to evaluate/predict/approximate the dynamics.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let's consider the simple model problem</p>
+$$y' = y$$<p>with the initial condition</p>
+$$y(0)=1$$<p>and see what one step of the forward Euler method does, we will assume that we start at some $t$ from the exact solution at that time, i.e. the starting point indicated by the red dot in the following image is on the exact solution (black) line.</p>
 
 </div>
 </div>
@@ -1075,14 +1168,35 @@ initFunction(initPrint)
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;One step of Forward Euler&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;$t$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;$y(t)$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
 
-<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
-              <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
-              <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
-              <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+<span class="c1"># the RHS of the ODE</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">y</span>
+
+<span class="c1"># an example solution trajectory (or solution to ODE $\dot{y}=f(y), y(0)=1$)</span>
+<span class="k">def</span> <span class="nf">y</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">y</span><span class="p">(</span><span class="n">t</span><span class="p">),</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Trajectory $y=y(t)$&#39;</span><span class="p">)</span>
+
+<span class="c1"># this is just some location in time</span>
+<span class="n">t0</span> <span class="o">=</span> <span class="mf">0.35</span>
+<span class="c1"># and an example of a time step size large enough we can see what the method is doing</span>
+<span class="n">dt</span> <span class="o">=</span> <span class="mf">0.4</span>
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">t0</span><span class="p">],</span> <span class="p">[</span><span class="n">y</span><span class="p">(</span><span class="n">t0</span><span class="p">)],</span> <span class="s1">&#39;ro&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">t0</span><span class="p">,</span> <span class="n">t0</span> <span class="o">+</span> <span class="n">dt</span><span class="p">],</span> <span class="p">[</span><span class="n">y</span><span class="p">(</span><span class="n">t0</span><span class="p">),</span> <span class="n">y</span><span class="p">(</span><span class="n">t0</span><span class="p">)</span> <span class="o">+</span> <span class="n">dt</span> <span class="o">*</span> <span class="n">f</span><span class="p">(</span><span class="n">t0</span><span class="p">,</span> <span class="n">y</span><span class="p">(</span><span class="n">t0</span><span class="p">))],</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;$y&#39;=f(t_0,y_0)$&quot;</span><span class="p">)</span>
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">t0</span> <span class="o">+</span> <span class="n">dt</span><span class="p">],</span> <span class="p">[</span><span class="n">y</span><span class="p">(</span><span class="n">t0</span> <span class="o">+</span> <span class="n">dt</span><span class="p">)],</span> <span class="s1">&#39;ko&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Exact soln at $t_0 + \Delta t$&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">t0</span> <span class="o">+</span> <span class="n">dt</span><span class="p">],</span> <span class="p">[</span><span class="n">y</span><span class="p">(</span><span class="n">t0</span><span class="p">)</span> <span class="o">+</span> <span class="n">dt</span> <span class="o">*</span> <span class="n">f</span><span class="p">(</span><span class="n">t0</span><span class="p">,</span> <span class="n">y</span><span class="p">(</span><span class="n">t0</span><span class="p">))],</span> <span class="s1">&#39;go&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;FE numerical soln at $t_0 + \Delta t$&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -1095,10 +1209,13 @@ initFunction(initPrint)
 <div class="jb_output_wrapper }}">
 <div class="output_area">
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>int32
-</pre>
+
+
+<div class="output_png output_subarea ">
+<img src="../images/maths/Timestepping_an_ODE_7_0.png"
+>
 </div>
+
 </div>
 </div>
 </div>
@@ -1111,7 +1228,24 @@ initFunction(initPrint)
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>To avoid this, we could have simply added a dot after an integer, which python then recognises as a floating point number (float64). NumPy offers several ways of assigning data types. Here are some of the more common ones:</p>
+<p>The black dot in the figure above shows what the true/exact solution at the new $n$ level is, while the green dot shows what the numerical solver predicts it to be.</p>
+<p>The difference between the two is the error that has been introduced in a single step of the method.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now in the next step of the algorithm we of course have to start from the green dot as we assume in practice we don't know the black line.</p>
+<p>The next step computes</p>
+$$y_{n+1} = y_n + \Delta t \, f(t_n,y_n),$$<p>but note that $f$ for this particular simple test case is simply $y$.</p>
+<p>We assume that we don't know what the exact solution is at this time level, and hence we can't read off the correct $t$ from the $x$ axis in the above plot and compute $\exp(t)$ in the RHS of our update. If we could then this would let us use the correct new slope at this time, i.e. the slope at the black dot.</p>
+<p>Instead we are forced to read off the $y$ axis - notice that in this example this gives us a $y$ value that is too small, and hence an $f$ that is too small. Therefore our next update will give us a second point that is even more too small!</p>
+<p>The moral of the story here is that <strong>errors generally accumulate</strong>, as we can see if we plot this next step of the algorithm:</p>
 
 </div>
 </div>
@@ -1125,25 +1259,38 @@ initFunction(initPrint)
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>   <span class="c1"># integer</span>
-<span class="n">b</span> <span class="o">=</span> <span class="mf">1.</span>  <span class="c1"># dot makes it a float</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Two steps of Forward Euler&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;$t$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;$y(t)$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="nb">type</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
 
-<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>  <span class="c1"># integers</span>
+<span class="c1"># the RHS of the ODE</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">y</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+<span class="c1"># an example solution trajectory (or solution to ODE $\dot{y}=f(y), y(0)=1$)</span>
+<span class="k">def</span> <span class="nf">y</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
 
-<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>  <span class="c1"># make array dtype float64</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">y</span><span class="p">(</span><span class="n">t</span><span class="p">),</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Trajectory $y=y(t)$&#39;</span><span class="p">)</span>
 
-<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>  <span class="c1"># make array same dtype as b</span>
+<span class="c1"># this is just some location in time</span>
+<span class="n">t0</span> <span class="o">=</span> <span class="mf">0.35</span>
+<span class="c1"># and an example of a time step size large enough we can see what the method is doing</span>
+<span class="n">dt</span> <span class="o">=</span> <span class="mf">0.4</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">t0</span><span class="p">],</span> <span class="p">[</span><span class="n">y</span><span class="p">(</span><span class="n">t0</span><span class="p">)],</span> <span class="s1">&#39;ro&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">t0</span><span class="p">,</span> <span class="n">t0</span> <span class="o">+</span> <span class="n">dt</span><span class="p">],</span> <span class="p">[</span><span class="n">y</span><span class="p">(</span><span class="n">t0</span><span class="p">),</span> <span class="n">y</span><span class="p">(</span><span class="n">t0</span><span class="p">)</span> <span class="o">+</span> <span class="n">dt</span> <span class="o">*</span> <span class="n">f</span><span class="p">(</span><span class="n">t0</span><span class="p">,</span> <span class="n">y</span><span class="p">(</span><span class="n">t0</span><span class="p">))],</span> <span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">y1</span> <span class="o">=</span> <span class="n">y</span><span class="p">(</span><span class="n">t0</span><span class="p">)</span> <span class="o">+</span> <span class="n">dt</span> <span class="o">*</span> <span class="n">f</span><span class="p">(</span><span class="n">t0</span><span class="p">,</span> <span class="n">y</span><span class="p">(</span><span class="n">t0</span><span class="p">))</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">t0</span> <span class="o">+</span> <span class="n">dt</span><span class="p">,</span> <span class="n">t0</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">dt</span><span class="p">],</span> <span class="p">[</span><span class="n">y1</span><span class="p">,</span> <span class="n">y1</span> <span class="o">+</span> <span class="n">dt</span> <span class="o">*</span> <span class="n">f</span><span class="p">(</span><span class="n">t0</span><span class="o">+</span><span class="n">dt</span><span class="p">,</span> <span class="n">y1</span><span class="p">)],</span> <span class="s1">&#39;b&#39;</span><span class="p">)</span>
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">t0</span> <span class="o">+</span> <span class="n">dt</span><span class="p">,</span> <span class="n">t0</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">dt</span><span class="p">],</span> <span class="p">[</span><span class="n">y</span><span class="p">(</span><span class="n">t0</span> <span class="o">+</span> <span class="n">dt</span><span class="p">),</span> <span class="n">y</span><span class="p">(</span><span class="n">t0</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">dt</span><span class="p">)],</span> <span class="s1">&#39;ko&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">t0</span> <span class="o">+</span> <span class="n">dt</span><span class="p">,</span> <span class="n">t0</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">dt</span><span class="p">],</span> <span class="p">[</span><span class="n">y</span><span class="p">(</span><span class="n">t0</span><span class="p">)</span> <span class="o">+</span> <span class="n">dt</span> <span class="o">*</span> <span class="n">f</span><span class="p">(</span><span class="n">t0</span><span class="p">,</span> <span class="n">y</span><span class="p">(</span><span class="n">t0</span><span class="p">)),</span> <span class="n">y1</span> <span class="o">+</span> <span class="n">dt</span> <span class="o">*</span> <span class="n">f</span><span class="p">(</span><span class="n">t0</span><span class="o">+</span><span class="n">dt</span><span class="p">,</span> <span class="n">y1</span><span class="p">)],</span> <span class="s1">&#39;go&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -1156,438 +1303,24 @@ initFunction(initPrint)
 <div class="jb_output_wrapper }}">
 <div class="output_area">
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>&lt;class &#39;int&#39;&gt; &lt;class &#39;float&#39;&gt;
-[0 1 2 3 4 5 6 7 8 9]
-int32
-[0. 1. 2. 3. 4. 5. 6. 7. 8. 9.]
-float64
-[0. 1. 2. 3. 4. 5. 6. 7. 8. 9.]
-float64
-</pre>
-</div>
-</div>
-</div>
-</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[&lt;matplotlib.lines.Line2D at 0x2c93e4eeb38&gt;]</pre>
 </div>
 
 </div>
 </div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>NumPy also allows us to create (pseudo) <strong>random</strong> arrays using numpy.random. Let us initialise a random array of <strong>complex</strong> numbers, which have a real and imaginary component (in python, and often in engineering, the imaginary unit is $j$). We will also seed the generator using np.random.seed(), so that every time we run the code we will get the same 'random' numbers.</p>
-
-</div>
-</div>
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># it does not matter what the seed is (here 0)</span>
-<span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">B</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
 <div class="jb_output_wrapper }}">
 <div class="output_area">
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>[[0.5488135 +0.38344152j 0.71518937+0.79172504j 0.60276338+0.52889492j]
- [0.54488318+0.56804456j 0.4236548 +0.92559664j 0.64589411+0.07103606j]
- [0.43758721+0.0871293j  0.891773  +0.0202184j  0.96366276+0.83261985j]]
-complex128
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>NumPy arrays are more difficult to manipulate than lists, where, for example, lists allow appending and arrays do not. There are, however, numpy functions which allow us to do this in a slightly more tedious way, but with much more control over it.</p>
-<p>For example, numpy.<strong>concatenate</strong> joins two or more arrays along an existing axis.</p>
-
-</div>
-</div>
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> 
-              <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]])</span>
-<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]])</span>
-
-<span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;axis=0: </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
-
-<span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="o">.</span><span class="n">T</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;axis=1: </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="jb_output_wrapper }}">
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>axis=0: 
- [[1 2]
- [3 4]
- [5 6]]
-axis=1: 
- [[1 2 5]
- [3 4 6]]
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>In the first example, the two arrays were joined along axis=0, i.e. a row was appended. In the second example we wanted to join them along axis=1, which is a column. NumPy arrays require that the lengths of rows and columns match in every column or row vector, so we had to <strong>transpose</strong> the vector b using b.T.</p>
-<p>What if we wanted to make a 3D array out of two 2D arrays? This is what NumPy calls <strong>stacking</strong> and has a general function numpy.stack() to achieve this, where we now specify a new axis along which we want to stack our arrays. Let us stack two 2D arrays along a vertical (depth) axis, axis=2.</p>
-
-</div>
-</div>
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> 
-              <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]])</span>
-<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span>
-              <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">]])</span>
-
-<span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">((</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;c.shape: &#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="jb_output_wrapper }}">
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>[[[1 5]
-  [2 6]]
-
- [[3 7]
-  [4 8]]]
-c.shape:  (2, 2, 2)
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Some NumPy functions allow us to specify array shape while creating them. We can also <strong>reshape</strong> any array after they are created.</p>
-
-</div>
-</div>
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>  <span class="c1"># 3x3 array filled with 0s</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
-
-<span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>   <span class="c1"># 1D array of 8 elements</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
-
-<span class="n">b</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>  <span class="c1"># reshape to a 4x2 matrix</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;reshape((4,2)): </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
-
-<span class="n">c</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>  <span class="c1"># reshape to a 2x2x2</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;reshape((2,2,2)): </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="jb_output_wrapper }}">
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>[[0. 0. 0.]
- [0. 0. 0.]
- [0. 0. 0.]]
-[0 1 2 3 4 5 6 7]
-reshape((4,2)): 
- [[0 1]
- [2 3]
- [4 5]
- [6 7]]
-reshape((2,2,2)): 
- [[[0 1]
-  [2 3]]
-
- [[4 5]
-  [6 7]]]
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>As stated before, numpy arrays require a consistent length of rows and columns. In the above example we initialised a 1D array of 8 elements, so the only possible shapes (after reshaping) are 8x1, 4x2, 2x4, 1x8 for 2D and only 2x2x2 for 3D.</p>
-
-</div>
-</div>
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Indexing-and-slicing">Indexing and slicing<a class="anchor-link" href="#Indexing-and-slicing"> </a></h2><p>NumPy arrays allow for some advanced indexing options, such as <strong>negative indexing</strong> and <strong>boolean indexing</strong>.</p>
-
-</div>
-</div>
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;A[-1, 2] = &#39;</span><span class="p">,</span> <span class="n">A</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>  <span class="c1"># last row, third column</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;A &lt; 6 :&#39;</span><span class="p">,</span> <span class="n">A</span><span class="p">[</span><span class="n">A</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="p">])</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;A &gt; 5 and A &lt; 10 :&#39;</span><span class="p">,</span> <span class="n">A</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">A</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">,</span> <span class="n">A</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">)])</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="jb_output_wrapper }}">
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>[[ 0  1  2  3]
- [ 4  5  6  7]
- [ 8  9 10 11]
- [12 13 14 15]]
-A[-1, 2] =  14
-A &lt; 6 : [0 1 2 3 4 5]
-A &gt; 5 and A &lt; 10 : [6 7 8 9]
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>If we are interested in finding the index of values equal to or less/greater than something, we could use <strong>np.argwhere()</strong>.</p>
 
-</div>
-</div>
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;A == 0: </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span><span class="n">A</span> <span class="o">==</span> <span class="mi">0</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;A &gt; 13: </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span><span class="n">A</span> <span class="o">&gt;</span> <span class="mi">13</span><span class="p">))</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="jb_output_wrapper }}">
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>A == 0: 
- [[0 0]]
-A &gt; 13: 
- [[3 2]
- [3 3]]
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-
-</div>
-</div>
 
-<div class="jb_cell">
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Slicing arrays follows the usual format of A[start:stop:step], where we can specify the starting and stopping index and step size for each dimension, separated by a comma. If a starting index is not specified it is set to 0 by default. If the stop index is not specified, it is the last index (-1) by default. Default step size is 1. Analogue to negative indexing, we can also define slicing with negative start, stop and step sizes, which will then go from the end of the array.</p>
-
-</div>
-</div>
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;a =&#39;</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;a[3:10] =&#39;</span><span class="p">,</span> <span class="n">a</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">10</span><span class="p">])</span>  <span class="c1"># default step=1</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;a[:6:2] =&#39;</span><span class="p">,</span> <span class="n">a</span><span class="p">[:</span><span class="mi">6</span><span class="p">:</span><span class="mi">2</span><span class="p">])</span>  <span class="c1"># up to 6th element, every 2nd element</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;a[::-1] =&#39;</span><span class="p">,</span> <span class="n">a</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>  <span class="c1"># all elements, but backwards</span>
-
-<span class="c1"># start from the last element, go backwards up to 5th from last</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;a[-1:-5:-1] =&#39;</span><span class="p">,</span> <span class="n">a</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">5</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
-
-<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1"> A = </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">A</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;A[:, 3] = &#39;</span><span class="p">,</span> <span class="n">A</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">])</span>  <span class="c1"># all row elements, only 3rd column</span>
-
-<span class="c1"># take all rows, reverse columns</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">A[:, ::-1] = </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">A</span><span class="p">[:,::</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
-</pre></div>
-
-    </div>
+<div class="output_png output_subarea ">
+<img src="../images/maths/Timestepping_an_ODE_10_1.png"
+>
 </div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="jb_output_wrapper }}">
-<div class="output_area">
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>a = [ 10.  20.  30.  40.  50.  60.  70.  80.  90. 100.]
-a[3:10] = [ 40.  50.  60.  70.  80.  90. 100.]
-a[:6:2] = [10. 30. 50.]
-a[::-1] = [100.  90.  80.  70.  60.  50.  40.  30.  20.  10.]
-a[-1:-5:-1] = [100.  90.  80.  70.]
-
- A = 
- [[ 0  1  2  3]
- [ 4  5  6  7]
- [ 8  9 10 11]
- [12 13 14 15]]
-A[:, 3] =  [ 3  7 11 15]
-
-A[:, ::-1] = 
- [[ 3  2  1  0]
- [ 7  6  5  4]
- [11 10  9  8]
- [15 14 13 12]]
-</pre>
-</div>
 </div>
 </div>
 </div>
@@ -1609,8 +1342,8 @@ A[:, ::-1] =
     
     
 
-    <a id="js-page__nav__prev" class="c-page__nav__prev" href="/book/coding/For_loops.html">
-      〈 <span class="u-margin-right-tiny"></span> For loops
+    <a id="js-page__nav__prev" class="c-page__nav__prev" href="/book/maths/Big_O_notation.html">
+      〈 <span class="u-margin-right-tiny"></span> Big O notation
     </a>
   
 
@@ -1618,8 +1351,8 @@ A[:, ::-1] =
     
 
     
-    <a id="js-page__nav__next" class="c-page__nav__next" href="/book/coding/Variables.html">
-      Variables <span class="u-margin-right-tiny"></span> 〉
+    <a id="js-page__nav__next" class="c-page__nav__next" href="/book/coding/intro.html">
+      Coding <span class="u-margin-right-tiny"></span> 〉
     </a>
   
 </nav>
