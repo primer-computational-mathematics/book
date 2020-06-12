@@ -8,7 +8,18 @@ The primer is (currently) split into three sections:
 * Coding
 * Geoscience
 
-### Coding style
+### Why is programming important?
+For an aspiring Earth scientist, programming is a vital tool in understanding the fundamental physics of our planet and its subsystems. Programming teaches how to logically tackle problems in the most effective way, it teaches creative and computational thinking. It aids and complements mathematics and engineering.
+
+Earth scientists often record observations of the world and use data to create a story on the mechanism. Whether we observe earthquake arrivals, flood extent, pollutant dispersion or oil flow in a well, large datasets may be beyond manual exploration. A few lines of code may unravel unexpected behaviours, or even lead to exciting discoveries.
+
+Lastly, programming gives an advantage over other scientists in your field without that skill. It can open many industrial opportunities, as well as new research directions. It also shows your capacity to learn and that you have solution-driven thinking.
+
+
+**Read more:**
+* ["Computational thinking, 10 years later"](https://www.microsoft.com/en-us/research/blog/computational-thinking-10-years-later/) - blog post published by Microsoft Research corporate vice president.
+
+### Why coding style matters?
 Python programming language is well known for its high readability and simplicity. It is said that Python is more often read than written. To achieve readability, it is highly recommended to follow coding guidelines, or "Pythonic" ways of coding.
 
 Python Enhancement Proposals [(PEPs)](https://www.python.org/dev/peps/) are primary mechanisms for adding new features into Python design. [PEP 8](https://www.python.org/dev/peps/pep-0008/) in particular, is a document describing recommended style guidelines for Python by Guido van Rossum, Python's designer. Style guidelines involve recommendations such as naming conventions, commenting standards, line length, white space conventions etc. Adhering to these standards makes the code consistent and easier to follow for someone unfamiliar with your work.
@@ -28,3 +39,7 @@ Python Enhancement Proposals [(PEPs)](https://www.python.org/dev/peps/) are prim
 * [PEP 8](https://www.python.org/dev/peps/pep-0008/) - the official guidelines published by Python's designer Guido van Rossum
 * [Google's Python Style Guide](https://google.github.io/styleguide/pyguide.html) - some companies or projects will follow specialised guidelines, here is an example from Google
 * [NumPy guideline](https://numpydoc.readthedocs.io/en/latest/format.html) - a bit more specialised guideline for scientific programming package NumPy
+
+
+### Extra resources:
+* [Essential Software Engineering for Researchers](https://imperialcollegelondon.github.io/grad_school_software_engineering_course/) - Imperial College introductory course to Python.
