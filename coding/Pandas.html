@@ -1,0 +1,3543 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,minimum-scale=1">
+
+  <title>Pandas</title>
+  <meta name="description" content="        Pandas    Pandas Pandas is an open source library for Python that can be used for data manipulation and analysis. If your data can be put into a spre...">
+
+  <link rel="canonical" href="https://primer-computational-mathematics.github.io/book/coding/Pandas.html">
+  <link rel="alternate" type="application/rss+xml" title="ESE Jupyter Material" href="https://primer-computational-mathematics.github.io/book/feed.xml">
+
+  <meta property="og:url"         content="https://primer-computational-mathematics.github.io/book/coding/Pandas.html" />
+<meta property="og:type"        content="article" />
+<meta property="og:title"       content="Pandas" />
+<meta property="og:description" content="        Pandas    Pandas Pandas is an open source library for Python that can be used for data manipulation and analysis. If your data can be put into a spre..." />
+<meta property="og:image"       content="https://primer-computational-mathematics.github.io//book/images/logo/logo.png" />
+
+<meta name="twitter:card" content="summary">
+
+
+  <script type="application/ld+json">
+  {
+  "@context": "http://schema.org",
+  "@type": "NewsArticle",
+  "mainEntityOfPage": "https://primer-computational-mathematics.github.io/book/coding/Pandas.html",
+  "headline": "Pandas",
+  "datePublished": "2020-06-15T12:13:40+00:00",
+  "dateModified": "2020-06-15T12:13:40+00:00",
+  "description": "        Pandas    Pandas Pandas is an open source library for Python that can be used for data manipulation and analysis. If your data can be put into a spre...",
+  "author": {
+    "@type": "Person",
+    "name": "Imperial College London"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Data 100 at UC Berkeley",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://primer-computational-mathematics.github.io/book",
+      "width": 60,
+      "height": 60
+    }
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "https://primer-computational-mathematics.github.io/book",
+    "height": 60,
+    "width": 60
+  }
+}
+
+  </script>
+  <link rel="stylesheet" href="/book/assets/css/styles.css">
+
+  <!-- <link rel="manifest" href="/manifest.json"> -->
+  <!-- <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#efae0a"> -->
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+  <meta name="theme-color" content="#233947">
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/x-icon" href="/book/images/logo/favicon.ico">
+
+  <!-- MathJax Config -->
+  <!-- Allow inline math using $ and automatically break long math lines -->
+<!-- (mostly) copied from nbconvert configuration -->
+<!-- https://github.com/jupyter/nbconvert/blob/master/nbconvert/templates/html/mathjax.tpl -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+        processEscapes: true,
+        processEnvironments: true
+    },
+    // Center justify equations in code and markdown cells. Elsewhere
+    // we use CSS to left justify single line equations in code cells.
+    displayAlign: 'center',
+    "HTML-CSS": {
+        styles: {'.MathJax_Display': {"margin": 0}},
+        linebreaks: { automatic: true },
+    },
+    
+});
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS_HTML' async></script>
+
+
+  <!-- DOM updating function -->
+  <script src="/book/assets/js/page/dom-update.js"></script>
+
+  <!-- Selectors for elements on the page -->
+  <script src="/book/assets/js/page/documentSelectors.js"></script>
+
+  <!-- Define some javascript variables that will be useful in other javascript -->
+  <script>
+    const site_basename = 'book';
+  </script>
+
+  <!-- Add AnchorJS to let headers be linked -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.2.0/anchor.min.js" async></script>
+  <script src="/book/assets/js/page/anchors.js" async></script>
+
+  <!-- Include Turbolinks to make page loads fast -->
+  <!-- https://github.com/turbolinks/turbolinks -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/turbolinks/5.2.0/turbolinks.js" async></script>
+  <meta name="turbolinks-cache-control" content="no-cache">
+
+  <!-- Load nbinteract for widgets -->
+  
+
+  <!-- Load Thebelab for interactive widgets -->
+  <!-- Include Thebelab for interactive code if it's enabled -->
+
+
+<!-- Display Thebelab button in each code cell -->
+<script>
+/**
+ * Set up thebelab button for code blocks
+ */
+
+const thebelabCellButton = id =>
+  `<a id="thebelab-cell-button-${id}" class="btn thebebtn o-tooltip--left" data-tooltip="Interactive Mode">
+    <img src="/book/assets/images/edit-button.svg" alt="Start thebelab interactive mode">
+  </a>`
+
+
+const addThebelabButtonToCodeCells =  () => {
+
+  const codeCells = document.querySelectorAll('div.input_area > div.highlight:not(.output) pre')
+  codeCells.forEach((codeCell, index) => {
+    const id = codeCellId(index)
+    codeCell.setAttribute('id', id)
+    if (document.getElementById("thebelab-cell-button-" + id) == null) {
+      codeCell.insertAdjacentHTML('afterend', thebelabCellButton(id));
+    }
+  })
+}
+
+initFunction(addThebelabButtonToCodeCells);
+</script>
+
+
+<script src="https://unpkg.com/thebelab@latest/lib/index.js" async></script>
+<script>
+    /**
+     * Add attributes to Thebelab blocks
+     */
+
+    const initThebelab = () => {
+        const addThebelabToCodeCells = () => {
+            console.log("Adding thebelab to code cells...");
+            // If Thebelab hasn't loaded, wait a bit and try again. This
+            // happens because we load ClipboardJS asynchronously.
+            if (window.thebelab === undefined) {
+                setTimeout(addThebelabToCodeCells, 250)
+            return
+            }
+
+            // If we already detect a Thebelab cell, don't re-run
+            if (document.querySelectorAll('div.thebelab-cell').length > 0) {
+                return;
+            }
+
+            // Find all code cells, replace with Thebelab interactive code cells
+            const codeCells = document.querySelectorAll('.input_area pre')
+            codeCells.forEach((codeCell, index) => {
+                const id = codeCellId(index)
+
+                // Clean up the language to make it work w/ CodeMirror and add it to the cell
+                dataLanguage = ""
+                dataLanguage = detectLanguage(dataLanguage);
+                codeCell.setAttribute('data-language', dataLanguage)
+                codeCell.setAttribute('data-executable', 'true')
+
+                // If the code cell is hidden, show it
+                var inputCheckbox = document.querySelector(`input#hidebtn${codeCell.id}`);
+                if (inputCheckbox !== null) {
+                    setCodeCellVisibility(inputCheckbox, 'visible');
+                }
+            });
+
+            // Remove the event listener from the page so keyboard press doesn't
+            // Change page
+            document.removeEventListener('keydown', initPageNav)
+            keyboardListener = false;
+
+            // Init thebelab
+            thebelab.bootstrap();
+
+            // Remove copy buttons since they won't work anymore
+            const copyAndThebeButtons = document.querySelectorAll('.copybtn, .thebebtn')
+            copyAndThebeButtons.forEach((button, index) => {
+                button.remove();
+            });
+
+            // Remove outputs since they'll be stale
+            const outputs = document.querySelectorAll('.output *, .output')
+            outputs.forEach((output, index) => {
+                output.remove();
+            });
+
+            // Find any cells with an initialization tag and ask ThebeLab to run them when ready
+            var thebeInitCells = document.querySelectorAll('div.tag_thebelab-init');
+            thebeInitCells.forEach((cell) => {
+                console.log("Initializing ThebeLab with cell: " + cell.id);
+                cell.querySelector('.thebelab-run-button').click();
+            });
+        }
+
+        // Add event listener for the function to modify code cells
+        const thebelabButtons = document.querySelectorAll('[id^=thebelab], [id$=thebelab]')
+        thebelabButtons.forEach((thebelabButton,index) => {
+            if (thebelabButton === null) {
+                setTimeout(initThebelab, 250)
+                return
+            };
+            thebelabButton.addEventListener('click', addThebelabToCodeCells);
+        });
+    }
+
+    // Initialize Thebelab
+    initFunction(initThebelab);
+
+// Helper function to munge the language name
+var detectLanguage = (language) => {
+    if (language.indexOf('python') > -1) {
+        language = "python";
+    }
+    return language;
+}
+</script>
+
+
+
+  <!-- Load the auto-generating TOC (non-async otherwise the TOC won't load w/ turbolinks) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.8.1/tocbot.min.js" async></script>
+  <script src="/book/assets/js/page/tocbot.js"></script>
+
+  <!-- Google analytics -->
+  
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', '');
+</script>
+
+
+
+  <!-- Clipboard copy button -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" async></script>
+
+  <!-- Load custom website scripts -->
+  <script src="/book/assets/js/scripts.js" async></script>
+
+  <!-- Load custom user CSS and JS  -->
+  <script src="/book/assets/custom/custom.js" async></script>
+  <link rel="stylesheet" href="/book/assets/custom/custom.css">
+
+  <!-- Update interact links w/ REST param, is defined in includes so we can use templates -->
+  
+
+  <!-- Lunr search code - will only be executed on the /search page -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/2.3.6/lunr.min.js" async></script>
+  <script>var initQuery = function() {
+  // See if we have a search box
+  var searchInput = document.querySelector('input#lunr_search');
+  if (searchInput === null) {
+    return;
+  }
+
+  // Function to parse our lunr cache
+  var idx = lunr(function () {
+    this.field('title')
+    this.field('excerpt')
+    this.field('categories')
+    this.field('tags')
+    this.ref('id')
+
+    this.pipeline.remove(lunr.trimmer)
+
+    for (var item in store) {
+      this.add({
+        title: store[item].title,
+        excerpt: store[item].excerpt,
+        categories: store[item].categories,
+        tags: store[item].tags,
+        id: item
+      })
+    }
+  });
+
+  // Run search upon keyup
+  searchInput.addEventListener('keyup', function () {
+    var resultdiv = document.querySelector('#results');
+    var query = document.querySelector("input#lunr_search").value.toLowerCase();
+    var result =
+      idx.query(function (q) {
+        query.split(lunr.tokenizer.separator).forEach(function (term) {
+          q.term(term, { boost: 100 })
+          if(query.lastIndexOf(" ") != query.length-1){
+            q.term(term, {  usePipeline: false, wildcard: lunr.Query.wildcard.TRAILING, boost: 10 })
+          }
+          if (term != ""){
+            q.term(term, {  usePipeline: false, editDistance: 1, boost: 1 })
+          }
+        })
+      });
+
+      // Empty the results div
+      while (resultdiv.firstChild) {
+        resultdiv.removeChild(resultdiv.firstChild);
+      }
+
+    resultdiv.insertAdjacentHTML('afterbegin', '<p class="results__found">'+result.length+' Result(s) found</p>');
+    for (var item in result) {
+      var ref = result[item].ref;
+      if(store[ref].teaser){
+        var searchitem =
+          '<div class="list__item">'+
+            '<article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">'+
+              '<h2 class="archive__item-title" itemprop="headline">'+
+                '<a href="'+store[ref].url+'" rel="permalink">'+store[ref].title+'</a>'+
+              '</h2>'+
+              '<div class="archive__item-teaser">'+
+                '<img src="'+store[ref].teaser+'" alt="">'+
+              '</div>'+
+              '<p class="archive__item-excerpt" itemprop="description">'+store[ref].excerpt.split(" ").splice(0,20).join(" ")+'...</p>'+
+            '</article>'+
+          '</div>';
+      }
+      else{
+    	  var searchitem =
+          '<div class="list__item">'+
+            '<article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">'+
+              '<h2 class="archive__item-title" itemprop="headline">'+
+                '<a href="'+store[ref].url+'" rel="permalink">'+store[ref].title+'</a>'+
+              '</h2>'+
+              '<p class="archive__item-excerpt" itemprop="description">'+store[ref].excerpt.split(" ").splice(0,20).join(" ")+'...</p>'+
+            '</article>'+
+          '</div>';
+      }
+      resultdiv.insertAdjacentHTML('beforeend', searchitem);
+    }
+  });
+};
+
+initFunction(initQuery);
+</script>
+
+  <!-- Load JS that depends on site variables -->
+  <script src="/book/assets/js/page/copy-button.js" async></script>
+
+  <!-- Hide cell code -->
+  <script src="/book/assets/js/page/hide-cell.js" async></script>
+
+  <!-- Printing the screen -->
+  <!-- Include nbinteract for interactive widgets -->
+<script src="https://printjs-4de6.kxcdn.com/print.min.js" async></script>
+<script>
+printContent = () => {
+    // MathJax displays a second version of any math for assistive devices etc.
+    // This prevents double-rendering in the PDF output.
+    var ignoreAssistList = [];
+    assistives = document.querySelectorAll('.MathJax_Display span.MJX_Assistive_MathML').forEach((element, index) => {
+        var thisId = 'MathJax-assistive-' + index.toString();
+        element.setAttribute('id', thisId);
+        ignoreAssistList.push(thisId)
+    });
+
+    // Print the actual content object
+    printJS({
+        printable: 'textbook_content',
+        type: 'html',
+        css: "/book/assets/css/styles.css",
+        style: "#textbook_content {padding-top: 40px};",
+        scanStyles: false,
+        targetStyles: ["*"],
+        ignoreElements: ignoreAssistList,
+        documentTitle: "Made with Jupyter Book"
+    })
+};
+
+initPrint = () => {
+    document.querySelector('#interact-button-print').addEventListener('click', printContent)
+}
+
+initFunction(initPrint)
+</script>
+
+</head>
+
+  <body>
+    <!-- Include the ThebeLab config so it gets reloaded on each page -->
+    <script type="text/x-thebe-config">{
+    requestKernel: true,
+    binderOptions: {
+    repo: "primer-computational-mathematics/book",
+    ref: "master",
+    },
+    codeMirrorConfig: {
+    theme: "abcdef",
+    mode: "python"
+    },
+    kernelOptions: {
+    kernelName: "python3",
+    path: "notebooks/coding"
+    }
+}
+</script>
+
+    <!-- .js-show-sidebar shows sidebar by default -->
+    <div id="js-textbook" class="c-textbook js-show-sidebar">
+      
+
+
+
+<nav id="js-sidebar" class="c-textbook__sidebar">
+  <a href="https://www.imperial.ac.uk/earth-science/"><img src="/book/images/logo/logo.png" class="textbook_logo" id="sidebar-logo" alt="textbook logo" data-turbolinks-permanent/></a>
+  <h2 class="c-sidebar__title">ESE Jupyter Material</h2>
+  <ul class="c-sidebar__chapters">
+    
+      
+      
+
+      
+      
+      
+      
+
+      
+      
+      <li class="c-sidebar__chapter" data-url="/intro">
+        <a class="c-sidebar__entry"
+          href="/book/intro.html"
+        >
+          
+          Home
+        </a>
+      </li>
+
+      
+      
+
+      
+
+      
+      
+
+      
+
+      
+    
+      
+      
+        <li class="c-sidebar__divider"></li>
+        
+      
+      
+        <li><h2 class="c-sidebar__title">Topics</li>
+        
+      
+      
+
+      
+      
+      
+      
+
+      
+      
+      <li class="c-sidebar__chapter" data-url="/maths/intro">
+        <a class="c-sidebar__entry"
+          href="/book/maths/intro.html"
+        >
+          
+          Mathematics
+        </a>
+      </li>
+
+      
+      
+
+      
+
+      
+      
+
+      
+        
+
+        
+
+        <ul class="c-sidebar__sections">
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/maths/TensorsReview">
+              <a class="c-sidebar__entry"
+                href="/book/maths/TensorsReview.html"
+              >
+                
+                TensorsReview
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/maths/Taylor_series">
+              <a class="c-sidebar__entry"
+                href="/book/maths/Taylor_series.html"
+              >
+                
+                Taylor series
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/maths/Big_O_notation">
+              <a class="c-sidebar__entry"
+                href="/book/maths/Big_O_notation.html"
+              >
+                
+                Big O notation
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/maths/Timestepping_an_ODE">
+              <a class="c-sidebar__entry"
+                href="/book/maths/Timestepping_an_ODE.html"
+              >
+                
+                Timestepping an ODE
+              </a>
+            </li>
+            
+            
+          
+        </ul>
+      
+
+      
+    
+      
+      
+
+      
+      
+      
+      
+
+      
+      
+      <li class="c-sidebar__chapter" data-url="/coding/intro">
+        <a class="c-sidebar__entry"
+          href="/book/coding/intro.html"
+        >
+          
+          Coding
+        </a>
+      </li>
+
+      
+      
+
+      
+
+      
+      
+
+      
+        
+
+        
+
+        <ul class="c-sidebar__sections">
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/coding/Printing_and_formatting_statements">
+              <a class="c-sidebar__entry"
+                href="/book/coding/Printing_and_formatting_statements.html"
+              >
+                
+                Printing and formatting statements
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/coding/Lists">
+              <a class="c-sidebar__entry"
+                href="/book/coding/Lists.html"
+              >
+                
+                Lists
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/coding/Sets">
+              <a class="c-sidebar__entry"
+                href="/book/coding/Sets.html"
+              >
+                
+                Sets
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/coding/List_comprehensions">
+              <a class="c-sidebar__entry"
+                href="/book/coding/List_comprehensions.html"
+              >
+                
+                List comprehensions
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/coding/Pandas">
+              <a class="c-sidebar__entry"
+                href="/book/coding/Pandas.html"
+              >
+                
+                Pandas
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/coding/Flow_control_statements">
+              <a class="c-sidebar__entry"
+                href="/book/coding/Flow_control_statements.html"
+              >
+                
+                Flow control statements
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/coding/Dictionaries">
+              <a class="c-sidebar__entry"
+                href="/book/coding/Dictionaries.html"
+              >
+                
+                Dictionaries
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/coding/Handling_errors">
+              <a class="c-sidebar__entry"
+                href="/book/coding/Handling_errors.html"
+              >
+                
+                Handling errors
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/coding/Matplotlib">
+              <a class="c-sidebar__entry"
+                href="/book/coding/Matplotlib.html"
+              >
+                
+                Matplotlib
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/coding/File_handling">
+              <a class="c-sidebar__entry"
+                href="/book/coding/File_handling.html"
+              >
+                
+                File handling
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/coding/While_loops">
+              <a class="c-sidebar__entry"
+                href="/book/coding/While_loops.html"
+              >
+                
+                While loops
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/coding/Importing">
+              <a class="c-sidebar__entry"
+                href="/book/coding/Importing.html"
+              >
+                
+                Importing
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/coding/If_statement">
+              <a class="c-sidebar__entry"
+                href="/book/coding/If_statement.html"
+              >
+                
+                If statement
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/coding/Tuples">
+              <a class="c-sidebar__entry"
+                href="/book/coding/Tuples.html"
+              >
+                
+                Tuples
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/coding/Nested_lists">
+              <a class="c-sidebar__entry"
+                href="/book/coding/Nested_lists.html"
+              >
+                
+                Nested lists
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/coding/For_loops">
+              <a class="c-sidebar__entry"
+                href="/book/coding/For_loops.html"
+              >
+                
+                For loops
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/coding/NumPy_Arrays">
+              <a class="c-sidebar__entry"
+                href="/book/coding/NumPy_Arrays.html"
+              >
+                
+                NumPy Arrays
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/coding/Variables">
+              <a class="c-sidebar__entry"
+                href="/book/coding/Variables.html"
+              >
+                
+                Variables
+              </a>
+            </li>
+            
+            
+          
+        </ul>
+      
+
+      
+    
+      
+      
+
+      
+      
+      
+      
+
+      
+      
+      <li class="c-sidebar__chapter" data-url="/geosciences/intro">
+        <a class="c-sidebar__entry"
+          href="/book/geosciences/intro.html"
+        >
+          
+          Geosciences
+        </a>
+      </li>
+
+      
+      
+
+      
+
+      
+      
+
+      
+        
+
+        
+
+        <ul class="c-sidebar__sections">
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/geosciences/Dynamic_Earth">
+              <a class="c-sidebar__entry"
+                href="/book/geosciences/Dynamic_Earth.html"
+              >
+                
+                Dynamic Earth
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/geosciences/cartography_cartopy">
+              <a class="c-sidebar__entry"
+                href="/book/geosciences/cartography_cartopy.html"
+              >
+                
+                cartography cartopy
+              </a>
+            </li>
+            
+            
+          
+        </ul>
+      
+
+      
+    
+  </ul>
+  <p class="sidebar_footer">Powered by <a href="https://jupyterbook.org">Jupyter Book</a></p>
+</nav>
+
+      
+      <div class="c-topbar" id="top-navbar">
+  <!-- We show the sidebar by default so we use .is-active -->
+  <div class="c-topbar__buttons">
+    <button
+      id="js-sidebar-toggle"
+      class="hamburger hamburger--arrowalt is-active"
+    >
+      <span class="hamburger-box">
+        <span class="hamburger-inner"></span>
+      </span>
+    </button>
+    <div class="buttons">
+<div class="download-buttons-dropdown">
+    <button id="dropdown-button-trigger" class="interact-button"><img src="/book/assets/images/download-solid.svg" alt="Download" /></button>
+    <div class="download-buttons">
+        <a href="/book/notebooks/coding/Pandas.ipynb" download>
+        <button id="interact-button-download" class="interact-button">.ipynb</button>
+        </a>
+        
+        <a id="interact-button-print"><button id="interact-button-download" class="interact-button">.pdf</button></a>
+    </div>
+</div>
+
+
+  <button id="interact-button-thebelab" class="interact-button">Thebelab</button>
+
+  
+  
+  
+
+
+</div>
+
+  </div>
+  <!-- Empty sidebar placeholder that we'll auto-fill with javascript -->
+  <aside class="sidebar__right">
+    <header><h4 class="nav__title"><img src="/book/assets/images/list-solid.svg" alt="Search" />   On this page</h4></header>
+    <nav class="onthispage">
+    </nav>
+  </aside>
+  <a href="/book/search.html" class="topbar-right-button" id="search-button">
+    <img src="/book/assets/images/search-solid.svg" alt="Search" />
+  </a>
+</div>
+
+      <main class="c-textbook__page" tabindex="-1">
+            <div class="c-textbook__content" id="textbook_content">
+                  <main class="jupyter-page">
+    <div id="page-info"><div id="page-title">Pandas</div>
+</div>
+    <div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Pandas">Pandas<a class="anchor-link" href="#Pandas"> </a></h1><p><a href="https://pandas.pydata.org/docs/">Pandas</a> is an open source library for Python that can be used for data manipulation and analysis. If your data can be put into a spreadsheet, Pandas is exactly what you need!</p>
+<p>Pandas is a very powerful tool with highly optimised performance. The full documentation can be found <a href="https://pandas.pydata.org/docs/index.html">here</a>.</p>
+<p>To start working with pandas you can simply import it. A standard alias used for pandas is "pd":</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Pandas-objects">Pandas objects<a class="anchor-link" href="#Pandas-objects"> </a></h2><p><strong>DataFrame</strong> is a 2D data structure with columns and rows, much like a table or Excel spreadsheet. To manually create a DataFrame, we can create a dictionary of lists. The keys are used as a table header and values in each list as rows:</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+     <span class="s2">&quot;Rock_type&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;granite&quot;</span><span class="p">,</span>
+                   <span class="s2">&quot;andesite&quot;</span><span class="p">,</span>
+                   <span class="s2">&quot;limestone&quot;</span><span class="p">],</span>
+     <span class="s2">&quot;Density&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">2.6</span><span class="p">,</span> <span class="mf">2.8</span><span class="p">,</span> <span class="mf">2.3</span><span class="p">],</span>
+     <span class="s2">&quot;Main_mineral&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;quartz&quot;</span><span class="p">,</span>
+                      <span class="s2">&quot;feldspar&quot;</span><span class="p">,</span>
+                      <span class="s2">&quot;calcite&quot;</span><span class="p">]})</span>
+
+<span class="c1"># Use df.head() to display</span>
+<span class="c1"># top rows</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Rock_type</th>
+      <th>Density</th>
+      <th>Main_mineral</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>granite</td>
+      <td>2.6</td>
+      <td>quartz</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>andesite</td>
+      <td>2.8</td>
+      <td>feldspar</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>limestone</td>
+      <td>2.3</td>
+      <td>calcite</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>To extract data from specific column, we can call the column name in two ways:</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># First method</span>
+<span class="c1"># Similar to calling dictionary keys</span>
+<span class="c1"># Works for all column names</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Rock_type&quot;</span><span class="p">])</span>
+
+<span class="c1"># Second method</span>
+<span class="c1"># This will only work if the column name</span>
+<span class="c1"># has no spaces and is not named like</span>
+<span class="c1"># any pandas attribute, e.g. T will mean</span>
+<span class="c1"># transpose and it won&#39;t extract a column</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">Rock_type</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>0      granite
+1     andesite
+2    limestone
+Name: Rock_type, dtype: object
+0      granite
+1     andesite
+2    limestone
+Name: Rock_type, dtype: object
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Columns of the DataFrame are called <strong>Series</strong>, and they are like lists. Series can be created from scratch with a list:</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s2">&quot;granite&quot;</span><span class="p">,</span> <span class="s2">&quot;andesite&quot;</span><span class="p">,</span> <span class="s2">&quot;limestone&quot;</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>0      granite
+1     andesite
+2    limestone
+dtype: object</pre>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Reading-files">Reading files<a class="anchor-link" href="#Reading-files"> </a></h2><p>Most of the time, we will be using data in different file formats, rather than manually creating a dataframe. Pandas have a very easy syntax for reading files:</p>
+
+<pre><code>pd.read_*
+
+</code></pre>
+<p>where * can be <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html">csv</a>, <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_excel.html">excel</a>, <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_html.html">html</a>, <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_sql.html">sql</a> and so on. For .txt file extentions we can use</p>
+
+<pre><code>pd.read_csv(file_name, delimiter=" ") or pd.read_fwf(file_name)
+
+</code></pre>
+<p>In this example we will look at New Zealand earthquake data in .csv format from <a href="https://ds.iris.edu/ieb/">IRIS</a>. With .head() we can specify how many rows to print, in this case, we want to display first 4 rows (that includes header):</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">nz_eqs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../geosciences/data/nz_largest_eq_since_1970.csv&quot;</span><span class="p">)</span>
+<span class="n">nz_eqs</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>year</th>
+      <th>month</th>
+      <th>day</th>
+      <th>utc_time</th>
+      <th>mag</th>
+      <th>lat</th>
+      <th>lon</th>
+      <th>depth_km</th>
+      <th>region</th>
+      <th>iris_id</th>
+      <th>timestamp</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2009</td>
+      <td>7</td>
+      <td>15</td>
+      <td>09:22:31</td>
+      <td>7.8</td>
+      <td>-45.8339</td>
+      <td>166.6363</td>
+      <td>20.9</td>
+      <td>OFF W. COAST OF S. ISLAND, N.Z.</td>
+      <td>2871698</td>
+      <td>1247649751</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2016</td>
+      <td>11</td>
+      <td>13</td>
+      <td>11:02:59</td>
+      <td>7.8</td>
+      <td>-42.7245</td>
+      <td>173.0647</td>
+      <td>22.0</td>
+      <td>SOUTH ISLAND, NEW ZEALAND</td>
+      <td>5197722</td>
+      <td>1479034979</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2003</td>
+      <td>8</td>
+      <td>21</td>
+      <td>12:12:47</td>
+      <td>7.2</td>
+      <td>-45.0875</td>
+      <td>167.0892</td>
+      <td>6.8</td>
+      <td>SOUTH ISLAND, NEW ZEALAND</td>
+      <td>1628007</td>
+      <td>1061467967</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2001</td>
+      <td>8</td>
+      <td>21</td>
+      <td>06:52:06</td>
+      <td>7.1</td>
+      <td>-36.8010</td>
+      <td>-179.7230</td>
+      <td>33.5</td>
+      <td>EAST OF NORTH ISLAND, N.Z.</td>
+      <td>1169374</td>
+      <td>998376726</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can check DataFrame shape by using:</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">nz_eqs</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(25000, 11)</pre>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We have 25,000 rows and 11 columns, that's a lot of data!</p>
+<h2 id="Writing-files">Writing files<a class="anchor-link" href="#Writing-files"> </a></h2><p>Let's say we want to export this data into excel spreadsheet but we only want to export magnitude, latitude, longitude and depth columns:</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">nz_eqs</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="s2">&quot;../geosciences/data/nz_eqs.xlsx&quot;</span><span class="p">,</span>
+                <span class="n">sheet_name</span><span class="o">=</span><span class="s2">&quot;Earthquakes&quot;</span><span class="p">,</span>
+                <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;mag&quot;</span><span class="p">,</span> <span class="s2">&quot;lat&quot;</span><span class="p">,</span> <span class="s2">&quot;lon&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;depth_km&quot;</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>ExcelWriter object allows us to export more than one sheet into the same file:</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">with</span> <span class="n">pd</span><span class="o">.</span><span class="n">ExcelWriter</span><span class="p">(</span><span class="s2">&quot;../geosciences/data/nz_eqs.xlsx&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">writer</span><span class="p">:</span>
+    <span class="n">nz_eqs</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="n">writer</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s2">&quot;Earthquakes&quot;</span><span class="p">,</span>
+                   <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;mag&quot;</span><span class="p">,</span> <span class="s2">&quot;lat&quot;</span><span class="p">,</span> <span class="s2">&quot;lon&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;depth_km&quot;</span><span class="p">])</span>
+    <span class="n">nz_eqs</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="n">writer</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s2">&quot;Extra info&quot;</span><span class="p">,</span>
+                   <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;region&quot;</span><span class="p">,</span> <span class="s2">&quot;iris_id&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;timestamp&quot;</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Filtering,-selecting-and-assigning">Filtering, selecting and assigning<a class="anchor-link" href="#Filtering,-selecting-and-assigning"> </a></h2><p>Looking at New Zealand earthquake DataFrame, we would like to filter it, so that we only use earthquakes since 2000 and magnitude higher than 5. To do that, we can create conditional expression:</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">nz_eqs_2</span> <span class="o">=</span> <span class="n">nz_eqs</span><span class="p">[(</span><span class="n">nz_eqs</span><span class="o">.</span><span class="n">year</span> <span class="o">&gt;=</span> <span class="mi">2000</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">nz_eqs</span><span class="o">.</span><span class="n">mag</span> <span class="o">&gt;=</span> <span class="mf">5.0</span><span class="p">)]</span>
+<span class="n">nz_eqs_2</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(544, 11)</pre>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This operation reduced our DataFrame to 544 rows from 25,000. The symbol &amp; is used for AND condition, while symbol | can be used for OR condition.</p>
+<p>If we want to pick specific rows and colums we can use syntax:</p>
+
+<pre><code>df.iloc[row_start:row_end:step, column_start:column_end:step]
+</code></pre>
+<p>where both row end and column end are not included.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">nz_eqs</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">12</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">:</span><span class="mi">9</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>lon</th>
+      <th>depth_km</th>
+      <th>region</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>173.0647</td>
+      <td>22.0</td>
+      <td>SOUTH ISLAND, NEW ZEALAND</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>164.8273</td>
+      <td>7.6</td>
+      <td>OFF W. COAST OF S. ISLAND, N.Z.</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>171.9023</td>
+      <td>4.0</td>
+      <td>SOUTH ISLAND, NEW ZEALAND</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>167.5146</td>
+      <td>2.0</td>
+      <td>SOUTH ISLAND, NEW ZEALAND</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Pandas built-in function .isin([list of values we look for]) allows to select data whose specified values are in the given column. This function returns True/False. Isin can be used with:</p>
+
+<pre><code>df.loc[df.col1.isin([value1, value2, ...])]
+
+</code></pre>
+<p>It will return a DataFrame filtered by the isin condition:</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">nz_eqs2</span> <span class="o">=</span> <span class="n">nz_eqs</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">nz_eqs</span><span class="o">.</span><span class="n">year</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="mi">2000</span><span class="p">])]</span>
+<span class="n">nz_eqs2</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>year</th>
+      <th>month</th>
+      <th>day</th>
+      <th>utc_time</th>
+      <th>mag</th>
+      <th>lat</th>
+      <th>lon</th>
+      <th>depth_km</th>
+      <th>region</th>
+      <th>iris_id</th>
+      <th>timestamp</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>46</th>
+      <td>2000</td>
+      <td>11</td>
+      <td>1</td>
+      <td>10:35:54</td>
+      <td>6.1</td>
+      <td>-45.009</td>
+      <td>167.123</td>
+      <td>12.2</td>
+      <td>SOUTH ISLAND, NEW ZEALAND</td>
+      <td>926219</td>
+      <td>973074954</td>
+    </tr>
+    <tr>
+      <th>93</th>
+      <td>2000</td>
+      <td>3</td>
+      <td>4</td>
+      <td>14:09:50</td>
+      <td>5.8</td>
+      <td>-34.381</td>
+      <td>179.146</td>
+      <td>33.0</td>
+      <td>SOUTH OF KERMADEC ISLANDS</td>
+      <td>880024</td>
+      <td>952178990</td>
+    </tr>
+    <tr>
+      <th>125</th>
+      <td>2000</td>
+      <td>7</td>
+      <td>1</td>
+      <td>04:48:56</td>
+      <td>5.7</td>
+      <td>-35.469</td>
+      <td>178.742</td>
+      <td>258.0</td>
+      <td>OFF E. COAST OF N. ISLAND, N.Z.</td>
+      <td>871393</td>
+      <td>962426936</td>
+    </tr>
+    <tr>
+      <th>174</th>
+      <td>2000</td>
+      <td>12</td>
+      <td>26</td>
+      <td>15:21:31</td>
+      <td>5.6</td>
+      <td>-35.117</td>
+      <td>179.700</td>
+      <td>73.0</td>
+      <td>OFF E. COAST OF N. ISLAND, N.Z.</td>
+      <td>1100574</td>
+      <td>977844091</td>
+    </tr>
+    <tr>
+      <th>230</th>
+      <td>2000</td>
+      <td>4</td>
+      <td>26</td>
+      <td>14:54:05</td>
+      <td>5.5</td>
+      <td>-33.660</td>
+      <td>-178.889</td>
+      <td>15.6</td>
+      <td>SOUTH OF KERMADEC ISLANDS</td>
+      <td>964992</td>
+      <td>956760845</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Another built-in selectors are .isnull([list of values we look for]) and .notnull([list of values we look for]). These selectors look for either 'NaN' or not 'NaN' values.</p>
+<p>If we want to create a new column, e.g. with depth in m, we can easily assign value to a new column:</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">nz_eqs</span><span class="p">[</span><span class="s2">&quot;depth_m&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">nz_eqs</span><span class="p">[</span><span class="s2">&quot;depth_km&quot;</span><span class="p">]</span><span class="o">*</span><span class="mi">1000</span>
+<span class="n">nz_eqs</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>year</th>
+      <th>month</th>
+      <th>day</th>
+      <th>utc_time</th>
+      <th>mag</th>
+      <th>lat</th>
+      <th>lon</th>
+      <th>depth_km</th>
+      <th>region</th>
+      <th>iris_id</th>
+      <th>timestamp</th>
+      <th>depth_m</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2009</td>
+      <td>7</td>
+      <td>15</td>
+      <td>09:22:31</td>
+      <td>7.8</td>
+      <td>-45.8339</td>
+      <td>166.6363</td>
+      <td>20.9</td>
+      <td>OFF W. COAST OF S. ISLAND, N.Z.</td>
+      <td>2871698</td>
+      <td>1247649751</td>
+      <td>20900.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2016</td>
+      <td>11</td>
+      <td>13</td>
+      <td>11:02:59</td>
+      <td>7.8</td>
+      <td>-42.7245</td>
+      <td>173.0647</td>
+      <td>22.0</td>
+      <td>SOUTH ISLAND, NEW ZEALAND</td>
+      <td>5197722</td>
+      <td>1479034979</td>
+      <td>22000.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2003</td>
+      <td>8</td>
+      <td>21</td>
+      <td>12:12:47</td>
+      <td>7.2</td>
+      <td>-45.0875</td>
+      <td>167.0892</td>
+      <td>6.8</td>
+      <td>SOUTH ISLAND, NEW ZEALAND</td>
+      <td>1628007</td>
+      <td>1061467967</td>
+      <td>6800.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2001</td>
+      <td>8</td>
+      <td>21</td>
+      <td>06:52:06</td>
+      <td>7.1</td>
+      <td>-36.8010</td>
+      <td>-179.7230</td>
+      <td>33.5</td>
+      <td>EAST OF NORTH ISLAND, N.Z.</td>
+      <td>1169374</td>
+      <td>998376726</td>
+      <td>33500.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2004</td>
+      <td>11</td>
+      <td>22</td>
+      <td>20:26:23</td>
+      <td>7.1</td>
+      <td>-46.4964</td>
+      <td>164.8273</td>
+      <td>7.6</td>
+      <td>OFF W. COAST OF S. ISLAND, N.Z.</td>
+      <td>1888053</td>
+      <td>1101155183</td>
+      <td>7600.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>These calculations are done at once for each row. That means, there is no need to loop over elements in the DataFrame, which makes it very efficient!</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Summary-statistics">Summary statistics<a class="anchor-link" href="#Summary-statistics"> </a></h2><p>Pandas have built-in functions that can calculate simple statistics:</p>
+
+<pre><code>df.describe()
+
+</code></pre>
+<p>For numeric data, this will return count, median, standard deviation, minimum, maximum, 25, 50 and 75 percentiles. For strings/timestamps, this will return count, unique, top and frequency.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">nz_eqs</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>year</th>
+      <th>month</th>
+      <th>day</th>
+      <th>mag</th>
+      <th>lat</th>
+      <th>lon</th>
+      <th>depth_km</th>
+      <th>iris_id</th>
+      <th>timestamp</th>
+      <th>depth_m</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>25000.000000</td>
+      <td>25000.000000</td>
+      <td>25000.000000</td>
+      <td>25000.000000</td>
+      <td>25000.000000</td>
+      <td>25000.000000</td>
+      <td>25000.000000</td>
+      <td>2.500000e+04</td>
+      <td>2.500000e+04</td>
+      <td>25000.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>1993.862160</td>
+      <td>6.408760</td>
+      <td>15.384160</td>
+      <td>4.270952</td>
+      <td>-38.939428</td>
+      <td>130.757907</td>
+      <td>94.014232</td>
+      <td>2.285625e+06</td>
+      <td>7.684759e+08</td>
+      <td>94014.232000</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>12.733297</td>
+      <td>3.512482</td>
+      <td>8.814035</td>
+      <td>0.356037</td>
+      <td>3.278140</td>
+      <td>117.371409</td>
+      <td>94.284137</td>
+      <td>2.562292e+06</td>
+      <td>4.021305e+08</td>
+      <td>94284.137095</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>1970.000000</td>
+      <td>1.000000</td>
+      <td>1.000000</td>
+      <td>3.900000</td>
+      <td>-47.952400</td>
+      <td>-179.999000</td>
+      <td>0.000000</td>
+      <td>1.034600e+04</td>
+      <td>2.629760e+05</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>1984.000000</td>
+      <td>3.000000</td>
+      <td>8.000000</td>
+      <td>4.000000</td>
+      <td>-40.537000</td>
+      <td>169.977150</td>
+      <td>12.000000</td>
+      <td>4.046555e+05</td>
+      <td>4.698424e+08</td>
+      <td>12000.000000</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>1995.000000</td>
+      <td>7.000000</td>
+      <td>15.000000</td>
+      <td>4.200000</td>
+      <td>-38.063050</td>
+      <td>175.867700</td>
+      <td>42.000000</td>
+      <td>1.608522e+06</td>
+      <td>7.920289e+08</td>
+      <td>42000.000000</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>2003.000000</td>
+      <td>9.000000</td>
+      <td>23.000000</td>
+      <td>4.400000</td>
+      <td>-36.864300</td>
+      <td>177.507000</td>
+      <td>170.100000</td>
+      <td>3.059155e+06</td>
+      <td>1.061565e+09</td>
+      <td>170100.000000</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>2020.000000</td>
+      <td>12.000000</td>
+      <td>31.000000</td>
+      <td>7.800000</td>
+      <td>-33.608600</td>
+      <td>180.000000</td>
+      <td>665.100000</td>
+      <td>1.124420e+07</td>
+      <td>1.590893e+09</td>
+      <td>665100.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Pandas also have separate built-in functions that can calculate these statistics, e.g. to get mean magnitude we can simply call:</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">nz_eqs</span><span class="p">[</span><span class="s2">&quot;mag&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>4.27095199999966</pre>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>For full tutorial see <a href="https://pandas.pydata.org/docs/getting_started/basics.html#descriptive-statistics">Descriptive Statistics</a> chapter in Pandas documentation.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Merging">Merging<a class="anchor-link" href="#Merging"> </a></h2><p>Let's create a second DataFrame that has latitude, longitude and depth (km) columns. And add an extra column with square root of depth:</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">nz_eqs2</span> <span class="o">=</span> <span class="n">nz_eqs</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">5</span><span class="p">:</span><span class="mi">8</span><span class="p">]</span>
+<span class="n">nz_eqs2</span><span class="p">[</span><span class="s2">&quot;depth_sqrt&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">nz_eqs2</span><span class="o">.</span><span class="n">depth_km</span><span class="p">)</span>
+<span class="n">nz_eqs2</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>lat</th>
+      <th>lon</th>
+      <th>depth_km</th>
+      <th>depth_sqrt</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>-45.8339</td>
+      <td>166.6363</td>
+      <td>20.9</td>
+      <td>4.571652</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-42.7245</td>
+      <td>173.0647</td>
+      <td>22.0</td>
+      <td>4.690416</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-45.0875</td>
+      <td>167.0892</td>
+      <td>6.8</td>
+      <td>2.607681</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-36.8010</td>
+      <td>-179.7230</td>
+      <td>33.5</td>
+      <td>5.787918</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-46.4964</td>
+      <td>164.8273</td>
+      <td>7.6</td>
+      <td>2.756810</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now, we would like to join the original 'nz_eqs' and 'nz_eqs2' DataFrames by common columns. We can use merge function that takes two DataFrames as attributes and we can decided which columns to merge with. For example, if we choose to merge with latitude, longitude, the final DataFrame would have two columns depth_km_x and depth_km_y for the same name columns in original DataFrames. If we wanted to merge DataFrames with three common columns, we can use:</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">nz_eqs_merged</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">nz_eqs</span><span class="p">,</span> <span class="n">nz_eqs2</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">,</span> <span class="n">left_on</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;lat&quot;</span><span class="p">,</span> <span class="s2">&quot;lon&quot;</span><span class="p">,</span> <span class="s2">&quot;depth_km&quot;</span><span class="p">],</span>
+                        <span class="n">right_on</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;lat&quot;</span><span class="p">,</span> <span class="s2">&quot;lon&quot;</span><span class="p">,</span><span class="s2">&quot;depth_km&quot;</span><span class="p">])</span>
+
+<span class="n">nz_eqs_merged</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>year</th>
+      <th>month</th>
+      <th>day</th>
+      <th>utc_time</th>
+      <th>mag</th>
+      <th>lat</th>
+      <th>lon</th>
+      <th>depth_km</th>
+      <th>region</th>
+      <th>iris_id</th>
+      <th>timestamp</th>
+      <th>depth_m</th>
+      <th>depth_sqrt</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2009</td>
+      <td>7</td>
+      <td>15</td>
+      <td>09:22:31</td>
+      <td>7.8</td>
+      <td>-45.8339</td>
+      <td>166.6363</td>
+      <td>20.9</td>
+      <td>OFF W. COAST OF S. ISLAND, N.Z.</td>
+      <td>2871698</td>
+      <td>1247649751</td>
+      <td>20900.0</td>
+      <td>4.571652</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2016</td>
+      <td>11</td>
+      <td>13</td>
+      <td>11:02:59</td>
+      <td>7.8</td>
+      <td>-42.7245</td>
+      <td>173.0647</td>
+      <td>22.0</td>
+      <td>SOUTH ISLAND, NEW ZEALAND</td>
+      <td>5197722</td>
+      <td>1479034979</td>
+      <td>22000.0</td>
+      <td>4.690416</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2003</td>
+      <td>8</td>
+      <td>21</td>
+      <td>12:12:47</td>
+      <td>7.2</td>
+      <td>-45.0875</td>
+      <td>167.0892</td>
+      <td>6.8</td>
+      <td>SOUTH ISLAND, NEW ZEALAND</td>
+      <td>1628007</td>
+      <td>1061467967</td>
+      <td>6800.0</td>
+      <td>2.607681</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2001</td>
+      <td>8</td>
+      <td>21</td>
+      <td>06:52:06</td>
+      <td>7.1</td>
+      <td>-36.8010</td>
+      <td>-179.7230</td>
+      <td>33.5</td>
+      <td>EAST OF NORTH ISLAND, N.Z.</td>
+      <td>1169374</td>
+      <td>998376726</td>
+      <td>33500.0</td>
+      <td>5.787918</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2004</td>
+      <td>11</td>
+      <td>22</td>
+      <td>20:26:23</td>
+      <td>7.1</td>
+      <td>-46.4964</td>
+      <td>164.8273</td>
+      <td>7.6</td>
+      <td>OFF W. COAST OF S. ISLAND, N.Z.</td>
+      <td>1888053</td>
+      <td>1101155183</td>
+      <td>7600.0</td>
+      <td>2.756810</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Combining">Combining<a class="anchor-link" href="#Combining"> </a></h2><p>If we want to join the same data from two tables, we can use concat() function. Let's split original data into two DataFrames and try to combine them back together:</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Extract two overlapping DataFrames</span>
+<span class="n">nz_eqs3</span> <span class="o">=</span> <span class="n">nz_eqs</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">15000</span><span class="p">,:]</span>
+<span class="n">nz_eqs4</span> <span class="o">=</span> <span class="n">nz_eqs</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">12000</span><span class="p">:,:]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shapes of two DataFrames:&quot;</span><span class="p">,</span> <span class="n">nz_eqs3</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">nz_eqs4</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="c1"># Reset the index from original DataFrame</span>
+<span class="n">nz_eqs4</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Concatenate DataFrames</span>
+<span class="c1"># Use ignore_index to create a new index</span>
+<span class="n">nz_eqs_concat</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">nz_eqs3</span><span class="p">,</span> <span class="n">nz_eqs4</span><span class="p">],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Drop duplicates in the new DataFrame</span>
+<span class="n">nz_eqs_concat_unique</span> <span class="o">=</span> <span class="n">nz_eqs_concat</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Original DataFrame shape:&quot;</span><span class="p">,</span> <span class="n">nz_eqs</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Concatenated DataFrame with duplicates shape:&quot;</span><span class="p">,</span> <span class="n">nz_eqs_concat</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Concatenated DataFrame without duplicates shape:&quot;</span><span class="p">,</span> <span class="n">nz_eqs_concat_unique</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Shapes of two DataFrames: (15000, 12) (13000, 12)
+Original DataFrame shape: (25000, 12)
+Concatenated DataFrame with duplicates shape: (28000, 12)
+Concatenated DataFrame without duplicates shape: (25000, 12)
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Grouping">Grouping<a class="anchor-link" href="#Grouping"> </a></h2><p>If we wanted to count how many times specific regions in New Zealand were hit by an earthquake, we can use groupby() function and count():</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">nz_eqs</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;region&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">region</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>region
+CHATHAM ISLANDS, N.Z. REGION          4
+COOK STRAIT, NEW ZEALAND           1381
+EAST OF NORTH ISLAND, N.Z.         1676
+NORTH ISLAND, NEW ZEALAND          6790
+NORTH OF NEW ZEALAND                 49
+NORTHWEST OF NEW ZEALAND              6
+OFF E. COAST OF N. ISLAND, N.Z.    7741
+OFF E. COAST OF S. ISLAND, N.Z.     182
+OFF W. COAST OF N. ISLAND, N.Z.     229
+OFF W. COAST OF S. ISLAND, N.Z.    1768
+SOUTH ISLAND, NEW ZEALAND          3119
+SOUTH OF CHATHAM ISLANDS              1
+SOUTH OF KERMADEC ISLANDS          2053
+SOUTHEAST OF AUSTRALIA                1
+Name: region, dtype: int64</pre>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This analysis is equivalent also to pandas built-in value_counts() function:</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">nz_eqs</span><span class="o">.</span><span class="n">region</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>OFF E. COAST OF N. ISLAND, N.Z.    7741
+NORTH ISLAND, NEW ZEALAND          6790
+SOUTH ISLAND, NEW ZEALAND          3119
+SOUTH OF KERMADEC ISLANDS          2053
+OFF W. COAST OF S. ISLAND, N.Z.    1768
+EAST OF NORTH ISLAND, N.Z.         1676
+COOK STRAIT, NEW ZEALAND           1381
+OFF W. COAST OF N. ISLAND, N.Z.     229
+OFF E. COAST OF S. ISLAND, N.Z.     182
+NORTH OF NEW ZEALAND                 49
+NORTHWEST OF NEW ZEALAND              6
+CHATHAM ISLANDS, N.Z. REGION          4
+SOUTH OF CHATHAM ISLANDS              1
+SOUTHEAST OF AUSTRALIA                1
+Name: region, dtype: int64</pre>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can also groupby two columns, e.g. region and year based on count, maximum and minimum depth in that year and region:</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">nz_eqs</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;region&#39;</span><span class="p">,</span> <span class="s1">&#39;year&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">depth_km</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="nb">len</span><span class="p">,</span> <span class="nb">min</span><span class="p">,</span> <span class="nb">max</span><span class="p">])</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th>len</th>
+      <th>min</th>
+      <th>max</th>
+    </tr>
+    <tr>
+      <th>region</th>
+      <th>year</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th rowspan="3" valign="top">CHATHAM ISLANDS, N.Z. REGION</th>
+      <th>1992</th>
+      <td>1.0</td>
+      <td>33.0</td>
+      <td>33.0</td>
+    </tr>
+    <tr>
+      <th>1993</th>
+      <td>1.0</td>
+      <td>33.0</td>
+      <td>33.0</td>
+    </tr>
+    <tr>
+      <th>2003</th>
+      <td>2.0</td>
+      <td>33.0</td>
+      <td>33.0</td>
+    </tr>
+    <tr>
+      <th rowspan="2" valign="top">COOK STRAIT, NEW ZEALAND</th>
+      <th>1971</th>
+      <td>22.0</td>
+      <td>12.0</td>
+      <td>205.5</td>
+    </tr>
+    <tr>
+      <th>1972</th>
+      <td>30.0</td>
+      <td>10.8</td>
+      <td>220.2</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Sorting">Sorting<a class="anchor-link" href="#Sorting"> </a></h2><p>Groupby() function returns the values in the index order. Suppose we would like to know count of earthquakes in each year in descending order. We can use function sort_values() for that:</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">nz_eqs_years</span> <span class="o">=</span> <span class="n">nz_eqs</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;year&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">depth_km</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="nb">len</span><span class="p">,</span> <span class="nb">min</span><span class="p">,</span> <span class="nb">max</span><span class="p">])</span>
+<span class="n">nz_eqs_years_sorted</span> <span class="o">=</span> <span class="n">nz_eqs_years</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s2">&quot;len&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">nz_eqs_years_sorted</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>len</th>
+      <th>min</th>
+      <th>max</th>
+    </tr>
+    <tr>
+      <th>year</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1995</th>
+      <td>1631.0</td>
+      <td>0.0</td>
+      <td>403.5</td>
+    </tr>
+    <tr>
+      <th>2001</th>
+      <td>941.0</td>
+      <td>0.0</td>
+      <td>430.7</td>
+    </tr>
+    <tr>
+      <th>1985</th>
+      <td>892.0</td>
+      <td>0.0</td>
+      <td>362.4</td>
+    </tr>
+    <tr>
+      <th>1997</th>
+      <td>794.0</td>
+      <td>0.0</td>
+      <td>600.0</td>
+    </tr>
+    <tr>
+      <th>1984</th>
+      <td>724.0</td>
+      <td>0.0</td>
+      <td>448.6</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Creating-date-time-stamps">Creating date-time stamps<a class="anchor-link" href="#Creating-date-time-stamps"> </a></h2><p>Let's create columns with hours, minutes and seconds from utc_time column in format:</p>
+
+<pre><code>HH:MM:SS
+
+</code></pre>
+<p>by splitting the strings with a colon and creating float columns.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">nz_eqs</span><span class="p">[</span><span class="s2">&quot;hour&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">nz_eqs</span><span class="p">[</span><span class="s2">&quot;utc_time&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+<span class="n">nz_eqs</span><span class="p">[</span><span class="s2">&quot;minute&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">nz_eqs</span><span class="p">[</span><span class="s2">&quot;utc_time&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+<span class="n">nz_eqs</span><span class="p">[</span><span class="s2">&quot;second&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">nz_eqs</span><span class="p">[</span><span class="s2">&quot;utc_time&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>With to_datetime() function, we can easily create date time stamp used by pandas:</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">nz_eqs</span><span class="p">[</span><span class="s2">&quot;datetime&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">nz_eqs</span><span class="p">[[</span><span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="s1">&#39;month&#39;</span><span class="p">,</span> <span class="s1">&#39;day&#39;</span><span class="p">,</span> <span class="s1">&#39;hour&#39;</span><span class="p">,</span> <span class="s1">&#39;minute&#39;</span><span class="p">,</span> <span class="s1">&#39;second&#39;</span><span class="p">]])</span>
+<span class="n">nz_eqs</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>year</th>
+      <th>month</th>
+      <th>day</th>
+      <th>utc_time</th>
+      <th>mag</th>
+      <th>lat</th>
+      <th>lon</th>
+      <th>depth_km</th>
+      <th>region</th>
+      <th>iris_id</th>
+      <th>timestamp</th>
+      <th>depth_m</th>
+      <th>hour</th>
+      <th>minute</th>
+      <th>second</th>
+      <th>datetime</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2009</td>
+      <td>7</td>
+      <td>15</td>
+      <td>09:22:31</td>
+      <td>7.8</td>
+      <td>-45.8339</td>
+      <td>166.6363</td>
+      <td>20.9</td>
+      <td>OFF W. COAST OF S. ISLAND, N.Z.</td>
+      <td>2871698</td>
+      <td>1247649751</td>
+      <td>20900.0</td>
+      <td>9.0</td>
+      <td>22.0</td>
+      <td>31.0</td>
+      <td>2009-07-15 09:22:31</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2016</td>
+      <td>11</td>
+      <td>13</td>
+      <td>11:02:59</td>
+      <td>7.8</td>
+      <td>-42.7245</td>
+      <td>173.0647</td>
+      <td>22.0</td>
+      <td>SOUTH ISLAND, NEW ZEALAND</td>
+      <td>5197722</td>
+      <td>1479034979</td>
+      <td>22000.0</td>
+      <td>11.0</td>
+      <td>2.0</td>
+      <td>59.0</td>
+      <td>2016-11-13 11:02:59</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2003</td>
+      <td>8</td>
+      <td>21</td>
+      <td>12:12:47</td>
+      <td>7.2</td>
+      <td>-45.0875</td>
+      <td>167.0892</td>
+      <td>6.8</td>
+      <td>SOUTH ISLAND, NEW ZEALAND</td>
+      <td>1628007</td>
+      <td>1061467967</td>
+      <td>6800.0</td>
+      <td>12.0</td>
+      <td>12.0</td>
+      <td>47.0</td>
+      <td>2003-08-21 12:12:47</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2001</td>
+      <td>8</td>
+      <td>21</td>
+      <td>06:52:06</td>
+      <td>7.1</td>
+      <td>-36.8010</td>
+      <td>-179.7230</td>
+      <td>33.5</td>
+      <td>EAST OF NORTH ISLAND, N.Z.</td>
+      <td>1169374</td>
+      <td>998376726</td>
+      <td>33500.0</td>
+      <td>6.0</td>
+      <td>52.0</td>
+      <td>6.0</td>
+      <td>2001-08-21 06:52:06</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The datetime column is not yet recognised as index so we can simply use:</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">nz_eqs</span> <span class="o">=</span> <span class="n">nz_eqs</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;datetime&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This timestamp will be useful for plotting data.</p>
+<h2 id="Plotting">Plotting<a class="anchor-link" href="#Plotting"> </a></h2><p>Plotting with pandas is very intuitive. We can use syntax:</p>
+
+<pre><code>df.plot.*
+
+</code></pre>
+<p>where * is any plot from matplotlib.pyplot supported by pandas. Full tutorial on pandas plots can be found <a href="https://pandas.pydata.org/pandas-docs/stable/user_guide/visualization.html">here</a>.</p>
+<p>Alternatively, we can use other plots from matplotlib library and pass specific columns as arguments:</p>
+
+<pre><code>plt.scatter(df.col1, df.col2, c=df.col3, s=df.col4, *kwargs)
+
+</code></pre>
+<p>In this tutorial we will use both ways of plotting.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let's plot magnitude data for all years and then for year 2000 only using pandas way of plotting:</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">nz_eqs</span><span class="p">[</span><span class="s1">&#39;mag&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Date&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Magnitude&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">nz_eqs</span><span class="p">[</span><span class="s1">&#39;mag&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;2000-01&#39;</span><span class="p">:</span><span class="s1">&#39;2001-01&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Date&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Magnitude&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../images/coding/Pandas_53_0.png"
+>
+</div>
+
+</div>
+</div>
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../images/coding/Pandas_53_1.png"
+>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can calculate how many earthquakes are within each year using:</p>
+
+<pre><code>df.resample('bintype').count()
+
+</code></pre>
+<p>For example, if we want to use intervals for year, month, minute and second we can use 'Y', 'M', 'T' and 'S' in the bintype argument.</p>
+<p>Let's count our earthquakes in 4 month intervals and display it with xticks every 4 years:</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">figure</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+
+<span class="c1"># Resample datetime index into 4 month bins</span>
+<span class="c1"># and then count how many </span>
+<span class="n">nz_eqs</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s2">&quot;4M&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">x_compat</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib</span>
+<span class="c1"># Change xticks to be every 4 years</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">matplotlib</span><span class="o">.</span><span class="n">dates</span><span class="o">.</span><span class="n">YearLocator</span><span class="p">(</span><span class="n">base</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">matplotlib</span><span class="o">.</span><span class="n">dates</span><span class="o">.</span><span class="n">DateFormatter</span><span class="p">(</span><span class="s2">&quot;%Y&quot;</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Date&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;No. of earthquakes&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../images/coding/Pandas_55_0.png"
+>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Suppose we would like to view the earthquake locations, places with largest earthquakes and their depths. To do that, we can use Cartopy library and create a scatter plot, passing magnitude column into size and depth column into colour.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">cartopy.crs</span> <span class="k">as</span> <span class="nn">ccrs</span>
+<span class="kn">import</span> <span class="nn">cartopy.feature</span> <span class="k">as</span> <span class="nn">cfeature</span>
+<span class="kn">from</span> <span class="nn">cartopy.mpl.gridliner</span> <span class="kn">import</span> <span class="n">LONGITUDE_FORMATTER</span><span class="p">,</span> <span class="n">LATITUDE_FORMATTER</span>
+<span class="kn">import</span> <span class="nn">matplotlib.ticker</span> <span class="k">as</span> <span class="nn">mticker</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let's plot this data passing columns into scatter plot:</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;font.size&#39;</span><span class="p">:</span> <span class="mi">14</span><span class="p">})</span>
+
+<span class="n">central_lon</span><span class="p">,</span> <span class="n">central_lat</span> <span class="o">=</span> <span class="mi">170</span><span class="p">,</span> <span class="o">-</span><span class="mi">50</span>
+<span class="n">extent</span> <span class="o">=</span> <span class="p">[</span><span class="mi">160</span><span class="p">,</span><span class="mi">188</span><span class="p">,</span><span class="o">-</span><span class="mi">48</span><span class="p">,</span><span class="o">-</span><span class="mi">32</span><span class="p">]</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">subplot_kw</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">Mercator</span><span class="p">(</span><span class="n">central_lon</span><span class="p">,</span> <span class="n">central_lat</span><span class="p">)),</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_extent</span><span class="p">(</span><span class="n">extent</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">coastlines</span><span class="p">(</span><span class="n">resolution</span><span class="o">=</span><span class="s1">&#39;10m&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Earthquakes in New Zealand since 1970&quot;</span><span class="p">)</span>
+
+<span class="c1"># Create a scatter plot</span>
+<span class="n">scatplot</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">nz_eqs</span><span class="o">.</span><span class="n">lon</span><span class="p">,</span><span class="n">nz_eqs</span><span class="o">.</span><span class="n">lat</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">nz_eqs</span><span class="o">.</span><span class="n">depth_km</span><span class="p">,</span>
+                      <span class="n">s</span><span class="o">=</span><span class="n">nz_eqs</span><span class="o">.</span><span class="n">depth_km</span><span class="o">/</span><span class="mi">10</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>
+                      <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;PuRd&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+                      <span class="n">transform</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">Geodetic</span><span class="p">())</span>
+
+<span class="c1"># Create colourbar</span>
+<span class="n">cbar</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">scatplot</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">fraction</span><span class="o">=</span><span class="mf">0.03</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Depth [km]&#39;</span><span class="p">)</span>
+
+<span class="c1"># Sort out gridlines and their density</span>
+<span class="n">xticks_extent</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">160</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">200</span><span class="p">,</span><span class="o">-</span><span class="mi">170</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">yticks_extent</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">60</span><span class="p">,</span> <span class="o">-</span><span class="mi">30</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+
+<span class="n">gl</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">gridlines</span><span class="p">(</span><span class="n">linewidths</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">gl</span><span class="o">.</span><span class="n">xlabels_top</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">gl</span><span class="o">.</span><span class="n">xlabels_bottom</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">gl</span><span class="o">.</span><span class="n">ylabels_left</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">gl</span><span class="o">.</span><span class="n">ylabels_right</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">gl</span><span class="o">.</span><span class="n">xlocator</span> <span class="o">=</span> <span class="n">mticker</span><span class="o">.</span><span class="n">FixedLocator</span><span class="p">(</span><span class="n">xticks_extent</span><span class="p">)</span>
+<span class="n">gl</span><span class="o">.</span><span class="n">ylocator</span> <span class="o">=</span> <span class="n">mticker</span><span class="o">.</span><span class="n">FixedLocator</span><span class="p">(</span><span class="n">yticks_extent</span><span class="p">)</span>
+<span class="n">gl</span><span class="o">.</span><span class="n">xformatter</span> <span class="o">=</span> <span class="n">LONGITUDE_FORMATTER</span>
+<span class="n">gl</span><span class="o">.</span><span class="n">yformatter</span> <span class="o">=</span> <span class="n">LATITUDE_FORMATTER</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../images/coding/Pandas_59_0.png"
+>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This way we can easily see that the deepest and largest earthquakes are in the North.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="References">References<a class="anchor-link" href="#References"> </a></h1><p>The notebook was compiled based on these tutorials:</p>
+<ul>
+<li><a href="https://pandas.pydata.org/docs/getting_started/index.html#getting-started">Pandas official Getting Started tutorials</a></li>
+<li><a href="https://www.kaggle.com/learn/pandas">Kaggle tutorial</a></li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+
+ 
+
+
+    </main>
+    
+            </div>
+            <div class="c-textbook__footer" id="textbook_footer">
+              
+<nav class="c-page__nav">
+  
+    
+    
+
+    <a id="js-page__nav__prev" class="c-page__nav__prev" href="/book/coding/List_comprehensions.html">
+      〈 <span class="u-margin-right-tiny"></span> List comprehensions
+    </a>
+  
+
+  
+    
+
+    
+    <a id="js-page__nav__next" class="c-page__nav__next" href="/book/coding/Flow_control_statements.html">
+      Flow control statements <span class="u-margin-right-tiny"></span> 〉
+    </a>
+  
+</nav>
+
+              <footer>
+  <p class="footer">This page was created by <a href="https://github.com/ExecutableBookProject/jupyter-book/graphs/contributors">The Jupyter Book Community</a></p>
+</footer>
+
+            </div>
+
+        </div>
+      </main>
+    </div>
+  </body>
+</html>
