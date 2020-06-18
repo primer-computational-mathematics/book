@@ -26,8 +26,8 @@
   "@type": "NewsArticle",
   "mainEntityOfPage": "https://primer-computational-mathematics.github.io/book/geosciences/Dynamic_Earth.html",
   "headline": "Dynamic Earth",
-  "datePublished": "2020-06-17T20:07:45+00:00",
-  "dateModified": "2020-06-17T20:07:45+00:00",
+  "datePublished": "2020-06-18T11:00:42+00:00",
+  "dateModified": "2020-06-18T11:00:42+00:00",
   "description": "        Dynamic Earth    Dynamic Earth and Planets Theory Plate tectonics The fundamental theory behind behaviour of the Earth's outer shell, the lithosphere...",
   "author": {
     "@type": "Person",
@@ -1033,25 +1033,6 @@ initFunction(initPrint)
             
             
           
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/geosciences/cartography_cartopy">
-              <a class="c-sidebar__entry"
-                href="/book/geosciences/cartography_cartopy.html"
-              >
-                
-                cartography cartopy
-              </a>
-            </li>
-            
-            
-          
         </ul>
       
 
@@ -1117,12 +1098,12 @@ initFunction(initPrint)
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Dynamic-Earth-and-Planets">Dynamic Earth and Planets<a class="anchor-link" href="#Dynamic-Earth-and-Planets"> </a></h1><h2 id="Theory">Theory<a class="anchor-link" href="#Theory"> </a></h2><h3 id="Plate-tectonics">Plate tectonics<a class="anchor-link" href="#Plate-tectonics"> </a></h3><p>The fundamental theory behind behaviour of the Earth's outer shell, the lithosphere, is called plate tectonics. The Earth is broken into multiple plates that interact at their boundaries. There are three types of interaction - plates can converge, diverge or move along their boundaries.</p>
-<p><img src="data/plate_boundaries.png" alt="tectonic plate boundaries on Earth" style="width:600px;"/></p>
+<p><img src="../images/plate_boundaries.png" alt="tectonic plate boundaries on Earth" style="width:600px;"/></p>
 <h3 id="Mid-ocean-ridges---the-divergent-boundary">Mid-ocean ridges - the divergent boundary<a class="anchor-link" href="#Mid-ocean-ridges---the-divergent-boundary"> </a></h3><p>The divergent boundary was discovered in 1960s, as geophycisists discovered that new oceanic crust is formed at mid-ocean ridges. As the new oceanic crust is formed, the older crust is pushed away from the ridges and as it cools, becomes thicker and subsides.</p>
 <p>The Earth's magnetic field is not the same over time. On avergae, 4 or 5 magnetic reversals happen within 1 million years. These reversals are recorded on the seafloor as new rocks produced at mid-ocean ridges have magnetite align with magnetic field at a time:</p>
-<p><img src="data/magnetic_field_seafloor.png" alt="Magnetic anomalies on seafloor" style="width:600px;"/></p>
+<p><img src="../images/magnetic_field_seafloor.png" alt="Magnetic anomalies on seafloor" style="width:600px;"/></p>
 <p>Magnetic anomalies can tell about the age of seafloor. These anomalies have been very well mapped across the world and dating techniques such as radioactive decauy of Potassium and Argon make their age bounds very robust. As seen on the picture below, the Bruhnes is the latest magnetic reversal that happened ~800,000 years ago:</p>
-<p><img src="data/magnetic_anomalies.png" alt="Magnetic anomalies on seafloor" style="width:600px;"/></p>
+<p><img src="../images/magnetic_anomalies.png" alt="Magnetic anomalies on seafloor" style="width:600px;"/></p>
 <h2 id="Exercise">Exercise<a class="anchor-link" href="#Exercise"> </a></h2><h3 id="Seafloor-age-vs.-depth-relationship">Seafloor age vs. depth relationship<a class="anchor-link" href="#Seafloor-age-vs.-depth-relationship"> </a></h3><p>Parsons &amp; Sclater (1977) provides a relationship between seafloor age $t$ (Ma) and depth $d(t)$:</p>
 $$d(t) = 2500 + 350\times t^{1/2}$$<p>,</p>
 <p>where $0 &lt; t &lt; 70$ Ma. In this exercise we will test the relationship on real data and check how it behaves for seafloor older than 70 Ma.</p>
@@ -1173,45 +1154,68 @@ $$d(t) = 2500 + 350\times t^{1/2}$$<p>,</p>
 <h3 id="Seafloor-age-from-magnetic-anomalies">Seafloor age from magnetic anomalies<a class="anchor-link" href="#Seafloor-age-from-magnetic-anomalies"> </a></h3><p><a href="https://agupubs.onlinelibrary.wiley.com/doi/full/10.1029/2007GC001743">Müller et al. (2008)</a> provides a comprehensive dataset of seafloor ages across the world. The dataset was compiled based on various magentic surveys of seafloor, dated independently of Parsons &amp; Sclater (1977) relationship between seafloor age and depth.</p>
 <p>The dataset is free to download at ftp://ftp.earthbyte.org/earthbyte/agegrid/2008/Grids/. We downloaded 'age.3.6.nc.bz2' file and plotted using this code:</p>
 
-<pre><code># Load seaflor age downloaded from
-# https://www.earthbyte.org/Resources/agegrid2008.html
-fname = "data/seafloor_ages.nc"
+</div>
+</div>
+</div>
+</div>
 
-dataset = netcdf_dataset(fname)
+<div class="jb_cell">
 
-# Manual says that age is stored in
-# Ma x 100 for storage reasons
-age = dataset.variables['z'][:]/100.
-lats_age = dataset.variables['y'][:]
-lons_age = dataset.variables['x'][:]
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 
-# Create figure
-plt.figure(figsize=(7,5))
-ax = plt.axes(projection=ccrs.Robinson())
-ax.coastlines(resolution='110m')
-ax.gridlines()
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Load seaflor age downloaded from</span>
+<span class="c1"># https://www.earthbyte.org/Resources/agegrid2008.html</span>
+<span class="n">fname</span> <span class="o">=</span> <span class="s2">&quot;data/seafloor_ages.nc&quot;</span>
 
-vmin = 0
-vmax = 200
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">netcdf_dataset</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
 
-# Set how many contour lines to display
-v = np.linspace(vmin, vmax, 11, endpoint=True)
+<span class="c1"># Manual says that age is stored in</span>
+<span class="c1"># Ma x 100 for storage reasons</span>
+<span class="n">age</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">variables</span><span class="p">[</span><span class="s1">&#39;z&#39;</span><span class="p">][:]</span><span class="o">/</span><span class="mf">100.</span>
+<span class="n">lats_age</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">variables</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">][:]</span>
+<span class="n">lons_age</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">variables</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">][:]</span>
 
-# Set how many ticks to display in colourbar
-v2 = np.linspace(vmin, vmax, 11, endpoint=True)
+<span class="c1"># Create figure</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">axes</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">Robinson</span><span class="p">())</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">coastlines</span><span class="p">(</span><span class="n">resolution</span><span class="o">=</span><span class="s1">&#39;110m&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">gridlines</span><span class="p">()</span>
 
-# Create contour plot
-contplot = ax.contourf(lons_age, lats_age, age, v,
-                       cmap="gist_rainbow",
-                       transform=ccrs.PlateCarree())
-# Create colourbar
-cbar = plt.colorbar(contplot, ax=ax, fraction=0.046, pad=0.01, 
-                    label='Age [Ma]', ticks = v2)
-plt.show()
+<span class="n">vmin</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">vmax</span> <span class="o">=</span> <span class="mi">200</span>
 
-</code></pre>
+<span class="c1"># Set how many contour lines to display</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Set how many ticks to display in colourbar</span>
+<span class="n">v2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Create contour plot</span>
+<span class="n">contplot</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">lons_age</span><span class="p">,</span> <span class="n">lats_age</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span>
+                       <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;gist_rainbow&quot;</span><span class="p">,</span>
+                       <span class="n">transform</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">())</span>
+<span class="c1"># Create colourbar</span>
+<span class="n">cbar</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">contplot</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">fraction</span><span class="o">=</span><span class="mf">0.046</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> 
+                    <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Age [Ma]&#39;</span><span class="p">,</span> <span class="n">ticks</span> <span class="o">=</span> <span class="n">v2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>The dataset is really large, therefore, we will only display the end result here. Note how easily we can pick out the position of Mid-Atlantic ridge tracing the youngest rocks (red colours) in the Atlantic. The oldest rocks on the other hand are coloured in magenta and occur at the continental margins and in the Pacific.</p>
-<p><img src="data/Mueller_2008_map.png" alt="Mueller 2008 magnetic map" style="width:600px;"/></p>
+<p><img src="../images/Mueller_2008_map.png" alt="Mueller 2008 magnetic map" style="width:600px;"/></p>
 
 </div>
 </div>
@@ -1331,7 +1335,7 @@ plt.show()
 
 
 <div class="output_png output_subarea ">
-<img src="../images/geosciences/Dynamic_Earth_6_0.png"
+<img src="../images/geosciences/Dynamic_Earth_8_0.png"
 >
 </div>
 
@@ -1645,7 +1649,7 @@ plt.show()
 
 
 <div class="output_png output_subarea ">
-<img src="../images/geosciences/Dynamic_Earth_13_0.png"
+<img src="../images/geosciences/Dynamic_Earth_15_0.png"
 >
 </div>
 
@@ -1894,7 +1898,7 @@ Number of points within 2*RMS = 96.89 %.
 
 
 <div class="output_png output_subarea ">
-<img src="../images/geosciences/Dynamic_Earth_22_0.png"
+<img src="../images/geosciences/Dynamic_Earth_24_0.png"
 >
 </div>
 
@@ -2015,87 +2019,110 @@ $$t = \Big(\frac{d(t) - 2500}{350}\Big)^2 $$<p>.</p>
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Since the original dataset is large, we can provide the code and the end result for side by side comparison of the ages calculated based on bathymetry and real age based on magnetic anomalies:</p>
 
-<pre><code>plt.rcParams.update({'font.size': 12})
+</div>
+</div>
+</div>
+</div>
 
-plt.figure(figsize=(7,10))
+<div class="jb_cell">
 
-# Create subplot for real age data
-ax1 = plt.subplot(2, 1, 1, projection=ccrs.PlateCarree())
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 
-extent = [np.min(lons_etopo), np.max(lons_etopo), np.min(lats_etopo), np.max(lats_etopo)-10]
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;font.size&#39;</span><span class="p">:</span> <span class="mi">12</span><span class="p">})</span>
 
-ax1.set_title("Seafloor age from magnetic anomalies")
-ax1.set_extent(extent)
-ax1.coastlines('110m', lw=1)
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
 
-vmin = 0
-vmax = 200
+<span class="c1"># Create subplot for real age data</span>
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">())</span>
 
-# Set how many contour lines to display
-v = np.linspace(vmin, vmax, 11, endpoint=True)
+<span class="n">extent</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">lons_etopo</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">lons_etopo</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">lats_etopo</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">lats_etopo</span><span class="p">)</span><span class="o">-</span><span class="mi">10</span><span class="p">]</span>
 
-# Set how many ticks to display in colourbar
-v2 = np.linspace(vmin, vmax, 11, endpoint=True)
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Seafloor age from magnetic anomalies&quot;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_extent</span><span class="p">(</span><span class="n">extent</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">coastlines</span><span class="p">(</span><span class="s1">&#39;110m&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
-# Create contour plot
-contplot = ax1.contourf(lons_age, lats_age, age, v,
-                       cmap="gist_rainbow",
-                       transform=ccrs.PlateCarree())
-# Create colourbar
-cbar = plt.colorbar(contplot, ax=ax1, fraction=0.046, pad=0.01, 
-                    label='Age [Ma]', ticks = v2)
+<span class="n">vmin</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">vmax</span> <span class="o">=</span> <span class="mi">200</span>
 
-# Sort out gridlines and their density
-xticks_extent = list(np.arange(-75, 10, 10))
-yticks_extent = list(np.arange(-10, 80, 10))
+<span class="c1"># Set how many contour lines to display</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-gl = ax1.gridlines(linewidths=0.1)
-gl.xlabels_top = False
-gl.xlabels_bottom = True
-gl.ylabels_left = True
-gl.ylabels_right = False
-gl.xlocator = mticker.FixedLocator(xticks_extent)
-gl.ylocator = mticker.FixedLocator(yticks_extent)
-gl.xformatter = LONGITUDE_FORMATTER
-gl.yformatter = LATITUDE_FORMATTER
+<span class="c1"># Set how many ticks to display in colourbar</span>
+<span class="n">v2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Create contour plot</span>
+<span class="n">contplot</span> <span class="o">=</span> <span class="n">ax1</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">lons_age</span><span class="p">,</span> <span class="n">lats_age</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span>
+                       <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;gist_rainbow&quot;</span><span class="p">,</span>
+                       <span class="n">transform</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">())</span>
+<span class="c1"># Create colourbar</span>
+<span class="n">cbar</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">contplot</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax1</span><span class="p">,</span> <span class="n">fraction</span><span class="o">=</span><span class="mf">0.046</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> 
+                    <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Age [Ma]&#39;</span><span class="p">,</span> <span class="n">ticks</span> <span class="o">=</span> <span class="n">v2</span><span class="p">)</span>
+
+<span class="c1"># Sort out gridlines and their density</span>
+<span class="n">xticks_extent</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">75</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">yticks_extent</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+
+<span class="n">gl</span> <span class="o">=</span> <span class="n">ax1</span><span class="o">.</span><span class="n">gridlines</span><span class="p">(</span><span class="n">linewidths</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">gl</span><span class="o">.</span><span class="n">xlabels_top</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">gl</span><span class="o">.</span><span class="n">xlabels_bottom</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">gl</span><span class="o">.</span><span class="n">ylabels_left</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">gl</span><span class="o">.</span><span class="n">ylabels_right</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">gl</span><span class="o">.</span><span class="n">xlocator</span> <span class="o">=</span> <span class="n">mticker</span><span class="o">.</span><span class="n">FixedLocator</span><span class="p">(</span><span class="n">xticks_extent</span><span class="p">)</span>
+<span class="n">gl</span><span class="o">.</span><span class="n">ylocator</span> <span class="o">=</span> <span class="n">mticker</span><span class="o">.</span><span class="n">FixedLocator</span><span class="p">(</span><span class="n">yticks_extent</span><span class="p">)</span>
+<span class="n">gl</span><span class="o">.</span><span class="n">xformatter</span> <span class="o">=</span> <span class="n">LONGITUDE_FORMATTER</span>
+<span class="n">gl</span><span class="o">.</span><span class="n">yformatter</span> <span class="o">=</span> <span class="n">LATITUDE_FORMATTER</span>
 
 
-# Create subplot for predicted age based on elevation
-ax2 = plt.subplot(2, 1, 2, projection=ccrs.PlateCarree())
+<span class="c1"># Create subplot for predicted age based on elevation</span>
+<span class="n">ax2</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">())</span>
 
-ax2.set_title("Predicted seafloor age from ETOPO1 bathymetry")
-ax2.set_extent(extent)
-ax2.coastlines('110m', lw=1)
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Predicted seafloor age from ETOPO1 bathymetry&quot;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_extent</span><span class="p">(</span><span class="n">extent</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">coastlines</span><span class="p">(</span><span class="s1">&#39;110m&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
 
-# Create contour plot
-contplot = ax2.contourf(lons_etopo, lats_etopo, ages_seafloor, v,
-                       cmap="gist_rainbow",
-                       transform=ccrs.PlateCarree())
-# Create colourbar
-cbar = plt.colorbar(contplot, ax=ax2, fraction=0.046, pad=0.01, 
-                    label='Predicted seafloor age [Ma]', ticks = v2)
+<span class="c1"># Create contour plot</span>
+<span class="n">contplot</span> <span class="o">=</span> <span class="n">ax2</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">lons_etopo</span><span class="p">,</span> <span class="n">lats_etopo</span><span class="p">,</span> <span class="n">ages_seafloor</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span>
+                       <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;gist_rainbow&quot;</span><span class="p">,</span>
+                       <span class="n">transform</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">())</span>
+<span class="c1"># Create colourbar</span>
+<span class="n">cbar</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">contplot</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax2</span><span class="p">,</span> <span class="n">fraction</span><span class="o">=</span><span class="mf">0.046</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> 
+                    <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Predicted seafloor age [Ma]&#39;</span><span class="p">,</span> <span class="n">ticks</span> <span class="o">=</span> <span class="n">v2</span><span class="p">)</span>
 
-# Sort out gridlines and their density
-xticks_extent = list(np.arange(-75, 10, 10))
-yticks_extent = list(np.arange(-10, 80, 10))
+<span class="c1"># Sort out gridlines and their density</span>
+<span class="n">xticks_extent</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">75</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">yticks_extent</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
 
-gl = ax2.gridlines(linewidths=0.1)
-gl.xlabels_top = False
-gl.xlabels_bottom = True
-gl.ylabels_left = True
-gl.ylabels_right = False
-gl.xlocator = mticker.FixedLocator(xticks_extent)
-gl.ylocator = mticker.FixedLocator(yticks_extent)
-gl.xformatter = LONGITUDE_FORMATTER
-gl.yformatter = LATITUDE_FORMATTER
+<span class="n">gl</span> <span class="o">=</span> <span class="n">ax2</span><span class="o">.</span><span class="n">gridlines</span><span class="p">(</span><span class="n">linewidths</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">gl</span><span class="o">.</span><span class="n">xlabels_top</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">gl</span><span class="o">.</span><span class="n">xlabels_bottom</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">gl</span><span class="o">.</span><span class="n">ylabels_left</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">gl</span><span class="o">.</span><span class="n">ylabels_right</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">gl</span><span class="o">.</span><span class="n">xlocator</span> <span class="o">=</span> <span class="n">mticker</span><span class="o">.</span><span class="n">FixedLocator</span><span class="p">(</span><span class="n">xticks_extent</span><span class="p">)</span>
+<span class="n">gl</span><span class="o">.</span><span class="n">ylocator</span> <span class="o">=</span> <span class="n">mticker</span><span class="o">.</span><span class="n">FixedLocator</span><span class="p">(</span><span class="n">yticks_extent</span><span class="p">)</span>
+<span class="n">gl</span><span class="o">.</span><span class="n">xformatter</span> <span class="o">=</span> <span class="n">LONGITUDE_FORMATTER</span>
+<span class="n">gl</span><span class="o">.</span><span class="n">yformatter</span> <span class="o">=</span> <span class="n">LATITUDE_FORMATTER</span>
 
-plt.subplots_adjust(wspace=0.1)
-plt.show()
+<span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">wspace</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
 
-</code></pre>
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>Comparing real seafloor age and age calculated based on depth, we can see that the relationship does not work for ages above 70 Ma. In the real age dataset, we can see that seafloor near continental margins is &gt; 140 Ma old, while according to the equation from Parsons &amp; Sclatter (1977), seafloor there would very young.</p>
-<p><img src="data/seafloor_ages_north_atlantic_comparison.png" alt="Real seafloor age vs. age derived from bathymetry" style="width:600px;"/></p>
+<p><img src="../images/seafloor_ages_north_atlantic_comparison.png" alt="Real seafloor age vs. age derived from bathymetry" style="width:600px;"/></p>
 
 </div>
 </div>
@@ -2124,8 +2151,8 @@ plt.show()
     
 
     
-    <a id="js-page__nav__next" class="c-page__nav__next" href="/book/geosciences/cartography_cartopy.html">
-      cartography cartopy <span class="u-margin-right-tiny"></span> 〉
+    <a id="js-page__nav__next" class="c-page__nav__next" href="">
+       <span class="u-margin-right-tiny"></span> 〉
     </a>
   
 </nav>
