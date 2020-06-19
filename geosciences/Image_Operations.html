@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width,minimum-scale=1">
 
   <title>Image Operations</title>
-  <meta name="description" content="        Image Operations    Remote Sensing A digital image is a 2D array of numbers in lines and columns or a raster dataset. It can also have a third dimens...">
+  <meta name="description" content="        Image Operations    Remote Sensing this notebook covers:Image displayPoint operationsContrast enhancementBCETGolden rulesImage display A digital imag...">
 
   <link rel="canonical" href="https://primer-computational-mathematics.github.io/book/geosciences/Image_Operations.html">
   <link rel="alternate" type="application/rss+xml" title="ESE Jupyter Material" href="https://primer-computational-mathematics.github.io/book/feed.xml">
@@ -14,7 +14,7 @@
   <meta property="og:url"         content="https://primer-computational-mathematics.github.io/book/geosciences/Image_Operations.html" />
 <meta property="og:type"        content="article" />
 <meta property="og:title"       content="Image Operations" />
-<meta property="og:description" content="        Image Operations    Remote Sensing A digital image is a 2D array of numbers in lines and columns or a raster dataset. It can also have a third dimens..." />
+<meta property="og:description" content="        Image Operations    Remote Sensing this notebook covers:Image displayPoint operationsContrast enhancementBCETGolden rulesImage display A digital imag..." />
 <meta property="og:image"       content="https://primer-computational-mathematics.github.io//book/images/logo/logo.png" />
 
 <meta name="twitter:card" content="summary">
@@ -26,9 +26,9 @@
   "@type": "NewsArticle",
   "mainEntityOfPage": "https://primer-computational-mathematics.github.io/book/geosciences/Image_Operations.html",
   "headline": "Image Operations",
-  "datePublished": "2020-06-19T13:38:33+00:00",
-  "dateModified": "2020-06-19T13:38:33+00:00",
-  "description": "        Image Operations    Remote Sensing A digital image is a 2D array of numbers in lines and columns or a raster dataset. It can also have a third dimens...",
+  "datePublished": "2020-06-19T14:49:55+00:00",
+  "dateModified": "2020-06-19T14:49:55+00:00",
+  "description": "        Image Operations    Remote Sensing this notebook covers:Image displayPoint operationsContrast enhancementBCETGolden rulesImage display A digital imag...",
   "author": {
     "@type": "Person",
     "name": "Imperial College London"
@@ -1154,7 +1154,17 @@ initFunction(initPrint)
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Remote-Sensing">Remote Sensing<a class="anchor-link" href="#Remote-Sensing"> </a></h1><p>A digital image is a 2D array of numbers in lines and columns or a raster dataset. It can also have a third dimension, in the form of other layers. Each cell of a digital image is called a pixel and the number representing the brightness of the pixel is called a <strong>digital number (DN).</strong> It can be composed of any number of layers/bands.
+<h1 id="Remote-Sensing">Remote Sensing<a class="anchor-link" href="#Remote-Sensing"> </a></h1><p>this notebook covers:</p>
+<ul>
+<li>Image display</li>
+<li>Point operations<ul>
+<li>Contrast enhancement</li>
+<li>BCET</li>
+</ul>
+</li>
+<li>Golden rules</li>
+</ul>
+<h2 id="Image-display">Image display<a class="anchor-link" href="#Image-display"> </a></h2><p>A digital image is a 2D array of numbers in lines and columns or a raster dataset. It can also have a third dimension, in the form of other layers. Each cell of a digital image is called a pixel and the number representing the brightness of the pixel is called a <strong>digital number (DN).</strong> It can be composed of any number of layers/bands.
 <img src="Data_Image_Operations/Image_Layers.png" style="width:400px;"/></p>
 <p>Not all bands are within the visible spectrum, however we can visualise them by assigning them to a colour gun in the visible spectrum. Following <strong>tristimulus colour theory</strong>, human colour perception is performed by three types of cones matching three primary colour: <strong>R</strong>ed, <strong>G</strong>reen and <strong>B</strong>lue (RGB). the combination of these three colours:
 $$ C=rR+gG+bB $$
@@ -1182,23 +1192,6 @@ Allows any colour to be represented to us within the visible spectrum.</p>
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="jb_output_wrapper }}">
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Requirement already up-to-date: pip in /home/nbuser/anaconda3_501/lib/python3.6/site-packages (20.1.1)
-Requirement already satisfied: opencv-python in /home/nbuser/anaconda3_501/lib/python3.6/site-packages (4.2.0.34)
-Requirement already satisfied: numpy&gt;=1.11.3 in /home/nbuser/anaconda3_501/lib/python3.6/site-packages (from opencv-python) (1.16.2)
-</pre>
-</div>
-</div>
-</div>
 </div>
 </div>
 
@@ -1253,13 +1246,17 @@ Requirement already satisfied: numpy&gt;=1.11.3 in /home/nbuser/anaconda3_501/li
 
 <span class="c1">#plot pseudo colour display</span>
 <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">232</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;pseudo-colour&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image0</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="s1">&#39;gist_rainbow&#39;</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image0</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="s1">&#39;gist_rainbow&#39;</span><span class="p">),</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span>
 
 <span class="c1">#generate colourbar to highlight brightest DNs</span>
 <span class="n">threshold</span> <span class="o">=</span> <span class="mf">0.8</span> 
-<span class="n">colors</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;white&quot;</span><span class="p">),</span> <span class="p">(</span><span class="n">threshold</span><span class="o">*</span><span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image0</span><span class="p">))</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image0</span><span class="p">)),</span> <span class="s2">&quot;gray&quot;</span><span class="p">),</span>
-          <span class="p">(</span><span class="n">threshold</span><span class="o">*</span><span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image0</span><span class="p">))</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image0</span><span class="p">)),</span> <span class="s2">&quot;red&quot;</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;red&quot;</span><span class="p">)</span> <span class="p">]</span>
-<span class="n">mycmap</span> <span class="o">=</span> <span class="n">mcolors</span><span class="o">.</span><span class="n">LinearSegmentedColormap</span><span class="o">.</span><span class="n">from_list</span><span class="p">(</span><span class="s1">&#39;my_colormap&#39;</span><span class="p">,</span> <span class="n">colors</span><span class="p">)</span>
+<span class="n">colors</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;white&quot;</span><span class="p">),</span>
+    <span class="p">(</span><span class="n">threshold</span><span class="o">*</span><span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image0</span><span class="p">))</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image0</span><span class="p">)),</span> <span class="s2">&quot;gray&quot;</span><span class="p">),</span>
+    <span class="p">(</span><span class="n">threshold</span><span class="o">*</span><span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image0</span><span class="p">))</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image0</span><span class="p">)),</span> <span class="s2">&quot;red&quot;</span><span class="p">),</span> 
+          <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;red&quot;</span><span class="p">)</span> <span class="p">]</span>
+<span class="n">mycmap</span> <span class="o">=</span> <span class="n">mcolors</span><span class="o">.</span><span class="n">LinearSegmentedColormap</span><span class="o">.</span><span class="n">from_list</span><span class="p">(</span><span class="s1">&#39;my_colormap&#39;</span><span class="p">,</span> 
+                                                   <span class="n">colors</span><span class="p">)</span>
 
 <span class="c1">#generate plot using new colourbar</span>
 <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">233</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;pseudo-colour&#39;</span><span class="p">),</span>
@@ -1288,7 +1285,7 @@ Requirement already satisfied: numpy&gt;=1.11.3 in /home/nbuser/anaconda3_501/li
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>(&lt;matplotlib.image.AxesImage at 0x7f99cbf649e8&gt;, None)</pre>
+<pre>(&lt;matplotlib.image.AxesImage at 0x7f99c6edeef0&gt;, None)</pre>
 </div>
 
 </div>
@@ -1315,7 +1312,7 @@ Requirement already satisfied: numpy&gt;=1.11.3 in /home/nbuser/anaconda3_501/li
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="point-operations">point operations<a class="anchor-link" href="#point-operations"> </a></h2><p>A point operation is a modification of a pixel value which is based on that pixel value and is independent of location or neighboring values. If we let x represent a digital imge and $x_{i,j}$ is the Dn of any pixel and Y the output pixel of any image then we describe any point operations as:
+<h2 id="Point-operations">Point operations<a class="anchor-link" href="#Point-operations"> </a></h2><p>A point operation is a modification of a pixel value which is based on that pixel value and is independent of location or neighboring values. If we let x represent a digital imge and $x_{i,j}$ is the Dn of any pixel and Y the output pixel of any image then we describe any point operations as:
 $$y_{i,j}=f(x_{i,j}) $$
 This is also frequently called histogram modification as its only alters the histogram of an image but not spatial relationship of image pixels.  Since our result is irrespect of its spatial location we will always have the same output for a specific input, this allows a <strong>LookUp Table (LUT)</strong> to be used. All values are computed first for every present Dn level and the the inputs are simply matched to their corresponding output. This saves computational time by not repeating the same operation.</p>
 
@@ -1333,9 +1330,12 @@ This is also frequently called histogram modification as its only alters the his
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Create histograms for all 3 bands</span>
 
-<span class="n">histogram0</span><span class="p">,</span> <span class="n">bin_edges0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">image0</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="nb">range</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image0</span><span class="p">)))</span>
-<span class="n">histogram1</span><span class="p">,</span> <span class="n">bin_edges1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">image1</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="nb">range</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image1</span><span class="p">)))</span>
-<span class="n">histogram2</span><span class="p">,</span> <span class="n">bin_edges2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">image2</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="nb">range</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image2</span><span class="p">)))</span>
+<span class="n">histogram0</span><span class="p">,</span> <span class="n">bin_edges0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">image0</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="nb">range</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> 
+                                                <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image0</span><span class="p">)))</span>
+<span class="n">histogram1</span><span class="p">,</span> <span class="n">bin_edges1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">image1</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="nb">range</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> 
+                                                <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image1</span><span class="p">)))</span>
+<span class="n">histogram2</span><span class="p">,</span> <span class="n">bin_edges2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">image2</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="nb">range</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> 
+                                                <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image2</span><span class="p">)))</span>
 
 <span class="c1">#create figure</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
@@ -1396,16 +1396,19 @@ This is also frequently called histogram modification as its only alters the his
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#set cut-off limits</span>
 <span class="n">image1_clip</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">image1</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
-<span class="c1">#can always clip top and bottom 1% of pixels in histogram as a standard range.</span>
+<span class="c1">#can always clip top and bottom 1% of pixels in histogram as a standard</span>
+<span class="c1">#range</span>
 
 <span class="c1">#visualise change</span>
 <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
 
 <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">221</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;original&#39;</span><span class="p">),</span> 
-<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">image1</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image0</span><span class="p">),[</span><span class="mi">0</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image0</span><span class="p">)]),</span> <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">image1</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image0</span><span class="p">),[</span><span class="mi">0</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image0</span><span class="p">)]),</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
 
 <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">222</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;clipped&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">image1_clip</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image1_clip</span><span class="p">),[</span><span class="mi">0</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image1_clip</span><span class="p">)]),</span> <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">image1_clip</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image1_clip</span><span class="p">),[</span><span class="mi">0</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image1_clip</span><span class="p">)]),</span> 
+<span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
@@ -1485,10 +1488,12 @@ $$ y = ax + b $$</p>
 <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
 
 <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">221</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;clipped&#39;</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">250</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">image1_clip</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image1_clip</span><span class="p">),[</span><span class="mi">0</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image1_clip</span><span class="p">)]),</span> <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">image1_clip</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image1_clip</span><span class="p">),</span>
+    <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image1_clip</span><span class="p">)]),</span> <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
 
 <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">222</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Linear scale&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">LCE</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image1</span><span class="p">),[</span><span class="mi">0</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image1</span><span class="p">)]),</span> <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">LCE</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image1</span><span class="p">),[</span><span class="mi">0</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image1</span><span class="p">)]),</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
 
 <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">224</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;LCE&#39;</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">set_cmap</span><span class="p">(</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">LCE</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
@@ -1617,7 +1622,7 @@ $$ y = ax + b $$</p>
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Balance-contrast-enhancement-technique-(BCET)">Balance contrast enhancement technique (BCET)<a class="anchor-link" href="#Balance-contrast-enhancement-technique-(BCET)"> </a></h2>
+<h3 id="Balance-Contrast-Enhancement-Technique-(BCET)">Balance Contrast Enhancement Technique (BCET)<a class="anchor-link" href="#Balance-Contrast-Enhancement-Technique-(BCET)"> </a></h3>
 </div>
 </div>
 </div>
@@ -1738,9 +1743,12 @@ $$ y = ax + b $$</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">histogram_BCET0</span><span class="p">,</span> <span class="n">bin_edges0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">image_BCET0</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="nb">range</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image0</span><span class="p">)))</span>
-<span class="n">histogram_BCET1</span><span class="p">,</span> <span class="n">bin_edges1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">image_BCET1</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="nb">range</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image1</span><span class="p">)))</span>
-<span class="n">histogram_BCET2</span><span class="p">,</span> <span class="n">bin_edges2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">image_BCET2</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="nb">range</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image2</span><span class="p">)))</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">histogram_BCET0</span><span class="p">,</span> <span class="n">bin_edges0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">image_BCET0</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> 
+                                        <span class="nb">range</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image0</span><span class="p">)))</span>
+<span class="n">histogram_BCET1</span><span class="p">,</span> <span class="n">bin_edges1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">image_BCET1</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> 
+                                        <span class="nb">range</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image1</span><span class="p">)))</span>
+<span class="n">histogram_BCET2</span><span class="p">,</span> <span class="n">bin_edges2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">image_BCET2</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> 
+                                        <span class="nb">range</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image2</span><span class="p">)))</span>
 
 <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
 <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">222</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;bands histograms BCET&quot;</span><span class="p">)</span>
@@ -1801,7 +1809,7 @@ $$ y = ax + b $$</p>
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="golden-rules-for-good-contrast-enhancement">golden rules for good contrast enhancement<a class="anchor-link" href="#golden-rules-for-good-contrast-enhancement"> </a></h2><ul>
+<h3 id="Golden-rules-for-good-contrast-enhancement">Golden rules for good contrast enhancement<a class="anchor-link" href="#Golden-rules-for-good-contrast-enhancement"> </a></h3><ul>
 <li>after any complex image processing, you wil still need to apply contrast enhancement to view the results properly</li>
 <li>visual observation is best to judge image quality</li>
 <li>Before extracting spectral profiles the data should laways be BCET stretched beforehand</li>
