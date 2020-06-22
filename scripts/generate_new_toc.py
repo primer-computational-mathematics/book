@@ -93,12 +93,12 @@ with open(tmpify('_toc.yml'), 'w') as outfile:
             filepath = os.sep.join((root, file))
             level = filepath.count(os.sep)
             if ext in ('.md',):
-                title = root.split(os.sep)[-1].capitalize()
+                title = root.split(os.sep)[-1].title()
                 outfile.write(leveltext[level-1].substitute(path=fix(filepath),
                                                           title=title))
                 outfile.write("  "*(level-1)+'sections:\n')
             if ext in ('.ipynb',):
-                title = name.replace('_', ' ').capitalize()
+                title = name.replace('_', ' ').title()
 
                 outfile.write(leveltext[level].substitute(path=fix(filepath),
                                                           title=title))
