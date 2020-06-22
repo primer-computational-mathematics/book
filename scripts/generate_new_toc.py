@@ -14,15 +14,17 @@ def use_nested():
 
 def fix(path):
     if use_nested():
-        return path
+        newpath = path.replace('notebooks'+os.sep, '', 1)
     else:
         newpath = '__'.join(path.split(os.sep)[1:])
-        shutil.copy(path, os.sep.join(('_tmp', newpath)))
-        return newpath
+    os.makedirs(os.sep.join(('_tmp', os.path.dirname(newpath))),
+                exist_ok=True)
+    shutil.copy(path, os.sep.join(('_tmp', newpath)))
+    return newpath
 
 def tmpify(path):
     if use_nested():
-        return path
+        return path.replace('notebooks', '_tmp', 1)
     else:
         return os.sep.join(('_tmp', path))
 
@@ -39,7 +41,7 @@ url = argv_or_default(2, '')
 
 with open('_newconfig.yml.in', 'r') as template_file:
     template = Template(template_file.read())
-with open(tmpify('_config.yml'), 'w') as outfile:
+with open('_tmp'+os.sep+'_config.yml', 'w') as outfile:
     outfile.write(template.substitute(logopath=fix(os.sep.join(("notebooks",
                                                                 "images",
                                                                 "logo",
@@ -70,7 +72,7 @@ skiplist= [os.sep.join(('notebooks','images')),]
 
 oldlevel = 1
 
-with open(tmpify('_toc.yml'), 'w') as outfile:
+with open('_tmp'+os.sep+'_toc.yml', 'w') as outfile:
 
     ## scan the files in the directories
 
@@ -95,14 +97,13 @@ with open(tmpify('_toc.yml'), 'w') as outfile:
             
             outfile.write(leveltext[level-1].substitute(path=fix(filepath),
                                                           title=title))
-        else:
+            outfile.write("  "*(level-1)+'sections:\n')
+        elif 'intro.ipynb' in files:
             filepath = os.sep.join((root, 'intro.ipynb'))
             level = filepath.count(os.sep)
             
             outfile.write(leveltext[level-1].substitute(path=fix(filepath),
                                                           title=title))
-
-        if len(glob.glob(os.sep.join((root, '*.ipynb'))))>1:
             outfile.write("  "*(level-1)+'sections:\n')
         
         for file in files:

@@ -30,7 +30,7 @@ jobs:
     - name: Build the book
       run: |
         python3 scripts/generate_new_toc.py
-        cat _toc.yml
+        cd _tmp
         jupyter-book build .
 
     # Push the book's HTML to github-pages
@@ -38,4 +38,4 @@ jobs:
       uses: peaceiris/actions-gh-pages@v3.5.9
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./_build/html
+        publish_dir: ./_tmp/_build/html
