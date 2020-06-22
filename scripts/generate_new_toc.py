@@ -6,23 +6,30 @@ import glob
 from string import Template
 import shutil
 
-shutil.rmtree('_tmp', ignore_errors=True)
+# remove any previous attempts
+if os.path.isdir('_tmp'):
+    shutil.rmtree('_tmp')
 os.mkdir('_tmp')
+shutil.copytree(os.sep.join(('notebooks','images')),
+                os.sep.join(('_tmp','images')))
+skiplist= [os.sep.join(('notebooks','images')),]
 
 def use_nested():
-    return sys.platform is not 'win32'
+    return sys.platform != 'win32'
 
 def fix(path):
     if use_nested():
-        return path
+        newpath = path.replace('notebooks'+os.sep, '', 1)
     else:
         newpath = '__'.join(path.split(os.sep)[1:])
-        shutil.copy(path, os.sep.join(('_tmp', newpath)))
-        return newpath
+    os.makedirs(os.sep.join(('_tmp', os.path.dirname(newpath))),
+                exist_ok=True)
+    shutil.copy(path, os.sep.join(('_tmp', newpath)))
+    return newpath
 
 def tmpify(path):
     if use_nested():
-        return path
+        return path.replace('notebooks', '_tmp', 1)
     else:
         return os.sep.join(('_tmp', path))
 
@@ -39,7 +46,7 @@ url = argv_or_default(2, '')
 
 with open('_newconfig.yml.in', 'r') as template_file:
     template = Template(template_file.read())
-with open(tmpify('_config.yml'), 'w') as outfile:
+with open('_tmp'+os.sep+'_config.yml', 'w') as outfile:
     outfile.write(template.substitute(logopath=fix(os.sep.join(("notebooks",
                                                                 "images",
                                                                 "logo",
@@ -60,17 +67,9 @@ subsection = Template("""    - title: ${title}
 leveltext = [None, chapter, section, subsection]
 
 
-for root, dirs, files in os.walk(os.sep.join(("notebooks",
-                                              "images"))):
-    for file in files:
-        fix(os.sep.join((root, file)))
-
-skiplist= [os.sep.join(('notebooks','images')),]
-
-
 oldlevel = 1
 
-with open(tmpify('_toc.yml'), 'w') as outfile:
+with open('_tmp'+os.sep+'_toc.yml', 'w') as outfile:
 
     ## scan the files in the directories
 
@@ -82,21 +81,43 @@ with open(tmpify('_toc.yml'), 'w') as outfile:
         if root == 'notebooks':
             ## Skip the base level
             continue
+
         for dir in dirs:
             if dir.startswith('.'):
                 skiplist.append(os.sep.join((root, dir)))
         if root.startswith(tuple(skiplist)):
             continue
+
+        exts = set(os.path.splitext(file)[1] for file in files)
+        if ('.ipynb' not in exts and
+            '.md' not in exts):
+            shutil.copytree(root,
+            root.replace(root.rsplit(os.sep,1)[0],
+                         '_tmp', 1))
+            shutil.copytree(root,
+            root.replace(root.rsplit(os.sep,1)[0],
+                         os.sep.join(('_tmp', '_build', 'html')), 1))
+
+        title = root.split(os.sep)[-1].title()
+        if 'intro.md' in files:
+            filepath = os.sep.join((root, 'intro.md'))
+            level = filepath.count(os.sep)
+            
+            outfile.write(leveltext[level-1].substitute(path=fix(filepath),
+                                                          title=title))
+            outfile.write("  "*(level-1)+'sections:\n')
+        elif 'intro.ipynb' in files:
+            filepath = os.sep.join((root, 'intro.ipynb'))
+            level = filepath.count(os.sep)
+            
+            outfile.write(leveltext[level-1].substitute(path=fix(filepath),
+                                                          title=title))
+            outfile.write("  "*(level-1)+'sections:\n')
         
         for file in files:
             name, ext = os.path.splitext(file)
             filepath = os.sep.join((root, file))
             level = filepath.count(os.sep)
-            if ext in ('.md',):
-                title = root.split(os.sep)[-1].title()
-                outfile.write(leveltext[level-1].substitute(path=fix(filepath),
-                                                          title=title))
-                outfile.write("  "*(level-1)+'sections:\n')
             if ext in ('.ipynb',):
                 title = name.replace('_', ' ').title()
 
