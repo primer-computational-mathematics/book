@@ -87,16 +87,28 @@ with open(tmpify('_toc.yml'), 'w') as outfile:
                 skiplist.append(os.sep.join((root, dir)))
         if root.startswith(tuple(skiplist)):
             continue
+
+        title = root.split(os.sep)[-1].title()
+        if 'intro.md' in files:
+            filepath = os.sep.join((root, 'intro.md'))
+            level = filepath.count(os.sep)
+            
+            outfile.write(leveltext[level-1].substitute(path=fix(filepath),
+                                                          title=title))
+        else:
+            filepath = os.sep.join((root, 'intro.ipynb'))
+            level = filepath.count(os.sep)
+            
+            outfile.write(leveltext[level-1].substitute(path=fix(filepath),
+                                                          title=title))
+
+        if len(glob.glob(os.sep.join((root, '*.ipynb'))))>1:
+            outfile.write("  "*(level-1)+'sections:\n')
         
         for file in files:
             name, ext = os.path.splitext(file)
             filepath = os.sep.join((root, file))
             level = filepath.count(os.sep)
-            if ext in ('.md',):
-                title = root.split(os.sep)[-1].title()
-                outfile.write(leveltext[level-1].substitute(path=fix(filepath),
-                                                          title=title))
-                outfile.write("  "*(level-1)+'sections:\n')
             if ext in ('.ipynb',):
                 title = name.replace('_', ' ').title()
 
