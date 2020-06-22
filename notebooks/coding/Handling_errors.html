@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>The Python Programming Language &#8212; ESE Jupyter Material</title>
+    <title>Handling errors &#8212; ESE Jupyter Material</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
     <link href="../../_static/css/index.css" rel="stylesheet">
     <link rel="stylesheet" href="../../_static/sphinx-book-theme.css" type="text/css" />
@@ -31,8 +31,8 @@
     <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Sets" href="Sets.html" />
-    <link rel="prev" title="Landing page" href="../intro.html" />
+    <link rel="next" title="File handling in Python" href="File_handling.html" />
+    <link rel="prev" title="Flow control statements" href="Flow_control_statements.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="docsearch:language" content="en">
@@ -71,7 +71,7 @@
     <a href="../intro.html">Landing page</a>
   </li>
   <li class="active">
-    <a href="">Coding</a>
+    <a href="intro.html">Coding</a>
   <ul class="nav sidenav_l2">
     <li class="">
       <a href="Sets.html">Sets</a>
@@ -106,8 +106,8 @@
     <li class="">
       <a href="Flow_control_statements.html">Flow Control Statements</a>
     </li>
-    <li class="">
-      <a href="Handling_errors.html">Handling Errors</a>
+    <li class="active">
+      <a href="">Handling Errors</a>
     </li>
     <li class="">
       <a href="File_handling.html">File Handling</a>
@@ -179,9 +179,9 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../_sources/notebooks/coding/intro.md"><button type="button"
+        <a class="dropdown-buttons" href="../../_sources/notebooks/coding/Handling_errors.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.md</button></a>
+                data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
             onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
@@ -198,11 +198,49 @@
 
         <!-- Launch buttons -->
 
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/notebooks/coding/Handling_errors.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
     </div>
     <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
 
 <nav id="bd-toc-nav">
     <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#error-types" class="nav-link">Error types</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#raising-errors" class="nav-link">Raising errors</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#catching-errors" class="nav-link">Catching errors</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#try-and-except-blocks" class="nav-link">Try and except blocks</a>
+        </li>
+    
+            </ul>
+        </li>
     
     </ul>
 </nav>
@@ -215,10 +253,92 @@
         
               <div>
                 
-  <div class="section" id="the-python-programming-language">
-<h1>The Python Programming Language<a class="headerlink" href="#the-python-programming-language" title="Permalink to this headline">¶</a></h1>
-<p>Landing Page for Python.</p>
-<div class="toctree-wrapper compound">
+  <div class="section" id="handling-errors">
+<h1>Handling errors<a class="headerlink" href="#handling-errors" title="Permalink to this headline">¶</a></h1>
+<p>When an <em>error</em> occurs in Python, an <em>exception</em> is <em>raised</em>.</p>
+<div class="section" id="error-types">
+<h2>Error types<a class="headerlink" href="#error-types" title="Permalink to this headline">¶</a></h2>
+<p>Full list of built in exceptions is available here:
+https://docs.python.org/3/library/exceptions.html#concrete-exceptions</p>
+<p>For example, when we create a tuple with four elements and want to print a 5th element, we get this error message:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>flower_names = (&quot;iris&quot;,
+                &quot;poppy&quot;,
+                &quot;dandelion&quot;,
+                &quot;rose&quot;)
+
+print(flower_names[4])
+
+---------------------------------------------------------------------------
+IndexError                                Traceback (most recent call last)
+&lt;ipython-input-2-3497b57dd596&gt; in &lt;module&gt;
+      4                 &quot;rose&quot;)
+      5 
+----&gt; 6 print(flower_names[4])
+
+IndexError: tuple index out of range
+</pre></div>
+</div>
+<p>IndexError refers to incorrect index, such as out of bounds.</p>
+</div>
+<div class="section" id="raising-errors">
+<h2>Raising errors<a class="headerlink" href="#raising-errors" title="Permalink to this headline">¶</a></h2>
+<p>In-built functions trigger or <em>raise</em> errors in Python. We can do that as well by using <em>raise</em>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>raise ValueError
+
+---------------------------------------------------------------------------
+ValueError                                Traceback (most recent call last)
+&lt;ipython-input-5-e4c8e09828d5&gt; in &lt;module&gt;
+----&gt; 1 raise ValueError
+
+ValueError:
+</pre></div>
+</div>
+</div>
+<div class="section" id="catching-errors">
+<h2>Catching errors<a class="headerlink" href="#catching-errors" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="try-and-except-blocks">
+<h3>Try and except blocks<a class="headerlink" href="#try-and-except-blocks" title="Permalink to this headline">¶</a></h3>
+<p>To handle errors in the code gracefully, we can use <em>try</em> and <em>except</em> blocks to avoid unnecessary crashes of the program. The <em>try</em> block executes the program and if the program fails, exception is raised and we can recover from the error. The syntax is:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>try:
+    # some code
+except ExceptionName1:
+    # some code
+except ExceptionName2:
+    # some code
+…
+except:
+    # lines to execute if there was an exception not caught above
+else:
+    # lines to execute if there was no exception at all
+</pre></div>
+</div>
+<p><em>else</em> is optional, at least one <em>except</em> needs to be raised. An example code below:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="s2">&quot;ten&quot;</span>
+
+<span class="k">try</span><span class="p">:</span>
+    
+    <span class="c1"># Try to create a number out of a string</span>
+    
+    <span class="nb">float</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    
+<span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+    
+    <span class="c1"># Raise an error if characters are not numbers</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Exception was raised.</span><span class="se">\n</span><span class="s2">Please use digits in your string.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Exception was raised.
+Please use digits in your string.
+</pre></div>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 
@@ -231,8 +351,8 @@
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="../intro.html" title="previous page">Landing page</a>
-    <a class='right-next' id="next-link" href="Sets.html" title="next page">Sets</a>
+    <a class='left-prev' id="prev-link" href="Flow_control_statements.html" title="previous page">Flow control statements</a>
+    <a class='right-next' id="next-link" href="File_handling.html" title="next page">File handling in Python</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
