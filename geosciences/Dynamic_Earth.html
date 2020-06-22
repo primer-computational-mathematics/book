@@ -1,0 +1,881 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Dynamic Earth and Planets &#8212; ESE Jupyter Material</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/sphinx-book-theme.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/mystnb.js"></script>
+    <script src="../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Creating maps in Cartopy" href="cartography_cartopy.html" />
+    <link rel="prev" title="image filtering" href="Image_Filtering.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  <img src="../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">ESE Jupyter Material</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  
+  <ul class="nav sidenav_l1">
+  <li class="">
+    <a href="../intro.html">Landing page</a>
+  </li>
+  <li class="">
+    <a href="../coding/intro.html">Coding</a>
+  </li>
+  <li class="">
+    <a href="../mathematics/intro.html">Mathematics</a>
+  </li>
+  <li class="active">
+    <a href="intro.html">Geosciences</a>
+  <ul class="nav sidenav_l2">
+    <li class="">
+      <a href="Image_Filtering.html">Image Filtering</a>
+    </li>
+    <li class="active">
+      <a href="">Dynamic Earth</a>
+    </li>
+    <li class="">
+      <a href="cartography_cartopy.html">Cartography Cartopy</a>
+    </li>
+  </ul>
+  </li>
+  <li class="">
+    <a href="../genindex.html">Index</a>
+  </li>
+</ul>
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/geosciences/Dynamic_Earth.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/geosciences/Dynamic_Earth.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#theory" class="nav-link">Theory</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#plate-tectonics" class="nav-link">Plate tectonics</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#mid-ocean-ridges-the-divergent-boundary" class="nav-link">Mid-ocean ridges - the divergent boundary</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#exercise" class="nav-link">Exercise</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#seafloor-age-vs-depth-relationship" class="nav-link">Seafloor age vs. depth relationship</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#seafloor-age-from-magnetic-anomalies" class="nav-link">Seafloor age from magnetic anomalies</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#etopo1-elevation-dataset" class="nav-link">ETOPO1 elevation dataset</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#seafloor-depth-based-on-real-age-data-line-test" class="nav-link">Seafloor depth based on real age data (line test)</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#seafloor-age-based-on-real-bathymetry-data" class="nav-link">Seafloor age based on real bathymetry data</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+    </ul>
+</nav>
+
+
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="dynamic-earth-and-planets">
+<h1>Dynamic Earth and Planets<a class="headerlink" href="#dynamic-earth-and-planets" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="theory">
+<h2>Theory<a class="headerlink" href="#theory" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="plate-tectonics">
+<h3>Plate tectonics<a class="headerlink" href="#plate-tectonics" title="Permalink to this headline">¶</a></h3>
+<p>The fundamental theory behind behaviour of the Earth’s outer shell, the lithosphere, is called plate tectonics. The Earth is broken into multiple plates that interact at their boundaries. There are three types of interaction - plates can converge, diverge or move along their boundaries.</p>
+<img src="data/plate_boundaries.png" alt="tectonic plate boundaries on Earth" style="width:600px;"/>
+</div>
+<div class="section" id="mid-ocean-ridges-the-divergent-boundary">
+<h3>Mid-ocean ridges - the divergent boundary<a class="headerlink" href="#mid-ocean-ridges-the-divergent-boundary" title="Permalink to this headline">¶</a></h3>
+<p>The divergent boundary was discovered in 1960s, as geophycisists discovered that new oceanic crust is formed at mid-ocean ridges. As the new oceanic crust is formed, the older crust is pushed away from the ridges and as it cools, becomes thicker and subsides.</p>
+<p>The Earth’s magnetic field is not the same over time. On avergae, 4 or 5 magnetic reversals happen within 1 million years. These reversals are recorded on the seafloor as new rocks produced at mid-ocean ridges have magnetite align with magnetic field at a time:</p>
+<img src="data/magnetic_field_seafloor.png" alt="Magnetic anomalies on seafloor" style="width:600px;"/>
+<p>Magnetic anomalies can tell about the age of seafloor. These anomalies have been very well mapped across the world and dating techniques such as radioactive decauy of Potassium and Argon make their age bounds very robust. As seen on the picture below, the Bruhnes is the latest magnetic reversal that happened ~800,000 years ago:</p>
+<img src="data/magnetic_anomalies.png" alt="Magnetic anomalies on seafloor" style="width:600px;"/>
+</div>
+</div>
+<div class="section" id="exercise">
+<h2>Exercise<a class="headerlink" href="#exercise" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="seafloor-age-vs-depth-relationship">
+<h3>Seafloor age vs. depth relationship<a class="headerlink" href="#seafloor-age-vs-depth-relationship" title="Permalink to this headline">¶</a></h3>
+<p>Parsons &amp; Sclater (1977) provides a relationship between seafloor age <span class="math notranslate nohighlight">\(t\)</span> (Ma) and depth <span class="math notranslate nohighlight">\(d(t)\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[d(t) = 2500 + 350\times t^{1/2}\]</div>
+<p>where <span class="math notranslate nohighlight">\(0 &lt; t &lt; 70\)</span> Ma. In this exercise we will test the relationship on real data and check how it behaves for seafloor older than 70 Ma.</p>
+<p>Before we jump to the exercise, let’s load all necessary libraries:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib.ticker</span> <span class="k">as</span> <span class="nn">mticker</span>
+
+<span class="kn">import</span> <span class="nn">cartopy.crs</span> <span class="k">as</span> <span class="nn">ccrs</span>
+<span class="kn">import</span> <span class="nn">cartopy.feature</span> <span class="k">as</span> <span class="nn">cfeature</span>
+<span class="kn">from</span> <span class="nn">cartopy.mpl.gridliner</span> <span class="kn">import</span> <span class="n">LONGITUDE_FORMATTER</span><span class="p">,</span> <span class="n">LATITUDE_FORMATTER</span>
+
+<span class="kn">from</span> <span class="nn">netCDF4</span> <span class="kn">import</span> <span class="n">Dataset</span> <span class="k">as</span> <span class="n">netcdf_dataset</span>
+
+<span class="kn">import</span> <span class="nn">cmocean</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">interpolate</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="seafloor-age-from-magnetic-anomalies">
+<h3>Seafloor age from magnetic anomalies<a class="headerlink" href="#seafloor-age-from-magnetic-anomalies" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://agupubs.onlinelibrary.wiley.com/doi/full/10.1029/2007GC001743">Müller et al. (2008)</a> provides a comprehensive dataset of seafloor ages across the world. The dataset was compiled based on various magentic surveys of seafloor, dated independently of Parsons &amp; Sclater (1977) relationship between seafloor age and depth.</p>
+<p>The dataset is free to download at ftp://ftp.earthbyte.org/earthbyte/agegrid/2008/Grids/. We downloaded ‘age.3.6.nc.bz2’ file and plotted using this code:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># Load seaflor age downloaded from
+# https://www.earthbyte.org/Resources/agegrid2008.html
+fname = &quot;data/seafloor_ages.nc&quot;
+
+dataset = netcdf_dataset(fname)
+
+# Manual says that age is stored in
+# Ma x 100 for storage reasons
+age = dataset.variables[&#39;z&#39;][:]/100.
+lats_age = dataset.variables[&#39;y&#39;][:]
+lons_age = dataset.variables[&#39;x&#39;][:]
+
+# Create figure
+plt.figure(figsize=(7,5))
+ax = plt.axes(projection=ccrs.Robinson())
+ax.coastlines(resolution=&#39;110m&#39;)
+ax.gridlines()
+
+vmin = 0
+vmax = 200
+
+# Set how many contour lines to display
+v = np.linspace(vmin, vmax, 11, endpoint=True)
+
+# Set how many ticks to display in colourbar
+v2 = np.linspace(vmin, vmax, 11, endpoint=True)
+
+# Create contour plot
+contplot = ax.contourf(lons_age, lats_age, age, v,
+                       cmap=&quot;gist_rainbow&quot;,
+                       transform=ccrs.PlateCarree())
+# Create colourbar
+cbar = plt.colorbar(contplot, ax=ax, fraction=0.046, pad=0.01, 
+                    label=&#39;Age [Ma]&#39;, ticks = v2)
+plt.show()
+</pre></div>
+</div>
+<p>The dataset is really large, therefore, we will only display the end result here. Note how easily we can pick out the position of Mid-Atlantic ridge tracing the youngest rocks (red colours) in the Atlantic. The oldest rocks on the other hand are coloured in magenta and occur at the continental margins and in the Pacific.</p>
+<img src="data/Mueller_2008_map.png" alt="Mueller 2008 magnetic map" style="width:600px;"/></div>
+<div class="section" id="etopo1-elevation-dataset">
+<h3>ETOPO1 elevation dataset<a class="headerlink" href="#etopo1-elevation-dataset" title="Permalink to this headline">¶</a></h3>
+<p>To compare seafloor ages calculated from magnetic anomalies, we downloaded ETOPO1 bathymetry data at https://maps.ngdc.noaa.gov/viewers/grid-extract/index.html. This dataset is of higher resolution, therefore we will be looking only at North Atlantic part:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load ETOPO1 bathymetry data downloaded from</span>
+<span class="c1"># https://maps.ngdc.noaa.gov/viewers/grid-extract/index.html</span>
+<span class="n">fname</span> <span class="o">=</span> <span class="s2">&quot;data/etopo1_atlantic.nc&quot;</span>
+
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">netcdf_dataset</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+
+<span class="c1"># To find variable names</span>
+<span class="c1"># print(dataset.variables)</span>
+<span class="n">elev</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">variables</span><span class="p">[</span><span class="s1">&#39;Band1&#39;</span><span class="p">][:]</span>
+<span class="n">lats_etopo</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">variables</span><span class="p">[</span><span class="s1">&#39;lat&#39;</span><span class="p">][:]</span>
+<span class="n">lons_etopo</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">variables</span><span class="p">[</span><span class="s1">&#39;lon&#39;</span><span class="p">][:]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we can create a plot of elevation in North Atlantic using Cartopy:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">subplot_kw</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">()),</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_extent</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">lons_etopo</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">lons_etopo</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">lats_etopo</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">lats_etopo</span><span class="p">)</span><span class="o">-</span><span class="mi">10</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">coastlines</span><span class="p">(</span><span class="n">resolution</span><span class="o">=</span><span class="s1">&#39;10m&#39;</span><span class="p">)</span>
+
+<span class="c1"># Set colourbar limits</span>
+<span class="n">vmin</span> <span class="o">=</span> <span class="o">-</span><span class="mi">7000</span>
+<span class="n">vmax</span> <span class="o">=</span> <span class="mi">7000</span>
+
+<span class="c1"># Set how many contour lines to display</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Set how many ticks to display in colourbar</span>
+<span class="n">v2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Create a contour plot</span>
+<span class="n">contplot</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">lons_etopo</span><span class="p">,</span> <span class="n">lats_etopo</span><span class="p">,</span> <span class="n">elev</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span>
+                       <span class="n">cmap</span><span class="o">=</span><span class="n">cmocean</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">topo</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax</span><span class="p">,</span>
+                       <span class="n">transform</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">())</span>
+
+<span class="n">cbar</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">contplot</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">fraction</span><span class="o">=</span><span class="mf">0.046</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">ticks</span><span class="o">=</span><span class="n">v2</span><span class="p">,</span> 
+                    <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Elevation [m]&#39;</span><span class="p">,</span> <span class="n">orientation</span><span class="o">=</span><span class="s2">&quot;horizontal&quot;</span><span class="p">)</span>
+
+<span class="c1"># Create a line that will be used to test the equation</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="o">-</span><span class="mf">46.81</span><span class="p">,</span> <span class="o">-</span><span class="mf">30.55</span><span class="p">],</span> <span class="p">[</span><span class="mf">25.43</span><span class="p">,</span> <span class="mf">22.42</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;yellow&quot;</span><span class="p">,</span>
+         <span class="n">transform</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">())</span>
+
+<span class="c1"># Sort out gridlines and their density</span>
+<span class="n">xticks_extent</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">75</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">yticks_extent</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+
+<span class="n">gl</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">gridlines</span><span class="p">(</span><span class="n">linewidths</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">gl</span><span class="o">.</span><span class="n">xlabels_top</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">gl</span><span class="o">.</span><span class="n">xlabels_bottom</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">gl</span><span class="o">.</span><span class="n">ylabels_left</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">gl</span><span class="o">.</span><span class="n">ylabels_right</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">gl</span><span class="o">.</span><span class="n">xlocator</span> <span class="o">=</span> <span class="n">mticker</span><span class="o">.</span><span class="n">FixedLocator</span><span class="p">(</span><span class="n">xticks_extent</span><span class="p">)</span>
+<span class="n">gl</span><span class="o">.</span><span class="n">ylocator</span> <span class="o">=</span> <span class="n">mticker</span><span class="o">.</span><span class="n">FixedLocator</span><span class="p">(</span><span class="n">yticks_extent</span><span class="p">)</span>
+<span class="n">gl</span><span class="o">.</span><span class="n">xformatter</span> <span class="o">=</span> <span class="n">LONGITUDE_FORMATTER</span>
+<span class="n">gl</span><span class="o">.</span><span class="n">yformatter</span> <span class="o">=</span> <span class="n">LATITUDE_FORMATTER</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/Dynamic_Earth_6_0.png" src="../_images/Dynamic_Earth_6_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="seafloor-depth-based-on-real-age-data-line-test">
+<h3>Seafloor depth based on real age data (line test)<a class="headerlink" href="#seafloor-depth-based-on-real-age-data-line-test" title="Permalink to this headline">¶</a></h3>
+<p>The bathymetry and age data were extracted for both raster files along the yellow profile seen in the previous picture and saved a csv file in geospatial software. We can read the files with pandas module:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ages</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data/atlantic_seafloor_ages.csv&quot;</span><span class="p">)</span>
+<span class="n">ages</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>dist</th>
+      <th>lon</th>
+      <th>lat</th>
+      <th>age_ma</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.000000</td>
+      <td>-46.627525</td>
+      <td>25.303259</td>
+      <td>9.08</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.033913</td>
+      <td>-46.594128</td>
+      <td>25.297365</td>
+      <td>8.92</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.067825</td>
+      <td>-46.560731</td>
+      <td>25.291472</td>
+      <td>8.80</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.101738</td>
+      <td>-46.527335</td>
+      <td>25.285578</td>
+      <td>8.62</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.135650</td>
+      <td>-46.493938</td>
+      <td>25.279685</td>
+      <td>8.02</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">bathymetry</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data/atlantic_bathymetry.csv&quot;</span><span class="p">)</span>
+<span class="n">bathymetry</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>dist</th>
+      <th>lon</th>
+      <th>lat</th>
+      <th>depth_m</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.000000</td>
+      <td>-46.627525</td>
+      <td>25.303259</td>
+      <td>-3759</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.016939</td>
+      <td>-46.610844</td>
+      <td>25.300315</td>
+      <td>-3789</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.033877</td>
+      <td>-46.594163</td>
+      <td>25.297371</td>
+      <td>-3750</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.050816</td>
+      <td>-46.577482</td>
+      <td>25.294428</td>
+      <td>-3691</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.067755</td>
+      <td>-46.560801</td>
+      <td>25.291484</td>
+      <td>-3599</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>We want to test how good the equation fits the real data. The equation predicts the seafloor depth based on age. In pandas, we can add an extra column to the file by using syntax:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>data[&quot;col_name&quot;] = # value
+</pre></div>
+</div>
+<p>We want to calculate depth of seafloor based on age according to the Parsons &amp; Sclater (1977) relationship:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Minus sign to make depth negative to match</span>
+<span class="c1"># bathymetry dataset</span>
+<span class="n">ages</span><span class="p">[</span><span class="s2">&quot;depth_m&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="mi">2500</span><span class="o">+</span><span class="mi">350</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">ages</span><span class="o">.</span><span class="n">age_ma</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s plot the real data and predicted data based on the equation along the profile:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+
+<span class="c1"># Set colourbar boundaries</span>
+<span class="n">vmin</span> <span class="o">=</span> <span class="o">-</span><span class="mi">7000</span>
+<span class="n">vmax</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="c1"># Create scatter plot for real bathymetry</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">bathymetry</span><span class="o">.</span><span class="n">dist</span><span class="p">,</span> <span class="n">bathymetry</span><span class="o">.</span><span class="n">depth_m</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+            <span class="n">c</span><span class="o">=</span><span class="n">bathymetry</span><span class="o">.</span><span class="n">depth_m</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmocean</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">deep</span><span class="p">,</span>
+           <span class="n">vmin</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;_no_label_&quot;</span><span class="p">)</span>
+
+<span class="c1"># Create a colourbar for real bathymetry</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;ETOPO1 seafloor depth [m]&quot;</span><span class="p">,</span>
+            <span class="n">orientation</span><span class="o">=</span><span class="s2">&quot;horizontal&quot;</span><span class="p">)</span>
+
+<span class="c1"># Create a scatter plot for calculated ages</span>
+<span class="c1"># Ages are passed to &#39;c&#39; argument to</span>
+<span class="c1"># colour the line with age of each depth</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">ages</span><span class="o">.</span><span class="n">dist</span><span class="p">,</span> <span class="n">ages</span><span class="o">.</span><span class="n">depth_m</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+           <span class="n">c</span><span class="o">=</span><span class="n">ages</span><span class="o">.</span><span class="n">age_ma</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;_no_label_&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;jet&quot;</span><span class="p">)</span>
+
+<span class="c1"># Create a colourbar for seafloor age</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Seafloor age (Müller et al., 2008) [m]&quot;</span><span class="p">,</span>
+            <span class="n">orientation</span><span class="o">=</span><span class="s2">&quot;horizontal&quot;</span><span class="p">)</span>
+
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Distance along yellow line [$^\circ$]&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Seafloor depth [m]&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Bathymetry along yellow line&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/Dynamic_Earth_13_0.png" src="../_images/Dynamic_Earth_13_0.png" />
+</div>
+</div>
+<p>As we can see on the graph, curve for ages below 70 Ma fits reasonably well ETOPO1 data, as equation predicts. However, let’s quantify the root mean square error for the dataset:</p>
+<div class="math notranslate nohighlight">
+\[ RMS\ Error = \sqrt{\frac{\sum_{i=1}^{n} (\text{predicted value}- \text{observed value})^2}{n}} \]</div>
+<p>where n is the number of samples. Since our datasets are not at the same resolution (1 arc-minute vs 2 acr-minutes), we need to interpolate ages at the same intervals as bathymetry dataset:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Extract distances for bathymetry dataset</span>
+<span class="n">depths_dist</span> <span class="o">=</span> <span class="n">bathymetry</span><span class="o">.</span><span class="n">dist</span>
+
+<span class="c1"># Use scipy to interpolate in 1D distances from ages dataset</span>
+<span class="c1"># with bathymetry calculated according to the relationship</span>
+<span class="c1"># d(t) = 2500 + 350*t^1/2</span>
+
+<span class="n">f</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">interp1d</span><span class="p">(</span><span class="n">ages</span><span class="o">.</span><span class="n">dist</span><span class="p">,</span> <span class="n">ages</span><span class="o">.</span><span class="n">depth_m</span><span class="p">)</span>
+
+<span class="c1"># Get interpolated bathymetry based on ages</span>
+<span class="n">baths_interp</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">depths_dist</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now let’s define a funciton that will calculate RMS error based on predicted and observed samples:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">rmsError</span><span class="p">(</span><span class="n">predicted</span><span class="p">,</span> <span class="n">observed</span><span class="p">):</span> 
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">predicted</span><span class="o">-</span><span class="n">observed</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">predicted</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># baths_interp is the calculated bathymetry base don age</span>
+<span class="c1"># bathymetry.depth_m is real bathymetry from ETOPO1</span>
+
+<span class="n">RMS</span> <span class="o">=</span> <span class="n">rmsError</span><span class="p">(</span><span class="n">baths_interp</span><span class="p">,</span> <span class="n">bathymetry</span><span class="o">.</span><span class="n">depth_m</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;RMS error in bathymetry is </span><span class="si">%.2f</span><span class="s2"> m.&quot;</span> <span class="o">%</span> <span class="n">RMS</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>RMS error in bathymetry is 483.17 m.
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now that we have our RMS error, we can calculate how many samples are within one and two RMS errors. The expected values should be around 68% and 95%:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="c1"># compare bathymetry from the equation and real bathymetry</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">bathymetry</span><span class="p">)):</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">bathymetry</span><span class="o">.</span><span class="n">dist</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">-</span><span class="n">bathymetry</span><span class="o">.</span><span class="n">depth_m</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">&lt;=</span> <span class="n">RMS</span><span class="p">)</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+        
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Number of points within 1*RMS = </span><span class="si">%.2f</span><span class="s2"> </span><span class="si">%s</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">count</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">bathymetry</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span> <span class="s2">&quot;%&quot;</span><span class="p">))</span>
+
+<span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="c1"># compare bathymetry from the equation and real bathymetry</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">bathymetry</span><span class="p">)):</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">bathymetry</span><span class="o">.</span><span class="n">dist</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">-</span><span class="n">bathymetry</span><span class="o">.</span><span class="n">depth_m</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">&lt;=</span> <span class="mi">2</span><span class="o">*</span><span class="n">RMS</span><span class="p">)</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+        
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Number of points within 2*RMS = </span><span class="si">%.2f</span><span class="s2"> </span><span class="si">%s</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">count</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">bathymetry</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span> <span class="s2">&quot;%&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Number of points within 1*RMS = 63.25 %.
+Number of points within 2*RMS = 96.89 %.
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we can plot our RMS bounds on the same plot:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+
+<span class="c1"># Set colourbar boundaries</span>
+<span class="n">vmin</span> <span class="o">=</span> <span class="o">-</span><span class="mi">7000</span>
+<span class="n">vmax</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="c1"># Create scatter plot for real bathymetry</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">bathymetry</span><span class="o">.</span><span class="n">dist</span><span class="p">,</span> <span class="n">bathymetry</span><span class="o">.</span><span class="n">depth_m</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+            <span class="n">c</span><span class="o">=</span><span class="n">bathymetry</span><span class="o">.</span><span class="n">depth_m</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmocean</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">deep</span><span class="p">,</span>
+           <span class="n">vmin</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;_no_label_&quot;</span><span class="p">)</span>
+
+<span class="c1"># Create colourbar for real bathymetry</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;ETOPO1 seafloor depth [m]&quot;</span><span class="p">,</span>
+            <span class="n">orientation</span><span class="o">=</span><span class="s2">&quot;horizontal&quot;</span><span class="p">)</span>
+
+<span class="c1"># Create scatter plot for estimated bathymetry</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">ages</span><span class="o">.</span><span class="n">dist</span><span class="p">,</span> <span class="n">ages</span><span class="o">.</span><span class="n">depth_m</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+           <span class="n">c</span><span class="o">=</span><span class="n">ages</span><span class="o">.</span><span class="n">age_ma</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;_no_label_&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;jet&quot;</span><span class="p">)</span>
+
+<span class="c1"># Create a colourbar for seafloor age</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Seafloor age (Müller et al., 2008) [m]&quot;</span><span class="p">,</span>
+            <span class="n">orientation</span><span class="o">=</span><span class="s2">&quot;horizontal&quot;</span><span class="p">)</span>
+
+<span class="c1"># Create scatter plot for estimated bathymetry - RMS</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ages</span><span class="o">.</span><span class="n">dist</span><span class="p">,</span> <span class="n">ages</span><span class="o">.</span><span class="n">depth_m</span><span class="o">-</span><span class="n">RMS</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+         <span class="n">color</span><span class="o">=</span><span class="s2">&quot;magenta&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;$\pm$ RMS = </span><span class="si">%.2f</span><span class="s2"> m&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">RMS</span><span class="p">),</span> <span class="n">dashes</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+
+<span class="c1"># Create scatter plot for estimated bathymetry + RMS</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ages</span><span class="o">.</span><span class="n">dist</span><span class="p">,</span> <span class="n">ages</span><span class="o">.</span><span class="n">depth_m</span><span class="o">+</span><span class="n">RMS</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+         <span class="n">color</span><span class="o">=</span><span class="s2">&quot;magenta&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;_no_label&quot;</span><span class="p">,</span> <span class="n">dashes</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Distance along yellow line [$^\circ$]&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Seafloor depth [m]&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;best&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Bathymetry along yellow line&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/Dynamic_Earth_22_0.png" src="../_images/Dynamic_Earth_22_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="seafloor-age-based-on-real-bathymetry-data">
+<h3>Seafloor age based on real bathymetry data<a class="headerlink" href="#seafloor-age-based-on-real-bathymetry-data" title="Permalink to this headline">¶</a></h3>
+<p>To calculate seafloor age from ETOPO1 bathymetry data we will need to rearrange the original equation:</p>
+<div class="math notranslate nohighlight">
+\[t = \Big(\frac{d(t) - 2500}{350}\Big)^2 \]</div>
+<p>This time we will apply the equation to the entire bathymetry data from ETOPO1. We can use <em>shape</em> function to see how the data is structured:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">elev</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>(3011, 4752)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The data is a 2D array with 3011 rows and 4752 columns. It is also a numpy array. We can apply the equation on the whole array to create a new array. However, we should only use the parts where elevation is below 0 m. In order to do that, we need to mask <em>elev</em> array:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Mask elev array where anything above zero</span>
+<span class="c1"># is set to NaN which is not displayed in graphs</span>
+<span class="n">elev_seafloor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">elev</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">elev</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we can calculate ages of seafloor from ETOPO1 bathymetry. Note that elevation on seafloor is negative in our dataset, while in the equation it is positive, so we can change the sign:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ages_seafloor</span> <span class="o">=</span> <span class="p">((</span><span class="o">-</span><span class="n">elev_seafloor</span><span class="o">-</span><span class="mf">2500.</span><span class="p">)</span><span class="o">/</span><span class="mf">350.</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Since the original dataset is large, we can provide the code and the end result for side by side comparison of the ages calculated based on bathymetry and real age based on magnetic anomalies:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>plt.rcParams.update({&#39;font.size&#39;: 12})
+
+plt.figure(figsize=(7,10))
+
+# Create subplot for real age data
+ax1 = plt.subplot(2, 1, 1, projection=ccrs.PlateCarree())
+
+extent = [np.min(lons_etopo), np.max(lons_etopo), np.min(lats_etopo), np.max(lats_etopo)-10]
+
+ax1.set_title(&quot;Seafloor age from magnetic anomalies&quot;)
+ax1.set_extent(extent)
+ax1.coastlines(&#39;110m&#39;, lw=1)
+
+vmin = 0
+vmax = 200
+
+# Set how many contour lines to display
+v = np.linspace(vmin, vmax, 11, endpoint=True)
+
+# Set how many ticks to display in colourbar
+v2 = np.linspace(vmin, vmax, 11, endpoint=True)
+
+# Create contour plot
+contplot = ax1.contourf(lons_age, lats_age, age, v,
+                       cmap=&quot;gist_rainbow&quot;,
+                       transform=ccrs.PlateCarree())
+# Create colourbar
+cbar = plt.colorbar(contplot, ax=ax1, fraction=0.046, pad=0.01, 
+                    label=&#39;Age [Ma]&#39;, ticks = v2)
+
+# Sort out gridlines and their density
+xticks_extent = list(np.arange(-75, 10, 10))
+yticks_extent = list(np.arange(-10, 80, 10))
+
+gl = ax1.gridlines(linewidths=0.1)
+gl.xlabels_top = False
+gl.xlabels_bottom = True
+gl.ylabels_left = True
+gl.ylabels_right = False
+gl.xlocator = mticker.FixedLocator(xticks_extent)
+gl.ylocator = mticker.FixedLocator(yticks_extent)
+gl.xformatter = LONGITUDE_FORMATTER
+gl.yformatter = LATITUDE_FORMATTER
+
+
+# Create subplot for predicted age based on elevation
+ax2 = plt.subplot(2, 1, 2, projection=ccrs.PlateCarree())
+
+ax2.set_title(&quot;Predicted seafloor age from ETOPO1 bathymetry&quot;)
+ax2.set_extent(extent)
+ax2.coastlines(&#39;110m&#39;, lw=1)
+
+
+# Create contour plot
+contplot = ax2.contourf(lons_etopo, lats_etopo, ages_seafloor, v,
+                       cmap=&quot;gist_rainbow&quot;,
+                       transform=ccrs.PlateCarree())
+# Create colourbar
+cbar = plt.colorbar(contplot, ax=ax2, fraction=0.046, pad=0.01, 
+                    label=&#39;Predicted seafloor age [Ma]&#39;, ticks = v2)
+
+# Sort out gridlines and their density
+xticks_extent = list(np.arange(-75, 10, 10))
+yticks_extent = list(np.arange(-10, 80, 10))
+
+gl = ax2.gridlines(linewidths=0.1)
+gl.xlabels_top = False
+gl.xlabels_bottom = True
+gl.ylabels_left = True
+gl.ylabels_right = False
+gl.xlocator = mticker.FixedLocator(xticks_extent)
+gl.ylocator = mticker.FixedLocator(yticks_extent)
+gl.xformatter = LONGITUDE_FORMATTER
+gl.yformatter = LATITUDE_FORMATTER
+
+plt.subplots_adjust(wspace=0.1)
+plt.show()
+</pre></div>
+</div>
+<p>Comparing real seafloor age and age calculated based on depth, we can see that the relationship does not work for ages above 70 Ma. In the real age dataset, we can see that seafloor near continental margins is &gt; 140 Ma old, while according to the equation from Parsons &amp; Sclatter (1977), seafloor there would very young.</p>
+<img src="data/seafloor_ages_north_atlantic_comparison.png" alt="Real seafloor age vs. age derived from bathymetry" style="width:600px;"/></div>
+</div>
+</div>
+
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="Image_Filtering.html" title="previous page">image filtering</a>
+    <a class='right-next' id="next-link" href="cartography_cartopy.html" title="next page">Creating maps in Cartopy</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Imperial College London<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../_static/js/index.js"></script>
+    
+  </body>
+</html>
