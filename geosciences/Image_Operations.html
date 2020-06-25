@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width,minimum-scale=1">
 
   <title>Image Operations</title>
-  <meta name="description" content="        Image Operations    Remote Sensing this notebook covers:Image displayPoint operationsContrast enhancementBCETGolden rulesImage display A digital imag...">
+  <meta name="description" content="        Image Operations    Remote Sensing Image display A digital image is a 2D array of numbers in lines and columns or a raster dataset. It can also have ...">
 
   <link rel="canonical" href="https://primer-computational-mathematics.github.io/book/geosciences/Image_Operations.html">
   <link rel="alternate" type="application/rss+xml" title="ESE Jupyter Material" href="https://primer-computational-mathematics.github.io/book/feed.xml">
@@ -14,7 +14,7 @@
   <meta property="og:url"         content="https://primer-computational-mathematics.github.io/book/geosciences/Image_Operations.html" />
 <meta property="og:type"        content="article" />
 <meta property="og:title"       content="Image Operations" />
-<meta property="og:description" content="        Image Operations    Remote Sensing this notebook covers:Image displayPoint operationsContrast enhancementBCETGolden rulesImage display A digital imag..." />
+<meta property="og:description" content="        Image Operations    Remote Sensing Image display A digital image is a 2D array of numbers in lines and columns or a raster dataset. It can also have ..." />
 <meta property="og:image"       content="https://primer-computational-mathematics.github.io//book/images/logo/logo.png" />
 
 <meta name="twitter:card" content="summary">
@@ -26,9 +26,9 @@
   "@type": "NewsArticle",
   "mainEntityOfPage": "https://primer-computational-mathematics.github.io/book/geosciences/Image_Operations.html",
   "headline": "Image Operations",
-  "datePublished": "2020-06-25T10:25:39+00:00",
-  "dateModified": "2020-06-25T10:25:39+00:00",
-  "description": "        Image Operations    Remote Sensing this notebook covers:Image displayPoint operationsContrast enhancementBCETGolden rulesImage display A digital imag...",
+  "datePublished": "2020-06-25T14:33:32+00:00",
+  "dateModified": "2020-06-25T14:33:32+00:00",
+  "description": "        Image Operations    Remote Sensing Image display A digital image is a 2D array of numbers in lines and columns or a raster dataset. It can also have ...",
   "author": {
     "@type": "Person",
     "name": "Imperial College London"
@@ -1211,24 +1211,15 @@ initFunction(initPrint)
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Remote-Sensing">Remote Sensing<a class="anchor-link" href="#Remote-Sensing"> </a></h1><p>this notebook covers:</p>
-<ul>
-<li>Image display</li>
-<li>Point operations<ul>
-<li>Contrast enhancement</li>
-<li>BCET</li>
-</ul>
-</li>
-<li>Golden rules</li>
-</ul>
+<h1 id="Remote-Sensing">Remote Sensing<a class="anchor-link" href="#Remote-Sensing"> </a></h1><p><a id="display"></a></p>
 <h2 id="Image-display">Image display<a class="anchor-link" href="#Image-display"> </a></h2><p>A digital image is a 2D array of numbers in lines and columns or a raster dataset. It can also have a third dimension, in the form of other layers. Each cell of a digital image is called a pixel and the number representing the brightness of the pixel is called a <strong>digital number (DN).</strong> It can be composed of any number of layers/bands.
-<img src="Data_Image_Operations/Image_Layers.png" style="width:400px;"/></p>
+<img src="Data_Image_Operations/Image_Layers.png" style="width:40%"/></p>
 <p>Not all bands are within the visible spectrum, however we can visualise them by assigning them to a colour gun in the visible spectrum. Following <strong>tristimulus colour theory</strong>, human colour perception is performed by three types of cones matching three primary colour: <strong>R</strong>ed, <strong>G</strong>reen and <strong>B</strong>lue (RGB). the combination of these three colours:
 $$ C=rR+gG+bB $$
-Allows any colour to be represented to us within the visible spectrum.</p>
-<p>Introducing some common terminoloy:</p>
+Allows any colour to be represented within the visible spectrum.</p>
+<p>Introducing some common terminology:</p>
 <p><strong> True colour composite </strong> -&gt; display of 3 image bands in red, green and blue spectral ranges matching RGB.</p>
-<p><strong> False colour composite </strong> -&gt; image bands displayed in red, green and blue do not match the spectra of these three primary colours</p>
+<p><strong> False colour composite </strong> -&gt; bands displayed in red, green and blue do not match the spectra of these three primary colours</p>
 <p><strong> Pseudo colour display </strong> -&gt; displays a monochrome image as a colour image by assigning each grey level to a unique colour. This benefits visualisation as our eyes perceive more colours than grey levels however the original quantitative sequential relationships of the DNs are lost.</p>
 
 </div>
@@ -1306,7 +1297,7 @@ Allows any colour to be represented to us within the visible spectrum.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image0</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="s1">&#39;gist_rainbow&#39;</span><span class="p">),</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span>
 
-<span class="c1">#generate colourbar to highlight brightest DNs</span>
+<span class="c1">#generate colourbar to highlight brightest DNs (see reference 1)</span>
 <span class="n">threshold</span> <span class="o">=</span> <span class="mf">0.8</span> 
 <span class="n">colors</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;white&quot;</span><span class="p">),</span>
     <span class="p">(</span><span class="n">threshold</span><span class="o">*</span><span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image0</span><span class="p">))</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image0</span><span class="p">)),</span> <span class="s2">&quot;gray&quot;</span><span class="p">),</span>
@@ -1369,9 +1360,10 @@ Allows any colour to be represented to us within the visible spectrum.</p>
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Point-operations">Point operations<a class="anchor-link" href="#Point-operations"> </a></h2><p>A point operation is a modification of a pixel value which is based on that pixel value and is independent of location or neighboring values. If we let x represent a digital imge and $x_{i,j}$ is the Dn of any pixel and Y the output pixel of any image then we describe any point operations as:
+<p><a id="point_operation"></a></p>
+<h2 id="Point-operations">Point operations<a class="anchor-link" href="#Point-operations"> </a></h2><p>A point operation is a modification of a pixel value which is based on that pixel value and is independent of location or neighboring values. If we let x represent a digital image and $x_{i,j}$ is the DN of any pixel and Y the output pixel of any image then we describe any point operations as:
 $$y_{i,j}=f(x_{i,j}) $$
-This is also frequently called histogram modification as its only alters the histogram of an image but not spatial relationship of image pixels.  Since our result is irrespect of its spatial location we will always have the same output for a specific input, this allows a <strong>LookUp Table (LUT)</strong> to be used. All values are computed first for every present Dn level and the the inputs are simply matched to their corresponding output. This saves computational time by not repeating the same operation.</p>
+This is also frequently called histogram modification as it only alters the histogram of an image but not spatial relationship of image pixels.  Since our result is irrespective of its spatial location we will always have the same output for a specific input. This allows a <strong>LookUp Table (LUT)</strong> to be used. All values are computed first for every present DN level and the inputs are simply matched to their corresponding output. This saves computational time by not repeating the same operation.</p>
 
 </div>
 </div>
@@ -1437,7 +1429,8 @@ This is also frequently called histogram modification as its only alters the his
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>In digital images a few pixels (often noise) can occupy wide value ranges at the low and high ends of the histograms, in the example above this is clear at the high end. In this case we can cut-off these pixels to later make better use of the dynamics range of our display (commonly 8-bit).</p>
+<p><a id="clip"></a></p>
+<h3 id="cut-off-clipping">cut-off clipping<a class="anchor-link" href="#cut-off-clipping"> </a></h3><p>In digital images a few pixels (often noise) can occupy wide value ranges at the low and high ends of the histograms, in the example above this ican be seen at the high end. In this case we can cut-off these pixels to later make better use of the dynamic range of our display (commonly 8-bit).</p>
 
 </div>
 </div>
@@ -1499,7 +1492,8 @@ This is also frequently called histogram modification as its only alters the his
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Contrast-enhancement">Contrast enhancement<a class="anchor-link" href="#Contrast-enhancement"> </a></h3><p>Is the most basic but most effective and efficient technique to optimise the image contrast and brightness for visualization or to highlight information in particular DN ranges.</p>
+<p><a id="contrast"></a></p>
+<h3 id="Contrast-enhancement">Contrast enhancement<a class="anchor-link" href="#Contrast-enhancement"> </a></h3><p>Is the most basic but most effective and efficient technique to optimise the image contrast and brightness for visualisation or to highlight information in particular DN ranges.</p>
 <p><strong>Linear Contrast Enhancement (LCE)</strong> is the simplest and one of the most effective contrast enhancement techniques. In this function, <strong>a</strong> controls the contrast of the output image, and <strong>b</strong> modifies the overall brightness. 
 $$ y = ax + b $$</p>
 <ul>
@@ -1507,8 +1501,8 @@ $$ y = ax + b $$</p>
 <li>if a &lt;1 but positive, compressional function which decreases the image contrast</li>
 </ul>
 <p>This function effect can be visualised as follows:</p>
-<p><img src="Data_Image_Operations/Contrast_Enhancement.png" style="width:400px;"/></p>
-<p>LCE improves image contrast without distorting the image information if the output Dn range is wider than the input Dn range. There are several methods to apply this:</p>
+<p><img src="Data_Image_Operations/Contrast_Enhancement.png" style="width:30%"/></p>
+<p>LCE improves image contrast without distorting the image information if the output DN range is wider than the input DN range. There are several methods to apply this:</p>
 <ul>
 <li><strong>interactive linear stretch</strong> - changing a and b interactively allows for optimization based on users visual judgement</li>
 <li><strong>linear scale</strong> - automatically scale the DN range to the full dynamics range of the display</li>
@@ -1548,11 +1542,11 @@ $$ y = ax + b $$</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">image1_clip</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image1_clip</span><span class="p">),</span>
     <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image1_clip</span><span class="p">)]),</span> <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
 
-<span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">222</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Linear scale&#39;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">222</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;stretched (LCE)&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">LCE</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image1</span><span class="p">),[</span><span class="mi">0</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image1</span><span class="p">)]),</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
 
-<span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">224</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;LCE&#39;</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">set_cmap</span><span class="p">(</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">224</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;streched (LCE)&#39;</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">set_cmap</span><span class="p">(</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">LCE</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
 
 <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">223</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;original&#39;</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">set_cmap</span><span class="p">(</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
@@ -1668,7 +1662,8 @@ $$ y = ax + b $$</p>
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We have removed the peak in the blue spectral layer which is dominantly water in our image. Within this part of the spectrum it is difficult to remove water only. Higher frequency bands like NIR or SWIR make it much easier to isolate water from our image as it has a clear separation from the rest of the objects in those bands. This is a great application when trying to use an optimal DN range on land or identify coastlines.</p>
+<p>We have removed the peak in the blue spectral layer which is dominantly water in our image. Within this part of the spectrum it is difficult to remove water only. Higher frequency bands like NIR or SWIR make it much easier to isolate water from our image as it has a clear separation from the rest of the objects in those bands. This is a great application when trying to use the optimal DN range on land or to identify coastlines.</p>
+<p>Further reading on implementing piecewise functions: <a href="http://yetanothermathprogrammingconsultant.blogspot.com/2019/02/piecewise-linear-functions-and.html">link</a></p>
 
 </div>
 </div>
@@ -1679,7 +1674,7 @@ $$ y = ax + b $$</p>
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Balance-Contrast-Enhancement-Technique-(BCET)">Balance Contrast Enhancement Technique (BCET)<a class="anchor-link" href="#Balance-Contrast-Enhancement-Technique-(BCET)"> </a></h3>
+<h3 id="Balance-Contrast-Enhancement-Technique-(BCET)$^2$">Balance Contrast Enhancement Technique (BCET)$^2$<a class="anchor-link" href="#Balance-Contrast-Enhancement-Technique-(BCET)$^2$"> </a></h3>
 </div>
 </div>
 </div>
@@ -1689,8 +1684,8 @@ $$ y = ax + b $$</p>
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Colour bias is one of the major causes of poor colour composite images. To eliminate bias, the three input basnds used for colour composition must have an equal value range and mean. The BCET is a simple solution to this problem. It can stretch or compress the image to a given value range and mean without changing the basic shape of the image histogram, hence not distorting the image information.</p>
-<p><img src="Data_Image_Operations/BCET1.png" style="width:700px;"/></p>
+<p>Colour bias is one of the major causes of poor colour composite images. To eliminate bias, the three input bands used for colour composition must have an equal value range and mean. BCET is an elegant solution to this problem. It can stretch or compress the image to a given value range and mean without changing the basic shape of the image histogram, hence not distorting the image information, using a parabolic (or cubic) function which is based on the min, max and mean of each input band and is nearly linear over this value/display range.</p>
+<p><img src="Data_Image_Operations/BCET1.png" style="width:70%"/></p>
 <p>Lastly, BCET also acts as an effective normalisation of the common information among the bands. By ensuring that each band occupies the same mean and value range, the common information is suppressed and the unique spectral variation between them is revealed.</p>
 
 </div>
@@ -1786,7 +1781,7 @@ $$ y = ax + b $$</p>
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>you can see the blue look of the original image has dissapeared. To visualise the results graphically see the histograms below.</p>
+<p>You can see the blue look of the original image has disappeared. To visualise the results graphically see the histograms below.</p>
 
 </div>
 </div>
@@ -1808,7 +1803,7 @@ $$ y = ax + b $$</p>
                                         <span class="nb">range</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image2</span><span class="p">)))</span>
 
 <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
-<span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">222</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;bands histograms BCET&quot;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">222</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;bands histograms after BCET&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;DN value&quot;</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;pixels&quot;</span><span class="p">)</span>
 <span class="c1">#plot histograms</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">bin_edges0</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">histogram_BCET0</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
@@ -1866,11 +1861,28 @@ $$ y = ax + b $$</p>
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<p><a id="rules"></a></p>
 <h3 id="Golden-rules-for-good-contrast-enhancement">Golden rules for good contrast enhancement<a class="anchor-link" href="#Golden-rules-for-good-contrast-enhancement"> </a></h3><ul>
-<li>after any complex image processing, you wil still need to apply contrast enhancement to view the results properly</li>
-<li>visual observation is best to judge image quality</li>
-<li>Before extracting spectral profiles the data should laways be BCET stretched beforehand</li>
+<li>After any processing that changes the DN value range of an image, you will still need to apply contrast enhancement to view the results properly</li>
+<li>Visual observation is best to judge image quality</li>
+<li>Before extracting spectral profiles the data should be well stretched, ideally using BCET (or, failing that, using a simple linear function)</li>
 </ul>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><a id="references_"></a></p>
+<h2 id="References">References<a class="anchor-link" href="#References"> </a></h2><p>Theory, content structure and images have been obtained from module thought content: J Mason, P., n.d. ESE 3.25 Advanced Remote Sensing. pp.3 - 12.</p>
+<ol>
+<li>Stack Overflow. 2020. Define A Colormap For Each Set Of Values In An Array. [online] Available at: <a href="https://stackoverflow.com/questions/42605051/define-a-colormap-for-each-set-of-values-in-an-array">https://stackoverflow.com/questions/42605051/define-a-colormap-for-each-set-of-values-in-an-array</a> [Accessed 22 June 2020].</li>
+<li>GUO, L., 1991. Balance contrast enhancement technique and its application in image colour composition. International Journal of Remote Sensing, 12(10), pp.2133-2151.</li>
+</ol>
 
 </div>
 </div>
