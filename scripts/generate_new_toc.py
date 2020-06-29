@@ -6,11 +6,16 @@ import glob
 from string import Template
 import shutil
 
-shutil.rmtree('_tmp', ignore_errors=True)
+# remove any previous attempts
+if os.path.isdir('_tmp'):
+    shutil.rmtree('_tmp')
 os.mkdir('_tmp')
+shutil.copytree(os.sep.join(('notebooks','images')),
+                os.sep.join(('_tmp','images')))
+skiplist= [os.sep.join(('notebooks','images')),]
 
 def use_nested():
-    return sys.platform is not 'win32'
+    return sys.platform != 'win32'
 
 def fix(path):
     if use_nested():
@@ -62,14 +67,6 @@ subsection = Template("""    - title: ${title}
 leveltext = [None, chapter, section, subsection]
 
 
-for root, dirs, files in os.walk(os.sep.join(("notebooks",
-                                              "images"))):
-    for file in files:
-        fix(os.sep.join((root, file)))
-
-skiplist= [os.sep.join(('notebooks','images')),]
-
-
 oldlevel = 1
 
 with open('_tmp'+os.sep+'_toc.yml', 'w') as outfile:
@@ -84,11 +81,22 @@ with open('_tmp'+os.sep+'_toc.yml', 'w') as outfile:
         if root == 'notebooks':
             ## Skip the base level
             continue
+
         for dir in dirs:
             if dir.startswith('.'):
                 skiplist.append(os.sep.join((root, dir)))
         if root.startswith(tuple(skiplist)):
             continue
+
+        exts = set(os.path.splitext(file)[1] for file in files)
+        if ('.ipynb' not in exts and
+            '.md' not in exts):
+            shutil.copytree(root,
+            root.replace(root.rsplit(os.sep,1)[0],
+                         '_tmp', 1))
+            shutil.copytree(root,
+            root.replace(root.rsplit(os.sep,1)[0],
+                         os.sep.join(('_tmp', '_build', 'html')), 1))
 
         title = root.split(os.sep)[-1].title()
         if 'intro.md' in files:
