@@ -1,1300 +1,261 @@
+
+
 <!DOCTYPE html>
-<html lang="en">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta charset="utf-8" />
+    <title>Tides &#8212; ESE Jupyter Material</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/sphinx-book-theme.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/mystnb.js"></script>
+    <script src="../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Waves" href="Wave_dispersion.html" />
+    <link rel="prev" title="Dynamic Earth and Planets" href="Dynamic_Earth.html" />
 
-  <title>Tides</title>
-  <meta name="description" content="        Tides    Tides Tides are very long wavelength and period waves and are characterised by rhythmic rise and fall of sea level over $\sim$ 0.5 day or $\...">
-
-  <link rel="canonical" href="https://primer-computational-mathematics.github.io/book/geosciences/Tides.html">
-  <link rel="alternate" type="application/rss+xml" title="ESE Jupyter Material" href="https://primer-computational-mathematics.github.io/book/feed.xml">
-
-  <meta property="og:url"         content="https://primer-computational-mathematics.github.io/book/geosciences/Tides.html" />
-<meta property="og:type"        content="article" />
-<meta property="og:title"       content="Tides" />
-<meta property="og:description" content="        Tides    Tides Tides are very long wavelength and period waves and are characterised by rhythmic rise and fall of sea level over $\sim$ 0.5 day or $\..." />
-<meta property="og:image"       content="https://primer-computational-mathematics.github.io//book/images/logo/logo.png" />
-
-<meta name="twitter:card" content="summary">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
 
 
-  <script type="application/ld+json">
-  {
-  "@context": "http://schema.org",
-  "@type": "NewsArticle",
-  "mainEntityOfPage": "https://primer-computational-mathematics.github.io/book/geosciences/Tides.html",
-  "headline": "Tides",
-  "datePublished": "2020-06-29T14:23:33+00:00",
-  "dateModified": "2020-06-29T14:23:33+00:00",
-  "description": "        Tides    Tides Tides are very long wavelength and period waves and are characterised by rhythmic rise and fall of sea level over $\sim$ 0.5 day or $\...",
-  "author": {
-    "@type": "Person",
-    "name": "Imperial College London"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "Data 100 at UC Berkeley",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://primer-computational-mathematics.github.io/book",
-      "width": 60,
-      "height": 60
-    }
-  },
-  "image": {
-    "@type": "ImageObject",
-    "url": "https://primer-computational-mathematics.github.io/book",
-    "height": 60,
-    "width": 60
-  }
-}
 
-  </script>
-  <link rel="stylesheet" href="/book/assets/css/styles.css">
-
-  <!-- <link rel="manifest" href="/manifest.json"> -->
-  <!-- <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#efae0a"> -->
-  <meta name="msapplication-TileColor" content="#da532c">
-  <meta name="msapplication-TileImage" content="/mstile-144x144.png">
-  <meta name="theme-color" content="#233947">
-
-  <!-- Favicon -->
-  <link rel="shortcut icon" type="image/x-icon" href="/book/images/logo/favicon.ico">
-
-  <!-- MathJax Config -->
-  <!-- Allow inline math using $ and automatically break long math lines -->
-<!-- (mostly) copied from nbconvert configuration -->
-<!-- https://github.com/jupyter/nbconvert/blob/master/nbconvert/templates/html/mathjax.tpl -->
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-    tex2jax: {
-        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-        displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
-        processEscapes: true,
-        processEnvironments: true
-    },
-    // Center justify equations in code and markdown cells. Elsewhere
-    // we use CSS to left justify single line equations in code cells.
-    displayAlign: 'center',
-    "HTML-CSS": {
-        styles: {'.MathJax_Display': {"margin": 0}},
-        linebreaks: { automatic: true },
-    },
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
     
-});
-</script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS_HTML' async></script>
 
-
-  <!-- DOM updating function -->
-  <script src="/book/assets/js/page/dom-update.js"></script>
-
-  <!-- Selectors for elements on the page -->
-  <script src="/book/assets/js/page/documentSelectors.js"></script>
-
-  <!-- Define some javascript variables that will be useful in other javascript -->
-  <script>
-    const site_basename = 'book';
-  </script>
-
-  <!-- Add AnchorJS to let headers be linked -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.2.0/anchor.min.js" async></script>
-  <script src="/book/assets/js/page/anchors.js" async></script>
-
-  <!-- Include Turbolinks to make page loads fast -->
-  <!-- https://github.com/turbolinks/turbolinks -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/turbolinks/5.2.0/turbolinks.js" async></script>
-  <meta name="turbolinks-cache-control" content="no-cache">
-
-  <!-- Load nbinteract for widgets -->
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
   
-
-  <!-- Load Thebelab for interactive widgets -->
-  <!-- Include Thebelab for interactive code if it's enabled -->
-
-
-<!-- Display Thebelab button in each code cell -->
-<script>
-/**
- * Set up thebelab button for code blocks
- */
-
-const thebelabCellButton = id =>
-  `<a id="thebelab-cell-button-${id}" class="btn thebebtn o-tooltip--left" data-tooltip="Interactive Mode">
-    <img src="/book/assets/images/edit-button.svg" alt="Start thebelab interactive mode">
-  </a>`
-
-
-const addThebelabButtonToCodeCells =  () => {
-
-  const codeCells = document.querySelectorAll('div.input_area > div.highlight:not(.output) pre')
-  codeCells.forEach((codeCell, index) => {
-    const id = codeCellId(index)
-    codeCell.setAttribute('id', id)
-    if (document.getElementById("thebelab-cell-button-" + id) == null) {
-      codeCell.insertAdjacentHTML('afterend', thebelabCellButton(id));
-    }
-  })
-}
-
-initFunction(addThebelabButtonToCodeCells);
-</script>
-
-
-<script src="https://unpkg.com/thebelab@latest/lib/index.js" async></script>
-<script>
-    /**
-     * Add attributes to Thebelab blocks
-     */
-
-    const initThebelab = () => {
-        const addThebelabToCodeCells = () => {
-            console.log("Adding thebelab to code cells...");
-            // If Thebelab hasn't loaded, wait a bit and try again. This
-            // happens because we load ClipboardJS asynchronously.
-            if (window.thebelab === undefined) {
-                setTimeout(addThebelabToCodeCells, 250)
-            return
-            }
-
-            // If we already detect a Thebelab cell, don't re-run
-            if (document.querySelectorAll('div.thebelab-cell').length > 0) {
-                return;
-            }
-
-            // Find all code cells, replace with Thebelab interactive code cells
-            const codeCells = document.querySelectorAll('.input_area pre')
-            codeCells.forEach((codeCell, index) => {
-                const id = codeCellId(index)
-
-                // Clean up the language to make it work w/ CodeMirror and add it to the cell
-                dataLanguage = ""
-                dataLanguage = detectLanguage(dataLanguage);
-                codeCell.setAttribute('data-language', dataLanguage)
-                codeCell.setAttribute('data-executable', 'true')
-
-                // If the code cell is hidden, show it
-                var inputCheckbox = document.querySelector(`input#hidebtn${codeCell.id}`);
-                if (inputCheckbox !== null) {
-                    setCodeCellVisibility(inputCheckbox, 'visible');
-                }
-            });
-
-            // Remove the event listener from the page so keyboard press doesn't
-            // Change page
-            document.removeEventListener('keydown', initPageNav)
-            keyboardListener = false;
-
-            // Init thebelab
-            thebelab.bootstrap();
-
-            // Remove copy buttons since they won't work anymore
-            const copyAndThebeButtons = document.querySelectorAll('.copybtn, .thebebtn')
-            copyAndThebeButtons.forEach((button, index) => {
-                button.remove();
-            });
-
-            // Remove outputs since they'll be stale
-            const outputs = document.querySelectorAll('.output *, .output')
-            outputs.forEach((output, index) => {
-                output.remove();
-            });
-
-            // Find any cells with an initialization tag and ask ThebeLab to run them when ready
-            var thebeInitCells = document.querySelectorAll('div.tag_thebelab-init');
-            thebeInitCells.forEach((cell) => {
-                console.log("Initializing ThebeLab with cell: " + cell.id);
-                cell.querySelector('.thebelab-run-button').click();
-            });
-        }
-
-        // Add event listener for the function to modify code cells
-        const thebelabButtons = document.querySelectorAll('[id^=thebelab], [id$=thebelab]')
-        thebelabButtons.forEach((thebelabButton,index) => {
-            if (thebelabButton === null) {
-                setTimeout(initThebelab, 250)
-                return
-            };
-            thebelabButton.addEventListener('click', addThebelabToCodeCells);
-        });
-    }
-
-    // Initialize Thebelab
-    initFunction(initThebelab);
-
-// Helper function to munge the language name
-var detectLanguage = (language) => {
-    if (language.indexOf('python') > -1) {
-        language = "python";
-    }
-    return language;
-}
-</script>
-
-
-
-  <!-- Load the auto-generating TOC (non-async otherwise the TOC won't load w/ turbolinks) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.8.1/tocbot.min.js" async></script>
-  <script src="/book/assets/js/page/tocbot.js"></script>
-
-  <!-- Google analytics -->
+  <img src="../_static/logo.png" class="logo" alt="logo">
   
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', '');
-</script>
-
-
-
-  <!-- Clipboard copy button -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" async></script>
-
-  <!-- Load custom website scripts -->
-  <script src="/book/assets/js/scripts.js" async></script>
-
-  <!-- Load custom user CSS and JS  -->
-  <script src="/book/assets/custom/custom.js" async></script>
-  <link rel="stylesheet" href="/book/assets/custom/custom.css">
-
-  <!-- Update interact links w/ REST param, is defined in includes so we can use templates -->
   
-
-  <!-- Lunr search code - will only be executed on the /search page -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/2.3.6/lunr.min.js" async></script>
-  <script>var initQuery = function() {
-  // See if we have a search box
-  var searchInput = document.querySelector('input#lunr_search');
-  if (searchInput === null) {
-    return;
-  }
-
-  // Function to parse our lunr cache
-  var idx = lunr(function () {
-    this.field('title')
-    this.field('excerpt')
-    this.field('categories')
-    this.field('tags')
-    this.ref('id')
-
-    this.pipeline.remove(lunr.trimmer)
-
-    for (var item in store) {
-      this.add({
-        title: store[item].title,
-        excerpt: store[item].excerpt,
-        categories: store[item].categories,
-        tags: store[item].tags,
-        id: item
-      })
-    }
-  });
-
-  // Run search upon keyup
-  searchInput.addEventListener('keyup', function () {
-    var resultdiv = document.querySelector('#results');
-    var query = document.querySelector("input#lunr_search").value.toLowerCase();
-    var result =
-      idx.query(function (q) {
-        query.split(lunr.tokenizer.separator).forEach(function (term) {
-          q.term(term, { boost: 100 })
-          if(query.lastIndexOf(" ") != query.length-1){
-            q.term(term, {  usePipeline: false, wildcard: lunr.Query.wildcard.TRAILING, boost: 10 })
-          }
-          if (term != ""){
-            q.term(term, {  usePipeline: false, editDistance: 1, boost: 1 })
-          }
-        })
-      });
-
-      // Empty the results div
-      while (resultdiv.firstChild) {
-        resultdiv.removeChild(resultdiv.firstChild);
-      }
-
-    resultdiv.insertAdjacentHTML('afterbegin', '<p class="results__found">'+result.length+' Result(s) found</p>');
-    for (var item in result) {
-      var ref = result[item].ref;
-      if(store[ref].teaser){
-        var searchitem =
-          '<div class="list__item">'+
-            '<article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">'+
-              '<h2 class="archive__item-title" itemprop="headline">'+
-                '<a href="'+store[ref].url+'" rel="permalink">'+store[ref].title+'</a>'+
-              '</h2>'+
-              '<div class="archive__item-teaser">'+
-                '<img src="'+store[ref].teaser+'" alt="">'+
-              '</div>'+
-              '<p class="archive__item-excerpt" itemprop="description">'+store[ref].excerpt.split(" ").splice(0,20).join(" ")+'...</p>'+
-            '</article>'+
-          '</div>';
-      }
-      else{
-    	  var searchitem =
-          '<div class="list__item">'+
-            '<article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">'+
-              '<h2 class="archive__item-title" itemprop="headline">'+
-                '<a href="'+store[ref].url+'" rel="permalink">'+store[ref].title+'</a>'+
-              '</h2>'+
-              '<p class="archive__item-excerpt" itemprop="description">'+store[ref].excerpt.split(" ").splice(0,20).join(" ")+'...</p>'+
-            '</article>'+
-          '</div>';
-      }
-      resultdiv.insertAdjacentHTML('beforeend', searchitem);
-    }
-  });
-};
-
-initFunction(initQuery);
-</script>
-
-  <!-- Load JS that depends on site variables -->
-  <script src="/book/assets/js/page/copy-button.js" async></script>
-
-  <!-- Hide cell code -->
-  <script src="/book/assets/js/page/hide-cell.js" async></script>
-
-  <!-- Printing the screen -->
-  <!-- Include nbinteract for interactive widgets -->
-<script src="https://printjs-4de6.kxcdn.com/print.min.js" async></script>
-<script>
-printContent = () => {
-    // MathJax displays a second version of any math for assistive devices etc.
-    // This prevents double-rendering in the PDF output.
-    var ignoreAssistList = [];
-    assistives = document.querySelectorAll('.MathJax_Display span.MJX_Assistive_MathML').forEach((element, index) => {
-        var thisId = 'MathJax-assistive-' + index.toString();
-        element.setAttribute('id', thisId);
-        ignoreAssistList.push(thisId)
-    });
-
-    // Print the actual content object
-    printJS({
-        printable: 'textbook_content',
-        type: 'html',
-        css: "/book/assets/css/styles.css",
-        style: "#textbook_content {padding-top: 40px};",
-        scanStyles: false,
-        targetStyles: ["*"],
-        ignoreElements: ignoreAssistList,
-        documentTitle: "Made with Jupyter Book"
-    })
-};
-
-initPrint = () => {
-    document.querySelector('#interact-button-print').addEventListener('click', printContent)
-}
-
-initFunction(initPrint)
-</script>
-
-</head>
-
-  <body>
-    <!-- Include the ThebeLab config so it gets reloaded on each page -->
-    <script type="text/x-thebe-config">{
-    requestKernel: true,
-    binderOptions: {
-    repo: "primer-computational-mathematics/book",
-    ref: "master",
-    },
-    codeMirrorConfig: {
-    theme: "abcdef",
-    mode: "python"
-    },
-    kernelOptions: {
-    kernelName: "python3",
-    path: "notebooks/geosciences"
-    }
-}
-</script>
-
-    <!-- .js-show-sidebar shows sidebar by default -->
-    <div id="js-textbook" class="c-textbook js-show-sidebar">
-      
-
-
-
-<nav id="js-sidebar" class="c-textbook__sidebar">
-  <a href="https://www.imperial.ac.uk/earth-science/"><img src="/book/images/logo/logo.png" class="textbook_logo" id="sidebar-logo" alt="textbook logo" data-turbolinks-permanent/></a>
-  <h2 class="c-sidebar__title">ESE Jupyter Material</h2>
-  <ul class="c-sidebar__chapters">
-    
-      
-      
-
-      
-      
-      
-      
-
-      
-      
-      <li class="c-sidebar__chapter" data-url="/intro">
-        <a class="c-sidebar__entry"
-          href="/book/intro.html"
-        >
-          
-          Home
-        </a>
-      </li>
-
-      
-      
-
-      
-
-      
-      
-
-      
-
-      
-    
-      
-      
-        <li class="c-sidebar__divider"></li>
-        
-      
-      
-        <li><h2 class="c-sidebar__title">Topics</li>
-        
-      
-      
-
-      
-      
-      
-      
-
-      
-      
-      <li class="c-sidebar__chapter" data-url="/maths/intro">
-        <a class="c-sidebar__entry"
-          href="/book/maths/intro.html"
-        >
-          
-          Mathematics
-        </a>
-      </li>
-
-      
-      
-
-      
-
-      
-      
-
-      
-        
-
-        
-
-        <ul class="c-sidebar__sections">
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/maths/Statistics_for_Geoscientists">
-              <a class="c-sidebar__entry"
-                href="/book/maths/Statistics_for_Geoscientists.html"
-              >
-                
-                Statistics for Geoscientists
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/maths/Taylor_series">
-              <a class="c-sidebar__entry"
-                href="/book/maths/Taylor_series.html"
-              >
-                
-                Taylor series
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/maths/Big_O_notation">
-              <a class="c-sidebar__entry"
-                href="/book/maths/Big_O_notation.html"
-              >
-                
-                Big O notation
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/maths/Timestepping_an_ODE">
-              <a class="c-sidebar__entry"
-                href="/book/maths/Timestepping_an_ODE.html"
-              >
-                
-                Timestepping an ODE
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/maths/Tensors_Review">
-              <a class="c-sidebar__entry"
-                href="/book/maths/Tensors_Review.html"
-              >
-                
-                Tensors Review
-              </a>
-            </li>
-            
-            
-          
-        </ul>
-      
-
-      
-    
-      
-      
-
-      
-      
-      
-      
-
-      
-      
-      <li class="c-sidebar__chapter" data-url="/coding/intro">
-        <a class="c-sidebar__entry"
-          href="/book/coding/intro.html"
-        >
-          
-          Coding
-        </a>
-      </li>
-
-      
-      
-
-      
-
-      
-      
-
-      
-        
-
-        
-
-        <ul class="c-sidebar__sections">
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/coding/Sets">
-              <a class="c-sidebar__entry"
-                href="/book/coding/Sets.html"
-              >
-                
-                Sets
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/coding/Dictionaries">
-              <a class="c-sidebar__entry"
-                href="/book/coding/Dictionaries.html"
-              >
-                
-                Dictionaries
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/coding/For_loops">
-              <a class="c-sidebar__entry"
-                href="/book/coding/For_loops.html"
-              >
-                
-                For loops
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/coding/Variables">
-              <a class="c-sidebar__entry"
-                href="/book/coding/Variables.html"
-              >
-                
-                Variables
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/coding/Nested_lists">
-              <a class="c-sidebar__entry"
-                href="/book/coding/Nested_lists.html"
-              >
-                
-                Nested lists
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/coding/List_comprehensions">
-              <a class="c-sidebar__entry"
-                href="/book/coding/List_comprehensions.html"
-              >
-                
-                List comprehensions
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/coding/Lists">
-              <a class="c-sidebar__entry"
-                href="/book/coding/Lists.html"
-              >
-                
-                Lists
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/coding/While_loops">
-              <a class="c-sidebar__entry"
-                href="/book/coding/While_loops.html"
-              >
-                
-                While loops
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/coding/Tuples">
-              <a class="c-sidebar__entry"
-                href="/book/coding/Tuples.html"
-              >
-                
-                Tuples
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/coding/Functions">
-              <a class="c-sidebar__entry"
-                href="/book/coding/Functions.html"
-              >
-                
-                Functions
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/coding/If_statement">
-              <a class="c-sidebar__entry"
-                href="/book/coding/If_statement.html"
-              >
-                
-                If statement
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/coding/Flow_control_statements">
-              <a class="c-sidebar__entry"
-                href="/book/coding/Flow_control_statements.html"
-              >
-                
-                Flow control statements
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/coding/Handling_errors">
-              <a class="c-sidebar__entry"
-                href="/book/coding/Handling_errors.html"
-              >
-                
-                Handling errors
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/coding/File_handling">
-              <a class="c-sidebar__entry"
-                href="/book/coding/File_handling.html"
-              >
-                
-                File handling
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/coding/NumPy_Arrays">
-              <a class="c-sidebar__entry"
-                href="/book/coding/NumPy_Arrays.html"
-              >
-                
-                NumPy Arrays
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/coding/Matplotlib">
-              <a class="c-sidebar__entry"
-                href="/book/coding/Matplotlib.html"
-              >
-                
-                Matplotlib
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/coding/Pandas">
-              <a class="c-sidebar__entry"
-                href="/book/coding/Pandas.html"
-              >
-                
-                Pandas
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/coding/Printing_and_formatting_statements">
-              <a class="c-sidebar__entry"
-                href="/book/coding/Printing_and_formatting_statements.html"
-              >
-                
-                Printing and formatting statements
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/coding/Importing">
-              <a class="c-sidebar__entry"
-                href="/book/coding/Importing.html"
-              >
-                
-                Importing
-              </a>
-            </li>
-            
-            
-          
-        </ul>
-      
-
-      
-    
-      
-      
-
-      
-      
-      
-      
-
-      
-      
-      <li class="c-sidebar__chapter" data-url="/geosciences/intro">
-        <a class="c-sidebar__entry"
-          href="/book/geosciences/intro.html"
-        >
-          
-          Geosciences
-        </a>
-      </li>
-
-      
-      
-
-      
-
-      
-      
-
-      
-        
-
-        
-
-        <ul class="c-sidebar__sections">
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/geosciences/Image_Filtering">
-              <a class="c-sidebar__entry"
-                href="/book/geosciences/Image_Filtering.html"
-              >
-                
-                Image Filtering
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/geosciences/Image_Operations">
-              <a class="c-sidebar__entry"
-                href="/book/geosciences/Image_Operations.html"
-              >
-                
-                Image Operations
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/geosciences/Cartography_Cartopy">
-              <a class="c-sidebar__entry"
-                href="/book/geosciences/Cartography_Cartopy.html"
-              >
-                
-                Cartography Cartopy
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/geosciences/Dynamic_Earth">
-              <a class="c-sidebar__entry"
-                href="/book/geosciences/Dynamic_Earth.html"
-              >
-                
-                Dynamic Earth
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/geosciences/Tides">
-              <a class="c-sidebar__entry"
-                href="/book/geosciences/Tides.html"
-              >
-                
-                Tides
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/geosciences/Wave_dispersion">
-              <a class="c-sidebar__entry"
-                href="/book/geosciences/Wave_dispersion.html"
-              >
-                
-                Wave dispersion
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/geosciences/Seismology">
-              <a class="c-sidebar__entry"
-                href="/book/geosciences/Seismology.html"
-              >
-                
-                Seismology
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/geosciences/Google_Earth_Engine_Foundations">
-              <a class="c-sidebar__entry"
-                href="/book/geosciences/Google_Earth_Engine_Foundations.html"
-              >
-                
-                Google Earth Engine Foundations
-              </a>
-            </li>
-            
-            
-          
-        </ul>
-      
-
-      
-    
+  <h1 class="site-logo" id="site-title">ESE Jupyter Material</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  
+  <ul class="nav sidenav_l1">
+  <li class="">
+    <a href="../intro.html">Landing page</a>
+  </li>
+  <li class="">
+    <a href="../coding/intro.html">Coding</a>
+  </li>
+  <li class="">
+    <a href="../mathematics/intro.html">Mathematics</a>
+  </li>
+  <li class="active">
+    <a href="intro.html">Geosciences</a>
+  <ul class="nav sidenav_l2">
+    <li class="">
+      <a href="Image_Filtering.html">Image Filtering</a>
+    </li>
+    <li class="">
+      <a href="Image_Operations.html">Image Operations</a>
+    </li>
+    <li class="">
+      <a href="Cartography_Cartopy.html">Cartography Cartopy</a>
+    </li>
+    <li class="">
+      <a href="Dynamic_Earth.html">Dynamic Earth</a>
+    </li>
+    <li class="active">
+      <a href="">Tides</a>
+    </li>
+    <li class="">
+      <a href="Wave_dispersion.html">Wave Dispersion</a>
+    </li>
+    <li class="">
+      <a href="Seismology.html">Seismology</a>
+    </li>
+    <li class="">
+      <a href="Google_Earth_Engine_Foundations.html">Google Earth Engine Foundations</a>
+    </li>
   </ul>
-  <p class="sidebar_footer">Powered by <a href="https://jupyterbook.org">Jupyter Book</a></p>
+  </li>
+  <li class="">
+    <a href="../genindex.html">Index</a>
+  </li>
+</ul>
 </nav>
 
-      
-      <div class="c-topbar" id="top-navbar">
-  <!-- We show the sidebar by default so we use .is-active -->
-  <div class="c-topbar__buttons">
-    <button
-      id="js-sidebar-toggle"
-      class="hamburger hamburger--arrowalt is-active"
-    >
-      <span class="hamburger-box">
-        <span class="hamburger-inner"></span>
-      </span>
-    </button>
-    <div class="buttons">
-<div class="download-buttons-dropdown">
-    <button id="dropdown-button-trigger" class="interact-button"><img src="/book/assets/images/download-solid.svg" alt="Download" /></button>
-    <div class="download-buttons">
-        <a href="/book/notebooks/geosciences/Tides.ipynb" download>
-        <button id="interact-button-download" class="interact-button">.ipynb</button>
-        </a>
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
         
-        <a id="interact-button-print"><button id="interact-button-download" class="interact-button">.pdf</button></a>
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/geosciences/Tides.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/geosciences/Tides.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
     </div>
 </div>
 
-
-  <button id="interact-button-thebelab" class="interact-button">Thebelab</button>
-
-  
-  
-  
-
-
+    </div>
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
 </div>
 
-  </div>
-  <!-- Empty sidebar placeholder that we'll auto-fill with javascript -->
-  <aside class="sidebar__right">
-    <header><h4 class="nav__title"><img src="/book/assets/images/list-solid.svg" alt="Search" />   On this page</h4></header>
-    <nav class="onthispage">
-    </nav>
-  </aside>
-  <a href="/book/search.html" class="topbar-right-button" id="search-button">
-    <img src="/book/assets/images/search-solid.svg" alt="Search" />
-  </a>
-</div>
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#tide-genereting-force-tgf" class="nav-link">Tide-genereting force (TGF)</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#tidal-frequencies" class="nav-link">Tidal frequencies</a>
+        </li>
+    
+    </ul>
+</nav>
 
-      <main class="c-textbook__page" tabindex="-1">
-            <div class="c-textbook__content" id="textbook_content">
-                  <main class="jupyter-page">
-    <div id="page-info"><div id="page-title">Tides</div>
-</div>
-    <div class="jb_cell">
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Tides">Tides<a class="anchor-link" href="#Tides"> </a></h1><p>Tides are very long wavelength and period waves and are characterised by rhythmic rise and fall of sea level over $\sim$ 0.5 day or $\sim$ full day. Tidal currents are generated by the Moon and the Sun. Tides are regular and can be predicted.</p>
-<p>Earth and Moon rotate about its common centre of mass with a period of $\sim$ 27.3 days. Earth rotates around its axis once per day, so we would expect one high and one low tide. However, in reality there are two highs and two lows per day.</p>
-<h2 id="Tide-genereting-force-(TGF)">Tide-genereting force (TGF)<a class="anchor-link" href="#Tide-genereting-force-(TGF)"> </a></h2><p>Recall that gravitational attraction results in a force:
-$$\mathbf{F}=G\frac{m_1m_2}{r^2}\hat{\mathbf{r}},$$
-where $G=6.67\times10^{-11}\,N\,m^2\,kg^{-2}$, $r$ the distance between point masses $m_1$ and $m_2$ and $\hat{\mathbf{r}}$ is the unit vector in the direction connecting two masses. This force per unit mass can be expressed as a gradient of a scalar potential:
-$$\mathbf{F}=-\nabla \Omega$$
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="tides">
+<h1>Tides<a class="headerlink" href="#tides" title="Permalink to this headline">¶</a></h1>
+<p>Tides are very long wavelength and period waves and are characterised by rhythmic rise and fall of sea level over <span class="math notranslate nohighlight">\(\sim\)</span> 0.5 day or <span class="math notranslate nohighlight">\(\sim\)</span> full day. Tidal currents are generated by the Moon and the Sun. Tides are regular and can be predicted.</p>
+<p>Earth and Moon rotate about its common centre of mass with a period of <span class="math notranslate nohighlight">\(\sim\)</span> 27.3 days. Earth rotates around its axis once per day, so we would expect one high and one low tide. However, in reality there are two highs and two lows per day.</p>
+<div class="section" id="tide-genereting-force-tgf">
+<h2>Tide-genereting force (TGF)<a class="headerlink" href="#tide-genereting-force-tgf" title="Permalink to this headline">¶</a></h2>
+<p>Recall that gravitational attraction results in a force:
+<span class="math notranslate nohighlight">\($\mathbf{F}=G\frac{m_1m_2}{r^2}\hat{\mathbf{r}},\)</span>$
+where <span class="math notranslate nohighlight">\(G=6.67\times10^{-11}\,N\,m^2\,kg^{-2}\)</span>, <span class="math notranslate nohighlight">\(r\)</span> the distance between point masses <span class="math notranslate nohighlight">\(m_1\)</span> and <span class="math notranslate nohighlight">\(m_2\)</span> and <span class="math notranslate nohighlight">\(\hat{\mathbf{r}}\)</span> is the unit vector in the direction connecting two masses. This force per unit mass can be expressed as a gradient of a scalar potential:
+<span class="math notranslate nohighlight">\($\mathbf{F}=-\nabla \Omega\)</span>$
 because gravitational field is conservative, meaning the total work done to move an object in the presence of that field does not depend on the path.</p>
-<p>Assuming $\mathbf{F}$ is the force from the Moon exerted on Earth and only varies in the radial direction:
-$\Omega = -G \frac{m_M}{r}$.</p>
-<p>We would like to find Moon's gravity influence on an arbitrary point $P$ at Earth's surface:</p>
-<p><img src="../images/tides_earth_moon.png" alt="TGF Earth-Moon" style="width:400px;"/></p>
+<p>Assuming <span class="math notranslate nohighlight">\(\mathbf{F}\)</span> is the force from the Moon exerted on Earth and only varies in the radial direction:
+<span class="math notranslate nohighlight">\(\Omega = -G \frac{m_M}{r}\)</span>.</p>
+<p>We would like to find Moon’s gravity influence on an arbitrary point <span class="math notranslate nohighlight">\(P\)</span> at Earth’s surface:</p>
+<img src="../images/tides_earth_moon.png" alt="TGF Earth-Moon" style="width:400px;"/>
 <p>From the cosine law, we know:</p>
-$$r_1^2=r^2+R^2-2rR\cos{\phi}\Rightarrow r_1^2=R^2\Big(1-2\frac{r}{R}\cos{\phi}+\Big(\frac{r}{R}\Big)^2\Big)$$<p>We can insert $r_1$ into potential scalar at point $P$:</p>
-$$\Omega_P = -G\frac{m_M}{R}\Big[1-2\frac{r}{R}\cos{\phi}+\Big(\frac{r}{R}\Big)^2\Big]^{-1/2}$$<p>We can expand the terms in the brackets with Legendre polynomials:
-$$\Omega_P = -G\frac{m_M}{R}\Big[1+\Big(\frac{r}{R}\Big)P_1(\cos{\phi})+\Big(\frac{r}{R}\Big)^2 P_2(\cos{\phi})+\Big(\frac{r}{R}\Big)^3 P_3(\cos{\phi})+...\Big],\\
+<div class="math notranslate nohighlight">
+\[r_1^2=r^2+R^2-2rR\cos{\phi}\Rightarrow r_1^2=R^2\Big(1-2\frac{r}{R}\cos{\phi}+\Big(\frac{r}{R}\Big)^2\Big)\]</div>
+<p>We can insert <span class="math notranslate nohighlight">\(r_1\)</span> into potential scalar at point <span class="math notranslate nohighlight">\(P\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\Omega_P = -G\frac{m_M}{R}\Big[1-2\frac{r}{R}\cos{\phi}+\Big(\frac{r}{R}\Big)^2\Big]^{-1/2}\]</div>
+<p>We can expand the terms in the brackets with Legendre polynomials:
+<span class="math notranslate nohighlight">\($\Omega_P = -G\frac{m_M}{R}\Big[1+\Big(\frac{r}{R}\Big)P_1(\cos{\phi})+\Big(\frac{r}{R}\Big)^2 P_2(\cos{\phi})+\Big(\frac{r}{R}\Big)^3 P_3(\cos{\phi})+...\Big],\\
 P_1(\cos{\phi})=\cos{\phi},\\
 P_2(\cos{\phi})=\frac{1}{2}(3\cos^2{\phi}-1),\\
-P_3(\cos{\phi})=\frac{1}{2}(5\cos^3{\phi}-3\cos{\phi}).$$</p>
-<p>Since we know the Earth's radius and distance to the Moon, their ratio can be approximated as $\frac{r}{R}\approx \frac{1}{60} \ll 1$. Therefore, any higher order terms in the expansion will become very small and can be ignored.</p>
+P_3(\cos{\phi})=\frac{1}{2}(5\cos^3{\phi}-3\cos{\phi}).\)</span>$</p>
+<p>Since we know the Earth’s radius and distance to the Moon, their ratio can be approximated as <span class="math notranslate nohighlight">\(\frac{r}{R}\approx \frac{1}{60} \ll 1\)</span>. Therefore, any higher order terms in the expansion will become very small and can be ignored.</p>
 <p>To find the tide-generating force, we need to take the gradient of this potential and its first three terms:
-$$\mathbf{F_p}=-\nabla\Omega_p,\quad \Omega_P = -G\frac{m_M}{R}\Big[1+\Big(\frac{r}{R}\Big)\cos{\phi}+\Big(\frac{r}{R}\Big)^2\frac{1}{2}(3\cos^2{\phi}-1)+...\Big].$$</p>
+<span class="math notranslate nohighlight">\($\mathbf{F_p}=-\nabla\Omega_p,\quad \Omega_P = -G\frac{m_M}{R}\Big[1+\Big(\frac{r}{R}\Big)\cos{\phi}+\Big(\frac{r}{R}\Big)^2\frac{1}{2}(3\cos^2{\phi}-1)+...\Big].\)</span>$</p>
 <p>The first term is a constant so its gradient is zero, it produces no force.</p>
-<p>The second term needs to be differentiated with respect to $r\cos{\phi}$ (the "x" direction) and is a constant:
-$$-\frac{\Omega_P}{\Omega(r\cos{\phi})}=\frac{Gm_M}{R^2}.$$
-It acts in the direction along $R$ on the graph and is the centripetal acceleration.</p>
+<p>The second term needs to be differentiated with respect to <span class="math notranslate nohighlight">\(r\cos{\phi}\)</span> (the “x” direction) and is a constant:
+<span class="math notranslate nohighlight">\($-\frac{\Omega_P}{\Omega(r\cos{\phi})}=\frac{Gm_M}{R^2}.\)</span>$
+It acts in the direction along <span class="math notranslate nohighlight">\(R\)</span> on the graph and is the centripetal acceleration.</p>
 <p>The final term in the potential creates a <strong>tide-generating force</strong>:
-$$\Omega_P = -\frac{1}{2}Gm_M \frac{r^2}{R^3}(3\cos^2{\phi}-1).$$
-To get the vertical and horizontal force, we need to differentiate it with respect to $r$ and $\phi$:
-$$F_{P}^{vert} = -\frac{\partial \Omega_P}{\partial r}=G m_M\frac{r}{R^3}(3\cos^2{\phi}-1),\\
-F_{P}^{horiz}=-\frac{\partial\Omega_P}{r\partial\phi}=-\frac{6}{2}Gm_M \frac{r}{R^3}\cos{\phi}\sin{\phi}=-\frac{3}{2}Gm_M \frac{r}{R^3}\sin{2\phi}.$$</p>
+<span class="math notranslate nohighlight">\($\Omega_P = -\frac{1}{2}Gm_M \frac{r^2}{R^3}(3\cos^2{\phi}-1).\)</span>$
+To get the vertical and horizontal force, we need to differentiate it with respect to <span class="math notranslate nohighlight">\(r\)</span> and <span class="math notranslate nohighlight">\(\phi\)</span>:
+<span class="math notranslate nohighlight">\($F_{P}^{vert} = -\frac{\partial \Omega_P}{\partial r}=G m_M\frac{r}{R^3}(3\cos^2{\phi}-1),\\
+F_{P}^{horiz}=-\frac{\partial\Omega_P}{r\partial\phi}=-\frac{6}{2}Gm_M \frac{r}{R^3}\cos{\phi}\sin{\phi}=-\frac{3}{2}Gm_M \frac{r}{R^3}\sin{2\phi}.\)</span>$</p>
 <p>The tide-generating force is inversely proportional to the cubic distance from the Earth to the Moon.</p>
-<p>Let's calculate the vertical and horizontal forces for point London at $51^\circ$N:</p>
-
-</div>
-</div>
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<p>Let’s calculate the vertical and horizontal forces for point London at <span class="math notranslate nohighlight">\(51^\circ\)</span>N:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
 <span class="k">def</span> <span class="nf">VerticalTGF</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">mass_moon</span><span class="p">,</span> <span class="n">planet_radius</span><span class="p">,</span> <span class="n">distance</span><span class="p">,</span> <span class="n">lat</span><span class="p">):</span>
@@ -1306,22 +267,12 @@ F_{P}^{horiz}=-\frac{\partial\Omega_P}{r\partial\phi}=-\frac{6}{2}Gm_M \frac{r}{
 <span class="k">def</span> <span class="nf">TidalPotential</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">mass_moon</span><span class="p">,</span> <span class="n">planet_radius</span><span class="p">,</span> <span class="n">distance</span><span class="p">,</span> <span class="n">lat</span><span class="p">):</span>
     <span class="k">return</span> <span class="o">-</span><span class="mf">0.5</span><span class="o">*</span><span class="n">G</span><span class="o">*</span><span class="n">mass_moon</span><span class="o">*</span><span class="p">(</span><span class="n">planet_radius</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="n">distance</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">lat</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
 </div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">G</span> <span class="o">=</span> <span class="mf">6.67e-11</span>          <span class="c1"># Gravitational constant</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">G</span> <span class="o">=</span> <span class="mf">6.67e-11</span>          <span class="c1"># Gravitational constant</span>
 <span class="n">mass_m</span> <span class="o">=</span><span class="mf">7.34767309e22</span> <span class="c1"># Moon&#39;s mass</span>
 <span class="n">r</span> <span class="o">=</span> <span class="mi">6378000</span>           <span class="c1"># Earth&#39;s radius</span>
 <span class="n">R</span> <span class="o">=</span> <span class="mi">384400000</span>         <span class="c1"># Earth-Moon distance</span>
@@ -1330,51 +281,21 @@ F_{P}^{horiz}=-\frac{\partial\Omega_P}{r\partial\phi}=-\frac{6}{2}Gm_M \frac{r}{
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Vertical force (N) = &quot;</span><span class="p">,</span> <span class="n">VerticalTGF</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">mass_m</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">phi</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Horizontal force (N) = &quot;</span><span class="p">,</span> <span class="n">HorizontalTGF</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">mass_m</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">phi</span><span class="p">))</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="jb_output_wrapper }}">
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Vertical force (N) =  1.0353180375515302e-07
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Vertical force (N) =  1.0353180375515302e-07
 Horizontal force (N) =  -8.074315039381746e-07
-</pre>
+</pre></div>
 </div>
 </div>
 </div>
-</div>
-</div>
-
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Horizontal force can change its sign when $\phi$ is zero and when $\phi = \pm\pi/2$. This explains why it has two bulges on Earth's surface.</p>
-<p><img src="../images/tides_forces.png" alt="TGF" style="width:400px;"/></p>
-<p>Let's plot how these forces change with latitude ($\phi$):</p>
-
-</div>
-</div>
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<p>Horizontal force can change its sign when <span class="math notranslate nohighlight">\(\phi\)</span> is zero and when <span class="math notranslate nohighlight">\(\phi = \pm\pi/2\)</span>. This explains why it has two bulges on Earth’s surface.</p>
+<img src="../images/tides_forces.png" alt="TGF" style="width:400px;"/>
+<p>Let’s plot how these forces change with latitude (<span class="math notranslate nohighlight">\(\phi\)</span>):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">HorizontalTGF</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">mass_m</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">phi</span><span class="p">),</span>
          <span class="n">c</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Horizontal force&quot;</span><span class="p">)</span>
@@ -1388,40 +309,15 @@ Horizontal force (N) =  -8.074315039381746e-07
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;best&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="jb_output_wrapper }}">
-<div class="output_area">
-
-
-
-<div class="output_png output_subarea ">
-<img src="../images/geosciences/Tides_4_0.png"
->
-</div>
-
+<div class="cell_output docutils container">
+<img alt="../_images/Tides_4_0.png" src="../_images/Tides_4_0.png" />
 </div>
 </div>
-</div>
-</div>
-
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Create a range of points on Earth surface</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a range of points on Earth surface</span>
 <span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">r</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">r</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
@@ -1441,22 +337,12 @@ Horizontal force (N) =  -8.074315039381746e-07
 <span class="n">x3</span> <span class="o">=</span> <span class="n">r3</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
 <span class="n">y3</span> <span class="o">=</span> <span class="n">r3</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
 </div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x3</span><span class="p">,</span> <span class="n">y3</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">dashes</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span>
          <span class="n">label</span><span class="o">=</span><span class="s2">&quot;equilibrium tidal</span><span class="se">\n</span><span class="s2">perturbation&quot;</span><span class="p">)</span>
@@ -1481,79 +367,49 @@ Horizontal force (N) =  -8.074315039381746e-07
 <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="jb_output_wrapper }}">
-<div class="output_area">
-
-
-
-<div class="output_png output_subarea ">
-<img src="../images/geosciences/Tides_6_0.png"
->
-</div>
-
+<div class="cell_output docutils container">
+<img alt="../_images/Tides_6_0.png" src="../_images/Tides_6_0.png" />
 </div>
 </div>
-</div>
-</div>
-
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Horizontal force can be balanced by the sea surface gradient term $g\times grad(h)$. This is called equilibrium tide - the free surface elevation of water-covered Earth whose pressure gradient balances horizontal TGF and results in steady balanced state:
-$$g\frac{1}{r}\frac{\partial h}{\partial \phi}=-\frac{1}{r}\frac{\partial \Omega_P}{\partial \phi}\Rightarrow h_{eq}=-\frac{\Omega_P}{g}.$$</p>
-<p>For Moon $h_{eq}\sim 0.27$ m. However, Earth is not entirely water covered so we don't have an equilibirium state in reality. The tidal bulges would rotate with Earth once every 24 hours but land gets in the way.</p>
-<p>Moon does not rotate exactly above the equator, so our equations need to be corrected for the angle $d_l$ (declination of the Moon north of the equator) and $C_p$ (the Moon's "hour" angle):</p>
-<p><img src="../images/tides_moon_declination.png" alt="TGF" style="width:600px;"/></p>
+<p>Horizontal force can be balanced by the sea surface gradient term <span class="math notranslate nohighlight">\(g\times grad(h)\)</span>. This is called equilibrium tide - the free surface elevation of water-covered Earth whose pressure gradient balances horizontal TGF and results in steady balanced state:
+<span class="math notranslate nohighlight">\($g\frac{1}{r}\frac{\partial h}{\partial \phi}=-\frac{1}{r}\frac{\partial \Omega_P}{\partial \phi}\Rightarrow h_{eq}=-\frac{\Omega_P}{g}.\)</span>$</p>
+<p>For Moon <span class="math notranslate nohighlight">\(h_{eq}\sim 0.27\)</span> m. However, Earth is not entirely water covered so we don’t have an equilibirium state in reality. The tidal bulges would rotate with Earth once every 24 hours but land gets in the way.</p>
+<p>Moon does not rotate exactly above the equator, so our equations need to be corrected for the angle <span class="math notranslate nohighlight">\(d_l\)</span> (declination of the Moon north of the equator) and <span class="math notranslate nohighlight">\(C_p\)</span> (the Moon’s “hour” angle):</p>
+<img src="../images/tides_moon_declination.png" alt="TGF" style="width:600px;"/>
 <p>Therefore, the new formula for potential is:
-$$\Omega_P = -\frac{1}{4}G m_M \frac{r^2}{R^3}[(3\sin^2{d_l}-1)(3\sin^2{\phi_P}-1)+\sin{2d_l}\sin{2\phi_P}\cos{C_P}+\cos^2{d_l}\cos^2{\phi_P}\cos{2C_P}].$$
-Recall that $g=\frac{GM_E}{r^2}$ and $h_eq=-\frac{\Omega_P}{g}$:
-$$h_{eq}(C_P,\phi_P, t)=r\frac{m_M}{M_E}\Big[C_0(t) \Big(\frac{3}{2}\sin^2{\phi_P}-\frac{1}{2}\Big)+C_1(t)\sin{2\phi_P}+C_2(t)\cos^2{\phi_P}\Big],\\
+<span class="math notranslate nohighlight">\($\Omega_P = -\frac{1}{4}G m_M \frac{r^2}{R^3}[(3\sin^2{d_l}-1)(3\sin^2{\phi_P}-1)+\sin{2d_l}\sin{2\phi_P}\cos{C_P}+\cos^2{d_l}\cos^2{\phi_P}\cos{2C_P}].\)</span>$
+Recall that <span class="math notranslate nohighlight">\(g=\frac{GM_E}{r^2}\)</span> and <span class="math notranslate nohighlight">\(h_eq=-\frac{\Omega_P}{g}\)</span>:
+<span class="math notranslate nohighlight">\($h_{eq}(C_P,\phi_P, t)=r\frac{m_M}{M_E}\Big[C_0(t) \Big(\frac{3}{2}\sin^2{\phi_P}-\frac{1}{2}\Big)+C_1(t)\sin{2\phi_P}+C_2(t)\cos^2{\phi_P}\Big],\\
 C_0(t) = \Big(\frac{r}{R}\Big)^3 \Big(\frac{3}{2}\sin^2{d_l}-\frac{1}{2}\Big),\\
 C_1(t) = \Big(\frac{r}{R}\Big)^3 \Big(\frac{3}{4}\sin{2d_l}\cos{C_P}\Big),\\
-C_2(t) = \Big(\frac{r}{R}\Big)^3 \Big(\frac{3}{4}\cos^2{2d_l}\cos{2C_P}\Big).$$</p>
-<p>Let's look at the time-dependent coefficients:</p>
-<ol>
-<li>First one does not vary with $C_P$, only depend on declination $d_l$. These are called the <strong>long-period tides or species</strong>.</li>
-<li>Second term also depends on $d_l$ at twice the frequency as above, but also includes <strong>diurnal species</strong> at frequency one per lunar cycle ($\cos{C_P}$ factor).</li>
-<li>Final term includes <strong>semi-diurnal species</strong> due to $\cos{2C_P}$ factor.</li>
+C_2(t) = \Big(\frac{r}{R}\Big)^3 \Big(\frac{3}{4}\cos^2{2d_l}\cos{2C_P}\Big).\)</span>$</p>
+<p>Let’s look at the time-dependent coefficients:</p>
+<ol class="simple">
+<li><p>First one does not vary with <span class="math notranslate nohighlight">\(C_P\)</span>, only depend on declination <span class="math notranslate nohighlight">\(d_l\)</span>. These are called the <strong>long-period tides or species</strong>.</p></li>
+<li><p>Second term also depends on <span class="math notranslate nohighlight">\(d_l\)</span> at twice the frequency as above, but also includes <strong>diurnal species</strong> at frequency one per lunar cycle (<span class="math notranslate nohighlight">\(\cos{C_P}\)</span> factor).</p></li>
+<li><p>Final term includes <strong>semi-diurnal species</strong> due to <span class="math notranslate nohighlight">\(\cos{2C_P}\)</span> factor.</p></li>
 </ol>
-<p>Lunar hour angle $C_P$ is the difference between longitude of point $P$ and location with the Moon directly overhead. It can be calculated from"
-$$C_P=\omega_1 t +\lambda_P,$$
-where $\omega_1=\frac{360^\circ}{24.8412 \text{hr}}=14.4921^\circ$ hr$^{-1}$.</p>
+<p>Lunar hour angle <span class="math notranslate nohighlight">\(C_P\)</span> is the difference between longitude of point <span class="math notranslate nohighlight">\(P\)</span> and location with the Moon directly overhead. It can be calculated from”
+<span class="math notranslate nohighlight">\($C_P=\omega_1 t +\lambda_P,\)</span>$
+where <span class="math notranslate nohighlight">\(\omega_1=\frac{360^\circ}{24.8412 \text{hr}}=14.4921^\circ\)</span> hr<span class="math notranslate nohighlight">\(^{-1}\)</span>.</p>
 <p>Doodson expanded tidal potential above with Fourier series using fundamental frequencies:</p>
-$$\omega=n_1\omega_1+n_2\omega_2+...+n_6 \omega_6$$<p>These frequencies are known and can be looked up in a table.</p>
-<p><img src="../images/tides_frequencies_1.png" alt="TGF" style="width:600px;"/>
-<img src="../images/tides_frequencies_2.png" alt="TGF" style="width:600px;"/></p>
-<h2 id="Tidal-frequencies">Tidal frequencies<a class="anchor-link" href="#Tidal-frequencies"> </a></h2><p>The combination of the six fundamental frequencies mentioned above can be used to find important cycles - semi-diurnal cycle ($\omega_1=12.42$ hr), spring/neap cycle ($\omega_0-\omega_1=14.75$ days).</p>
-<p>Spring-neap cycles can be explained via superposition of the principal lunar and principal solar tidal constituents: $\omega_0-\omega_1=\omega_2-\omega_3 \rightarrow M_2, S_2.$</p>
-<p><img src="../images/tides_principal_constituents.png" alt="TGF" style="width:600px;"/></p>
-<p>Using $M_2$ and $S_2$, we can plot semi-diurnal and spring-neap cycles:</p>
-
+<div class="math notranslate nohighlight">
+\[\omega=n_1\omega_1+n_2\omega_2+...+n_6 \omega_6\]</div>
+<p>These frequencies are known and can be looked up in a table.</p>
+<img src="../images/tides_frequencies_1.png" alt="TGF" style="width:600px;"/>
+<img src="../images/tides_frequencies_2.png" alt="TGF" style="width:600px;"/>
 </div>
-</div>
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">24</span><span class="o">*</span><span class="mi">30</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">)</span>
+<div class="section" id="tidal-frequencies">
+<h2>Tidal frequencies<a class="headerlink" href="#tidal-frequencies" title="Permalink to this headline">¶</a></h2>
+<p>The combination of the six fundamental frequencies mentioned above can be used to find important cycles - semi-diurnal cycle (<span class="math notranslate nohighlight">\(\omega_1=12.42\)</span> hr), spring/neap cycle (<span class="math notranslate nohighlight">\(\omega_0-\omega_1=14.75\)</span> days).</p>
+<p>Spring-neap cycles can be explained via superposition of the principal lunar and principal solar tidal constituents: <span class="math notranslate nohighlight">\(\omega_0-\omega_1=\omega_2-\omega_3 \rightarrow M_2, S_2.\)</span></p>
+<img src="../images/tides_principal_constituents.png" alt="TGF" style="width:600px;"/>
+<p>Using <span class="math notranslate nohighlight">\(M_2\)</span> and <span class="math notranslate nohighlight">\(S_2\)</span>, we can plot semi-diurnal and spring-neap cycles:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">24</span><span class="o">*</span><span class="mi">30</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">)</span>
 
 <span class="n">M2</span> <span class="o">=</span> <span class="mf">0.242334</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">((</span><span class="mi">2</span><span class="o">*</span><span class="mf">14.4921</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">180</span><span class="p">)</span><span class="o">*</span><span class="n">t</span><span class="p">)</span>
 <span class="n">S2</span> <span class="o">=</span> <span class="mf">0.112841</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">((</span><span class="mi">2</span><span class="o">*</span><span class="mf">14.4921</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="mf">0.549</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="mf">0.0411</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">180</span><span class="p">)</span><span class="o">*</span><span class="n">t</span><span class="p">)</span>
@@ -1576,52 +432,17 @@ $$\omega=n_1\omega_1+n_2\omega_2+...+n_6 \omega_6$$<p>These frequencies are know
 <span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Semi-diurnal and Spring-Neap cycles</span><span class="se">\n</span><span class="s2">(M2 and S2)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="jb_output_wrapper }}">
-<div class="output_area">
-
-
-
-<div class="output_png output_subarea ">
-<img src="../images/geosciences/Tides_8_0.png"
->
-</div>
-
+<div class="cell_output docutils container">
+<img alt="../_images/Tides_8_0.png" src="../_images/Tides_8_0.png" />
 </div>
 </div>
-</div>
-</div>
-
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p>The top graph shows 57 highs in 30 days, while the middle graph shows 60 highs in 30 days.</p>
-<p>Then we can plot diurnal inequality - $M_2$ and $K_1$:</p>
-
-</div>
-</div>
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">M2</span> <span class="o">=</span> <span class="mf">0.242334</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">((</span><span class="mi">2</span><span class="o">*</span><span class="mf">14.4921</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">180</span><span class="p">)</span><span class="o">*</span><span class="n">t</span><span class="p">);</span>
+<p>Then we can plot diurnal inequality - <span class="math notranslate nohighlight">\(M_2\)</span> and <span class="math notranslate nohighlight">\(K_1\)</span>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">M2</span> <span class="o">=</span> <span class="mf">0.242334</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">((</span><span class="mi">2</span><span class="o">*</span><span class="mf">14.4921</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">180</span><span class="p">)</span><span class="o">*</span><span class="n">t</span><span class="p">);</span>
 <span class="n">K1</span> <span class="o">=</span> <span class="mf">0.141565</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">((</span><span class="mi">1</span><span class="o">*</span><span class="mf">14.4921</span> <span class="o">+</span> <span class="mi">1</span><span class="o">*</span><span class="mf">0.549</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">180</span><span class="p">)</span><span class="o">*</span><span class="n">t</span><span class="p">);</span>
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
@@ -1642,83 +463,50 @@ $$\omega=n_1\omega_1+n_2\omega_2+...+n_6 \omega_6$$<p>These frequencies are know
 <span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Diurnal inequality</span><span class="se">\n</span><span class="s2">(M2 and K1)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="jb_output_wrapper }}">
-<div class="output_area">
-
-
-
-<div class="output_png output_subarea ">
-<img src="../images/geosciences/Tides_10_0.png"
->
-</div>
-
+<div class="cell_output docutils container">
+<img alt="../_images/Tides_10_0.png" src="../_images/Tides_10_0.png" />
 </div>
 </div>
-</div>
-</div>
-
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p>We can see on the bottom graph that it has high and lows of different magnitudes within a 24 hour period.</p>
 <p><strong>References:</strong></p>
-<ul>
-<li>The information in this notebook was compiled based on Geophysical Fluid Dynamics for the Oceans course at ESE</li>
+<ul class="simple">
+<li><p>The information in this notebook was compiled based on Geophysical Fluid Dynamics for the Oceans course at ESE</p></li>
 </ul>
-
-</div>
-</div>
 </div>
 </div>
 
- 
 
-
-    </main>
-    
-            </div>
-            <div class="c-textbook__footer" id="textbook_footer">
+              </div>
               
-<nav class="c-page__nav">
-  
-    
-    
-
-    <a id="js-page__nav__prev" class="c-page__nav__prev" href="/book/geosciences/Dynamic_Earth.html">
-      〈 <span class="u-margin-right-tiny"></span> Dynamic Earth
-    </a>
-  
-
-  
-    
-
-    
-    <a id="js-page__nav__next" class="c-page__nav__next" href="/book/geosciences/Wave_dispersion.html">
-      Wave dispersion <span class="u-margin-right-tiny"></span> 〉
-    </a>
-  
-</nav>
-
-              <footer>
-  <p class="footer">This page was created by <a href="https://github.com/ExecutableBookProject/jupyter-book/graphs/contributors">The Jupyter Book Community</a></p>
-</footer>
-
-            </div>
-
         </div>
-      </main>
     </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="Dynamic_Earth.html" title="previous page">Dynamic Earth and Planets</a>
+    <a class='right-next' id="next-link" href="Wave_dispersion.html" title="next page">Waves</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Imperial College London<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../_static/js/index.js"></script>
+    
   </body>
 </html>

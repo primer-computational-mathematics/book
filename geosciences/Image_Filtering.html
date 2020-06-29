@@ -1,1291 +1,242 @@
+
+
 <!DOCTYPE html>
-<html lang="en">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta charset="utf-8" />
+    <title>IMAGE FILTERING &#8212; ESE Jupyter Material</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/sphinx-book-theme.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/mystnb.js"></script>
+    <script src="../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Remote Sensing" href="Image_Operations.html" />
+    <link rel="prev" title="Geosciences" href="intro.html" />
 
-  <title>Image Filtering</title>
-  <meta name="description" content="        Image Filtering    IMAGE FILTERING Filtering is a technique for modifying or enhancing an image. For example, we can use it to highlight features and...">
-
-  <link rel="canonical" href="https://primer-computational-mathematics.github.io/book/geosciences/Image_Filtering.html">
-  <link rel="alternate" type="application/rss+xml" title="ESE Jupyter Material" href="https://primer-computational-mathematics.github.io/book/feed.xml">
-
-  <meta property="og:url"         content="https://primer-computational-mathematics.github.io/book/geosciences/Image_Filtering.html" />
-<meta property="og:type"        content="article" />
-<meta property="og:title"       content="Image Filtering" />
-<meta property="og:description" content="        Image Filtering    IMAGE FILTERING Filtering is a technique for modifying or enhancing an image. For example, we can use it to highlight features and..." />
-<meta property="og:image"       content="https://primer-computational-mathematics.github.io//book/images/logo/logo.png" />
-
-<meta name="twitter:card" content="summary">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
 
 
-  <script type="application/ld+json">
-  {
-  "@context": "http://schema.org",
-  "@type": "NewsArticle",
-  "mainEntityOfPage": "https://primer-computational-mathematics.github.io/book/geosciences/Image_Filtering.html",
-  "headline": "Image Filtering",
-  "datePublished": "2020-06-29T14:23:33+00:00",
-  "dateModified": "2020-06-29T14:23:33+00:00",
-  "description": "        Image Filtering    IMAGE FILTERING Filtering is a technique for modifying or enhancing an image. For example, we can use it to highlight features and...",
-  "author": {
-    "@type": "Person",
-    "name": "Imperial College London"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "Data 100 at UC Berkeley",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://primer-computational-mathematics.github.io/book",
-      "width": 60,
-      "height": 60
-    }
-  },
-  "image": {
-    "@type": "ImageObject",
-    "url": "https://primer-computational-mathematics.github.io/book",
-    "height": 60,
-    "width": 60
-  }
-}
 
-  </script>
-  <link rel="stylesheet" href="/book/assets/css/styles.css">
-
-  <!-- <link rel="manifest" href="/manifest.json"> -->
-  <!-- <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#efae0a"> -->
-  <meta name="msapplication-TileColor" content="#da532c">
-  <meta name="msapplication-TileImage" content="/mstile-144x144.png">
-  <meta name="theme-color" content="#233947">
-
-  <!-- Favicon -->
-  <link rel="shortcut icon" type="image/x-icon" href="/book/images/logo/favicon.ico">
-
-  <!-- MathJax Config -->
-  <!-- Allow inline math using $ and automatically break long math lines -->
-<!-- (mostly) copied from nbconvert configuration -->
-<!-- https://github.com/jupyter/nbconvert/blob/master/nbconvert/templates/html/mathjax.tpl -->
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-    tex2jax: {
-        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-        displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
-        processEscapes: true,
-        processEnvironments: true
-    },
-    // Center justify equations in code and markdown cells. Elsewhere
-    // we use CSS to left justify single line equations in code cells.
-    displayAlign: 'center',
-    "HTML-CSS": {
-        styles: {'.MathJax_Display': {"margin": 0}},
-        linebreaks: { automatic: true },
-    },
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
     
-});
-</script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS_HTML' async></script>
 
-
-  <!-- DOM updating function -->
-  <script src="/book/assets/js/page/dom-update.js"></script>
-
-  <!-- Selectors for elements on the page -->
-  <script src="/book/assets/js/page/documentSelectors.js"></script>
-
-  <!-- Define some javascript variables that will be useful in other javascript -->
-  <script>
-    const site_basename = 'book';
-  </script>
-
-  <!-- Add AnchorJS to let headers be linked -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.2.0/anchor.min.js" async></script>
-  <script src="/book/assets/js/page/anchors.js" async></script>
-
-  <!-- Include Turbolinks to make page loads fast -->
-  <!-- https://github.com/turbolinks/turbolinks -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/turbolinks/5.2.0/turbolinks.js" async></script>
-  <meta name="turbolinks-cache-control" content="no-cache">
-
-  <!-- Load nbinteract for widgets -->
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
   
-
-  <!-- Load Thebelab for interactive widgets -->
-  <!-- Include Thebelab for interactive code if it's enabled -->
-
-
-<!-- Display Thebelab button in each code cell -->
-<script>
-/**
- * Set up thebelab button for code blocks
- */
-
-const thebelabCellButton = id =>
-  `<a id="thebelab-cell-button-${id}" class="btn thebebtn o-tooltip--left" data-tooltip="Interactive Mode">
-    <img src="/book/assets/images/edit-button.svg" alt="Start thebelab interactive mode">
-  </a>`
-
-
-const addThebelabButtonToCodeCells =  () => {
-
-  const codeCells = document.querySelectorAll('div.input_area > div.highlight:not(.output) pre')
-  codeCells.forEach((codeCell, index) => {
-    const id = codeCellId(index)
-    codeCell.setAttribute('id', id)
-    if (document.getElementById("thebelab-cell-button-" + id) == null) {
-      codeCell.insertAdjacentHTML('afterend', thebelabCellButton(id));
-    }
-  })
-}
-
-initFunction(addThebelabButtonToCodeCells);
-</script>
-
-
-<script src="https://unpkg.com/thebelab@latest/lib/index.js" async></script>
-<script>
-    /**
-     * Add attributes to Thebelab blocks
-     */
-
-    const initThebelab = () => {
-        const addThebelabToCodeCells = () => {
-            console.log("Adding thebelab to code cells...");
-            // If Thebelab hasn't loaded, wait a bit and try again. This
-            // happens because we load ClipboardJS asynchronously.
-            if (window.thebelab === undefined) {
-                setTimeout(addThebelabToCodeCells, 250)
-            return
-            }
-
-            // If we already detect a Thebelab cell, don't re-run
-            if (document.querySelectorAll('div.thebelab-cell').length > 0) {
-                return;
-            }
-
-            // Find all code cells, replace with Thebelab interactive code cells
-            const codeCells = document.querySelectorAll('.input_area pre')
-            codeCells.forEach((codeCell, index) => {
-                const id = codeCellId(index)
-
-                // Clean up the language to make it work w/ CodeMirror and add it to the cell
-                dataLanguage = ""
-                dataLanguage = detectLanguage(dataLanguage);
-                codeCell.setAttribute('data-language', dataLanguage)
-                codeCell.setAttribute('data-executable', 'true')
-
-                // If the code cell is hidden, show it
-                var inputCheckbox = document.querySelector(`input#hidebtn${codeCell.id}`);
-                if (inputCheckbox !== null) {
-                    setCodeCellVisibility(inputCheckbox, 'visible');
-                }
-            });
-
-            // Remove the event listener from the page so keyboard press doesn't
-            // Change page
-            document.removeEventListener('keydown', initPageNav)
-            keyboardListener = false;
-
-            // Init thebelab
-            thebelab.bootstrap();
-
-            // Remove copy buttons since they won't work anymore
-            const copyAndThebeButtons = document.querySelectorAll('.copybtn, .thebebtn')
-            copyAndThebeButtons.forEach((button, index) => {
-                button.remove();
-            });
-
-            // Remove outputs since they'll be stale
-            const outputs = document.querySelectorAll('.output *, .output')
-            outputs.forEach((output, index) => {
-                output.remove();
-            });
-
-            // Find any cells with an initialization tag and ask ThebeLab to run them when ready
-            var thebeInitCells = document.querySelectorAll('div.tag_thebelab-init');
-            thebeInitCells.forEach((cell) => {
-                console.log("Initializing ThebeLab with cell: " + cell.id);
-                cell.querySelector('.thebelab-run-button').click();
-            });
-        }
-
-        // Add event listener for the function to modify code cells
-        const thebelabButtons = document.querySelectorAll('[id^=thebelab], [id$=thebelab]')
-        thebelabButtons.forEach((thebelabButton,index) => {
-            if (thebelabButton === null) {
-                setTimeout(initThebelab, 250)
-                return
-            };
-            thebelabButton.addEventListener('click', addThebelabToCodeCells);
-        });
-    }
-
-    // Initialize Thebelab
-    initFunction(initThebelab);
-
-// Helper function to munge the language name
-var detectLanguage = (language) => {
-    if (language.indexOf('python') > -1) {
-        language = "python";
-    }
-    return language;
-}
-</script>
-
-
-
-  <!-- Load the auto-generating TOC (non-async otherwise the TOC won't load w/ turbolinks) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.8.1/tocbot.min.js" async></script>
-  <script src="/book/assets/js/page/tocbot.js"></script>
-
-  <!-- Google analytics -->
+  <img src="../_static/logo.png" class="logo" alt="logo">
   
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', '');
-</script>
-
-
-
-  <!-- Clipboard copy button -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" async></script>
-
-  <!-- Load custom website scripts -->
-  <script src="/book/assets/js/scripts.js" async></script>
-
-  <!-- Load custom user CSS and JS  -->
-  <script src="/book/assets/custom/custom.js" async></script>
-  <link rel="stylesheet" href="/book/assets/custom/custom.css">
-
-  <!-- Update interact links w/ REST param, is defined in includes so we can use templates -->
   
-
-  <!-- Lunr search code - will only be executed on the /search page -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/2.3.6/lunr.min.js" async></script>
-  <script>var initQuery = function() {
-  // See if we have a search box
-  var searchInput = document.querySelector('input#lunr_search');
-  if (searchInput === null) {
-    return;
-  }
-
-  // Function to parse our lunr cache
-  var idx = lunr(function () {
-    this.field('title')
-    this.field('excerpt')
-    this.field('categories')
-    this.field('tags')
-    this.ref('id')
-
-    this.pipeline.remove(lunr.trimmer)
-
-    for (var item in store) {
-      this.add({
-        title: store[item].title,
-        excerpt: store[item].excerpt,
-        categories: store[item].categories,
-        tags: store[item].tags,
-        id: item
-      })
-    }
-  });
-
-  // Run search upon keyup
-  searchInput.addEventListener('keyup', function () {
-    var resultdiv = document.querySelector('#results');
-    var query = document.querySelector("input#lunr_search").value.toLowerCase();
-    var result =
-      idx.query(function (q) {
-        query.split(lunr.tokenizer.separator).forEach(function (term) {
-          q.term(term, { boost: 100 })
-          if(query.lastIndexOf(" ") != query.length-1){
-            q.term(term, {  usePipeline: false, wildcard: lunr.Query.wildcard.TRAILING, boost: 10 })
-          }
-          if (term != ""){
-            q.term(term, {  usePipeline: false, editDistance: 1, boost: 1 })
-          }
-        })
-      });
-
-      // Empty the results div
-      while (resultdiv.firstChild) {
-        resultdiv.removeChild(resultdiv.firstChild);
-      }
-
-    resultdiv.insertAdjacentHTML('afterbegin', '<p class="results__found">'+result.length+' Result(s) found</p>');
-    for (var item in result) {
-      var ref = result[item].ref;
-      if(store[ref].teaser){
-        var searchitem =
-          '<div class="list__item">'+
-            '<article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">'+
-              '<h2 class="archive__item-title" itemprop="headline">'+
-                '<a href="'+store[ref].url+'" rel="permalink">'+store[ref].title+'</a>'+
-              '</h2>'+
-              '<div class="archive__item-teaser">'+
-                '<img src="'+store[ref].teaser+'" alt="">'+
-              '</div>'+
-              '<p class="archive__item-excerpt" itemprop="description">'+store[ref].excerpt.split(" ").splice(0,20).join(" ")+'...</p>'+
-            '</article>'+
-          '</div>';
-      }
-      else{
-    	  var searchitem =
-          '<div class="list__item">'+
-            '<article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">'+
-              '<h2 class="archive__item-title" itemprop="headline">'+
-                '<a href="'+store[ref].url+'" rel="permalink">'+store[ref].title+'</a>'+
-              '</h2>'+
-              '<p class="archive__item-excerpt" itemprop="description">'+store[ref].excerpt.split(" ").splice(0,20).join(" ")+'...</p>'+
-            '</article>'+
-          '</div>';
-      }
-      resultdiv.insertAdjacentHTML('beforeend', searchitem);
-    }
-  });
-};
-
-initFunction(initQuery);
-</script>
-
-  <!-- Load JS that depends on site variables -->
-  <script src="/book/assets/js/page/copy-button.js" async></script>
-
-  <!-- Hide cell code -->
-  <script src="/book/assets/js/page/hide-cell.js" async></script>
-
-  <!-- Printing the screen -->
-  <!-- Include nbinteract for interactive widgets -->
-<script src="https://printjs-4de6.kxcdn.com/print.min.js" async></script>
-<script>
-printContent = () => {
-    // MathJax displays a second version of any math for assistive devices etc.
-    // This prevents double-rendering in the PDF output.
-    var ignoreAssistList = [];
-    assistives = document.querySelectorAll('.MathJax_Display span.MJX_Assistive_MathML').forEach((element, index) => {
-        var thisId = 'MathJax-assistive-' + index.toString();
-        element.setAttribute('id', thisId);
-        ignoreAssistList.push(thisId)
-    });
-
-    // Print the actual content object
-    printJS({
-        printable: 'textbook_content',
-        type: 'html',
-        css: "/book/assets/css/styles.css",
-        style: "#textbook_content {padding-top: 40px};",
-        scanStyles: false,
-        targetStyles: ["*"],
-        ignoreElements: ignoreAssistList,
-        documentTitle: "Made with Jupyter Book"
-    })
-};
-
-initPrint = () => {
-    document.querySelector('#interact-button-print').addEventListener('click', printContent)
-}
-
-initFunction(initPrint)
-</script>
-
-</head>
-
-  <body>
-    <!-- Include the ThebeLab config so it gets reloaded on each page -->
-    <script type="text/x-thebe-config">{
-    requestKernel: true,
-    binderOptions: {
-    repo: "primer-computational-mathematics/book",
-    ref: "master",
-    },
-    codeMirrorConfig: {
-    theme: "abcdef",
-    mode: "python"
-    },
-    kernelOptions: {
-    kernelName: "python36",
-    path: "notebooks/geosciences"
-    }
-}
-</script>
-
-    <!-- .js-show-sidebar shows sidebar by default -->
-    <div id="js-textbook" class="c-textbook js-show-sidebar">
-      
-
-
-
-<nav id="js-sidebar" class="c-textbook__sidebar">
-  <a href="https://www.imperial.ac.uk/earth-science/"><img src="/book/images/logo/logo.png" class="textbook_logo" id="sidebar-logo" alt="textbook logo" data-turbolinks-permanent/></a>
-  <h2 class="c-sidebar__title">ESE Jupyter Material</h2>
-  <ul class="c-sidebar__chapters">
-    
-      
-      
-
-      
-      
-      
-      
-
-      
-      
-      <li class="c-sidebar__chapter" data-url="/intro">
-        <a class="c-sidebar__entry"
-          href="/book/intro.html"
-        >
-          
-          Home
-        </a>
-      </li>
-
-      
-      
-
-      
-
-      
-      
-
-      
-
-      
-    
-      
-      
-        <li class="c-sidebar__divider"></li>
-        
-      
-      
-        <li><h2 class="c-sidebar__title">Topics</li>
-        
-      
-      
-
-      
-      
-      
-      
-
-      
-      
-      <li class="c-sidebar__chapter" data-url="/maths/intro">
-        <a class="c-sidebar__entry"
-          href="/book/maths/intro.html"
-        >
-          
-          Mathematics
-        </a>
-      </li>
-
-      
-      
-
-      
-
-      
-      
-
-      
-        
-
-        
-
-        <ul class="c-sidebar__sections">
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/maths/Statistics_for_Geoscientists">
-              <a class="c-sidebar__entry"
-                href="/book/maths/Statistics_for_Geoscientists.html"
-              >
-                
-                Statistics for Geoscientists
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/maths/Taylor_series">
-              <a class="c-sidebar__entry"
-                href="/book/maths/Taylor_series.html"
-              >
-                
-                Taylor series
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/maths/Big_O_notation">
-              <a class="c-sidebar__entry"
-                href="/book/maths/Big_O_notation.html"
-              >
-                
-                Big O notation
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/maths/Timestepping_an_ODE">
-              <a class="c-sidebar__entry"
-                href="/book/maths/Timestepping_an_ODE.html"
-              >
-                
-                Timestepping an ODE
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/maths/Tensors_Review">
-              <a class="c-sidebar__entry"
-                href="/book/maths/Tensors_Review.html"
-              >
-                
-                Tensors Review
-              </a>
-            </li>
-            
-            
-          
-        </ul>
-      
-
-      
-    
-      
-      
-
-      
-      
-      
-      
-
-      
-      
-      <li class="c-sidebar__chapter" data-url="/coding/intro">
-        <a class="c-sidebar__entry"
-          href="/book/coding/intro.html"
-        >
-          
-          Coding
-        </a>
-      </li>
-
-      
-      
-
-      
-
-      
-      
-
-      
-        
-
-        
-
-        <ul class="c-sidebar__sections">
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/coding/Sets">
-              <a class="c-sidebar__entry"
-                href="/book/coding/Sets.html"
-              >
-                
-                Sets
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/coding/Dictionaries">
-              <a class="c-sidebar__entry"
-                href="/book/coding/Dictionaries.html"
-              >
-                
-                Dictionaries
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/coding/For_loops">
-              <a class="c-sidebar__entry"
-                href="/book/coding/For_loops.html"
-              >
-                
-                For loops
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/coding/Variables">
-              <a class="c-sidebar__entry"
-                href="/book/coding/Variables.html"
-              >
-                
-                Variables
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/coding/Nested_lists">
-              <a class="c-sidebar__entry"
-                href="/book/coding/Nested_lists.html"
-              >
-                
-                Nested lists
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/coding/List_comprehensions">
-              <a class="c-sidebar__entry"
-                href="/book/coding/List_comprehensions.html"
-              >
-                
-                List comprehensions
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/coding/Lists">
-              <a class="c-sidebar__entry"
-                href="/book/coding/Lists.html"
-              >
-                
-                Lists
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/coding/While_loops">
-              <a class="c-sidebar__entry"
-                href="/book/coding/While_loops.html"
-              >
-                
-                While loops
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/coding/Tuples">
-              <a class="c-sidebar__entry"
-                href="/book/coding/Tuples.html"
-              >
-                
-                Tuples
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/coding/Functions">
-              <a class="c-sidebar__entry"
-                href="/book/coding/Functions.html"
-              >
-                
-                Functions
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/coding/If_statement">
-              <a class="c-sidebar__entry"
-                href="/book/coding/If_statement.html"
-              >
-                
-                If statement
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/coding/Flow_control_statements">
-              <a class="c-sidebar__entry"
-                href="/book/coding/Flow_control_statements.html"
-              >
-                
-                Flow control statements
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/coding/Handling_errors">
-              <a class="c-sidebar__entry"
-                href="/book/coding/Handling_errors.html"
-              >
-                
-                Handling errors
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/coding/File_handling">
-              <a class="c-sidebar__entry"
-                href="/book/coding/File_handling.html"
-              >
-                
-                File handling
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/coding/NumPy_Arrays">
-              <a class="c-sidebar__entry"
-                href="/book/coding/NumPy_Arrays.html"
-              >
-                
-                NumPy Arrays
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/coding/Matplotlib">
-              <a class="c-sidebar__entry"
-                href="/book/coding/Matplotlib.html"
-              >
-                
-                Matplotlib
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/coding/Pandas">
-              <a class="c-sidebar__entry"
-                href="/book/coding/Pandas.html"
-              >
-                
-                Pandas
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/coding/Printing_and_formatting_statements">
-              <a class="c-sidebar__entry"
-                href="/book/coding/Printing_and_formatting_statements.html"
-              >
-                
-                Printing and formatting statements
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/coding/Importing">
-              <a class="c-sidebar__entry"
-                href="/book/coding/Importing.html"
-              >
-                
-                Importing
-              </a>
-            </li>
-            
-            
-          
-        </ul>
-      
-
-      
-    
-      
-      
-
-      
-      
-      
-      
-
-      
-      
-      <li class="c-sidebar__chapter" data-url="/geosciences/intro">
-        <a class="c-sidebar__entry"
-          href="/book/geosciences/intro.html"
-        >
-          
-          Geosciences
-        </a>
-      </li>
-
-      
-      
-
-      
-
-      
-      
-
-      
-        
-
-        
-
-        <ul class="c-sidebar__sections">
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/geosciences/Image_Filtering">
-              <a class="c-sidebar__entry"
-                href="/book/geosciences/Image_Filtering.html"
-              >
-                
-                Image Filtering
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/geosciences/Image_Operations">
-              <a class="c-sidebar__entry"
-                href="/book/geosciences/Image_Operations.html"
-              >
-                
-                Image Operations
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/geosciences/Cartography_Cartopy">
-              <a class="c-sidebar__entry"
-                href="/book/geosciences/Cartography_Cartopy.html"
-              >
-                
-                Cartography Cartopy
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/geosciences/Dynamic_Earth">
-              <a class="c-sidebar__entry"
-                href="/book/geosciences/Dynamic_Earth.html"
-              >
-                
-                Dynamic Earth
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/geosciences/Tides">
-              <a class="c-sidebar__entry"
-                href="/book/geosciences/Tides.html"
-              >
-                
-                Tides
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/geosciences/Wave_dispersion">
-              <a class="c-sidebar__entry"
-                href="/book/geosciences/Wave_dispersion.html"
-              >
-                
-                Wave dispersion
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/geosciences/Seismology">
-              <a class="c-sidebar__entry"
-                href="/book/geosciences/Seismology.html"
-              >
-                
-                Seismology
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/geosciences/Google_Earth_Engine_Foundations">
-              <a class="c-sidebar__entry"
-                href="/book/geosciences/Google_Earth_Engine_Foundations.html"
-              >
-                
-                Google Earth Engine Foundations
-              </a>
-            </li>
-            
-            
-          
-        </ul>
-      
-
-      
-    
+  <h1 class="site-logo" id="site-title">ESE Jupyter Material</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  
+  <ul class="nav sidenav_l1">
+  <li class="">
+    <a href="../intro.html">Landing page</a>
+  </li>
+  <li class="">
+    <a href="../coding/intro.html">Coding</a>
+  </li>
+  <li class="">
+    <a href="../mathematics/intro.html">Mathematics</a>
+  </li>
+  <li class="active">
+    <a href="intro.html">Geosciences</a>
+  <ul class="nav sidenav_l2">
+    <li class="active">
+      <a href="">Image Filtering</a>
+    </li>
+    <li class="">
+      <a href="Image_Operations.html">Image Operations</a>
+    </li>
+    <li class="">
+      <a href="Cartography_Cartopy.html">Cartography Cartopy</a>
+    </li>
+    <li class="">
+      <a href="Dynamic_Earth.html">Dynamic Earth</a>
+    </li>
+    <li class="">
+      <a href="Tides.html">Tides</a>
+    </li>
+    <li class="">
+      <a href="Wave_dispersion.html">Wave Dispersion</a>
+    </li>
+    <li class="">
+      <a href="Seismology.html">Seismology</a>
+    </li>
+    <li class="">
+      <a href="Google_Earth_Engine_Foundations.html">Google Earth Engine Foundations</a>
+    </li>
   </ul>
-  <p class="sidebar_footer">Powered by <a href="https://jupyterbook.org">Jupyter Book</a></p>
+  </li>
+  <li class="">
+    <a href="../genindex.html">Index</a>
+  </li>
+</ul>
 </nav>
 
-      
-      <div class="c-topbar" id="top-navbar">
-  <!-- We show the sidebar by default so we use .is-active -->
-  <div class="c-topbar__buttons">
-    <button
-      id="js-sidebar-toggle"
-      class="hamburger hamburger--arrowalt is-active"
-    >
-      <span class="hamburger-box">
-        <span class="hamburger-inner"></span>
-      </span>
-    </button>
-    <div class="buttons">
-<div class="download-buttons-dropdown">
-    <button id="dropdown-button-trigger" class="interact-button"><img src="/book/assets/images/download-solid.svg" alt="Download" /></button>
-    <div class="download-buttons">
-        <a href="/book/notebooks/geosciences/Image_Filtering.ipynb" download>
-        <button id="interact-button-download" class="interact-button">.ipynb</button>
-        </a>
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
         
-        <a id="interact-button-print"><button id="interact-button-download" class="interact-button">.pdf</button></a>
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/geosciences/Image_Filtering.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/geosciences/Image_Filtering.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
     </div>
 </div>
 
-
-  <button id="interact-button-thebelab" class="interact-button">Thebelab</button>
-
-  
-  
-  
-
-
+    </div>
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
 </div>
 
-  </div>
-  <!-- Empty sidebar placeholder that we'll auto-fill with javascript -->
-  <aside class="sidebar__right">
-    <header><h4 class="nav__title"><img src="/book/assets/images/list-solid.svg" alt="Search" />   On this page</h4></header>
-    <nav class="onthispage">
-    </nav>
-  </aside>
-  <a href="/book/search.html" class="topbar-right-button" id="search-button">
-    <img src="/book/assets/images/search-solid.svg" alt="Search" />
-  </a>
-</div>
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#moving-average-filter" class="nav-link">Moving Average Filter</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#sharpening-filters" class="nav-link">Sharpening Filters</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#edge-detection-gradient-operators" class="nav-link">Edge Detection (gradient operators)</a>
+        </li>
+    
+    </ul>
+</nav>
 
-      <main class="c-textbook__page" tabindex="-1">
-            <div class="c-textbook__content" id="textbook_content">
-                  <main class="jupyter-page">
-    <div id="page-info"><div id="page-title">Image Filtering</div>
-</div>
-    <div class="jb_cell">
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="IMAGE-FILTERING">IMAGE FILTERING<a class="anchor-link" href="#IMAGE-FILTERING"> </a></h2><p>Filtering is a technique for modifying or enhancing an image. For example, we can use it to highlight features and/or remove noise. The basic image filtering operations implemented here are:</p>
-<ul>
-<li>smoothing filter (moving average filter)</li>
-<li>sharpening filter</li>
-<li>edge detection</li>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="image-filtering">
+<h1>IMAGE FILTERING<a class="headerlink" href="#image-filtering" title="Permalink to this headline">¶</a></h1>
+<p>Filtering is a technique for modifying or enhancing an image. For example, we can use it to highlight features and/or remove noise. The basic image filtering operations implemented here are:</p>
+<ul class="simple">
+<li><p>smoothing filter (moving average filter)</p></li>
+<li><p>sharpening filter</p></li>
+<li><p>edge detection</p></li>
 </ul>
 <p>Filtering is a neighbourhood operation, in which the value of the pixel in the output image is determined by applying some alogrithm to the values of the pixels in the neighbourhood of the corresponding input pixel. All of the examples found below are linear filtering operations in which the value of an output pixel is a linear combination of the values of the pixels in the input pixels neighbourhood.</p>
-
-</div>
-</div>
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p>What we aim to achieve is to have a moving window across our image which calculates an average of the values of the input image within the window for the central pixel. This smoothens the contrast between pixels.</p>
-<p><img src="Data_Image_Filtering/convolution_graphical.png" style="width:300px;"/></p>
+<img src="Data_Image_Filtering/convolution_graphical.png" style="width:300px;"/>
 <p>This can be acccomplished through convolution, which is a neighbourhood operation in which each output pixel is the weighted sum of neighbouring input pixels. The matrix of weights is called the convolution kernel, below we show a 3x3 kernel that we will use for our moving average filter:</p>
-<p><img src="Data_Image_Filtering/kernel.png" style="width:150px;"/></p>
+<img src="Data_Image_Filtering/kernel.png" style="width:150px;"/>
 <p>To prevent against empty values at the edges of the image we can use padding, for instance we can place zero values in these cells or mirror the available values within our window. If this is not done and we ignore the edge pixels we will reduce the size of our image.</p>
-<h3 id="Moving-Average-Filter">Moving Average Filter<a class="anchor-link" href="#Moving-Average-Filter"> </a></h3><p>It takes M samples of input at a time and takes the average of that subset of data to produce a single output point, in statistics commonly named moving/rolling mean. As it is averaging the neighbouring pixels we are reducing the contrast between pixels and hence smoothening the image. An example of this is demonstrated below.</p>
-
-</div>
-</div>
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Import required libaries</span>
+<div class="section" id="moving-average-filter">
+<h2>Moving Average Filter<a class="headerlink" href="#moving-average-filter" title="Permalink to this headline">¶</a></h2>
+<p>It takes M samples of input at a time and takes the average of that subset of data to produce a single output point, in statistics commonly named moving/rolling mean. As it is averaging the neighbouring pixels we are reducing the contrast between pixels and hence smoothening the image. An example of this is demonstrated below.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import required libaries</span>
 <span class="kn">import</span> <span class="nn">imageio</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
@@ -1294,22 +245,12 @@ initFunction(initPrint)
 <span class="kn">import</span> <span class="nn">math</span>
 <span class="kn">import</span> <span class="nn">time</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
 </div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Read in image</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Read in image</span>
 <span class="n">img</span> <span class="o">=</span> <span class="n">imageio</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s1">&#39;Data_Image_Filtering/output-onlinejpgtools.jpg&#39;</span><span class="p">)</span>
 
 <span class="c1">#find out image ratio</span>
@@ -1332,50 +273,19 @@ initFunction(initPrint)
 
 <span class="n">image_show</span><span class="p">(</span><span class="n">image_noisy</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">11</span><span class="p">)</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="jb_output_wrapper }}">
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Image dimension = (390, 556, 3)
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Image dimension = (390, 556, 3)
 Image dimension = (390, 556)
-</pre>
+</pre></div>
+</div>
+<img alt="../_images/Image_Filtering_3_1.png" src="../_images/Image_Filtering_3_1.png" />
 </div>
 </div>
-</div>
-<div class="jb_output_wrapper }}">
-<div class="output_area">
-
-
-
-<div class="output_png output_subarea ">
-<img src="../images/geosciences/Image_Filtering_3_1.png"
->
-</div>
-
-</div>
-</div>
-</div>
-</div>
-
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Design the kernel h (3x3 filter in this case)</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Design the kernel h (3x3 filter in this case)</span>
 <span class="n">h</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">9</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span>
                     <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span>
                     <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]])</span>
@@ -1397,174 +307,65 @@ Image dimension = (390, 556)
 
 <span class="n">image_comp</span><span class="p">(</span><span class="n">image_filtered</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">11</span><span class="p">)</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="jb_output_wrapper }}">
-<div class="output_area">
-
-
-
-<div class="output_png output_subarea ">
-<img src="../images/geosciences/Image_Filtering_4_0.png"
->
-</div>
-
+<div class="cell_output docutils container">
+<img alt="../_images/Image_Filtering_4_0.png" src="../_images/Image_Filtering_4_0.png" />
 </div>
 </div>
-</div>
-</div>
-
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p>The kernel can be of any size. Increasing the kernel size will lead to a blurrier image as more data is averaged in each step.</p>
-
-</div>
-</div>
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">h</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">81</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">([</span><span class="mi">9</span><span class="p">,</span><span class="mi">9</span><span class="p">])</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">h</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">81</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">([</span><span class="mi">9</span><span class="p">,</span><span class="mi">9</span><span class="p">])</span>
 <span class="n">image_smooth</span><span class="o">=</span><span class="n">scipy</span><span class="o">.</span><span class="n">signal</span><span class="o">.</span><span class="n">convolve2d</span><span class="p">(</span><span class="n">image</span><span class="p">,</span><span class="n">h</span><span class="p">,</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;full&#39;</span><span class="p">,</span>
                                      <span class="n">boundary</span> <span class="o">=</span> <span class="s1">&#39;fill&#39;</span><span class="p">,</span> <span class="n">fillvalue</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">image_comp</span> <span class="p">(</span><span class="n">image_smooth</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">11</span><span class="p">)</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="jb_output_wrapper }}">
-<div class="output_area">
-
-
-
-<div class="output_png output_subarea ">
-<img src="../images/geosciences/Image_Filtering_6_0.png"
->
-</div>
-
+<div class="cell_output docutils container">
+<img alt="../_images/Image_Filtering_6_0.png" src="../_images/Image_Filtering_6_0.png" />
 </div>
 </div>
 </div>
-</div>
-
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Sharpening-Filters">Sharpening Filters<a class="anchor-link" href="#Sharpening-Filters"> </a></h3><p>These filters work in the same fashion except that their kernel aims to increase the contrast between neighbouring pixels. This effect will be most pronounced at the pixels with the largest difference in digital numbers.</p>
+<div class="section" id="sharpening-filters">
+<h2>Sharpening Filters<a class="headerlink" href="#sharpening-filters" title="Permalink to this headline">¶</a></h2>
+<p>These filters work in the same fashion except that their kernel aims to increase the contrast between neighbouring pixels. This effect will be most pronounced at the pixels with the largest difference in digital numbers.</p>
 <p>A simple Kernel that we can use for this would be:</p>
-<p><img src="Data_Image_Filtering/filter_sharpen.png" style="width:100px;"/></p>
+<img src="Data_Image_Filtering/filter_sharpen.png" style="width:100px;"/>
 <p>The effect of this filter can be see in the following image:</p>
-
-</div>
-</div>
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">h</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="mi">9</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="mi">9</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="mi">9</span><span class="p">],</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">h</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="mi">9</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="mi">9</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="mi">9</span><span class="p">],</span>
             <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="mi">9</span><span class="p">,</span><span class="mf">1.9</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="mi">9</span><span class="p">],</span>
             <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="mi">9</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="mi">9</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="mi">9</span><span class="p">]])</span>
 <span class="n">image_sharp</span><span class="o">=</span><span class="n">scipy</span><span class="o">.</span><span class="n">signal</span><span class="o">.</span><span class="n">convolve2d</span><span class="p">(</span><span class="n">image</span><span class="p">,</span><span class="n">h</span><span class="p">,</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;full&#39;</span><span class="p">,</span> 
                                 <span class="n">boundary</span> <span class="o">=</span> <span class="s1">&#39;fill&#39;</span><span class="p">,</span> <span class="n">fillvalue</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">image_comp</span> <span class="p">(</span><span class="n">image_sharp</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">11</span><span class="p">)</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="jb_output_wrapper }}">
-<div class="output_area">
-
-
-
-<div class="output_png output_subarea ">
-<img src="../images/geosciences/Image_Filtering_8_0.png"
->
-</div>
-
+<div class="cell_output docutils container">
+<img alt="../_images/Image_Filtering_8_0.png" src="../_images/Image_Filtering_8_0.png" />
 </div>
 </div>
-</div>
-</div>
-
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p>In some cases the filters you will be using can be separated into two smaller filters and convolve these one after the other with our image. for instance:</p>
-<p><img src="Data_Image_Filtering/filter_simplified.png"  style="width:300px;"/></p>
+<img src="Data_Image_Filtering/filter_simplified.png"  style="width:300px;"/>
 <p>What this achieves is that it can bring down our computational complexity to $ O(N^2 K) $, whereas before it was $ O(N^2 K^2) $</p>
-
 </div>
-</div>
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Edge-Detection-(gradient-operators)">Edge Detection (gradient operators)<a class="anchor-link" href="#Edge-Detection-(gradient-operators)"> </a></h3><p>Edges in this context refer to a stark contrast in brightness (DN value) within our image. These can be related to discontinuities in depth, discontinuities in surface orientation (angle), changes in material properties and or variation in scene illumination. These methods are valuable for data extraction in areas such as image processing, computer vision, and machine learning as it allows the extraction of structural properties of an image while reducing the amount of data.</p>
+<div class="section" id="edge-detection-gradient-operators">
+<h2>Edge Detection (gradient operators)<a class="headerlink" href="#edge-detection-gradient-operators" title="Permalink to this headline">¶</a></h2>
+<p>Edges in this context refer to a stark contrast in brightness (DN value) within our image. These can be related to discontinuities in depth, discontinuities in surface orientation (angle), changes in material properties and or variation in scene illumination. These methods are valuable for data extraction in areas such as image processing, computer vision, and machine learning as it allows the extraction of structural properties of an image while reducing the amount of data.</p>
 <p>To find these brightness discontinuities derivatives can be used to characterise these as follows</p>
-<p><img src="Data_Image_Filtering/differential.png" style="width:400px;"/></p>
+<img src="Data_Image_Filtering/differential.png" style="width:400px;"/>
 <p>The way to apply this is through finite differencing. We can express this finite differencing in a kernel (h) and convolve this with our image:</p>
-<p>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; forward difference: $f'[x]= f[x+1]-f[x]$ &emsp;&emsp; -&gt; &emsp;&emsp; $ h=[1,-1,0]$</p>
-<p>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; backward difference: $f'[x]= f[x]-f[x-1]$ &emsp; -&gt; &emsp;&emsp; $h=[0,1,-1]$</p>
-<p>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; central difference: $f'[x]= \frac{f[x+1]-f[x-1]}{2}$ &emsp;&emsp;&emsp;&emsp;&emsp; -&gt; &emsp;&emsp; $h=[1,0,-1]$</p>
+<p>        forward difference: <span class="math notranslate nohighlight">\(f'[x]= f[x+1]-f[x]\)</span>    -&gt;    $ h=[1,-1,0]$</p>
+<p>        backward difference: <span class="math notranslate nohighlight">\(f'[x]= f[x]-f[x-1]\)</span>   -&gt;    <span class="math notranslate nohighlight">\(h=[0,1,-1]\)</span></p>
+<p>        central difference: <span class="math notranslate nohighlight">\(f'[x]= \frac{f[x+1]-f[x-1]}{2}\)</span>       -&gt;    <span class="math notranslate nohighlight">\(h=[1,0,-1]\)</span></p>
 <p>With his we we can design filters such as the Sobel filter which is demonstrated below.</p>
-
-</div>
-</div>
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Design the Sobel filters</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#Design the Sobel filters</span>
 <span class="n">h_sobel_x</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> 
              <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">],</span>
              <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span> <span class="c1">#this will be be used to convolve in the x-axis</span>
@@ -1584,183 +385,82 @@ Image dimension = (390, 556)
 <span class="n">axarr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image_filtered_x</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
 <span class="n">axarr</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image_filtered_y</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="jb_output_wrapper }}">
-<div class="output_area">
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>&lt;matplotlib.image.AxesImage at 0x7f8c8dde73c8&gt;</pre>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f8c8dde73c8&gt;
+</pre></div>
 </div>
-
+<img alt="../_images/Image_Filtering_11_1.png" src="../_images/Image_Filtering_11_1.png" />
 </div>
 </div>
-<div class="jb_output_wrapper }}">
-<div class="output_area">
-
-
-
-<div class="output_png output_subarea ">
-<img src="../images/geosciences/Image_Filtering_11_1.png"
->
-</div>
-
-</div>
-</div>
-</div>
-</div>
-
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Take the magnitude gradient of the two images to join them</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#Take the magnitude gradient of the two images to join them</span>
 <span class="n">mag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">image_filtered_x</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">image_filtered_y</span><span class="p">))</span>
 <span class="n">image_show</span> <span class="p">(</span><span class="n">mag</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">11</span><span class="p">)</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="jb_output_wrapper }}">
-<div class="output_area">
-
-
-
-<div class="output_png output_subarea ">
-<img src="../images/geosciences/Image_Filtering_12_0.png"
->
-</div>
-
+<div class="cell_output docutils container">
+<img alt="../_images/Image_Filtering_12_0.png" src="../_images/Image_Filtering_12_0.png" />
 </div>
 </div>
-</div>
-</div>
-
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#extract information on the direction of the gradient</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#extract information on the direction of the gradient</span>
 <span class="n">directionality</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span><span class="n">image_filtered_y</span><span class="p">,</span><span class="n">image_filtered_x</span><span class="p">)</span>
 <span class="n">image_show</span> <span class="p">(</span><span class="n">directionality</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span> <span class="n">colour</span><span class="o">=</span> <span class="s1">&#39;gist_rainbow&#39;</span><span class="p">)</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="jb_output_wrapper }}">
-<div class="output_area">
-
-
-
-<div class="output_png output_subarea ">
-<img src="../images/geosciences/Image_Filtering_13_0.png"
->
-</div>
-
+<div class="cell_output docutils container">
+<img alt="../_images/Image_Filtering_13_0.png" src="../_images/Image_Filtering_13_0.png" />
 </div>
 </div>
-</div>
-</div>
-
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p>Our edge detection is not perfect as we do not have ideal large steps in brightness on every edge, but more of a transition.</p>
-<p><img src="Data_Image_Filtering/gradient.png" style="width:300px;"/></p>
+<img src="Data_Image_Filtering/gradient.png" style="width:300px;"/>
 <p>Hence it is not always easy to say that there should be an edge between two pixels or not. One simple step we can take to greatly improve edge detection is smoothening out noise using a gaussian filter for instance. This can become very important when taking second derivatives like the laplacian as derivatives are very sensitive to noise.</p>
-
-</div>
-</div>
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p>For further reading image filtering and alternative kernels please see:
-<a href="https://en.wikipedia.org/wiki/Kernel_(image_processing">https://en.wikipedia.org/wiki/Kernel_(image_processing</a>)
-<a href="https://uk.mathworks.com/help/images/what-is-image-filtering-in-the-spatial-domain.html">https://uk.mathworks.com/help/images/what-is-image-filtering-in-the-spatial-domain.html</a></p>
+https://en.wikipedia.org/wiki/Kernel_(image_processing)
+https://uk.mathworks.com/help/images/what-is-image-filtering-in-the-spatial-domain.html</p>
 <p>Alternatively here you can find python functions that have the kernel integrated in the code already:
-<a href="https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_imgproc/py_filtering/py_filtering.html">https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_imgproc/py_filtering/py_filtering.html</a></p>
+https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_imgproc/py_filtering/py_filtering.html</p>
 <p>Edge detection and more advanced methods:
-<a href="https://en.wikipedia.org/wiki/Edge_detection">https://en.wikipedia.org/wiki/Edge_detection</a></p>
-
-</div>
-</div>
+https://en.wikipedia.org/wiki/Edge_detection</p>
 </div>
 </div>
 
- 
 
-
-    </main>
-    
-            </div>
-            <div class="c-textbook__footer" id="textbook_footer">
+              </div>
               
-<nav class="c-page__nav">
-  
-    
-    
-
-    <a id="js-page__nav__prev" class="c-page__nav__prev" href="/book/geosciences/intro.html">
-      〈 <span class="u-margin-right-tiny"></span> Geosciences
-    </a>
-  
-
-  
-    
-
-    
-    <a id="js-page__nav__next" class="c-page__nav__next" href="/book/geosciences/Image_Operations.html">
-      Image Operations <span class="u-margin-right-tiny"></span> 〉
-    </a>
-  
-</nav>
-
-              <footer>
-  <p class="footer">This page was created by <a href="https://github.com/ExecutableBookProject/jupyter-book/graphs/contributors">The Jupyter Book Community</a></p>
-</footer>
-
-            </div>
-
         </div>
-      </main>
     </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="intro.html" title="previous page">Geosciences</a>
+    <a class='right-next' id="next-link" href="Image_Operations.html" title="next page">Remote Sensing</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Imperial College London<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../_static/js/index.js"></script>
+    
   </body>
 </html>

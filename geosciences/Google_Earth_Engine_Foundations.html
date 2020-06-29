@@ -1,1284 +1,247 @@
+
+
 <!DOCTYPE html>
-<html lang="en">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta charset="utf-8" />
+    <title>Google Earth Engine &#8212; ESE Jupyter Material</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/sphinx-book-theme.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/mystnb.js"></script>
+    <script src="../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Index" href="../genindex.html" />
+    <link rel="prev" title="Downloading earthquake data" href="Seismology.html" />
 
-  <title>Google Earth Engine Foundations</title>
-  <meta name="description" content="        Google Earth Engine Foundations    Google Earth Engine Covering the Foundations Google Earth Engine (GEE) combines a multi-petabyte catalog of satell...">
-
-  <link rel="canonical" href="https://primer-computational-mathematics.github.io/book/geosciences/Google_Earth_Engine_Foundations.html">
-  <link rel="alternate" type="application/rss+xml" title="ESE Jupyter Material" href="https://primer-computational-mathematics.github.io/book/feed.xml">
-
-  <meta property="og:url"         content="https://primer-computational-mathematics.github.io/book/geosciences/Google_Earth_Engine_Foundations.html" />
-<meta property="og:type"        content="article" />
-<meta property="og:title"       content="Google Earth Engine Foundations" />
-<meta property="og:description" content="        Google Earth Engine Foundations    Google Earth Engine Covering the Foundations Google Earth Engine (GEE) combines a multi-petabyte catalog of satell..." />
-<meta property="og:image"       content="https://primer-computational-mathematics.github.io//book/images/logo/logo.png" />
-
-<meta name="twitter:card" content="summary">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
 
 
-  <script type="application/ld+json">
-  {
-  "@context": "http://schema.org",
-  "@type": "NewsArticle",
-  "mainEntityOfPage": "https://primer-computational-mathematics.github.io/book/geosciences/Google_Earth_Engine_Foundations.html",
-  "headline": "Google Earth Engine Foundations",
-  "datePublished": "2020-06-29T14:23:33+00:00",
-  "dateModified": "2020-06-29T14:23:33+00:00",
-  "description": "        Google Earth Engine Foundations    Google Earth Engine Covering the Foundations Google Earth Engine (GEE) combines a multi-petabyte catalog of satell...",
-  "author": {
-    "@type": "Person",
-    "name": "Imperial College London"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "Data 100 at UC Berkeley",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://primer-computational-mathematics.github.io/book",
-      "width": 60,
-      "height": 60
-    }
-  },
-  "image": {
-    "@type": "ImageObject",
-    "url": "https://primer-computational-mathematics.github.io/book",
-    "height": 60,
-    "width": 60
-  }
-}
 
-  </script>
-  <link rel="stylesheet" href="/book/assets/css/styles.css">
-
-  <!-- <link rel="manifest" href="/manifest.json"> -->
-  <!-- <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#efae0a"> -->
-  <meta name="msapplication-TileColor" content="#da532c">
-  <meta name="msapplication-TileImage" content="/mstile-144x144.png">
-  <meta name="theme-color" content="#233947">
-
-  <!-- Favicon -->
-  <link rel="shortcut icon" type="image/x-icon" href="/book/images/logo/favicon.ico">
-
-  <!-- MathJax Config -->
-  <!-- Allow inline math using $ and automatically break long math lines -->
-<!-- (mostly) copied from nbconvert configuration -->
-<!-- https://github.com/jupyter/nbconvert/blob/master/nbconvert/templates/html/mathjax.tpl -->
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-    tex2jax: {
-        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-        displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
-        processEscapes: true,
-        processEnvironments: true
-    },
-    // Center justify equations in code and markdown cells. Elsewhere
-    // we use CSS to left justify single line equations in code cells.
-    displayAlign: 'center',
-    "HTML-CSS": {
-        styles: {'.MathJax_Display': {"margin": 0}},
-        linebreaks: { automatic: true },
-    },
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
     
-});
-</script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS_HTML' async></script>
 
-
-  <!-- DOM updating function -->
-  <script src="/book/assets/js/page/dom-update.js"></script>
-
-  <!-- Selectors for elements on the page -->
-  <script src="/book/assets/js/page/documentSelectors.js"></script>
-
-  <!-- Define some javascript variables that will be useful in other javascript -->
-  <script>
-    const site_basename = 'book';
-  </script>
-
-  <!-- Add AnchorJS to let headers be linked -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.2.0/anchor.min.js" async></script>
-  <script src="/book/assets/js/page/anchors.js" async></script>
-
-  <!-- Include Turbolinks to make page loads fast -->
-  <!-- https://github.com/turbolinks/turbolinks -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/turbolinks/5.2.0/turbolinks.js" async></script>
-  <meta name="turbolinks-cache-control" content="no-cache">
-
-  <!-- Load nbinteract for widgets -->
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
   
-
-  <!-- Load Thebelab for interactive widgets -->
-  <!-- Include Thebelab for interactive code if it's enabled -->
-
-
-<!-- Display Thebelab button in each code cell -->
-<script>
-/**
- * Set up thebelab button for code blocks
- */
-
-const thebelabCellButton = id =>
-  `<a id="thebelab-cell-button-${id}" class="btn thebebtn o-tooltip--left" data-tooltip="Interactive Mode">
-    <img src="/book/assets/images/edit-button.svg" alt="Start thebelab interactive mode">
-  </a>`
-
-
-const addThebelabButtonToCodeCells =  () => {
-
-  const codeCells = document.querySelectorAll('div.input_area > div.highlight:not(.output) pre')
-  codeCells.forEach((codeCell, index) => {
-    const id = codeCellId(index)
-    codeCell.setAttribute('id', id)
-    if (document.getElementById("thebelab-cell-button-" + id) == null) {
-      codeCell.insertAdjacentHTML('afterend', thebelabCellButton(id));
-    }
-  })
-}
-
-initFunction(addThebelabButtonToCodeCells);
-</script>
-
-
-<script src="https://unpkg.com/thebelab@latest/lib/index.js" async></script>
-<script>
-    /**
-     * Add attributes to Thebelab blocks
-     */
-
-    const initThebelab = () => {
-        const addThebelabToCodeCells = () => {
-            console.log("Adding thebelab to code cells...");
-            // If Thebelab hasn't loaded, wait a bit and try again. This
-            // happens because we load ClipboardJS asynchronously.
-            if (window.thebelab === undefined) {
-                setTimeout(addThebelabToCodeCells, 250)
-            return
-            }
-
-            // If we already detect a Thebelab cell, don't re-run
-            if (document.querySelectorAll('div.thebelab-cell').length > 0) {
-                return;
-            }
-
-            // Find all code cells, replace with Thebelab interactive code cells
-            const codeCells = document.querySelectorAll('.input_area pre')
-            codeCells.forEach((codeCell, index) => {
-                const id = codeCellId(index)
-
-                // Clean up the language to make it work w/ CodeMirror and add it to the cell
-                dataLanguage = ""
-                dataLanguage = detectLanguage(dataLanguage);
-                codeCell.setAttribute('data-language', dataLanguage)
-                codeCell.setAttribute('data-executable', 'true')
-
-                // If the code cell is hidden, show it
-                var inputCheckbox = document.querySelector(`input#hidebtn${codeCell.id}`);
-                if (inputCheckbox !== null) {
-                    setCodeCellVisibility(inputCheckbox, 'visible');
-                }
-            });
-
-            // Remove the event listener from the page so keyboard press doesn't
-            // Change page
-            document.removeEventListener('keydown', initPageNav)
-            keyboardListener = false;
-
-            // Init thebelab
-            thebelab.bootstrap();
-
-            // Remove copy buttons since they won't work anymore
-            const copyAndThebeButtons = document.querySelectorAll('.copybtn, .thebebtn')
-            copyAndThebeButtons.forEach((button, index) => {
-                button.remove();
-            });
-
-            // Remove outputs since they'll be stale
-            const outputs = document.querySelectorAll('.output *, .output')
-            outputs.forEach((output, index) => {
-                output.remove();
-            });
-
-            // Find any cells with an initialization tag and ask ThebeLab to run them when ready
-            var thebeInitCells = document.querySelectorAll('div.tag_thebelab-init');
-            thebeInitCells.forEach((cell) => {
-                console.log("Initializing ThebeLab with cell: " + cell.id);
-                cell.querySelector('.thebelab-run-button').click();
-            });
-        }
-
-        // Add event listener for the function to modify code cells
-        const thebelabButtons = document.querySelectorAll('[id^=thebelab], [id$=thebelab]')
-        thebelabButtons.forEach((thebelabButton,index) => {
-            if (thebelabButton === null) {
-                setTimeout(initThebelab, 250)
-                return
-            };
-            thebelabButton.addEventListener('click', addThebelabToCodeCells);
-        });
-    }
-
-    // Initialize Thebelab
-    initFunction(initThebelab);
-
-// Helper function to munge the language name
-var detectLanguage = (language) => {
-    if (language.indexOf('python') > -1) {
-        language = "python";
-    }
-    return language;
-}
-</script>
-
-
-
-  <!-- Load the auto-generating TOC (non-async otherwise the TOC won't load w/ turbolinks) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.8.1/tocbot.min.js" async></script>
-  <script src="/book/assets/js/page/tocbot.js"></script>
-
-  <!-- Google analytics -->
+  <img src="../_static/logo.png" class="logo" alt="logo">
   
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', '');
-</script>
-
-
-
-  <!-- Clipboard copy button -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" async></script>
-
-  <!-- Load custom website scripts -->
-  <script src="/book/assets/js/scripts.js" async></script>
-
-  <!-- Load custom user CSS and JS  -->
-  <script src="/book/assets/custom/custom.js" async></script>
-  <link rel="stylesheet" href="/book/assets/custom/custom.css">
-
-  <!-- Update interact links w/ REST param, is defined in includes so we can use templates -->
   
-
-  <!-- Lunr search code - will only be executed on the /search page -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/2.3.6/lunr.min.js" async></script>
-  <script>var initQuery = function() {
-  // See if we have a search box
-  var searchInput = document.querySelector('input#lunr_search');
-  if (searchInput === null) {
-    return;
-  }
-
-  // Function to parse our lunr cache
-  var idx = lunr(function () {
-    this.field('title')
-    this.field('excerpt')
-    this.field('categories')
-    this.field('tags')
-    this.ref('id')
-
-    this.pipeline.remove(lunr.trimmer)
-
-    for (var item in store) {
-      this.add({
-        title: store[item].title,
-        excerpt: store[item].excerpt,
-        categories: store[item].categories,
-        tags: store[item].tags,
-        id: item
-      })
-    }
-  });
-
-  // Run search upon keyup
-  searchInput.addEventListener('keyup', function () {
-    var resultdiv = document.querySelector('#results');
-    var query = document.querySelector("input#lunr_search").value.toLowerCase();
-    var result =
-      idx.query(function (q) {
-        query.split(lunr.tokenizer.separator).forEach(function (term) {
-          q.term(term, { boost: 100 })
-          if(query.lastIndexOf(" ") != query.length-1){
-            q.term(term, {  usePipeline: false, wildcard: lunr.Query.wildcard.TRAILING, boost: 10 })
-          }
-          if (term != ""){
-            q.term(term, {  usePipeline: false, editDistance: 1, boost: 1 })
-          }
-        })
-      });
-
-      // Empty the results div
-      while (resultdiv.firstChild) {
-        resultdiv.removeChild(resultdiv.firstChild);
-      }
-
-    resultdiv.insertAdjacentHTML('afterbegin', '<p class="results__found">'+result.length+' Result(s) found</p>');
-    for (var item in result) {
-      var ref = result[item].ref;
-      if(store[ref].teaser){
-        var searchitem =
-          '<div class="list__item">'+
-            '<article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">'+
-              '<h2 class="archive__item-title" itemprop="headline">'+
-                '<a href="'+store[ref].url+'" rel="permalink">'+store[ref].title+'</a>'+
-              '</h2>'+
-              '<div class="archive__item-teaser">'+
-                '<img src="'+store[ref].teaser+'" alt="">'+
-              '</div>'+
-              '<p class="archive__item-excerpt" itemprop="description">'+store[ref].excerpt.split(" ").splice(0,20).join(" ")+'...</p>'+
-            '</article>'+
-          '</div>';
-      }
-      else{
-    	  var searchitem =
-          '<div class="list__item">'+
-            '<article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">'+
-              '<h2 class="archive__item-title" itemprop="headline">'+
-                '<a href="'+store[ref].url+'" rel="permalink">'+store[ref].title+'</a>'+
-              '</h2>'+
-              '<p class="archive__item-excerpt" itemprop="description">'+store[ref].excerpt.split(" ").splice(0,20).join(" ")+'...</p>'+
-            '</article>'+
-          '</div>';
-      }
-      resultdiv.insertAdjacentHTML('beforeend', searchitem);
-    }
-  });
-};
-
-initFunction(initQuery);
-</script>
-
-  <!-- Load JS that depends on site variables -->
-  <script src="/book/assets/js/page/copy-button.js" async></script>
-
-  <!-- Hide cell code -->
-  <script src="/book/assets/js/page/hide-cell.js" async></script>
-
-  <!-- Printing the screen -->
-  <!-- Include nbinteract for interactive widgets -->
-<script src="https://printjs-4de6.kxcdn.com/print.min.js" async></script>
-<script>
-printContent = () => {
-    // MathJax displays a second version of any math for assistive devices etc.
-    // This prevents double-rendering in the PDF output.
-    var ignoreAssistList = [];
-    assistives = document.querySelectorAll('.MathJax_Display span.MJX_Assistive_MathML').forEach((element, index) => {
-        var thisId = 'MathJax-assistive-' + index.toString();
-        element.setAttribute('id', thisId);
-        ignoreAssistList.push(thisId)
-    });
-
-    // Print the actual content object
-    printJS({
-        printable: 'textbook_content',
-        type: 'html',
-        css: "/book/assets/css/styles.css",
-        style: "#textbook_content {padding-top: 40px};",
-        scanStyles: false,
-        targetStyles: ["*"],
-        ignoreElements: ignoreAssistList,
-        documentTitle: "Made with Jupyter Book"
-    })
-};
-
-initPrint = () => {
-    document.querySelector('#interact-button-print').addEventListener('click', printContent)
-}
-
-initFunction(initPrint)
-</script>
-
-</head>
-
-  <body>
-    <!-- Include the ThebeLab config so it gets reloaded on each page -->
-    <script type="text/x-thebe-config">{
-    requestKernel: true,
-    binderOptions: {
-    repo: "primer-computational-mathematics/book",
-    ref: "master",
-    },
-    codeMirrorConfig: {
-    theme: "abcdef",
-    mode: "python"
-    },
-    kernelOptions: {
-    kernelName: "python3",
-    path: "notebooks/geosciences"
-    }
-}
-</script>
-
-    <!-- .js-show-sidebar shows sidebar by default -->
-    <div id="js-textbook" class="c-textbook js-show-sidebar">
-      
-
-
-
-<nav id="js-sidebar" class="c-textbook__sidebar">
-  <a href="https://www.imperial.ac.uk/earth-science/"><img src="/book/images/logo/logo.png" class="textbook_logo" id="sidebar-logo" alt="textbook logo" data-turbolinks-permanent/></a>
-  <h2 class="c-sidebar__title">ESE Jupyter Material</h2>
-  <ul class="c-sidebar__chapters">
-    
-      
-      
-
-      
-      
-      
-      
-
-      
-      
-      <li class="c-sidebar__chapter" data-url="/intro">
-        <a class="c-sidebar__entry"
-          href="/book/intro.html"
-        >
-          
-          Home
-        </a>
-      </li>
-
-      
-      
-
-      
-
-      
-      
-
-      
-
-      
-    
-      
-      
-        <li class="c-sidebar__divider"></li>
-        
-      
-      
-        <li><h2 class="c-sidebar__title">Topics</li>
-        
-      
-      
-
-      
-      
-      
-      
-
-      
-      
-      <li class="c-sidebar__chapter" data-url="/maths/intro">
-        <a class="c-sidebar__entry"
-          href="/book/maths/intro.html"
-        >
-          
-          Mathematics
-        </a>
-      </li>
-
-      
-      
-
-      
-
-      
-      
-
-      
-        
-
-        
-
-        <ul class="c-sidebar__sections">
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/maths/Statistics_for_Geoscientists">
-              <a class="c-sidebar__entry"
-                href="/book/maths/Statistics_for_Geoscientists.html"
-              >
-                
-                Statistics for Geoscientists
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/maths/Taylor_series">
-              <a class="c-sidebar__entry"
-                href="/book/maths/Taylor_series.html"
-              >
-                
-                Taylor series
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/maths/Big_O_notation">
-              <a class="c-sidebar__entry"
-                href="/book/maths/Big_O_notation.html"
-              >
-                
-                Big O notation
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/maths/Timestepping_an_ODE">
-              <a class="c-sidebar__entry"
-                href="/book/maths/Timestepping_an_ODE.html"
-              >
-                
-                Timestepping an ODE
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/maths/Tensors_Review">
-              <a class="c-sidebar__entry"
-                href="/book/maths/Tensors_Review.html"
-              >
-                
-                Tensors Review
-              </a>
-            </li>
-            
-            
-          
-        </ul>
-      
-
-      
-    
-      
-      
-
-      
-      
-      
-      
-
-      
-      
-      <li class="c-sidebar__chapter" data-url="/coding/intro">
-        <a class="c-sidebar__entry"
-          href="/book/coding/intro.html"
-        >
-          
-          Coding
-        </a>
-      </li>
-
-      
-      
-
-      
-
-      
-      
-
-      
-        
-
-        
-
-        <ul class="c-sidebar__sections">
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/coding/Sets">
-              <a class="c-sidebar__entry"
-                href="/book/coding/Sets.html"
-              >
-                
-                Sets
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/coding/Dictionaries">
-              <a class="c-sidebar__entry"
-                href="/book/coding/Dictionaries.html"
-              >
-                
-                Dictionaries
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/coding/For_loops">
-              <a class="c-sidebar__entry"
-                href="/book/coding/For_loops.html"
-              >
-                
-                For loops
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/coding/Variables">
-              <a class="c-sidebar__entry"
-                href="/book/coding/Variables.html"
-              >
-                
-                Variables
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/coding/Nested_lists">
-              <a class="c-sidebar__entry"
-                href="/book/coding/Nested_lists.html"
-              >
-                
-                Nested lists
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/coding/List_comprehensions">
-              <a class="c-sidebar__entry"
-                href="/book/coding/List_comprehensions.html"
-              >
-                
-                List comprehensions
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/coding/Lists">
-              <a class="c-sidebar__entry"
-                href="/book/coding/Lists.html"
-              >
-                
-                Lists
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/coding/While_loops">
-              <a class="c-sidebar__entry"
-                href="/book/coding/While_loops.html"
-              >
-                
-                While loops
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/coding/Tuples">
-              <a class="c-sidebar__entry"
-                href="/book/coding/Tuples.html"
-              >
-                
-                Tuples
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/coding/Functions">
-              <a class="c-sidebar__entry"
-                href="/book/coding/Functions.html"
-              >
-                
-                Functions
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/coding/If_statement">
-              <a class="c-sidebar__entry"
-                href="/book/coding/If_statement.html"
-              >
-                
-                If statement
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/coding/Flow_control_statements">
-              <a class="c-sidebar__entry"
-                href="/book/coding/Flow_control_statements.html"
-              >
-                
-                Flow control statements
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/coding/Handling_errors">
-              <a class="c-sidebar__entry"
-                href="/book/coding/Handling_errors.html"
-              >
-                
-                Handling errors
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/coding/File_handling">
-              <a class="c-sidebar__entry"
-                href="/book/coding/File_handling.html"
-              >
-                
-                File handling
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/coding/NumPy_Arrays">
-              <a class="c-sidebar__entry"
-                href="/book/coding/NumPy_Arrays.html"
-              >
-                
-                NumPy Arrays
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/coding/Matplotlib">
-              <a class="c-sidebar__entry"
-                href="/book/coding/Matplotlib.html"
-              >
-                
-                Matplotlib
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/coding/Pandas">
-              <a class="c-sidebar__entry"
-                href="/book/coding/Pandas.html"
-              >
-                
-                Pandas
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/coding/Printing_and_formatting_statements">
-              <a class="c-sidebar__entry"
-                href="/book/coding/Printing_and_formatting_statements.html"
-              >
-                
-                Printing and formatting statements
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/coding/Importing">
-              <a class="c-sidebar__entry"
-                href="/book/coding/Importing.html"
-              >
-                
-                Importing
-              </a>
-            </li>
-            
-            
-          
-        </ul>
-      
-
-      
-    
-      
-      
-
-      
-      
-      
-      
-
-      
-      
-      <li class="c-sidebar__chapter" data-url="/geosciences/intro">
-        <a class="c-sidebar__entry"
-          href="/book/geosciences/intro.html"
-        >
-          
-          Geosciences
-        </a>
-      </li>
-
-      
-      
-
-      
-
-      
-      
-
-      
-        
-
-        
-
-        <ul class="c-sidebar__sections">
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/geosciences/Image_Filtering">
-              <a class="c-sidebar__entry"
-                href="/book/geosciences/Image_Filtering.html"
-              >
-                
-                Image Filtering
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/geosciences/Image_Operations">
-              <a class="c-sidebar__entry"
-                href="/book/geosciences/Image_Operations.html"
-              >
-                
-                Image Operations
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/geosciences/Cartography_Cartopy">
-              <a class="c-sidebar__entry"
-                href="/book/geosciences/Cartography_Cartopy.html"
-              >
-                
-                Cartography Cartopy
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/geosciences/Dynamic_Earth">
-              <a class="c-sidebar__entry"
-                href="/book/geosciences/Dynamic_Earth.html"
-              >
-                
-                Dynamic Earth
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/geosciences/Tides">
-              <a class="c-sidebar__entry"
-                href="/book/geosciences/Tides.html"
-              >
-                
-                Tides
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/geosciences/Wave_dispersion">
-              <a class="c-sidebar__entry"
-                href="/book/geosciences/Wave_dispersion.html"
-              >
-                
-                Wave dispersion
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/geosciences/Seismology">
-              <a class="c-sidebar__entry"
-                href="/book/geosciences/Seismology.html"
-              >
-                
-                Seismology
-              </a>
-            </li>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/geosciences/Google_Earth_Engine_Foundations">
-              <a class="c-sidebar__entry"
-                href="/book/geosciences/Google_Earth_Engine_Foundations.html"
-              >
-                
-                Google Earth Engine Foundations
-              </a>
-            </li>
-            
-            
-          
-        </ul>
-      
-
-      
-    
+  <h1 class="site-logo" id="site-title">ESE Jupyter Material</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  
+  <ul class="nav sidenav_l1">
+  <li class="">
+    <a href="../intro.html">Landing page</a>
+  </li>
+  <li class="">
+    <a href="../coding/intro.html">Coding</a>
+  </li>
+  <li class="">
+    <a href="../mathematics/intro.html">Mathematics</a>
+  </li>
+  <li class="active">
+    <a href="intro.html">Geosciences</a>
+  <ul class="nav sidenav_l2">
+    <li class="">
+      <a href="Image_Filtering.html">Image Filtering</a>
+    </li>
+    <li class="">
+      <a href="Image_Operations.html">Image Operations</a>
+    </li>
+    <li class="">
+      <a href="Cartography_Cartopy.html">Cartography Cartopy</a>
+    </li>
+    <li class="">
+      <a href="Dynamic_Earth.html">Dynamic Earth</a>
+    </li>
+    <li class="">
+      <a href="Tides.html">Tides</a>
+    </li>
+    <li class="">
+      <a href="Wave_dispersion.html">Wave Dispersion</a>
+    </li>
+    <li class="">
+      <a href="Seismology.html">Seismology</a>
+    </li>
+    <li class="active">
+      <a href="">Google Earth Engine Foundations</a>
+    </li>
   </ul>
-  <p class="sidebar_footer">Powered by <a href="https://jupyterbook.org">Jupyter Book</a></p>
+  </li>
+  <li class="">
+    <a href="../genindex.html">Index</a>
+  </li>
+</ul>
 </nav>
 
-      
-      <div class="c-topbar" id="top-navbar">
-  <!-- We show the sidebar by default so we use .is-active -->
-  <div class="c-topbar__buttons">
-    <button
-      id="js-sidebar-toggle"
-      class="hamburger hamburger--arrowalt is-active"
-    >
-      <span class="hamburger-box">
-        <span class="hamburger-inner"></span>
-      </span>
-    </button>
-    <div class="buttons">
-<div class="download-buttons-dropdown">
-    <button id="dropdown-button-trigger" class="interact-button"><img src="/book/assets/images/download-solid.svg" alt="Download" /></button>
-    <div class="download-buttons">
-        <a href="/book/notebooks/geosciences/Google_Earth_Engine_Foundations.ipynb" download>
-        <button id="interact-button-download" class="interact-button">.ipynb</button>
-        </a>
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
         
-        <a id="interact-button-print"><button id="interact-button-download" class="interact-button">.pdf</button></a>
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/geosciences/Google_Earth_Engine_Foundations.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/geosciences/Google_Earth_Engine_Foundations.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
     </div>
 </div>
 
-
-  <button id="interact-button-thebelab" class="interact-button">Thebelab</button>
-
-  
-  
-  
-
-
+    </div>
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
 </div>
 
-  </div>
-  <!-- Empty sidebar placeholder that we'll auto-fill with javascript -->
-  <aside class="sidebar__right">
-    <header><h4 class="nav__title"><img src="/book/assets/images/list-solid.svg" alt="Search" />   On this page</h4></header>
-    <nav class="onthispage">
-    </nav>
-  </aside>
-  <a href="/book/search.html" class="topbar-right-button" id="search-button">
-    <img src="/book/assets/images/search-solid.svg" alt="Search" />
-  </a>
-</div>
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#covering-the-foundations" class="nav-link">Covering the Foundations</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#installation" class="nav-link">Installation</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#google-earth-engine-apps" class="nav-link">Google Earth Engine Apps</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#google-earth-engine-code-editor" class="nav-link">Google Earth Engine Code Editor</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#general-guidance" class="nav-link">General Guidance</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+    </ul>
+</nav>
 
-      <main class="c-textbook__page" tabindex="-1">
-            <div class="c-textbook__content" id="textbook_content">
-                  <main class="jupyter-page">
-    <div id="page-info"><div id="page-title">Google Earth Engine Foundations</div>
-</div>
-    <div class="jb_cell">
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Google-Earth-Engine">Google Earth Engine<a class="anchor-link" href="#Google-Earth-Engine"> </a></h1><h2 id="Covering-the-Foundations">Covering the Foundations<a class="anchor-link" href="#Covering-the-Foundations"> </a></h2>
+    </div>
 </div>
-</div>
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><a href="https://earthengine.google.com">Google Earth Engine (GEE)</a> combines a multi-petabyte catalog of satellite imagery and geospatial datasets with planetary-scale analysis capabilities and makes it available for scientists, researchers, and developers to detect changes, map trends, and quantify differences on the Earth's surface through a cloud based platform. Hence offering the capability of running your algorithms and only requiring to export or visualise the output. The archive includes more than 30 years of historical imagery and scientific datasets, updated and expanded daily.</p>
-<p>For an informative background read on GEE and its applications see the following <a href="https://www.sciencedirect.com/science/article/pii/S0034425717302900?via%3Dihub">hyperlink</a>.</p>
-<p>The main <a href="https://developers.google.com/earth-engine">GEE guide</a> covers everything from installation to available functions and usage, for an extensive range of examples see <a href="https://github.com/giswqs/earthengine-py-notebooks">here</a>. Here we will cover the basic important key points that should walk you through it.</p>
-<h3 id="Installation">Installation<a class="anchor-link" href="#Installation"> </a></h3><p>Firstly, you should apply for access to use the GEE. follow this <a href="https://code.earthengine.google.com/">link</a>, if you cannot login yet it will tell you what steps you should follow to apply for access. Do this as soon as possible, I got access within a few minutes, however it says it can take a few days potentially. Referencing you are from Imperial and it is for research should get you access.</p>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="google-earth-engine">
+<h1>Google Earth Engine<a class="headerlink" href="#google-earth-engine" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="covering-the-foundations">
+<h2>Covering the Foundations<a class="headerlink" href="#covering-the-foundations" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://earthengine.google.com">Google Earth Engine (GEE)</a> combines a multi-petabyte catalog of satellite imagery and geospatial datasets with planetary-scale analysis capabilities and makes it available for scientists, researchers, and developers to detect changes, map trends, and quantify differences on the Earth’s surface through a cloud based platform. Hence offering the capability of running your algorithms and only requiring to export or visualise the output. The archive includes more than 30 years of historical imagery and scientific datasets, updated and expanded daily.</p>
+<p>For an informative background read on GEE and its applications see the following <a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S0034425717302900?via%3Dihub">hyperlink</a>.</p>
+<p>The main <a class="reference external" href="https://developers.google.com/earth-engine">GEE guide</a> covers everything from installation to available functions and usage, for an extensive range of examples see <a class="reference external" href="https://github.com/giswqs/earthengine-py-notebooks">here</a>. Here we will cover the basic important key points that should walk you through it.</p>
+<div class="section" id="installation">
+<h3>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h3>
+<p>Firstly, you should apply for access to use the GEE. follow this <a class="reference external" href="https://code.earthengine.google.com/">link</a>, if you cannot login yet it will tell you what steps you should follow to apply for access. Do this as soon as possible, I got access within a few minutes, however it says it can take a few days potentially. Referencing you are from Imperial and it is for research should get you access.</p>
 <p>If you decide to access GEE using python you can install geemap which will automatically install all its dependencies like earthengine-api, folium and ipyleaflet. This allows for several methods to intereact with Earh Engine data layers.</p>
 <p><strong>Important note</strong>: A key difference between folium and ipyleaflet is that ipyleaflet is built upon ipywidgets and allows bidirectional communication between the front-end and the backend enabling the use of the map to capture user input, while folium is meant for displaying static data only (source). Note that Google Colab currently does not support ipyleaflet (source). Therefore, if you are using geemap with Google Colab, you should use import geemap.eefolium. If you are using geemap with binder or a local Jupyter notebook server, you can use import geemap, which provides more functionalities for capturing user input (e.g., mouse-clicking and moving).</p>
-
-</div>
-</div>
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Installs geemap package</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Installs geemap package</span>
 <span class="kn">import</span> <span class="nn">subprocess</span>
 
 <span class="k">try</span><span class="p">:</span>
@@ -1303,150 +266,80 @@ initFunction(initPrint)
     <span class="n">ee</span><span class="o">.</span><span class="n">Authenticate</span><span class="p">()</span>
     <span class="n">ee</span><span class="o">.</span><span class="n">Initialize</span><span class="p">()</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
 </div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># test by creating basemap</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># test by creating basemap</span>
 <span class="n">Map</span> <span class="o">=</span> <span class="n">geemap</span><span class="o">.</span><span class="n">Map</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="p">[</span><span class="mi">40</span><span class="p">,</span><span class="o">-</span><span class="mi">100</span><span class="p">],</span> <span class="n">zoom</span><span class="o">=</span><span class="mi">4</span><span class="p">,)</span>
 <span class="n">Map</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="jb_output_wrapper }}">
-<div class="output_area">
-
-
-
-
- 
- 
-<div id="2f5d08cf-d9ee-4976-a408-5194afe73fde"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#2f5d08cf-d9ee-4976-a408-5194afe73fde');
-</script>
+<div class="cell_output docutils container">
 <script type="application/vnd.jupyter.widget-view+json">
 {"model_id": "8faaa6c8a3914e3898b42bf44fbf4f98", "version_major": 2, "version_minor": 0}
-</script>
-</div>
-
+</script></div>
 </div>
 </div>
-</div>
-</div>
-
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Google-Earth-Engine-Apps">Google Earth Engine Apps<a class="anchor-link" href="#Google-Earth-Engine-Apps"> </a></h3><p><a href="https://developers.google.com/earth-engine/apps">GEE apps</a> are a way to share your results for expert and non-expert audiences alike. It is typically done along with a publication as an easy and accesible way for people to access and interact with the results. Following this <a href="https://philippgaertner.github.io/2019/04/earth-engine-apps-inventory/">link</a> you can find many examples of these apps and try them out. They can be very useful to obtain an idea of what exists and access some fully functioning examples.</p>
-<p>To clone any of the repositories you can acces the <a href="https://earthengine.googlesource.com/users">GEE user list</a> and find the project and its git clone link. Firstly, however you will require to obtain access to clone these github repositories, this can be done as follows:</p>
-<ul>
-<li>access this <a href="https://earthengine.googlesource.com/users">link</a></li>
-<li>click generate password</li>
-<li>sign in, this needs to be an email with GEE access I believe</li>
-<li>instructions to copy paste into the git prompt will be shown</li>
+<div class="section" id="google-earth-engine-apps">
+<h3>Google Earth Engine Apps<a class="headerlink" href="#google-earth-engine-apps" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://developers.google.com/earth-engine/apps">GEE apps</a> are a way to share your results for expert and non-expert audiences alike. It is typically done along with a publication as an easy and accesible way for people to access and interact with the results. Following this <a class="reference external" href="https://philippgaertner.github.io/2019/04/earth-engine-apps-inventory/">link</a> you can find many examples of these apps and try them out. They can be very useful to obtain an idea of what exists and access some fully functioning examples.</p>
+<p>To clone any of the repositories you can acces the <a class="reference external" href="https://earthengine.googlesource.com/users">GEE user list</a> and find the project and its git clone link. Firstly, however you will require to obtain access to clone these github repositories, this can be done as follows:</p>
+<ul class="simple">
+<li><p>access this <a class="reference external" href="https://earthengine.googlesource.com/users">link</a></p></li>
+<li><p>click generate password</p></li>
+<li><p>sign in, this needs to be an email with GEE access I believe</p></li>
+<li><p>instructions to copy paste into the git prompt will be shown</p></li>
 </ul>
 <p>Now you should be able to freely clone any of the github repositories.</p>
-
 </div>
+<div class="section" id="google-earth-engine-code-editor">
+<h3>Google Earth Engine Code Editor<a class="headerlink" href="#google-earth-engine-code-editor" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://developers.google.com/earth-engine/playground">GEE code editor</a> is a web-based IDE for the Earth Engine JavaScript API. Code Editor features are designed to make developing complex geospatial workflows fast and easy.</p>
 </div>
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Google-Earth-Engine-Code-Editor">Google Earth Engine Code Editor<a class="anchor-link" href="#Google-Earth-Engine-Code-Editor"> </a></h3><p><a href="https://developers.google.com/earth-engine/playground">GEE code editor</a> is a web-based IDE for the Earth Engine JavaScript API. Code Editor features are designed to make developing complex geospatial workflows fast and easy.</p>
-
-</div>
-</div>
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="General-Guidance">General Guidance<a class="anchor-link" href="#General-Guidance"> </a></h3>
-</div>
-</div>
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<ul>
-<li>Using Azure notebook I encountered many problems regarding package versions not agreeing, using Jupyter via the Anaconda environment or google collab gave me zero problems</li>
-<li>GEE has many built-in functions, make sure to look through the linked documentation before attempting to write a function for it</li>
-<li>GEE has a per user <a href="https://developers.google.com/earth-engine/usage">quota</a> on concurrent queries. If needed however you can apply for more</li>
+<div class="section" id="general-guidance">
+<h3>General Guidance<a class="headerlink" href="#general-guidance" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Using Azure notebook I encountered many problems regarding package versions not agreeing, using Jupyter via the Anaconda environment or google collab gave me zero problems</p></li>
+<li><p>GEE has many built-in functions, make sure to look through the linked documentation before attempting to write a function for it</p></li>
+<li><p>GEE has a per user <a class="reference external" href="https://developers.google.com/earth-engine/usage">quota</a> on concurrent queries. If needed however you can apply for more</p></li>
 </ul>
-
-</div>
 </div>
 </div>
 </div>
 
- 
 
-
-    </main>
-    
-            </div>
-            <div class="c-textbook__footer" id="textbook_footer">
+              </div>
               
-<nav class="c-page__nav">
-  
-    
-    
-
-    <a id="js-page__nav__prev" class="c-page__nav__prev" href="/book/geosciences/Seismology.html">
-      〈 <span class="u-margin-right-tiny"></span> Seismology
-    </a>
-  
-
-  
-    
-
-    
-    <a id="js-page__nav__next" class="c-page__nav__next" href="">
-       <span class="u-margin-right-tiny"></span> 〉
-    </a>
-  
-</nav>
-
-              <footer>
-  <p class="footer">This page was created by <a href="https://github.com/ExecutableBookProject/jupyter-book/graphs/contributors">The Jupyter Book Community</a></p>
-</footer>
-
-            </div>
-
         </div>
-      </main>
     </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="Seismology.html" title="previous page">Downloading earthquake data</a>
+    <a class='right-next' id="next-link" href="../genindex.html" title="next page">Index</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Imperial College London<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../_static/js/index.js"></script>
+    
   </body>
 </html>
