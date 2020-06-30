@@ -92,6 +92,9 @@
       <a href="Dynamic_Earth.html">Dynamic Earth</a>
     </li>
     <li class="">
+      <a href="Google_Earth_Engine_Getting_Started.html">Google Earth Engine Getting Started</a>
+    </li>
+    <li class="">
       <a href="Tides.html">Tides</a>
     </li>
     <li class="">
@@ -101,7 +104,7 @@
       <a href="Seismology.html">Seismology</a>
     </li>
     <li class="active">
-      <a href="">Google Earth Engine Foundations</a>
+      <a href="">Google Earth Engine</a>
     </li>
   </ul>
   </li>
@@ -195,22 +198,48 @@
     <ul class="nav section-nav flex-column">
     
         <li class="nav-item toc-entry toc-h2">
-            <a href="#covering-the-foundations" class="nav-link">Covering the Foundations</a><ul class="nav section-nav flex-column">
+            <a href="#" class="nav-link">Google Earth Engine</a><ul class="nav section-nav flex-column">
                 
         <li class="nav-item toc-entry toc-h3">
-            <a href="#installation" class="nav-link">Installation</a>
+            <a href="#setting-up-your-notebook" class="nav-link">Setting Up Your Notebook</a>
         </li>
     
         <li class="nav-item toc-entry toc-h3">
-            <a href="#google-earth-engine-apps" class="nav-link">Google Earth Engine Apps</a>
+            <a href="#display-an-image" class="nav-link">Display An Image</a>
         </li>
     
         <li class="nav-item toc-entry toc-h3">
-            <a href="#google-earth-engine-code-editor" class="nav-link">Google Earth Engine Code Editor</a>
+            <a href="#visualise-specific-bands" class="nav-link">Visualise Specific Bands</a>
         </li>
     
         <li class="nav-item toc-entry toc-h3">
-            <a href="#general-guidance" class="nav-link">General Guidance</a>
+            <a href="#find-an-image" class="nav-link">Find An Image</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#band-maths" class="nav-link">Band Maths</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#apply-band-math-to-an-image-collection" class="nav-link">Apply Band Math To An Image Collection</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#reducing" class="nav-link">Reducing</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#obtain-image-statistics" class="nav-link">Obtain Image Statistics</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#using-masks" class="nav-link">Using Masks</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#inbuild-cloudscore-function" class="nav-link">Inbuild CloudScore Function</a>
         </li>
     
             </ul>
@@ -229,16 +258,9 @@
                 
   <div class="section" id="google-earth-engine">
 <h1>Google Earth Engine<a class="headerlink" href="#google-earth-engine" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="covering-the-foundations">
-<h2>Covering the Foundations<a class="headerlink" href="#covering-the-foundations" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference external" href="https://earthengine.google.com">Google Earth Engine (GEE)</a> combines a multi-petabyte catalog of satellite imagery and geospatial datasets with planetary-scale analysis capabilities and makes it available for scientists, researchers, and developers to detect changes, map trends, and quantify differences on the Earth’s surface through a cloud based platform. Hence offering the capability of running your algorithms and only requiring to export or visualise the output. The archive includes more than 30 years of historical imagery and scientific datasets, updated and expanded daily.</p>
-<p>For an informative background read on GEE and its applications see the following <a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S0034425717302900?via%3Dihub">hyperlink</a>.</p>
-<p>The main <a class="reference external" href="https://developers.google.com/earth-engine">GEE guide</a> covers everything from installation to available functions and usage, for an extensive range of examples see <a class="reference external" href="https://github.com/giswqs/earthengine-py-notebooks">here</a>. Here we will cover the basic important key points that should walk you through it.</p>
-<div class="section" id="installation">
-<h3>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h3>
-<p>Firstly, you should apply for access to use the GEE. follow this <a class="reference external" href="https://code.earthengine.google.com/">link</a>, if you cannot login yet it will tell you what steps you should follow to apply for access. Do this as soon as possible, I got access within a few minutes, however it says it can take a few days potentially. Referencing you are from Imperial and it is for research should get you access.</p>
-<p>If you decide to access GEE using python you can install geemap which will automatically install all its dependencies like earthengine-api, folium and ipyleaflet. This allows for several methods to intereact with Earh Engine data layers.</p>
-<p><strong>Important note</strong>: A key difference between folium and ipyleaflet is that ipyleaflet is built upon ipywidgets and allows bidirectional communication between the front-end and the backend enabling the use of the map to capture user input, while folium is meant for displaying static data only (source). Note that Google Colab currently does not support ipyleaflet (source). Therefore, if you are using geemap with Google Colab, you should use import geemap.eefolium. If you are using geemap with binder or a local Jupyter notebook server, you can use import geemap, which provides more functionalities for capturing user input (e.g., mouse-clicking and moving).</p>
+<p>This notebooks aims to walk you through and clarify some of the basic concept of using the Google Earth engine by building upon our script step by step. Majority of this content has been borrowed from a <span class="xref myst">github repository</span> containing over 360+ Jupyter Python notebooks examples to demonstrate the <a class="reference external" href="https://developers.google.com/earth-engine">Google Earth Engine guide</a> in python notebooks.</p>
+<div class="section" id="setting-up-your-notebook">
+<h2>Setting Up Your Notebook<a class="headerlink" href="#setting-up-your-notebook" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Installs geemap package</span>
@@ -260,7 +282,7 @@
 <span class="c1"># Authenticates and initializes Earth Engine</span>
 <span class="kn">import</span> <span class="nn">ee</span>
 
-<span class="k">try</span><span class="p">:</span> <span class="c1">#authentication only required once for a notebook</span>
+<span class="k">try</span><span class="p">:</span>
     <span class="n">ee</span><span class="o">.</span><span class="n">Initialize</span><span class="p">()</span>
 <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
     <span class="n">ee</span><span class="o">.</span><span class="n">Authenticate</span><span class="p">()</span>
@@ -271,41 +293,319 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># test by creating basemap</span>
-<span class="n">Map</span> <span class="o">=</span> <span class="n">geemap</span><span class="o">.</span><span class="n">Map</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="p">[</span><span class="mi">40</span><span class="p">,</span><span class="o">-</span><span class="mi">100</span><span class="p">],</span> <span class="n">zoom</span><span class="o">=</span><span class="mi">4</span><span class="p">,)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#set map</span>
+<span class="n">Map</span> <span class="o">=</span> <span class="n">geemap</span><span class="o">.</span><span class="n">Map</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="p">[</span><span class="mi">40</span><span class="p">,</span><span class="o">-</span><span class="mi">100</span><span class="p">],</span> <span class="n">zoom</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="c1">#Set a basemap, standard is google maps</span>
+<span class="n">Map</span><span class="o">.</span><span class="n">add_basemap</span><span class="p">(</span><span class="s1">&#39;SATELLITE&#39;</span><span class="p">)</span>
 <span class="n">Map</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "8faaa6c8a3914e3898b42bf44fbf4f98", "version_major": 2, "version_minor": 0}
+{"model_id": "ebddd46500554b25b329c44f217247a2", "version_major": 2, "version_minor": 0}
 </script></div>
 </div>
 </div>
-<div class="section" id="google-earth-engine-apps">
-<h3>Google Earth Engine Apps<a class="headerlink" href="#google-earth-engine-apps" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference external" href="https://developers.google.com/earth-engine/apps">GEE apps</a> are a way to share your results for expert and non-expert audiences alike. It is typically done along with a publication as an easy and accesible way for people to access and interact with the results. Following this <a class="reference external" href="https://philippgaertner.github.io/2019/04/earth-engine-apps-inventory/">link</a> you can find many examples of these apps and try them out. They can be very useful to obtain an idea of what exists and access some fully functioning examples.</p>
-<p>To clone any of the repositories you can acces the <a class="reference external" href="https://earthengine.googlesource.com/users">GEE user list</a> and find the project and its git clone link. Firstly, however you will require to obtain access to clone these github repositories, this can be done as follows:</p>
-<ul class="simple">
-<li><p>access this <a class="reference external" href="https://earthengine.googlesource.com/users">link</a></p></li>
-<li><p>click generate password</p></li>
-<li><p>sign in, this needs to be an email with GEE access I believe</p></li>
-<li><p>instructions to copy paste into the git prompt will be shown</p></li>
-</ul>
-<p>Now you should be able to freely clone any of the github repositories.</p>
+<div class="section" id="display-an-image">
+<h2>Display An Image<a class="headerlink" href="#display-an-image" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load an image.</span>
+<span class="n">image</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">(</span><span class="s1">&#39;LANDSAT/LC08/C01/T1/LC08_044034_20140318&#39;</span><span class="p">)</span>
+
+<span class="c1"># Display the image.</span>
+<span class="n">Map</span><span class="o">.</span><span class="n">addLayer</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="p">{},</span> <span class="s1">&#39;Landsat 8 original image&#39;</span><span class="p">)</span>
+<span class="n">Map</span><span class="o">.</span><span class="n">centerObject</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
+<span class="c1">#show Map</span>
+<span class="n">Map</span>
+</pre></div>
 </div>
-<div class="section" id="google-earth-engine-code-editor">
-<h3>Google Earth Engine Code Editor<a class="headerlink" href="#google-earth-engine-code-editor" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference external" href="https://developers.google.com/earth-engine/playground">GEE code editor</a> is a web-based IDE for the Earth Engine JavaScript API. Code Editor features are designed to make developing complex geospatial workflows fast and easy.</p>
 </div>
-<div class="section" id="general-guidance">
-<h3>General Guidance<a class="headerlink" href="#general-guidance" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li><p>Using Azure notebook I encountered many problems regarding package versions not agreeing, using Jupyter via the Anaconda environment or google collab gave me zero problems</p></li>
-<li><p>GEE has many built-in functions, make sure to look through the linked documentation before attempting to write a function for it</p></li>
-<li><p>GEE has a per user <a class="reference external" href="https://developers.google.com/earth-engine/usage">quota</a> on concurrent queries. If needed however you can apply for more</p></li>
-</ul>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "ebddd46500554b25b329c44f217247a2", "version_major": 2, "version_minor": 0}
+</script></div>
+</div>
+</div>
+<div class="section" id="visualise-specific-bands">
+<h2>Visualise Specific Bands<a class="headerlink" href="#visualise-specific-bands" title="Permalink to this headline">¶</a></h2>
+<p>Remember multiple bands are displayed as RGB to our eyes.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define visualization parameters in an object literal.</span>
+<span class="n">vizParams</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;bands&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;B5&#39;</span><span class="p">,</span> <span class="s1">&#39;B4&#39;</span><span class="p">,</span> <span class="s1">&#39;B3&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;min&#39;</span><span class="p">:</span> <span class="mi">5000</span><span class="p">,</span> <span class="s1">&#39;max&#39;</span><span class="p">:</span> <span class="mi">15000</span><span class="p">,</span> <span class="s1">&#39;gamma&#39;</span><span class="p">:</span> <span class="mf">1.3</span><span class="p">}</span>
+
+<span class="c1"># Center the map on the image and display.</span>
+<span class="n">Map</span><span class="o">.</span><span class="n">centerObject</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
+<span class="n">Map</span><span class="o">.</span><span class="n">addLayer</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">vizParams</span><span class="p">,</span> <span class="s1">&#39;Landsat 8 False color&#39;</span><span class="p">)</span>
+<span class="n">Map</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "ebddd46500554b25b329c44f217247a2", "version_major": 2, "version_minor": 0}
+</script></div>
+</div>
+</div>
+<div class="section" id="find-an-image">
+<h2>Find An Image<a class="headerlink" href="#find-an-image" title="Permalink to this headline">¶</a></h2>
+<p>it is highly recommended to first look at the <a class="reference external" href="https://developers.google.com/earth-engine/datasets">Google Earth Engine database</a> before starting to filter for an image in your script. Each dataset on the website also has a few lines of code showing how to access it.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#set location, easy to find on google maps</span>
+<span class="n">point</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">Geometry</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span><span class="o">-</span><span class="mf">122.262</span><span class="p">,</span> <span class="mf">37.8719</span><span class="p">)</span>
+
+<span class="c1">#set filter criteria</span>
+<span class="n">filteredCollection</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">ImageCollection</span><span class="p">(</span><span class="s1">&#39;LANDSAT/LC08/C01/T1&#39;</span><span class="p">)</span> \
+    <span class="o">.</span><span class="n">filterBounds</span><span class="p">(</span><span class="n">point</span><span class="p">)</span> \
+    <span class="o">.</span><span class="n">filterDate</span><span class="p">(</span><span class="s1">&#39;2014-06-01&#39;</span><span class="p">,</span><span class="s1">&#39;2014-10-01&#39;</span><span class="p">)</span> \
+    <span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="s1">&#39;CLOUD_COVER&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>   <span class="c1">#sort by cloudcover</span>
+
+<span class="c1">#see how many images in collection</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">filteredCollection</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">getInfo</span><span class="p">())</span>
+
+<span class="c1">#take 1st image from collection, least cloudy one</span>
+<span class="n">first</span> <span class="o">=</span> <span class="n">filteredCollection</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+
+<span class="c1"># Define visualization parameters in an object literal.</span>
+<span class="n">vizParams</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;bands&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;B5&#39;</span><span class="p">,</span> <span class="s1">&#39;B4&#39;</span><span class="p">,</span> <span class="s1">&#39;B3&#39;</span><span class="p">],</span>
+             <span class="s1">&#39;min&#39;</span><span class="p">:</span> <span class="mi">5000</span><span class="p">,</span> <span class="s1">&#39;max&#39;</span><span class="p">:</span> <span class="mi">15000</span><span class="p">,</span> <span class="s1">&#39;gamma&#39;</span><span class="p">:</span> <span class="mf">1.3</span><span class="p">}</span>
+
+<span class="c1"># Center the map on the image and display.</span>
+<span class="n">Map</span><span class="o">.</span><span class="n">centerObject</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
+<span class="n">Map</span><span class="o">.</span><span class="n">addLayer</span><span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="n">vizParams</span><span class="p">,</span> <span class="s1">&#39;Landsat 8 image&#39;</span><span class="p">)</span>
+<span class="n">Map</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>8
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "ebddd46500554b25b329c44f217247a2", "version_major": 2, "version_minor": 0}
+</script></div>
+</div>
+</div>
+</div>
+<div class="section" id="band-maths">
+<h1>Band Maths<a class="headerlink" href="#band-maths" title="Permalink to this headline">¶</a></h1>
+<p>There are many more functions than the below which can be applied, they are found in the linked manuals. but here is a demonstration on how they work.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># find image</span>
+<span class="n">point</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">Geometry</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span><span class="o">-</span><span class="mf">122.262</span><span class="p">,</span> <span class="mf">37.8719</span><span class="p">)</span>
+
+<span class="n">filteredCollection</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">ImageCollection</span><span class="p">(</span><span class="s1">&#39;LANDSAT/LC08/C01/T1&#39;</span><span class="p">)</span> \
+    <span class="o">.</span><span class="n">filterBounds</span><span class="p">(</span><span class="n">point</span><span class="p">)</span> \
+    <span class="o">.</span><span class="n">filterDate</span><span class="p">(</span><span class="s1">&#39;2014-06-01&#39;</span><span class="p">,</span><span class="s1">&#39;2014-10-01&#39;</span><span class="p">)</span> \
+    <span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="s1">&#39;CLOUD_COVER&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>   <span class="c1">#sort by cloudcover</span>
+
+<span class="c1">#take 1st image from collection, least cloudy one</span>
+<span class="n">first</span> <span class="o">=</span> <span class="n">filteredCollection</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+
+<span class="c1">#define function to be applied to image</span>
+<span class="k">def</span> <span class="nf">getNDWI</span><span class="p">(</span><span class="n">image</span><span class="p">):</span>    <span class="c1"># (B5 - B3)/(B5+B3)</span>
+    <span class="k">return</span> <span class="n">image</span><span class="o">.</span><span class="n">normalizedDifference</span><span class="p">([</span><span class="s1">&#39;B5&#39;</span><span class="p">,</span> <span class="s1">&#39;B3&#39;</span><span class="p">])</span>
+<span class="c1">#apply function to image</span>
+<span class="n">ndwi1</span> <span class="o">=</span> <span class="n">getNDWI</span><span class="p">(</span><span class="n">first</span><span class="p">)</span>
+
+<span class="c1"># Define visualization parameters in an object literal.</span>
+<span class="n">ndwiParams</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;min&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="s1">&#39;max&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s1">&#39;palette&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;FF0000&#39;</span><span class="p">,</span> <span class="s1">&#39;FFFFFF&#39;</span><span class="p">,</span> <span class="s1">&#39;0000FF&#39;</span><span class="p">]}</span>
+
+<span class="c1"># Center the map on the image and display.</span>
+<span class="n">Map</span><span class="o">.</span><span class="n">centerObject</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
+<span class="n">Map</span><span class="o">.</span><span class="n">addLayer</span><span class="p">(</span><span class="n">ndwi1</span><span class="p">,</span> <span class="n">ndwiParams</span><span class="p">,</span> <span class="s1">&#39;NDVI 1&#39;</span><span class="p">)</span>
+<span class="n">Map</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "ebddd46500554b25b329c44f217247a2", "version_major": 2, "version_minor": 0}
+</script></div>
+</div>
+<div class="section" id="apply-band-math-to-an-image-collection">
+<h2>Apply Band Math To An Image Collection<a class="headerlink" href="#apply-band-math-to-an-image-collection" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Add Earth Engine dataset</span>
+<span class="n">point</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">Geometry</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span><span class="o">-</span><span class="mf">122.262</span><span class="p">,</span> <span class="mf">37.8719</span><span class="p">)</span>
+
+<span class="n">filteredCollection</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">ImageCollection</span><span class="p">(</span><span class="s1">&#39;LANDSAT/LC08/C01/T1&#39;</span><span class="p">)</span> \
+    <span class="o">.</span><span class="n">filterBounds</span><span class="p">(</span><span class="n">point</span><span class="p">)</span> \
+    <span class="o">.</span><span class="n">filterDate</span><span class="p">(</span><span class="s1">&#39;2014-06-01&#39;</span><span class="p">,</span><span class="s1">&#39;2014-10-01&#39;</span><span class="p">)</span> \
+    <span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="s1">&#39;CLOUD_COVER&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>   <span class="c1">#sort by cloudcover</span>
+
+<span class="c1">#visualise bands available for images in collection</span>
+<span class="c1">#Landsat 8 expected 11 bands</span>
+<span class="n">bandNames</span> <span class="o">=</span> <span class="n">filteredCollection</span><span class="o">.</span><span class="n">first</span><span class="p">()</span><span class="o">.</span><span class="n">bandNames</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">bandNames</span><span class="o">.</span><span class="n">getInfo</span><span class="p">())</span>
+
+<span class="c1">#carry out function and add output as an extra band</span>
+<span class="k">def</span> <span class="nf">addNDVI</span><span class="p">(</span><span class="n">image</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">image</span><span class="o">.</span><span class="n">addBands</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">normalizedDifference</span><span class="p">([</span><span class="s1">&#39;B5&#39;</span><span class="p">,</span> <span class="s1">&#39;B3&#39;</span><span class="p">]))</span>
+
+<span class="c1"># Map the function over the collection.</span>
+<span class="n">ndviCollection</span> <span class="o">=</span> <span class="n">filteredCollection</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">addNDVI</span><span class="p">)</span>
+<span class="c1"># you can see we created a new band containing our function above</span>
+<span class="n">first</span> <span class="o">=</span> <span class="n">ndviCollection</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+<span class="n">bandNames</span> <span class="o">=</span> <span class="n">first</span><span class="o">.</span><span class="n">bandNames</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">bandNames</span><span class="o">.</span><span class="n">getInfo</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>[&#39;B1&#39;, &#39;B2&#39;, &#39;B3&#39;, &#39;B4&#39;, &#39;B5&#39;, &#39;B6&#39;, &#39;B7&#39;, &#39;B8&#39;, &#39;B9&#39;, &#39;B10&#39;, &#39;B11&#39;, &#39;BQA&#39;]
+[&#39;B1&#39;, &#39;B2&#39;, &#39;B3&#39;, &#39;B4&#39;, &#39;B5&#39;, &#39;B6&#39;, &#39;B7&#39;, &#39;B8&#39;, &#39;B9&#39;, &#39;B10&#39;, &#39;B11&#39;, &#39;BQA&#39;, &#39;nd&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="reducing">
+<h2>Reducing<a class="headerlink" href="#reducing" title="Permalink to this headline">¶</a></h2>
+<p>this average images to enhance common information and reduce noise like cloud cover</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Add Earth Engine dataset</span>
+<span class="n">collection</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">ImageCollection</span><span class="p">(</span><span class="s1">&#39;LANDSAT/LC08/C01/T1&#39;</span><span class="p">)</span> \
+    <span class="o">.</span><span class="n">filterBounds</span><span class="p">(</span><span class="n">ee</span><span class="o">.</span><span class="n">Geometry</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span><span class="o">-</span><span class="mf">122.262</span><span class="p">,</span> <span class="mf">37.8719</span><span class="p">))</span> \
+    <span class="o">.</span><span class="n">filterDate</span><span class="p">(</span><span class="s1">&#39;2014-01-01&#39;</span><span class="p">,</span> <span class="s1">&#39;2014-12-31&#39;</span><span class="p">)</span> \
+    <span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="s1">&#39;CLOUD_COVER&#39;</span><span class="p">)</span>
+
+<span class="c1"># Compute the median of each pixel for each band of the 5 least cloudy scenes.</span>
+<span class="n">median</span> <span class="o">=</span> <span class="n">collection</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="n">ee</span><span class="o">.</span><span class="n">Reducer</span><span class="o">.</span><span class="n">median</span><span class="p">())</span>
+
+<span class="c1"># Define visualization parameters in an object literal.</span>
+<span class="n">vizParams</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;bands&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;B5_median&#39;</span><span class="p">,</span> <span class="s1">&#39;B4_median&#39;</span><span class="p">,</span> <span class="s1">&#39;B3_median&#39;</span><span class="p">],</span>
+             <span class="s1">&#39;min&#39;</span><span class="p">:</span> <span class="mi">5000</span><span class="p">,</span> <span class="s1">&#39;max&#39;</span><span class="p">:</span> <span class="mi">15000</span><span class="p">,</span> <span class="s1">&#39;gamma&#39;</span><span class="p">:</span> <span class="mf">1.3</span><span class="p">}</span>
+<span class="c1"># display image</span>
+<span class="n">Map</span><span class="o">.</span><span class="n">setCenter</span><span class="p">(</span><span class="o">-</span><span class="mf">122.262</span><span class="p">,</span> <span class="mf">37.8719</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">Map</span><span class="o">.</span><span class="n">addLayer</span><span class="p">(</span><span class="n">median</span><span class="p">,</span> <span class="n">vizParams</span><span class="p">,</span> <span class="s1">&#39;Median image&#39;</span><span class="p">)</span>
+<span class="n">Map</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "ebddd46500554b25b329c44f217247a2", "version_major": 2, "version_minor": 0}
+</script></div>
+</div>
+</div>
+<div class="section" id="obtain-image-statistics">
+<h2>Obtain Image Statistics<a class="headerlink" href="#obtain-image-statistics" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Add Earth Engine dataset</span>
+<span class="n">image</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">(</span><span class="s1">&#39;LANDSAT/LC08/C01/T1_TOA/LC08_044034_20140318&#39;</span><span class="p">)</span>
+<span class="n">Map</span><span class="o">.</span><span class="n">addLayer</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;bands&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;B4&#39;</span><span class="p">,</span> <span class="s1">&#39;B3&#39;</span><span class="p">,</span> <span class="s1">&#39;B2&#39;</span><span class="p">],</span> <span class="s1">&#39;max&#39;</span><span class="p">:</span> <span class="mf">0.3</span><span class="p">},</span> <span class="s1">&#39;Landsat 8&#39;</span><span class="p">)</span>
+
+<span class="c1"># Create an arbitrary rectangle as a region and display it.</span>
+<span class="n">region</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">Geometry</span><span class="o">.</span><span class="n">Rectangle</span><span class="p">(</span><span class="o">-</span><span class="mf">122.2806</span><span class="p">,</span> <span class="mf">37.1209</span><span class="p">,</span> <span class="o">-</span><span class="mf">122.0554</span><span class="p">,</span> <span class="mf">37.2413</span><span class="p">)</span>
+<span class="n">Map</span><span class="o">.</span><span class="n">centerObject</span><span class="p">(</span><span class="n">ee</span><span class="o">.</span><span class="n">FeatureCollection</span><span class="p">(</span><span class="n">region</span><span class="p">),</span> <span class="mi">9</span><span class="p">)</span>
+<span class="n">Map</span><span class="o">.</span><span class="n">addLayer</span><span class="p">(</span><span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">()</span><span class="o">.</span><span class="n">paint</span><span class="p">(</span><span class="n">region</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">{},</span> <span class="s1">&#39;Region&#39;</span><span class="p">)</span>
+
+<span class="c1"># Get a dictionary of means in the region. Keys are bandnames.</span>
+<span class="n">mean</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">reduceRegion</span><span class="p">(</span><span class="o">**</span><span class="p">{</span>
+  <span class="s1">&#39;reducer&#39;</span><span class="p">:</span> <span class="n">ee</span><span class="o">.</span><span class="n">Reducer</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span>
+  <span class="s1">&#39;geometry&#39;</span><span class="p">:</span> <span class="n">region</span><span class="p">,</span>
+  <span class="s1">&#39;scale&#39;</span><span class="p">:</span> <span class="mi">30</span>
+<span class="p">})</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">mean</span><span class="o">.</span><span class="n">getInfo</span><span class="p">())</span>
+<span class="n">Map</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>{&#39;B1&#39;: 0.10156726419256697, &#39;B10&#39;: 288.3898316688731, &#39;B11&#39;: 287.4496961587173, &#39;B2&#39;: 0.07771978773589312, &#39;B3&#39;: 0.05530074222374056, &#39;B4&#39;: 0.03670883505442356, &#39;B5&#39;: 0.22139764553479283, &#39;B6&#39;: 0.07888235294207073, &#39;B7&#39;: 0.035089536963059234, &#39;B8&#39;: 0.047100656968120116, &#39;B9&#39;: 0.00156092084691453, &#39;BQA&#39;: 2720.11945357173}
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "ebddd46500554b25b329c44f217247a2", "version_major": 2, "version_minor": 0}
+</script></div>
+</div>
+</div>
+<div class="section" id="using-masks">
+<h2>Using Masks<a class="headerlink" href="#using-masks" title="Permalink to this headline">¶</a></h2>
+<p>The mask in the example below avoids us from including the water bodies in our data, this way we have a wider range of our colour palette available to show changes on land.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load two Landsat 5 images, 20 years apart.</span>
+<span class="n">image1</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">(</span><span class="s1">&#39;LANDSAT/LT05/C01/T1_TOA/LT05_044034_19900604&#39;</span><span class="p">)</span>
+<span class="n">image2</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">(</span><span class="s1">&#39;LANDSAT/LT05/C01/T1_TOA/LT05_044034_20100611&#39;</span><span class="p">)</span>
+
+
+<span class="c1"># This function gets NDVI from Landsat 5 imagery.</span>
+<span class="k">def</span> <span class="nf">getNDVI</span><span class="p">(</span><span class="n">image</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">image</span><span class="o">.</span><span class="n">normalizedDifference</span><span class="p">([</span><span class="s1">&#39;B4&#39;</span><span class="p">,</span> <span class="s1">&#39;B3&#39;</span><span class="p">])</span>
+
+<span class="c1"># Compute NDVI from the scenes.</span>
+<span class="n">ndvi1</span> <span class="o">=</span> <span class="n">getNDVI</span><span class="p">(</span><span class="n">image1</span><span class="p">)</span>
+<span class="n">ndvi2</span> <span class="o">=</span> <span class="n">getNDVI</span><span class="p">(</span><span class="n">image2</span><span class="p">)</span>
+
+<span class="c1"># Compute the difference in NDVI.</span>
+<span class="n">ndviDifference</span> <span class="o">=</span> <span class="n">ndvi2</span><span class="o">.</span><span class="n">subtract</span><span class="p">(</span><span class="n">ndvi1</span><span class="p">)</span>
+
+<span class="c1"># Load the land mask from the SRTM DEM.</span>
+<span class="n">landMask</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">(</span><span class="s1">&#39;CGIAR/SRTM90_V4&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">mask</span><span class="p">()</span>
+
+<span class="c1"># Update the NDVI difference mask with the mask</span>
+<span class="n">maskedDifference</span> <span class="o">=</span> <span class="n">ndviDifference</span><span class="o">.</span><span class="n">updateMask</span><span class="p">(</span><span class="n">landMask</span><span class="p">)</span>
+
+<span class="c1"># Display the masked result.</span>
+<span class="n">vizParams</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;min&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="s1">&#39;max&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
+             <span class="s1">&#39;palette&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;FF0000&#39;</span><span class="p">,</span> <span class="s1">&#39;FFFFFF&#39;</span><span class="p">,</span> <span class="s1">&#39;0000FF&#39;</span><span class="p">]}</span>
+<span class="n">Map</span><span class="o">.</span><span class="n">setCenter</span><span class="p">(</span><span class="o">-</span><span class="mf">122.2531</span><span class="p">,</span> <span class="mf">37.6295</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
+<span class="n">Map</span><span class="o">.</span><span class="n">addLayer</span><span class="p">(</span><span class="n">maskedDifference</span><span class="p">,</span> <span class="n">vizParams</span><span class="p">,</span> <span class="s1">&#39;NDVI difference&#39;</span><span class="p">)</span>
+<span class="n">Map</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "ebddd46500554b25b329c44f217247a2", "version_major": 2, "version_minor": 0}
+</script></div>
+</div>
+</div>
+<div class="section" id="inbuild-cloudscore-function">
+<h2>Inbuild CloudScore Function<a class="headerlink" href="#inbuild-cloudscore-function" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">## mask clouds</span>
+<span class="k">def</span> <span class="nf">cloudMask</span><span class="p">(</span><span class="n">img</span><span class="p">):</span>
+    <span class="n">cloudscore</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">Algorithms</span><span class="o">.</span><span class="n">Landsat</span><span class="o">.</span><span class="n">simpleCloudScore</span><span class="p">(</span><span class="n">img</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">&#39;cloud&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">img</span><span class="o">.</span><span class="n">updateMask</span><span class="p">(</span><span class="n">cloudscore</span><span class="o">.</span><span class="n">lt</span><span class="p">(</span><span class="mi">50</span><span class="p">))</span>
+
+<span class="c1"># Add Earth Engine dataset</span>
+<span class="n">collection</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">ImageCollection</span><span class="p">(</span><span class="s1">&#39;LANDSAT/LC8_L1T_TOA&#39;</span><span class="p">)</span> \
+                <span class="o">.</span><span class="n">filterDate</span><span class="p">(</span><span class="s1">&#39;2014-12-10&#39;</span><span class="p">,</span> <span class="s1">&#39;2016-12-31&#39;</span><span class="p">)</span> \
+                <span class="o">.</span><span class="n">filterBounds</span><span class="p">(</span><span class="n">ee</span><span class="o">.</span><span class="n">Geometry</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span><span class="o">-</span><span class="mf">122.262</span><span class="p">,</span> <span class="mf">37.8719</span><span class="p">))</span> \
+                <span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">cloudMask</span><span class="p">)</span> <span class="c1">#hash in front to see difference</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">collection</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">getInfo</span><span class="p">())</span>
+
+<span class="c1">#average images in collection</span>
+<span class="n">median</span> <span class="o">=</span> <span class="n">collection</span><span class="o">.</span><span class="n">median</span><span class="p">()</span>
+<span class="c1">#display image</span>
+<span class="n">Map</span><span class="o">.</span><span class="n">setCenter</span><span class="p">(</span><span class="o">-</span><span class="mf">122.262</span><span class="p">,</span> <span class="mf">37.8719</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
+<span class="n">vis</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;bands&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;B5&#39;</span><span class="p">,</span> <span class="s1">&#39;B4&#39;</span><span class="p">,</span> <span class="s1">&#39;B3&#39;</span><span class="p">],</span> <span class="s1">&#39;max&#39;</span><span class="p">:</span> <span class="mf">0.3</span><span class="p">}</span>
+<span class="n">Map</span><span class="o">.</span><span class="n">addLayer</span><span class="p">(</span><span class="n">median</span><span class="p">,</span><span class="n">vis</span><span class="p">)</span>
+<span class="n">Map</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>48
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "ebddd46500554b25b329c44f217247a2", "version_major": 2, "version_minor": 0}
+</script></div>
 </div>
 </div>
 </div>
