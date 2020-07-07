@@ -27,11 +27,15 @@ def fix(path):
     shutil.copy(path, os.sep.join(('_tmp', newpath)))
     return newpath
 
-def tmpify(path):
+def change_path(root, base):
     if use_nested():
-        return path.replace('notebooks', '_tmp', 1)
+        print(root.replace('notebooks', base, 1))
+        print(root.replace(root.rsplit(os.sep, 1)[0],
+                            base, 1))
+        return root.replace('notebooks', base, 1)
     else:
-        return os.sep.join(('_tmp', path))
+        return root.replace(root.rsplit(os.sep, 1)[0],
+                            base, 1)
 
 ### quick and dirty argument parsing
 def argv_or_default(key, default):
@@ -54,13 +58,13 @@ with open('_tmp'+os.sep+'_config.yml', 'w') as outfile:
 
 ### Set up table of contents
 
-chapter = Template("""- title: ${title}
+chapter = Template("""- title: "${title}"
   file: ${path}
 """)
-section = Template("""  - title: ${title}
+section = Template("""  - title: "${title}"
     file: ${path}
 """)
-subsection = Template("""    - title: ${title}
+subsection = Template("""    - title: "${title}"
       file: ${path}
 """)
 
@@ -91,13 +95,11 @@ with open('_tmp'+os.sep+'_toc.yml', 'w') as outfile:
         exts = set(os.path.splitext(file)[1] for file in files)
         if ('.ipynb' not in exts and
             '.md' not in exts):
-            shutil.copytree(root,
-            root.replace(root.rsplit(os.sep,1)[0],
-                         '_tmp', 1))
-            shutil.copytree(root,
-            root.replace(root.rsplit(os.sep,1)[0],
-                         os.sep.join(('_tmp', '_build', 'html')), 1))
-
+            shutil.copytree(root, change_path(root, '_tmp'))
+            shutil.copytree(root, change_path(root,
+                                              os.sep.join(('_tmp',
+                                                           '_build',
+                                                           'html'))))
         title = root.split(os.sep)[-1].title()
         if 'intro.md' in files:
             filepath = os.sep.join((root, 'intro.md'))
