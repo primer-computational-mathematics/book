@@ -215,6 +215,10 @@
             <a href="#edge-detection-gradient-operators" class="nav-link">Edge Detection (gradient operators)</a>
         </li>
     
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#references-and-further-reading" class="nav-link">References and Further Reading:</a>
+        </li>
+    
     </ul>
 </nav>
 
@@ -236,9 +240,9 @@
 </ul>
 <p>Filtering is a neighbourhood operation, in which the value of the pixel in the output image is determined by applying some alogrithm to the values of the pixels in the neighbourhood of the corresponding input pixel. All of the examples found below are linear filtering operations in which the value of an output pixel is a linear combination of the values of the pixels in the input pixels neighbourhood.</p>
 <p>What we aim to achieve is to have a moving window across our image which calculates an average of the values of the input image within the window for the central pixel. This smoothens the contrast between pixels.</p>
-<img src="Data_Image_Filtering/convolution_graphical.png" style="width:300px;"/>
+<img src="Data_Image_Filtering/convolution_graphical.png" style="width:30%;"/>
 <p>This can be acccomplished through convolution, which is a neighbourhood operation in which each output pixel is the weighted sum of neighbouring input pixels. The matrix of weights is called the convolution kernel, below we show a 3x3 kernel that we will use for our moving average filter:</p>
-<img src="Data_Image_Filtering/kernel.png" style="width:150px;"/>
+<img src="Data_Image_Filtering/kernel.png" style="width:15%;"/>
 <p>To prevent against empty values at the edges of the image we can use padding, for instance we can place zero values in these cells or mirror the available values within our window. If this is not done and we ignore the edge pixels we will reduce the size of our image.</p>
 <div class="section" id="moving-average-filter">
 <h2>Moving Average Filter<a class="headerlink" href="#moving-average-filter" title="Permalink to this headline">¶</a></h2>
@@ -262,25 +266,14 @@
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Read in image</span>
 <span class="n">img</span> <span class="o">=</span> <span class="n">imageio</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s1">&#39;Data_Image_Filtering/output-onlinejpgtools.jpg&#39;</span><span class="p">)</span>
 
-<span class="c1">#find out image ratio</span>
+<span class="c1">#find image ratio</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Image dimension =&#39;</span><span class="p">,</span> <span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> 
 
-<span class="c1">#Take weighted average of 3 layers</span>
+<span class="c1">#Take weighted average of 3 layers to make 1 layer gray scale</span>
 <span class="n">image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">((</span><span class="mf">0.2126</span> <span class="o">*</span> <span class="n">img</span><span class="p">[:,:,</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">(</span><span class="mf">0.7152</span> <span class="o">*</span> <span class="n">img</span><span class="p">[:,:,</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">(</span><span class="mf">0.0722</span> <span class="o">*</span> <span class="n">img</span><span class="p">[:,:,</span><span class="mi">2</span><span class="p">]))</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Image dimension =&#39;</span><span class="p">,</span> <span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> 
 <span class="c1">#To maintain orignal RGB properties apply filter to each </span>
 <span class="c1">#layer individually instead of averaging them</span>
-
-<span class="c1">#We corrupt the image with gaussian noise for educational </span>
-<span class="c1">#purposes to show the filters in action clearer</span>
-<span class="c1">#image_noisy = noise.add_noise(image, &#39;Data_Image_Filtering/gaussian&#39;)</span>
-
-<span class="c1">#Display the result, function used throughout</span>
-<span class="k">def</span> <span class="nf">image_show</span><span class="p">(</span><span class="n">im</span><span class="p">,</span><span class="n">height</span><span class="p">,</span><span class="n">width</span><span class="p">,</span><span class="n">colour</span> <span class="o">=</span> <span class="s1">&#39;gray&#39;</span><span class="p">):</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">colour</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="n">height</span><span class="p">,</span> <span class="n">width</span><span class="p">)</span>
-
-<span class="n">image_show</span><span class="p">(</span><span class="n">image_noisy</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">11</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -289,7 +282,21 @@
 Image dimension = (390, 556)
 </pre></div>
 </div>
-<img alt="../_images/Image_Filtering_3_1.png" src="../_images/Image_Filtering_3_1.png" />
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#Display the result, function used throughout</span>
+<span class="k">def</span> <span class="nf">image_show</span><span class="p">(</span><span class="n">im</span><span class="p">,</span><span class="n">height</span><span class="p">,</span><span class="n">width</span><span class="p">,</span><span class="n">colour</span> <span class="o">=</span> <span class="s1">&#39;gray&#39;</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">colour</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="n">height</span><span class="p">,</span> <span class="n">width</span><span class="p">)</span>
+
+<span class="n">image_show</span><span class="p">(</span><span class="n">image</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">11</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/Image_Filtering_4_0.png" src="../_images/Image_Filtering_4_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -299,10 +306,16 @@ Image dimension = (390, 556)
                     <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span>
                     <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]])</span>
 
-<span class="c1">#Convolve the corrupted image with h</span>
+<span class="c1">#Convolve the image with h</span>
 <span class="n">image_filtered</span><span class="o">=</span><span class="n">scipy</span><span class="o">.</span><span class="n">signal</span><span class="o">.</span><span class="n">convolve2d</span><span class="p">(</span><span class="n">image</span><span class="p">,</span><span class="n">h</span><span class="p">,</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;full&#39;</span><span class="p">,</span> 
                                   <span class="n">boundary</span> <span class="o">=</span> <span class="s1">&#39;fill&#39;</span><span class="p">,</span> <span class="n">fillvalue</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#Display the change</span>
 <span class="k">def</span> <span class="nf">image_comp</span><span class="p">(</span><span class="n">im</span><span class="p">,</span><span class="n">height</span><span class="p">,</span><span class="n">width</span><span class="p">,</span><span class="n">colour</span> <span class="o">=</span> <span class="s1">&#39;gray&#39;</span><span class="p">):</span>
 
     <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
@@ -319,21 +332,29 @@ Image dimension = (390, 556)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/Image_Filtering_4_0.png" src="../_images/Image_Filtering_4_0.png" />
+<img alt="../_images/Image_Filtering_6_0.png" src="../_images/Image_Filtering_6_0.png" />
 </div>
 </div>
-<p>The kernel can be of any size. Increasing the kernel size will lead to a blurrier image as more data is averaged in each step.</p>
+<p>The kernel can be of any size. Increasing the kernel size will lead to a blurrier image as we averaged over a larger amount of data in each step.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">h</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">81</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">([</span><span class="mi">9</span><span class="p">,</span><span class="mi">9</span><span class="p">])</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Design the kernel h (9x9 filter in this case)</span>
+<span class="n">h</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">81</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">([</span><span class="mi">9</span><span class="p">,</span><span class="mi">9</span><span class="p">])</span>
 <span class="n">image_smooth</span><span class="o">=</span><span class="n">scipy</span><span class="o">.</span><span class="n">signal</span><span class="o">.</span><span class="n">convolve2d</span><span class="p">(</span><span class="n">image</span><span class="p">,</span><span class="n">h</span><span class="p">,</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;full&#39;</span><span class="p">,</span>
                                      <span class="n">boundary</span> <span class="o">=</span> <span class="s1">&#39;fill&#39;</span><span class="p">,</span> <span class="n">fillvalue</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#Display the change</span>
 <span class="n">image_comp</span> <span class="p">(</span><span class="n">image_smooth</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">11</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/Image_Filtering_6_0.png" src="../_images/Image_Filtering_6_0.png" />
+<img alt="../_images/Image_Filtering_9_0.png" src="../_images/Image_Filtering_9_0.png" />
 </div>
 </div>
 </div>
@@ -341,32 +362,41 @@ Image dimension = (390, 556)
 <h2>Sharpening Filters<a class="headerlink" href="#sharpening-filters" title="Permalink to this headline">¶</a></h2>
 <p>These filters work in the same fashion except that their kernel aims to increase the contrast between neighbouring pixels. This effect will be most pronounced at the pixels with the largest difference in digital numbers.</p>
 <p>A simple Kernel that we can use for this would be:</p>
-<img src="Data_Image_Filtering/filter_sharpen.png" style="width:100px;"/>
+<img src="Data_Image_Filtering/filter_sharpen.png" style="width:10%"/>
 <p>The effect of this filter can be see in the following image:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">h</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="mi">9</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="mi">9</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="mi">9</span><span class="p">],</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Design the kernel h (3x3 filter in this case)</span>
+<span class="n">h</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="mi">9</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="mi">9</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="mi">9</span><span class="p">],</span>
             <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="mi">9</span><span class="p">,</span><span class="mf">1.9</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="mi">9</span><span class="p">],</span>
             <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="mi">9</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="mi">9</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="mi">9</span><span class="p">]])</span>
+<span class="c1">#Convolve the image with h</span>
 <span class="n">image_sharp</span><span class="o">=</span><span class="n">scipy</span><span class="o">.</span><span class="n">signal</span><span class="o">.</span><span class="n">convolve2d</span><span class="p">(</span><span class="n">image</span><span class="p">,</span><span class="n">h</span><span class="p">,</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;full&#39;</span><span class="p">,</span> 
                                 <span class="n">boundary</span> <span class="o">=</span> <span class="s1">&#39;fill&#39;</span><span class="p">,</span> <span class="n">fillvalue</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#Display the change</span>
 <span class="n">image_comp</span> <span class="p">(</span><span class="n">image_sharp</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">11</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/Image_Filtering_8_0.png" src="../_images/Image_Filtering_8_0.png" />
+<img alt="../_images/Image_Filtering_12_0.png" src="../_images/Image_Filtering_12_0.png" />
 </div>
 </div>
 <p>In some cases the filters you will be using can be separated into two smaller filters and convolve these one after the other with our image. for instance:</p>
-<img src="Data_Image_Filtering/filter_simplified.png"  style="width:300px;"/>
+<img src="Data_Image_Filtering/filter_simplified.png"  style="width:30%;"/>
 <p>What this achieves is that it can bring down our computational complexity to $ O(N^2 K) $, whereas before it was $ O(N^2 K^2) $</p>
 </div>
 <div class="section" id="edge-detection-gradient-operators">
 <h2>Edge Detection (gradient operators)<a class="headerlink" href="#edge-detection-gradient-operators" title="Permalink to this headline">¶</a></h2>
 <p>Edges in this context refer to a stark contrast in brightness (DN value) within our image. These can be related to discontinuities in depth, discontinuities in surface orientation (angle), changes in material properties and or variation in scene illumination. These methods are valuable for data extraction in areas such as image processing, computer vision, and machine learning as it allows the extraction of structural properties of an image while reducing the amount of data.</p>
 <p>To find these brightness discontinuities derivatives can be used to characterise these as follows</p>
-<img src="Data_Image_Filtering/differential.png" style="width:400px;"/>
+<img src="Data_Image_Filtering/differential.png" style="width:40%;"/>
 <p>The way to apply this is through finite differencing. We can express this finite differencing in a kernel (h) and convolve this with our image:</p>
 <p>        forward difference: <span class="math notranslate nohighlight">\(f'[x]= f[x+1]-f[x]\)</span>    -&gt;    $ h=[1,-1,0]$</p>
 <p>        backward difference: <span class="math notranslate nohighlight">\(f'[x]= f[x]-f[x-1]\)</span>   -&gt;    <span class="math notranslate nohighlight">\(h=[0,1,-1]\)</span></p>
@@ -383,13 +413,18 @@ Image dimension = (390, 556)
              <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
              <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span> <span class="c1"># this will be used to convolve in the y-axis</span>
 
-<span class="c1"># Sobel filtering</span>
+<span class="c1"># Convolve with Sobel filters</span>
 <span class="n">image_filtered_x</span><span class="o">=</span><span class="n">scipy</span><span class="o">.</span><span class="n">signal</span><span class="o">.</span><span class="n">convolve2d</span><span class="p">(</span><span class="n">image</span><span class="p">,</span><span class="n">h_sobel_x</span><span class="p">,</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;full&#39;</span><span class="p">,</span> 
                                       <span class="n">boundary</span> <span class="o">=</span> <span class="s1">&#39;fill&#39;</span><span class="p">,</span> <span class="n">fillvalue</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">image_filtered_y</span> <span class="o">=</span><span class="n">scipy</span><span class="o">.</span><span class="n">signal</span><span class="o">.</span><span class="n">convolve2d</span><span class="p">(</span><span class="n">image</span><span class="p">,</span><span class="n">h_sobel_y</span><span class="p">,</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;full&#39;</span><span class="p">,</span>
                                       <span class="n">boundary</span> <span class="o">=</span> <span class="s1">&#39;fill&#39;</span><span class="p">,</span> <span class="n">fillvalue</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-
-<span class="c1">#show both images</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#Display results</span>
 <span class="n">f</span><span class="p">,</span> <span class="n">axarr</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">11</span><span class="p">))</span> 
 <span class="n">axarr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image_filtered_x</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
 <span class="n">axarr</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image_filtered_y</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
@@ -397,39 +432,56 @@ Image dimension = (390, 556)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f8c8dde73c8&gt;
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x1a19f5b550&gt;
 </pre></div>
 </div>
-<img alt="../_images/Image_Filtering_11_1.png" src="../_images/Image_Filtering_11_1.png" />
+<img alt="../_images/Image_Filtering_16_1.png" src="../_images/Image_Filtering_16_1.png" />
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#Take the magnitude gradient of the two images to join them</span>
 <span class="n">mag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">image_filtered_x</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">image_filtered_y</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#Display the result</span>
 <span class="n">image_show</span> <span class="p">(</span><span class="n">mag</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">11</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/Image_Filtering_12_0.png" src="../_images/Image_Filtering_12_0.png" />
+<img alt="../_images/Image_Filtering_18_0.png" src="../_images/Image_Filtering_18_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#extract information on the direction of the gradient</span>
 <span class="n">directionality</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span><span class="n">image_filtered_y</span><span class="p">,</span><span class="n">image_filtered_x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#Display the result</span>
 <span class="n">image_show</span> <span class="p">(</span><span class="n">directionality</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span> <span class="n">colour</span><span class="o">=</span> <span class="s1">&#39;gist_rainbow&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/Image_Filtering_13_0.png" src="../_images/Image_Filtering_13_0.png" />
+<img alt="../_images/Image_Filtering_20_0.png" src="../_images/Image_Filtering_20_0.png" />
 </div>
 </div>
 <p>Our edge detection is not perfect as we do not have ideal large steps in brightness on every edge, but more of a transition.</p>
-<img src="Data_Image_Filtering/gradient.png" style="width:300px;"/>
+<img src="Data_Image_Filtering/gradient.png" style="width:30%;"/>
 <p>Hence it is not always easy to say that there should be an edge between two pixels or not. One simple step we can take to greatly improve edge detection is smoothening out noise using a gaussian filter for instance. This can become very important when taking second derivatives like the laplacian as derivatives are very sensitive to noise.</p>
+</div>
+<div class="section" id="references-and-further-reading">
+<h2>References and Further Reading:<a class="headerlink" href="#references-and-further-reading" title="Permalink to this headline">¶</a></h2>
 <p>For further reading image filtering and alternative kernels please see:
 https://en.wikipedia.org/wiki/Kernel_(image_processing)
 https://uk.mathworks.com/help/images/what-is-image-filtering-in-the-spatial-domain.html</p>
