@@ -247,6 +247,7 @@
 <div style="justify-content: center">
         <img src="Data_Image_Filtering/convolution_graphical.png" style= "width: 30%">
 </div>
+<p style="text-align:center;"><img src="Data_Image_Filtering/convolution_graphical.png" style= "width: 30%"></p>
 <p>This can be acccomplished through convolution, which is a neighbourhood operation in which each output pixel is the weighted sum of neighbouring input pixels. The matrix of weights is called the convolution kernel, below we show a 3x3 kernel that we will use for our moving average filter:</p>
 <img src="Data_Image_Filtering/kernel.png" style="width:15%; float: center"  />
 <p>To prevent against empty values at the edges of the image we can use padding, for instance we can place zero values in these cells or mirror the available values within our window. If this is not done and we ignore the edge pixels we will reduce the size of our image.</p>
@@ -272,7 +273,7 @@
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Read in image</span>
 <span class="n">img</span> <span class="o">=</span> <span class="n">imageio</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s1">&#39;Data_Image_Filtering/output-onlinejpgtools.jpg&#39;</span><span class="p">)</span>
 
-<span class="c1">#find image ratio</span>
+<span class="c1">#find image dimensions</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Image dimension =&#39;</span><span class="p">,</span> <span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> 
 
 <span class="c1">#Take weighted average of 3 layers to make 1 layer gray scale</span>
@@ -293,11 +294,10 @@ Image dimension = (390, 556)
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#Display the result, function used throughout</span>
-<span class="k">def</span> <span class="nf">image_show</span><span class="p">(</span><span class="n">im</span><span class="p">,</span><span class="n">height</span><span class="p">,</span><span class="n">width</span><span class="p">,</span><span class="n">colour</span> <span class="o">=</span> <span class="s1">&#39;gray&#39;</span><span class="p">):</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">colour</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="n">height</span><span class="p">,</span> <span class="n">width</span><span class="p">)</span>
-
-<span class="n">image_show</span><span class="p">(</span><span class="n">image</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">11</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;input image&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;pixels&quot;</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;pixels&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -321,19 +321,17 @@ Image dimension = (390, 556)
 </div>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#Display the change</span>
-<span class="k">def</span> <span class="nf">image_comp</span><span class="p">(</span><span class="n">im</span><span class="p">,</span><span class="n">height</span><span class="p">,</span><span class="n">width</span><span class="p">,</span><span class="n">colour</span> <span class="o">=</span> <span class="s1">&#39;gray&#39;</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
 
-    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">121</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;input&#39;</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">set_cmap</span><span class="p">(</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">14</span><span class="p">),</span> 
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;pixels&quot;</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;pixels&quot;</span><span class="p">)</span>
 
-    <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">221</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;input&#39;</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">set_cmap</span><span class="p">(</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="n">height</span><span class="p">,</span> <span class="n">width</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">122</span><span class="p">)</span> <span class="p">,</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;output&#39;</span><span class="p">)</span> <span class="p">,</span> <span class="n">plt</span><span class="o">.</span><span class="n">set_cmap</span><span class="p">(</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image_filtered</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;pixels&quot;</span><span class="p">)</span>
 
-    <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">222</span><span class="p">)</span> <span class="p">,</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;output&#39;</span><span class="p">)</span> <span class="p">,</span> <span class="n">plt</span><span class="o">.</span><span class="n">set_cmap</span><span class="p">(</span><span class="n">colour</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">im</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="n">height</span><span class="p">,</span> <span class="n">width</span><span class="p">)</span>
-
-
-<span class="n">image_comp</span><span class="p">(</span><span class="n">image_filtered</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">11</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -352,17 +350,6 @@ Image dimension = (390, 556)
 </div>
 </div>
 </div>
-<div class="cell tag_hide-input docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#Display the change</span>
-<span class="n">image_comp</span> <span class="p">(</span><span class="n">image_smooth</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">11</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/Image_Filtering_9_0.png" src="../_images/Image_Filtering_9_0.png" />
-</div>
-</div>
 </div>
 <div class="section" id="sharpening-filters">
 <h2>Sharpening Filters<a class="headerlink" href="#sharpening-filters" title="Permalink to this headline">¶</a></h2>
@@ -370,6 +357,27 @@ Image dimension = (390, 556)
 <p>A simple Kernel that we can use for this would be:</p>
 <img src="Data_Image_Filtering/filter_sharpen.png" style="width:10%; float: center"/>
 <p>The effect of this filter can be see in the following image:</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#Display the change</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+
+<span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">121</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;input&#39;</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">set_cmap</span><span class="p">(</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;pixels&quot;</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;pixels&quot;</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">122</span><span class="p">)</span> <span class="p">,</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;output&#39;</span><span class="p">)</span> <span class="p">,</span> <span class="n">plt</span><span class="o">.</span><span class="n">set_cmap</span><span class="p">(</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image_smooth</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;pixels&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/Image_Filtering_10_0.png" src="../_images/Image_Filtering_10_0.png" />
+</div>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Design the kernel h (3x3 filter in this case)</span>
@@ -386,7 +394,17 @@ Image dimension = (390, 556)
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#Display the change</span>
-<span class="n">image_comp</span> <span class="p">(</span><span class="n">image_sharp</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">11</span><span class="p">)</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+
+<span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">121</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;input&#39;</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">set_cmap</span><span class="p">(</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;pixels&quot;</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;pixels&quot;</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">122</span><span class="p">)</span> <span class="p">,</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;output&#39;</span><span class="p">)</span> <span class="p">,</span> <span class="n">plt</span><span class="o">.</span><span class="n">set_cmap</span><span class="p">(</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image_sharp</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;pixels&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -394,6 +412,7 @@ Image dimension = (390, 556)
 <img alt="../_images/Image_Filtering_12_0.png" src="../_images/Image_Filtering_12_0.png" />
 </div>
 </div>
+<p>We could do a Linear Contrast enhancement above to see a larger contrast in colours again. See Image Operations notebook</p>
 <p>In some cases the filters you will be using can be separated into two smaller filters and convolve these one after the other with our image. for instance:</p>
 <img src="Data_Image_Filtering/filter_simplified.png"  style="width:30%; float: center"/>
 <p>What this achieves is that it can bring down our computational complexity to $ O(N^2 K) $, whereas before it was $ O(N^2 K^2) $</p>
@@ -431,17 +450,22 @@ Image dimension = (390, 556)
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#Display results</span>
-<span class="n">f</span><span class="p">,</span> <span class="n">axarr</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">11</span><span class="p">))</span> 
-<span class="n">axarr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image_filtered_x</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
-<span class="n">axarr</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image_filtered_y</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">14</span><span class="p">))</span> 
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image_filtered_x</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;pixels&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;pixels&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;edges x-direction&quot;</span><span class="p">)</span>
+
+
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image_filtered_y</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;pixels&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;edges y-direction&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x1a19f5b550&gt;
-</pre></div>
-</div>
-<img alt="../_images/Image_Filtering_16_1.png" src="../_images/Image_Filtering_16_1.png" />
+<img alt="../_images/Image_Filtering_16_0.png" src="../_images/Image_Filtering_16_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -455,7 +479,10 @@ Image dimension = (390, 556)
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#Display the result</span>
-<span class="n">image_show</span> <span class="p">(</span><span class="n">mag</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">11</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;magnitude&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;pixels&quot;</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;pixels&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">mag</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -474,7 +501,10 @@ Image dimension = (390, 556)
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#Display the result</span>
-<span class="n">image_show</span> <span class="p">(</span><span class="n">directionality</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span> <span class="n">colour</span><span class="o">=</span> <span class="s1">&#39;gist_rainbow&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;directionality of gradient/edge&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;pixels&quot;</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;pixels&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">directionality</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gist_rainbow&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
