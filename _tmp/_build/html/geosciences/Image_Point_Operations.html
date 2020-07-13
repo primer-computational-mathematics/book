@@ -1,0 +1,696 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Remote Sensing: Image Point Operations &#8212; ESE Jupyter Material</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/sphinx-book-theme.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/mystnb.js"></script>
+    <script src="../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Tides" href="Tides.html" />
+    <link rel="prev" title="Google Earth Engine Getting Started" href="Google_Earth_Engine_Getting_Started_.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  <img src="../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">ESE Jupyter Material</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  
+  <ul class="nav sidenav_l1">
+  <li class="">
+    <a href="../intro.html">Landing page</a>
+  </li>
+  <li class="active">
+    <a href="intro.html">Geosciences</a>
+  <ul class="nav sidenav_l2">
+    <li class="">
+      <a href="Camera_Calibration.html">Camera Calibration</a>
+    </li>
+    <li class="">
+      <a href="Particle_Image_Velocimetry.html">Particle Image Velocimetry (PIV)</a>
+    </li>
+    <li class="">
+      <a href="Wave_dispersion.html">Wave Dispersion</a>
+    </li>
+    <li class="">
+      <a href="Dynamic_Earth.html">Dynamic Earth</a>
+    </li>
+    <li class="">
+      <a href="Image_Filtering.html">Image Filtering</a>
+    </li>
+    <li class="">
+      <a href="Google_Earth_Engine_Foundations.html">Google Earth Engine Foundations</a>
+    </li>
+    <li class="">
+      <a href="Seismology.html">Seismology</a>
+    </li>
+    <li class="">
+      <a href="Google_Earth_Engine_Getting_Started_.html">Google Earth Engine Getting Started</a>
+    </li>
+    <li class="active">
+      <a href="">Image Point Operations</a>
+    </li>
+    <li class="">
+      <a href="Tides.html">Tides</a>
+    </li>
+    <li class="">
+      <a href="Cartography_Cartopy.html">Cartography Cartopy</a>
+    </li>
+    <li class="">
+      <a href="Image_Transformations.html">Image Transformations</a>
+    </li>
+  </ul>
+  </li>
+  <li class="">
+    <a href="../mathematics/intro.html">Mathematics</a>
+  </li>
+  <li class="">
+    <a href="../coding/intro.html">Coding</a>
+  </li>
+  <li class="">
+    <a href="../genindex.html">Index</a>
+  </li>
+</ul>
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/geosciences/Image_Point_Operations.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/geosciences/Image_Point_Operations.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#image-display" class="nav-link">Image Display</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#point-operations" class="nav-link">Point Operations</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#cut-off-clipping" class="nav-link">Cut-Off Clipping</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#contrast-enhancement" class="nav-link">Contrast Enhancement</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#linear-scale" class="nav-link">Linear Scale</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#piecewise-linear-stretch" class="nav-link">Piecewise Linear Stretch</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#balance-contrast-enhancement-technique-bcet-2" class="nav-link">Balance Contrast Enhancement Technique (BCET)^2</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#golden-rules-for-good-contrast-enhancement" class="nav-link">Golden rules for good contrast enhancement</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#references" class="nav-link">References</a>
+        </li>
+    
+    </ul>
+</nav>
+
+
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="remote-sensing-image-point-operations">
+<h1>Remote Sensing: Image Point Operations<a class="headerlink" href="#remote-sensing-image-point-operations" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="image-display">
+<h2>Image Display<a class="headerlink" href="#image-display" title="Permalink to this headline">¶</a></h2>
+<p>A digital image is a 2D array of numbers in lines and columns or a raster dataset. It can also have a third dimension, in the form of other layers. Each cell of a digital image is called a pixel and the number representing the brightness of the pixel is called a <strong>digital number (DN).</strong> It can be composed of any number of layers/bands.</p>
+<p style="text-align:center;"><img src="Data_Image_Operations/Image_Layers.png" style="width:40%"/></p>
+<p>Not all bands are within the visible spectrum, however we can visualise them by assigning them to a colour gun in the visible spectrum. Following <strong>tristimulus colour theory</strong>, human colour perception is performed by three types of cones matching three primary colour: <strong>R</strong>ed, <strong>G</strong>reen and <strong>B</strong>lue (RGB). the combination of these three colours:</p>
+<div class="math notranslate nohighlight">
+\[C=rR+gG+bB\]</div>
+<p>Allows any colour to be represented within the visible spectrum.</p>
+<p>Introducing some common terminology:</p>
+<p><strong>True colour composite</strong> -&gt; display of 3 image bands in red, green and blue spectral ranges matching RGB.</p>
+<p><strong>False colour composite</strong> -&gt; bands displayed in red, green and blue do not match the spectra of these three primary colours</p>
+<p><strong>Pseudo colour display</strong> -&gt; displays a monochrome image as a colour image by assigning each grey level to a unique colour. This benefits visualisation as our eyes perceive more colours than grey levels however the original quantitative sequential relationships of the DNs are lost.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># install required packages</span>
+<span class="c1">##!pip install --upgrade pip</span>
+<span class="c1">##!pip install opencv-python</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import required libaries</span>
+<span class="kn">import</span> <span class="nn">imageio</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib.colors</span> <span class="k">as</span> <span class="nn">mcolors</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">cm</span>
+<span class="kn">import</span> <span class="nn">cv2</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#read in image</span>
+<span class="n">img</span> <span class="o">=</span> <span class="n">imageio</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s1">&#39;Data_Image_Operations/Picture1.png&#39;</span><span class="p">)</span>
+
+<span class="c1">#find out image ratio</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Image dimension =&#39;</span><span class="p">,</span> <span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> 
+
+<span class="c1">#separate layers</span>
+<span class="n">image0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">(</span><span class="n">img</span><span class="p">[:,:,</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">image1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">(</span><span class="n">img</span><span class="p">[:,:,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">image2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">(</span><span class="n">img</span><span class="p">[:,:,</span><span class="mi">2</span><span class="p">])</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Image dimension = (899, 1600, 4)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+
+<span class="c1">#plot grey scale</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">131</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;grey scale&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image0</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="s1">&#39;gray&#39;</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;pixels&quot;</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;pixels&quot;</span><span class="p">)</span>
+
+<span class="c1">#plot pseudo colour display</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">132</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;pseudo-colour&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image0</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="s1">&#39;gist_rainbow&#39;</span><span class="p">),</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">14</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;pixels&quot;</span><span class="p">)</span>
+
+<span class="c1">#generate colourbar to highlight brightest DNs (see reference 1)</span>
+<span class="n">threshold</span> <span class="o">=</span> <span class="mf">0.8</span> 
+<span class="n">colors</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;white&quot;</span><span class="p">),</span>
+    <span class="p">(</span><span class="n">threshold</span><span class="o">*</span><span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image0</span><span class="p">))</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image0</span><span class="p">)),</span> <span class="s2">&quot;gray&quot;</span><span class="p">),</span>
+    <span class="p">(</span><span class="n">threshold</span><span class="o">*</span><span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image0</span><span class="p">))</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image0</span><span class="p">)),</span> <span class="s2">&quot;red&quot;</span><span class="p">),</span> 
+          <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;red&quot;</span><span class="p">)</span> <span class="p">]</span>
+<span class="n">mycmap</span> <span class="o">=</span> <span class="n">mcolors</span><span class="o">.</span><span class="n">LinearSegmentedColormap</span><span class="o">.</span><span class="n">from_list</span><span class="p">(</span><span class="s1">&#39;my_colormap&#39;</span><span class="p">,</span> 
+                                                   <span class="n">colors</span><span class="p">)</span>
+
+<span class="c1">#generate plot using new colourbar</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">133</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;pseudo-colour&#39;</span><span class="p">),</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image0</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="n">mycmap</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;pixels&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/Image_Point_Operations_4_0.png" src="../_images/Image_Point_Operations_4_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="point-operations">
+<h2>Point Operations<a class="headerlink" href="#point-operations" title="Permalink to this headline">¶</a></h2>
+<p>A point operation is a modification of a pixel value which is based on that pixel value and is independent of location or neighboring values. If we let x represent a digital image and <span class="math notranslate nohighlight">\(x_{i,j}\)</span> is the DN of any pixel and Y the output pixel of any image then we describe any point operations as:</p>
+<div class="math notranslate nohighlight">
+\[y_{i,j}=f(x_{i,j})\]</div>
+<p>This is also frequently called histogram modification as it only alters the histogram of an image but not spatial relationship of image pixels.  Since our result is irrespective of its spatial location we will always have the same output for a specific input. This allows a <strong>LookUp Table (LUT)</strong> to be used. All values are computed first for every present DN level and the inputs are simply matched to their corresponding output. This saves computational time by not repeating the same operation. LUT tables scale much better.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#Create histograms for all 3 bands</span>
+
+<span class="n">histogram0</span><span class="p">,</span> <span class="n">bin_edges0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">image0</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="nb">range</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> 
+                                                <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image0</span><span class="p">)))</span>
+<span class="n">histogram1</span><span class="p">,</span> <span class="n">bin_edges1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">image1</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="nb">range</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> 
+                                                <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image1</span><span class="p">)))</span>
+<span class="n">histogram2</span><span class="p">,</span> <span class="n">bin_edges2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">image2</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="nb">range</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> 
+                                                <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image2</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#create figure</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;bands histograms&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;DN value&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;frequency&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mi">202</span><span class="p">,</span> <span class="mi">100000</span><span class="p">,</span> <span class="s2">&quot;mostly noise&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+
+<span class="c1">#plot histograms</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">bin_edges0</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">histogram0</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">bin_edges1</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">histogram1</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">bin_edges2</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">histogram2</span><span class="p">,</span> <span class="s1">&#39;g&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/Image_Point_Operations_7_0.png" src="../_images/Image_Point_Operations_7_0.png" />
+</div>
+</div>
+<div class="section" id="cut-off-clipping">
+<h3>Cut-Off Clipping<a class="headerlink" href="#cut-off-clipping" title="Permalink to this headline">¶</a></h3>
+<p>In digital images a few pixels (often noise) can occupy wide value ranges at the low and high ends of the histograms, in the example above this can be seen at the high end. In this case we can cut-off these pixels to later make better use of the dynamic range of our display (commonly 8-bit).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#set cut-off limits</span>
+<span class="n">image1_clip</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">image1</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+<span class="c1">#can always clip top and bottom 1% of pixels in histogram as a standard</span>
+<span class="c1">#range</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#visualise change</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+
+<span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">221</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;original&#39;</span><span class="p">),</span> 
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">image1</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image0</span><span class="p">),[</span><span class="mi">0</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image0</span><span class="p">)]),</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;frequency&quot;</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;DN value&quot;</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">222</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;clipped&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">image1_clip</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image1_clip</span><span class="p">),[</span><span class="mi">0</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image1_clip</span><span class="p">)]),</span> 
+<span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">250</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;DN value&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/Image_Point_Operations_10_0.png" src="../_images/Image_Point_Operations_10_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="contrast-enhancement">
+<h3>Contrast Enhancement<a class="headerlink" href="#contrast-enhancement" title="Permalink to this headline">¶</a></h3>
+<p>Contrast Enhamcenet is the most basic but most effective and efficient technique to optimise the image contrast and brightness for visualisation or to highlight information in particular DN ranges.</p>
+<p><strong>Linear Contrast Enhancement (LCE)</strong> is the simplest and one of the most effective contrast enhancement techniques. In this function, <strong>a</strong> controls the contrast of the output image, and <strong>b</strong> modifies the overall brightness.</p>
+<div class="math notranslate nohighlight">
+\[y = ax + b\]</div>
+<ul class="simple">
+<li><p>if a &gt; 1, stretching function which increase the image contrast</p></li>
+<li><p>if a &lt;1 but positive, compressional function which decreases the image contrast</p></li>
+</ul>
+<p>This function effect can be visualised as follows:</p>
+<p style="text-align:center;"><img src="Data_Image_Operations/Contrast_Enhancement.png" style="width:30%"/></p>
+<p>LCE improves image contrast without distorting the image information if the output DN range is wider than the input DN range. There are several methods to apply this:</p>
+<ul class="simple">
+<li><p><strong>interactive linear stretch</strong> - changing a and b interactively allows for optimization based on users visual judgement</p></li>
+<li><p><strong>linear scale</strong> - automatically scale the DN range to the full dynamics range of the display</p></li>
+<li><p><strong>piecewise linear stretch</strong> - apply several different linear functions to different ranges. Can be used to simulate very complex non-linear functions.</p></li>
+</ul>
+<div class="section" id="linear-scale">
+<h4>Linear Scale<a class="headerlink" href="#linear-scale" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#save time by by only computing values once</span>
+<span class="n">MIN</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">image1_clip</span><span class="p">)</span>
+<span class="n">MAX</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image1_clip</span><span class="p">)</span>
+
+<span class="c1">#apply linear scale</span>
+<span class="n">LCE</span> <span class="o">=</span> <span class="p">(</span><span class="n">image1_clip</span><span class="o">-</span><span class="n">MIN</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">255</span><span class="o">/</span><span class="p">(</span><span class="n">MAX</span><span class="o">-</span><span class="n">MIN</span><span class="p">))</span>
+
+<span class="c1">#Could be done using a lookup table, unhash &quot;##&quot; to use</span>
+<span class="c1">##LUT  = {}</span>
+<span class="c1">##for i in range(MIN,MAX+1): LUT[i] = (i-MIN)*(255/(MAX-MIN))   </span>
+<span class="c1">##LCE = np.array([LUT.get(i) for i in range(MIN, MAX + 1)])</span>
+<span class="c1">##LCE = indexer[(image1_clip - MIN)]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#compare results</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+
+<span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">221</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;clipped&#39;</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">250</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">image1_clip</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image1_clip</span><span class="p">),</span>
+    <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image1_clip</span><span class="p">)]),</span> <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;frequency&quot;</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;DN value&quot;</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">222</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;stretched (LCE)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">LCE</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image1</span><span class="p">),[</span><span class="mi">0</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image1</span><span class="p">)]),</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;DN value&quot;</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">223</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;original&#39;</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">set_cmap</span><span class="p">(</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image1</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;pixels&quot;</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;pixels&quot;</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">224</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;streched (LCE)&#39;</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">set_cmap</span><span class="p">(</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">LCE</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;pixels&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;an increase in contrast can be seen&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/Image_Point_Operations_14_0.png" src="../_images/Image_Point_Operations_14_0.png" />
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>an increase in contrast can be seen
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="piecewise-linear-stretch">
+<h4>Piecewise Linear Stretch<a class="headerlink" href="#piecewise-linear-stretch" title="Permalink to this headline">¶</a></h4>
+<p>A siple 2 bit Piecewise Linaer Stretch (PLS) is demonstrated below</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#copy array and make sure values are int</span>
+<span class="n">PLS</span> <span class="o">=</span> <span class="n">LCE</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="n">MIN</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">PLS</span><span class="p">))</span>
+<span class="n">MAX</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">PLS</span><span class="p">))</span>
+
+<span class="c1">#create dictionary / LUT</span>
+<span class="n">d</span>  <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MIN</span><span class="p">,</span><span class="n">MAX</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>  
+    <span class="k">if</span> <span class="mi">100</span><span class="o">&lt;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">150</span><span class="p">:</span>
+        <span class="n">d</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">d</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="mi">1</span>
+
+<span class="c1">#apply dictionary/LUT to image </span>
+<span class="n">PLS_</span> <span class="o">=</span> <span class="n">PLS</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+<span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">PLS_</span><span class="p">])</span>
+<span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">PLS</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">PLS</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#visualise result</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">221</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;PLS&#39;</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">set_cmap</span><span class="p">(</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">out</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">22</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;pixels&quot;</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;pixels&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/Image_Point_Operations_17_0.png" src="../_images/Image_Point_Operations_17_0.png" />
+</div>
+</div>
+<p>We have removed the peak in the blue spectral layer which is dominantly water in our image. Within this part of the spectrum it is difficult to remove water only. Higher frequency bands like NIR or SWIR make it much easier to isolate water from our image as it has a clear separation from the rest of the objects in those bands. This is a great application when trying to use the optimal DN range on land or to identify coastlines.</p>
+<p>Further reading on implementing piecewise functions: <a class="reference external" href="http://yetanothermathprogrammingconsultant.blogspot.com/2019/02/piecewise-linear-functions-and.html">link</a></p>
+</div>
+</div>
+<div class="section" id="balance-contrast-enhancement-technique-bcet-2">
+<h3>Balance Contrast Enhancement Technique (BCET)<span class="math notranslate nohighlight">\(^2\)</span><a class="headerlink" href="#balance-contrast-enhancement-technique-bcet-2" title="Permalink to this headline">¶</a></h3>
+<p>Colour bias is one of the major causes of poor colour composite images. To eliminate bias, the three input bands used for colour composition must have an equal value range and mean. BCET is an elegant solution to this problem. It can stretch or compress the image to a given value range and mean without changing the basic shape of the image histogram, hence not distorting the image information, using a parabolic (or cubic) function which is based on the min, max and mean of each input band and is nearly linear over this value/display range.</p>
+<p style="text-align:center;"><img src="Data_Image_Operations/BCET1.png" style="width:70%"/></p>
+<p>Lastly, BCET also acts as an effective normalisation of the common information among the bands. By ensuring that each band occupies the same mean and value range, the common information is suppressed and the unique spectral variation between them is revealed.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define BCET function</span>
+<span class="k">def</span> <span class="nf">BCET</span> <span class="p">(</span><span class="n">img</span><span class="p">):</span>
+    <span class="n">l</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+    <span class="n">h</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+    <span class="n">e</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+    <span class="n">L</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">H</span> <span class="o">=</span> <span class="mi">255</span> <span class="c1">#use full dynamic range</span>
+    <span class="n">E</span> <span class="o">=</span> <span class="mi">110</span> <span class="c1">#can be varied</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">img</span><span class="o">^</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="p">(</span><span class="n">h</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span><span class="p">(</span><span class="n">E</span><span class="o">-</span><span class="n">L</span><span class="p">)</span><span class="o">-</span><span class="n">s</span><span class="o">*</span><span class="p">(</span><span class="n">H</span><span class="o">-</span><span class="n">L</span><span class="p">)</span><span class="o">+</span><span class="n">l</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span><span class="p">(</span><span class="n">H</span><span class="o">-</span><span class="n">E</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">h</span><span class="o">*</span><span class="p">(</span><span class="n">E</span><span class="o">-</span><span class="n">L</span><span class="p">)</span><span class="o">-</span><span class="n">e</span><span class="o">*</span><span class="p">(</span><span class="n">H</span><span class="o">-</span><span class="n">L</span><span class="p">)</span><span class="o">+</span><span class="n">l</span><span class="o">*</span><span class="p">(</span><span class="n">H</span><span class="o">-</span><span class="n">E</span><span class="p">)))</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="p">(</span><span class="n">H</span><span class="o">-</span><span class="n">L</span><span class="p">)</span><span class="o">/</span><span class="p">((</span><span class="n">h</span><span class="o">-</span><span class="n">l</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">h</span><span class="o">+</span><span class="n">l</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">b</span><span class="p">))</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">L</span><span class="o">-</span><span class="n">a</span><span class="o">*</span><span class="p">(</span><span class="n">l</span><span class="o">-</span><span class="n">b</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">a</span><span class="o">*</span><span class="p">(</span><span class="n">img</span><span class="o">-</span><span class="n">b</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span><span class="n">c</span>
+    <span class="k">return</span> <span class="n">y</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="c1">#ensure all integers to plot image</span>
+
+<span class="c1">#apply function</span>
+<span class="n">image_BCET0</span> <span class="o">=</span> <span class="n">BCET</span><span class="p">(</span><span class="n">image0</span><span class="p">)</span>
+<span class="n">image_BCET1</span> <span class="o">=</span> <span class="n">BCET</span><span class="p">(</span><span class="n">image1</span><span class="p">)</span>
+<span class="n">image_BCET2</span> <span class="o">=</span> <span class="n">BCET</span><span class="p">(</span><span class="n">image2</span><span class="p">)</span>
+
+<span class="c1">#stack 3 bands back together</span>
+<span class="n">rgb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dstack</span><span class="p">((</span><span class="n">image_BCET0</span><span class="p">,</span><span class="n">image_BCET1</span><span class="p">,</span><span class="n">image_BCET2</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#visualise results</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">221</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;original&#39;</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">set_cmap</span><span class="p">(</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">22</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;pixels&quot;</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;pixels&quot;</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">222</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;BCET&#39;</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">set_cmap</span><span class="p">(</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">rgb</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">22</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;pixels&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/Image_Point_Operations_22_0.png" src="../_images/Image_Point_Operations_22_0.png" />
+</div>
+</div>
+<p>You can see the blue look of the original image has disappeared. To visualise the results graphically see the histograms below.</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">histogram_BCET0</span><span class="p">,</span> <span class="n">bin_edges0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">image_BCET0</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> 
+                                        <span class="nb">range</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image0</span><span class="p">)))</span>
+<span class="n">histogram_BCET1</span><span class="p">,</span> <span class="n">bin_edges1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">image_BCET1</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> 
+                                        <span class="nb">range</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image1</span><span class="p">)))</span>
+<span class="n">histogram_BCET2</span><span class="p">,</span> <span class="n">bin_edges2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">image_BCET2</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> 
+                                        <span class="nb">range</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image2</span><span class="p">)))</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+
+<span class="c1">#plot histograms</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">221</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;bands histograms original image&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;DN value&quot;</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;pixels&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">bin_edges0</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">histogram0</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">bin_edges1</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">histogram1</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">bin_edges2</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">histogram2</span><span class="p">,</span> <span class="s1">&#39;g&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span>
+
+<span class="c1">#plot histograms</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">222</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;bands histograms after BCET&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;DN value&quot;</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;pixels&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">bin_edges0</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">histogram_BCET0</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">bin_edges1</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">histogram_BCET1</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">bin_edges2</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">histogram_BCET2</span><span class="p">,</span> <span class="s1">&#39;g&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/Image_Point_Operations_24_0.png" src="../_images/Image_Point_Operations_24_0.png" />
+</div>
+</div>
+<p>The peaks have been shifted to occupy the same range and mean of the overall histogram.</p>
+</div>
+<div class="section" id="golden-rules-for-good-contrast-enhancement">
+<h3>Golden rules for good contrast enhancement<a class="headerlink" href="#golden-rules-for-good-contrast-enhancement" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>After any processing that changes the DN value range of an image, you will still need to apply contrast enhancement to view the results properly</p></li>
+<li><p>Visual observation is best to judge image quality</p></li>
+<li><p>Before extracting spectral profiles the data should be well stretched, ideally using BCET (or, failing that, using a simple linear function)</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<p>Theory, content structure and images have been obtained from module thought content: J Mason, P., n.d. ESE 3.25 Advanced Remote Sensing. pp.3 - 12.</p>
+<ol class="simple">
+<li><p>Stack Overflow. 2020. Define A Colormap For Each Set Of Values In An Array. [online] Available at: <a class="reference external" href="https://stackoverflow.com/questions/42605051/define-a-colormap-for-each-set-of-values-in-an-array">https://stackoverflow.com/questions/42605051/define-a-colormap-for-each-set-of-values-in-an-array</a> [Accessed 22 June 2020].</p></li>
+<li><p>GUO, L., 1991. Balance contrast enhancement technique and its application in image colour composition. International Journal of Remote Sensing, 12(10), pp.2133-2151.</p></li>
+</ol>
+</div>
+</div>
+
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="Google_Earth_Engine_Getting_Started_.html" title="previous page">Google Earth Engine Getting Started</a>
+    <a class='right-next' id="next-link" href="Tides.html" title="next page">Tides</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Imperial College London<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../_static/js/index.js"></script>
+    
+  </body>
+</html>
