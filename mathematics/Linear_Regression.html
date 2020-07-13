@@ -1,0 +1,547 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Linear Regression &#8212; ESE Jupyter Material</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/sphinx-book-theme.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/mystnb.js"></script>
+    <script src="../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Big O notation" href="Big_O_notation.html" />
+    <link rel="prev" title="Fractals" href="Fractals.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  <img src="../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">ESE Jupyter Material</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  
+  <ul class="nav sidenav_l1">
+  <li class="">
+    <a href="../intro.html">Landing page</a>
+  </li>
+  <li class="">
+    <a href="../coding/intro.html">Coding</a>
+  </li>
+  <li class="active">
+    <a href="intro.html">Mathematics</a>
+  <ul class="nav sidenav_l2">
+    <li class="">
+      <a href="Statistics_for_Geoscientists.html">Statistics For Geoscientists</a>
+    </li>
+    <li class="">
+      <a href="Fourier Series.html">Fourier Series</a>
+    </li>
+    <li class="">
+      <a href="Taylor_series.html">Taylor Series</a>
+    </li>
+    <li class="">
+      <a href="Fractals.html">Fractals</a>
+    </li>
+    <li class="active">
+      <a href="">Linear Regression</a>
+    </li>
+    <li class="">
+      <a href="Big_O_notation.html">Big O Notation</a>
+    </li>
+    <li class="">
+      <a href="Timestepping_an_ODE.html">Timestepping An Ode</a>
+    </li>
+    <li class="">
+      <a href="Tensors_Review.html">Tensors Review</a>
+    </li>
+    <li class="">
+      <a href="linear_algebra/intro.html">Linear_Algebra</a>
+    </li>
+    <li class="">
+      <a href="sets and functions/intro.html">Sets And Functions</a>
+    </li>
+    <li class="">
+      <a href="complex analysis/intro.html">Complex Analysis</a>
+    </li>
+  </ul>
+  </li>
+  <li class="">
+    <a href="../geosciences/intro.html">Geosciences</a>
+  </li>
+  <li class="">
+    <a href="../genindex.html">Index</a>
+  </li>
+</ul>
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/mathematics/Linear_Regression.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/mathematics/Linear_Regression.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#theory" class="nav-link">Theory</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#simple-linear-regression" class="nav-link">Simple Linear Regression</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#multiple-linear-regression" class="nav-link">Multiple Linear Regression</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#root-mean-squared-error" class="nav-link">Root Mean Squared Error</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#coefficient-of-determination" class="nav-link">Coefficient of Determination</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#least-squares-error-calculation" class="nav-link">Least  squares error calculation</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#implementation-of-linear-regression-in-python" class="nav-link">Implementation of Linear Regression in Python</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#simple-linear-regression-example-submarine-landslide-size-in-the-north-atlantic" class="nav-link">Simple Linear Regression example: Submarine landslide size in the North Atlantic</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#polynomial-curve-fitting" class="nav-link">Polynomial curve fitting</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#references" class="nav-link">References</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+    </ul>
+</nav>
+
+
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="linear-regression">
+<h1>Linear Regression<a class="headerlink" href="#linear-regression" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="theory">
+<h2>Theory<a class="headerlink" href="#theory" title="Permalink to this headline">¶</a></h2>
+<p>Linearity refers to a linear relationship between two or more variables. Linear regression aims to predict the dependent variable value (y) based on a given independent variable (x). Therefore linear regression finds out a linear relationship between x and y.</p>
+<p>When there is noise in the data (potential errors), or multiple different measurement values (<span class="math notranslate nohighlight">\(y\)</span>) at a given <span class="math notranslate nohighlight">\(x\)</span>, then we may no be able to fit a function/curve that goes through all points exactly. Therefore in linear regresssion the aim is to find a function that best approximates the data but does not necessarily go through all the points.</p>
+<div class="section" id="simple-linear-regression">
+<h3>Simple Linear Regression<a class="headerlink" href="#simple-linear-regression" title="Permalink to this headline">¶</a></h3>
+<p>Plotting the independent variable (x) on the x-axis and dependent variable (y) on the y-axis linear regression gives us a straight line with equation:
+<span class="math notranslate nohighlight">\($y=b_0+b_1x\)</span>$
+Where <span class="math notranslate nohighlight">\(b_0\)</span> is the intercept and <span class="math notranslate nohighlight">\(b_1\)</span> is the slope of the line. The y and x variables remain the same as the data points cannot change, however, the intercept (<span class="math notranslate nohighlight">\(b_0\)</span>) and slope (<span class="math notranslate nohighlight">\(b_1\)</span>) can be modified to obtain the most optimal value for the intercept and the slope. The linear regression algorithm fits multiple lines on the data points and returns the line that results in the least error. This may be achieved by minimised the sum of the squares of the differences to the data, known as a least squares approximation to the data using a linear function.</p>
+<img src="Pictures/simple_LR.png" alt="Drawing" style="width: 300px;"/>
+<p>Figure 1: Plot of scatter points in 2D space (blue) and line that results in the least error (red). (Source: https://acadgild.com/blog/2linear-regression-case-study-2)</p>
+</div>
+<div class="section" id="multiple-linear-regression">
+<h3>Multiple Linear Regression<a class="headerlink" href="#multiple-linear-regression" title="Permalink to this headline">¶</a></h3>
+<p>This can be extended to multiple linear regression where there are more than two variables. In this scenario, the dependent variable is dependent upon several independent variables <span class="math notranslate nohighlight">\(x= (x_1, …, x_n)\)</span> where n is the number of variables. You can assume a linear relationship between x and y with the regression equation:
+<span class="math notranslate nohighlight">\($y=b_0+b_1x_1+b_2x_2+b_3x_3+…b_nx_n +\epsilon\)</span>$
+Where <span class="math notranslate nohighlight">\(b_0,b_1,...,b_n\)</span> are the regression coefficients and \epsilon is the random error.</p>
+</div>
+<div class="section" id="root-mean-squared-error">
+<h3>Root Mean Squared Error<a class="headerlink" href="#root-mean-squared-error" title="Permalink to this headline">¶</a></h3>
+<p>There are many methods to evaluate the performance of the linear regression algorithm. Two commonly used methods are the Root Mean Squared Error (RMSE) and Coefficient of Determination (<span class="math notranslate nohighlight">\(R^2\)</span> Score)</p>
+<p>RMSE is the square root of the sum all errors squared divided by the number of values. The equation for the RMSE is:
+<span class="math notranslate nohighlight">\($RMSE=\sqrt{\frac{1}{n}\sum_{i=1}^{n} (\hat{y_i} - y_i)^2}\)</span>$
+where <span class="math notranslate nohighlight">\(\hat{y_1}, \hat{y_2}, ..., \hat{y_n}\)</span>  are the predicted values and <span class="math notranslate nohighlight">\(y_1, y_2, ..., y_n\)</span> are the observed values. n is the number of observations.</p>
+</div>
+<div class="section" id="coefficient-of-determination">
+<h3>Coefficient of Determination<a class="headerlink" href="#coefficient-of-determination" title="Permalink to this headline">¶</a></h3>
+<p>The coefficient of determinaion is a statistical measure of how close the data are to the linear regression line.</p>
+<p><span class="math notranslate nohighlight">\(R^2\)</span> = Explained variation / Total variation. <span class="math notranslate nohighlight">\(R^2\)</span> is therefore always between 0 and 100%. The higher the R-squared, the better the model fits the data.</p>
+<p><span class="math notranslate nohighlight">\(R^2\)</span> is defined as follows:
+<span class="math notranslate nohighlight">\($R^2 = 1-\frac{SS_r}{SS_t}\)</span>$
+<span class="math notranslate nohighlight">\($SS_r=\sum_{i=1}^{n} ({y_i} - \hat{y_i})^2\)</span>$
+<span class="math notranslate nohighlight">\($SS_t=\sum_{i=1}^{n} ({y_i} - \bar{y_i})^2\)</span>$</p>
+<p><span class="math notranslate nohighlight">\(SS_r\)</span> (Sum of Squared Regression) is the variation explained by the linear regression model.</p>
+<p><span class="math notranslate nohighlight">\(SS_t\)</span> (Sum of Squared Total) is the total variation in the data.</p>
+<p><span class="math notranslate nohighlight">\(y_1, y_2, ..., y_n\)</span> are the observed values, <span class="math notranslate nohighlight">\(\hat{y_1}, \hat{y_2}, ..., \hat{y_n}\)</span>  are the predicted values of y, and <span class="math notranslate nohighlight">\(\bar{y_1}, \bar{y_2}, ..., \bar{y_n}\)</span> are the mean values of y.</p>
+<p>Based on the above equation the <span class="math notranslate nohighlight">\(R^2\)</span> score usually ranges from 0 to 1, but can be negative if the model is completely wrong.</p>
+</div>
+<div class="section" id="least-squares-error-calculation">
+<h3>Least  squares error calculation<a class="headerlink" href="#least-squares-error-calculation" title="Permalink to this headline">¶</a></h3>
+<p>Least squares fitting minimises the sum of the squares of the differences between the data provided and the polynomial approximation. In other words it minimises the folowing expression:</p>
+<div class="math notranslate nohighlight">
+\[E=\sum_{i=0}^{N} (P(x_i) - y_i)^2\]</div>
+<p>Where E is the squared error, <span class="math notranslate nohighlight">\(P(x_i)\)</span> is the value of the polynomial function that has been fit to the data evaluated at point <span class="math notranslate nohighlight">\(x_i\)</span>, and <span class="math notranslate nohighlight">\(y_i\)</span> is the <span class="math notranslate nohighlight">\(i^{th}\)</span> data value.</p>
+<img src="Least_squares.png" alt="Drawing" style="width: 300px;"/>
+Figure 2: A plot of the data points (red), the least squares line of best fit (blue), and the residuals (green). Source: Wikipedia, (https://en.wikipedia.org/wiki/Linear_least_squares)
+<p>In this calulation we are computing the sum of the squares of the distances indicated in green in Figure 1.</p>
+</div>
+</div>
+<div class="section" id="implementation-of-linear-regression-in-python">
+<h2>Implementation of Linear Regression in Python<a class="headerlink" href="#implementation-of-linear-regression-in-python" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="simple-linear-regression-example-submarine-landslide-size-in-the-north-atlantic">
+<h3>Simple Linear Regression example: Submarine landslide size in the North Atlantic<a class="headerlink" href="#simple-linear-regression-example-submarine-landslide-size-in-the-north-atlantic" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#Some imports needed for linear regression in python</span>
+
+<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">scipy.interpolate</span> <span class="k">as</span> <span class="nn">si</span>
+<span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="nn">ss</span>
+
+<span class="c1"># some default font sizes for plots</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;font.size&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">12</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;font.family&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;sans-serif&#39;</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;font.sans-serif&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Arial&#39;</span><span class="p">,</span> <span class="s1">&#39;Dejavu Sans&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>In this example we are attempting to fit a linear best fit line to the data “length_width.dat” in log-log space. This file contains the lengths and widths of submarine landslides in the North Atlantic basin [from Huhnerbach &amp; Masson, 2004, Fig. 7].</p>
+<p>Firatly we use numpy.polyfit in order to use the least squares error calculation to fit a linear polynomial. Next we use scipy.stats.linregress to perform linear regression using a scipy implementation of linear regression.
+Then we compare the slope and the intercept (the two coefficients in the linear polynomial) between the two approaches.</p>
+<p>The coefficient of determination is also determined by default from the linear regression calculation. To check these values agree we will also calculate the <span class="math notranslate nohighlight">\(R^2\)</span> value using the numpy.polyfit data</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#Python function that evaluates the squared error</span>
+
+<span class="k">def</span> <span class="nf">sqr_error</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">xi</span><span class="p">,</span> <span class="n">yi</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;&quot;function to evaluate the sum of square of errors&quot;&quot;&quot;</span>
+    <span class="c1"># first compute the square of the differences</span>
+    <span class="n">diff2</span> <span class="o">=</span> <span class="p">(</span><span class="n">p</span><span class="p">(</span><span class="n">xi</span><span class="p">)</span><span class="o">-</span><span class="n">yi</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+    <span class="c1"># and return their sum</span>
+    <span class="k">return</span> <span class="n">diff2</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+
+
+
+
+
+<span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;length_width.dat&quot;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+
+<span class="n">xi</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">yi</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">file</span><span class="p">:</span>
+    <span class="n">xi</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">]))</span>
+    <span class="n">yi</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">1</span><span class="p">]))</span>
+<span class="n">xi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">xi</span><span class="p">)</span>
+<span class="n">yi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">yi</span><span class="p">)</span>
+
+<span class="c1"># set up figure</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+<span class="c1"># plot the raw data</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span> <span class="n">yi</span><span class="p">,</span> <span class="s1">&#39;ko&#39;</span><span class="p">)</span>
+
+<span class="c1"># fit a linear line to the log of the data using numpy.polyfit</span>
+<span class="n">logxi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">xi</span><span class="p">)</span>
+<span class="n">logyi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">yi</span><span class="p">)</span>
+<span class="n">poly_coeffs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">polyfit</span><span class="p">(</span><span class="n">logxi</span><span class="p">,</span> <span class="n">logyi</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="c1"># Construct the corresponding polynomial function from these coefficients</span>
+<span class="n">p1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">poly1d</span><span class="p">(</span><span class="n">poly_coeffs</span><span class="p">)</span>
+<span class="c1"># print the polynomial coefficients to compare with regression</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Lagrange polynomial coefficients = </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">poly_coeffs</span><span class="p">))</span>
+
+<span class="c1"># calculate and print an R-squared value for this fit using the mathematical</span>
+<span class="c1"># definition from https://en.wikipedia.org/wiki/Coefficient_of_determination</span>
+<span class="n">SS_res</span> <span class="o">=</span> <span class="n">sqr_error</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">logxi</span><span class="p">,</span> <span class="n">logyi</span><span class="p">)</span>
+<span class="n">SS_tot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">logyi</span><span class="p">)</span> <span class="o">-</span> <span class="n">logyi</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">r2</span> <span class="o">=</span> <span class="mf">1.</span> <span class="o">-</span> <span class="n">SS_res</span><span class="o">/</span><span class="n">SS_tot</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;R squared value calculated from Lagrange polynomial fit to the data in log-log space = </span><span class="si">{}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">r2</span><span class="p">))</span>
+
+<span class="c1"># only need two points to plot a linear</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">xi</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">xi</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">p1</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;$\log(y) = $</span><span class="si">%.3f</span><span class="s1">$\,\log(x) + $</span><span class="si">%.3f</span><span class="s1">&#39;</span> <span class="o">%</span>
+           <span class="p">(</span><span class="n">poly_coeffs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">poly_coeffs</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+
+<span class="c1"># check values computed above against scipy&#39;s linear regression</span>
+<span class="n">slope</span><span class="p">,</span> <span class="n">intercept</span><span class="p">,</span> <span class="n">r_value</span><span class="p">,</span> <span class="n">p_value</span><span class="p">,</span> <span class="n">std_err</span> <span class="o">=</span> <span class="n">ss</span><span class="o">.</span><span class="n">linregress</span><span class="p">(</span><span class="n">logxi</span><span class="p">,</span> <span class="n">logyi</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Linear regression ... slope, intercept, r_value = </span><span class="si">{0:.8f}</span><span class="s1">, </span><span class="si">{1:.8f}</span><span class="s1">, </span><span class="si">{2:.8f}</span><span class="s1">&#39;</span>\
+      <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">slope</span><span class="p">,</span> <span class="n">intercept</span><span class="p">,</span> <span class="n">r_value</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;r_value squared = </span><span class="si">{:.8f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">r_value</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Submarine landslide dimensions&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Length [km]&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Width [km]&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.76</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="s1">&#39;R2 = </span><span class="si">%.6f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">r2</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">ax1</span><span class="o">.</span><span class="n">transAxes</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Lagrange polynomial coefficients = [1.0266104  0.37698383]
+R squared value calculated from Lagrange polynomial fit to the data in log-log space = 0.5653751967433511
+
+Linear regression ... slope, intercept, r_value = 1.02661040, 0.37698383, 0.75191435
+r_value squared = 0.56537520
+</pre></div>
+</div>
+<img alt="../_images/Linear_Regression_8_1.png" src="../_images/Linear_Regression_8_1.png" />
+</div>
+</div>
+</div>
+<div class="section" id="polynomial-curve-fitting">
+<h3>Polynomial curve fitting<a class="headerlink" href="#polynomial-curve-fitting" title="Permalink to this headline">¶</a></h3>
+<p>Curve fitting is popular to use of datasets containing noise. To fit these curves of varying polynomial degree we can again use the least squares error calculation.</p>
+<p>Using numpy.polyfit we can fit curves of varying polynomial degree to the data points. This is demonstrated below.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># data points</span>
+<span class="n">xi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">7.0</span><span class="p">,</span> <span class="mf">9.0</span><span class="p">])</span>
+<span class="n">yi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">])</span>
+
+<span class="c1"># Let&#39;s set up some space to store all the polynomial coefficients</span>
+<span class="c1"># there are some redundancies here, and we have assumed we will only </span>
+<span class="c1"># consider polynomials up to degree N</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="n">poly_coeffs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">N</span><span class="p">,</span> <span class="n">N</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+    <span class="n">poly_coeffs</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">polyfit</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span> <span class="n">yi</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;poly_coeffs = </span><span class="se">\n</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">poly_coeffs</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>poly_coeffs = 
+[[ 0.5         0.          0.          0.          0.          0.        ]
+ [ 0.0508044   0.26714649  0.          0.          0.          0.        ]
+ [ 0.02013603 -0.13983999  0.55279339  0.          0.          0.        ]
+ [-0.00552147  0.09889271 -0.43193108  0.75909819  0.          0.        ]
+ [-0.00420655  0.07403681 -0.38492428  0.59251888  0.27906056  0.        ]
+ [-0.00301599  0.06536037 -0.49614427  1.59623195 -2.08266478  1.20030166]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">margins</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.4</span><span class="p">,</span> <span class="mf">9.1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">poly1d</span><span class="p">(</span><span class="n">poly_coeffs</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)])</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Degree </span><span class="si">%i</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">i</span><span class="p">)</span>
+
+<span class="c1"># Overlay raw data</span>
+<span class="n">plot_raw_data</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span> <span class="n">yi</span><span class="p">,</span> <span class="n">ax1</span><span class="p">)</span>
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">12</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Polynomial approximations of differing degree&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/Linear_Regression_11_0.png" src="../_images/Linear_Regression_11_0.png" />
+</div>
+</div>
+<p>Using the above function that evaluates the squared error, we can evaluate the error for each of the polynomials calculated above.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">poly1d</span><span class="p">(</span><span class="n">poly_coeffs</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;square of the difference between the data and the &#39;</span>
+          <span class="s1">&#39;polynomial of degree </span><span class="si">{0:1d}</span><span class="s1"> = </span><span class="si">{1:.8e}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">sqr_error</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">xi</span><span class="p">,</span> <span class="n">yi</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>square of the difference between the data and the polynomial of degree 0 = 4.60000000e-01
+square of the difference between the data and the polynomial of degree 1 = 3.32988992e-01
+square of the difference between the data and the polynomial of degree 2 = 1.99478242e-01
+square of the difference between the data and the polynomial of degree 3 = 1.57303437e-01
+square of the difference between the data and the polynomial of degree 4 = 4.69232378e-02
+square of the difference between the data and the polynomial of degree 5 = 7.23216068e-26
+</pre></div>
+</div>
+</div>
+</div>
+<p>As can be seen above the error drops as we approximate the data with higher degree polynomials.</p>
+<p>This notebook could be improved by the addition of multiple linear regression implemented in python. For some inspiration on this you can look at https://towardsdatascience.com/a-beginners-guide-to-linear-regression-in-python-with-scikit-learn-83a8f7ae2b4f and https://acadgild.com/blog/2linear-regression-case-study-2.</p>
+</div>
+<div class="section" id="references">
+<h3>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Information in this notebook is compiled based on ACSE-3 (Numerical Methods), Lecture 1: Interpolation and Curve Fitting</p></li>
+<li><p>V. Huhnerbach, D.G. Masson, Landslides in the North Atlantic and its adjacent seas: an analysis of their morphology, setting and behaviour, Marine Geology 213 (2004) 343 – 362.</p></li>
+<li><p>https://realpython.com/linear-regression-in-python/</p></li>
+<li><p>https://towardsdatascience.com/a-beginners-guide-to-linear-regression-in-python-with-scikit-learn-83a8f7ae2b4f</p></li>
+<li><p>https://acadgild.com/blog/2linear-regression-case-study-2</p></li>
+<li><p>https://towardsdatascience.com/what-does-rmse-really-mean-806b65f2e48e</p></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="Fractals.html" title="previous page">Fractals</a>
+    <a class='right-next' id="next-link" href="Big_O_notation.html" title="next page">Big O notation</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Imperial College London<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../_static/js/index.js"></script>
+    
+  </body>
+</html>
