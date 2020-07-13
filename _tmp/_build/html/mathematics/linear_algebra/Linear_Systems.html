@@ -1,0 +1,866 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Solving systems of linear equations &#8212; ESE Jupyter Material</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/mystnb.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Complex Numbers" href="../complex analysis/intro.html" />
+    <link rel="prev" title="Theory" href="Theory.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../index.html">
+  
+  <img src="../../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">ESE Jupyter Material</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  
+  <ul class="nav sidenav_l1">
+  <li class="">
+    <a href="../../intro.html">Landing page</a>
+  </li>
+  <li class="">
+    <a href="../../geosciences/intro.html">Geosciences</a>
+  </li>
+  <li class="active">
+    <a href="../intro.html">Mathematics</a>
+  <ul class="nav sidenav_l2">
+    <li class="">
+      <a href="../Tensors_Review.html">Tensors Review</a>
+    </li>
+    <li class="">
+      <a href="../Fractals.html">Fractals</a>
+    </li>
+    <li class="">
+      <a href="../Timestepping_an_ODE.html">Timestepping An Ode</a>
+    </li>
+    <li class="">
+      <a href="../Big_O_notation.html">Big O Notation</a>
+    </li>
+    <li class="">
+      <a href="../Fourier Series.html">Fourier Series</a>
+    </li>
+    <li class="">
+      <a href="../Taylor_series.html">Taylor Series</a>
+    </li>
+    <li class="">
+      <a href="../Linear_Regression.html">Linear Regression</a>
+    </li>
+    <li class="">
+      <a href="../Statistics_for_Geoscientists.html">Statistics For Geoscientists</a>
+    </li>
+    <li class="">
+      <a href="../sets and functions/intro.html">Sets And Functions</a>
+    </li>
+    <li class="active">
+      <a href="intro.html">Linear_Algebra</a>
+      <ul class="nav sidenav_l3">
+      <li class="">
+        <a href="Basic_definitions_and_operations.html">Basic definitions and operations</a>
+      </li>
+      <li class="">
+        <a href="Eigenvalues_and_eigenvectors.html">Eigenvalues and eigenvectors</a>
+      </li>
+      <li class="">
+        <a href="Theory.html">Theory</a>
+      </li>
+      <li class="active">
+        <a href="">Solving systems of linear equations</a>
+      </li>
+    </ul>
+    </li>
+    <li class="">
+      <a href="../complex analysis/intro.html">Complex Analysis</a>
+    </li>
+  </ul>
+  </li>
+  <li class="">
+    <a href="../../coding/intro.html">Coding</a>
+  </li>
+  <li class="">
+    <a href="../../genindex.html">Index</a>
+  </li>
+</ul>
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/mathematics/linear_algebra/Linear_Systems.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/mathematics/linear_algebra/Linear_Systems.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#" class="nav-link">Solving systems of linear equations</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#example-unique-solution" class="nav-link">Example: Unique solution</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#matrix-equation" class="nav-link">Matrix equation</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#example-no-solution" class="nav-link">Example: No solution</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#vector-equation" class="nav-link">Vector equation</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#triangular-systems" class="nav-link">Triangular systems</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#example-upper-triangular-system" class="nav-link">Example: Upper-triangular system</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#trapezoidal-matrix" class="nav-link">Trapezoidal matrix</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h5">
+            <a href="#example-underdetermined-system" class="nav-link">Example: Underdetermined system</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#existence-and-uniqueness-of-a-solution" class="nav-link">Existence and uniqueness of a solution</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#gaussian-elimination" class="nav-link">Gaussian elimination</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#example" class="nav-link">Example</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#transformations-as-matrices" class="nav-link">Transformations as matrices</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#using-the-inverse-matrix-to-solve-a-linear-system" class="nav-link">Using the inverse matrix to solve a linear system</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#gauss-jordan-elimination" class="nav-link">Gauss-Jordan elimination</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#example-calculating-an-inverse-of-a-matrix" class="nav-link">Example: Calculating an inverse of a matrix</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+            </ul>
+        </li>
+    
+    </ul>
+</nav>
+
+
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="solving-systems-of-linear-equations">
+<h1>Solving systems of linear equations<a class="headerlink" href="#solving-systems-of-linear-equations" title="Permalink to this headline">¶</a></h1>
+<p>Consider a general system of <span class="math notranslate nohighlight">\(m\)</span> linear equations with <span class="math notranslate nohighlight">\(n\)</span> unknowns (variables):</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} a_{11}x_1 + a_{12}x_2 + \cdots + a_{1n}x_n = b_1 \\
+a_{21}x_1 + a_{22}x_2 + \cdots + a_{2n}x_n = b_2 \\
+    \vdots \qquad \qquad \vdots \\
+a_{m1}x_1 + a_{m2}x_2 + \cdots + a_{mn}x_n = b_m, \end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(x_i\)</span> are unknowns, <span class="math notranslate nohighlight">\(a_{ij}\)</span> are the coefficients of the system and <span class="math notranslate nohighlight">\(b_i\)</span> are the RHS terms. These can be real or complex numbers.</p>
+<p>Almost every problem in linear algebra will come down to solving such a system. But what does it mean to solve a system of equations?</p>
+<p><strong>Solution of the system.</strong> Solving a system of equations means to find <em>all</em> n-tuples <span class="math notranslate nohighlight">\((x_1, x_2, ..., x_n)\)</span> such that substituting each one back into the system gives exactly those values given on the RHS, in the correct order. We call each such tuple a solution of the system of equations.</p>
+<p>To solve such a system we will use basic arithmetic operations to transform our problem into a simpler one. That is, we will transform our system into another <strong>equivalent system</strong>. We say that two systems of equations are equivalent if they have the same set of solutions. In other words, the transformed system is equivalent to the original one if the transformation does not cause a solution to be lost or gained.</p>
+<p>Three such transformations (sometimes called <em>elementary row operations</em>) of a system of linear equations that result in an equivalent system are:</p>
+<ol class="simple">
+<li><p>Swapping any two equations of the system</p></li>
+<li><p>Multiplying an equation of the system by any number different from 0</p></li>
+<li><p>Adding an equation of the system multiplied by a scalar to another equation of the system</p></li>
+</ol>
+<p>We will aim to use these transformations to eliminate certain unknowns from some equations. Ideally, we would like to reduce one equation to have only one unknown, which we can then simply solve for. Then we plug this value in other equations and so on. Let us demonstrate this on a couple of simple examples.</p>
+<div class="section" id="example-unique-solution">
+<h2>Example: Unique solution<a class="headerlink" href="#example-unique-solution" title="Permalink to this headline">¶</a></h2>
+<p>Consider the following system of 3 linear equations involving 3 unknowns <span class="math notranslate nohighlight">\(x, y, z\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} x + z = 0 \\
+y - z = 1 \\
+x + 2y + z = 1 \end{split}\]</div>
+<p>Being a system of 3 equations and 3 unknowns, we should be able to solve it. We start by noticing that if we subtract the 1st equation from the 3rd we would be left with an equation involving only <span class="math notranslate nohighlight">\(y\)</span>. That is, we need to use the transformation rule number 3. After doing that, we get the following equivalent system:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} x + z = 0 \\
+y - z = 1 \\
+2y = 1. \end{split}\]</div>
+<p>Now we can easily see from the 3rd equation that <span class="math notranslate nohighlight">\(y = 1/2\)</span>. Now we plug this value of <span class="math notranslate nohighlight">\(y\)</span> into the 2nd equation and solve it for <span class="math notranslate nohighlight">\(z\)</span>. Then we plug the value of <span class="math notranslate nohighlight">\(z\)</span> into the 1st equation and solve it for <span class="math notranslate nohighlight">\(x\)</span>. After doing that, we find that the only solution to the problem is a triplet <span class="math notranslate nohighlight">\((1/2, 1/2, -1/2)\)</span>.</p>
+</div>
+<div class="section" id="matrix-equation">
+<h2>Matrix equation<a class="headerlink" href="#matrix-equation" title="Permalink to this headline">¶</a></h2>
+<p>We can represent any system of linear equation in matrix form. The general <span class="math notranslate nohighlight">\(m \times n\)</span> system from the beginning of this notebook can be represented as:</p>
+<div class="math notranslate nohighlight">
+\[ A \mathbf{x} = \mathbf{b}, \]</div>
+<p>where <span class="math notranslate nohighlight">\(A \in \mathbb{c}^{m \times n}\)</span> is called a <strong>coefficient matrix</strong> with coefficients as entries <span class="math notranslate nohighlight">\(a_{ij}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{b}\)</span> are vectors <span class="math notranslate nohighlight">\(\in \mathbb{R}^n\)</span>.</p>
+<p>The same transformation rules from before still apply to a systems represented in matrix form, where each row is one equation. Since these transformations are performed on both the LHS and RHS of equations it is convenient to write the system using an <strong>augmented matrix</strong> which is obtained by appending <span class="math notranslate nohighlight">\(\mathbf{b}\)</span> to <span class="math notranslate nohighlight">\(A\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} (A | \mathbf{b}) =
+\left ( \begin{array}{cccc|c}
+a_{11} &amp; a_{12} &amp; \cdots &amp; a_{1n} &amp; b_1 \\
+a_{21} &amp; a_{22} &amp; \cdots &amp; a_{2n} &amp; b_2 \\
+    &amp; \vdots &amp; &amp; \vdots &amp; \\
+a_{m1} &amp; a_{m2} &amp; \cdots &amp; a_{mn} &amp; b_m \end{array} \right ).\end{split}\]</div>
+<p>To avoid confusing <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(\mathbf{b}\)</span>, they are often separated by a straight line, as shown above.</p>
+<div class="section" id="example-no-solution">
+<h3>Example: No solution<a class="headerlink" href="#example-no-solution" title="Permalink to this headline">¶</a></h3>
+<p>Consider a very similar problem to the one in the previous example, which only differs in the sign of <span class="math notranslate nohighlight">\(a_{33}\)</span> in the 3rd equation:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} x + z = 0 \\
+y - z = 1 \\
+x + 2y - z = 1 \end{split}\]</div>
+<p>Let us first write it in matrix-form <span class="math notranslate nohighlight">\(A \mathbf{x} = \mathbf{b}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} \begin{pmatrix}
+1 &amp; 0 &amp; 1 \\
+0 &amp; 1 &amp; -1 \\
+1 &amp; 2 &amp; -1 \end{pmatrix} 
+\begin{pmatrix} x \\ y \\ z \end{pmatrix} = 
+\begin{pmatrix} 0 \\ 1 \\ 1 \end{pmatrix} \end{split}\]</div>
+<p>Or using an augmented matrix:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} \left ( \begin{array}{ccc|c}
+1 &amp; 0 &amp; 1 &amp; 0 \\
+0 &amp; 1 &amp; -1 &amp; 1 \\
+1 &amp; 2 &amp; -1 &amp; 1
+\end{array} \right ) \end{split}\]</div>
+<p>We will again aim to eliminate certain coefficients from equations. For example, we could eliminate the first coefficient in the 3rd row by subtracting the 1st row from the 3rd row. By doing that, we get the equivalent system:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+    \left ( \begin{array}{ccc|c}
+1 &amp; 0 &amp; 1 &amp; 0 \\
+0 &amp; 1 &amp; -1 &amp; 1 \\
+1 &amp; 2 &amp; -1 &amp; 1
+\end{array} \right )
+    \hspace{-0.5em}
+    \begin{align}
+        &amp;\phantom{I}\\
+        &amp;\phantom{II} \\
+        &amp;L_3 - L_1 \to L_3
+    \end{align}
+    \Rightarrow
+\left ( \begin{array}{ccc|c}
+1 &amp; 0 &amp; 1 &amp; 0 \\
+0 &amp; 1 &amp; -1 &amp; 1 \\
+0 &amp; 2 &amp; -2 &amp; 1
+\end{array} \right )
+\end{aligned} \end{split}\]</div>
+<p>Now we want to eliminate the second coefficient in the 3rd equation. To do that, we use the third transformation rule again to subtract <span class="math notranslate nohighlight">\(2 \times\)</span> 2nd equation from the 3rd:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\left ( \begin{array}{ccc|c}
+1 &amp; 0 &amp; 1 &amp; 0 \\
+0 &amp; 1 &amp; -1 &amp; 1 \\
+0 &amp; 2 &amp; -2 &amp; 1
+\end{array} \right )
+    \hspace{-0.5em}
+    \begin{align}
+        &amp;\phantom{I}\\
+        &amp;\phantom{II} \\
+        &amp; L_3 - 2L_1 \to L_3
+    \end{align}
+    \Rightarrow
+\left ( \begin{array}{ccc|c}
+1 &amp; 0 &amp; 1 &amp; 0 \\
+0 &amp; 1 &amp; -1 &amp; 1 \\
+0 &amp; 0 &amp; 0 &amp; -1
+\end{array} \right )
+\end{aligned} \end{split}\]</div>
+<p>Let us look at the third equation: <span class="math notranslate nohighlight">\(0 = -1\)</span>. What this equation is telling us is that if a solution exists, that solution would be such that <span class="math notranslate nohighlight">\(0 = -1\)</span>. Since this is obviously not true, we conclude that there is no solution of this system of equations. Or, more precisely, we found that the solution set of this system is an <strong><a class="reference external" href="https://en.wikipedia.org/wiki/Empty_set">empty set</a></strong>.</p>
+</div>
+</div>
+<div class="section" id="vector-equation">
+<h2>Vector equation<a class="headerlink" href="#vector-equation" title="Permalink to this headline">¶</a></h2>
+<p>Remember that a product of matrix-vector multiplication is a linear combination of the columns of the matrix. We can therefore write <span class="math notranslate nohighlight">\(A\mathbf{x} = \mathbf{b}\)</span> as:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} x_1 \begin{pmatrix} \\ a_1 \\ \\ \end{pmatrix} 
++ x_2 \begin{pmatrix} \\ a_2 \\ \\ \end{pmatrix} 
++ \cdots + x_n \begin{pmatrix} \\ a_n \\ \\ \end{pmatrix}
+= \begin{pmatrix} \\ b \\ \\ \end{pmatrix} \end{split}\]</div>
+<p>Therefore, solving <span class="math notranslate nohighlight">\(A \mathbf{x} = \mathbf{b}\)</span> can be thought of as finding weights <span class="math notranslate nohighlight">\(x_1, ..., x_n\)</span> such that the above is true.</p>
+</div>
+<div class="section" id="triangular-systems">
+<h2>Triangular systems<a class="headerlink" href="#triangular-systems" title="Permalink to this headline">¶</a></h2>
+<p>Some special types of systems of linear equations can be solved very easily. An especially important type is a triangular system.</p>
+<p>A square <span class="math notranslate nohighlight">\(n \times n\)</span> matrix <span class="math notranslate nohighlight">\(A\)</span> is a <strong>lower triangular matrix</strong> if <span class="math notranslate nohighlight">\(a_{ij} = 0\)</span> for <span class="math notranslate nohighlight">\(i &lt; j\)</span>. Similarly, we say that it is <strong>upper triangular</strong> if <span class="math notranslate nohighlight">\(a_{ij} = 0\)</span> for <span class="math notranslate nohighlight">\(i &gt; j\)</span>. For example,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{pmatrix} 1 &amp; 0 &amp; 0 \\ 1 &amp; 1 &amp; 0 \\ 1 &amp; 1 &amp; 1 \end{pmatrix}, \quad
+\begin{pmatrix} 0 &amp; 0 &amp; 0 \\ 1 &amp; 0 &amp; 0 \\ 0 &amp; 1 &amp; 0 \end{pmatrix}, \quad
+\begin{pmatrix} 1 &amp; 1 &amp; 0 \\ 0 &amp; 1 &amp; 1 \\ 0 &amp; 0 &amp; 1 \end{pmatrix}.\end{split}\]</div>
+<p>The first two matrices above are lower-triangular because <span class="math notranslate nohighlight">\(a_{12}=a_{13}=a_{23} = 0\)</span> and the third one is upper-triangular because <span class="math notranslate nohighlight">\(a_{21}=a_{31}=a_{32}=0\)</span>.</p>
+<p>A system of linear equations which has a triangular coefficient matrix is called a <em>triangular system</em>. If you look back at the examples above, you will see that the transformations performed were actually helping us reach a triangular form of the coefficient matrix. Indeed, often the easiest way to solve a system of linear equations will be to transform it into an equivalent triangular system.</p>
+<div class="section" id="example-upper-triangular-system">
+<h3>Example: Upper-triangular system<a class="headerlink" href="#example-upper-triangular-system" title="Permalink to this headline">¶</a></h3>
+<p>Here we will demonstrate why triangular systems of equations are very simple to solve. Consider the following upper-triangular system:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} \begin{pmatrix}
+1 &amp; -1 &amp; 2 \\
+0 &amp; 2 &amp; -1 \\
+0 &amp; 0 &amp; 2 \end{pmatrix} 
+\begin{pmatrix} x \\ y \\ z \end{pmatrix} = 
+\begin{pmatrix} -1 \\ 3 \\ 2 \end{pmatrix} \end{split}\]</div>
+<p>Solving an <span class="math notranslate nohighlight">\(n \times n\)</span> triangular system comes down to solving, in <span class="math notranslate nohighlight">\(n\)</span> steps, one equation with one unknown. So we should be able to solve the above system in just 3 steps. We begin solving an upper-triangular system by solving the last equation, which in our case is the following equation with one unknown: $ 2z = 2 $. Clearly, <span class="math notranslate nohighlight">\(z=1\)</span> and <span class="math notranslate nohighlight">\(z\)</span> is no longer an unknown variable. Now we work our way up and solve the 2nd equation, plugging in our unique solution of <span class="math notranslate nohighlight">\(z\)</span>: <span class="math notranslate nohighlight">\(2y -z = 2y - 1 = 3\)</span> which is again an equation with one unknown. We find that <span class="math notranslate nohighlight">\(y = 2\)</span> which we then plug in the first equation: $ x - y + 2z = x - 2 + 2 = x = -1 $. We have successfully solved the system and we found that it has a unique solution <span class="math notranslate nohighlight">\(\mathbf{x} = (-1, 2, 1)\)</span>.</p>
+<p>If the system is lower-triangular, we  start solving it from the 1st equation and work our way down to the last one.</p>
+</div>
+<div class="section" id="trapezoidal-matrix">
+<h3>Trapezoidal matrix<a class="headerlink" href="#trapezoidal-matrix" title="Permalink to this headline">¶</a></h3>
+<p>We can generalise the idea of triangular matrices to non-square matrices. A non-square matrix with zero entries below or above the diagonal is called an upper or lower <strong>trapezoidal matrix</strong>. For example:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} \begin{pmatrix} 1 &amp; 2 &amp; 2 &amp; 2 \\ 0 &amp; 1 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 1 &amp; 2\end{pmatrix}, \quad
+\begin{pmatrix} 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\ 2 &amp; 1 &amp; 0 &amp; 0 &amp; 0 \\ 2 &amp; 2 &amp; 1 &amp; 0 &amp; 0 \end{pmatrix} \end{split}\]</div>
+<p>What can we say about such system of equations <span class="math notranslate nohighlight">\(A \mathbf{x} = \mathbf{b}\)</span> where <span class="math notranslate nohighlight">\(A \in \mathbb{C}^{m \times n}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>, <span class="math notranslate nohighlight">\(\mathbf{b} \in \mathbb{C}^n\)</span>? If <span class="math notranslate nohighlight">\(m &lt; n\)</span> there are fewer equations than there are unknowns so the system is <strong>undertermined</strong>. If <span class="math notranslate nohighlight">\(m &gt; n\)</span> there are more equations than unknown and the system is <strong>overdetermined</strong>.</p>
+<div class="section" id="example-underdetermined-system">
+<h4>Example: Underdetermined system<a class="headerlink" href="#example-underdetermined-system" title="Permalink to this headline">¶</a></h4>
+<p>Let us consider the following system of 2 equations and 3 unknowns:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} x - y + 2z = -1 \\
+2y - z = 3 \end{split}\]</div>
+<p>We begin from the 2nd equation since it involves less unknowns than the 1st equation: $ 2y - z = 3$. Here we have a choice of which variable to solve for, but we shall solve it for <span class="math notranslate nohighlight">\(y\)</span> since it is the <em>leading variable</em> (first non-zero in the row). We find <span class="math notranslate nohighlight">\(y = (z + 3)/2\)</span>. <span class="math notranslate nohighlight">\(z\)</span> is a <em>free variable</em>, which we introduce formally bellow, but it essentially means that <span class="math notranslate nohighlight">\(z\)</span> can be any number <span class="math notranslate nohighlight">\(z \in \mathbb{C}\)</span>, say <span class="math notranslate nohighlight">\(z = t\)</span>. Substituting <span class="math notranslate nohighlight">\(y = (t + 3)/2\)</span> into the 1st equation:</p>
+<div class="math notranslate nohighlight">
+\[ x = y - 2z - 1 = (t + 3)/2 - 2t - 1 = -\frac{3t}{2} + \frac{1}{2} \]</div>
+<p>Therefore our solution set in terms of <span class="math notranslate nohighlight">\(z\)</span> is <span class="math notranslate nohighlight">\(\{(-\frac{3t}{2} + \frac{1}{2}, \frac{t + 3}{2}, t), t \in \mathbb{c}\}\)</span>.</p>
+</div>
+</div>
+</div>
+<div class="section" id="existence-and-uniqueness-of-a-solution">
+<h2>Existence and uniqueness of a solution<a class="headerlink" href="#existence-and-uniqueness-of-a-solution" title="Permalink to this headline">¶</a></h2>
+<p>Let us think geometrically what it means for a system <span class="math notranslate nohighlight">\(A \mathbf{x} = \mathbf{b}\)</span> to have a solution. Consider a simple system of linear equations:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} \begin{bmatrix} 2 &amp; 3 \\ 1 &amp; -4 \end{bmatrix} \begin{bmatrix} x \\ y \end{bmatrix} = \begin{bmatrix} 7 \\ 3 \end{bmatrix}, \end{split}\]</div>
+<p>or, equivalently,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} 2x + 3y = 7 \\ x - 4y = 3. \end{split}\]</div>
+<p>Let us plot these two lines using Python:</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+
+<span class="n">x1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">y1</span> <span class="o">=</span> <span class="p">(</span><span class="mi">7</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">x1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">3</span>
+
+<span class="n">x2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">y2</span> <span class="o">=</span> <span class="p">(</span><span class="n">x2</span> <span class="o">-</span> <span class="mi">3</span><span class="p">)</span> <span class="o">/</span> <span class="mi">4</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$2x + 3y = 7$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$x - 4y = 3$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mf">1.5</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/Linear_Systems_2_0.png" src="../../_images/Linear_Systems_2_0.png" />
+</div>
+</div>
+<p>The two lines cross at only one point, at point $ (37/11, 1/11)$. This point is the <em>unique solution</em> of the system, <span class="math notranslate nohighlight">\(\mathbf{x} = (37/11, 1/11)\)</span>.</p>
+<p>Let’s now consider two systems of two equations whose graphs are parallel lines:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} 2x + 3y = 7  \qquad 2x + 3y = 7 \\ 2x + 3y = 5 \qquad 4x + 6y = 14\end{split}\]</div>
+<p>and let us plot them.</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">x2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">y2</span> <span class="o">=</span> <span class="p">(</span><span class="mi">5</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">x2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">3</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$2x + 3y = 7$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$2x + 3y = 5$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
+
+<span class="n">y2</span> <span class="o">=</span> <span class="p">(</span><span class="mi">14</span> <span class="o">-</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">x1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">6</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$2x + 3y = 7$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y2</span><span class="p">,</span> <span class="s1">&#39;y--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$4x + 6y = 14$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">setp</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">xlim</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">3.7</span><span class="p">),</span> <span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/Linear_Systems_4_0.png" src="../../_images/Linear_Systems_4_0.png" />
+</div>
+</div>
+<p>In the first case, the lines never cross because they are parallel. Therefore, the system of equations has no solution. We can write <span class="math notranslate nohighlight">\(\mathbf{x} \in \emptyset\)</span> (empty set).</p>
+<p>The lines are parallel in the second case as well, but now they are on top of each other. There are an infinite number of solutions to that system - every point on the line $ y = (7-2x)/3 $ is a solution. We can then write that the solution set is $ { (t, \frac{7-2t}{3}), t \in \mathbb{R})} $.</p>
+<p>We can conclude that the existence and uniqueness of the solution of a linear system depends on whether the lines are parallel or not.</p>
+<p>Let us test this by finding the cross products of the row-vectors of the coefficient matrices. The row-vectors are normal to the lines given by the equations, so if the equation graphs are parallel, their normals will be too.</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">matplotlib.patches</span> <span class="kn">import</span> <span class="n">Polygon</span>
+
+
+<span class="n">x2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">y2</span> <span class="o">=</span> <span class="p">(</span><span class="n">x2</span> <span class="o">-</span> <span class="mi">3</span><span class="p">)</span> <span class="o">/</span> <span class="mi">4</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$2x + 3y = 7$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$x - 4y = 3$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="mi">37</span><span class="o">/</span><span class="mi">11</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">11</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">angles</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="mi">37</span><span class="o">/</span><span class="mi">11</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">11</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">angles</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">)</span>
+<span class="n">vertices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">4</span><span class="p">]])</span><span class="o">/</span><span class="mf">4.3</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">37</span><span class="o">/</span><span class="mi">11</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">11</span><span class="p">])</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">Polygon</span><span class="p">(</span><span class="n">vertices</span> <span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;lightblue&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">))</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mf">1.5</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
+
+
+<span class="n">y2</span> <span class="o">=</span> <span class="p">(</span><span class="mi">5</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">x2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">3</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$2x + 3y = 7$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$2x + 3y = 5$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="mf">1.3</span><span class="p">,</span> <span class="mf">4.4</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">angles</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="mf">1.5</span><span class="p">,</span> <span class="mi">2</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">angles</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">3.7</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/Linear_Systems_6_0.png" src="../../_images/Linear_Systems_6_0.png" />
+</div>
+</div>
+<p>If <span class="math notranslate nohighlight">\(\mathbf{a_1} = (a_{11}, a_{12})\)</span> is the first row-vector of a coefficient matrix and <span class="math notranslate nohighlight">\(\mathbf{a_2} = (a_{21}, a_{22})\)</span>, we can express their cross product as:</p>
+<div class="math notranslate nohighlight">
+\[ ( \mathbf{a_1} \times \mathbf{a_2} ) = |\mathbf{a_1}| |\mathbf{a_2}| \sin(\vartheta) \hat{n}, \]</div>
+<p>where <span class="math notranslate nohighlight">\(|\cdot|\)</span> denotes the magnitude of the vector, <span class="math notranslate nohighlight">\(\vartheta\)</span> is the angle between <span class="math notranslate nohighlight">\(\mathbf{a_1}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{a_2}\)</span> and <span class="math notranslate nohighlight">\(\hat{n}\)</span> is the unit normal vector to both vectors. We can see that the magnitude of the vector is equal to the area of a parallelogram with sides <span class="math notranslate nohighlight">\(|\mathbf{u}|\)</span> and <span class="math notranslate nohighlight">\(|\mathbf{v}|\)</span>, with <span class="math notranslate nohighlight">\(\vartheta\)</span> controlling how skewed it is. Such a parallelogram is marked by light-blue on the left figure. We also know from the previous notebook that the magnitude of the cross product of the two rows or columns of the matrix is given by the determinant of the matrix:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} |(a_{11}, a_{12}) \times (a_{21}, a_{22}) | = |(a_{11}, a_{21}) \times (a_{12}, a_{22}) | = \det \begin{pmatrix} a_{11} &amp; a_{12} \\ a_{21} &amp; a_{22} \end{pmatrix}.\end{split}\]</div>
+<p>Let us then conclude, and we will justify this in the next notebooks, that a system of linear equations <span class="math notranslate nohighlight">\(A \mathbf{x} = \mathbf{b}\)</span> will have a unique solution iff <span class="math notranslate nohighlight">\(\det A \neq 0\)</span>. If <span class="math notranslate nohighlight">\(\det A = 0\)</span>, the system either has infinitely-many solutions or no solutions at all.</p>
+</div>
+</div>
+<div class="section" id="gaussian-elimination">
+<h1>Gaussian elimination<a class="headerlink" href="#gaussian-elimination" title="Permalink to this headline">¶</a></h1>
+<p>Let us finally formally introduce what we have been trying to achieve in most examples above. <strong>Gaussian elimination</strong> (or row reduction) uses the three transformations mentioned before to reduce a system to <strong>row echelon form</strong>. A matrix is in row echelon form if:</p>
+<ul class="simple">
+<li><p>all zero rows (if they exist) are below all non-zero rows</p></li>
+<li><p>the <strong>leading coefficient</strong> (or <strong>pivot</strong>; the first non-zero entry in a row) is always strictly to the right of the leading coefficient of the row above it. That is, for two leading elements <span class="math notranslate nohighlight">\(a_{ij}\)</span> and <span class="math notranslate nohighlight">\(a_{kl}\)</span>: if <span class="math notranslate nohighlight">\(i &lt; k\)</span> then it is required that <span class="math notranslate nohighlight">\(j &lt; l\)</span>.</p></li>
+</ul>
+<p>Notice that these conditions require reduced echelon form to be an upper-trapezoidal matrix. For example:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} \begin{pmatrix} 1 &amp; 2 &amp; 0 &amp; 1 \\ 0 &amp; 1 &amp; 0 &amp; 5 \\ 0 &amp; 0 &amp;2 &amp; 2 \end{pmatrix}, \quad 
+\begin{pmatrix} 1 &amp; 0 &amp; 0 \\ 0 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 1 \end{pmatrix}, \quad
+\begin{pmatrix} 1 &amp; -2 &amp; 0 &amp; 1 \\ 0 &amp; 0 &amp; 1 &amp; 3 \\ 0 &amp; 0 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp; 0\end{pmatrix}\end{split}\]</div>
+<p>The motivation behind performing Gaussian elimination is therefore clear, as we have demonstrated in the upper-triangular example why triangular systems are most convenient for solving systems of linear equations.</p>
+<p>Let us consider again a general coefficient matrix <span class="math notranslate nohighlight">\(A \in \mathbb{C}^{m \times n}\)</span> in <span class="math notranslate nohighlight">\(A \mathbf{x} = \mathbf{b}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} \begin{pmatrix} a_{11} &amp; a_{12} &amp; a_{13} &amp; \cdots &amp; a_{1n} \\
+a_{21} &amp; a_{22} &amp; a_{23} &amp; \cdots &amp; a_{2n} \\ 
+a_{31} &amp; a_{32} &amp; a_{33} &amp; \cdots &amp; a_{3n} \\
+ &amp; \vdots &amp; &amp; \vdots &amp; \\
+a_{m1} &amp; a_{m2} &amp; a_{m3} &amp; \cdots &amp; a_{mn} \end{pmatrix} \end{split}\]</div>
+<p>What we want to achieve is to have all entries in the 1st column be 0 except for the first one. Then in the 2nd column all entires below the second entry should be 0. In the 3rd column all entries below the third entry should be 0, and so on. That means that we will have to use the 3rd transformation rule and subtract one equation from every one below it, multiplied such that the column entries will cancel:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+    &amp;\begin{pmatrix} a_{11} &amp; a_{12} &amp; a_{13} &amp; \cdots &amp; a_{1n} \\
+    a_{21} &amp; a_{22} &amp; a_{23} &amp; \cdots &amp; a_{2n} \\ 
+    a_{31} &amp; a_{32} &amp; a_{33} &amp; \cdots &amp; a_{3n} \\
+     &amp; \vdots &amp; &amp; \vdots &amp; \\
+    a_{m1} &amp; a_{m2} &amp; a_{m3} &amp; \cdots &amp; a_{mn} \end{pmatrix}
+    \hspace{-0.5em}
+    \begin{align}
+        &amp;\phantom{L_1}\\
+        &amp;L_2 - ^{a_{21}}/_{a_{11}}L_1 \to L_2 \\
+        &amp;L_3 - ^{a_{31}}/_{a_{11}}L_1 \to L_3 \\
+        &amp;\qquad \cdots \\
+        &amp;L_m - ^{a_{m1}}/_{a_{11}}L_1 \to L_1
+    \end{align} \\ \\
+    \Rightarrow \quad
+    &amp;\begin{pmatrix} a_{11} &amp; a_{12} &amp; a_{13} &amp; \cdots &amp; a_{1n} \\
+    0 &amp; \tilde{a_{22}} &amp; \tilde{a_{23}} &amp; \cdots &amp; \tilde{a_{2n}} \\ 
+    0 &amp; \tilde{a_{32}} &amp; \tilde{a_{33}} &amp; \cdots &amp; \tilde{a_{3n}} \\
+     &amp; \vdots &amp; &amp; \vdots &amp; \\
+    0 &amp; \tilde{a_{m2}} &amp; \tilde{a_{m3}} &amp; \cdots &amp; \tilde{a_{mn}} \end{pmatrix}
+    \hspace{-0.5em}
+    \begin{aligned}
+        &amp;\phantom{L_1}\\
+        &amp;\phantom{L_2} \\
+        &amp;L_3 - ^{a_{32}}/_{a_{12}}L_1 \to L_3 \\
+        &amp;\qquad \cdots \\
+        &amp;L_m - ^{a_{m2}}/_{a_{12}}L_1 \to L_1
+    \end{aligned} \\ \\
+    \Rightarrow \quad
+    &amp;\begin{pmatrix} a_{11} &amp; a_{12} &amp; a_{13} &amp; \cdots &amp; a_{1n} \\
+    0 &amp; \tilde{a_{22}} &amp; \hat{a_{23}} &amp; \cdots &amp; \hat{a_{2n}} \\ 
+    0 &amp; 0 &amp; \hat{a_{33}} &amp; \cdots &amp; \hat{a_{3n}} \\
+     &amp; \vdots &amp; &amp; \vdots &amp; \\
+    0 &amp; 0 &amp; \hat{a_{m3}} &amp; \cdots &amp; \hat{a_{mn}} \end{pmatrix} \\ 
+    &amp; \qquad \dots
+\end{aligned} \end{split}\]</div>
+<p>And so on. Notice that these operations (transformations) are performed on entire rows, so the entries in the entire row change (here denoted by tilde and hat). That is why we need to be careful what row we add to other row since, for example, adding the first row to other rows later on would re-introduce non-zero values in the first column which we previously eliminated.</p>
+<div class="section" id="example">
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<p>Consider the following system of 3 equations and 3 unknowns <span class="math notranslate nohighlight">\(x, y, z\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} x - y + 2z = -1 \\ x + 2y - z = 2 \\ -x + y + z = 0 \end{split}\]</div>
+<p>Let us write it in augmented-matrix form and perform Gaussian eliminations.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+    &amp;\left ( \begin{array}{ccc|c} 
+        1 &amp; -1 &amp; 2 &amp; -1 \\ 
+        1 &amp; 2 &amp; -1 &amp; 2 \\
+        -1 &amp; 1 &amp; 1 &amp; 0 \end{array} \right )
+    \hspace{-0.5em}
+    \begin{align}
+        &amp;\phantom{L_1}\\
+        &amp;L_2 - L_1 \to L_2 \\
+        &amp;L_3 + L_1 \to L_3 \\
+    \end{align} \\ \\
+    \Rightarrow \quad
+    &amp;\left ( \begin{array}{ccc|c} 
+        1 &amp; -1 &amp; 2 &amp; -1 \\ 
+        0 &amp; 3 &amp; -3 &amp; 3 \\
+        0 &amp; 0 &amp; 3 &amp; -1 \end{array} \right )
+\end{aligned}\end{split}\]</div>
+<p>The one transformation on the 3rd equation eliminated both <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> unknowns from it so we did not have to perform another transformation. Now the system is reduced to an upper-triangular one, which we have encountered before and know how to solve. We begin from the last equation and back-substitute found values as we work our way up. We leave it to the reader to confirm that there is a unique solution <span class="math notranslate nohighlight">\(\mathbf{x} = (1/3, 2/3, -1/3)\)</span>.</p>
+</div>
+<div class="section" id="transformations-as-matrices">
+<h2>Transformations as matrices<a class="headerlink" href="#transformations-as-matrices" title="Permalink to this headline">¶</a></h2>
+<p>Recall the example on permutations a few notebooks ago, where we wrote each permutation of rows or columns as a permutation matrix multiplying the original matrix. We can do the same thing with elementary row transformations.</p>
+<p>Consider the same example from above, where we performed the following 2 transformations on the square <span class="math notranslate nohighlight">\(3 \times 3\)</span> matrix <span class="math notranslate nohighlight">\(A\)</span>:</p>
+<ol class="simple">
+<li><p>subtracted row 1 from row 2; <span class="math notranslate nohighlight">\(L_2 - L_1 \to L_2\)</span></p></li>
+<li><p>added row 1 to row 3; <span class="math notranslate nohighlight">\(L_3 + L_1 \to L_3\)</span></p></li>
+</ol>
+<p>We can write both of these transformations using <strong>elementary matrices</strong>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} E_1 = \begin{pmatrix} 1 &amp; 0 &amp; 0 \\ -1 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 1 \end{pmatrix}, \quad E_2 = \begin{pmatrix} 1 &amp; 0 &amp; 0 \\ 0 &amp; 1 &amp; 0 \\ 1 &amp; 0 &amp; 1 \end{pmatrix} \end{split}\]</div>
+<p>As in the example of permutations, left-multiplication by an elementary matrix <span class="math notranslate nohighlight">\(E\)</span> represents elementary row operations, while right-multiplication represents elementary column operations. Our transformations are row operations, so we left multiply our original matrix:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} E_2 E_1 A = 
+\begin{pmatrix} 1 &amp; -1 &amp; 2 \\ 0 &amp; 3 &amp; -3 \\ 0 &amp; 0 &amp; 3 \end{pmatrix},\end{split}\]</div>
+<p>resulting in the same upper-triangular matrix as before. Note that the order in which we multiply is, in general, important.</p>
+</div>
+</div>
+<div class="section" id="using-the-inverse-matrix-to-solve-a-linear-system">
+<h1>Using the inverse matrix to solve a linear system<a class="headerlink" href="#using-the-inverse-matrix-to-solve-a-linear-system" title="Permalink to this headline">¶</a></h1>
+<p>Remember that an inverse of a square matrix <span class="math notranslate nohighlight">\(A\)</span> is <span class="math notranslate nohighlight">\(A^{-1}\)</span> such that <span class="math notranslate nohighlight">\(AA^{-1} = A^{-1}A = I\)</span>. Therefore, if we have a matrix equation <span class="math notranslate nohighlight">\(A \mathbf{x} = \mathbf{b}\)</span>, finding an inverse <span class="math notranslate nohighlight">\(A^{-1}\)</span> would allow us to solve for all unknowns simultaneously, rather than in steps like in the examples above. Here is the idea:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} A\mathbf{x} = \mathbf{b} \\
+\mbox{multiply both sides by} A^{-1} \\
+I \mathbf{x} = A^{-1}\mathbf{b} \\ 
+\mathbf{x} = A^{-1}\mathbf{b} \end{split}\]</div>
+<p>Finding the solution <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> is then reduced to a matrix-vector multiplication <span class="math notranslate nohighlight">\(A^{-1}\mathbf{b}\)</span>.</p>
+<div class="section" id="gauss-jordan-elimination">
+<h2>Gauss-Jordan elimination<a class="headerlink" href="#gauss-jordan-elimination" title="Permalink to this headline">¶</a></h2>
+<p><strong>Gauss-Jordan elimination</strong> is a type of Gaussian elimination that we can use to find the inverse of a matrix. This process is based on reducing a matrix whose inverse we want to find to <strong>reduced row echelon form</strong>. For a matrix to be in reduced row echelon form it must satisfy the two conditions written above for row echelon forms and an additional condition:</p>
+<ul class="simple">
+<li><p>Each leading (pivot) element is 1 and all other entries in their columns are 0.</p></li>
+</ul>
+<p>Examples of such matrices are:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} \begin{pmatrix} 1 &amp; 0 &amp; 0\\ 0 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 1 \end{pmatrix}, \quad
+\begin{pmatrix} 1 &amp; 0 &amp; 4\\ 0 &amp; 1 &amp; 3 \end{pmatrix}, \quad
+\begin{pmatrix} 0 &amp; 0 &amp; 1 &amp; 5 &amp; 0 &amp; 2 &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 6 &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp;0 &amp;0 &amp; 0 &amp; 1 \end{pmatrix} \end{split}\]</div>
+<p>Now, let <span class="math notranslate nohighlight">\(A \in \mathbb{R}^{n \times n}\)</span> be a square matrix whose inverse we want to find. We use it to form an augmented block matrix <span class="math notranslate nohighlight">\([A | I]\)</span>. We perform elementary row transformations on this matrix such that we reduce <span class="math notranslate nohighlight">\(A\)</span> to reduced row echelon form, which we will denote as <span class="math notranslate nohighlight">\(A_R\)</span>. In this process, the identity matrix <span class="math notranslate nohighlight">\(I\)</span> on the right will be transformed to some new matrix <span class="math notranslate nohighlight">\(B\)</span>. If <span class="math notranslate nohighlight">\(A\)</span> is invertible, we will have:</p>
+<div class="math notranslate nohighlight">
+\[ [A | I] \Rightarrow [A_R | B] = [I | A^{-1}] \]</div>
+<p>Let us think why this is. We showed above that elementary row operations can be represented as elementary matrices. Let there be <span class="math notranslate nohighlight">\(k\)</span> such transformations needed to reduce <span class="math notranslate nohighlight">\(A\)</span> to <span class="math notranslate nohighlight">\(A_R\)</span>. Then we can write:</p>
+<div class="math notranslate nohighlight">
+\[ [A_R | B] = E_k E_{k-1} \dots E_2 E_1[A | I] \]</div>
+<p>and let us denote <span class="math notranslate nohighlight">\(S = E_k E_{k-1} \dots E_2 E_1\)</span>, the product of all <span class="math notranslate nohighlight">\(k\)</span> elementary matrices. Now,</p>
+<div class="math notranslate nohighlight">
+\[ [A_R | B] = S[A | I] = [SA | SI] = [SA | S]\]</div>
+<p>Therefore, if <span class="math notranslate nohighlight">\(A_R = I \Rightarrow I = SA\)</span>, meaning that <span class="math notranslate nohighlight">\(S = B\)</span> is indeed the inverse of <span class="math notranslate nohighlight">\(A\)</span>.</p>
+<p>If <span class="math notranslate nohighlight">\(A\)</span> is not invertible, remember that it means that it is not full-rank. What that means is that <span class="math notranslate nohighlight">\(A_R\)</span> will have at least one zero-row. In that case, <span class="math notranslate nohighlight">\(B \neq A^{-1}\)</span>.</p>
+<div class="section" id="example-calculating-an-inverse-of-a-matrix">
+<h3>Example: Calculating an inverse of a matrix<a class="headerlink" href="#example-calculating-an-inverse-of-a-matrix" title="Permalink to this headline">¶</a></h3>
+<p>Let us find the inverse matrix of:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} A = \begin{bmatrix} 2 &amp; 1 &amp; 3 \\ 0 &amp; 2 &amp; -1 \\ 3 &amp; -1 &amp; 2 \end{bmatrix}. \end{split}\]</div>
+<p>We begin by forming an augmented matrix <span class="math notranslate nohighlight">\([A|I]\)</span> and begin reducing <span class="math notranslate nohighlight">\(A\)</span> to reduced row echelon form.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+    {[A | I] =} \quad &amp;\left [ \begin{array}{ccc|ccc} 
+        2 &amp; 1 &amp; 3 &amp; 1 &amp; 0 &amp; 0 \\ 
+        0 &amp; 2 &amp; -1 &amp; 0 &amp; 1 &amp; 0\\ 
+        3 &amp; -1 &amp; 2 &amp; 0 &amp; 0 &amp; 1 \end{array} \right ]
+    \hspace{-0.5em}
+    \begin{aligned}
+        &amp;^1/_2 L_1 \to L_1 \\
+        &amp;\phantom{L} \\
+        &amp;\phantom{L} \\
+    \end{aligned} \\ \\
+    \sim \quad
+    &amp;\left [ \begin{array}{ccc|ccc} 
+        1 &amp; ^1/_2 &amp; ^3/_2 &amp; ^1/_2 &amp; 0 &amp; 0 \\ 
+        0 &amp; 2 &amp; -1 &amp; 0 &amp; 1 &amp; 0\\ 
+        3 &amp; -1 &amp; 2 &amp; 0 &amp; 0 &amp; 1 \end{array} \right ]
+    \hspace{-0.5em}
+    \begin{aligned}
+        &amp;\phantom{L} \\
+        &amp;\phantom{L} \\
+        &amp;L_3 -3L_1 \to L_3 \\
+    \end{aligned} \\ \\
+    \sim \quad
+    &amp;\left [ \begin{array}{ccc|ccc} 
+        1 &amp; ^1/_2 &amp; ^3/_2 &amp; ^1/_2 &amp; 0 &amp; 0 \\ 
+        0 &amp; 2 &amp; -1 &amp; 0 &amp; 1 &amp; 0\\ 
+        0 &amp; -^5/_2 &amp; -^5/_2 &amp; -^3/_2 &amp; 0 &amp; 1 \end{array} \right ]
+    \hspace{-0.5em}
+    \begin{aligned}
+        &amp;\phantom{L} \\
+        &amp; ^1/_2 L_2 \to L_2\\
+        &amp;\phantom{L} \\
+    \end{aligned} \\ \\
+    \sim \quad
+    &amp;\left [ \begin{array}{ccc|ccc} 
+        1 &amp; ^1/_2 &amp; ^3/_2 &amp; ^1/_2 &amp; 0 &amp; 0 \\ 
+        0 &amp; 1 &amp; -^1/_2 &amp; 0 &amp; ^1/_2 &amp; 0\\ 
+        0 &amp; -^5/_2 &amp; -^5/_2 &amp; -^3/_2 &amp; 0 &amp; 1 \end{array} \right ]
+    \hspace{-0.5em}
+    \begin{aligned}
+        &amp; L_1 -^1/_2 L_2 \to L_1 \\
+        &amp; \phantom{L}\\
+        &amp; L_3 +^5/_2 L_2 \to L_3 \\
+    \end{aligned} \\ \\
+    \sim \quad
+    &amp;\left [ \begin{array}{ccc|ccc} 
+        1 &amp; 0 &amp; ^7/_4 &amp; ^1/_2 &amp; -^1/_4 &amp; 0 \\ 
+        0 &amp; 1 &amp; -^1/_2 &amp; 0 &amp; ^1/_2 &amp; 0\\ 
+        0 &amp; 0 &amp; -^{15}/_4 &amp; -^3/_2 &amp; ^5/_4 &amp; 1 \end{array} \right ]
+    \hspace{-0.5em}
+    \begin{aligned}
+        &amp; \phantom{L} \\
+        &amp; \phantom{L}\\
+        &amp; -^4/_{15}L_3 \to L_3 \\
+    \end{aligned} \\ \\
+    \sim \quad
+    &amp;\left [ \begin{array}{ccc|ccc} 
+        1 &amp; 0 &amp; ^7/_4 &amp; ^1/_2 &amp; -^1/_4 &amp; 0 \\ 
+        0 &amp; 1 &amp; -^1/_2 &amp; 0 &amp; ^1/_2 &amp; 0\\ 
+        0 &amp; 0 &amp; 1 &amp; ^2/_5 &amp; -^1/_3 &amp; -^4/_{15} \end{array} \right ]
+    \hspace{-0.5em}
+    \begin{aligned}
+        &amp; L_1 -^7/_4 L_3 \to L_1 \\
+        &amp; L_2 +^1/_2 L_3 \to L_2\\
+        &amp; \phantom{L} \\
+    \end{aligned} \\ \\
+    \sim \quad
+    &amp;\left [ \begin{array}{ccc|ccc} 
+        1 &amp; 0 &amp; 0 &amp; -^1/_5 &amp; ^1/_3 &amp; ^7/_{15} \\ 
+        0 &amp; 1 &amp; 0 &amp; ^1/_5 &amp; ^1/_3 &amp; -^2/_{15}\\ 
+        0 &amp; 0 &amp; 1 &amp; ^2/_5 &amp; -^1/_3 &amp; -^4/_{15} \end{array} \right ]
+    = [I | B]
+\end{aligned}\end{split}\]</div>
+<p>We successfully found the inverse <span class="math notranslate nohighlight">\(A^{-1} = B\)</span>! Let us now use it to solve the system <span class="math notranslate nohighlight">\(A \mathbf{x} = \mathbf{b}\)</span>, where <span class="math notranslate nohighlight">\(\mathbf{b} = (2, 0, 1)^T\)</span>. As explained before, <span class="math notranslate nohighlight">\(A\)</span> on the LHS is eliminated by multiplying both sides by <span class="math notranslate nohighlight">\(A^{-1}\)</span> on the left, leaving:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} \mathbf{x} = A^{-1}\mathbf{b} =
+\begin{pmatrix} 
+-^1/_5 &amp; ^1/_3 &amp; ^7/_{15} \\ 
+^1/_5 &amp; ^1/_3 &amp; -^2/_{15} \\ 
+^2/_5 &amp; -^1/_3 &amp; -^4/_{15} 
+\end{pmatrix}
+\begin{pmatrix} 2 \\ 0 \\ 1 \end{pmatrix} =
+\begin{pmatrix} 1/15 \\ 4/15 \\ 8/15 \end{pmatrix} \end{split}\]</div>
+<p>The reader is encouraged to confirm this is the correct solution either through substitution into the original system or by using another solution method.</p>
+</div>
+</div>
+</div>
+
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="Theory.html" title="previous page">Theory</a>
+    <a class='right-next' id="next-link" href="../complex analysis/intro.html" title="next page">Complex Numbers</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Imperial College London<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../../_static/js/index.js"></script>
+    
+  </body>
+</html>
