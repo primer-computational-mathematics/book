@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Overview &#8212; ESE Jupyter Material</title>
+    <title>Dakota &#8212; ESE Jupyter Material</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
     <link href="../_static/css/index.css" rel="stylesheet">
     <link rel="stylesheet" href="../_static/sphinx-book-theme.css" type="text/css" />
@@ -80,32 +80,7 @@
   <ul class="current">
    <li class="toctree-l2 current active">
     <a class="current reference internal" href="#">
-     Overview
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="#installation">
-     Installation
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="#python-template-for-dakota">
-     Python template for Dakota
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="#dakota-bash-file">
-     Dakota bash file
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="#dakota-input-file">
-     Dakota input file
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="#references">
-     References
+     Dakota
     </a>
    </li>
    <li class="toctree-l2">
@@ -375,7 +350,34 @@
             <i class="fas fa-list"></i> On this page
         </div>
         <nav id="bd-toc-nav">
-            
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#installation">
+   Installation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#python-template-for-dakota">
+   Python template for Dakota
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#dakota-bash-file">
+   Dakota bash file
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#dakota-input-file">
+   Dakota input file
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
+ </li>
+</ul>
+
         </nav>
     </div>
 </div>
@@ -384,16 +386,15 @@
         
               <div>
                 
-  <div class="section" id="overview">
-<h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="dakota">
+<h1>Dakota<a class="headerlink" href="#dakota" title="Permalink to this headline">¶</a></h1>
 <p>The dakota project provides software for optimisation and uncertainty quantification.</p>
 <p>Dakotas parametric analyses can be used for a broad range of computational tasks as it enables design exploration, risk analysis, model calibration, and quantification of margins and uncertainty with computational models.</p>
 <p>The intended use of Dakota is to aid computational methods developed to better understand the complex physical systems they simulate. In many cases these simulations are used to find the optimal design of a system, or to make prediction for systems that can not be directly tested.</p>
 <p>The use of these computational simulations can lead to better system designs and improved overall performance. Furthermore, a reduced dependence on physical testing can reduce development costs and quicken the design process.</p>
 <p>In this notebook I will summarise how the Dakota library is used to automatize the parameter space investigated in a given computational model using python.</p>
-</div>
 <div class="section" id="installation">
-<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
 <p>Dakota can be downloaded from https://dakota.sandia.gov/download.html. For the latest release savethe tar.gv file to downloads and extract it. Make sure the file is the source code. This will be yourDakota installation directory.</p>
 <p>Before attempting to install dakota you must ensure you have the packages cmake and libboost in-stalled. If you dont you will have to find someone with the necessary admin rights to install these.</p>
 <p>To extract the tar.gv file navigate to the file and type the following:</p>
@@ -412,7 +413,7 @@
 <code style="background:black;color:white">make install    
 </p></div>
 <div class="section" id="python-template-for-dakota">
-<h1>Python template for Dakota<a class="headerlink" href="#python-template-for-dakota" title="Permalink to this headline">¶</a></h1>
+<h2>Python template for Dakota<a class="headerlink" href="#python-template-for-dakota" title="Permalink to this headline">¶</a></h2>
 <p>To automatize the parameter space in your model using Dakota you first need to have a python script in which Dakota can adjust the parameters in the model simulations. To do this create a .py file by typing the following in the terminal.</p>
 <p style="background:black">
 <code style="background:black;color:white">gedit file.py
@@ -425,7 +426,7 @@
 <p>Dakota can automatize more parameters for more complex studies.</p>
 </div>
 <div class="section" id="dakota-bash-file">
-<h1>Dakota bash file<a class="headerlink" href="#dakota-bash-file" title="Permalink to this headline">¶</a></h1>
+<h2>Dakota bash file<a class="headerlink" href="#dakota-bash-file" title="Permalink to this headline">¶</a></h2>
 <p>The purpose of the bash file is to allow Dakota to investigate the selected parameters in the python file. In this case the bash file, e.g file.sh, creates a copy of the python file (the template file) and using the built in function ’dprepro’ changes the values of these parameters. It then runs the python script and returns the results.</p>
 <p>In the following bash file ’file.py’ is the previously created python file and ’file_temp.in’ is the template file.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#!/bin/sh
@@ -449,7 +450,7 @@ mv results.tmp $2
 </div>
 </div>
 <div class="section" id="dakota-input-file">
-<h1>Dakota input file<a class="headerlink" href="#dakota-input-file" title="Permalink to this headline">¶</a></h1>
+<h2>Dakota input file<a class="headerlink" href="#dakota-input-file" title="Permalink to this headline">¶</a></h2>
 <p>The Dakota input file must consist of the following blocks: environment, method, model, variables, interface and responses. Details on these blocks can be found on the Reference Manual and User’s Manual. These can be downloaded from https://dakota.sandia.gov/documentation.html.</p>
 <p>As an exampple in this simple case Dakota puts values ranging between 1 and 2 instead of Parameter1 ’par1’, and values ranging between 3 and 4 instead of Parameter2 ’par2’ in the template. Then, Dakota prints out the response function according to the input parameter into the tabular file ’file.dat’.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>environment
@@ -497,10 +498,11 @@ responses
 </div>
 </div>
 <div class="section" id="references">
-<h1>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h1>
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>https://dakota.sandia.gov</p></li>
 </ul>
+</div>
 </div>
 
 
