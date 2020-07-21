@@ -787,41 +787,43 @@ Even when albedo = 0.0, temperature on Earth would still only be 5˚C
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">simple_model</span><span class="p">(</span><span class="n">final_co2</span><span class="p">,</span> <span class="n">years</span><span class="p">,</span> <span class="n">current_temp</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">current_co2</span><span class="o">=</span><span class="mi">280</span><span class="p">,</span> <span class="n">e</span><span class="o">=</span><span class="mf">0.62</span><span class="p">,</span> <span class="n">S_o</span><span class="o">=</span><span class="mi">1365</span><span class="p">,</span> <span class="n">T_o</span><span class="o">=</span><span class="mi">273</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mf">5.67e-8</span><span class="p">,</span> <span class="n">f</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="mi">70</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mi">1025</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">4200</span><span class="p">):</span>
-    <span class="n">temperature</span> <span class="o">=</span> <span class="p">[</span><span class="mi">14</span><span class="p">]</span>
-    <span class="n">t</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">total_t</span> <span class="o">=</span> <span class="n">years</span>
-    <span class="n">al</span> <span class="o">=</span> <span class="mf">0.3</span>
-    <span class="n">dM_in</span> <span class="o">=</span> <span class="mf">5.35</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">final_co2</span><span class="o">/</span><span class="n">current_co2</span><span class="p">)</span>
+    <span class="n">temperature</span> <span class="o">=</span> <span class="p">[</span><span class="mi">14</span><span class="p">]</span> <span class="c1"># store initial and calculated temperature into a list</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># counter</span>
+    <span class="n">total_t</span> <span class="o">=</span> <span class="n">years</span> <span class="c1"># counter limit</span>
+    <span class="n">al</span> <span class="o">=</span> <span class="mf">0.3</span> <span class="c1"># initial albedo</span>
+    <span class="n">dM</span> <span class="o">=</span> <span class="mf">5.35</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">final_co2</span><span class="o">/</span><span class="n">current_co2</span><span class="p">)</span>
     <span class="n">C</span> <span class="o">=</span> <span class="n">f</span> <span class="o">*</span> <span class="n">d</span> <span class="o">*</span> <span class="n">p</span> <span class="o">*</span> <span class="n">c</span>
     <span class="n">a</span> <span class="o">=</span> <span class="n">e</span> <span class="o">*</span> <span class="n">s</span> <span class="o">*</span> <span class="n">T_o</span><span class="o">**</span><span class="mi">4</span>
     <span class="n">b</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">e</span> <span class="o">*</span> <span class="n">s</span> <span class="o">*</span> <span class="n">T_o</span><span class="o">**</span><span class="mi">3</span>
     <span class="k">while</span> <span class="n">t</span> <span class="o">&lt;</span> <span class="n">total_t</span><span class="p">:</span>
         <span class="n">t</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="n">seconds</span> <span class="o">=</span> <span class="n">t</span> <span class="o">*</span> <span class="mi">3600</span> <span class="o">*</span> <span class="mi">24</span> <span class="o">*</span> <span class="mf">365.25</span>
+        <span class="n">seconds</span> <span class="o">=</span> <span class="n">t</span> <span class="o">*</span> <span class="mi">3600</span> <span class="o">*</span> <span class="mi">24</span> <span class="o">*</span> <span class="mf">365.25</span> <span class="c1"># convert years to seconds</span>
+        <span class="c1"># ice albedo effect + tipping point</span>
         <span class="k">if</span> <span class="n">temperature</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="o">-</span><span class="mi">10</span><span class="p">:</span>
             <span class="n">al</span> <span class="o">=</span> <span class="mf">0.9</span>
         <span class="k">elif</span> <span class="n">temperature</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">10</span><span class="p">:</span>
             <span class="n">al</span> <span class="o">=</span> <span class="mf">0.3</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">al</span> <span class="o">=</span> <span class="mf">0.9</span> <span class="o">-</span> <span class="p">(</span><span class="mf">0.9</span><span class="o">-</span><span class="mf">0.3</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">temperature</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="mi">10</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
-        <span class="n">M_in</span> <span class="o">=</span> <span class="mf">0.25</span><span class="o">*</span><span class="n">S_o</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">al</span><span class="p">)</span> <span class="o">+</span> <span class="n">dM_in</span>
-        <span class="n">D</span> <span class="o">=</span> <span class="p">(</span><span class="n">M_in</span><span class="o">-</span><span class="n">a</span><span class="o">-</span><span class="n">current_temp</span><span class="o">*</span><span class="n">b</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">C</span><span class="p">)</span>
-        <span class="n">temp</span> <span class="o">=</span> <span class="p">((</span><span class="mi">1</span><span class="o">/</span><span class="n">b</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">M_in</span><span class="o">-</span><span class="n">a</span><span class="o">-</span><span class="n">C</span><span class="o">*</span><span class="n">D</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">b</span><span class="o">*</span><span class="n">seconds</span><span class="o">/</span><span class="n">C</span><span class="p">)))</span>
+        <span class="n">M</span> <span class="o">=</span> <span class="mf">0.25</span><span class="o">*</span><span class="n">S_o</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">al</span><span class="p">)</span> <span class="o">+</span> <span class="n">dM</span>
+        <span class="c1"># substitute into differential equation</span>
+        <span class="n">D</span> <span class="o">=</span> <span class="p">(</span><span class="n">M</span><span class="o">-</span><span class="n">a</span><span class="o">-</span><span class="n">current_temp</span><span class="o">*</span><span class="n">b</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">C</span><span class="p">)</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="p">((</span><span class="mi">1</span><span class="o">/</span><span class="n">b</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">M</span><span class="o">-</span><span class="n">a</span><span class="o">-</span><span class="n">C</span><span class="o">*</span><span class="n">D</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">b</span><span class="o">*</span><span class="n">seconds</span><span class="o">/</span><span class="n">C</span><span class="p">)))</span>
         <span class="n">temperature</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">temperature</span>
+    <span class="k">return</span> <span class="n">temperature</span> <span class="c1"># output temperature list</span>
 
+<span class="c1"># ask user for input</span>
 <span class="n">num</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;How many projections do you want to make? &quot;</span><span class="p">))</span>
-<span class="n">time</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;How many years do you want to project into the future? &quot;</span><span class="p">))</span>
-<span class="n">all_CO2_conc</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">time</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;How many years do you want to project into the future? &quot;</span><span class="p">))</span> 
+<span class="n">all_CO2_conc</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># create list for all CO2 concentration</span>
 
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num</span><span class="p">):</span> <span class="c1"># ask user for CO2 concentration</span>
     <span class="n">CO2_conc</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Please enter final CO2 concentration for projection %.d in ppm: &quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)))</span>
-    <span class="n">all_CO2_conc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">CO2_conc</span><span class="p">)</span>
+    <span class="n">all_CO2_conc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">CO2_conc</span><span class="p">)</span> <span class="c1"># add user input into list</span>
     
 <span class="n">all_CO2_conc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">all_CO2_conc</span><span class="p">)</span>
 
-
-<span class="n">projections</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">projections</span> <span class="o">=</span> <span class="p">{}</span> <span class="c1"># create dictionary to store temperature data over time</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">all_CO2_conc</span><span class="p">)):</span>
     <span class="n">projections</span><span class="p">[</span><span class="s1">&#39;CO2 concentration=&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">all_CO2_conc</span><span class="p">[</span><span class="n">i</span><span class="p">])]</span><span class="o">=</span><span class="p">[]</span>
     <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">time</span><span class="p">):</span>
@@ -833,9 +835,9 @@ Even when albedo = 0.0, temperature on Earth would still only be 5˚C
 <span class="n">ax1</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
 <span class="n">ax1</span><span class="o">.</span><span class="n">margins</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
 
-<span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">time</span><span class="p">)])</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">time</span><span class="p">)])</span> <span class="c1"># make an array of years for plotting</span>
 
-<span class="n">colour</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;purple&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;k&#39;</span><span class="p">]</span>
+<span class="n">colour</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;purple&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;k&#39;</span><span class="p">]</span> <span class="c1"># create a list of colours to choose from</span>
 
 <span class="c1"># plot figure</span>
 <span class="kn">import</span> <span class="nn">random</span>
@@ -851,11 +853,12 @@ Even when albedo = 0.0, temperature on Earth would still only be 5˚C
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>How many projections do you want to make? 3
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>How many projections do you want to make? 4
 How many years do you want to project into the future? 20
 Please enter final CO2 concentration for projection 1 in ppm: 16
 Please enter final CO2 concentration for projection 2 in ppm: 17
 Please enter final CO2 concentration for projection 3 in ppm: 560
+Please enter final CO2 concentration for projection 4 in ppm: 1000
 </pre></div>
 </div>
 <img alt="../_images/Climate_Model_22_1.png" src="../_images/Climate_Model_22_1.png" />
