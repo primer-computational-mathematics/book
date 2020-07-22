@@ -87,7 +87,7 @@ with open('_tmp'+os.sep+'_toc.yml', 'w') as outfile:
             continue
 
         for dir in dirs:
-            if dir.startswith('.'):
+            if dir.startswith('.') or not (os.path.isfile(os.sep.join((root, dir, "intro.md"))) or os.path.isfile(os.sep.join((root, dir, "intro.ipynb")))):
                 skiplist.append(os.sep.join((root, dir)))
         if root.startswith(tuple(skiplist)):
             continue
@@ -100,7 +100,7 @@ with open('_tmp'+os.sep+'_toc.yml', 'w') as outfile:
                                               os.sep.join(('_tmp',
                                                            '_build',
                                                            'html'))))
-        title = root.split(os.sep)[-1].title()
+        title = root.split(os.sep)[-1].title().replace('_', ' ')
         if 'intro.md' in files:
             filepath = os.sep.join((root, 'intro.md'))
             level = filepath.count(os.sep)
