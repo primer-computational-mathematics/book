@@ -5,6 +5,23 @@ import os
 import glob
 from string import Template
 import shutil
+import io
+from nbformat import read
+import re
+
+
+def nb_title(fname):
+    with io.open(fname, 'r', encoding='utf-8') as f:
+        nb = read(f, 4)
+
+    for cell in nb.cells:
+        if cell.cell_type == "markdown":
+            title = re.search("# (.*?)\n", cell['source'])\
+
+            if title is not None:
+                title = title.group().split("#")[-1].strip()
+                return title
+
 
 # remove any previous attempts
 if os.path.isdir('_tmp'):
@@ -121,7 +138,9 @@ with open('_tmp'+os.sep+'_toc.yml', 'w') as outfile:
             filepath = os.sep.join((root, file))
             level = filepath.count(os.sep)
             if ext in ('.ipynb',):
-                title = name.replace('_', ' ').title()
+                title = nb_title(filepath)
+                if title is None:
+                    title = name.replace('_', ' ').title()
 
                 outfile.write(leveltext[level].substitute(path=fix(filepath),
                                                           title=title))
