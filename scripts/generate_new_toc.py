@@ -149,3 +149,6 @@ with open('_tmp'+os.sep+'_toc.yml', 'w') as outfile:
     fix('genindex.rst')
     outfile.write(chapter.substitute(path='genindex.rst',
                                      title='Index'))
+
+print('_toc.yml generated. Directories skipped: ')
+[print(i, directory) for i, directory in enumerate(skiplist, 1)]
