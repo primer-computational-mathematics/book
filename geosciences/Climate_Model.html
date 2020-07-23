@@ -213,10 +213,6 @@
     <ul class="nav section-nav flex-column">
     
         <li class="nav-item toc-entry toc-h2">
-            <a href="#heat-capacity" class="nav-link">Heat Capacity</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
             <a href="#an-oversimplified-model" class="nav-link">An oversimplified model</a><ul class="nav section-nav flex-column">
                 
         <li class="nav-item toc-entry toc-h3">
@@ -285,6 +281,7 @@
                 
   <div class="section" id="constructing-a-zero-dimensional-energy-balance-model">
 <h1>Constructing a zero-dimensional energy balance model<a class="headerlink" href="#constructing-a-zero-dimensional-energy-balance-model" title="Permalink to this headline">¶</a></h1>
+<p>Material from this module is from Practical 1 in the Climate module.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#import relevant modules</span>
@@ -295,16 +292,6 @@
 </pre></div>
 </div>
 </div>
-</div>
-<div class="section" id="heat-capacity">
-<h2>Heat Capacity<a class="headerlink" href="#heat-capacity" title="Permalink to this headline">¶</a></h2>
-<p>Heat capacity (C) is the energy (E) required to raise the temperature of a body of a material by 1˚C, independent of mass.</p>
-<p><span class="math notranslate nohighlight">\(C=\frac{E}{∆T}\)</span> <span class="math notranslate nohighlight">\(J˚C^{-1}\)</span></p>
-<p>where <span class="math notranslate nohighlight">\(∆T\)</span> is the change in temperature.</p>
-<p><b>Specific heat capacity (c)</b> is the energy needed to heat up 1kg of a material by 1˚C.</p>
-<p><span class="math notranslate nohighlight">\(c=\frac{E}{m∆T}\)</span> <span class="math notranslate nohighlight">\(Jkg^{-1}˚C^{-1}\)</span></p>
-<p>where m is the mass of the body of a material.</p>
-<p>Heat capacity of water &gt;&gt; ice &gt; air &gt; land.</p>
 </div>
 <div class="section" id="an-oversimplified-model">
 <h2>An oversimplified model<a class="headerlink" href="#an-oversimplified-model" title="Permalink to this headline">¶</a></h2>
@@ -386,7 +373,7 @@
 Even when albedo = 0.0, temperature on Earth would still only be 5˚C
 </pre></div>
 </div>
-<img alt="../_images/Climate_Model_4_1.png" src="../_images/Climate_Model_4_1.png" />
+<img alt="../_images/Climate_Model_3_1.png" src="../_images/Climate_Model_3_1.png" />
 </div>
 </div>
 <p>But the average temperature on Earth should be <b>14˚C</b>, a difference of 32˚C. Something must be seriously wrong.</p>
@@ -420,10 +407,14 @@ Even when albedo = 0.0, temperature on Earth would still only be 5˚C
 <p>Recall that <span class="math notranslate nohighlight">\(E_{in}=S_o\pi R_E^2(1-α)\)</span>, and <span class="math notranslate nohighlight">\(E_{in}=E_{out}\)</span>:</p>
 <div class="math notranslate nohighlight">
 \[S_o\pi R_E^2(1-α)=4\pi R_E^2εσT_K^{4}\]</div>
-<p>Eliminating <span class="math notranslate nohighlight">\(\pi\)</span> and <span class="math notranslate nohighlight">\(R_E^2\)</span> gives, and rearranging for <span class="math notranslate nohighlight">\(T_K\)</span> gives:</p>
+<p>Eliminating <span class="math notranslate nohighlight">\(\pi\)</span> and <span class="math notranslate nohighlight">\(R_E^2\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\frac{1}{4}S_o(1-α)=εσT_K^{4}\]</div>
+<p>In the equation above, LHS gives <b>energy flux density into the Earth</b>, and RHS gives <b>energy flux density out of the Earth</b>.</p>
+<p>Rearranging for <span class="math notranslate nohighlight">\(T_K\)</span> gives:</p>
 <div class="math notranslate nohighlight">
 \[T_K=(\frac{S_o(1-α)}{4εσ})^{\frac{1}{4}}\]</div>
-<p>Note: ε must be between 0 and 1, it should be 0.62 for Earth’s temperature to be 14˚C.</p>
+<p>Emissivity of the Earth is 0.62, with albedo of 0.3, its surface temperature becomes 14˚C. Therefore, the assumption that Earth’s albedo is 0.3 is valid.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># define a function to find the temperature with a given emissivity</span>
@@ -454,46 +445,18 @@ Even when albedo = 0.0, temperature on Earth would still only be 5˚C
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/Climate_Model_7_0.png" src="../_images/Climate_Model_7_0.png" />
+<img alt="../_images/Climate_Model_6_0.png" src="../_images/Climate_Model_6_0.png" />
 </div>
 </div>
-<p>At least now the temperature obtained is much more sensible.</p>
 </div>
 <div class="section" id="greenhouse-effect">
 <h2>Greenhouse effect<a class="headerlink" href="#greenhouse-effect" title="Permalink to this headline">¶</a></h2>
-<p>Let’s first use binomial expansion on the equation linking absolute temperature (<span class="math notranslate nohighlight">\(T_K\)</span>), temperature in degrees Celsius (<span class="math notranslate nohighlight">\(T_C\)</span>), and conversion constant from degrees Celsius to Kelvin (<span class="math notranslate nohighlight">\(T_o=273\)</span>).</p>
-<p>Recall that binomial expansion is <span class="math notranslate nohighlight">\((1+x)^{n}≈(1+nx)\)</span> when x&lt;&lt;1:</p>
+<p>Accounting for greenhouse effect, the temperature on Earth is calculated as following:</p>
 <div class="math notranslate nohighlight">
-\[T_K=(T_o+T_C)\]</div>
-<div class="math notranslate nohighlight">
-\[T_K^4=(T_o+T_C)^4=T_o^4(1+\frac{T_C}{T_o})^{4}≈T_o^4(1+4\frac{T_C}{T_o})\]</div>
-<p>Substitute <span class="math notranslate nohighlight">\(T_K\)</span> into Stefan-Boltzmann Law:</p>
-<div class="math notranslate nohighlight">
-\[M_{out}=σT_K^{4}≈σ(T_o^4(1+4\frac{T_C}{T_o}))\]</div>
-<p>In terms of total energy flux:</p>
-<div class="math notranslate nohighlight">
-\[E_{out}=σ4\pi R_E^{2}(T_o^4(1+4\frac{T_C}{T_o}))\]</div>
-<p>Including emissivity:</p>
-<div class="math notranslate nohighlight">
-\[E_{out}=εσ4\pi R_E^{2}(T_o^4(1+4\frac{T_C}{T_o}))\]</div>
-<div class="math notranslate nohighlight">
-\[=4\pi R_E^{2}(εσT_o^{4}+4εσT_o^{3}T_C)\]</div>
-<div class="math notranslate nohighlight">
-\[=4\pi R_E^{2}(a+bT_C)\]</div>
+\[T_C=\frac{\frac{1}{4}S_o(1-α)-a}{b}\]</div>
 <p>where <span class="math notranslate nohighlight">\(a=εσT_o^{4}\)</span> and <span class="math notranslate nohighlight">\(b=4εσT_o^{3}\)</span> are constants.</p>
 <p>a is the constant coefficient for longwave radiation <span class="math notranslate nohighlight">\(= εσT_o^{4}\)</span> <span class="math notranslate nohighlight">\(Wm^{-2}\)</span></p>
 <p>b is temperature-dependent coefficient for longwave radiation <span class="math notranslate nohighlight">\(= 4εσT_o^{3}\)</span> <span class="math notranslate nohighlight">\(Wm^{-2}˚C^{-1}\)</span></p>
-<p>Since <span class="math notranslate nohighlight">\(E_{in}=E_{out}\)</span> at radiative equilibrium:</p>
-<div class="math notranslate nohighlight">
-\[S_o\pi R_E^2(1-α)=4\pi R_E^{2}(a+bT_C)\]</div>
-<div class="math notranslate nohighlight">
-\[S_o(1-α)=4(a+bT_c)\]</div>
-<div class="math notranslate nohighlight">
-\[\frac{1}{4}S_o(1-α)=a+bT_c\]</div>
-<p>In the equation above, LHS gives <b>energy flux density into the Earth</b>, and RHS gives <b>energy flux density out of the Earth</b>.</p>
-<p>Rearrange for <span class="math notranslate nohighlight">\(T_C\)</span> gives:</p>
-<div class="math notranslate nohighlight">
-\[T_C=\frac{\frac{1}{4}S_o(1-α)-a}{b}\]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># find values of a and b when emissivity = 0.62</span>
@@ -552,17 +515,17 @@ Even when albedo = 0.0, temperature on Earth would still only be 5˚C
 <div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Accounting for greenhouse effect, when emissivity is 0.62, temperature now is 15˚C
 </pre></div>
 </div>
-<img alt="../_images/Climate_Model_11_1.png" src="../_images/Climate_Model_11_1.png" />
+<img alt="../_images/Climate_Model_9_1.png" src="../_images/Climate_Model_9_1.png" />
 </div>
 </div>
 <p>As you can see, for the same set of values of emissivity, the temperature now is higher since the greenhouse effect is taken into account.</p>
-<p>We can rewrite the equation above as:</p>
+<p>From above, we know that <span class="math notranslate nohighlight">\(M_{in}=\frac{1}{4}S_o(1-α)\)</span>, thus:</p>
 <div class="math notranslate nohighlight">
 \[T_C = \frac{M_{in}-a}{b} = \frac{M_{in}}{b}-\frac{a}{b}\]</div>
 <p>Since <span class="math notranslate nohighlight">\(\frac{a}{b}\)</span> is constant, we can write this in terms of change in temperature and change in incoming energy flux:</p>
 <div class="math notranslate nohighlight">
 \[∆T_C = \frac{∆M_{in}}{b}\]</div>
-<p>Therefore, the change in temperature is proportional to <b>radiative forcing</b>, the difference in energy flux density going in and out of the Earth.</p>
+<p>Therefore, the change in temperature is proportional to <b>radiative forcing</b>, the difference in energy flux density.</p>
 <p>The radiative forcing associated with CO<span class="math notranslate nohighlight">\(_{2}\)</span> gas of concentration [CO<span class="math notranslate nohighlight">\(_2\)</span>] compared to a base level concentration ot [CO<span class="math notranslate nohighlight">\(_2\)</span>]<span class="math notranslate nohighlight">\(_0\)</span> can be approximated by:</p>
 <div class="math notranslate nohighlight">
 \[∆M_{CO_2,in} = 5.35ln(\frac{[CO_2]}{[CO_2]_0})\]</div>
@@ -572,7 +535,7 @@ Even when albedo = 0.0, temperature on Earth would still only be 5˚C
 <p>Substituting this back into the equation fo <span class="math notranslate nohighlight">\(T_C\)</span>:</p>
 <div class="math notranslate nohighlight">
 \[∆T_{CO2} = \frac{3.7}{b}\]</div>
-<p>The change in temperature from doubling concentration of CO<span class="math notranslate nohighlight">\(_2\)</span> compared to pre-industrial levels is <b>climate sensibility</b>.</p>
+<p>The change in temperature from doubling concentration of CO<span class="math notranslate nohighlight">\(_2\)</span> compared to pre-industrial levels is <b>climate sensibility</b>, which leads to 1˚C of warming.</p>
 <p>Simplified approximations of radiative forcing caused by other greenhouse gases can be found in Table 3 in the paper <strong><a class="reference external" href="https://en.wikipedia.org/wiki/Planck%27s_law">Myhre et al.</a></strong></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -609,7 +572,7 @@ Even when albedo = 0.0, temperature on Earth would still only be 5˚C
 <div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>When CO2 concentration is doubled, temperature increases by 1˚C.
 </pre></div>
 </div>
-<img alt="../_images/Climate_Model_14_1.png" src="../_images/Climate_Model_14_1.png" />
+<img alt="../_images/Climate_Model_12_1.png" src="../_images/Climate_Model_12_1.png" />
 </div>
 </div>
 </div>
@@ -626,26 +589,10 @@ Even when albedo = 0.0, temperature on Earth would still only be 5˚C
 </div>
 <div class="section" id="restoring-equilibrium">
 <h2>Restoring equilibrium<a class="headerlink" href="#restoring-equilibrium" title="Permalink to this headline">¶</a></h2>
-<p>The <strong><a class="reference external" href="https://en.wikipedia.org/wiki/First_law_of_thermodynamics">first law of thermodynamics</a></strong> states that the total energy in an isolated system is constant.</p>
-<p>Treating the climate system as an isolated system, the rate of change in internal energy of the climate system must be balanced by the rate of net heating or cooling.</p>
-<p>From above, we derived that energy flux density absorbed <span class="math notranslate nohighlight">\(M_{in}=\frac{1}{4}S_o(1-α)\)</span>, and energy flux density out <span class="math notranslate nohighlight">\(M_{out}=(a+bT_C)\)</span>, thus net heating/cooling is:</p>
-<div class="math notranslate nohighlight">
-\[M_{in}-M_{out}=\frac{1}{4}S_o(1-α)-(a+bT_C)\]</div>
-<p>The change in temperature per unit area per unit time is <span class="math notranslate nohighlight">\(C\frac{dT}{dt}\)</span> (verify this by units).</p>
-<p>Change in temperature is equivalent to change in kinetic energy i.e. internal energy of the system.</p>
-<p>Therefore:</p>
-<div class="math notranslate nohighlight">
-\[C\frac{dT}{dt}=\frac{1}{4}S_o(1-α)-(a+bT_C)\]</div>
-<div class="math notranslate nohighlight">
-\[\frac{dT}{dt}=\frac{\frac{1}{4}S_o(1-α)-(a+bT_C)}{C}\]</div>
-<p>To simplify, since T_C is merely a specific value of T:</p>
-<div class="math notranslate nohighlight">
-\[\frac{dT}{dt}=\frac{\frac{1}{4}S_o(1-α)-(a+bT)}{C}\]</div>
-<p>This equation accounts for the fact that when the system is out of equilibrium for whatever reason, it will try and restore equilibrium.</p>
-<p>Solving this differential equation gives:</p>
+<p>After additional radiative forcings and change in energy flux density, the temperature on Earth changes to restore equilibrium. How temperature changes over time can be described by the following equation:</p>
 <div class="math notranslate nohighlight">
 \[T=\frac{1}{b}(\frac{1}{4}S_o(1-α)-a-CDe^{-\frac{b}{c}t})=\frac{1}{b}(M_{in}-a-CDe^{-\frac{b}{c}t})\]</div>
-<p>where D is an arbitrary constant determined by initial conditions:</p>
+<p>where D is an arbitrary constant determined by initial temperature <span class="math notranslate nohighlight">\(T_{t=0}\)</span>:</p>
 <div class="math notranslate nohighlight">
 \[D=\frac{\frac{1}{4}S_o(1-α)-a-T_{t=0}b}{C}\]</div>
 <div class="cell docutils container">
@@ -694,7 +641,7 @@ Even when albedo = 0.0, temperature on Earth would still only be 5˚C
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/Climate_Model_17_0.png" src="../_images/Climate_Model_17_0.png" />
+<img alt="../_images/Climate_Model_15_0.png" src="../_images/Climate_Model_15_0.png" />
 </div>
 </div>
 </div>
@@ -774,7 +721,7 @@ Even when albedo = 0.0, temperature on Earth would still only be 5˚C
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/Climate_Model_19_0.png" src="../_images/Climate_Model_19_0.png" />
+<img alt="../_images/Climate_Model_17_0.png" src="../_images/Climate_Model_17_0.png" />
 </div>
 </div>
 <p>In this case, the tipping point is between 7˚C and 8˚C, resulting in two different equilibrium temperatures.</p>
@@ -860,7 +807,7 @@ Please enter final CO2 concentration for projection 3 in ppm: 560
 Please enter final CO2 concentration for projection 4 in ppm: 1000
 </pre></div>
 </div>
-<img alt="../_images/Climate_Model_22_1.png" src="../_images/Climate_Model_22_1.png" />
+<img alt="../_images/Climate_Model_20_1.png" src="../_images/Climate_Model_20_1.png" />
 </div>
 </div>
 </div>
