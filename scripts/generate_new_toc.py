@@ -5,6 +5,23 @@ import os
 import glob
 from string import Template
 import shutil
+import io
+from nbformat import read
+import re
+
+
+def nb_title(fname):
+    with io.open(fname, 'r', encoding='utf-8') as f:
+        nb = read(f, 4)
+
+    for cell in nb.cells:
+        if cell.cell_type == "markdown":
+            title = re.search("# (.*?)\n", cell['source'])\
+
+            if title is not None:
+                title = title.group().split("#")[-1].strip()
+                return title
+
 
 # remove any previous attempts
 if os.path.isdir('_tmp'):
@@ -87,7 +104,7 @@ with open('_tmp'+os.sep+'_toc.yml', 'w') as outfile:
             continue
 
         for dir in dirs:
-            if dir.startswith('.'):
+            if dir.startswith('.') or not (os.path.isfile(os.sep.join((root, dir, "intro.md"))) or os.path.isfile(os.sep.join((root, dir, "intro.ipynb")))):
                 skiplist.append(os.sep.join((root, dir)))
         if root.startswith(tuple(skiplist)):
             continue
@@ -100,7 +117,7 @@ with open('_tmp'+os.sep+'_toc.yml', 'w') as outfile:
                                               os.sep.join(('_tmp',
                                                            '_build',
                                                            'html'))))
-        title = root.split(os.sep)[-1].title()
+        title = root.split(os.sep)[-1].title().replace('_', ' ')
         if 'intro.md' in files:
             filepath = os.sep.join((root, 'intro.md'))
             level = filepath.count(os.sep)
@@ -121,7 +138,9 @@ with open('_tmp'+os.sep+'_toc.yml', 'w') as outfile:
             filepath = os.sep.join((root, file))
             level = filepath.count(os.sep)
             if ext in ('.ipynb',):
-                title = name.replace('_', ' ').title()
+                title = nb_title(filepath)
+                if title is None:
+                    title = name.replace('_', ' ').title()
 
                 outfile.write(leveltext[level].substitute(path=fix(filepath),
                                                           title=title))
@@ -130,3 +149,6 @@ with open('_tmp'+os.sep+'_toc.yml', 'w') as outfile:
     fix('genindex.rst')
     outfile.write(chapter.substitute(path='genindex.rst',
                                      title='Index'))
+
+print('_toc.yml generated. Directories skipped: ')
+[print(i, directory) for i, directory in enumerate(skiplist, 1)]
