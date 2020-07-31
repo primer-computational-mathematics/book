@@ -19,7 +19,7 @@ def nb_title(fname):
             title = re.search("# (.*?)\n", cell['source'])\
 
             if title is not None:
-                title = title.group().split("#")[-1].strip()
+                title = title.group().split("#")[-1].strip().replace('"', r'\"')
                 return title
 
 
@@ -121,18 +121,18 @@ with open('_tmp'+os.sep+'_toc.yml', 'w') as outfile:
         if 'intro.md' in files:
             filepath = os.sep.join((root, 'intro.md'))
             level = filepath.count(os.sep)
-            
+
             outfile.write(leveltext[level-1].substitute(path=fix(filepath),
                                                           title=title))
             outfile.write("  "*(level-1)+'sections:\n')
         elif 'intro.ipynb' in files:
             filepath = os.sep.join((root, 'intro.ipynb'))
             level = filepath.count(os.sep)
-            
+
             outfile.write(leveltext[level-1].substitute(path=fix(filepath),
                                                           title=title))
             outfile.write("  "*(level-1)+'sections:\n')
-        
+
         for file in files:
             name, ext = os.path.splitext(file)
             filepath = os.sep.join((root, file))
