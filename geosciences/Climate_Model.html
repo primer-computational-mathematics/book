@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Constructing an energy balance model from Planck’s response &#8212; ESE Jupyter Material</title>
+    <title>Constructing an energy balance model &#8212; ESE Jupyter Material</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
     <link href="../_static/css/index.css" rel="stylesheet">
     <link rel="stylesheet" href="../_static/sphinx-book-theme.css" type="text/css" />
@@ -98,7 +98,7 @@
       <a href="Tides.html">Tides</a>
     </li>
     <li class="active">
-      <a href="">An oversimplified model</a>
+      <a href="">Planck response</a>
     </li>
     <li class="">
       <a href="Seismology.html">Downloading earthquake data</a>
@@ -229,7 +229,7 @@
     <ul class="nav section-nav flex-column">
     
         <li class="nav-item toc-entry toc-h2">
-            <a href="#an-oversimplified-model" class="nav-link">An oversimplified model</a><ul class="nav section-nav flex-column">
+            <a href="#planck-response" class="nav-link">Planck response</a><ul class="nav section-nav flex-column">
                 
         <li class="nav-item toc-entry toc-h3">
             <a href="#assumption-1" class="nav-link">Assumption 1</a>
@@ -251,7 +251,7 @@
         </li>
     
         <li class="nav-item toc-entry toc-h2">
-            <a href="#a-less-oversimplified-model" class="nav-link">A less oversimplified model</a>
+            <a href="#emissivity" class="nav-link">Emissivity</a>
         </li>
     
         <li class="nav-item toc-entry toc-h2">
@@ -295,8 +295,8 @@
         
               <div>
                 
-  <div class="section" id="constructing-an-energy-balance-model-from-planck-s-response">
-<h1>Constructing an energy balance model from Planck’s response<a class="headerlink" href="#constructing-an-energy-balance-model-from-planck-s-response" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="constructing-an-energy-balance-model">
+<h1>Constructing an energy balance model<a class="headerlink" href="#constructing-an-energy-balance-model" title="Permalink to this headline">¶</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#import relevant modules</span>
@@ -308,9 +308,9 @@
 </div>
 </div>
 </div>
-<div class="section" id="an-oversimplified-model">
-<h2>An oversimplified model<a class="headerlink" href="#an-oversimplified-model" title="Permalink to this headline">¶</a></h2>
-<p>The <b>energy flux density at the surface of the Earth</b> can be calculated from the <strong><a class="reference external" href="https://en.wikipedia.org/wiki/Inverse-square_law#:~:text=In%20science%2C%20an%20inverse%2Dsquare,source%20of%20that%20physical%20quantity.">inverse square law</a></strong>, given the power of the Sun <span class="math notranslate nohighlight">\(3.86\)</span>x<span class="math notranslate nohighlight">\(10^{26}W\)</span> (<span class="math notranslate nohighlight">\(E_S\)</span>), and the distance between the Sun and the Earth <span class="math notranslate nohighlight">\(1.5\)</span>x<span class="math notranslate nohighlight">\(10^{11}m\)</span> (<span class="math notranslate nohighlight">\(R\)</span>):</p>
+<div class="section" id="planck-response">
+<h2>Planck response<a class="headerlink" href="#planck-response" title="Permalink to this headline">¶</a></h2>
+<p>The <b>energy flux density at the surface of the Earth</b> can be calculated from the inverse square law, given the power of the Sun <span class="math notranslate nohighlight">\(3.86\)</span>x<span class="math notranslate nohighlight">\(10^{26}W\)</span> (<span class="math notranslate nohighlight">\(E_S\)</span>), and the distance between the Sun and the Earth <span class="math notranslate nohighlight">\(1.5\)</span>x<span class="math notranslate nohighlight">\(10^{11}m\)</span> (<span class="math notranslate nohighlight">\(R\)</span>):</p>
 <div class="math notranslate nohighlight">
 \[S_o=\frac{E_S}{4\pi R^{2}}\]</div>
 <p>This is the <b>solar constant <span class="math notranslate nohighlight">\(S_o\)</span></b>, which is roughly 1365 <span class="math notranslate nohighlight">\(Wm^{-2}\)</span>.</p>
@@ -322,20 +322,20 @@
 <li><p>It is in radiative equilibrium i.e. energy in = energy out</p></li>
 <li><p>Equal solar irradiation on the surface of the Earth</p></li>
 </ol>
-<p>Recall that albedo is the <b>reflectance of an object over all wavelengths</b>, which measures how well a surface reflects EM radiation. Its value is between 0 and 1, for example 0.1 means 10% of EM radiation incident on the object is reflected, so 90% of it is absorbed. Therefore, albedo is higher for <b>ice and snow (0.9)</b> than that for <b>water (0.06)</b>.</p>
-<p>From here, we can start by calculating the energy flux density on the surface of the Earth.</p>
-<p>Earth radius = <span class="math notranslate nohighlight">\(R_E\)</span>; albedo = <span class="math notranslate nohighlight">\(α\)</span></p>
-<p>We already know the energy flux density at the surface of the Earth = the solar constant <span class="math notranslate nohighlight">\(S_o\)</span>, so the energy flux density including albedo becomes <span class="math notranslate nohighlight">\(S_oA(1-α)\)</span>.</p>
+<p>Recall that albedo (α) is the <b>reflectance of an object over all wavelengths</b>, which measures how well a surface reflects EM radiation.</p>
+<p>We already know the energy flux density at the surface of the Earth = the solar constant <span class="math notranslate nohighlight">\(S_o\)</span>.</p>
 <p>Thus, the energy flux density (<span class="math notranslate nohighlight">\(Wm^{-2}\)</span>) into the Earth is:</p>
 <div class="math notranslate nohighlight">
 \[M_{in}=S_o(1-α)\]</div>
 <p>In terms of total energy flux (<span class="math notranslate nohighlight">\(W\)</span>):</p>
 <div class="math notranslate nohighlight">
 \[E_{in}=S_o\pi R_E^2(1-α)\]</div>
-<p>The energy flux density emitted is described by <strong><a class="reference external" href="https://en.wikipedia.org/wiki/Stefan%E2%80%93Boltzmann_law">Stefan-Boltzmann Law</a></strong>:</p>
+<p>where <span class="math notranslate nohighlight">\(R_E\)</span> is the radius of the Earth.</p>
+<p>The energy flux density emitted is described by Stefan-Boltzmann Law:</p>
 <div class="math notranslate nohighlight">
 \[M_{out}=σ𝑇_K^{4}\]</div>
-<p>where σ=<b>Stefan-Boltzmann constant</b>=<span class="math notranslate nohighlight">\(5.6697\)</span>x<span class="math notranslate nohighlight">\(10^{-8}Wm^{-2}K^{-4}\)</span>, and <span class="math notranslate nohighlight">\(T_K\)</span> is <b>absolute temperature</b>. In terms of total energy flux:</p>
+<p>where σ=<b>Stefan-Boltzmann constant</b>=<span class="math notranslate nohighlight">\(5.67\)</span>x<span class="math notranslate nohighlight">\(10^{-8}Wm^{-2}K^{-4}\)</span>, and <span class="math notranslate nohighlight">\(T_K\)</span> is <b>absolute temperature</b>.</p>
+<p>In terms of total energy flux:</p>
 <div class="math notranslate nohighlight">
 \[E_{out}=4\pi R_E^2σ𝑇_K^{4}\]</div>
 <p>At <b>radiative equilibrium</b>, energy absorbed = energy emitted, thus:</p>
@@ -343,10 +343,10 @@
 \[E_{in}=E_{out}\]</div>
 <div class="math notranslate nohighlight">
 \[S_o\pi R_E^2(1-α)=4\pi R_E^{2}σ𝑇_K^{4}\]</div>
-<p>Eliminating <span class="math notranslate nohighlight">\(\pi\)</span> and <span class="math notranslate nohighlight">\(R_E\)</span> gives:</p>
 <div class="math notranslate nohighlight">
-\[\frac{S_o(1-α)}{4}=σ𝑇_K^{4}\]</div>
-<p>Rearranging this equation gives the temperature at the surface of the Earth:</p>
+\[\frac{1}{4}S_o(1-α)=σ𝑇_K^{4}\]</div>
+<p>Recall <span class="math notranslate nohighlight">\(σ𝑇_K^{4}=M_{out}\)</span>, thus <span class="math notranslate nohighlight">\(\frac{1}{4}S_o(1-α)=M_{in}\)</span>.</p>
+<p>Rearranging for <span class="math notranslate nohighlight">\(T_K\)</span>:</p>
 <div class="math notranslate nohighlight">
 \[T_K=(\frac{S_o(1-α)}{4σ})^{\frac{1}{4}}\]</div>
 <p>Substituting albedo=0.3, temperature on the surface of the Earth is <b>-18˚C</b>.</p>
@@ -357,41 +357,19 @@
 <span class="k">def</span> <span class="nf">find_temp</span><span class="p">(</span><span class="n">al</span><span class="p">,</span> <span class="n">S_o</span><span class="o">=</span><span class="mi">1365</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mf">5.67e-8</span><span class="p">):</span>
     <span class="k">return</span> <span class="p">((</span><span class="n">S_o</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">al</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="mi">4</span><span class="o">*</span><span class="n">s</span><span class="p">))</span><span class="o">**</span><span class="mf">0.25</span><span class="o">-</span><span class="mi">273</span>
 
-<span class="c1"># make a list of albedo between 0 and 1</span>
-<span class="n">albedo</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.01</span><span class="o">*</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">101</span><span class="p">)])</span>
+<span class="n">al</span> <span class="o">=</span> <span class="mf">0.3</span>
 
-<span class="c1"># calculate temperature for each albedo</span>
-<span class="n">temp</span> <span class="o">=</span> <span class="n">find_temp</span><span class="p">(</span><span class="n">albedo</span><span class="p">)</span>
-
-<span class="c1"># set up figure</span>
-<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
-<span class="n">ax1</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">margins</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
-
-<span class="c1"># plot figure</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">albedo</span><span class="p">,</span> <span class="n">temp</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">albedo</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">temp</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;ko&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;albedo=</span><span class="si">%.1f</span><span class="s1">, temperature=%.f˚C&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">albedo</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">temp</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">albedo</span><span class="p">[</span><span class="mi">29</span><span class="p">],</span> <span class="n">temp</span><span class="p">[</span><span class="mi">29</span><span class="p">],</span> <span class="s1">&#39;ro&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;albedo=</span><span class="si">%.1f</span><span class="s1">, temperature=%.f˚C&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">albedo</span><span class="p">[</span><span class="mi">29</span><span class="p">],</span> <span class="n">temp</span><span class="p">[</span><span class="mi">29</span><span class="p">]))</span> 
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Albedo&#39;</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Temperature (Degrees Celsius)&#39;</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;A plot of temperature vs emissivity when albedo=0.3&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;When albedo = </span><span class="si">%.1f</span><span class="s2">, temperature on Earth is %.d˚C.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">albedo</span><span class="p">[</span><span class="mi">29</span><span class="p">],</span> <span class="n">temp</span><span class="p">[</span><span class="mi">29</span><span class="p">]))</span> 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Even when albedo = </span><span class="si">%.1f</span><span class="s2">, temperature on Earth would still only be %.d˚C&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">albedo</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">temp</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;When albedo = </span><span class="si">%.1f</span><span class="s2">, surface temperature on Earth would be %.d˚C.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">al</span><span class="p">,</span> <span class="n">find_temp</span><span class="p">(</span><span class="n">al</span><span class="p">)))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>When albedo = 0.3, temperature on Earth is -17˚C.
-Even when albedo = 0.0, temperature on Earth would still only be 5˚C
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>When albedo = 0.3, surface temperature on Earth would be -18˚C.
 </pre></div>
 </div>
-<img alt="../_images/Climate_Model_3_1.png" src="../_images/Climate_Model_3_1.png" />
 </div>
 </div>
-<p>But the average temperature on Earth should be <b>14˚C</b>, a difference of 32˚C. Something must be seriously wrong.</p>
+<p>But the average temperature on Earth should be around <b>14˚C</b>, so something in the model must be wrong.</p>
 <p>Actually, some of the assumptions are not valid and are too simple.</p>
 <div class="section" id="assumption-1">
 <h3>Assumption 1<a class="headerlink" href="#assumption-1" title="Permalink to this headline">¶</a></h3>
@@ -410,23 +388,15 @@ Even when albedo = 0.0, temperature on Earth would still only be 5˚C
 <p>The Earth is a sphere, so heat absorbtion (and heat emission) is not uniform.</p>
 </div>
 </div>
-<div class="section" id="a-less-oversimplified-model">
-<h2>A less oversimplified model<a class="headerlink" href="#a-less-oversimplified-model" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="emissivity">
+<h2>Emissivity<a class="headerlink" href="#emissivity" title="Permalink to this headline">¶</a></h2>
 <p>To improve the model and address assumption 1, <b>emissivity ε</b> is introduced to describe the <b>difference in the range of radiation emitted between the object and an ideal black body</b>.</p>
 <p>Including this ‘fudge factor’, Stefan-Boltzmann Law becomes:</p>
 <div class="math notranslate nohighlight">
 \[M_{out}=εσT_K^{4}\]</div>
-<p>Or in terms of total energy flux:</p>
-<div class="math notranslate nohighlight">
-\[E_{out}=4\pi R_E^2εσT_K^{4}\]</div>
-<p>Recall that <span class="math notranslate nohighlight">\(E_{in}=S_o\pi R_E^2(1-α)\)</span>, and <span class="math notranslate nohighlight">\(E_{in}=E_{out}\)</span>:</p>
-<div class="math notranslate nohighlight">
-\[S_o\pi R_E^2(1-α)=4\pi R_E^2εσT_K^{4}\]</div>
-<p>Eliminating <span class="math notranslate nohighlight">\(\pi\)</span> and <span class="math notranslate nohighlight">\(R_E^2\)</span>:</p>
+<p>Since <span class="math notranslate nohighlight">\(M_{in}=M_{out}\)</span>,</p>
 <div class="math notranslate nohighlight">
 \[\frac{1}{4}S_o(1-α)=εσT_K^{4}\]</div>
-<p>In the equation above, LHS gives <b>energy flux density into the Earth</b>, and RHS gives <b>energy flux density out of the Earth</b>.</p>
-<p>Rearranging for <span class="math notranslate nohighlight">\(T_K\)</span>:</p>
 <div class="math notranslate nohighlight">
 \[T_K=(\frac{S_o(1-α)}{4εσ})^{\frac{1}{4}}\]</div>
 <p>It is found that the emissivity of the Earth is 0.62, and substituting this into the equation gives 14˚C, proving that albedo=0.3 is a valid assumption.</p>
@@ -436,70 +406,56 @@ Even when albedo = 0.0, temperature on Earth would still only be 5˚C
 <span class="k">def</span> <span class="nf">find_new_temp</span><span class="p">(</span><span class="n">al</span><span class="p">,</span> <span class="n">S_o</span><span class="o">=</span><span class="mi">1365</span><span class="p">,</span> <span class="n">e</span><span class="o">=</span><span class="mf">0.62</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mf">5.67e-8</span><span class="p">):</span>
     <span class="k">return</span> <span class="p">((</span><span class="n">S_o</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">al</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="mi">4</span><span class="o">*</span><span class="n">e</span><span class="o">*</span><span class="n">s</span><span class="p">))</span><span class="o">**</span><span class="mf">0.25</span><span class="o">-</span><span class="mi">273</span>
 
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Including emissivity, temperature on Earth would be %.d˚C.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">find_new_temp</span><span class="p">(</span><span class="mf">0.3</span><span class="p">)))</span>
+
 <span class="c1"># make a list of values of emissivity between 0.01 and 1</span>
 <span class="n">albedo</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.01</span><span class="o">*</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">101</span><span class="p">)])</span>
 
 <span class="c1">#calculate temperature with emissivity</span>
 <span class="n">new_temp</span> <span class="o">=</span> <span class="n">find_new_temp</span><span class="p">(</span><span class="n">albedo</span><span class="p">)</span>
 
-<span class="c1"># set up figure</span>
-<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
-<span class="n">ax1</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">margins</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
-
 <span class="c1"># plot figure</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">albedo</span><span class="p">,</span> <span class="n">new_temp</span><span class="p">,</span> <span class="s1">&#39;k&#39;</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">albedo</span><span class="p">[</span><span class="mi">29</span><span class="p">],</span> <span class="n">new_temp</span><span class="p">[</span><span class="mi">29</span><span class="p">],</span> <span class="s1">&#39;ro&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;albedo=</span><span class="si">%.1f</span><span class="s1">, temperature=%.d˚C&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">albedo</span><span class="p">[</span><span class="mi">29</span><span class="p">],</span> <span class="n">new_temp</span><span class="p">[</span><span class="mi">29</span><span class="p">]))</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Albedo&#39;</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Temperature (Degrees Celsius)&#39;</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;A plot of temperature vs albedo when emissivity=0.62&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">albedo</span><span class="p">,</span> <span class="n">new_temp</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">albedo</span><span class="p">[</span><span class="mi">29</span><span class="p">],</span> <span class="n">new_temp</span><span class="p">[</span><span class="mi">29</span><span class="p">],</span> <span class="s1">&#39;ro&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;albedo=</span><span class="si">%.1f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">albedo</span><span class="p">[</span><span class="mi">29</span><span class="p">]))</span> 
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Albedo&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Temperature (Degrees Celsius)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;A plot of temperature vs emissivity when emissivity=0.62&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/Climate_Model_6_0.png" src="../_images/Climate_Model_6_0.png" />
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Including emissivity, temperature on Earth would be 14˚C.
+</pre></div>
+</div>
+<img alt="../_images/Climate_Model_6_1.png" src="../_images/Climate_Model_6_1.png" />
 </div>
 </div>
 </div>
 <div class="section" id="greenhouse-effect">
 <h2>Greenhouse effect<a class="headerlink" href="#greenhouse-effect" title="Permalink to this headline">¶</a></h2>
-<p>Let’s first use binomial expansion on the equation linking absolute temperature (<span class="math notranslate nohighlight">\(T_K\)</span>), temperature in degrees Celsius (<span class="math notranslate nohighlight">\(T_C\)</span>), and conversion constant from degrees Celsius to Kelvin (<span class="math notranslate nohighlight">\(T_o=273\)</span>).</p>
-<p>Recall that binomial expansion is <span class="math notranslate nohighlight">\((1+x)^{n}≈(1+nx)\)</span> when x&lt;&lt;1:</p>
+<p>To include greenhouse effect into the model, let’s first use binomial expansion on the equation linking absolute temperature (<span class="math notranslate nohighlight">\(T_K\)</span>), temperature in degrees Celsius (<span class="math notranslate nohighlight">\(T_C\)</span>), and conversion constant from degrees Celsius to Kelvin (<span class="math notranslate nohighlight">\(T_o=273\)</span>).</p>
 <div class="math notranslate nohighlight">
 \[T_K=(T_o+T_C)\]</div>
+<p>Recall that binomial expansion is <span class="math notranslate nohighlight">\((1+x)^{n}≈(1+nx)\)</span> when x&lt;&lt;1:</p>
 <div class="math notranslate nohighlight">
-\[T_K^4=(T_o+T_C)^4=T_o^4(1+\frac{T_C}{T_o})^{4}≈T_o^4(1+4\frac{T_C}{T_o})\]</div>
-<p>Substitute <span class="math notranslate nohighlight">\(T_K\)</span> into Stefan-Boltzmann Law:</p>
+\[T_K^4≈T_o^4(1+4\frac{T_C}{T_o})\]</div>
+<p>Substitute <span class="math notranslate nohighlight">\(T_K\)</span> and including emissivity into Stefan-Boltzmann Law:</p>
 <div class="math notranslate nohighlight">
-\[M_{out}=σT_K^{4}≈σ(T_o^4(1+4\frac{T_C}{T_o}))\]</div>
-<p>In terms of total energy flux:</p>
+\[M_{out}=εσ(T_o^4(1+4\frac{T_C}{T_o}))\]</div>
 <div class="math notranslate nohighlight">
-\[E_{out}=σ4\pi R_E^{2}(T_o^4(1+4\frac{T_C}{T_o}))\]</div>
-<p>Including emissivity:</p>
-<div class="math notranslate nohighlight">
-\[E_{out}=εσ4\pi R_E^{2}(T_o^4(1+4\frac{T_C}{T_o}))\]</div>
-<div class="math notranslate nohighlight">
-\[=4\pi R_E^{2}(εσT_o^{4}+4εσT_o^{3}T_C)\]</div>
-<div class="math notranslate nohighlight">
-\[=4\pi R_E^{2}(a+bT_C)\]</div>
-<p>where <span class="math notranslate nohighlight">\(a=εσT_o^{4}\)</span> and <span class="math notranslate nohighlight">\(b=4εσT_o^{3}\)</span> are constants.</p>
+\[=a+bT_C\]</div>
 <p>a is the constant coefficient for longwave radiation <span class="math notranslate nohighlight">\(= εσT_o^{4}=195Wm^{-2}\)</span></p>
 <p>b is temperature-dependent coefficient for longwave radiation <span class="math notranslate nohighlight">\(= 4εσT_o^{3}=2.9Wm^{-2}˚C^{-1}\)</span></p>
-<p>Since <span class="math notranslate nohighlight">\(E_{in}=E_{out}\)</span> at radiative equilibrium:</p>
+<p>Since <span class="math notranslate nohighlight">\(M_{in}=M_{out}\)</span>,</p>
 <div class="math notranslate nohighlight">
-\[S_o\pi R_E^2(1-α)=4\pi R_E^{2}(a+bT_C)\]</div>
-<p>Eliminating <span class="math notranslate nohighlight">\(\pi\)</span> and <span class="math notranslate nohighlight">\(R_E^2\)</span>:</p>
-<div class="math notranslate nohighlight">
-\[S_o(1-α)=4(a+bT_c)\]</div>
-<div class="math notranslate nohighlight">
-\[\frac{1}{4}S_o(1-α)=a+bT_c\]</div>
-<p>In the equation above, LHS gives <b>energy flux density into the Earth</b>, and RHS gives <b>energy flux density out of the Earth</b> accounting for greenhouse effect.</p>
-<p>Rearrange for <span class="math notranslate nohighlight">\(T_C\)</span> gives:</p>
+\[\frac{1}{4}S_o(1-α)=a+bT_C\]</div>
 <div class="math notranslate nohighlight">
 \[T_C=\frac{\frac{1}{4}S_o(1-α)-a}{b}\]</div>
-<p>As you’ll see below, for the same set of values of albedo, the temperature now is higher.</p>
+<p>As you can see below, for the same set of values of albedo, the temperature now is higher. In the case for albedo=0.3, temperature becomes 15˚C.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># define function for calculating T_C with a given emissivity</span>
@@ -508,30 +464,27 @@ Even when albedo = 0.0, temperature on Earth would still only be 5˚C
     <span class="n">b</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">e</span> <span class="o">*</span> <span class="n">s</span> <span class="o">*</span> <span class="n">T_o</span><span class="o">**</span><span class="mi">3</span>
     <span class="k">return</span> <span class="p">(</span><span class="mf">0.25</span><span class="o">*</span><span class="n">S_o</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">al</span><span class="p">)</span><span class="o">-</span><span class="n">a</span><span class="p">)</span><span class="o">/</span><span class="n">b</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Accounting for greenhouse effect, when albedo is 0.3, temperature now is %.d˚C&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">find_TC</span><span class="p">(</span><span class="mf">0.3</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Accounting for greenhouse effect, temperature on Earth would be %.d˚C.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">find_TC</span><span class="p">(</span><span class="mf">0.3</span><span class="p">)))</span>
 
 <span class="c1"># make a list of albedo between 0 and 1</span>
 <span class="n">al</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.01</span><span class="o">*</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">101</span><span class="p">)])</span>
 <span class="n">T_C</span> <span class="o">=</span> <span class="n">find_TC</span><span class="p">(</span><span class="n">al</span><span class="p">)</span>
 
-<span class="c1"># set up figure</span>
-<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
-<span class="n">ax1</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">margins</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
-
 <span class="c1"># plot figure</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">al</span><span class="p">,</span> <span class="n">T_C</span><span class="p">,</span> <span class="s1">&#39;k&#39;</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">al</span><span class="p">[</span><span class="mi">29</span><span class="p">],</span> <span class="n">T_C</span><span class="p">[</span><span class="mi">29</span><span class="p">],</span> <span class="s1">&#39;ro&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;albedo=</span><span class="si">%.1f</span><span class="s1">, temperature=%.d˚C&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">al</span><span class="p">[</span><span class="mi">29</span><span class="p">],</span> <span class="n">T_C</span><span class="p">[</span><span class="mi">29</span><span class="p">]))</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Albedo&#39;</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Temperature (Degrees Celsius)&#39;</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;A plot of temperature vs albedo when emissivity=0.62 including greenhouse effect&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">al</span><span class="p">,</span> <span class="n">T_C</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">al</span><span class="p">[</span><span class="mi">29</span><span class="p">],</span> <span class="n">T_C</span><span class="p">[</span><span class="mi">29</span><span class="p">],</span> <span class="s1">&#39;ro&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;albedo=</span><span class="si">%.1f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">al</span><span class="p">[</span><span class="mi">29</span><span class="p">]))</span> 
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Albedo&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Temperature (Degrees Celsius)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;A plot of temperature vs emissivity when albedo=0.3 including greenhouse effect&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Accounting for greenhouse effect, when albedo is 0.3, temperature now is 15˚C
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Accounting for greenhouse effect, temperature on Earth would be 15˚C.
 </pre></div>
 </div>
 <img alt="../_images/Climate_Model_8_1.png" src="../_images/Climate_Model_8_1.png" />
@@ -540,20 +493,17 @@ Even when albedo = 0.0, temperature on Earth would still only be 5˚C
 <p>We can rewrite the equation above as:</p>
 <div class="math notranslate nohighlight">
 \[T_C = \frac{M_{in}-a}{b} = \frac{M_{in}}{b}-\frac{a}{b}\]</div>
-<p>Since <span class="math notranslate nohighlight">\(\frac{a}{b}\)</span> is constant, we can write this in terms of change in temperature and change in incoming energy flux:</p>
 <div class="math notranslate nohighlight">
 \[∆T_C = \frac{∆M_{in}}{b}\]</div>
-<p>Therefore, the change in temperature is proportional to <b>radiative forcing</b> of the greenhouse gas, the difference in energy flux density going in and out of the Earth compared to before that greenhouse gas is added.</p>
+<p><span class="math notranslate nohighlight">\(∆M_{in}\)</span> is the <b>radiative forcing</b> of a greenhouse gas, the increase in energy flux density caused by that particular greenhouse gas.</p>
 <p>The radiative forcing associated with CO<span class="math notranslate nohighlight">\(_{2}\)</span> gas of concentration [CO<span class="math notranslate nohighlight">\(_2\)</span>] compared to a base level concentration ot [CO<span class="math notranslate nohighlight">\(_2\)</span>]<span class="math notranslate nohighlight">\(_0\)</span> can be approximated by:</p>
 <div class="math notranslate nohighlight">
 \[∆M_{CO_2,in} = 5.35ln(\frac{[CO_2]}{[CO_2]_0})\]</div>
 <p>For a doubling of CO<span class="math notranslate nohighlight">\(_2\)</span>, the radiative forcing would be:</p>
 <div class="math notranslate nohighlight">
 \[∆M_{CO_2,in} = 5.35ln(2) = 3.7 Wm^{-2}\]</div>
-<p>Substituting this back into the equation fo <span class="math notranslate nohighlight">\(T_C\)</span>:</p>
-<div class="math notranslate nohighlight">
-\[∆T_{CO2} = \frac{3.7}{b}\]</div>
-<p>The change in temperature from doubling concentration of CO<span class="math notranslate nohighlight">\(_2\)</span> compared to a base level is <b>climate sensibility</b>. For the study of climate change, this base level is pre-industrial level CO<span class="math notranslate nohighlight">\(_2\)</span> concentration of 280ppm.</p>
+<p>Thus, when CO<span class="math notranslate nohighlight">\(_2\)</span> doubles, <span class="math notranslate nohighlight">\(∆T_{CO2} = \frac{3.7}{b} = \frac{3.7}{2.9} ≈ 1˚C\)</span></p>
+<p>This is <b>climate sensibility</b>, the change in temperature caused by doubling CO<span class="math notranslate nohighlight">\(_2\)</span> concentration compared to a base level. In the study of climate change, this base level is pre-industrial CO<span class="math notranslate nohighlight">\(_2\)</span> concentration of 280ppm.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">find_newT</span><span class="p">(</span><span class="n">CO2_now</span><span class="p">,</span> <span class="n">CO2_initial</span><span class="o">=</span><span class="mi">280</span><span class="p">,</span> <span class="n">e</span><span class="o">=</span><span class="mf">0.62</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mf">5.67e-8</span><span class="p">,</span> <span class="n">T_o</span><span class="o">=</span><span class="mi">273</span><span class="p">,</span> <span class="n">S_o</span><span class="o">=</span><span class="mi">1365</span><span class="p">,</span> <span class="n">al</span><span class="o">=</span><span class="mf">0.3</span><span class="p">):</span>
@@ -566,28 +516,23 @@ Even when albedo = 0.0, temperature on Earth would still only be 5˚C
 <span class="n">CO2_now</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1000</span><span class="p">)])</span>
 <span class="n">temp_now</span> <span class="o">=</span> <span class="n">find_newT</span><span class="p">(</span><span class="n">CO2_now</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;When CO2 concentration is doubled compared to pre-industrial levels, temperature increases by %.d˚C.&quot;</span> 
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;When CO2 concentration reaches 560ppm, double that of pre-industrial level, temperature increases by %.d˚C.&quot;</span> 
       <span class="o">%</span> <span class="p">(</span><span class="n">temp_now</span><span class="p">[</span><span class="mi">559</span><span class="p">]</span><span class="o">-</span><span class="n">temp_now</span><span class="p">[</span><span class="mi">279</span><span class="p">]))</span>
 
-<span class="c1"># set up figure</span>
-<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
-<span class="n">ax1</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">margins</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
-
-<span class="c1"># plot figure</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">CO2_now</span><span class="p">,</span> <span class="n">temp_now</span><span class="p">,</span> <span class="s1">&#39;k&#39;</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">CO2_now</span><span class="p">[</span><span class="mi">279</span><span class="p">],</span> <span class="n">temp_now</span><span class="p">[</span><span class="mi">279</span><span class="p">],</span> <span class="s1">&#39;ro&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;pre-industrial CO2 = %.dppm, temperature=%.d˚C&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">CO2_now</span><span class="p">[</span><span class="mi">279</span><span class="p">],</span> <span class="n">temp_now</span><span class="p">[</span><span class="mi">279</span><span class="p">]))</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">CO2_now</span><span class="p">[</span><span class="mi">559</span><span class="p">],</span> <span class="n">temp_now</span><span class="p">[</span><span class="mi">559</span><span class="p">],</span> <span class="s1">&#39;bo&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;double CO2 = %.dppm, temperature=%.d˚C&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">CO2_now</span><span class="p">[</span><span class="mi">559</span><span class="p">],</span> <span class="n">temp_now</span><span class="p">[</span><span class="mi">559</span><span class="p">]))</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;CO2 concentration (ppm)&#39;</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Temperature (Degrees Celsius)&#39;</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;A plot of CO2 concentration vs temperature when albedo=0.3 and emissivity=0.62&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">CO2_now</span><span class="p">,</span> <span class="n">temp_now</span><span class="p">,</span> <span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">CO2_now</span><span class="p">[</span><span class="mi">279</span><span class="p">],</span> <span class="n">temp_now</span><span class="p">[</span><span class="mi">279</span><span class="p">],</span> <span class="s1">&#39;ro&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;pre-industrial CO2 = %.dppm, temperature=%.d˚C&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">CO2_now</span><span class="p">[</span><span class="mi">279</span><span class="p">],</span> <span class="n">temp_now</span><span class="p">[</span><span class="mi">279</span><span class="p">]))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">CO2_now</span><span class="p">[</span><span class="mi">559</span><span class="p">],</span> <span class="n">temp_now</span><span class="p">[</span><span class="mi">559</span><span class="p">],</span> <span class="s1">&#39;bo&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;double CO2 = %.dppm, temperature=%.d˚C&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">CO2_now</span><span class="p">[</span><span class="mi">559</span><span class="p">],</span> <span class="n">temp_now</span><span class="p">[</span><span class="mi">559</span><span class="p">]))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;CO2 concentration (ppm)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Temperature (Degrees Celsius)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;A plot of CO2 concentration vs temperature when albedo=0.3 and emissivity=0.62&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>When CO2 concentration is doubled compared to pre-industrial levels, temperature increases by 1˚C.
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>When CO2 concentration reaches 560ppm, double that of pre-industrial level, temperature increases by 1˚C.
 </pre></div>
 </div>
 <img alt="../_images/Climate_Model_10_1.png" src="../_images/Climate_Model_10_1.png" />
@@ -596,128 +541,74 @@ Even when albedo = 0.0, temperature on Earth would still only be 5˚C
 </div>
 <div class="section" id="storing-heat">
 <h2>Storing heat<a class="headerlink" href="#storing-heat" title="Permalink to this headline">¶</a></h2>
-<p>Recall that heat capacity (C) is the energy (E) required to raise the temperature of a body of a material by 1˚C, independent of mass.</p>
-<p><span class="math notranslate nohighlight">\(C=\frac{E}{∆T}\)</span> <span class="math notranslate nohighlight">\(J˚C^{-1}\)</span></p>
 <p>Given that most of the temperature change is due to the heat exchange with the top 70m layer of the ocean, we’ll assume the contribution from land and deep ocean to heat storage is negligible, and that the ocean is 70m deep.</p>
-<p>The density of seawater <span class="math notranslate nohighlight">\(ρ=1025kgm^{-3}\)</span>, specific heat capacity of water <span class="math notranslate nohighlight">\(c=4200Jkg^{-1}˚C^{-1}\)</span>, the fraction (<span class="math notranslate nohighlight">\(f\)</span>) which the Earth’s surface is covered by ocean (70%), and depth of the ocean (<span class="math notranslate nohighlight">\(d\)</span>), we can calculate the heat capacity of the ocean per meter squared:</p>
+<p>Given that the density of seawater <span class="math notranslate nohighlight">\(ρ=1025kgm^{-3}\)</span>, specific heat capacity of water <span class="math notranslate nohighlight">\(c=4200Jkg^{-1}˚C^{-1}\)</span>, the fraction (<span class="math notranslate nohighlight">\(f\)</span>) which the Earth’s surface is covered by ocean (70%), and depth of the ocean (<span class="math notranslate nohighlight">\(d\)</span>), we can calculate the heat capacity of the ocean per meter squared, which is the energy required to increase the temperature of one square metre of the ocean by 1 degrees Celsius:</p>
 <div class="math notranslate nohighlight">
 \[C=fρdc\]</div>
 <p>You can verify this by looking at the units.</p>
-<p>Substituting in the numbers, the Earth’s heat capacity is <span class="math notranslate nohighlight">\(2.11*10^{8}Jm^{-2}˚C^{-1}\)</span>.</p>
-</div>
-<div class="section" id="restoring-equilibrium">
-<h2>Restoring equilibrium<a class="headerlink" href="#restoring-equilibrium" title="Permalink to this headline">¶</a></h2>
-<p>The first law of thermodynamics states that the total energy in an isolated system is constant.</p>
-<p>Treating the climate system as an isolated system, the rate of change in internal energy of the climate system must be balanced by the rate of net heating or cooling.</p>
-<p>From above, we derived that energy flux density absorbed <span class="math notranslate nohighlight">\(M_{in}=\frac{1}{4}S_o(1-α)\)</span>, and energy flux density out <span class="math notranslate nohighlight">\(M_{out}=(a+bT_C)\)</span>, thus net heating/cooling is:</p>
-<div class="math notranslate nohighlight">
-\[M_{in}-M_{out}=\frac{1}{4}S_o(1-α)-(a+bT_C)\]</div>
-<p>The change in temperature per unit area per unit time is <span class="math notranslate nohighlight">\(C\frac{dT}{dt}\)</span> (verify this by units).</p>
-<p>Change in temperature is equivalent to change in kinetic energy i.e. internal energy of the system.</p>
-<p>Therefore:</p>
-<div class="math notranslate nohighlight">
-\[C\frac{dT}{dt}=\frac{1}{4}S_o(1-α)-(a+bT_C)\]</div>
-<div class="math notranslate nohighlight">
-\[\frac{dT}{dt}=\frac{\frac{1}{4}S_o(1-α)-(a+bT_C)}{C}\]</div>
-<p>To simplify, since T_C is merely a specific value of T:</p>
-<div class="math notranslate nohighlight">
-\[\frac{dT}{dt}=\frac{\frac{1}{4}S_o(1-α)-(a+bT)}{C}\]</div>
-<p>This equation accounts for the fact that when the system is out of equilibrium for whatever reason, it will try and restore equilibrium.</p>
-<p>Solving this differential equation gives:</p>
-<div class="math notranslate nohighlight">
-\[T=\frac{1}{b}(\frac{1}{4}S_o(1-α)-a-CDe^{-\frac{b}{c}t})=\frac{1}{b}(M_{in}-a-CDe^{-\frac{b}{c}t})\]</div>
-<p>where D is an arbitrary constant determined by initial conditions:</p>
-<div class="math notranslate nohighlight">
-\[D=\frac{\frac{1}{4}S_o(1-α)-a-T_{t=0}b}{C}\]</div>
+<p>Substituting in the numbers, the heat capacity of the ocean per metre squared is <span class="math notranslate nohighlight">\(2.11*10^8 Jm^{-2}˚C^{-1}\)</span></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># define a function to calculate temp over time</span>
-<span class="k">def</span> <span class="nf">equilibrium_T</span><span class="p">(</span><span class="n">T_initial</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">e</span><span class="o">=</span><span class="mf">0.62</span><span class="p">,</span> <span class="n">al</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">C</span><span class="o">=</span><span class="mf">2.11e8</span><span class="p">,</span> <span class="n">S_o</span><span class="o">=</span><span class="mi">1365</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mf">5.67e-8</span><span class="p">,</span> <span class="n">T_o</span><span class="o">=</span><span class="mi">273</span><span class="p">):</span>
-    <span class="n">a</span> <span class="o">=</span> <span class="n">e</span> <span class="o">*</span> <span class="n">s</span> <span class="o">*</span> <span class="n">T_o</span><span class="o">**</span><span class="mi">4</span>
-    <span class="n">b</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">e</span> <span class="o">*</span> <span class="n">s</span> <span class="o">*</span> <span class="n">T_o</span><span class="o">**</span><span class="mi">3</span>
-    <span class="n">D</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.25</span><span class="o">*</span><span class="n">S_o</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">al</span><span class="p">)</span><span class="o">-</span><span class="n">a</span><span class="o">-</span><span class="n">T_initial</span><span class="o">*</span><span class="n">b</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">C</span><span class="p">)</span>
-    <span class="n">t</span> <span class="o">=</span> <span class="n">t</span><span class="o">*</span><span class="mi">3600</span><span class="o">*</span><span class="mi">24</span><span class="o">*</span><span class="mi">365</span> <span class="c1"># convert t from years to seconds</span>
-    <span class="k">return</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">b</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mf">0.25</span><span class="o">*</span><span class="n">S_o</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">al</span><span class="p">)</span><span class="o">-</span><span class="n">a</span><span class="o">-</span><span class="n">C</span><span class="o">*</span><span class="n">D</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">b</span><span class="o">*</span><span class="n">t</span><span class="o">/</span><span class="n">C</span><span class="p">))</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="mf">0.7</span> <span class="c1"># %</span>
+<span class="n">p</span> <span class="o">=</span> <span class="mi">1025</span> <span class="c1"># kg/m3</span>
+<span class="n">d</span> <span class="o">=</span> <span class="mi">70</span> <span class="c1"># m</span>
+<span class="n">c</span> <span class="o">=</span> <span class="mi">4200</span> <span class="c1"># J/kg˚C</span>
 
-<span class="n">initial_T</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">41</span><span class="p">,</span> <span class="mi">10</span><span class="p">)])</span>
-
-<span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">)])</span>
-
-<span class="n">T</span> <span class="o">=</span> <span class="p">{}</span> <span class="c1"># store data in a dictionary</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">initial_T</span><span class="p">)):</span>
-    <span class="n">T</span><span class="p">[</span><span class="s1">&#39;temp=&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">initial_T</span><span class="p">[</span><span class="n">i</span><span class="p">])]</span><span class="o">=</span><span class="p">[]</span> <span class="c1"># indexed by temp = initial temperature</span>
-    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)):</span>
-        <span class="n">T</span><span class="p">[</span><span class="s1">&#39;temp=&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">initial_T</span><span class="p">[</span><span class="n">i</span><span class="p">])]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">equilibrium_T</span><span class="p">(</span><span class="n">initial_T</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">t</span><span class="p">[</span><span class="n">j</span><span class="p">]))</span> 
-
-    
-<span class="c1"># set up figure</span>
-<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
-<span class="n">ax1</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">margins</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
-
-<span class="k">def</span> <span class="nf">h</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-    <span class="k">return</span> <span class="mi">0</span><span class="o">*</span><span class="n">x</span><span class="o">+</span><span class="n">T</span><span class="p">[</span><span class="s1">&#39;temp=&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="mi">0</span><span class="p">)][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-
-
-<span class="c1"># plot figure</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">T</span><span class="p">[</span><span class="s1">&#39;temp=&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="mi">0</span><span class="p">)],</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;0˚C&#39;</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">T</span><span class="p">[</span><span class="s1">&#39;temp=&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="mi">10</span><span class="p">)],</span> <span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;10˚C&#39;</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">T</span><span class="p">[</span><span class="s1">&#39;temp=&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="mi">20</span><span class="p">)],</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;20˚C&#39;</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">T</span><span class="p">[</span><span class="s1">&#39;temp=&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="mi">30</span><span class="p">)],</span> <span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;30˚C&#39;</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">T</span><span class="p">[</span><span class="s1">&#39;temp=&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="mi">40</span><span class="p">)],</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;40˚C&#39;</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">h</span><span class="p">(</span><span class="n">t</span><span class="p">),</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;equilibrium temperature=%.d˚C&#39;</span> <span class="o">%</span> <span class="n">T</span><span class="p">[</span><span class="s1">&#39;temp=&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="mi">0</span><span class="p">)][</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Time (years)&#39;</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Temperature (Degrees Celsius)&#39;</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;A plot of temperature over time accounting for ocean heat storage&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Heat capacity of the ocean per metre squared = </span><span class="si">%.2e</span><span class="s2"> J/m2˚C&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">f</span><span class="o">*</span><span class="n">p</span><span class="o">*</span><span class="n">d</span><span class="o">*</span><span class="n">c</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/Climate_Model_13_0.png" src="../_images/Climate_Model_13_0.png" />
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Heat capacity of the ocean per metre squared = 2.11e+08 J/m2˚C
+</pre></div>
 </div>
 </div>
+</div>
+</div>
+<div class="section" id="restoring-equilibrium">
+<h2>Restoring equilibrium<a class="headerlink" href="#restoring-equilibrium" title="Permalink to this headline">¶</a></h2>
+<p>From the first law of thermodyamics, the rate of change in temperature must be balanced by the net rate of heating or cooling.</p>
+<div class="math notranslate nohighlight">
+\[M_{in}-M_{out}=\frac{1}{4}S_o(1-α)-(a+bT_C)\]</div>
+<p>The change in temperature per unit area per unit time is <span class="math notranslate nohighlight">\(C\frac{dT}{dt}\)</span> (verify this by units).</p>
+<p>Therefore:</p>
+<div class="math notranslate nohighlight">
+\[C\frac{dT}{dt}=\frac{1}{4}S_o(1-α)-(a+bT_C)\]</div>
+<p>Since T_C is merely a specific value of T:</p>
+<div class="math notranslate nohighlight">
+\[C\frac{dT}{dt}=\frac{1}{4}S_o(1-α)-(a+bT)\]</div>
+<p>The solution to the ODE is:</p>
+<div class="math notranslate nohighlight">
+\[T=\frac{\frac{1}{4}S_o(1-α)-a-CDe^{-\frac{b}{C}t}}{b}\]</div>
+<p>where D is a constant based on initial conditions:</p>
+<div class="math notranslate nohighlight">
+\[D=\frac{\frac{1}{4}S_o(1-α)-a-bT_{t=0}}{C}\]</div>
 </div>
 <div class="section" id="ice-albedo-positive-feedback-tipping-points">
 <h2>Ice-albedo positive feedback - tipping points<a class="headerlink" href="#ice-albedo-positive-feedback-tipping-points" title="Permalink to this headline">¶</a></h2>
 <p>Assume that due to some perturbation:</p>
 <ul class="simple">
-<li><p>the average temperature becomes lower than -10˚C, then the entire Earth freezes, albedo becomes 0.9</p></li>
+<li><p>the average temperature becomes lower than -10˚C, then albedo of the Earth is 0.9 due to ice globally</p></li>
 <li><p>the average temperature is between -10˚C and 10˚C, then the albedo is between 0.3 and 0.9, and this can be calculated by using ratios:</p></li>
 </ul>
 <div class="math notranslate nohighlight">
-\[α=α_{ice}-(α_{ice}-α_{land})*\frac{T_{now}-T_{freeze}}{T_{melt}-T_{freeze}}\]</div>
+\[α=α_{ice}-(α_{ice}-α_{land})\frac{T_{now}-T_{freeze}}{T_{melt}-T_{freeze}}\]</div>
 <ul class="simple">
 <li><p>the average temperare becomes higher than 10˚C, then the entire Earth’s ice melts, albedo becomes 0.3</p></li>
 </ul>
-<p>When a tipping point is reached e.g. temperature changes from 10˚C to 11˚C, albedo changes, leading to drastic changes in energy balance, thus equilibrium temperature also changes.</p>
+<p>When a critical temperature is reached, any slight change will lead to a shift in equilibrium temperature. This critical temperature is called a tipping point. In this case, the tipping point is between 7˚C and 8˚C.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">find_al</span><span class="p">(</span><span class="n">T_initial</span><span class="p">,</span> <span class="n">T_freeze</span><span class="o">=-</span><span class="mi">10</span><span class="p">,</span> <span class="n">T_melt</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">al_ice</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">al_land</span><span class="o">=</span><span class="mf">0.3</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">T_initial</span> <span class="o">&lt;=</span> <span class="n">T_freeze</span><span class="p">:</span>
-        <span class="n">al</span> <span class="o">=</span> <span class="n">al_ice</span>
-    <span class="k">elif</span> <span class="n">T_initial</span> <span class="o">&gt;=</span> <span class="n">T_melt</span><span class="p">:</span>
-        <span class="n">al</span> <span class="o">=</span> <span class="n">al_land</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">al</span> <span class="o">=</span> <span class="n">al_ice</span> <span class="o">-</span> <span class="p">(</span><span class="n">al_ice</span><span class="o">-</span><span class="n">al_land</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">T_initial</span><span class="o">-</span><span class="n">T_freeze</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">T_melt</span><span class="o">-</span><span class="n">T_freeze</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">al</span>
-        
-<span class="n">albedo</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="n">T_initial</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">10</span><span class="o">*</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)])</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">T_initial</span><span class="p">)):</span>
-    <span class="n">albedo</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">find_al</span><span class="p">(</span><span class="n">T_initial</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
-<span class="n">albedo</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">albedo</span><span class="p">)</span>
-
-<span class="c1"># define a function to calculate temp over time</span>
-<span class="k">def</span> <span class="nf">equilibrium_T_2</span><span class="p">(</span><span class="n">T_initial</span><span class="p">,</span> <span class="n">years</span><span class="p">,</span> <span class="n">e</span><span class="o">=</span><span class="mf">0.62</span><span class="p">,</span> <span class="n">C</span><span class="o">=</span><span class="mf">2.11e8</span><span class="p">,</span> <span class="n">S_o</span><span class="o">=</span><span class="mi">1365</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mf">5.67e-8</span><span class="p">,</span> <span class="n">T_o</span><span class="o">=</span><span class="mi">273</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># define a function to calculate temp over time</span>
+<span class="k">def</span> <span class="nf">equilibrium_T</span><span class="p">(</span><span class="n">T_initial</span><span class="p">,</span> <span class="n">years</span><span class="p">,</span> <span class="n">e</span><span class="o">=</span><span class="mf">0.62</span><span class="p">,</span> <span class="n">C</span><span class="o">=</span><span class="mf">2.11e8</span><span class="p">,</span> <span class="n">S_o</span><span class="o">=</span><span class="mi">1365</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mf">5.67e-8</span><span class="p">,</span> <span class="n">T_o</span><span class="o">=</span><span class="mi">273</span><span class="p">):</span>
     <span class="n">temp</span> <span class="o">=</span> <span class="p">[</span><span class="n">T_initial</span><span class="p">]</span>
     <span class="n">time</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">t</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">while</span> <span class="n">t</span> <span class="o">&lt;</span> <span class="n">years</span><span class="p">:</span>
         <span class="n">t</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="n">time</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
-        <span class="n">seconds</span> <span class="o">=</span> <span class="n">t</span> <span class="o">*</span> <span class="mi">3600</span> <span class="o">*</span> <span class="mi">24</span> <span class="o">*</span> <span class="mf">365.25</span>
+        <span class="n">seconds</span> <span class="o">=</span> <span class="n">t</span> <span class="o">*</span> <span class="mi">3600</span> <span class="o">*</span> <span class="mi">24</span> <span class="o">*</span> <span class="mf">365.25</span> <span class="c1"># convert years to seconds</span>
+        <span class="c1"># ice albedo feedback</span>
         <span class="k">if</span> <span class="n">temp</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="o">-</span><span class="mi">10</span><span class="p">:</span>
             <span class="n">al</span> <span class="o">=</span> <span class="mf">0.9</span>
         <span class="k">elif</span> <span class="n">temp</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">10</span><span class="p">:</span>
@@ -726,30 +617,27 @@ Even when albedo = 0.0, temperature on Earth would still only be 5˚C
             <span class="n">al</span> <span class="o">=</span> <span class="mf">0.9</span> <span class="o">-</span> <span class="p">(</span><span class="mf">0.9</span> <span class="o">-</span> <span class="mf">0.3</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">temp</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">10</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">20</span><span class="p">)</span>
         <span class="n">a</span> <span class="o">=</span> <span class="n">e</span> <span class="o">*</span> <span class="n">s</span> <span class="o">*</span> <span class="n">T_o</span><span class="o">**</span><span class="mi">4</span>
         <span class="n">b</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">e</span> <span class="o">*</span> <span class="n">s</span> <span class="o">*</span> <span class="n">T_o</span><span class="o">**</span><span class="mi">3</span>
-        <span class="n">D</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.25</span><span class="o">*</span><span class="n">S_o</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">al</span><span class="p">)</span><span class="o">-</span><span class="n">a</span><span class="o">-</span><span class="n">T_initial</span><span class="o">*</span><span class="n">b</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">C</span><span class="p">)</span>
+        <span class="c1"># substitute into differential equation</span>
+        <span class="n">D</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.25</span><span class="o">*</span><span class="n">S_o</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">al</span><span class="p">)</span><span class="o">-</span><span class="n">a</span><span class="o">-</span><span class="n">T_initial</span><span class="o">*</span><span class="n">b</span><span class="p">)</span><span class="o">/</span><span class="n">C</span>
         <span class="n">temp</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="mi">1</span><span class="o">/</span><span class="n">b</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mf">0.25</span><span class="o">*</span><span class="n">S_o</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">al</span><span class="p">)</span><span class="o">-</span><span class="n">a</span><span class="o">-</span><span class="n">C</span><span class="o">*</span><span class="n">D</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">b</span><span class="o">*</span><span class="n">seconds</span><span class="o">/</span><span class="n">C</span><span class="p">)))</span>
     <span class="k">return</span> <span class="n">time</span><span class="p">,</span> <span class="n">temp</span>
 
-<span class="n">time_minus10</span><span class="p">,</span> <span class="n">temp_minus10</span> <span class="o">=</span> <span class="n">equilibrium_T_2</span><span class="p">(</span><span class="o">-</span><span class="mi">15</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
-<span class="n">time_7</span><span class="p">,</span> <span class="n">temp_7</span> <span class="o">=</span> <span class="n">equilibrium_T_2</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
-<span class="n">time_8</span><span class="p">,</span> <span class="n">temp_8</span> <span class="o">=</span> <span class="n">equilibrium_T_2</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
-<span class="n">time_25</span><span class="p">,</span> <span class="n">temp_25</span> <span class="o">=</span> <span class="n">equilibrium_T_2</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
-
-<span class="c1"># set up figure</span>
-<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
-<span class="n">ax1</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">margins</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">time_minus15</span><span class="p">,</span> <span class="n">temp_minus15</span> <span class="o">=</span> <span class="n">equilibrium_T</span><span class="p">(</span><span class="o">-</span><span class="mi">15</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">time_7</span><span class="p">,</span> <span class="n">temp_7</span> <span class="o">=</span> <span class="n">equilibrium_T</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">time_8</span><span class="p">,</span> <span class="n">temp_8</span> <span class="o">=</span> <span class="n">equilibrium_T</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">time_25</span><span class="p">,</span> <span class="n">temp_25</span> <span class="o">=</span> <span class="n">equilibrium_T</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
 
 <span class="c1"># plot figure</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time_minus15</span><span class="p">,</span> <span class="n">temp_minus15</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;-15˚C&#39;</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time_7</span><span class="p">,</span> <span class="n">temp_7</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;7˚C&#39;</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time_8</span><span class="p">,</span> <span class="n">temp_8</span><span class="p">,</span> <span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;8˚C&#39;</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time_25</span><span class="p">,</span> <span class="n">temp_25</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;25˚C&#39;</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Time (years)&#39;</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Temperature (Degrees Celsius)&#39;</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;A plot of temperature over time accounting for ice-albedo effect&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time_minus15</span><span class="p">,</span> <span class="n">temp_minus15</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;-15˚C&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time_7</span><span class="p">,</span> <span class="n">temp_7</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;7˚C&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time_8</span><span class="p">,</span> <span class="n">temp_8</span><span class="p">,</span> <span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;8˚C&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time_25</span><span class="p">,</span> <span class="n">temp_25</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;25˚C&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time (years)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Temperature (Degrees Celsius)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;A plot of temperature over time accounting for ice-albedo effect&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -757,12 +645,11 @@ Even when albedo = 0.0, temperature on Earth would still only be 5˚C
 <img alt="../_images/Climate_Model_15_0.png" src="../_images/Climate_Model_15_0.png" />
 </div>
 </div>
-<p>In this case, the tipping point is between 7˚C and 8˚C, resulting in two different equilibrium temperatures.</p>
 </div>
 <div class="section" id="final-model">
 <h2>Final model<a class="headerlink" href="#final-model" title="Permalink to this headline">¶</a></h2>
 <p>Now, let’s include all the concepts above into this final model.</p>
-<p>Note that CO<span class="math notranslate nohighlight">\(_2\)</span> is the only greenhouse gas considered, and the initial conditions are set to temperature of 14˚C and CO<span class="math notranslate nohighlight">\(_2\)</span> concentration of 280ppm. Feel free to change them and other variables in the model.</p>
+<p>Note that CO<span class="math notranslate nohighlight">\(_2\)</span> is the only greenhouse gas considered, and the initial conditions are set to temperature of 14˚C and CO<span class="math notranslate nohighlight">\(_2\)</span> concentration of 280ppm.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">simple_model</span><span class="p">(</span><span class="n">final_co2</span><span class="p">,</span> <span class="n">years</span><span class="p">,</span> <span class="n">current_temp</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">current_co2</span><span class="o">=</span><span class="mi">280</span><span class="p">,</span> <span class="n">e</span><span class="o">=</span><span class="mf">0.62</span><span class="p">,</span> <span class="n">S_o</span><span class="o">=</span><span class="mi">1365</span><span class="p">,</span> <span class="n">T_o</span><span class="o">=</span><span class="mi">273</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mf">5.67e-8</span><span class="p">,</span> <span class="n">f</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="mi">70</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mi">1025</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">4200</span><span class="p">):</span>
@@ -771,7 +658,7 @@ Even when albedo = 0.0, temperature on Earth would still only be 5˚C
     <span class="n">total_t</span> <span class="o">=</span> <span class="n">years</span> <span class="c1"># counter limit</span>
     <span class="n">al</span> <span class="o">=</span> <span class="mf">0.3</span> <span class="c1"># initial albedo</span>
     <span class="n">dM</span> <span class="o">=</span> <span class="mf">5.35</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">final_co2</span><span class="o">/</span><span class="n">current_co2</span><span class="p">)</span>
-    <span class="n">C</span> <span class="o">=</span> <span class="n">f</span> <span class="o">*</span> <span class="n">d</span> <span class="o">*</span> <span class="n">p</span> <span class="o">*</span> <span class="n">c</span>
+    <span class="n">C</span> <span class="o">=</span> <span class="mf">2.11e8</span>
     <span class="n">a</span> <span class="o">=</span> <span class="n">e</span> <span class="o">*</span> <span class="n">s</span> <span class="o">*</span> <span class="n">T_o</span><span class="o">**</span><span class="mi">4</span>
     <span class="n">b</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">e</span> <span class="o">*</span> <span class="n">s</span> <span class="o">*</span> <span class="n">T_o</span><span class="o">**</span><span class="mi">3</span>
     <span class="k">while</span> <span class="n">t</span> <span class="o">&lt;</span> <span class="n">total_t</span><span class="p">:</span>
@@ -799,13 +686,12 @@ Even when albedo = 0.0, temperature on Earth would still only be 5˚C
     
 <span class="n">time</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;How many years do you want to project into the future? &quot;</span><span class="p">))</span> 
 
-<span class="n">all_CO2_conc</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># create list for all CO2 concentration</span>
+<span class="n">all_CO2_conc</span> <span class="o">=</span> <span class="p">[]</span> 
 
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num</span><span class="p">):</span> <span class="c1"># ask user for CO2 concentration</span>
     <span class="n">CO2_conc</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Please enter final CO2 concentration for projection %.d in ppm: &quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)))</span>
     <span class="n">all_CO2_conc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">CO2_conc</span><span class="p">)</span> <span class="c1"># add user input into list</span>
-    
-<span class="n">all_CO2_conc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">all_CO2_conc</span><span class="p">)</span>
+
 
 <span class="n">projections</span> <span class="o">=</span> <span class="p">{}</span> <span class="c1"># create dictionary to store temperature data over time</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">all_CO2_conc</span><span class="p">)):</span>
@@ -813,26 +699,21 @@ Even when albedo = 0.0, temperature on Earth would still only be 5˚C
     <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">time</span><span class="p">):</span>
         <span class="n">projections</span><span class="p">[</span><span class="s1">&#39;CO2 concentration=&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">all_CO2_conc</span><span class="p">[</span><span class="n">i</span><span class="p">])]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">simple_model</span><span class="p">(</span><span class="n">all_CO2_conc</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">time</span><span class="p">)[</span><span class="n">j</span><span class="p">])</span>
  
-
-<span class="c1"># set up figure</span>
-<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
-<span class="n">ax1</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">margins</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
- 
 <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">time</span><span class="p">)])</span> <span class="c1"># make an array of years for plotting</span>
 
-<span class="n">colour</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;purple&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;k&#39;</span><span class="p">]</span> <span class="c1"># create a list of colours to choose from</span>
+<span class="n">colour</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;purple&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;k&#39;</span><span class="p">]</span> <span class="c1"># create a list of colours to choose from</span>
 
 
 <span class="c1"># plot figure</span>
-
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="mi">9</span><span class="p">))</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">all_CO2_conc</span><span class="p">)):</span>
-    <span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">projections</span><span class="p">[</span><span class="s1">&#39;CO2 concentration=&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">all_CO2_conc</span><span class="p">[</span><span class="n">i</span><span class="p">])],</span> <span class="n">colour</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;projection %.d&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Time (years)&#39;</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Temperature (Degrees Celsius)&#39;</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;A plot of temperature over time&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">projections</span><span class="p">[</span><span class="s1">&#39;CO2 concentration=&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">all_CO2_conc</span><span class="p">[</span><span class="n">i</span><span class="p">])],</span> <span class="n">colour</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;projection %.d&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time (years)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Temperature (Degrees Celsius)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;A plot of temperature over time&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -846,18 +727,18 @@ Please enter final CO2 concentration for projection 4 in ppm: 560
 Please enter final CO2 concentration for projection 5 in ppm: 1000
 </pre></div>
 </div>
-<img alt="../_images/Climate_Model_18_1.png" src="../_images/Climate_Model_18_1.png" />
+<img alt="../_images/Climate_Model_17_1.png" src="../_images/Climate_Model_17_1.png" />
 </div>
 </div>
 </div>
 <div class="section" id="conclusion">
 <h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h2>
-<p>Of course this model is still very crude. There are still plenty of things that it doesn’t take into account, such as clouds, position of continents, vegetation, etc. In a real climate model, other factors also have to be included such as atmospheric dynamics, climate variability, human activity, and much more.</p>
-<p>However, this example shows how scientists build climate models by using physical equations, making approximations and aassumptions, inserting parameters into those equations to account for any variability, and adjusting their values so that it resembles the real world every time it is run.</p>
+<p>This model is still very crude, since plenty of things are still not taken into account, such as clouds, position of continents, vegetation, etc. In a real climate model, other factors also have to be included such as atmospheric dynamics, climate variability, human activity, etc.</p>
+<p>However, this example shows how scientists build climate models by using equations from physics, making approximations and assumptions, including parameters or other equations to account for any variability, and adjusting the values of parameters so that it resembles the real world every time it is run.</p>
 <div class="section" id="references">
 <h3>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li><p>Lecture materials in the Climate module</p></li>
+<li><p>Lecture 1 practical and teaching materials in the Climate module</p></li>
 <li><p><strong><a class="reference external" href="https://www.e-education.psu.edu/meteo469/node/135">Penn State</a></strong></p></li>
 <li><p><strong><a class="reference external" href="https://math.nyu.edu/faculty/kleeman/zero_dim_ebm.html">New York University Maths Department</a></strong></p></li>
 <li><p><strong><a class="reference external" href="https://en.wikipedia.org/wiki/Planck%27s_law">Myhre et al.</a></strong></p></li>
