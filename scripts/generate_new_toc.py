@@ -99,6 +99,8 @@ with open('_tmp'+os.sep+'_toc.yml', 'w') as outfile:
                                      title='Home'))
 
     for root, dirs, files in os.walk('notebooks'):
+        dirs.sort()
+        files.sort()
         if root == 'notebooks':
             ## Skip the base level
             continue
@@ -137,6 +139,7 @@ with open('_tmp'+os.sep+'_toc.yml', 'w') as outfile:
             name, ext = os.path.splitext(file)
             filepath = os.sep.join((root, file))
             level = filepath.count(os.sep)
+
             if ext in ('.ipynb',):
                 title = nb_title(filepath)
                 if title is None:
