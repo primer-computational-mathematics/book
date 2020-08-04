@@ -72,18 +72,20 @@ with open('_tmp'+os.sep+'_toc.yml', 'w') as outfile:
             # Skip the base level
             continue
 
+        exts = set(os.path.splitext(file)[1] for file in files)
+        if ('.ipynb' and '.md') not in exts:
+            try:
+                shutil.copytree(root, change_path(root, '_tmp'))
+                shutil.copytree(root, change_path(root,
+                                                  os.sep.join(('_tmp',
+                                                               '_build',
+                                                               'html'))))
+            except FileExistsError:
+                pass
+
         if ('intro.md' or 'intro.ipynb') not in files:
             print('Skipped directory', root)
             continue
-
-        exts = set(os.path.splitext(file)[1] for file in files)
-        if ('.ipynb' not in exts and
-            '.md' not in exts):
-            shutil.copytree(root, change_path(root, '_tmp'))
-            shutil.copytree(root, change_path(root,
-                                              os.sep.join(('_tmp',
-                                                           '_build',
-                                                           'html'))))
 
         for intro in ['intro.md', 'intro.ipynb']:
             if intro in files:
