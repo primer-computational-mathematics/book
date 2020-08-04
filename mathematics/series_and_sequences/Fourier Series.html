@@ -1,0 +1,516 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Fourier Series &#8212; ESE Jupyter Material</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/mystnb.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Fourier Transforms" href="Fourier Transforms.html" />
+    <link rel="prev" title="Taylor series" href="Taylor_series.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../index.html">
+  
+  <img src="../../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">ESE Jupyter Material</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  
+  <ul class="nav sidenav_l1">
+  <li class="">
+    <a href="../../intro.html">Landing page</a>
+  </li>
+  <li class="">
+    <a href="../../coding/intro.html">Coding</a>
+  </li>
+  <li class="active">
+    <a href="../intro.html">Mathematics</a>
+  <ul class="nav sidenav_l2">
+    <li class="">
+      <a href="../Statistics_for_Geoscientists.html">Introduction to statistics for Geoscientists</a>
+    </li>
+    <li class="">
+      <a href="../Tensors_Review.html">Review of tensors</a>
+    </li>
+    <li class="">
+      <a href="../Taylor_series.html">Taylor series</a>
+    </li>
+    <li class="">
+      <a href="../Coordinate_Systems.html">Lecture 1 (Coordinate Systems)</a>
+    </li>
+    <li class="">
+      <a href="../Big_O_notation.html">Big O notation</a>
+    </li>
+    <li class="">
+      <a href="../Vectors.html">Lecture 1 (Vectors)</a>
+    </li>
+    <li class="">
+      <a href="../Vector_calculus.html">Vector calculus</a>
+    </li>
+    <li class="">
+      <a href="../Fourier Series.html">Fourier Series</a>
+    </li>
+    <li class="">
+      <a href="../Timestepping_an_ODE.html">Solving (or "timestepping") an ordinary differential equation (ODE)</a>
+    </li>
+    <li class="">
+      <a href="../Fourier Transforms.html">Fourier Transforms</a>
+    </li>
+    <li class="">
+      <a href="../Linear_Regression.html">Linear Regression</a>
+    </li>
+    <li class="">
+      <a href="../Fractals.html">Fractals</a>
+    </li>
+    <li class="">
+      <a href="../numerical_methods/intro.html">Numerical Methods</a>
+    </li>
+    <li class="">
+      <a href="../statistics/intro.html">Statistics</a>
+    </li>
+    <li class="">
+      <a href="../complex analysis/intro.html">Complex Analysis</a>
+    </li>
+    <li class="">
+      <a href="../linear_algebra/intro.html">Linear Algebra</a>
+    </li>
+    <li class="">
+      <a href="../calculus/intro.html">Calculus</a>
+    </li>
+    <li class="active">
+      <a href="intro.html">Series And Sequences</a>
+      <ul class="nav sidenav_l3">
+      <li class="">
+        <a href="Taylor_series.html">Taylor series</a>
+      </li>
+      <li class="active">
+        <a href="">Fourier Series</a>
+      </li>
+      <li class="">
+        <a href="Fourier Transforms.html">Fourier Transforms</a>
+      </li>
+    </ul>
+    </li>
+    <li class="">
+      <a href="../mathematical_notation/intro.html">Mathematical Notation</a>
+    </li>
+    <li class="">
+      <a href="../sets and functions/intro.html">Sets And Functions</a>
+    </li>
+    <li class="">
+      <a href="../math_methods_1/intro.html">Math Methods 1</a>
+    </li>
+  </ul>
+  </li>
+  <li class="">
+    <a href="../../geosciences/intro.html">Geosciences</a>
+  </li>
+  <li class="">
+    <a href="../../genindex.html">Index</a>
+  </li>
+</ul>
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/mathematics/series_and_sequences/Fourier Series.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        
+        <a class="issues-button"
+            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2Fmathematics/series_and_sequences/Fourier Series.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/mathematics/series_and_sequences/Fourier Series.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <button type="button" class="btn btn-secondary topbarbtn"
+            onclick="initThebelabSBT()" title="Launch Thebelab" data-toggle="tooltip" data-placement="left"><i
+                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
+        
+    </div>
+</div>
+
+    </div>
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#fourier-coeffiecients" class="nav-link">Fourier Coeffiecients</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#square-wave-and-gibbs-phenomenon" class="nav-link">Square Wave and Gibbs Phenomenon</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#fourier-series-of-odd-and-even-functions" class="nav-link">Fourier Series of Odd and Even Functions</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#changing-the-interval" class="nav-link">Changing the Interval</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#references" class="nav-link">References:</a>
+        </li>
+    
+    </ul>
+</nav>
+
+
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="fourier-series">
+<h1>Fourier Series<a class="headerlink" href="#fourier-series" title="Permalink to this headline">¶</a></h1>
+<p>The Fourier series enables us to represent <span class="math notranslate nohighlight">\(periodic\)</span> functions as an infinite sum. Particularly, it represents functions as a sum of weighted <span class="math notranslate nohighlight">\(sin\)</span> and <span class="math notranslate nohighlight">\(cos\)</span> functions.</p>
+<p>This is possible, since the sin and cos functions form a complete orthogonal set (<em>basis functions</em>). The Fourier series for a function <span class="math notranslate nohighlight">\(f(x)\)</span> with a period of <span class="math notranslate nohighlight">\(2{\pi}\)</span> is given by:</p>
+<div class="math notranslate nohighlight">
+\[f(x) = \frac{a_0}{2} + \sum \limits _{n=1} ^{\infty}a_n \cos(nx) + \sum \limits _{n=1} ^{\infty}b_n \sin(nx)\]</div>
+<p>where <span class="math notranslate nohighlight">\(a_n\)</span> and <span class="math notranslate nohighlight">\(b_n\)</span> are a set of coeffiecients.</p>
+<div class="section" id="fourier-coeffiecients">
+<h2>Fourier Coeffiecients<a class="headerlink" href="#fourier-coeffiecients" title="Permalink to this headline">¶</a></h2>
+<p>Using the orthogonality property of the cos and sin functions we can determine an expression for the coefficients of the Fourier Series. By integrating the Fourier Series over the interval [-<span class="math notranslate nohighlight">\({\pi}\)</span>,<span class="math notranslate nohighlight">\({\pi}\)</span>], we can determine an expression for <span class="math notranslate nohighlight">\(a_0\)</span>. Over this interval, the sums will vanish, as we are intergrating the sin and cos functions over a period. Thus, we are left with</p>
+<div class="math notranslate nohighlight">
+\[\int_{-{\pi}}^{\pi} f(x)dx = \int_{-{\pi}}^{\pi}\frac{a_0}{2}dx\]</div>
+<p>Therefore, by carrying out the integral we find the expression for <span class="math notranslate nohighlight">\(a_0\)</span> to be</p>
+<div class="math notranslate nohighlight">
+\[a_0 = \frac{1}{\pi} \int_{-{\pi}}^{\pi} f(x)dx \]</div>
+<p>From this, its is clear that the <span class="math notranslate nohighlight">\(\frac{a_0}{2}\)</span> term in the series represents the mean of the function <span class="math notranslate nohighlight">\(f(x)\)</span> over the period. In order to determine the <span class="math notranslate nohighlight">\(a_n\)</span> coefficients we must multiply the series by <span class="math notranslate nohighlight">\(\cos(mx)\)</span>, for a positive integer <span class="math notranslate nohighlight">\(m\)</span>, and integrate over the period. The series becomes</p>
+<div class="math notranslate nohighlight">
+\[\int_{-{\pi}}^{\pi}f(x)\cos(mx)dx = \frac{a_0}{2}\int_{-{\pi}}^{\pi}\cos(mx)dx + \sum \limits _{n=1} ^{\infty}\int_{-{\pi}}^{\pi}a_n\cos(nx)\cos(mx)dx + \sum \limits _{n=1} ^{\infty}\int_{-{\pi}}^{\pi}b_n\sin(nx)\cos(mx)dx\]</div>
+<p>Due to the orthogonality property of the <span class="math notranslate nohighlight">\(\sin\)</span> and <span class="math notranslate nohighlight">\(\cos\)</span> functions, the only term that does not vanish on the right-hand side is <span class="math notranslate nohighlight">\(\int_{-{\pi}}^{\pi}a_n\cos(nx)\cos(mx)dx\)</span> for <span class="math notranslate nohighlight">\(m=n\)</span>. Solving for <span class="math notranslate nohighlight">\(a_n\)</span> we get</p>
+<div class="math notranslate nohighlight">
+\[a_n = \frac{1}{\pi} \int_{-{\pi}}^{\pi} f(x)\cos(nx)dx \,\,\,\,n=1, 2, ...\]</div>
+<p>This is consistent with the expresion for <span class="math notranslate nohighlight">\(a_0\)</span> for <span class="math notranslate nohighlight">\(n=0\)</span>. Thus the 1/2 factor included on the <span class="math notranslate nohighlight">\(a_0\)</span> term is there to maintain this consistency between <span class="math notranslate nohighlight">\(a_0\)</span> and <span class="math notranslate nohighlight">\(a_n\)</span>.</p>
+<p>To determine the values of the <span class="math notranslate nohighlight">\(b_n\)</span> coefficients we multiply by <span class="math notranslate nohighlight">\(\sin(mx)\)</span>. Similarly to the <span class="math notranslate nohighlight">\(a_n\)</span> coefficients, due to the orthogonality property, the only term that does not vanish on the right-hand side is <span class="math notranslate nohighlight">\(\int_{-{\pi}}^{\pi}b_n\sin(nx)\sin(mx)dx\)</span> for <span class="math notranslate nohighlight">\(m=n\)</span>. Thus, solving for <span class="math notranslate nohighlight">\(b_n\)</span></p>
+<div class="math notranslate nohighlight">
+\[b_n = \frac{1}{\pi} \int_{-{\pi}}^{\pi} f(x)\sin(nx)dx \,\,\,\,n=1, 2, ...\]</div>
+</div>
+<div class="section" id="square-wave-and-gibbs-phenomenon">
+<h2>Square Wave and Gibbs Phenomenon<a class="headerlink" href="#square-wave-and-gibbs-phenomenon" title="Permalink to this headline">¶</a></h2>
+<p>Now that we have introduced the Fourier Series lets look at an example, the positive square wave. This is defined as</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+f(x) = \left\{
+    \begin{array}\\
+        0 &amp; \mbox{if } \ -{\pi} \leq x &lt; 0 \\
+        1 &amp; \mbox{if } \ 0 &lt; x &lt; {\pi},\\
+    \end{array}
+\right.
+\end{split}\]</div>
+<p>Lets plot this function.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pylab</span> <span class="k">as</span> <span class="nn">pylab</span>
+<span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;font.size&#39;</span> <span class="p">:</span> <span class="mi">16</span> <span class="p">}</span>
+<span class="n">pylab</span><span class="o">.</span><span class="n">rcParams</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">square</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">))</span> <span class="o">%</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="mf">0.50</span><span class="p">:</span>
+            <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
+    <span class="k">return</span> <span class="n">y</span>
+
+<span class="n">N</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">10.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+
+<span class="n">ax</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">square</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">)</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/Fourier Series_3_01.png" src="../../_images/Fourier Series_3_01.png" />
+</div>
+</div>
+<p>Now lets try to express the square wave as a Fourier Series. Firstly we need to calculate the coefficients using the above expressions. Carrying out the calculations we find</p>
+<div class="math notranslate nohighlight">
+\[a_0 = \frac{1}{\pi} \int_{0}^{\pi} dx = 1 \]</div>
+<div class="math notranslate nohighlight">
+\[a_n = \frac{1}{\pi} \int_{0}^{\pi} \cos(nx)dx = 0, \,\,\,\,n\geq 1\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+b_n = \frac{1}{\pi} \int_{0}^{\pi} \sin(nx)dx = \left\{
+    \begin{array}\\
+        \frac{2}{n{\pi}} &amp; \mbox{if n is odd} \\
+        0 &amp; \mbox{if n is even}\\
+    \end{array}
+\right. 
+\end{split}\]</div>
+<p>Now lets formulate the Fourier Series for the positive square wave. First lets define the Fourier Series and its terms</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define the cos and sin terms of the Fourier series</span>
+<span class="k">def</span> <span class="nf">cosTerm</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="c1"># Always zero except for n=0</span>
+    <span class="k">if</span> <span class="n">n</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span> <span class="k">return</span> <span class="mf">1.0</span>
+    <span class="k">return</span> <span class="mf">0.</span>
+
+<span class="k">def</span> <span class="nf">sinTerm</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+
+    <span class="k">if</span> <span class="n">n</span><span class="o">%</span><span class="mi">2</span><span class="p">:</span> <span class="c1"># n modulo 2 = 1 (True) then Odd</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="mf">2.</span> <span class="o">/</span> <span class="p">(</span><span class="n">n</span><span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="mf">0.</span>
+    <span class="k">return</span> <span class="n">ret</span>
+
+<span class="k">def</span> <span class="nf">fourier</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">x</span><span class="p">):</span>
+    <span class="c1">#a_0 term, remember 1/2</span>
+    <span class="nb">sum</span> <span class="o">=</span> <span class="n">cosTerm</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">/</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+    
+    <span class="c1">#all other terms</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+        <span class="nb">sum</span> <span class="o">+=</span> <span class="n">sinTerm</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">cosTerm</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">sum</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now lets plot the Fourier Series for \( n=10, n=50, n=100\)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">fourier</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="n">x</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s1">&#39;n = 10&#39;</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">fourier</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span><span class="n">x</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s1">&#39;n = 50&#39;</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">fourier</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span><span class="n">x</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s1">&#39;n = 100&#39;</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="o">-</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/Fourier Series_7_01.png" src="../../_images/Fourier Series_7_01.png" />
+</div>
+</div>
+<p>As expected, increasing the number of terms, <span class="math notranslate nohighlight">\(n\)</span>, results in the Fourier Series approaching closer to the true shape of the square wave. However, an overshoot (undershoot) and a ringing effect is evident on the plots. This occurs when a truncated Fourier Series is used to approximate a function with discontinuities, such as the function above. In fact, increasing the number of terms will not decrease the amplitude of the overshoot. The effect is present for all functions with discontinuities and is known as the <em>Gibbs phenomenon</em>.</p>
+<p>So why do Gibbs phenomena occur? A discontinuity represents a change that takes place in zero time and thus contains infinite high frequencies. By approximating this with a truncated Fourier Series we are including only finite frequencies, which is not enough to properly describe the discontinuity, resulting in the ringing effect around the discontinuity, where the first ring has the largest amplitude.</p>
+</div>
+<div class="section" id="fourier-series-of-odd-and-even-functions">
+<h2>Fourier Series of Odd and Even Functions<a class="headerlink" href="#fourier-series-of-odd-and-even-functions" title="Permalink to this headline">¶</a></h2>
+<p>Two classes of functions that will be of great use when dealing with Fourier Series are odd and even functions. In this section we will demonstrate how using the properties of odd and even functions can simplify the Fourier Series of a function.</p>
+<p>For a symmetric interval around zero we have</p>
+<div class="math notranslate nohighlight">
+\[f(x) = f(-x) \,\, \mbox{if } f \, \mbox{is} \,\mbox{even}\]</div>
+<div class="math notranslate nohighlight">
+\[f(x) = -f(-x) \,\, \mbox{if } f \, \mbox{is} \,\mbox{odd}\]</div>
+<p>From these definitions, it is clear that even functions are symmetric around the y axis, eg. <span class="math notranslate nohighlight">\(\cos(x)\)</span> while odd functions are antisymmetric around the y axis eg. <span class="math notranslate nohighlight">\(\sin(x)\)</span>. The following properties of odd and even functions are very useful in Fourier analysis.</p>
+<ul class="simple">
+<li><p>The product of two odd functions is an even function, <span class="math notranslate nohighlight">\(o_1(x)o_2(x) = e(x)\)</span>.</p></li>
+<li><p>The product of two even functions is an even function, <span class="math notranslate nohighlight">\(e_1(x)e_2(x) = e(x)\)</span>.</p></li>
+<li><p>The product of an even and an odd function is an odd function, <span class="math notranslate nohighlight">\(e_1(x)o_1(x) = o(x)\)</span>.</p></li>
+<li><p>The integral of an odd function on a <em>symmetric</em> interval is zero, <span class="math notranslate nohighlight">\(\int_{-a}^{a} o(x)dx = 0\)</span></p></li>
+<li><p>The integral of an even function on a <em>symmetric</em> interval is twice the integral of the postive part, <span class="math notranslate nohighlight">\(\int_{-a}^{a} e(x)dx = 2\int_{0}^{a} e(x)dx\)</span></p></li>
+</ul>
+<p>Since <span class="math notranslate nohighlight">\(\cos(nx)\)</span> is even and <span class="math notranslate nohighlight">\(\sin(nx)\)</span> is odd, depending on the nature of <span class="math notranslate nohighlight">\(f(x)\)</span> we may be able to eliminate some terms from the Fourier series. Lets use the above example, the positive square wave. The square wave is an odd function, thus the term <span class="math notranslate nohighlight">\(f(x)\cos(nx)\)</span>  must be odd. Thus, looking at the expression for <span class="math notranslate nohighlight">\(a_n\)</span> and the properties of odd functions, we can see that <span class="math notranslate nohighlight">\(a_n = 0\)</span> for all <span class="math notranslate nohighlight">\(n &gt; 0\)</span>, which agrees with what we have found before. Thus, the properties of odd and even functions can allow us to eliminate one of the infinite sums in the Fourier Series, making them very useful in Fourier analysis.</p>
+</div>
+<div class="section" id="changing-the-interval">
+<h2>Changing the Interval<a class="headerlink" href="#changing-the-interval" title="Permalink to this headline">¶</a></h2>
+<p>A function need not be periodic around the [-<span class="math notranslate nohighlight">\({\pi}\)</span>,<span class="math notranslate nohighlight">\({\pi}\)</span>] interval, in order to be expressed as a Fourier Series. Through a simple change of variable we can express a periodic function across any interval as a Fourier Series. For a function <span class="math notranslate nohighlight">\(f(x)\)</span> with a period <span class="math notranslate nohighlight">\(p=2L\)</span>, we need to scale the x-axis by a variable <span class="math notranslate nohighlight">\(u\)</span> where,</p>
+<div class="math notranslate nohighlight">
+\[u = \frac{{\pi}x}{L}\]</div>
+<p>Taking into consideration a new function <span class="math notranslate nohighlight">\(g(u)\)</span>, where <span class="math notranslate nohighlight">\(g(u)=f(x)\)</span>, we can write the Fourier Series for <span class="math notranslate nohighlight">\(g(u)\)</span> as</p>
+<div class="math notranslate nohighlight">
+\[g(u) = \frac{a_0}{2} + \sum \limits _{n=1} ^{\infty}a_n \cos(nu) + \sum \limits _{n=1} ^{\infty}b_n \sin(nu)\]</div>
+<p>Thus, by changing out variable back to <span class="math notranslate nohighlight">\(x\)</span> we can write the Fourier Series of <span class="math notranslate nohighlight">\(f(x)\)</span> as</p>
+<div class="math notranslate nohighlight">
+\[f(x) = \frac{a_0}{2} + \sum \limits _{n=1} ^{\infty}a_n \cos(\frac{n{\pi}}{L}x) + \sum \limits _{n=1} ^{\infty}b_n \sin(\frac{n{\pi}}{L}x)\]</div>
+<p>Using <span class="math notranslate nohighlight">\(\frac{du}{dx} = \frac{{\pi}}{L}\)</span> we can determine the coefficients <span class="math notranslate nohighlight">\(a_0\)</span>, <span class="math notranslate nohighlight">\(a_n\)</span> and <span class="math notranslate nohighlight">\(b_n\)</span>. These are given by</p>
+<div class="math notranslate nohighlight">
+\[a_0 = \frac{1}{L} \int_{-L}^{L} f(x)dx \]</div>
+<div class="math notranslate nohighlight">
+\[a_n = \frac{1}{L} \int_{-L}^{L} f(x)\cos(\frac{n{\pi}}{L}x)dx \,\,\,\,n=1, 2, ...\]</div>
+<div class="math notranslate nohighlight">
+\[b_n = \frac{1}{L} \int_{-L}^{L} f(x)\sin(\frac{n{\pi}}{L}x)dx \,\,\,\,n=1, 2, ...\]</div>
+<p>Using these expressions we can express periodic functions of any period as Fourier Series.</p>
+</div>
+<div class="section" id="references">
+<h2>References:<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<p>Material used in this notebook was based on the Fourier Series lecture content of Maths Methods 2 module provided by the Earth Science and Engineering Department and on the “Fourier Transforms” course by professor Carlo Contaldi provided by the Physics Department.</p>
+</div>
+</div>
+
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="Taylor_series.html" title="previous page">Taylor series</a>
+    <a class='right-next' id="next-link" href="Fourier Transforms.html" title="next page">Fourier Transforms</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Imperial College London<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../../_static/js/index.js"></script>
+    
+  </body>
+</html>
