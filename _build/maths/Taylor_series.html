@@ -1,0 +1,410 @@
+---
+redirect_from:
+  - "/maths/taylor-series"
+interact_link: notebooks/maths/Taylor_series.ipynb
+kernel_name: python3
+kernel_path: notebooks/maths
+has_widgets: false
+title: |-
+  Taylor series
+pagenum: 3
+prev_page:
+  url: /maths/Big_O_notation.html
+next_page:
+  url: /maths/TensorsReview.html
+suffix: .ipynb
+search: x f approximation toc series point span class function taylor linear terms frac o h constant notation error value href motivation data modified id item big wikipedia expansion example its c derivative numnbspnbsp lilispana linearisation truncation reading approximate us consider better org our slope line infinite li ul aside further arbitrary single really e forecast called en wiki around yes very y accuracy ldots truncate div itemlispana spanmotivation quotlinearisationquot num nbspnbsp method sum derivatives suppose guess choice well approx weather tomorrow today persistence makes lets plot actually where m same formula following away include writing xh hf delta gif talking
+
+comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /notebooks***"
+---
+
+    <main class="jupyter-page">
+    <div id="page-info"><div id="page-title">Taylor series</div>
+</div>
+    
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><h1>Table of Contents<span class="tocSkip"></span></h1></p>
+<div class="toc"><ul class="toc-item"><li><span><a href="#Motivation---a-constant-approximation" data-toc-modified-id="Motivation---a-constant-approximation-1"><span class="toc-item-num">1&nbsp;&nbsp;</span>Motivation - a constant approximation</a></span></li><li><span><a href="#Motivation---a-linear-approximation-(a-&quot;linearisation&quot;)" data-toc-modified-id="Motivation---a-linear-approximation-(a-&quot;linearisation&quot;)-2"><span class="toc-item-num">2&nbsp;&nbsp;</span>Motivation - a linear approximation (a "linearisation")</a></span><ul class="toc-item"><li><ul class="toc-item"><li><span><a href="#Taylor-series-example" data-toc-modified-id="Taylor-series-example-2.0.1"><span class="toc-item-num">2.0.1&nbsp;&nbsp;</span>Taylor series example</a></span></li></ul></li><li><span><a href="#Aside:-Big-O-notation" data-toc-modified-id="Aside:-Big-O-notation-2.1"><span class="toc-item-num">2.1&nbsp;&nbsp;</span>Aside: Big O notation</a></span></li></ul></li><li><span><a href="#Truncation-error" data-toc-modified-id="Truncation-error-3"><span class="toc-item-num">3&nbsp;&nbsp;</span>Truncation error</a></span></li><li><span><a href="#FURTHER-READING:" data-toc-modified-id="FURTHER-READING:-4"><span class="toc-item-num">4&nbsp;&nbsp;</span><strong>FURTHER READING:</strong></a></span></li></ul></div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Taylor-series">Taylor series<a class="anchor-link" href="#Taylor-series"> </a></h1><p>A Taylor series is a method by which we can approximate an arbitrary function by a sum of terms made up of that function and its derivatives at a single point.</p>
+<p>This concept underlies many things (especially in computational science) so it's worth us spending some time reviewing it.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Motivation---a-constant-approximation">Motivation - a constant approximation<a class="anchor-link" href="#Motivation---a-constant-approximation"> </a></h2><p>Consider a function of a single independent variable:  $f(x)$</p>
+<p>Suppose this function is really really expensive to evaluate. Suppose I have already evaluated it at a single $x$ value, call it $x_0$, i.e. I know the value of $f(x_0)$.</p>
+<p>Given only this information, what is the best guess (estimation/approximation) I can make for $f(x)$ for a choice $x\ne x_0$?</p>
+<p>Well I can't really do anything better than</p>
+$$  f(x) \approx f(x_0)$$<p>This may seem a hopeless approximation, but it can be used in some situations. Pretend $f$ is a weather forecast and $x$ is time. This just says that for a forecast of the weather tomorrow use what we see today - this is a real technique called <a href="https://en.wikipedia.org/wiki/Weather_forecasting#Persistence"><em>persistent forecast</em></a> ("today equals tomorrow").</p>
+<p>"... This makes persistence a 'hard to beat' method for forecasting longer time periods": <a href="http://ww2010.atmos.uiuc.edu/(Gh)/guides/mtr/fcst/mth/prst.rxml">http://ww2010.atmos.uiuc.edu/(Gh)/guides/mtr/fcst/mth/prst.rxml</a></p>
+<p>Let's consider an example:</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>and plot our current situation, assuming that $x_0=0$. We call this the expansion point - we are constructing an approximation "around this point".</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;A constant approximation&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;$x$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+
+<span class="c1"># define our x for plotting purposes</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">3.</span><span class="p">,</span> <span class="mf">3.</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+
+<span class="c1"># plot exact function</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Exact function&#39;</span><span class="p">)</span>
+
+<span class="c1"># define our approximation</span>
+<span class="n">x0</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">x0</span><span class="p">),</span> <span class="s1">&#39;ro&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Expansion point&#39;</span><span class="p">)</span>
+
+<span class="c1"># and plot the constant approximation</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Constant approximation&#39;</span><span class="p">)</span>
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;matplotlib.legend.Legend at 0x2322df4cb38&gt;</pre>
+</div>
+
+</div>
+</div>
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../images/maths/Taylor_series_6_1.png"
+>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Can I have any confidence in this guess?</p>
+<ol>
+<li>Yes if it turns out that the function $f$ is actually a constant.</li>
+</ol>
+<ol>
+<li>Yes, if I can assume that $f$ doesn't vary very much in the vicinity of $x_0$, and if we are interested in $x$ values that are close to $x_0$.</li>
+</ol>
+<p>How can I do better?</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Motivation---a-linear-approximation-(a-&quot;linearisation&quot;)">Motivation - a linear approximation (a "linearisation")<a class="anchor-link" href="#Motivation---a-linear-approximation-(a-&quot;linearisation&quot;)"> </a></h2><p>The obvious improvement we can make is to approximate the true function with a linear approximation rather than a constant.</p>
+<p>This is a common way to write a linear function:</p>
+$$ y = mx + c$$<p>where $m$ is the slope and $c$ is the intercept - the $y$ value the line hits the $x=0$ axis at.</p>
+<p>We consider an approximation, or an expansion, (or in this case a "linearisation") "about a point".</p>
+<p>For us the point is $x_0$ and it makes sense for us to make the slope of the linear approximation the same as the derivative of the function at this point.</p>
+<p>So we are now using the value of $f$ at $x_0$ AND the value of the derivative of $f$ at $x_0$:  $m = f'(x_0)$.</p>
+<p>This is the formula for the linear line with this slope:</p>
+$$ y = f'(x_0) x + c$$<p>where choice of $c$ moves the linear line up and down. We want it to pass through the function at $x_0$ as well of course, and this allows us to figure out what value $c$ should take.</p>
+<p>Actually we generally write the linearisation in the following form</p>
+$$ f(x) \approx f(x_0) + (x-x_0)f'(x_0)$$<p>so when $(x-x_0)$ is zero, we are at the expansion point and we indeed get $f(x_0)$ on the RHS. As we move away from that point $(x-x_0)$ grows and our approximation adds a correction based on the size of the derivative at $x_0$.</p>
+<p>Let's plot this. First we need to define the derivative:</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># of course for our example f this is trivial:</span>
+<span class="k">def</span> <span class="nf">fx</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;A constant approximation&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;$x$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+
+<span class="c1"># define our x for plotting purposes</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">3.</span><span class="p">,</span> <span class="mf">3.</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+
+<span class="c1"># plot exact function</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Exact function&#39;</span><span class="p">)</span>
+
+<span class="c1"># define our approximation</span>
+<span class="n">x0</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">x0</span><span class="p">)</span><span class="o">*</span><span class="n">fx</span><span class="p">(</span><span class="n">x0</span><span class="p">))</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">x0</span><span class="p">),</span> <span class="s1">&#39;ro&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Expansion point&#39;</span><span class="p">)</span>
+
+<span class="c1"># and plot the constant approximation</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Linear approximation&#39;</span><span class="p">)</span>
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;matplotlib.legend.Legend at 0x2322e095cf8&gt;</pre>
+</div>
+
+</div>
+</div>
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../images/maths/Taylor_series_10_1.png"
+>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This is clearly an improved approximation compared to the constant one.</p>
+<p>However the same accuracy points hold: if we are a long way from the expansion point, or if $f$ is very complex, this may not be a good approximation.</p>
+<p>Can we do better - yes we can consider the curvature of the black line in addition to its value and its slope, i.e. we can include a term proportional to $f''(x_0)$ to our approximation.</p>
+<p>and so on...</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This is the formula for the infinite Taylor series <em>about (or around) the point $x_0$</em></p>
+$$f(x) = f(x_0) + (x - x_0) f'(x_0) + \frac{(x - x_0)^2}{2!} f''(x_0) + \frac{(x - x_0)^3}{3!} f'''(x_0) +
+\frac{(x - x_0)^4}{4!} f^{(iv)}(x_0) + \ldots$$<p>An equivalent way of writing this expansion is</p>
+$$ f(x_0+h)  = f(x_0) + hf'(x_0) + \frac{h^2}{2!}f''(x_0) + \frac{h^3}{3!}f'''(x_0) + \ldots $$<p>or replace $h$ by the notation $\Delta x$ or $\delta x$.</p>
+<p>As we include more and more terms our approximation improves - see the following animated gif from Wikipedia which explains the point.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Taylor-series-example">Taylor series example<a class="anchor-link" href="#Taylor-series-example"> </a></h4><p><em>Wikipedia image: The exponential function (in blue), and the sum of the first (n + 1) terms of its Taylor series expansion around the point 0 (in red).</em></p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/6/62/Exp_series.gif" width=200x></p>
+<p>More terms equate with a better approximation valid a larger distance from $x_0$.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Aside:-Big-O-notation">Aside: Big O notation<a class="anchor-link" href="#Aside:-Big-O-notation"> </a></h3><p>When talking about terms in infinite series (terms we will often be forces to truncate, i.e. throw away), or talking about errors, convergence, complexity, run times etc, so-called <a href="https://en.wikipedia.org/wiki/Big_O_notation">Big-O</a> notation is very useful.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>As an alternative to writing "$ \ldots $" in the above infinite expansions, we can also write</p>
+$$f(x) = f(x_0) + (x - x_0) f'(x_0) + \frac{(x - x_0)^2}{2!} f''(x_0) + \frac{(x - x_0)^3}{3!} f'''(x_0) + \mathcal{O}((x - x_0)^4)$$<p>or</p>
+$$ f(x_0+h) = f(x_0) + hf'(x_0) + \frac{h^2}{2!}f''(x_0) + \frac{h^3}{3!}f'''(x_0) + \mathcal{O}(h^4) $$<p>What does this mean?</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>LINK TO THE NOTEBOOK ON BIG O NOTATION</strong></p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Truncation-error">Truncation error<a class="anchor-link" href="#Truncation-error"> </a></h2><p>In principle we can use Taylor series to approximate a (sufficiently smooth) function with arbitrary accuracy as long as we use sufficiently many terms, but in practice we will have to truncate.</p>
+<p>In the next section we will use similar ideas to compute an approximate solution to a differential equations, we will do this by approximating the operation of taking a derivative.</p>
+<p>Again by making use of enough terms from a Taylor series we can construct approximations of derivatives with arbitrary accuracy, but again in practice we will have to truncate.</p>
+<p>In both cases the act of limiting the number of terms we use introduces an error.</p>
+<p>Since we are truncating an infinite series at some point, this type of error is often called a <a href="https://en.wikipedia.org/wiki/Truncation_error"><em>truncation error</em></a>.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="FURTHER-READING:"><strong>FURTHER READING:</strong><a class="anchor-link" href="#FURTHER-READING:"> </a></h2><p>For an application of Taylor series see the notebook on timestepping ODEs</p>
+
+</div>
+</div>
+</div>
+</div>
+
+ 
+
+
+    </main>
+    

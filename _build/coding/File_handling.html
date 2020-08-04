@@ -1,0 +1,309 @@
+---
+redirect_from:
+  - "/coding/file-handling"
+interact_link: notebooks/coding/File_handling.ipynb
+kernel_name: python3
+kernel_path: notebooks/coding
+has_widgets: false
+title: |-
+  File handling
+pagenum: 8
+prev_page:
+  url: /coding/Dictionaries.html
+next_page:
+  url: /coding/Flow_control_statements.html
+suffix: .ipynb
+search: file our data pandas density not numpy lines values arrays python temperature line example string array separated whitespaces list elements set text below extract column read using automatically beginning here into numbers default readcsv dataframe header different best files contains end used assign genfromtxt org reference html generate function type comments skip delimiter any save npy object its names handling suppose air temperatures atm pressure celsius degrees kg m source wikipedia keyword usually statement improve syntax lot things us closing opened want additionally variable above stored recognised point note already initialised specific length rather empty lists append good practice initalise
+
+comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /notebooks***"
+---
+
+    <main class="jupyter-page">
+    <div id="page-info"><div id="page-title">File handling</div>
+</div>
+    
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="File-handling-in-Python">File handling in Python<a class="anchor-link" href="#File-handling-in-Python"> </a></h1><p>Suppose we have a text file like below, from which we would like to extract temperature and density data:</p>
+$$
+# Density of air at different temperatures, at 1 atm pressure
+# Column 1: temperature in Celsius degrees
+# Column 2: density in kg/m^3
+  0.0   999.8425
+  4.0   999.9750
+ 15.0   999.1026
+ 20.0   998.2071
+ 25.0   997.0479
+ 37.0   993.3316
+ 50.0   988.04
+100.0   958.3665
+# Source: Wikipedia (keyword Density)
+$$<h2 id="Python">Python<a class="anchor-link" href="#Python"> </a></h2><p>It is usually best to read and write files using the <strong>with statement</strong> which will improve our syntax and do a lot of things automatically for us (like closing the file we opened).</p>
+<p>Our file contains 3 lines at the beginning and 1 line at the end which we do not want to extract. Additionally, the temperature and density values are separated by whitespaces. Here is an example of how we could extract the data into two arrays:</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;density_water.dat&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>  <span class="c1"># r for read</span>
+    <span class="c1"># skip extra lines by taking a slice of the file</span>
+    <span class="n">lines</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">readlines</span><span class="p">()[</span><span class="mi">3</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        
+    <span class="c1"># initialise 2 empty arrays to store our data</span>
+    <span class="n">temp</span><span class="p">,</span> <span class="n">density</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">lines</span><span class="p">)),</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">lines</span><span class="p">))</span>
+    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">lines</span><span class="p">)):</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+        <span class="n">temp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">density</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        
+<span class="nb">print</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">density</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[  0.   4.  15.  20.  25.  37.  50. 100.]
+[999.8425 999.975  999.1026 998.2071 997.0479 993.3316 988.04   958.3665]
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The lines variable in the above example is a list which contains our lines with numbers, but they are stored as a string - they are not recognised as numbers at this point. Note that the temperature and density arrays are already initialised as arrays of specific length, rather than empty lists which we will then append numbers to. It is good practice to initalise arrays like this when we know exactly how many elements our final array will have. The for loop is used to cycle through all elements of our data list. Each ith element is a string, which we split into a new list with the same number of elements as the number of values that are separated by whitespaces in the line - in our case 2. Finally we can assign those values to elements in the temperature and density arrays, but first we converted them from a string to a float.</p>
+<p>The below example shows how we could write the data into a text file with, for example here, comma separated values.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;output.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>  <span class="c1"># w for write</span>
+    <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;# Temperature and density data</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">temp</span><span class="p">)):</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">,</span><span class="si">{}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">temp</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">density</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="NumPy">NumPy<a class="anchor-link" href="#NumPy"> </a></h2><p>NumPy's <a href="https://numpy.org/doc/1.18/reference/generated/numpy.genfromtxt.html"><strong>genfromtxt</strong></a> (generate from text) function provides full control over the file which we are trying to open. It initialises a numpy array from the data. Some of the parameters include:</p>
+
+<pre><code>- dtype: set a data type. If not set, determines the data type automatically for each column
+- comments: skips every line starting with a string that is set here. '#' by default.
+- skip_header: number of lines to skip at the beginning of the file
+- skip_footer: number of lines to skip at the end of the file
+- delimiter: the string used to separate values. Any whitespaces, by default.
+
+</code></pre>
+<p>For our file, we do not have to change anything since comments are marked by a # at the beginning of the line and the values are separated by whitespaces.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">genfromtxt</span><span class="p">(</span><span class="s1">&#39;density_water.dat&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[[  0.     999.8425]
+ [  4.     999.975 ]
+ [ 15.     999.1026]
+ [ 20.     998.2071]
+ [ 25.     997.0479]
+ [ 37.     993.3316]
+ [ 50.     988.04  ]
+ [100.     958.3665]]
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can save our array to a file in multiple ways - examples below. If we plan on using the array in another python code, perhaps it is best to save it as a .npy file. We can later easily load the .npy file and reconstruct the original array. The reader is encouraged to read about <strong>pickling</strong> in Python, which allows any object in Python to be saved in this way, not only numpy arrays.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="s1">&#39;data.txt&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>  <span class="c1"># save data array to a text file</span>
+<span class="n">np</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;data.npy&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>  <span class="c1"># save data array to a .npy file</span>
+
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;data.npy&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[[  0.     999.8425]
+ [  4.     999.975 ]
+ [ 15.     999.1026]
+ [ 20.     998.2071]
+ [ 25.     997.0479]
+ [ 37.     993.3316]
+ [ 50.     988.04  ]
+ [100.     958.3665]]
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Pandas">Pandas<a class="anchor-link" href="#Pandas"> </a></h2><p>Despite its name, panda's <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html"><strong>read_csv</strong></a> can read many different types of files, including our .dat file. Pandas DataFrame is the primary data structure in pandas, so this function will generate one such DataFrame. It is a very powerful object with many capabilities not even implemented in NumPy - deserving of its own notebook.</p>
+<p>As in the NumPy example, we specify that our comment lines begin with a '#' and that our delimiter is whitespace(s). Furthermore, we can give names (header) to our columns in the DataFrame, where we assign our list col_names using the names parameter. Pandas' read_csv() by default automatically sets this from the header line in our file, which we do not have in our file so we set header=None.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">pandas</span> <span class="k">import</span> <span class="n">read_csv</span>
+
+<span class="n">col_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;temperature&#39;</span><span class="p">,</span> <span class="s1">&#39;density&#39;</span><span class="p">]</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;density_water.dat&#39;</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="s1">&#39;#&#39;</span><span class="p">,</span> <span class="n">delim_whitespace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="n">col_names</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;data.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>   temperature   density
+0          0.0  999.8425
+1          4.0  999.9750
+2         15.0  999.1026
+3         20.0  998.2071
+4         25.0  997.0479
+5         37.0  993.3316
+6         50.0  988.0400
+7        100.0  958.3665
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+ 
+
+
+    </main>
+    

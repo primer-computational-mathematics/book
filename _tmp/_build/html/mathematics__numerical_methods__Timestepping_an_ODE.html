@@ -1,0 +1,445 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Solving (or “timestepping”) an ordinary differential equation (ODE) &#8212; ESE Jupyter Material</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/sphinx-book-theme.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/mystnb.js"></script>
+    <script src="_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script async="async" src="_static/thebelab.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Sequences and series" href="mathematics__sequences_and_series__intro.html" />
+    <link rel="prev" title="Numerical methods" href="mathematics__numerical_methods__intro.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  <img src="_static/images__logo__logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">ESE Jupyter Material</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  
+  <ul class="nav sidenav_l1">
+  <li class="">
+    <a href="intro.html">Landing page</a>
+  </li>
+  <li class="">
+    <a href="coding__intro.html">Coding</a>
+  </li>
+  <li class="">
+    <a href="geosciences__intro.html">Geosciences</a>
+  </li>
+  <li class="active">
+    <a href="mathematics__intro.html">Mathematics</a>
+  <ul class="nav sidenav_l2">
+    <li class="">
+      <a href="mathematics__calculus__intro.html">Calculus</a>
+    </li>
+    <li class="">
+      <a href="mathematics__complex analysis__intro.html">Complex Analysis</a>
+    </li>
+    <li class="">
+      <a href="mathematics__linear_algebra__intro.html">Linear Algebra</a>
+    </li>
+    <li class="">
+      <a href="mathematics__mathematical_notation__intro.html">Mathematical Notation</a>
+    </li>
+    <li class="">
+      <a href="mathematics__math_methods_1__intro.html">Math Methods 1</a>
+    </li>
+    <li class="active">
+      <a href="mathematics__numerical_methods__intro.html">Numerical Methods</a>
+      <ul class="nav sidenav_l3">
+      <li class="active">
+        <a href="">Solving (or "timestepping") an ordinary differential equation (ODE)</a>
+      </li>
+    </ul>
+    </li>
+    <li class="">
+      <a href="mathematics__sequences_and_series__intro.html">Sequences And Series</a>
+    </li>
+    <li class="">
+      <a href="mathematics__sets and functions__intro.html">Sets And Functions</a>
+    </li>
+    <li class="">
+      <a href="mathematics__statistics__intro.html">Statistics</a>
+    </li>
+  </ul>
+  </li>
+  <li class="">
+    <a href="genindex.html">Index</a>
+  </li>
+</ul>
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/mathematics__numerical_methods__Timestepping_an_ODE.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        
+        <a class="issues-button"
+            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2Fmathematics__numerical_methods__Timestepping_an_ODE.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/mathematics__numerical_methods__Timestepping_an_ODE.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <button type="button" class="btn btn-secondary topbarbtn thebelab-launch-button"
+            onclick="initThebelab()" title="Launch Thebelab" data-toggle="tooltip" data-placement="left"><i
+                class="fas fa-rocket"></i><span style="margin-left: .4em;">ThebeLab</span></button>
+        
+    </div>
+</div>
+
+    </div>
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#what-do-we-mean-by-timestepping" class="nav-link">What do we mean by timestepping?</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#deriving-the-forward-euler-scheme-from-taylor-series" class="nav-link">Deriving the forward Euler scheme from Taylor series</a>
+        </li>
+    
+    </ul>
+</nav>
+
+
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <h1>Table of Contents<span class="tocSkip"></span></h1>
+<div class="toc"><ul class="toc-item"><li><span><a href="#What-do-we-mean-by-timestepping?" data-toc-modified-id="What-do-we-mean-by-timestepping?-1"><span class="toc-item-num">1&nbsp;&nbsp;</span>What do we mean by timestepping?</a></span></li><li><span><a href="#Deriving-the-forward-Euler-scheme-from-Taylor-series" data-toc-modified-id="Deriving-the-forward-Euler-scheme-from-Taylor-series-2"><span class="toc-item-num">2&nbsp;&nbsp;</span>Deriving the forward Euler scheme from Taylor series</a></span></li></ul></div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="solving-or-timestepping-an-ordinary-differential-equation-ode">
+<h1>Solving (or “timestepping”) an ordinary differential equation (ODE)<a class="headerlink" href="#solving-or-timestepping-an-ordinary-differential-equation-ode" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="what-do-we-mean-by-timestepping">
+<h2>What do we mean by timestepping?<a class="headerlink" href="#what-do-we-mean-by-timestepping" title="Permalink to this headline">¶</a></h2>
+<p>The numerical solution of ODEs is a big topic.</p>
+<p>A common type of ODE you will come across will only include a <em>first</em> derivative with respect to an independent variable.
+This won’t necessarily be time <span class="math notranslate nohighlight">\(t\)</span> (it might be space <span class="math notranslate nohighlight">\(x\)</span>), but we can always “interpret” this indepedent as “time” or a time-like variable. This is why we commonly talk about “timestepping” an ODE even though there are lots of scenarios where
+you will be doing this for problems either where <span class="math notranslate nohighlight">\(t\)</span> doesn’t appear, or isn’t the variable the derivative has been taken with respect to!</p>
+<p>Aside: What would you do with a problem that includes higher than first order derivative. An example comes from Newton’s second law, which tells us about acceleration (or rate of change of momentum), but we want to solve for position (<span class="math notranslate nohighlight">\(x\)</span>), i.e. we’re thinking about an ODE in the form <span class="math notranslate nohighlight">\(\ddot{x}=f\)</span>.  Well we can always convert higher order problems into a <em>system</em> of ODEs only involving first order derivatives by introducing “dummy” variables. In the Newton’s second law example just introduce velocity, then we can rewrite our second order problem <span class="math notranslate nohighlight">\(\ddot{x}=f\)</span> as the coupled first order problem <span class="math notranslate nohighlight">\(\dot{x}=u,\;\dot{u}=f\)</span>.</p>
+<p>Let’s suppose we have an ODE of the form</p>
+<p>\(y’ = f(t,y) \qquad\left[\text{NB. on the LHS we could also use the notation <span class="math notranslate nohighlight">\(\dot{y}\)</span> or <span class="math notranslate nohighlight">\(\frac{dy}{dt}\)</span>}\right]
+\)</p>
+<p>This is describing a solution function of the form <span class="math notranslate nohighlight">\(y\equiv y(t)\)</span>, i.e. the solution <span class="math notranslate nohighlight">\(y\)</span> is a function of one variable - <span class="math notranslate nohighlight">\(t\)</span>.</p>
+<p><span class="math notranslate nohighlight">\(y\)</span> is called the <em>dependent variable</em> and <span class="math notranslate nohighlight">\(t\)</span> the <em>dependent variable</em>.</p>
+<p>[NB. in the case where <span class="math notranslate nohighlight">\(y\)</span> is multi-dimensional - a vector of unknowns/dependent variables - we would talk about a <em>system of ODEs</em>. For the case where there are more than one independent variables then we need to start thinking about <em>partial differential equations (PDEs)</em>, covered later in this module and in ACSE-3].</p>
+<p>For example</p>
+<div class="math notranslate nohighlight">
+\[y' = \exp(t), \qquad\text{or equivalently} \qquad y' = y\]</div>
+<p>the first is an example where the RHS is a function of <span class="math notranslate nohighlight">\(t\)</span> only, the second a function of <span class="math notranslate nohighlight">\(y\)</span> only.</p>
+<p>This is an example where both <span class="math notranslate nohighlight">\(t\)</span> and <span class="math notranslate nohighlight">\(y\)</span> appear on the RHS:</p>
+<div class="math notranslate nohighlight">
+\[y' = y + t^3\]</div>
+<p>The first two (<span class="math notranslate nohighlight">\(y'=y\)</span> or <span class="math notranslate nohighlight">\(y'=\exp(t)\)</span>) are relatively easy for us to solve analytically, the final case is a bit more challenging and we may need to resort to a numerical approach (or attempt symbolic computation).</p>
+</div>
+<div class="section" id="deriving-the-forward-euler-scheme-from-taylor-series">
+<h2>Deriving the forward Euler scheme from Taylor series<a class="headerlink" href="#deriving-the-forward-euler-scheme-from-taylor-series" title="Permalink to this headline">¶</a></h2>
+<p>There are several approached to motivate and develop numerical solvers for ODEs.</p>
+<p>One common way is to make use of a Taylor series expansion.</p>
+<p>From the notebook on Taylor series we know that (assuming smoothness of the solution) the following is true:</p>
+<div class="math notranslate nohighlight">
+\[ y(t+\Delta t) = y(t) + \Delta t \, y'(t) + \frac{\Delta t^2}{2!}y''(t) + \frac{\Delta t^3}{3!}y'''(t) + \mathcal{O}(\Delta t^4),\]</div>
+<p>Using the notation <span class="math notranslate nohighlight">\(y_n=y(t_n), \; y'_n=y'(t_n)\)</span> etc, and assuming a uniform time step size <span class="math notranslate nohighlight">\(\Delta t\)</span>, this is equivalent to</p>
+<div class="math notranslate nohighlight">
+\[ y_{n+1} = y_n + \Delta t\, y'_n + \frac{\Delta t^2}{2!}y''_n + \frac{\Delta t^3}{3!}y'''_n + \mathcal{O}(\Delta t^4).\]</div>
+<p>Dropping second-order terms (which we can justify if <span class="math notranslate nohighlight">\(y\)</span> is “smooth”, which means that <span class="math notranslate nohighlight">\(y''\)</span> is “well-behaved”, and <span class="math notranslate nohighlight">\(\Delta t\)</span> is chosen to be sufficiently small so that the terms containing higher powers of <span class="math notranslate nohighlight">\(\Delta t\)</span> are relatively speaking <em>very small</em>),</p>
+<p>and noting that <span class="math notranslate nohighlight">\(y'_n = f(t_n,y_n)\)</span> we are left with the discrete relation</p>
+<div class="math notranslate nohighlight">
+\[y_{n+1} = y_n + \Delta t \, f(t_n,y_n).\]</div>
+<br>
+<p>This is a very famous ODE solver, or time-stepping method - termed the <strong>forward Euler</strong> or <strong>explicit Euler</strong> method.</p>
+<p>We have turned the continuous problem into a discrete one - we have discretised. And note that this is in a form similar to our logistic map, so we know that we can write a simple piece of code that iterates over <span class="math notranslate nohighlight">\(n\)</span> to evaluate/predict/approximate the dynamics.</p>
+<p>Let’s consider the simple model problem</p>
+<div class="math notranslate nohighlight">
+\[y' = y\]</div>
+<p>with the initial condition</p>
+<div class="math notranslate nohighlight">
+\[y(0)=1\]</div>
+<p>and see what one step of the forward Euler method does, we will assume that we start at some <span class="math notranslate nohighlight">\(t\)</span> from the exact solution at that time, i.e. the starting point indicated by the red dot in the following image is on the exact solution (black) line.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;One step of Forward Euler&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;$t$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;$y(t)$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+
+<span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+
+<span class="c1"># the RHS of the ODE</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">y</span>
+
+<span class="c1"># an example solution trajectory (or solution to ODE $\dot{y}=f(y), y(0)=1$)</span>
+<span class="k">def</span> <span class="nf">y</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">y</span><span class="p">(</span><span class="n">t</span><span class="p">),</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Trajectory $y=y(t)$&#39;</span><span class="p">)</span>
+
+<span class="c1"># this is just some location in time</span>
+<span class="n">t0</span> <span class="o">=</span> <span class="mf">0.35</span>
+<span class="c1"># and an example of a time step size large enough we can see what the method is doing</span>
+<span class="n">dt</span> <span class="o">=</span> <span class="mf">0.4</span>
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">t0</span><span class="p">],</span> <span class="p">[</span><span class="n">y</span><span class="p">(</span><span class="n">t0</span><span class="p">)],</span> <span class="s1">&#39;ro&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">t0</span><span class="p">,</span> <span class="n">t0</span> <span class="o">+</span> <span class="n">dt</span><span class="p">],</span> <span class="p">[</span><span class="n">y</span><span class="p">(</span><span class="n">t0</span><span class="p">),</span> <span class="n">y</span><span class="p">(</span><span class="n">t0</span><span class="p">)</span> <span class="o">+</span> <span class="n">dt</span> <span class="o">*</span> <span class="n">f</span><span class="p">(</span><span class="n">t0</span><span class="p">,</span> <span class="n">y</span><span class="p">(</span><span class="n">t0</span><span class="p">))],</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;$y&#39;=f(t_0,y_0)$&quot;</span><span class="p">)</span>
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">t0</span> <span class="o">+</span> <span class="n">dt</span><span class="p">],</span> <span class="p">[</span><span class="n">y</span><span class="p">(</span><span class="n">t0</span> <span class="o">+</span> <span class="n">dt</span><span class="p">)],</span> <span class="s1">&#39;ko&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Exact soln at $t_0 + \Delta t$&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">t0</span> <span class="o">+</span> <span class="n">dt</span><span class="p">],</span> <span class="p">[</span><span class="n">y</span><span class="p">(</span><span class="n">t0</span><span class="p">)</span> <span class="o">+</span> <span class="n">dt</span> <span class="o">*</span> <span class="n">f</span><span class="p">(</span><span class="n">t0</span><span class="p">,</span> <span class="n">y</span><span class="p">(</span><span class="n">t0</span><span class="p">))],</span> <span class="s1">&#39;go&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;FE numerical soln at $t_0 + \Delta t$&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/mathematics__numerical_methods__Timestepping_an_ODE_7_0.png" src="_images/mathematics__numerical_methods__Timestepping_an_ODE_7_0.png" />
+</div>
+</div>
+<p>The black dot in the figure above shows what the true/exact solution at the new <span class="math notranslate nohighlight">\(n\)</span> level is, while the green dot shows what the numerical solver predicts it to be.</p>
+<p>The difference between the two is the error that has been introduced in a single step of the method.</p>
+<p>Now in the next step of the algorithm we of course have to start from the green dot as we assume in practice we don’t know the black line.</p>
+<p>The next step computes</p>
+<div class="math notranslate nohighlight">
+\[y_{n+1} = y_n + \Delta t \, f(t_n,y_n),\]</div>
+<p>but note that <span class="math notranslate nohighlight">\(f\)</span> for this particular simple test case is simply <span class="math notranslate nohighlight">\(y\)</span>.</p>
+<p>We assume that we don’t know what the exact solution is at this time level, and hence we can’t read off the correct <span class="math notranslate nohighlight">\(t\)</span> from the <span class="math notranslate nohighlight">\(x\)</span> axis in the above plot and compute <span class="math notranslate nohighlight">\(\exp(t)\)</span> in the RHS of our update. If we could then this would let us use the correct new slope at this time, i.e. the slope at the black dot.</p>
+<p>Instead we are forced to read off the <span class="math notranslate nohighlight">\(y\)</span> axis - notice that in this example this gives us a <span class="math notranslate nohighlight">\(y\)</span> value that is too small, and hence an <span class="math notranslate nohighlight">\(f\)</span> that is too small. Therefore our next update will give us a second point that is even more too small!</p>
+<p>The moral of the story here is that <strong>errors generally accumulate</strong>, as we can see if we plot this next step of the algorithm:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Two steps of Forward Euler&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;$t$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;$y(t)$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+
+<span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+
+<span class="c1"># the RHS of the ODE</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">y</span>
+
+<span class="c1"># an example solution trajectory (or solution to ODE $\dot{y}=f(y), y(0)=1$)</span>
+<span class="k">def</span> <span class="nf">y</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">y</span><span class="p">(</span><span class="n">t</span><span class="p">),</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Trajectory $y=y(t)$&#39;</span><span class="p">)</span>
+
+<span class="c1"># this is just some location in time</span>
+<span class="n">t0</span> <span class="o">=</span> <span class="mf">0.35</span>
+<span class="c1"># and an example of a time step size large enough we can see what the method is doing</span>
+<span class="n">dt</span> <span class="o">=</span> <span class="mf">0.4</span>
+
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">t0</span><span class="p">],</span> <span class="p">[</span><span class="n">y</span><span class="p">(</span><span class="n">t0</span><span class="p">)],</span> <span class="s1">&#39;ro&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">t0</span><span class="p">,</span> <span class="n">t0</span> <span class="o">+</span> <span class="n">dt</span><span class="p">],</span> <span class="p">[</span><span class="n">y</span><span class="p">(</span><span class="n">t0</span><span class="p">),</span> <span class="n">y</span><span class="p">(</span><span class="n">t0</span><span class="p">)</span> <span class="o">+</span> <span class="n">dt</span> <span class="o">*</span> <span class="n">f</span><span class="p">(</span><span class="n">t0</span><span class="p">,</span> <span class="n">y</span><span class="p">(</span><span class="n">t0</span><span class="p">))],</span> <span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">y1</span> <span class="o">=</span> <span class="n">y</span><span class="p">(</span><span class="n">t0</span><span class="p">)</span> <span class="o">+</span> <span class="n">dt</span> <span class="o">*</span> <span class="n">f</span><span class="p">(</span><span class="n">t0</span><span class="p">,</span> <span class="n">y</span><span class="p">(</span><span class="n">t0</span><span class="p">))</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">t0</span> <span class="o">+</span> <span class="n">dt</span><span class="p">,</span> <span class="n">t0</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">dt</span><span class="p">],</span> <span class="p">[</span><span class="n">y1</span><span class="p">,</span> <span class="n">y1</span> <span class="o">+</span> <span class="n">dt</span> <span class="o">*</span> <span class="n">f</span><span class="p">(</span><span class="n">t0</span><span class="o">+</span><span class="n">dt</span><span class="p">,</span> <span class="n">y1</span><span class="p">)],</span> <span class="s1">&#39;b&#39;</span><span class="p">)</span>
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">t0</span> <span class="o">+</span> <span class="n">dt</span><span class="p">,</span> <span class="n">t0</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">dt</span><span class="p">],</span> <span class="p">[</span><span class="n">y</span><span class="p">(</span><span class="n">t0</span> <span class="o">+</span> <span class="n">dt</span><span class="p">),</span> <span class="n">y</span><span class="p">(</span><span class="n">t0</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">dt</span><span class="p">)],</span> <span class="s1">&#39;ko&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">t0</span> <span class="o">+</span> <span class="n">dt</span><span class="p">,</span> <span class="n">t0</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">dt</span><span class="p">],</span> <span class="p">[</span><span class="n">y</span><span class="p">(</span><span class="n">t0</span><span class="p">)</span> <span class="o">+</span> <span class="n">dt</span> <span class="o">*</span> <span class="n">f</span><span class="p">(</span><span class="n">t0</span><span class="p">,</span> <span class="n">y</span><span class="p">(</span><span class="n">t0</span><span class="p">)),</span> <span class="n">y1</span> <span class="o">+</span> <span class="n">dt</span> <span class="o">*</span> <span class="n">f</span><span class="p">(</span><span class="n">t0</span><span class="o">+</span><span class="n">dt</span><span class="p">,</span> <span class="n">y1</span><span class="p">)],</span> <span class="s1">&#39;go&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x2c93e4eeb38&gt;]
+</pre></div>
+</div>
+<img alt="_images/mathematics__numerical_methods__Timestepping_an_ODE_10_1.png" src="_images/mathematics__numerical_methods__Timestepping_an_ODE_10_1.png" />
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "primer-computational-mathematics/book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "."
+        }
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="mathematics__numerical_methods__intro.html" title="previous page">Numerical methods</a>
+    <a class='right-next' id="next-link" href="mathematics__sequences_and_series__intro.html" title="next page">Sequences and series</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Imperial College London<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="_static/js/index.js"></script>
+    
+  </body>
+</html>

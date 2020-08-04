@@ -1,0 +1,1531 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,minimum-scale=1">
+
+  <title>Search the site</title>
+  <meta name="description" content="        ">
+
+  <link rel="canonical" href="http://localhost:4000/search">
+  <link rel="alternate" type="application/rss+xml" title="ESE Jupyter Material" href="http://localhost:4000/feed.xml">
+
+  <meta property="og:url"         content="http://localhost:4000/search" />
+<meta property="og:type"        content="article" />
+<meta property="og:title"       content="Search the site" />
+<meta property="og:description" content="        " />
+<meta property="og:image"       content="http://localhost:4000/images/logo/logo.png" />
+
+<meta name="twitter:card" content="summary">
+
+
+  <script type="application/ld+json">
+  {
+  "@context": "http://schema.org",
+  "@type": "NewsArticle",
+  "mainEntityOfPage": "http://localhost:4000/search",
+  "headline": "Search the site",
+  "datePublished": "2020-06-29T11:46:00+01:00",
+  "dateModified": "2020-06-29T11:46:00+01:00",
+  "description": "        ",
+  "author": {
+    "@type": "Person",
+    "name": "Imperial College London"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Data 100 at UC Berkeley",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://localhost:4000",
+      "width": 60,
+      "height": 60
+    }
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "http://localhost:4000",
+    "height": 60,
+    "width": 60
+  }
+}
+
+  </script>
+  <link rel="stylesheet" href="/assets/css/styles.css">
+
+  <!-- <link rel="manifest" href="/manifest.json"> -->
+  <!-- <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#efae0a"> -->
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+  <meta name="theme-color" content="#233947">
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/x-icon" href="/images/logo/favicon.ico">
+
+  <!-- MathJax Config -->
+  <!-- Allow inline math using $ and automatically break long math lines -->
+<!-- (mostly) copied from nbconvert configuration -->
+<!-- https://github.com/jupyter/nbconvert/blob/master/nbconvert/templates/html/mathjax.tpl -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+        processEscapes: true,
+        processEnvironments: true
+    },
+    // Center justify equations in code and markdown cells. Elsewhere
+    // we use CSS to left justify single line equations in code cells.
+    displayAlign: 'center',
+    "HTML-CSS": {
+        styles: {'.MathJax_Display': {"margin": 0}},
+        linebreaks: { automatic: true },
+    },
+    
+});
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS_HTML' async></script>
+
+
+  <!-- DOM updating function -->
+  <script src="/assets/js/page/dom-update.js"></script>
+
+  <!-- Selectors for elements on the page -->
+  <script src="/assets/js/page/documentSelectors.js"></script>
+
+  <!-- Define some javascript variables that will be useful in other javascript -->
+  <script>
+    const site_basename = '';
+  </script>
+
+  <!-- Add AnchorJS to let headers be linked -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.2.0/anchor.min.js" async></script>
+  <script src="/assets/js/page/anchors.js" async></script>
+
+  <!-- Include Turbolinks to make page loads fast -->
+  <!-- https://github.com/turbolinks/turbolinks -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/turbolinks/5.2.0/turbolinks.js" async></script>
+  <meta name="turbolinks-cache-control" content="no-cache">
+
+  <!-- Load nbinteract for widgets -->
+  
+
+  <!-- Load Thebelab for interactive widgets -->
+  <!-- Include Thebelab for interactive code if it's enabled -->
+
+
+<!-- Display Thebelab button in each code cell -->
+<script>
+/**
+ * Set up thebelab button for code blocks
+ */
+
+const thebelabCellButton = id =>
+  `<a id="thebelab-cell-button-${id}" class="btn thebebtn o-tooltip--left" data-tooltip="Interactive Mode">
+    <img src="/assets/images/edit-button.svg" alt="Start thebelab interactive mode">
+  </a>`
+
+
+const addThebelabButtonToCodeCells =  () => {
+
+  const codeCells = document.querySelectorAll('div.input_area > div.highlight:not(.output) pre')
+  codeCells.forEach((codeCell, index) => {
+    const id = codeCellId(index)
+    codeCell.setAttribute('id', id)
+    if (document.getElementById("thebelab-cell-button-" + id) == null) {
+      codeCell.insertAdjacentHTML('afterend', thebelabCellButton(id));
+    }
+  })
+}
+
+initFunction(addThebelabButtonToCodeCells);
+</script>
+
+
+<script src="https://unpkg.com/thebelab@latest/lib/index.js" async></script>
+<script>
+    /**
+     * Add attributes to Thebelab blocks
+     */
+
+    const initThebelab = () => {
+        const addThebelabToCodeCells = () => {
+            console.log("Adding thebelab to code cells...");
+            // If Thebelab hasn't loaded, wait a bit and try again. This
+            // happens because we load ClipboardJS asynchronously.
+            if (window.thebelab === undefined) {
+                setTimeout(addThebelabToCodeCells, 250)
+            return
+            }
+
+            // If we already detect a Thebelab cell, don't re-run
+            if (document.querySelectorAll('div.thebelab-cell').length > 0) {
+                return;
+            }
+
+            // Find all code cells, replace with Thebelab interactive code cells
+            const codeCells = document.querySelectorAll('.input_area pre')
+            codeCells.forEach((codeCell, index) => {
+                const id = codeCellId(index)
+
+                // Clean up the language to make it work w/ CodeMirror and add it to the cell
+                dataLanguage = ""
+                dataLanguage = detectLanguage(dataLanguage);
+                codeCell.setAttribute('data-language', dataLanguage)
+                codeCell.setAttribute('data-executable', 'true')
+
+                // If the code cell is hidden, show it
+                var inputCheckbox = document.querySelector(`input#hidebtn${codeCell.id}`);
+                if (inputCheckbox !== null) {
+                    setCodeCellVisibility(inputCheckbox, 'visible');
+                }
+            });
+
+            // Remove the event listener from the page so keyboard press doesn't
+            // Change page
+            document.removeEventListener('keydown', initPageNav)
+            keyboardListener = false;
+
+            // Init thebelab
+            thebelab.bootstrap();
+
+            // Remove copy buttons since they won't work anymore
+            const copyAndThebeButtons = document.querySelectorAll('.copybtn, .thebebtn')
+            copyAndThebeButtons.forEach((button, index) => {
+                button.remove();
+            });
+
+            // Remove outputs since they'll be stale
+            const outputs = document.querySelectorAll('.output *, .output')
+            outputs.forEach((output, index) => {
+                output.remove();
+            });
+
+            // Find any cells with an initialization tag and ask ThebeLab to run them when ready
+            var thebeInitCells = document.querySelectorAll('div.tag_thebelab-init');
+            thebeInitCells.forEach((cell) => {
+                console.log("Initializing ThebeLab with cell: " + cell.id);
+                cell.querySelector('.thebelab-run-button').click();
+            });
+        }
+
+        // Add event listener for the function to modify code cells
+        const thebelabButtons = document.querySelectorAll('[id^=thebelab], [id$=thebelab]')
+        thebelabButtons.forEach((thebelabButton,index) => {
+            if (thebelabButton === null) {
+                setTimeout(initThebelab, 250)
+                return
+            };
+            thebelabButton.addEventListener('click', addThebelabToCodeCells);
+        });
+    }
+
+    // Initialize Thebelab
+    initFunction(initThebelab);
+
+// Helper function to munge the language name
+var detectLanguage = (language) => {
+    if (language.indexOf('python') > -1) {
+        language = "python";
+    }
+    return language;
+}
+</script>
+
+
+
+  <!-- Load the auto-generating TOC (non-async otherwise the TOC won't load w/ turbolinks) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.8.1/tocbot.min.js" async></script>
+  <script src="/assets/js/page/tocbot.js"></script>
+
+  <!-- Google analytics -->
+  
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', '');
+</script>
+
+
+
+  <!-- Clipboard copy button -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" async></script>
+
+  <!-- Load custom website scripts -->
+  <script src="/assets/js/scripts.js" async></script>
+
+  <!-- Load custom user CSS and JS  -->
+  <script src="/assets/custom/custom.js" async></script>
+  <link rel="stylesheet" href="/assets/custom/custom.css">
+
+  <!-- Update interact links w/ REST param, is defined in includes so we can use templates -->
+  
+
+  <!-- Lunr search code - will only be executed on the /search page -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/2.3.6/lunr.min.js" async></script>
+  <script>var initQuery = function() {
+  // See if we have a search box
+  var searchInput = document.querySelector('input#lunr_search');
+  if (searchInput === null) {
+    return;
+  }
+
+  // Function to parse our lunr cache
+  var idx = lunr(function () {
+    this.field('title')
+    this.field('excerpt')
+    this.field('categories')
+    this.field('tags')
+    this.ref('id')
+
+    this.pipeline.remove(lunr.trimmer)
+
+    for (var item in store) {
+      this.add({
+        title: store[item].title,
+        excerpt: store[item].excerpt,
+        categories: store[item].categories,
+        tags: store[item].tags,
+        id: item
+      })
+    }
+  });
+
+  // Run search upon keyup
+  searchInput.addEventListener('keyup', function () {
+    var resultdiv = document.querySelector('#results');
+    var query = document.querySelector("input#lunr_search").value.toLowerCase();
+    var result =
+      idx.query(function (q) {
+        query.split(lunr.tokenizer.separator).forEach(function (term) {
+          q.term(term, { boost: 100 })
+          if(query.lastIndexOf(" ") != query.length-1){
+            q.term(term, {  usePipeline: false, wildcard: lunr.Query.wildcard.TRAILING, boost: 10 })
+          }
+          if (term != ""){
+            q.term(term, {  usePipeline: false, editDistance: 1, boost: 1 })
+          }
+        })
+      });
+
+      // Empty the results div
+      while (resultdiv.firstChild) {
+        resultdiv.removeChild(resultdiv.firstChild);
+      }
+
+    resultdiv.insertAdjacentHTML('afterbegin', '<p class="results__found">'+result.length+' Result(s) found</p>');
+    for (var item in result) {
+      var ref = result[item].ref;
+      if(store[ref].teaser){
+        var searchitem =
+          '<div class="list__item">'+
+            '<article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">'+
+              '<h2 class="archive__item-title" itemprop="headline">'+
+                '<a href="'+store[ref].url+'" rel="permalink">'+store[ref].title+'</a>'+
+              '</h2>'+
+              '<div class="archive__item-teaser">'+
+                '<img src="'+store[ref].teaser+'" alt="">'+
+              '</div>'+
+              '<p class="archive__item-excerpt" itemprop="description">'+store[ref].excerpt.split(" ").splice(0,20).join(" ")+'...</p>'+
+            '</article>'+
+          '</div>';
+      }
+      else{
+    	  var searchitem =
+          '<div class="list__item">'+
+            '<article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">'+
+              '<h2 class="archive__item-title" itemprop="headline">'+
+                '<a href="'+store[ref].url+'" rel="permalink">'+store[ref].title+'</a>'+
+              '</h2>'+
+              '<p class="archive__item-excerpt" itemprop="description">'+store[ref].excerpt.split(" ").splice(0,20).join(" ")+'...</p>'+
+            '</article>'+
+          '</div>';
+      }
+      resultdiv.insertAdjacentHTML('beforeend', searchitem);
+    }
+  });
+};
+
+initFunction(initQuery);
+</script>
+
+  <!-- Load JS that depends on site variables -->
+  <script src="/assets/js/page/copy-button.js" async></script>
+
+  <!-- Hide cell code -->
+  <script src="/assets/js/page/hide-cell.js" async></script>
+
+  <!-- Printing the screen -->
+  <!-- Include nbinteract for interactive widgets -->
+<script src="https://printjs-4de6.kxcdn.com/print.min.js" async></script>
+<script>
+printContent = () => {
+    // MathJax displays a second version of any math for assistive devices etc.
+    // This prevents double-rendering in the PDF output.
+    var ignoreAssistList = [];
+    assistives = document.querySelectorAll('.MathJax_Display span.MJX_Assistive_MathML').forEach((element, index) => {
+        var thisId = 'MathJax-assistive-' + index.toString();
+        element.setAttribute('id', thisId);
+        ignoreAssistList.push(thisId)
+    });
+
+    // Print the actual content object
+    printJS({
+        printable: 'textbook_content',
+        type: 'html',
+        css: "/assets/css/styles.css",
+        style: "#textbook_content {padding-top: 40px};",
+        scanStyles: false,
+        targetStyles: ["*"],
+        ignoreElements: ignoreAssistList,
+        documentTitle: "Made with Jupyter Book"
+    })
+};
+
+initPrint = () => {
+    document.querySelector('#interact-button-print').addEventListener('click', printContent)
+}
+
+initFunction(initPrint)
+</script>
+
+</head>
+
+  <body>
+    <!-- Include the ThebeLab config so it gets reloaded on each page -->
+    <script type="text/x-thebe-config">{
+    requestKernel: true,
+    binderOptions: {
+    repo: "primer-computational-mathematics/book",
+    ref: "master",
+    },
+    codeMirrorConfig: {
+    theme: "abcdef",
+    mode: "python"
+    },
+    kernelOptions: {
+    kernelName: "python3",
+    path: ""
+    }
+}
+</script>
+
+    <!-- .js-show-sidebar shows sidebar by default -->
+    <div id="js-textbook" class="c-textbook js-show-sidebar">
+      
+
+
+
+<nav id="js-sidebar" class="c-textbook__sidebar">
+  <a href="https://www.imperial.ac.uk/earth-science/"><img src="/images/logo/logo.png" class="textbook_logo" id="sidebar-logo" alt="textbook logo" data-turbolinks-permanent/></a>
+  <h2 class="c-sidebar__title">ESE Jupyter Material</h2>
+  <ul class="c-sidebar__chapters">
+    
+      
+      
+
+      
+      
+      
+      
+
+      
+      
+      <li class="c-sidebar__chapter" data-url="/intro">
+        <a class="c-sidebar__entry"
+          href="/intro.html"
+        >
+          
+          Home
+        </a>
+      </li>
+
+      
+      
+
+      
+
+      
+      
+
+      
+
+      
+    
+      
+      
+        <li class="c-sidebar__divider"></li>
+        
+      
+      
+        <li><h2 class="c-sidebar__title">Topics</li>
+        
+      
+      
+
+      
+      
+      
+      
+
+      
+      
+      <li class="c-sidebar__chapter" data-url="/maths/intro">
+        <a class="c-sidebar__entry"
+          href="/maths/intro.html"
+        >
+          
+          Mathematics
+        </a>
+      </li>
+
+      
+      
+
+      
+
+      
+      
+
+      
+        
+
+        
+
+        <ul class="c-sidebar__sections">
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/maths/Big_O_notation">
+              <a class="c-sidebar__entry"
+                href="/maths/Big_O_notation.html"
+              >
+                
+                Big O notation
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/maths/Statistics_for_Geoscientists">
+              <a class="c-sidebar__entry"
+                href="/maths/Statistics_for_Geoscientists.html"
+              >
+                
+                Statistics for Geoscientists
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/maths/Taylor_series">
+              <a class="c-sidebar__entry"
+                href="/maths/Taylor_series.html"
+              >
+                
+                Taylor series
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/maths/Tensors_Review">
+              <a class="c-sidebar__entry"
+                href="/maths/Tensors_Review.html"
+              >
+                
+                Tensors Review
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/maths/Timestepping_an_ODE">
+              <a class="c-sidebar__entry"
+                href="/maths/Timestepping_an_ODE.html"
+              >
+                
+                Timestepping an ODE
+              </a>
+            </li>
+            
+            
+          
+        </ul>
+      
+
+      
+    
+      
+      
+
+      
+      
+      
+      
+
+      
+      
+      <li class="c-sidebar__chapter" data-url="/coding/intro">
+        <a class="c-sidebar__entry"
+          href="/coding/intro.html"
+        >
+          
+          Coding
+        </a>
+      </li>
+
+      
+      
+
+      
+
+      
+      
+
+      
+        
+
+        
+
+        <ul class="c-sidebar__sections">
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/coding/Dictionaries">
+              <a class="c-sidebar__entry"
+                href="/coding/Dictionaries.html"
+              >
+                
+                Dictionaries
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/coding/File_handling">
+              <a class="c-sidebar__entry"
+                href="/coding/File_handling.html"
+              >
+                
+                File handling
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/coding/Flow_control_statements">
+              <a class="c-sidebar__entry"
+                href="/coding/Flow_control_statements.html"
+              >
+                
+                Flow control statements
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/coding/For_loops">
+              <a class="c-sidebar__entry"
+                href="/coding/For_loops.html"
+              >
+                
+                For loops
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/coding/Functions">
+              <a class="c-sidebar__entry"
+                href="/coding/Functions.html"
+              >
+                
+                Functions
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/coding/Handling_errors">
+              <a class="c-sidebar__entry"
+                href="/coding/Handling_errors.html"
+              >
+                
+                Handling errors
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/coding/If_statement">
+              <a class="c-sidebar__entry"
+                href="/coding/If_statement.html"
+              >
+                
+                If statement
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/coding/Importing">
+              <a class="c-sidebar__entry"
+                href="/coding/Importing.html"
+              >
+                
+                Importing
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/coding/Lists">
+              <a class="c-sidebar__entry"
+                href="/coding/Lists.html"
+              >
+                
+                Lists
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/coding/List_comprehensions">
+              <a class="c-sidebar__entry"
+                href="/coding/List_comprehensions.html"
+              >
+                
+                List comprehensions
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/coding/Matplotlib">
+              <a class="c-sidebar__entry"
+                href="/coding/Matplotlib.html"
+              >
+                
+                Matplotlib
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/coding/Nested_lists">
+              <a class="c-sidebar__entry"
+                href="/coding/Nested_lists.html"
+              >
+                
+                Nested lists
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/coding/NumPy_Arrays">
+              <a class="c-sidebar__entry"
+                href="/coding/NumPy_Arrays.html"
+              >
+                
+                NumPy Arrays
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/coding/Pandas">
+              <a class="c-sidebar__entry"
+                href="/coding/Pandas.html"
+              >
+                
+                Pandas
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/coding/Printing_and_formatting_statements">
+              <a class="c-sidebar__entry"
+                href="/coding/Printing_and_formatting_statements.html"
+              >
+                
+                Printing and formatting statements
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/coding/Sets">
+              <a class="c-sidebar__entry"
+                href="/coding/Sets.html"
+              >
+                
+                Sets
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/coding/Tuples">
+              <a class="c-sidebar__entry"
+                href="/coding/Tuples.html"
+              >
+                
+                Tuples
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/coding/Variables">
+              <a class="c-sidebar__entry"
+                href="/coding/Variables.html"
+              >
+                
+                Variables
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/coding/While_loops">
+              <a class="c-sidebar__entry"
+                href="/coding/While_loops.html"
+              >
+                
+                While loops
+              </a>
+            </li>
+            
+            
+          
+        </ul>
+      
+
+      
+    
+      
+      
+
+      
+      
+      
+      
+
+      
+      
+      <li class="c-sidebar__chapter" data-url="/geosciences/intro">
+        <a class="c-sidebar__entry"
+          href="/geosciences/intro.html"
+        >
+          
+          Geosciences
+        </a>
+      </li>
+
+      
+      
+
+      
+
+      
+      
+
+      
+        
+
+        
+
+        <ul class="c-sidebar__sections">
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/geosciences/Cartography_Cartopy">
+              <a class="c-sidebar__entry"
+                href="/geosciences/Cartography_Cartopy.html"
+              >
+                
+                While loops
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/geosciences/Dynamic_Earth">
+              <a class="c-sidebar__entry"
+                href="/geosciences/Dynamic_Earth.html"
+              >
+                
+                Dynamic Earth
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/geosciences/Image_Filtering">
+              <a class="c-sidebar__entry"
+                href="/geosciences/Image_Filtering.html"
+              >
+                
+                Image Filtering
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/geosciences/Image_Operations">
+              <a class="c-sidebar__entry"
+                href="/geosciences/Image_Operations.html"
+              >
+                
+                Image Operations
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/geosciences/Seismology">
+              <a class="c-sidebar__entry"
+                href="/geosciences/Seismology.html"
+              >
+                
+                Seismology
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/geosciences/Tides">
+              <a class="c-sidebar__entry"
+                href="/geosciences/Tides.html"
+              >
+                
+                Tides
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/geosciences/Wave_dispersion">
+              <a class="c-sidebar__entry"
+                href="/geosciences/Wave_dispersion.html"
+              >
+                
+                Wave dispersion
+              </a>
+            </li>
+            
+            
+          
+        </ul>
+      
+
+      
+    
+  </ul>
+  <p class="sidebar_footer">Powered by <a href="https://jupyterbook.org">Jupyter Book</a></p>
+</nav>
+
+      
+      <div class="c-topbar" id="top-navbar">
+  <!-- We show the sidebar by default so we use .is-active -->
+  <div class="c-topbar__buttons">
+    <button
+      id="js-sidebar-toggle"
+      class="hamburger hamburger--arrowalt is-active"
+    >
+      <span class="hamburger-box">
+        <span class="hamburger-inner"></span>
+      </span>
+    </button>
+    <div class="buttons">
+<div class="download-buttons-dropdown">
+    <button id="dropdown-button-trigger" class="interact-button"><img src="/assets/images/download-solid.svg" alt="Download" /></button>
+    <div class="download-buttons">
+        
+        <a id="interact-button-print"><button id="interact-button-download" class="interact-button">.pdf</button></a>
+    </div>
+</div>
+
+
+</div>
+
+  </div>
+  <!-- Empty sidebar placeholder that we'll auto-fill with javascript -->
+  <aside class="sidebar__right">
+    <header><h4 class="nav__title"><img src="/assets/images/list-solid.svg" alt="Search" />   On this page</h4></header>
+    <nav class="onthispage">
+    </nav>
+  </aside>
+  <a href="/search.html" class="topbar-right-button" id="search-button">
+    <img src="/assets/images/search-solid.svg" alt="Search" />
+  </a>
+</div>
+
+      <main class="c-textbook__page" tabindex="-1">
+            <div class="c-textbook__content" id="textbook_content">
+              <div class="search-content__inner-wrap">
+    <input type="text" id="lunr_search" class="search-input" tabindex="-1" placeholder="'Enter your search term...''" />
+    <div id="results" class="results"></div>
+</div>
+
+<script>
+    // Add the lunr store since we will now search it
+    var store = [{
+        "title": "Arrays",
+        
+        "excerpt": "array lists list arrays numpy not numbers row x python dimensional nested vector only element column using vectors very operations function indexing slicing new memory data example store say e matrix construct three work just simple columns equal similar indexed appending constructing appropriate structures represent rows indices further four multi achieved while fine intuitive complicated scaling much reasons include loops ways create g barray rather length our actually require b j does works where whole reshape needs possible lets want available size input functions section review methods complex simplest storing wanted above characterised index marks increase get hyper cases any",
+        "categories": [],
+        "tags": [],
+        "url": "http://localhost:4000/coding/Arrays.html",
+        "teaser":null},{
+        "title": "Dictionaries",
+        
+        "excerpt": "key value keys data etc strings numbers values dictionaries dictionary python structure store pairs syntax dict anything lists arrays must unique set twice second replaces access modify based also search iterate",
+        "categories": [],
+        "tags": [],
+        "url": "http://localhost:4000/coding/Dictionaries.html",
+        "teaser":null},{
+        "title": "File handling",
+        
+        "excerpt": "file our data pandas density not numpy lines values arrays python temperature line example string array separated whitespaces list elements set text below extract column read using automatically beginning here into numbers default readcsv dataframe header different best files contains end used assign genfromtxt org reference html generate function type comments skip delimiter any save npy object its names handling suppose air temperatures atm pressure celsius degrees kg m source wikipedia keyword usually statement improve syntax lot things us closing opened want additionally variable above stored recognised point note already initialised specific length rather empty lists append good practice initalise",
+        "categories": [],
+        "tags": [],
+        "url": "http://localhost:4000/coding/File_handling.html",
+        "teaser":null},{
+        "title": "Flow control statements",
+        
+        "excerpt": "break continue statement statements used while loop ends example pass flow control loops modify behaviour current iteration continues onto next code nothing",
+        "categories": [],
+        "tags": [],
+        "url": "http://localhost:4000/coding/Flow_control_statements.html",
+        "teaser":null},{
+        "title": "For loops",
+        
+        "excerpt": "elements list loop code range stop loops celsius fahrenheit circf looping syntax lines executed function start step between temperatures t used iterate any iterable structure iterating means type element execute same inside needs indented example apart created specified iterations using generates sort excluding increment not provided every generated only argument treats value starts generate index exercise create increments conversion formula frac",
+        "categories": [],
+        "tags": [],
+        "url": "http://localhost:4000/coding/For_loops.html",
+        "teaser":null},{
+        "title": "Functions",
+        
+        "excerpt": "variables function code functions only arg execute return arguments local any b custom python blocks executed called def functionname optional names should descriptive separated commas become within object objects returned appear before even though does not unless inside exist want global outside",
+        "categories": [],
+        "tags": [],
+        "url": "http://localhost:4000/coding/Functions.html",
+        "teaser":null},{
+        "title": "Handling errors",
+        
+        "excerpt": "except errors code error exception raise valueerror try python raised exceptions print flowernames indexerror program built example tuple rose traceback recent last ipython input module index blocks exceptionname lines execute else handling occurs types full list available documentation docs org library html concrete create only four elements want th element get message iris poppy dandelion bdd range refers incorrect such bounds raising functions trigger well using eced catching handle gracefully avoid unnecessary crashes block executes fails recover syntax not caught above optional least needs below",
+        "categories": [],
+        "tags": [],
+        "url": "http://localhost:4000/coding/Handling_errors.html",
+        "teaser":null},{
+        "title": "If statement",
+        
+        "excerpt": "boolean code false construct true elif execute only else allows create cases based conditions executue optional blocks inside block needs indented example",
+        "categories": [],
+        "tags": [],
+        "url": "http://localhost:4000/coding/If_statement.html",
+        "teaser":null},{
+        "title": "Importing",
+        
+        "excerpt": "import our module math function importing functions want everything sin imported into same file python cover also simply only need namespace mymodule py pythons growing popularity years inevitably lead development thousands excellent libraries frameworks section basics own classes much often objects certain entire whole allows us inside such however good practice longer prefix because instead here put generally not recommended overshadow name happen single avoid renaming imports specific say named located folder script where myfunction just square case general specify path example desktop",
+        "categories": [],
+        "tags": [],
+        "url": "http://localhost:4000/coding/Importing.html",
+        "teaser":null},{
+        "title": "List comprehensions",
+        
+        "excerpt": "list condition expression celsius fahrenheit circf comprehensions using item someiterable comprehension temperatures t shortcuts creating lists loops within statement main advantage shorter syntax somelist generate based items met optional anything same value string exercise create between increments conversion formula frac",
+        "categories": [],
+        "tags": [],
+        "url": "http://localhost:4000/coding/List_comprehensions.html",
+        "teaser":null},{
+        "title": "Lists",
+        
+        "excerpt": "element lists list syntax operations object contains multiple elements defined order referred index l etc extract specific part slicing same done strings",
+        "categories": [],
+        "tags": [],
+        "url": "http://localhost:4000/coding/Lists.html",
+        "teaser":null},{
+        "title": "Matplotlib",
+        
+        "excerpt": "matplotlib plt kwargs plot pyplot graph legend text data org used plots scatter functions api asgen html commonly xdata ydata hist loc x y sets plotting import something generation type histogram include bins e function position title axis python library not built need every want convention however any prefix usually return cases statements own update object itself useful format point either markers joined lines vs varying marker size colour decoration after grid creates gridlines create keyword arguement determine legends g upper left best documentation check here insert specified fontsize style weight color xlabel ylabel labels xlim minx maxx ylim miny",
+        "categories": [],
+        "tags": [],
+        "url": "http://localhost:4000/coding/Matplotlib.html",
+        "teaser":null},{
+        "title": "Nested lists",
+        
+        "excerpt": "lists table nested contain elements also above created rows using zip function loop through same create columns",
+        "categories": [],
+        "tags": [],
+        "url": "http://localhost:4000/coding/Nested_lists.html",
+        "teaser":null},{
+        "title": "NumPyArrays",
+        
+        "excerpt": "numpy arrays array d along us axis data random example indexing index python also allow x step functions type types let numbers after using where not stack slicing negative stop default advanced creating assigning here float initialise integer imaginary seed np every lists row wanted column require rows columns vector b specify only start starting size specified numerical provides excellent support working large extensive library mathematical operate notebook cover both basic uses giving plenty examples manipulating important correctly initialize includes full list supported found org devdocs user basics html generally good idea work double precision unless confident doing attribute dtype",
+        "categories": [],
+        "tags": [],
+        "url": "http://localhost:4000/coding/NumPyArrays.html",
+        "teaser":null},{
+        "title": "NumPy Arrays",
+        
+        "excerpt": "numpy arrays array d along data random us axis example indexing index python types numbers also allow x step functions initialise type let after using where not stack specify xx slicing negative stop default complex basics creating assigning here float integer imaginary seed np every lists row wanted column require rows columns vector b start starting size specified numerical provides excellent support working large extensive library mathematical operate notebook introduce generating manipulation manipulating important correctly initialize includes full list supported found org devdocs user html generally good idea work double precision unless confident doing attribute dtype lets check its demonstrate",
+        "categories": [],
+        "tags": [],
+        "url": "http://localhost:4000/coding/NumPy_Arrays.html",
+        "teaser":null},{
+        "title": "Pandas",
+        
+        "excerpt": "pandas data columns dataframe column df pydata org docs html function want count used rows create values lets into depth earthquakes year plot list stable new magnitude built col statistics dataframes plotting very index pd specific reference api earthquake isin tutorial nzeqs merge library spreadsheet full simply excel files file creating syntax where zealand using export only latitude longitude our condition both not value return e g easily calculate strings also groupby scatter analysis need documentation found here standard table manually lists header ways series reading csv readcsv filename example format iris case display allows us same symbol step row",
+        "categories": [],
+        "tags": [],
+        "url": "http://localhost:4000/coding/Pandas.html",
+        "teaser":null},{
+        "title": "Printing and formatting statements",
+        
+        "excerpt": "text print numbers also want insert printing statement into python function where line multiple lines n apart inserting s significant figures example method specify string formatting statements general code hellow world takes argument brackets prints terminal using separator notice not need add spaces around achieved triple apostrophe words take calculations formatted sometimes certain texts statemtens g decides here needed xf x displayed syntax coding rules below format allows positions objects variable name strings both methods valid whichever suits better",
+        "categories": [],
+        "tags": [],
+        "url": "http://localhost:4000/coding/Printing_and_formatting_statements.html",
+        "teaser":null},{
+        "title": "Sets",
+        
+        "excerpt": "sets set variable type only contain copy particular element cannot python container equivalent maths not ordered dont indices keys elements any defined curly brackets etc same even though specify twice stores once values returned order added together simple addition method lists sliced indexed operations done",
+        "categories": [],
+        "tags": [],
+        "url": "http://localhost:4000/coding/Sets.html",
+        "teaser":null},{
+        "title": "Tuples",
+        
+        "excerpt": "tuples lists used values variable cannot modified multiple functions tuple syntax g value constant store data immutable storing created round brackets elements want dont same type example string formatting print text return extracted function somevariable purpose functionality even accident faster widely python keys dictionaries while cant",
+        "categories": [],
+        "tags": [],
+        "url": "http://localhost:4000/coding/Tuples.html",
+        "teaser":null},{
+        "title": "Variables",
+        
+        "excerpt": "b numbers variables variable g t e integer y strings value python floating point true false example type mathematical booleans words cannot used names not print return case digits same types float boolean gap much function formulae position ball given where v objects object contains assigned certain special meaning assert break class continue def del elif else except exec finally global import lambda pass raise try while yield good usually descriptive letter symbols abbreviation containing lower upper underscores start sensitive common str string hello world int bool different because computer stores computers discrete representation means between adjacent integers floats smaller",
+        "categories": [],
+        "tags": [],
+        "url": "http://localhost:4000/coding/Variables.html",
+        "teaser":null},{
+        "title": "While loops",
+        
+        "excerpt": "while loops condition code executed loop celsius fahrenheit circf false true boolean once temperatures t repeat instructions until certain syntax follows infinite where never becomes similar statements needs indented example exercise create between increments conversion formula frac",
+        "categories": [],
+        "tags": [],
+        "url": "http://localhost:4000/coding/While_loops.html",
+        "teaser":null},{
+        "title": "Coding",
+        
+        "excerpt": "python programming language landing page",
+        "categories": [],
+        "tags": [],
+        "url": "http://localhost:4000/coding/intro.html",
+        "teaser":null},{
+        "title": "Dynamic Earth",
+        
+        "excerpt": "seafloor age data magnetic dataset based real equation depth bathymetry anomalies t relationship ma ages etopo img src images png alt style width px calculate array earth plate mid ridges new parsons d lets atlantic elevation error rms tectonics boundaries along ocean crust not rocks very below exercise sclater where test file using only calculated value predicted n samples need should dynamic theory earths lithosphere plates divergent boundary discovered oceanic formed older field reversals within years well across world seen picture vs provide between ftp earthbyte downloaded code large therefore end result note continental margins compare ngdc north create plot",
+        "categories": [],
+        "tags": [],
+        "url": "http://localhost:4000/geosciences/Dynamic_Earth.html",
+        "teaser":null},{
+        "title": "ESE 95018 Seismology",
+        
+        "excerpt": "m moment frac downloaded mw mu earthquakes data region magnitude seismic sqrt kappa rho d fault new zealand earthquake any world ds iris edu ieb database provides usgs date location depth read csv file pandas module lets plot map b value used calculate scalar via relationship log rightarrow given n dimenstions torque prem vp vs where shear modulus slip area",
+        "categories": [],
+        "tags": [],
+        "url": "http://localhost:4000/geosciences/ESE_95018_Seismology.html",
+        "teaser":null},{
+        "title": "Image Filtering",
+        
+        "excerpt": "image pixels kernel x our f filter edge filtering values img src dataimagefiltering png style width px moving average detection pixel input not filters neighbourhood output below contrast between data difference h emspemsp noise value window within neighbouring instance size brightness discontinuities derivatives emspemspemspemspemspemspemsp en example operations here sharpening operation linear central through convolution edges takes reducing hence smoothening demonstrated step effect simple using convolve o n k gradient properties methods extraction such finite differencing very wikipedia org wiki html python pyfiltering technique modifying enhancing highlight features remove basic implemented smoothing determined applying alogrithm corresponding examples found combination aim achieve",
+        "categories": [],
+        "tags": [],
+        "url": "http://localhost:4000/geosciences/Image_Filtering.html",
+        "teaser":null},{
+        "title": "Image Operations",
+        
+        "excerpt": "image colour contrast range dn linear bands value display enhancement id pixel any function digital not three blue our output information bcet mean spectrum spectral ranges values j histogram same input functions remote sensing array also called brightness img src dataimageoperations png style width within visible red green colours allows common composite point based x y pixels used images effective technique b apply stretch piecewise using d layers however visualise assigning theory matching primary rgb grey level unique visualisation original operations operation modification location only spatial its cut off occupy high histograms basic lce overall without distorting several changing visual",
+        "categories": [],
+        "tags": [],
+        "url": "http://localhost:4000/geosciences/Image_Operations.html",
+        "teaser":null},{
+        "title": "Seismology",
+        
+        "excerpt": "obspy iris earthquake data specify catalogue earthquakes org html want docs magnitude information networks stations example depth client access www edu code library start parameters downloaded minimum maximum packages plot downloading online download usgs ds need input map either end date format datetime python box latitude longitude functions clients getevents here events event below custom plotting databases website gov feed v csv php international seismological centre isc ac uk iscbulletin search browser ieb cmt globalcmt cmtsearch wanted our own downloads github com wiki exactly hq lets loading necessary libraries bunch useful choosing interested particular seismograph used gmap displays within region",
+        "categories": [],
+        "tags": [],
+        "url": "http://localhost:4000/geosciences/Seismology.html",
+        "teaser":null},{
+        "title": "Statistics for Geoscientists",
+        
+        "excerpt": "scipy test data correlation stats mean normal value distribution x p population sample used example samples whether hypothesis h statistics y frac n coefficient null b chi given commonly where standard distributions docs org doc reference html q sum lets isotope fit negative generated not hypotheses probability t tailed tests squared help group sigma size means percentile between variance regression line underlying mannwhitneyu non e very sqrt deviation using values median spread therefore th quartile oxygen carbon correlated quite linear determine into returns r strong weak pearsonr mx normally distributed always testing event occur grain higher students different discrete fail",
+        "categories": [],
+        "tags": [],
+        "url": "http://localhost:4000/geosciences/Statistics_for_Geoscientists.html",
+        "teaser":null},{
+        "title": "Tides",
+        
+        "excerpt": "r frac big cos phi omega g omegap force p cp moon sin dl earth tgf mm partial t m phip tide mathbf potential img src images png alt style width px term c tidal its f point gradient horizontal h diurnal tides period sim days per direction not surface gmm graph above frequencies rotate highs n distance does earths rightarrow terms generating need lets plot eq angle hour species lunar cycle semi hr cycles spring neap very sea mass once high however reality lows recall gravitational results hat where times between masses unit scalar nabla field depend only moons",
+        "categories": [],
+        "tags": [],
+        "url": "http://localhost:4000/geosciences/Tides.html",
+        "teaser":null},{
+        "title": "Wave dispersion",
+        
+        "excerpt": "frac wave waves k lambda wavelength speed omega pi c group g big h t phase velocity d dispersion sqrt kd amplitude depth small frequency relation shallow deep travel delta cg dk tanh times here dependent not plot component same x e trains individual terminology symbol description relationships height l steepness period angular cp ck dc mean called combines wavenumber its general linear common limits criteria gd short large different function greatest fastest separation virtue differing rates known equation gt shows longer faster shorter until reach limit applies envelope travels any illustrate shifted superposition looks where crests coincide amplitudes added",
+        "categories": [],
+        "tags": [],
+        "url": "http://localhost:4000/geosciences/Wave_dispersion.html",
+        "teaser":null},{
+        "title": "Cartography Cartopy",
+        
+        "excerpt": "projection plate cartopy using plots map projections example data california boundaries pacific american motion org generate useful equidistant equal earth used function files plotted transform ccrs boundary plates circn mm yr state ca gov creating maps create scitools uk package uses standard matplotlib html equator mercator azimuthal area allows plotting scatter grid points plot bathymetry add platecarree geodetic quiver components shapefiles between north www calculator parts usgs notebook learn python engine makes very easy personalise full list available docs latest crs equirectangular conserves distances along meridians carre parallel preserves angles shapes small objects inflates areas away conic east west elongated",
+        "categories": [],
+        "tags": [],
+        "url": "http://localhost:4000/geosciences/cartography_cartopy.html",
+        "teaser":null},{
+        "title": "Geosciences",
+        
+        "excerpt": "geosciences landing page primer",
+        "categories": [],
+        "tags": [],
+        "url": "http://localhost:4000/geosciences/intro.html",
+        "teaser":null},{
+        "title": "Home",
+        
+        "excerpt": "python programming code style guidelines computational coding thinking www follow peps org pep earth engineering mathematics scientists why well research dev makes users guide guideline io imperial college primer into important its teaches often create few new read years later microsoft en blog published readability recommended guido van rossum pythons designer conventions standards line easier good meaningful explain better complex not keep compact resources google github html specialised numpy landing page welcome department science londons technqiues engineers currently split three sections geoscience aspiring scientist vital tool understanding fundamental physics our planet subsystems logically tackle problems effective creative aids complements record",
+        "categories": [],
+        "tags": [],
+        "url": "http://localhost:4000/intro.html",
+        "teaser":null},{
+        "title": "Big O notation",
+        
+        "excerpt": "x h f y frac o delta toc mathcal notation t class span limit e example computational point term c small case error ldots rightarrow right n href data modified id item mathematical explanation computer science iv terms errors order behaviour where le considering size quad text quadratically introduction numnbspnbsp series infinite complexity en wikipedia org wiki very such algorithms above v constant left its enough larger factor problem g asymptotic cost div itemlispana lilispana li ul big taylor xh hf talking away convergence run times means well simply here magnitude replaced bounded relative large measure lefty infty things values",
+        "categories": [],
+        "tags": [],
+        "url": "http://localhost:4000/maths/Big_O_notation.html",
+        "teaser":null},{
+        "title": "Statistics for Geoscientists",
+        
+        "excerpt": "scipy test data correlation stats mean normal value p distribution x sample used statistics samples whether hypothesis h population example y distributions frac n coefficient null b chi commonly where standard docs org doc reference html q sum lets isotope fit negative generated not hypotheses probability t tailed tests squared help group sigma size means percentile between variance regression line underlying mannwhitneyu non very sqrt deviation using given values median spread therefore th quartile oxygen carbon correlated quite linear determine into returns inferential r strong weak pearsonr mx normally distributed always testing event occur grain higher students different discrete fail",
+        "categories": [],
+        "tags": [],
+        "url": "http://localhost:4000/maths/Statistics_for_Geoscientists.html",
+        "teaser":null},{
+        "title": "Taylor series",
+        
+        "excerpt": "x f approximation toc series point span class function taylor linear terms frac o h constant notation error value href motivation data modified id item big wikipedia expansion example its c derivative numnbspnbsp lilispana linearisation truncation reading approximate us consider better org our slope line infinite li ul aside further arbitrary single really e forecast called en wiki around yes very y accuracy ldots truncate div itemlispana spanmotivation quotlinearisationquot num nbspnbsp method sum derivatives suppose guess choice well approx weather tomorrow today persistence makes lets plot actually where m same formula following away include writing xh hf delta gif talking",
+        "categories": [],
+        "tags": [],
+        "url": "http://localhost:4000/maths/Taylor_series.html",
+        "teaser":null},{
+        "title": "TensorsReview",
+        
+        "excerpt": "mathbf e varepsilon m sigma hat quad tensor stress ijk j n delta t x vector ij index k mbox notation v times cdot b where partial ai surface vi space sum three point symbol s frac matrix bi tensors dimensional indices components order g levi civita therefore p normal its y z xi nabla kronecker product boldsymbol c rank introduce let us defined note often coordinate sx xy stresses bar begin pmatrix end any dummy term array here also want draw dealing figure xx xz similarly yy zz elements coordinates values cartesian written summation convention only once not expressed",
+        "categories": [],
+        "tags": [],
+        "url": "http://localhost:4000/maths/TensorsReview.html",
+        "teaser":null},{
+        "title": "Tensors Review",
+        
+        "excerpt": "mathbf e varepsilon m sigma hat quad tensor stress ijk j n delta t x vector ij index k mbox notation v times cdot where partial ai surface vi b space sum three point symbol s frac matrix phi tensors dimensional indices components order g levi civita therefore p normal its y z xi nabla kronecker product boldsymbol c rank introduce let us defined note often coordinate sx xy stresses bar begin pmatrix end any dummy term array here also want draw dealing figure xx xz similarly yy zz elements coordinates values cartesian written summation convention only once not expressed",
+        "categories": [],
+        "tags": [],
+        "url": "http://localhost:4000/maths/Tensors_Review.html",
+        "teaser":null},{
+        "title": "Timestepping an ODE",
+        
+        "excerpt": "y t delta yn f solution dot euler timestepping forward taylor series ode variable x where order example second step class span toc problem us frac tn n small mean scheme numerical odes only e form our function case method exact black next deriving derivative higher variables qquad dependent start exp rhs simple assume too div href data modified id item numnbspnbsp differential common respect independent always talk even problems appear newtons law solve thinking ddot well into system u lets left text nb notation need relatively assuming following true mathcal o terms very discrete solver note point line above",
+        "categories": [],
+        "tags": [],
+        "url": "http://localhost:4000/maths/Timestepping_an_ODE.html",
+        "teaser":null},{
+        "title": "Mathematics",
+        
+        "excerpt": "mathematics landing page primer",
+        "categories": [],
+        "tags": [],
+        "url": "http://localhost:4000/maths/intro.html",
+        "teaser":null},{
+        "title": "taylor-series",
+        
+        "excerpt": "x y f t h delta point frac function approximation o terms series e mathcal yn c case n small error taylor example where its us value wikipedia our limit solution constant very term above method consider org expansion linear slope line size ldots notation right text dot step approximate well en wiki derivative form black errors order rightarrow left problem second next tn single computational variable better called lets plot assuming assume using following rhs infinite iv larger behaviour sufficiently le enough dependent considering quad numerical quadratically algorithm euler simple exact arbitrary derivatives things suppose really only cant approx",
+        "categories": [],
+        "tags": [],
+        "url": "http://localhost:4000/maths/taylor-series.html",
+        "teaser":null},]
+</script>
+            </div>
+            <div class="c-textbook__footer" id="textbook_footer">
+              
+<nav class="c-page__nav">
+  
+
+  
+</nav>
+
+              <footer>
+  <p class="footer">This page was created by <a href="https://github.com/ExecutableBookProject/jupyter-book/graphs/contributors">The Jupyter Book Community</a></p>
+</footer>
+
+            </div>
+
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

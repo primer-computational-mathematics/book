@@ -1,0 +1,1260 @@
+---
+redirect_from:
+  - "/geosciences/statistics-for-geoscientists"
+interact_link: notebooks/geosciences/Statistics_for_Geoscientists.ipynb
+kernel_name: python3
+kernel_path: notebooks/geosciences
+has_widgets: false
+title: |-
+  Statistics for Geoscientists
+pagenum: 29
+prev_page:
+  url: /geosciences/Image_Filtering.html
+next_page:
+  url: 
+suffix: .ipynb
+search: scipy test data correlation stats mean normal value distribution x p population sample used example samples whether hypothesis h statistics y frac n coefficient null b chi given commonly where standard distributions docs org doc reference html q sum lets isotope fit negative generated not hypotheses probability t tailed tests squared help group sigma size means percentile between variance regression line underlying mannwhitneyu non e very sqrt deviation using values median spread therefore th quartile oxygen carbon correlated quite linear determine into returns r strong weak pearsonr mx normally distributed always testing event occur grain higher students different discrete fail
+
+comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /notebooks***"
+---
+
+    <main class="jupyter-page">
+    <div id="page-info"><div id="page-title">Statistics for Geoscientists</div>
+</div>
+    
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Introduction-to-statistics-for-Geoscientists">Introduction to statistics for Geoscientists<a class="anchor-link" href="#Introduction-to-statistics-for-Geoscientists"> </a></h1><p><em>Statistics</em> is a study concerning the collection, organisation, analysis, interpretation and presentation of data. Statistics help with describing and analysing non-deterministic phenomena, i.e. ones that cannot be precisely predicted.</p>
+<p><em>Population</em> is a group/set of items/events of interest in the study. For example, a population could length of all fossils from a given locality.</p>
+<p><em>Sample</em> is a subset of population that we measured, e.g. length of a single fossil from a given locality. Samples must be unbiased for reliable statistical analysis. Signor and Lipps (1982) for example showed that biased sampling in fossils can lead to wrong interpretations for extinctions due to discontinous fossil record in time and ranges of species in sediments.</p>
+<p><em>Distribution</em> is a shape of population histogram. The most commonly known distribution is normal distribution ('bell curve'). Normal (Gaussian) distribution is very powerful as it approximates many real-world distribution. Mathematically, normal distribution is described as:</p>
+$$ f(x) = \frac{1}{\sqrt{2\pi\sigma^2}} e^{-\frac{(x-\mu)^2}{2\sigma^2}}$$<p>where $\sigma$ is the standard deviation and $\mu$ is the mean. It is often assumed that distributions will be normal in statistical methods. As an example, we can plot one using <a href="https://docs.scipy.org/doc/scipy/reference/stats.html">scipy.stats</a>.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">scipy</span> <span class="k">import</span> <span class="n">stats</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Generate data with normal distribution</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
+
+<span class="c1"># Plot a histogram of the data</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../images/geosciences/Statistics_for_Geoscientists_2_0.png"
+>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Averages">Averages<a class="anchor-link" href="#Averages"> </a></h2><p><em>Average</em> is a measure of central tendency, in colloquial language, it is a single number that represents given population.</p>
+<p><em>Mean</em> (arithmetic mean) is calculated by summing up all values and dividing by the population size.</p>
+<p><em>Median</em> is the middle value for ordered list of values.</p>
+<p><em>Mode</em> is most common value.</p>
+<p>Median and mean are commonly used as avaregaes. Median may be a better representation of skewed distributions and reduces the effect of outliers. Mode isn't really used that often.</p>
+<p>We can calculate this with numpy and scipy.stats in-built functions:</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Generate data</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mean = </span><span class="si">%.2f</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Median = </span><span class="si">%.2f</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="n">mode</span><span class="p">,</span> <span class="n">count</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">mode</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mode = </span><span class="si">%.2f</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="n">mode</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Mean = 3.91.
+Median = 3.00.
+Mode = 1.00.
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Measures-of-spread">Measures of spread<a class="anchor-link" href="#Measures-of-spread"> </a></h3><p>Knowing populations by their means and medians can be misleading. Therefore, we can use spread with numpy function</p>
+
+<pre><code>np.ptp()
+
+</code></pre>
+<p>to test samples.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">sample1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mf">0.2</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span> <span class="p">,</span> <span class="mf">0.1</span> <span class="p">,</span> <span class="mf">0.1</span> <span class="p">,</span> <span class="mf">0.2</span><span class="p">])</span>
+<span class="n">sample2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">2000</span><span class="p">,</span> <span class="o">-</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">2000</span><span class="p">])</span>
+
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Sample 1 mean = </span><span class="si">%.2f</span><span class="s2">, median = </span><span class="si">%.2f</span><span class="s2">, spread = </span><span class="si">%.2f</span><span class="s2">.&quot;</span>
+       <span class="o">%</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">sample1</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">sample1</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">ptp</span><span class="p">(</span><span class="n">sample1</span><span class="p">)))</span>
+
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Sample 2 mean = </span><span class="si">%.2f</span><span class="s2">, median = </span><span class="si">%.2f</span><span class="s2">, spread = </span><span class="si">%.2f</span><span class="s2">.&quot;</span>
+       <span class="o">%</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">sample2</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">sample2</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">ptp</span><span class="p">(</span><span class="n">sample2</span><span class="p">)))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Sample 1 mean = 0.00, median = 0.00, spread = 0.40.
+Sample 2 mean = 0.00, median = 0.00, spread = 4000.00.
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Percentiles">Percentiles<a class="anchor-link" href="#Percentiles"> </a></h2><p>The nth percentile says that n% of the population are lower than given value.</p>
+<p>The four percentiles with their own names are:</p>
+<ul>
+<li>25th percentile - first quartile (Q1)</li>
+<li>50th percentile - second quartile (Q2)</li>
+<li>75th percentile - third quartile (Q3)</li>
+<li>Interquartile - range between Q1 and Q2.</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Generate normal distribution</span>
+<span class="n">mu</span><span class="p">,</span> <span class="n">std</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span>
+<span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">std</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="s1">&#39;k&#39;</span><span class="p">)</span>
+
+<span class="c1"># Fill background</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">interpolate</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;IQ&quot;</span><span class="p">)</span>
+
+<span class="c1"># Fill between values that are less than 25th percentile</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">interpolate</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                 <span class="n">where</span><span class="o">=</span><span class="p">(</span><span class="n">x</span><span class="o">&lt;=</span><span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.25</span><span class="p">)),</span>
+                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;green&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Q1&quot;</span><span class="p">)</span>
+
+<span class="c1"># Fill between values that are more than 75th percentile</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">interpolate</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                 <span class="n">where</span><span class="o">=</span><span class="p">(</span><span class="n">x</span><span class="o">&gt;=</span><span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.75</span><span class="p">)),</span>
+                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Q3&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;best&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../images/geosciences/Statistics_for_Geoscientists_8_0.png"
+>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Variance-and-standard-deviation">Variance and standard deviation<a class="anchor-link" href="#Variance-and-standard-deviation"> </a></h2><p><em>Variance</em> and <em>standard deviation</em> are measures of spread. The sample variance is described as follows:</p>
+$$ v = \frac{1}{N-1} \sum_{i=1}^{N} \left( x_i - \bar{x}\right)^2 ,$$<p>where $N$ is the number of measuremrents, $x_i$ is the individual measurement and $\bar{x}$ is the sample mean. For population variance we can use $\frac{1}{N}$, instead of $\frac{1}{N-1}$. This corrects for bias in the estimation (Bessel's correction).</p>
+<p>The sample standard deviations is:</p>
+$$\sigma=\sqrt{v},$$<p>which is useful as is in units of the measured samples.</p>
+<h2 id="Bivariant-statistics">Bivariant statistics<a class="anchor-link" href="#Bivariant-statistics"> </a></h2><p><em>Bivariant statistics</em> is when we analyse two variables to look for relationships.</p>
+<p>For example, let's load isotope data from ODP 806 site in Java downloaded from <a href="https://www1.ncdc.noaa.gov/pub/data/paleo/contributions_by_author/berger1996/806isotp.txt">NOAA</a> for a G.sacculifer foraminifera species.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">odp_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/odp_806_data.csv&#39;</span><span class="p">)</span>
+
+<span class="n">odp_data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>depth_1</th>
+      <th>depth_2</th>
+      <th>age</th>
+      <th>oxygen</th>
+      <th>carbon</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.1</td>
+      <td>0.09</td>
+      <td>3.42</td>
+      <td>1.98</td>
+      <td>2.09</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.2</td>
+      <td>0.19</td>
+      <td>6.94</td>
+      <td>1.86</td>
+      <td>1.93</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.3</td>
+      <td>0.28</td>
+      <td>10.61</td>
+      <td>1.68</td>
+      <td>1.60</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.4</td>
+      <td>0.38</td>
+      <td>14.63</td>
+      <td>1.48</td>
+      <td>1.91</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.5</td>
+      <td>0.47</td>
+      <td>18.90</td>
+      <td>0.85</td>
+      <td>1.92</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">odp_data</span><span class="o">.</span><span class="n">age</span><span class="p">,</span> <span class="n">odp_data</span><span class="o">.</span><span class="n">carbon</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;$\delta^</span><span class="si">{13}</span><span class="s2">C$&quot;</span><span class="p">,</span>
+        <span class="n">c</span><span class="o">=</span><span class="s2">&quot;magenta&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">odp_data</span><span class="o">.</span><span class="n">age</span><span class="p">,</span> <span class="n">odp_data</span><span class="o">.</span><span class="n">oxygen</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;$\delta^</span><span class="si">{18}</span><span class="s2">O$&quot;</span><span class="p">,</span>
+        <span class="n">c</span><span class="o">=</span><span class="s2">&quot;green&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;$\delta^</span><span class="si">{13}</span><span class="s2">C$/$\delta^</span><span class="si">{18}</span><span class="s2">O$ (‰)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Age (kyr)&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;best&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../images/geosciences/Statistics_for_Geoscientists_11_0.png"
+>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can see that throughout past 800,000 years the oxygen isotope data and carbon isotope data is correlated. Let's plot them against each other:</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">odp_data</span><span class="o">.</span><span class="n">oxygen</span><span class="p">,</span> <span class="n">odp_data</span><span class="o">.</span><span class="n">carbon</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;$\delta^</span><span class="si">{13}</span><span class="s2">C$&quot;</span><span class="p">,</span>
+           <span class="n">c</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;magenta&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;$\delta^</span><span class="si">{13}</span><span class="s2">C$ (‰)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;$\delta^</span><span class="si">{18}</span><span class="s2">O$ (‰)&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mf">2.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mf">2.5</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../images/geosciences/Statistics_for_Geoscientists_13_0.png"
+>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The data is quite scattered but the general trend is that with increased carbon isotope content we observe increased oxygen content. Linear regression can help to mathematically find, whether these to are correlated at all.</p>
+<h3 id="Linear-regression">Linear regression<a class="anchor-link" href="#Linear-regression"> </a></h3><p>Linear regression can help us determine whether there is relationship between two parameters. Most commonly used technique to fit a line into data is least squares regression that minimises the sum of squares of vertical errors. In Python, we can use:</p>
+
+<pre><code>scipy.stats.linregress(x, y)
+
+</code></pre>
+<p>that returns slope $m$ and intercept $c$ for line equation $y=mx+c$. It also returns correlation coefficient <em>rvalue</em>, two-sided <em>p-value</em> for hypothesis if slope is zero and <em>stderrr</em>, the standard error of estimated gradient.</p>
+<h4 id="Correlation-coefficients">Correlation coefficients<a class="anchor-link" href="#Correlation-coefficients"> </a></h4><p>The correlation coefficient can be used to determine how well two samples are correlated.</p>
+<table>
+<thead><tr>
+<th>r-value</th>
+<th>Interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-1</td>
+<td>Perfect negative correlation</td>
+</tr>
+<tr>
+<td>-0.7</td>
+<td>Strong negative correlation</td>
+</tr>
+<tr>
+<td>-0.5</td>
+<td>Moderate negative correlation</td>
+</tr>
+<tr>
+<td>-0.3</td>
+<td>Weak negative correlation</td>
+</tr>
+<tr>
+<td>0</td>
+<td>No correlation</td>
+</tr>
+<tr>
+<td>0.3</td>
+<td>Weak correlation</td>
+</tr>
+<tr>
+<td>0.5</td>
+<td>Moderate correlation</td>
+</tr>
+<tr>
+<td>0.7</td>
+<td>Strong correlation</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Perfect correlation</td>
+</tr>
+</tbody>
+</table>
+<p>Scipy has a range of correlation coefficients. Most common is <strong>Pearson r-value</strong>:</p>
+
+<pre><code>scipy.stats.pearsonr(x, y)
+
+</code></pre>
+<p>This coefficient is calculated according to:</p>
+$$ r = \frac{\sum (x-m_x)(y-m_y)}{\sqrt{\sum (x-m_x)^2 \sum (y-m_y)^2}},$$<p>where $m_x$ and $m_y$ are mean values for $x$ and $y$ vectors. You can read more about it <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.pearsonr.html#scipy.stats.pearsonr">here</a>.</p>
+<p>Pearson correlation coefficient assumes that two datasets are <strong>normally distributed</strong>. That is not always the case, therefore, <strong>Spearman's rank correlation coefficient</strong> can be used for <em>non-parametric</em> correlation (assuming no specific distribution). You can call it using:</p>
+
+<pre><code>scipy.stats.spearmanr(x, y)
+
+
+</code></pre>
+<h4 id="Exercise">Exercise<a class="anchor-link" href="#Exercise"> </a></h4><p>Let's fit line into the oxygen nad carbon isotope data and find how well these two correlate:</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Create x values for line plotting</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">odp_data</span><span class="o">.</span><span class="n">oxygen</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">odp_data</span><span class="o">.</span><span class="n">oxygen</span><span class="p">),</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="c1"># Fit a line</span>
+<span class="n">slope</span><span class="p">,</span> <span class="n">intercept</span><span class="p">,</span> <span class="n">r_value</span><span class="p">,</span> <span class="n">p_value</span><span class="p">,</span> <span class="n">stderr</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">linregress</span><span class="p">(</span><span class="n">odp_data</span><span class="o">.</span><span class="n">oxygen</span><span class="p">,</span> <span class="n">odp_data</span><span class="o">.</span><span class="n">carbon</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Slope = </span><span class="si">%.2f</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="n">slope</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Intercept = </span><span class="si">%.2f</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="n">intercept</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Correlation coefficient = </span><span class="si">%.2f</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="n">r_value</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;P-value = </span><span class="si">%.2f</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="n">p_value</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Standard error = </span><span class="si">%.2f</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="n">stderr</span><span class="p">)</span>
+
+<span class="n">pearson_r</span><span class="p">,</span> <span class="n">pearson_p</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">pearsonr</span><span class="p">(</span><span class="n">odp_data</span><span class="o">.</span><span class="n">oxygen</span><span class="p">,</span> <span class="n">odp_data</span><span class="o">.</span><span class="n">carbon</span><span class="p">)</span>
+<span class="n">spearman_r</span><span class="p">,</span> <span class="n">spearman_p</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">spearmanr</span><span class="p">(</span><span class="n">odp_data</span><span class="o">.</span><span class="n">oxygen</span><span class="p">,</span> <span class="n">odp_data</span><span class="o">.</span><span class="n">carbon</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Pearson r = </span><span class="si">%.2f</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="n">pearson_r</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Spearman r = </span><span class="si">%.2f</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="n">spearman_r</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Slope = 0.15.
+Intercept = 1.52.
+Correlation coefficient = 0.21.
+P-value = 0.01.
+Standard error = 0.06.
+Pearson r = 0.21.
+Spearman r = 0.20.
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Create a plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">odp_data</span><span class="o">.</span><span class="n">oxygen</span><span class="p">,</span> <span class="n">odp_data</span><span class="o">.</span><span class="n">carbon</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;$\delta^</span><span class="si">{13}</span><span class="s2">C$&quot;</span><span class="p">,</span>
+           <span class="n">c</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;magenta&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">slope</span><span class="o">*</span><span class="n">x</span><span class="o">+</span><span class="n">intercept</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;$\delta^</span><span class="si">{13}</span><span class="s2">C$ (‰)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;$\delta^</span><span class="si">{18}</span><span class="s2">O$ (‰)&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mf">2.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mf">2.5</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../images/geosciences/Statistics_for_Geoscientists_16_0.png"
+>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>As expected, our data is quite scattered and correlation coefficient is $&lt; 0.3$, meaning there is very weak correlation. Let's generate some random data and fit a line:</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Create random data</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">20202020</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+
+<span class="c1"># Create equally space data for fitted line</span>
+<span class="n">xx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="c1"># Fit a line</span>
+<span class="n">slope</span><span class="p">,</span> <span class="n">intercept</span><span class="p">,</span> <span class="n">r_value</span><span class="p">,</span> <span class="n">p_value</span><span class="p">,</span> <span class="n">stderr</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">linregress</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Slope = </span><span class="si">%.2f</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="n">slope</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Intercept = </span><span class="si">%.2f</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="n">intercept</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Correlation coefficient = </span><span class="si">%.2f</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="n">r_value</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;P-value = </span><span class="si">%.2f</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="n">p_value</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Standard error = </span><span class="si">%.2f</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="n">stderr</span><span class="p">)</span>
+
+<span class="n">pearson_r</span><span class="p">,</span> <span class="n">pearson_p</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">pearsonr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">spearman_r</span><span class="p">,</span> <span class="n">spearman_p</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">spearmanr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Pearson r = </span><span class="si">%.2f</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="n">pearson_r</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Spearman r = </span><span class="si">%.2f</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="n">spearman_r</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Slope = -2.10.
+Intercept = 0.58.
+Correlation coefficient = -0.89.
+P-value = 0.00.
+Standard error = 0.16.
+Pearson r = -0.89.
+Spearman r = -0.88.
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Create a plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;$\delta^</span><span class="si">{13}</span><span class="s2">C$&quot;</span><span class="p">,</span>
+           <span class="n">c</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;magenta&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">slope</span><span class="o">*</span><span class="n">xx</span><span class="o">+</span><span class="n">intercept</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../images/geosciences/Statistics_for_Geoscientists_19_0.png"
+>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This time data showed strong negative correlation.</p>
+<h2 id="Inferential-statistics">Inferential statistics<a class="anchor-link" href="#Inferential-statistics"> </a></h2><p><em>Inferential statistics</em> aims to infer properties of data based on hypotheses testing. Hypotheses will test probability.</p>
+<p><em>Probability</em> $p$ describes how likely an event is to occur. It ranges between $(0,1)$, where $p=0$ implies that event will never occur and $p=1$ means that the event will always occur.</p>
+<h3 id="Hypotheses">Hypotheses<a class="anchor-link" href="#Hypotheses"> </a></h3><p>We can formulate two hypotheses - the <em>null hypothesis</em> (H0) and an <em>alternative hypothesis</em> (H1). We will only accept H1, if it is very unlikely for H0 to explain our results.</p>
+<p>For example, we have grain sizes for samples A and B, where sample A has higher mean:</p>
+<ul>
+<li>H0 - There is no difference in mean grain size between A and B.</li>
+<li>H1 - Mean grain size is higher in sample A than B.</li>
+</ul>
+<h3 id="Student's-T-test">Student's T-test<a class="anchor-link" href="#Student's-T-test"> </a></h3><p>Different test types are available. For example, we can use Student's T-test checks the probability for two samples to have the same underlying mean. Scipy provides:</p>
+
+<pre><code>scipy.stats.ttest_ind(a, b)
+
+</code></pre>
+<p>This test will return <em>t-statistic</em> which describes how means are different from one another and <em>p-value</em>, the probability of null hypothesis being true.</p>
+<p>We can use this test on some randomly generated data with normal distributions.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Generate data that will have the same mean</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">100000</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">12345</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">100000</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">67890</span><span class="p">)</span>
+
+<span class="c1"># Use Student&#39;s T-test</span>
+<span class="n">t_statistic</span><span class="p">,</span> <span class="n">p_value</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">ttest_ind</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;t-statistic = </span><span class="si">%.2f</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="n">t_statistic</span><span class="p">)</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;p-value = </span><span class="si">%.2f</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="n">p_value</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>t-statistic = 0.77.
+p-value = 0.44.
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>If observed p-value is $&gt;0.05$ or $0.10$, we cannot reject the null hypothesis. The threshold is arbitrary, $p = 0.05$ is just most commonly used.</p>
+<p>T-test is commonly used but it is not always appropriate to use:</p>
+<ul>
+<li>Assumes normally distributed samples</li>
+<li>Needs a large sample size to give sensible results</li>
+</ul>
+<h3 id="Tails">Tails<a class="anchor-link" href="#Tails"> </a></h3><p>Instead of testing how different the means are, we could test whether the mean of A is greater than the mean of B. For that we can use <em>one-tailed</em> test.</p>
+<p>Alternatively, we can take a two-tailed test to find whether mean of A is higher or lower than mean of B.</p>
+<p>When using scipy.stats tests, make sure you check whether it is a one-tailed or two-tailed test!</p>
+<h3 id="Non-parametric-tests">Non-parametric tests<a class="anchor-link" href="#Non-parametric-tests"> </a></h3><p>Tests that don't require data to be normally distributed are for example, the <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.mannwhitneyu.html#scipy.stats.mannwhitneyu">Mann-Whitney</a> rank test and 
+<a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.mannwhitneyu.html#scipy.stats.mannwhitneyu">Kolmogorow-Smirnov test</a> for goodness of fit. Two-sample K-S test can be used as an alternative to t-test. It answers the question whether samples come from the same underlying population.</p>
+<h3 id="Testing-for-normal-distribution">Testing for normal distribution<a class="anchor-link" href="#Testing-for-normal-distribution"> </a></h3><p>We can test data with hypotheses:</p>
+<ul>
+<li>H0 - underlying distribution is normal</li>
+<li>H1 - underlying distibution is not normal</li>
+</ul>
+<p>Scipy provides:</p>
+
+<pre><code>scipy.stats.normaltest()
+</code></pre>
+<p>It tests the null hypothesis if a sample comes from a normal distribution. We can test earthquake depth and magnitude data from New Zealand whether they come from normal distribution:</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">nz_eqs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data/nz_largest_eq_since_1970.csv&quot;</span><span class="p">)</span>
+<span class="n">nz_eqs</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>year</th>
+      <th>month</th>
+      <th>day</th>
+      <th>utc_time</th>
+      <th>mag</th>
+      <th>lat</th>
+      <th>lon</th>
+      <th>depth_km</th>
+      <th>region</th>
+      <th>iris_id</th>
+      <th>timestamp</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2009</td>
+      <td>7</td>
+      <td>15</td>
+      <td>09:22:31</td>
+      <td>7.8</td>
+      <td>-45.8339</td>
+      <td>166.6363</td>
+      <td>20.9</td>
+      <td>OFF W. COAST OF S. ISLAND, N.Z.</td>
+      <td>2871698</td>
+      <td>1247649751</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2016</td>
+      <td>11</td>
+      <td>13</td>
+      <td>11:02:59</td>
+      <td>7.8</td>
+      <td>-42.7245</td>
+      <td>173.0647</td>
+      <td>22.0</td>
+      <td>SOUTH ISLAND, NEW ZEALAND</td>
+      <td>5197722</td>
+      <td>1479034979</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2003</td>
+      <td>8</td>
+      <td>21</td>
+      <td>12:12:47</td>
+      <td>7.2</td>
+      <td>-45.0875</td>
+      <td>167.0892</td>
+      <td>6.8</td>
+      <td>SOUTH ISLAND, NEW ZEALAND</td>
+      <td>1628007</td>
+      <td>1061467967</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2001</td>
+      <td>8</td>
+      <td>21</td>
+      <td>06:52:06</td>
+      <td>7.1</td>
+      <td>-36.8010</td>
+      <td>-179.7230</td>
+      <td>33.5</td>
+      <td>EAST OF NORTH ISLAND, N.Z.</td>
+      <td>1169374</td>
+      <td>998376726</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2004</td>
+      <td>11</td>
+      <td>22</td>
+      <td>20:26:23</td>
+      <td>7.1</td>
+      <td>-46.4964</td>
+      <td>164.8273</td>
+      <td>7.6</td>
+      <td>OFF W. COAST OF S. ISLAND, N.Z.</td>
+      <td>1888053</td>
+      <td>1101155183</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">nz_eqs</span><span class="o">.</span><span class="n">mag</span><span class="p">,</span><span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Magnitude&quot;</span><span class="p">)</span>
+
+<span class="n">ax2</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">nz_eqs</span><span class="o">.</span><span class="n">depth_km</span><span class="p">,</span><span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Depth (km)&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">wspace</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../images/geosciences/Statistics_for_Geoscientists_24_0.png"
+>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The distributions do not look normal, however, we can test the to get a more robust evidence:</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">statistic</span><span class="p">,</span> <span class="n">p_value</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">normaltest</span><span class="p">(</span><span class="n">nz_eqs</span><span class="o">.</span><span class="n">mag</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;P-value = </span><span class="si">%.9f</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="n">p_value</span><span class="p">)</span>
+
+<span class="n">statistic</span><span class="p">,</span> <span class="n">p_value</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">normaltest</span><span class="p">(</span><span class="n">nz_eqs</span><span class="o">.</span><span class="n">depth_km</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;P-value = </span><span class="si">%.9f</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="n">p_value</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>P-value = 0.000000000.
+P-value = 0.000000000.
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In both cases, the p-value is so small, the null hypothesis is rejected, and therefore, the distributions are not normal.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Chi-squared-test-(-or-$\chi^2$-test)">Chi-squared test ( or $\chi^2$ test)<a class="anchor-link" href="#Chi-squared-test-(-or-$\chi^2$-test)"> </a></h2><p>Chi-squared tesst is used for discrete (categorised data). For example, discrete data may be rock type (granite, sandstone, limestone, etc.) or fault type (normal, strike-slip, etc.).</p>
+<p>This test assesses how likely it is that counts of discrete data fit some expected pattern. In Python we can use a <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.chisquare.html">chi-squared test</a> with:</p>
+
+<pre><code>scipy.stats.chisquare()
+
+</code></pre>
+<p>that tests the null hypothesis that the categorical data has the given frequency. It returns <em>s-statistic</em> that is the value of Chi-squared and <em>p-value</em> which is two-tailed probability of the result occuring by chance.</p>
+<h3 id="Exercise">Exercise<a class="anchor-link" href="#Exercise"> </a></h3><p>Let's say that we analyse 2000 grades and they fall into fail, 2rd, 2ii, 2i and 1st categories. We find that the marks breakdown is</p>
+<p>Fail: 3.2% 3rd: 11.5% 2ii: 15.9% 2i: 41.3% 1st: 28.1</p>
+<p>We will consider now a group of students and their marks:</p>
+<table>
+<thead><tr>
+<th>Grade</th>
+<th>Group 1</th>
+<th>Group 2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fail</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>3rd</td>
+<td>12</td>
+<td>8</td>
+</tr>
+<tr>
+<td>2ii</td>
+<td>23</td>
+<td>8</td>
+</tr>
+<tr>
+<td>2i</td>
+<td>29</td>
+<td>24</td>
+</tr>
+<tr>
+<td>1st</td>
+<td>21</td>
+<td>40</td>
+</tr>
+</tbody>
+</table>
+<p>Chi-squared test will help us determine whether these grades are atypical.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">observed1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span> <span class="mi">21</span><span class="p">])</span>
+<span class="n">observed2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">40</span><span class="p">])</span>
+
+<span class="n">predicted</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">3.2</span><span class="p">,</span> <span class="mf">11.5</span><span class="p">,</span> <span class="mf">15.9</span><span class="p">,</span> <span class="mf">41.3</span><span class="p">,</span> <span class="mf">28.1</span><span class="p">])</span>
+
+<span class="n">s_statistic</span><span class="p">,</span> <span class="n">p_value</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">chisquare</span><span class="p">(</span><span class="n">observed1</span><span class="p">,</span> <span class="n">predicted</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Group 1 p-value = </span><span class="si">%.5f</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="n">p_value</span><span class="p">)</span>
+
+<span class="n">s_statistic</span><span class="p">,</span> <span class="n">p_value</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">chisquare</span><span class="p">(</span><span class="n">observed2</span><span class="p">,</span> <span class="n">predicted</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Group 2 p-value = </span><span class="si">%.5f</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="n">p_value</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Group 1 p-value = 0.03779.
+Group 2 p-value = 0.00040.
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The p-value indicates that these groups have quite typical mark distribtion.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+ 
+
+
+    </main>
+    

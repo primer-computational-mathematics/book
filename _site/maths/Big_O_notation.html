@@ -1,0 +1,1377 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,minimum-scale=1">
+
+  <title>Big O notation</title>
+  <meta name="description" content="        Big O notation    Table of Contents1&nbsp;&nbsp;Introduction and notation2&nbsp;&nbsp;Mathematical explanation2.1&nbsp;&nbsp;Example3&nbsp;&nbsp;Use ...">
+
+  <link rel="canonical" href="http://localhost:4000/maths/Big_O_notation.html">
+  <link rel="alternate" type="application/rss+xml" title="ESE Jupyter Material" href="http://localhost:4000/feed.xml">
+
+  <meta property="og:url"         content="http://localhost:4000/maths/Big_O_notation.html" />
+<meta property="og:type"        content="article" />
+<meta property="og:title"       content="Big O notation" />
+<meta property="og:description" content="        Big O notation    Table of Contents1&nbsp;&nbsp;Introduction and notation2&nbsp;&nbsp;Mathematical explanation2.1&nbsp;&nbsp;Example3&nbsp;&nbsp;Use ..." />
+<meta property="og:image"       content="http://localhost:4000/images/logo/logo.png" />
+
+<meta name="twitter:card" content="summary">
+
+
+  <script type="application/ld+json">
+  {
+  "@context": "http://schema.org",
+  "@type": "NewsArticle",
+  "mainEntityOfPage": "http://localhost:4000/maths/Big_O_notation.html",
+  "headline": "Big O notation",
+  "datePublished": "2020-06-29T11:46:00+01:00",
+  "dateModified": "2020-06-29T11:46:00+01:00",
+  "description": "        Big O notation    Table of Contents1&nbsp;&nbsp;Introduction and notation2&nbsp;&nbsp;Mathematical explanation2.1&nbsp;&nbsp;Example3&nbsp;&nbsp;Use ...",
+  "author": {
+    "@type": "Person",
+    "name": "Imperial College London"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Data 100 at UC Berkeley",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://localhost:4000",
+      "width": 60,
+      "height": 60
+    }
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "http://localhost:4000",
+    "height": 60,
+    "width": 60
+  }
+}
+
+  </script>
+  <link rel="stylesheet" href="/assets/css/styles.css">
+
+  <!-- <link rel="manifest" href="/manifest.json"> -->
+  <!-- <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#efae0a"> -->
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+  <meta name="theme-color" content="#233947">
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/x-icon" href="/images/logo/favicon.ico">
+
+  <!-- MathJax Config -->
+  <!-- Allow inline math using $ and automatically break long math lines -->
+<!-- (mostly) copied from nbconvert configuration -->
+<!-- https://github.com/jupyter/nbconvert/blob/master/nbconvert/templates/html/mathjax.tpl -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+        processEscapes: true,
+        processEnvironments: true
+    },
+    // Center justify equations in code and markdown cells. Elsewhere
+    // we use CSS to left justify single line equations in code cells.
+    displayAlign: 'center',
+    "HTML-CSS": {
+        styles: {'.MathJax_Display': {"margin": 0}},
+        linebreaks: { automatic: true },
+    },
+    
+});
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS_HTML' async></script>
+
+
+  <!-- DOM updating function -->
+  <script src="/assets/js/page/dom-update.js"></script>
+
+  <!-- Selectors for elements on the page -->
+  <script src="/assets/js/page/documentSelectors.js"></script>
+
+  <!-- Define some javascript variables that will be useful in other javascript -->
+  <script>
+    const site_basename = '';
+  </script>
+
+  <!-- Add AnchorJS to let headers be linked -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.2.0/anchor.min.js" async></script>
+  <script src="/assets/js/page/anchors.js" async></script>
+
+  <!-- Include Turbolinks to make page loads fast -->
+  <!-- https://github.com/turbolinks/turbolinks -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/turbolinks/5.2.0/turbolinks.js" async></script>
+  <meta name="turbolinks-cache-control" content="no-cache">
+
+  <!-- Load nbinteract for widgets -->
+  
+
+  <!-- Load Thebelab for interactive widgets -->
+  <!-- Include Thebelab for interactive code if it's enabled -->
+
+
+<!-- Display Thebelab button in each code cell -->
+<script>
+/**
+ * Set up thebelab button for code blocks
+ */
+
+const thebelabCellButton = id =>
+  `<a id="thebelab-cell-button-${id}" class="btn thebebtn o-tooltip--left" data-tooltip="Interactive Mode">
+    <img src="/assets/images/edit-button.svg" alt="Start thebelab interactive mode">
+  </a>`
+
+
+const addThebelabButtonToCodeCells =  () => {
+
+  const codeCells = document.querySelectorAll('div.input_area > div.highlight:not(.output) pre')
+  codeCells.forEach((codeCell, index) => {
+    const id = codeCellId(index)
+    codeCell.setAttribute('id', id)
+    if (document.getElementById("thebelab-cell-button-" + id) == null) {
+      codeCell.insertAdjacentHTML('afterend', thebelabCellButton(id));
+    }
+  })
+}
+
+initFunction(addThebelabButtonToCodeCells);
+</script>
+
+
+<script src="https://unpkg.com/thebelab@latest/lib/index.js" async></script>
+<script>
+    /**
+     * Add attributes to Thebelab blocks
+     */
+
+    const initThebelab = () => {
+        const addThebelabToCodeCells = () => {
+            console.log("Adding thebelab to code cells...");
+            // If Thebelab hasn't loaded, wait a bit and try again. This
+            // happens because we load ClipboardJS asynchronously.
+            if (window.thebelab === undefined) {
+                setTimeout(addThebelabToCodeCells, 250)
+            return
+            }
+
+            // If we already detect a Thebelab cell, don't re-run
+            if (document.querySelectorAll('div.thebelab-cell').length > 0) {
+                return;
+            }
+
+            // Find all code cells, replace with Thebelab interactive code cells
+            const codeCells = document.querySelectorAll('.input_area pre')
+            codeCells.forEach((codeCell, index) => {
+                const id = codeCellId(index)
+
+                // Clean up the language to make it work w/ CodeMirror and add it to the cell
+                dataLanguage = ""
+                dataLanguage = detectLanguage(dataLanguage);
+                codeCell.setAttribute('data-language', dataLanguage)
+                codeCell.setAttribute('data-executable', 'true')
+
+                // If the code cell is hidden, show it
+                var inputCheckbox = document.querySelector(`input#hidebtn${codeCell.id}`);
+                if (inputCheckbox !== null) {
+                    setCodeCellVisibility(inputCheckbox, 'visible');
+                }
+            });
+
+            // Remove the event listener from the page so keyboard press doesn't
+            // Change page
+            document.removeEventListener('keydown', initPageNav)
+            keyboardListener = false;
+
+            // Init thebelab
+            thebelab.bootstrap();
+
+            // Remove copy buttons since they won't work anymore
+            const copyAndThebeButtons = document.querySelectorAll('.copybtn, .thebebtn')
+            copyAndThebeButtons.forEach((button, index) => {
+                button.remove();
+            });
+
+            // Remove outputs since they'll be stale
+            const outputs = document.querySelectorAll('.output *, .output')
+            outputs.forEach((output, index) => {
+                output.remove();
+            });
+
+            // Find any cells with an initialization tag and ask ThebeLab to run them when ready
+            var thebeInitCells = document.querySelectorAll('div.tag_thebelab-init');
+            thebeInitCells.forEach((cell) => {
+                console.log("Initializing ThebeLab with cell: " + cell.id);
+                cell.querySelector('.thebelab-run-button').click();
+            });
+        }
+
+        // Add event listener for the function to modify code cells
+        const thebelabButtons = document.querySelectorAll('[id^=thebelab], [id$=thebelab]')
+        thebelabButtons.forEach((thebelabButton,index) => {
+            if (thebelabButton === null) {
+                setTimeout(initThebelab, 250)
+                return
+            };
+            thebelabButton.addEventListener('click', addThebelabToCodeCells);
+        });
+    }
+
+    // Initialize Thebelab
+    initFunction(initThebelab);
+
+// Helper function to munge the language name
+var detectLanguage = (language) => {
+    if (language.indexOf('python') > -1) {
+        language = "python";
+    }
+    return language;
+}
+</script>
+
+
+
+  <!-- Load the auto-generating TOC (non-async otherwise the TOC won't load w/ turbolinks) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.8.1/tocbot.min.js" async></script>
+  <script src="/assets/js/page/tocbot.js"></script>
+
+  <!-- Google analytics -->
+  
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', '');
+</script>
+
+
+
+  <!-- Clipboard copy button -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" async></script>
+
+  <!-- Load custom website scripts -->
+  <script src="/assets/js/scripts.js" async></script>
+
+  <!-- Load custom user CSS and JS  -->
+  <script src="/assets/custom/custom.js" async></script>
+  <link rel="stylesheet" href="/assets/custom/custom.css">
+
+  <!-- Update interact links w/ REST param, is defined in includes so we can use templates -->
+  
+
+  <!-- Lunr search code - will only be executed on the /search page -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/2.3.6/lunr.min.js" async></script>
+  <script>var initQuery = function() {
+  // See if we have a search box
+  var searchInput = document.querySelector('input#lunr_search');
+  if (searchInput === null) {
+    return;
+  }
+
+  // Function to parse our lunr cache
+  var idx = lunr(function () {
+    this.field('title')
+    this.field('excerpt')
+    this.field('categories')
+    this.field('tags')
+    this.ref('id')
+
+    this.pipeline.remove(lunr.trimmer)
+
+    for (var item in store) {
+      this.add({
+        title: store[item].title,
+        excerpt: store[item].excerpt,
+        categories: store[item].categories,
+        tags: store[item].tags,
+        id: item
+      })
+    }
+  });
+
+  // Run search upon keyup
+  searchInput.addEventListener('keyup', function () {
+    var resultdiv = document.querySelector('#results');
+    var query = document.querySelector("input#lunr_search").value.toLowerCase();
+    var result =
+      idx.query(function (q) {
+        query.split(lunr.tokenizer.separator).forEach(function (term) {
+          q.term(term, { boost: 100 })
+          if(query.lastIndexOf(" ") != query.length-1){
+            q.term(term, {  usePipeline: false, wildcard: lunr.Query.wildcard.TRAILING, boost: 10 })
+          }
+          if (term != ""){
+            q.term(term, {  usePipeline: false, editDistance: 1, boost: 1 })
+          }
+        })
+      });
+
+      // Empty the results div
+      while (resultdiv.firstChild) {
+        resultdiv.removeChild(resultdiv.firstChild);
+      }
+
+    resultdiv.insertAdjacentHTML('afterbegin', '<p class="results__found">'+result.length+' Result(s) found</p>');
+    for (var item in result) {
+      var ref = result[item].ref;
+      if(store[ref].teaser){
+        var searchitem =
+          '<div class="list__item">'+
+            '<article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">'+
+              '<h2 class="archive__item-title" itemprop="headline">'+
+                '<a href="'+store[ref].url+'" rel="permalink">'+store[ref].title+'</a>'+
+              '</h2>'+
+              '<div class="archive__item-teaser">'+
+                '<img src="'+store[ref].teaser+'" alt="">'+
+              '</div>'+
+              '<p class="archive__item-excerpt" itemprop="description">'+store[ref].excerpt.split(" ").splice(0,20).join(" ")+'...</p>'+
+            '</article>'+
+          '</div>';
+      }
+      else{
+    	  var searchitem =
+          '<div class="list__item">'+
+            '<article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">'+
+              '<h2 class="archive__item-title" itemprop="headline">'+
+                '<a href="'+store[ref].url+'" rel="permalink">'+store[ref].title+'</a>'+
+              '</h2>'+
+              '<p class="archive__item-excerpt" itemprop="description">'+store[ref].excerpt.split(" ").splice(0,20).join(" ")+'...</p>'+
+            '</article>'+
+          '</div>';
+      }
+      resultdiv.insertAdjacentHTML('beforeend', searchitem);
+    }
+  });
+};
+
+initFunction(initQuery);
+</script>
+
+  <!-- Load JS that depends on site variables -->
+  <script src="/assets/js/page/copy-button.js" async></script>
+
+  <!-- Hide cell code -->
+  <script src="/assets/js/page/hide-cell.js" async></script>
+
+  <!-- Printing the screen -->
+  <!-- Include nbinteract for interactive widgets -->
+<script src="https://printjs-4de6.kxcdn.com/print.min.js" async></script>
+<script>
+printContent = () => {
+    // MathJax displays a second version of any math for assistive devices etc.
+    // This prevents double-rendering in the PDF output.
+    var ignoreAssistList = [];
+    assistives = document.querySelectorAll('.MathJax_Display span.MJX_Assistive_MathML').forEach((element, index) => {
+        var thisId = 'MathJax-assistive-' + index.toString();
+        element.setAttribute('id', thisId);
+        ignoreAssistList.push(thisId)
+    });
+
+    // Print the actual content object
+    printJS({
+        printable: 'textbook_content',
+        type: 'html',
+        css: "/assets/css/styles.css",
+        style: "#textbook_content {padding-top: 40px};",
+        scanStyles: false,
+        targetStyles: ["*"],
+        ignoreElements: ignoreAssistList,
+        documentTitle: "Made with Jupyter Book"
+    })
+};
+
+initPrint = () => {
+    document.querySelector('#interact-button-print').addEventListener('click', printContent)
+}
+
+initFunction(initPrint)
+</script>
+
+</head>
+
+  <body>
+    <!-- Include the ThebeLab config so it gets reloaded on each page -->
+    <script type="text/x-thebe-config">{
+    requestKernel: true,
+    binderOptions: {
+    repo: "primer-computational-mathematics/book",
+    ref: "master",
+    },
+    codeMirrorConfig: {
+    theme: "abcdef",
+    mode: "python"
+    },
+    kernelOptions: {
+    kernelName: "python3",
+    path: "notebooks/maths"
+    }
+}
+</script>
+
+    <!-- .js-show-sidebar shows sidebar by default -->
+    <div id="js-textbook" class="c-textbook js-show-sidebar">
+      
+
+
+
+<nav id="js-sidebar" class="c-textbook__sidebar">
+  <a href="https://www.imperial.ac.uk/earth-science/"><img src="/images/logo/logo.png" class="textbook_logo" id="sidebar-logo" alt="textbook logo" data-turbolinks-permanent/></a>
+  <h2 class="c-sidebar__title">ESE Jupyter Material</h2>
+  <ul class="c-sidebar__chapters">
+    
+      
+      
+
+      
+      
+      
+      
+
+      
+      
+      <li class="c-sidebar__chapter" data-url="/intro">
+        <a class="c-sidebar__entry"
+          href="/intro.html"
+        >
+          
+          Home
+        </a>
+      </li>
+
+      
+      
+
+      
+
+      
+      
+
+      
+
+      
+    
+      
+      
+        <li class="c-sidebar__divider"></li>
+        
+      
+      
+        <li><h2 class="c-sidebar__title">Topics</li>
+        
+      
+      
+
+      
+      
+      
+      
+
+      
+      
+      <li class="c-sidebar__chapter" data-url="/maths/intro">
+        <a class="c-sidebar__entry"
+          href="/maths/intro.html"
+        >
+          
+          Mathematics
+        </a>
+      </li>
+
+      
+      
+
+      
+
+      
+      
+
+      
+        
+
+        
+
+        <ul class="c-sidebar__sections">
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/maths/Big_O_notation">
+              <a class="c-sidebar__entry"
+                href="/maths/Big_O_notation.html"
+              >
+                
+                Big O notation
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/maths/Statistics_for_Geoscientists">
+              <a class="c-sidebar__entry"
+                href="/maths/Statistics_for_Geoscientists.html"
+              >
+                
+                Statistics for Geoscientists
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/maths/Taylor_series">
+              <a class="c-sidebar__entry"
+                href="/maths/Taylor_series.html"
+              >
+                
+                Taylor series
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/maths/Tensors_Review">
+              <a class="c-sidebar__entry"
+                href="/maths/Tensors_Review.html"
+              >
+                
+                Tensors Review
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/maths/Timestepping_an_ODE">
+              <a class="c-sidebar__entry"
+                href="/maths/Timestepping_an_ODE.html"
+              >
+                
+                Timestepping an ODE
+              </a>
+            </li>
+            
+            
+          
+        </ul>
+      
+
+      
+    
+      
+      
+
+      
+      
+      
+      
+
+      
+      
+      <li class="c-sidebar__chapter" data-url="/coding/intro">
+        <a class="c-sidebar__entry"
+          href="/coding/intro.html"
+        >
+          
+          Coding
+        </a>
+      </li>
+
+      
+      
+
+      
+
+      
+      
+
+      
+        
+
+        
+
+        <ul class="c-sidebar__sections">
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/coding/Dictionaries">
+              <a class="c-sidebar__entry"
+                href="/coding/Dictionaries.html"
+              >
+                
+                Dictionaries
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/coding/File_handling">
+              <a class="c-sidebar__entry"
+                href="/coding/File_handling.html"
+              >
+                
+                File handling
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/coding/Flow_control_statements">
+              <a class="c-sidebar__entry"
+                href="/coding/Flow_control_statements.html"
+              >
+                
+                Flow control statements
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/coding/For_loops">
+              <a class="c-sidebar__entry"
+                href="/coding/For_loops.html"
+              >
+                
+                For loops
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/coding/Functions">
+              <a class="c-sidebar__entry"
+                href="/coding/Functions.html"
+              >
+                
+                Functions
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/coding/Handling_errors">
+              <a class="c-sidebar__entry"
+                href="/coding/Handling_errors.html"
+              >
+                
+                Handling errors
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/coding/If_statement">
+              <a class="c-sidebar__entry"
+                href="/coding/If_statement.html"
+              >
+                
+                If statement
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/coding/Importing">
+              <a class="c-sidebar__entry"
+                href="/coding/Importing.html"
+              >
+                
+                Importing
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/coding/Lists">
+              <a class="c-sidebar__entry"
+                href="/coding/Lists.html"
+              >
+                
+                Lists
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/coding/List_comprehensions">
+              <a class="c-sidebar__entry"
+                href="/coding/List_comprehensions.html"
+              >
+                
+                List comprehensions
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/coding/Matplotlib">
+              <a class="c-sidebar__entry"
+                href="/coding/Matplotlib.html"
+              >
+                
+                Matplotlib
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/coding/Nested_lists">
+              <a class="c-sidebar__entry"
+                href="/coding/Nested_lists.html"
+              >
+                
+                Nested lists
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/coding/NumPy_Arrays">
+              <a class="c-sidebar__entry"
+                href="/coding/NumPy_Arrays.html"
+              >
+                
+                NumPy Arrays
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/coding/Pandas">
+              <a class="c-sidebar__entry"
+                href="/coding/Pandas.html"
+              >
+                
+                Pandas
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/coding/Printing_and_formatting_statements">
+              <a class="c-sidebar__entry"
+                href="/coding/Printing_and_formatting_statements.html"
+              >
+                
+                Printing and formatting statements
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/coding/Sets">
+              <a class="c-sidebar__entry"
+                href="/coding/Sets.html"
+              >
+                
+                Sets
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/coding/Tuples">
+              <a class="c-sidebar__entry"
+                href="/coding/Tuples.html"
+              >
+                
+                Tuples
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/coding/Variables">
+              <a class="c-sidebar__entry"
+                href="/coding/Variables.html"
+              >
+                
+                Variables
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/coding/While_loops">
+              <a class="c-sidebar__entry"
+                href="/coding/While_loops.html"
+              >
+                
+                While loops
+              </a>
+            </li>
+            
+            
+          
+        </ul>
+      
+
+      
+    
+      
+      
+
+      
+      
+      
+      
+
+      
+      
+      <li class="c-sidebar__chapter" data-url="/geosciences/intro">
+        <a class="c-sidebar__entry"
+          href="/geosciences/intro.html"
+        >
+          
+          Geosciences
+        </a>
+      </li>
+
+      
+      
+
+      
+
+      
+      
+
+      
+        
+
+        
+
+        <ul class="c-sidebar__sections">
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/geosciences/Cartography_Cartopy">
+              <a class="c-sidebar__entry"
+                href="/geosciences/Cartography_Cartopy.html"
+              >
+                
+                While loops
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/geosciences/Dynamic_Earth">
+              <a class="c-sidebar__entry"
+                href="/geosciences/Dynamic_Earth.html"
+              >
+                
+                Dynamic Earth
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/geosciences/Image_Filtering">
+              <a class="c-sidebar__entry"
+                href="/geosciences/Image_Filtering.html"
+              >
+                
+                Image Filtering
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/geosciences/Image_Operations">
+              <a class="c-sidebar__entry"
+                href="/geosciences/Image_Operations.html"
+              >
+                
+                Image Operations
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/geosciences/Seismology">
+              <a class="c-sidebar__entry"
+                href="/geosciences/Seismology.html"
+              >
+                
+                Seismology
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/geosciences/Tides">
+              <a class="c-sidebar__entry"
+                href="/geosciences/Tides.html"
+              >
+                
+                Tides
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/geosciences/Wave_dispersion">
+              <a class="c-sidebar__entry"
+                href="/geosciences/Wave_dispersion.html"
+              >
+                
+                Wave dispersion
+              </a>
+            </li>
+            
+            
+          
+        </ul>
+      
+
+      
+    
+  </ul>
+  <p class="sidebar_footer">Powered by <a href="https://jupyterbook.org">Jupyter Book</a></p>
+</nav>
+
+      
+      <div class="c-topbar" id="top-navbar">
+  <!-- We show the sidebar by default so we use .is-active -->
+  <div class="c-topbar__buttons">
+    <button
+      id="js-sidebar-toggle"
+      class="hamburger hamburger--arrowalt is-active"
+    >
+      <span class="hamburger-box">
+        <span class="hamburger-inner"></span>
+      </span>
+    </button>
+    <div class="buttons">
+<div class="download-buttons-dropdown">
+    <button id="dropdown-button-trigger" class="interact-button"><img src="/assets/images/download-solid.svg" alt="Download" /></button>
+    <div class="download-buttons">
+        <a href="/notebooks/maths/Big_O_notation.ipynb" download>
+        <button id="interact-button-download" class="interact-button">.ipynb</button>
+        </a>
+        
+        <a id="interact-button-print"><button id="interact-button-download" class="interact-button">.pdf</button></a>
+    </div>
+</div>
+
+
+  <button id="interact-button-thebelab" class="interact-button">Thebelab</button>
+
+  
+  
+  
+
+
+</div>
+
+  </div>
+  <!-- Empty sidebar placeholder that we'll auto-fill with javascript -->
+  <aside class="sidebar__right">
+    <header><h4 class="nav__title"><img src="/assets/images/list-solid.svg" alt="Search" />   On this page</h4></header>
+    <nav class="onthispage">
+    </nav>
+  </aside>
+  <a href="/search.html" class="topbar-right-button" id="search-button">
+    <img src="/assets/images/search-solid.svg" alt="Search" />
+  </a>
+</div>
+
+      <main class="c-textbook__page" tabindex="-1">
+            <div class="c-textbook__content" id="textbook_content">
+                  <main class="jupyter-page">
+    <div id="page-info"><div id="page-title">Big O notation</div>
+</div>
+    
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><h1>Table of Contents<span class="tocSkip"></span></h1></p>
+<div class="toc"><ul class="toc-item"><li><span><a href="#Introduction-and-notation" data-toc-modified-id="Introduction-and-notation-1"><span class="toc-item-num">1&nbsp;&nbsp;</span>Introduction and notation</a></span></li><li><span><a href="#Mathematical-explanation" data-toc-modified-id="Mathematical-explanation-2"><span class="toc-item-num">2&nbsp;&nbsp;</span>Mathematical explanation</a></span><ul class="toc-item"><li><span><a href="#Example" data-toc-modified-id="Example-2.1"><span class="toc-item-num">2.1&nbsp;&nbsp;</span>Example</a></span></li></ul></li><li><span><a href="#Use-in-Computer/Computational-Science" data-toc-modified-id="Use-in-Computer/Computational-Science-3"><span class="toc-item-num">3&nbsp;&nbsp;</span>Use in Computer/Computational Science</a></span></li></ul></div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Big-O-notation">Big O notation<a class="anchor-link" href="#Big-O-notation"> </a></h1><h2 id="Introduction-and-notation">Introduction and notation<a class="anchor-link" href="#Introduction-and-notation"> </a></h2><p>In the notebook on Taylor series we arrived at the infinite Taylor series <em>about (or around) the point $x_0$</em>:</p>
+$$f(x) = f(x_0) + (x - x_0) f'(x_0) + \frac{(x - x_0)^2}{2!} f''(x_0) + \frac{(x - x_0)^3}{3!} f'''(x_0) +
+\frac{(x - x_0)^4}{4!} f^{(iv)}(x_0) + \ldots$$<p>and we pointed out that an equivalent way of writing this expansion is</p>
+$$ f(x_0+h)  = f(x_0) + hf'(x_0) + \frac{h^2}{2!}f''(x_0) + \frac{h^3}{3!}f'''(x_0) + \ldots $$<p>or replace $h$ by the notation $\Delta x$ or $\delta x$.</p>
+<p>When talking about terms in infinite series (terms we will often be forces to truncate, i.e. throw away), or talking about errors, convergence, complexity, run times etc, so-called <a href="https://en.wikipedia.org/wiki/Big_O_notation">Big-O</a> is very useful.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>What this means is that mathematically we have some notation that allows us to write these infinite expansions in forms such as</p>
+$$f(x) = f(x_0) + (x - x_0) f'(x_0) + \frac{(x - x_0)^2}{2!} f''(x_0) + \frac{(x - x_0)^3}{3!} f'''(x_0) + \mathcal{O}((x - x_0)^4)$$<p>or</p>
+$$ f(x_0+h) = f(x_0) + hf'(x_0) + \frac{h^2}{2!}f''(x_0) + \frac{h^3}{3!}f'''(x_0) + \mathcal{O}(h^4) $$<p>But what does this mean?</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Mathematical-explanation">Mathematical explanation<a class="anchor-link" href="#Mathematical-explanation"> </a></h2><p>Well simply $\mathcal{O}$ here means "order".</p>
+<p>More formally it is used to signify (place bounds on) the limiting behaviour of the magnitude of a mathematical term (or an algorithm's runtime).</p>
+<p>So based on the the example above we have simply replaced the terms</p>
+$$ \frac{h^4}{4!} f^{(iv)}(x_0) +  \frac{h^5}{5!} f^{(v)}(x_0) + \ldots $$<p>with</p>
+$$ \mathcal{O}(h^4) $$<p>"in the limit" (and implicitly for this use application we are interested in the limit as $h\rightarrow 0$)</p>
+<p>i.e. we have written that</p>
+$$ \frac{h^4}{4!} f^{(iv)}(x_0) +  \frac{h^5}{5!} f^{(v)}(x_0) + \ldots  =  \mathcal{O}(h^4) $$<p>this is stating that as $h$ tends to zero the LHS can bounded in magnitude by a term of the form</p>
+$$ C h^4 $$<p>where $C$ is a constant, i.e. there exists a constant $C$ such that for all sufficiently small $h$</p>
+$$\left| \frac{h^4}{4!} f^{(iv)}(x_0) +  \frac{h^5}{5!} f^{(v)}(x_0) + \ldots \right| \le C h^4 $$<p>In our case the point is that, assuming $f$ is a well-behaved function, i.e. it's derivatives are bounded, then there will be a small enough $h$ such that the terms dependent on the 5th and higher powers or $h$ are very small relative to the first term</p>
+<p>They can't be ignored, but we can select a $C$ which is a bit larger than original factor ${h^4}/{4!}$ so that the above holds.</p>
+<p>The point here isn't to actually find $C$, this is just notation to help convey a point.</p>
+<p>It's important when analysing errors in algorithms.</p>
+<p>Note that for this case we were considering the limit of small $h$ and so the lowest power eventually becomes dominant, the opposite situation would occur if we were considering the limit of large $h$.</p>
+<p>With errors we are generally thinking about the former case, with run-times (where $h$ might be replaced with some measure of the size of the problem) we are in the latter case.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Example">Example<a class="anchor-link" href="#Example"> </a></h3><p>Consider</p>
+$$g(y) = 3y^2 - y^3 + 9y^4$$<p>in the limit as $y\rightarrow 0$.</p>
+<p>We can show that</p>
+$$\left| 3y^2 - y^3 + 9y^4 \right| \le \left| 3y^2\right| + \left|y^3\right| + \left|9y^4 \right| \le 3y^2 + y^2 + 9y^2 \le 13 y^2$$<p>as we are considering the case as $y$ gets small. Hence we can write</p>
+$$g(y) = 3y^2 - y^3 + 9y^4 = \mathcal{O}(y^2) \quad\text{as}\quad y\rightarrow 0$$<p>If we were considering the case of $y\rightarrow \infty$, then we would write instead</p>
+$$g(y) = \mathcal{O}(y^4) \quad\text{as}\quad y\rightarrow \infty$$
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>When dealing with numerical errors you may see things like</p>
+$$\text{error} \approx 10^{-5}\Delta t +  10^{5}\Delta t^2$$<p>For larger values of $\Delta t$ the second term will clearly dominate due to the relative size of the constant in front of it compared to the first term.</p>
+<p>But when performing a convergence analysis, i.e. investigating how the error drops as $\Delta t$ is reduced, there will come a point for small enough $\Delta t$ that the first term starts to dominate, and from the point onwards the error will decay linearly rather than quadratically, i.e. halving $\Delta t$ leads to a reduction in the error by a factor of 2 rather than 4.</p>
+<p>So we would say that</p>
+$$\text{error} = \mathcal{O}(\Delta t)$$<p>even though at larger $\Delta t$ values the error would be observed to decay quadratically as we reduce $\Delta t$.</p>
+<p>We use the expression "in the asymptotic limit" to refer to region of parameter space where the leading order behaviour dominates. For the above example if we observe something that looks like second order behaviour (when we expect first) we would explain this away by saying that we are not in the asymptotic limit. If we see very close to first order behaviour then we would say we are in the asymptotic limit.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Use-in-Computer/Computational-Science">Use in Computer/Computational Science<a class="anchor-link" href="#Use-in-Computer/Computational-Science"> </a></h2><p>For the cost of algorithms we use the notation in a similar manner.</p>
+<p>An algorithm is said to have (<em>time</em> or <em>algorithmic</em> or <em>computational</em>) <a href="https://en.wikipedia.org/wiki/Time_complexity">complexity</a> of $\mathcal{O}(n^2)$ for example,
+if for large enough $n$, where $n$ is a measure of the problem size, the computational cost grows quadratically - for every doubling of the problem size the cost grows by a factor 4.</p>
+<p>When it comes to complexity it's quite common to see things like $\mathcal{O}(n \log n)$, i.e. the algorithm scales worse than linearly, but not as bad as quadratically.</p>
+<p>For some examples see <a href="https://en.wikipedia.org/wiki/Computational_complexity_of_mathematical_operations">https://en.wikipedia.org/wiki/Computational_complexity_of_mathematical_operations</a></p>
+
+</div>
+</div>
+</div>
+</div>
+
+ 
+
+
+    </main>
+    
+            </div>
+            <div class="c-textbook__footer" id="textbook_footer">
+              
+<nav class="c-page__nav">
+  
+    
+    
+
+    <a id="js-page__nav__prev" class="c-page__nav__prev" href="/maths/intro.html">
+      〈 <span class="u-margin-right-tiny"></span> Mathematics
+    </a>
+  
+
+  
+    
+
+    
+    <a id="js-page__nav__next" class="c-page__nav__next" href="/maths/Taylor_series.html">
+      Taylor series <span class="u-margin-right-tiny"></span> 〉
+    </a>
+  
+</nav>
+
+              <footer>
+  <p class="footer">This page was created by <a href="https://github.com/ExecutableBookProject/jupyter-book/graphs/contributors">The Jupyter Book Community</a></p>
+</footer>
+
+            </div>
+
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

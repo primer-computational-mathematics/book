@@ -1,0 +1,675 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Downloading earthquake data &#8212; ESE Jupyter Material</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/sphinx-book-theme.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/mystnb.js"></script>
+    <script src="_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script async="async" src="_static/thebelab.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Tides" href="geosciences__Tides.html" />
+    <link rel="prev" title="Particle Image Velocimetry (PIV)" href="geosciences__Particle_Image_Velocimetry.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  <img src="_static/images__logo__logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">ESE Jupyter Material</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  
+  <ul class="nav sidenav_l1">
+  <li class="">
+    <a href="intro.html">Landing page</a>
+  </li>
+  <li class="">
+    <a href="coding__intro.html">Coding</a>
+  </li>
+  <li class="active">
+    <a href="geosciences__intro.html">Geosciences</a>
+  <ul class="nav sidenav_l2">
+    <li class="">
+      <a href="geosciences__1D_Resistivity_Forward_Modelling.html">Enter field data</a>
+    </li>
+    <li class="">
+      <a href="geosciences__Camera_Calibration.html">Camera Calibration</a>
+    </li>
+    <li class="">
+      <a href="geosciences__Cartography_Cartopy.html">Creating maps in Cartopy</a>
+    </li>
+    <li class="">
+      <a href="geosciences__Climate_Model.html">Constructing an energy balance model</a>
+    </li>
+    <li class="">
+      <a href="geosciences__Dynamic_Earth.html">Dynamic Earth and Planets</a>
+    </li>
+    <li class="">
+      <a href="geosciences__Google_Earth_Engine_Foundations.html">Google Earth Engine Foundations</a>
+    </li>
+    <li class="">
+      <a href="geosciences__Google_Earth_Engine_Getting_Started_.html">Installation</a>
+    </li>
+    <li class="">
+      <a href="geosciences__Image_Filtering.html">Image Filtering</a>
+    </li>
+    <li class="">
+      <a href="geosciences__Image_Point_Operations.html">Remote Sensing: Image Point Operations</a>
+    </li>
+    <li class="">
+      <a href="geosciences__Image_Transformations_and_Orthorectification.html">Image Transformations and orthorectification</a>
+    </li>
+    <li class="">
+      <a href="geosciences__Milankovitch_cycles.html">Milankovitch cycles</a>
+    </li>
+    <li class="">
+      <a href="geosciences__Particle_Image_Velocimetry.html">Particle Image Velocimetry (PIV)</a>
+    </li>
+    <li class="active">
+      <a href="">Downloading earthquake data</a>
+    </li>
+    <li class="">
+      <a href="geosciences__Tides.html">Tides</a>
+    </li>
+    <li class="">
+      <a href="geosciences__Wave_dispersion.html">Waves</a>
+    </li>
+  </ul>
+  </li>
+  <li class="">
+    <a href="mathematics__intro.html">Mathematics</a>
+  </li>
+  <li class="">
+    <a href="genindex.html">Index</a>
+  </li>
+</ul>
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/geosciences__Seismology.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        
+        <a class="issues-button"
+            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2Fgeosciences__Seismology.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/geosciences__Seismology.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <button type="button" class="btn btn-secondary topbarbtn thebelab-launch-button"
+            onclick="initThebelab()" title="Launch Thebelab" data-toggle="tooltip" data-placement="left"><i
+                class="fas fa-rocket"></i><span style="margin-left: .4em;">ThebeLab</span></button>
+        
+    </div>
+</div>
+
+    </div>
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#input-parameters" class="nav-link">Input parameters</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#networks-and-stations" class="nav-link">Networks and stations</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#start-and-end-time" class="nav-link">Start and end time</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#boundaries" class="nav-link">Boundaries</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#magnitude-and-depth" class="nav-link">Magnitude and depth</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#accessing-iris" class="nav-link">Accessing IRIS</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#custom-data-plotting" class="nav-link">Custom data plotting</a>
+        </li>
+    
+    </ul>
+</nav>
+
+
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="downloading-earthquake-data">
+<h1>Downloading earthquake data<a class="headerlink" href="#downloading-earthquake-data" title="Permalink to this headline">¶</a></h1>
+<p>There are many databases online we can download earthquake data from:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://earthquake.usgs.gov/earthquakes/feed/v1.0/csv.php">USGS website</a></p></li>
+<li><p><a class="reference external" href="http://www.isc.ac.uk/iscbulletin/search/catalogue/">International Seismological Centre</a></p></li>
+<li><p><a class="reference external" href="https://ds.iris.edu/ieb/">IRIS earthquake browser</a></p></li>
+<li><p><a class="reference external" href="https://www.globalcmt.org/CMTsearch.html">CMT catalogue</a></p></li>
+</ul>
+<p>But what if we wanted to write our own code that downloads information on earthquakes? <a class="reference external" href="https://github.com/obspy/obspy/wiki">ObsPy</a> library has exactly what we need to download data from <a class="reference external" href="https://www.iris.edu/hq/">IRIS</a>!</p>
+<p>Let’s start by loading all the necessary libraries:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span>
+<span class="kn">from</span> <span class="nn">dateutil.relativedelta</span> <span class="k">import</span> <span class="n">relativedelta</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib.ticker</span> <span class="k">as</span> <span class="nn">mticker</span>
+
+<span class="kn">import</span> <span class="nn">cartopy.crs</span> <span class="k">as</span> <span class="nn">ccrs</span>
+<span class="kn">import</span> <span class="nn">cartopy.feature</span> <span class="k">as</span> <span class="nn">cfeature</span>
+<span class="kn">from</span> <span class="nn">cartopy.mpl.gridliner</span> <span class="k">import</span> <span class="n">LONGITUDE_FORMATTER</span><span class="p">,</span> <span class="n">LATITUDE_FORMATTER</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="input-parameters">
+<h2>Input parameters<a class="headerlink" href="#input-parameters" title="Permalink to this headline">¶</a></h2>
+<p>First we will specify a bunch of parameters that will be useful in choosing the earthquake data we are interested in.</p>
+<div class="section" id="networks-and-stations">
+<h3>Networks and stations<a class="headerlink" href="#networks-and-stations" title="Permalink to this headline">¶</a></h3>
+<p>We can specify particular seismograph networks and stations to be used when downloading the data. For example, we can look at <a class="reference external" href="http://ds.iris.edu/gmap/">IRIS online map</a> that displays what networks and stations are within the region. If we want to specify either of them, we need to put a list of strings with short codes, such as ‘TA’ for Transportable Array network in USA and ‘O20K’ for a station in Alaska. In this exercise, we will want all the networks and stations, therefore we can assign ‘None’ to the variables:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">network</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">station</span> <span class="o">=</span> <span class="kc">None</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="start-and-end-time">
+<h3>Start and end time<a class="headerlink" href="#start-and-end-time" title="Permalink to this headline">¶</a></h3>
+<p>Usually we want to specify the time window for which we want the earthquake data downloaded. The code takes date and time in UTC format that we can use <a class="reference external" href="https://docs.python.org/3/library/datetime.html">datetime</a> library for. The required format is:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>1970-01-01 01:01:1.01
+</pre></div>
+</div>
+<p>In this example, we will specify end time to be current date and start time to be 10 years prior:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">start_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span> <span class="o">-</span> <span class="n">relativedelta</span><span class="p">(</span><span class="n">years</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">end_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>2010-06-28 14:56:09.116501 2020-06-28 14:56:09.116501
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="boundaries">
+<h3>Boundaries<a class="headerlink" href="#boundaries" title="Permalink to this headline">¶</a></h3>
+<p>We may specify where the earthquakes should come from. We can either input a box boundary or central latitude and longitude and radius. In this example, we will look at a box and we will specify minimum and maximum latitude and longitude:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">min_latitude</span> <span class="o">=</span> <span class="mi">55</span>
+<span class="n">max_latitude</span> <span class="o">=</span> <span class="mi">65</span>
+<span class="n">min_longitude</span> <span class="o">=</span> <span class="o">-</span><span class="mi">160</span>
+<span class="n">max_longitude</span> <span class="o">=</span> <span class="o">-</span><span class="mi">140</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="magnitude-and-depth">
+<h3>Magnitude and depth<a class="headerlink" href="#magnitude-and-depth" title="Permalink to this headline">¶</a></h3>
+<p>We can also specify the minimum and maximum magnitude and depth of the earthquakes downloaded. In this example we will set a minimum magnitude, no maximum magnitude and no depth constraints.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">min_mag</span> <span class="o">=</span> <span class="mf">4.0</span>
+<span class="n">max_mag</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">min_depth</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">max_depth</span> <span class="o">=</span> <span class="kc">None</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="accessing-iris">
+<h2>Accessing IRIS<a class="headerlink" href="#accessing-iris" title="Permalink to this headline">¶</a></h2>
+<p>ObsPy has many classes and functions that interact with IRIS earthquake database. The <a class="reference external" href="https://docs.obspy.org/master/packages/obspy.clients.iris.html">Client</a> class creates a wrapper around IRIS Web services and allows you to access information from Python.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">obspy.clients.fdsn</span> <span class="k">import</span> <span class="n">Client</span>
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="s2">&quot;IRIS&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>To access earthquake catalogue we can use:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>client.get_events()
+</pre></div>
+</div>
+<p>All keyword arguments are listed <a class="reference external" href="https://docs.obspy.org/packages/autogen/obspy.clients.fdsn.client.Client.get_events.html">here</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">catalogue</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_events</span><span class="p">(</span><span class="n">starttime</span><span class="o">=</span><span class="n">start_time</span><span class="p">,</span><span class="n">endtime</span><span class="o">=</span><span class="n">end_time</span><span class="p">,</span>\
+                              <span class="n">minlatitude</span><span class="o">=</span><span class="n">min_latitude</span><span class="p">,</span><span class="n">maxlatitude</span><span class="o">=</span><span class="n">max_latitude</span><span class="p">,</span>\
+                              <span class="n">minlongitude</span><span class="o">=</span><span class="n">min_longitude</span><span class="p">,</span><span class="n">maxlongitude</span><span class="o">=</span><span class="n">max_longitude</span><span class="p">,</span>\
+                              <span class="n">minmagnitude</span><span class="o">=</span><span class="n">min_mag</span><span class="p">,</span> <span class="n">maxmagnitude</span><span class="o">=</span><span class="n">max_mag</span><span class="p">,</span>\
+                              <span class="n">mindepth</span><span class="o">=</span><span class="n">min_depth</span><span class="p">,</span> <span class="n">maxdepth</span><span class="o">=</span><span class="n">max_depth</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">catalogue</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>1045 Event(s) in Catalog:
+2020-06-18T20:38:43.258000Z | +60.887, -149.086 | 4.2 ml
+2020-06-12T04:48:49.070000Z | +57.325, -155.204 | 4.4 mb
+...
+2010-07-11T07:07:23.870000Z | +56.743, -154.008 | 4.0 mb
+2010-07-08T03:15:49.260000Z | +61.857, -150.527 | 4.7 MW
+To see all events call &#39;print(CatalogObject.__str__(print_all=True))&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can plot the catalogue using built-in ObsPy functions to quickly visualise the data:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">catalogue</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="s2">&quot;local&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;cartopy&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/geosciences__Seismology_15_0.png" src="_images/geosciences__Seismology_15_0.png" />
+</div>
+</div>
+<p>The catalogue states that we have over 1000 events recorded by IRIS for given parameters. Now we will want to access the data in the catalogue.</p>
+<p><a class="reference external" href="https://docs.obspy.org/packages/obspy.core.event.html"><img src="https://docs.obspy.org/_images/Event.png" style="width:600px;"/></a></p>
+<p>If we loop over elements, or <em>events</em> in the Catalogue we can access different information. Below we will extract origin time of the earthquake, its location, depth and magnitude:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create empty lists</span>
+<span class="n">year</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">month</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">day</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">hour</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">minute</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">second</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="n">lat</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">lon</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">dep</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">mag</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">time</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="c1"># Loop over each event in the catalogue</span>
+<span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">catalogue</span><span class="p">:</span>
+    
+    <span class="n">year</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">origins</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">year</span><span class="p">)</span>
+    <span class="n">month</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">origins</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">month</span><span class="p">)</span>
+    <span class="n">day</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">origins</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">day</span><span class="p">)</span>
+    <span class="n">hour</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">origins</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">hour</span><span class="p">)</span>
+    <span class="n">minute</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">origins</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">minute</span><span class="p">)</span>
+    <span class="n">second</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">origins</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">second</span><span class="p">)</span>
+
+    <span class="n">lat</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">origins</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">latitude</span><span class="p">)</span>
+    <span class="n">lon</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">origins</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">longitude</span><span class="p">)</span>
+    <span class="n">dep</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">origins</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">depth</span><span class="o">/</span><span class="mf">1000.</span><span class="p">)</span>
+    <span class="n">mag</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">magnitudes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">mag</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="custom-data-plotting">
+<h2>Custom data plotting<a class="headerlink" href="#custom-data-plotting" title="Permalink to this headline">¶</a></h2>
+<p>For custom plotting, we can create a pandas DataFrame with all the information on earthquakes:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">year</span><span class="p">,</span> <span class="n">month</span><span class="p">,</span> <span class="n">day</span><span class="p">,</span> <span class="n">hour</span><span class="p">,</span> <span class="n">minute</span><span class="p">,</span> <span class="n">second</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">dep</span><span class="p">,</span> <span class="n">mag</span><span class="p">])</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> 
+             <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;year&quot;</span><span class="p">,</span> <span class="s2">&quot;month&quot;</span><span class="p">,</span> <span class="s2">&quot;day&quot;</span><span class="p">,</span> <span class="s2">&quot;hour&quot;</span><span class="p">,</span> <span class="s2">&quot;minute&quot;</span><span class="p">,</span> <span class="s2">&quot;second&quot;</span><span class="p">,</span>
+                      <span class="s2">&quot;lat&quot;</span><span class="p">,</span> <span class="s2">&quot;lon&quot;</span><span class="p">,</span> <span class="s2">&quot;depth_m&quot;</span><span class="p">,</span> <span class="s2">&quot;mag&quot;</span><span class="p">])</span>
+
+<span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>year</th>
+      <th>month</th>
+      <th>day</th>
+      <th>hour</th>
+      <th>minute</th>
+      <th>second</th>
+      <th>lat</th>
+      <th>lon</th>
+      <th>depth_m</th>
+      <th>mag</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2020.0</td>
+      <td>6.0</td>
+      <td>18.0</td>
+      <td>20.0</td>
+      <td>38.0</td>
+      <td>43.0</td>
+      <td>60.8872</td>
+      <td>-149.0860</td>
+      <td>28.2</td>
+      <td>4.2</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2020.0</td>
+      <td>6.0</td>
+      <td>12.0</td>
+      <td>4.0</td>
+      <td>48.0</td>
+      <td>49.0</td>
+      <td>57.3254</td>
+      <td>-155.2038</td>
+      <td>49.1</td>
+      <td>4.4</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2020.0</td>
+      <td>6.0</td>
+      <td>8.0</td>
+      <td>18.0</td>
+      <td>57.0</td>
+      <td>5.0</td>
+      <td>56.0446</td>
+      <td>-153.7615</td>
+      <td>29.9</td>
+      <td>4.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Code below will plot the downloaded earthquakes on a map:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;font.size&#39;</span><span class="p">:</span> <span class="mi">14</span><span class="p">})</span>
+
+<span class="n">central_lon</span> <span class="o">=</span> <span class="n">min_longitude</span>
+<span class="n">central_lat</span> <span class="o">=</span> <span class="n">min_latitude</span>
+
+<span class="n">extent</span> <span class="o">=</span> <span class="p">[</span><span class="n">min_longitude</span><span class="p">,</span><span class="n">max_longitude</span><span class="p">,</span><span class="n">min_latitude</span><span class="p">,</span><span class="n">max_latitude</span><span class="p">]</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">subplot_kw</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">Mercator</span><span class="p">(</span><span class="n">central_lon</span><span class="p">,</span> <span class="n">central_lat</span><span class="p">)),</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_extent</span><span class="p">(</span><span class="n">extent</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">coastlines</span><span class="p">(</span><span class="n">resolution</span><span class="o">=</span><span class="s1">&#39;10m&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Earthquakes between </span><span class="si">%g</span><span class="s2"> and </span><span class="si">%g</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">year</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">year</span><span class="p">)))</span>
+
+<span class="c1"># Create a scatter plot</span>
+<span class="n">scatplot</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">lon</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">lat</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">depth_m</span><span class="p">,</span>
+                      <span class="n">s</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">depth_m</span><span class="o">/</span><span class="mi">10</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;jet&quot;</span><span class="p">,</span>
+                      <span class="n">transform</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">Geodetic</span><span class="p">())</span>
+
+<span class="c1"># Create colourbar</span>
+<span class="n">cbar</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">scatplot</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">fraction</span><span class="o">=</span><span class="mf">0.03</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Depth [km]&#39;</span><span class="p">)</span>
+
+<span class="c1"># Sort out gridlines and their density</span>
+<span class="n">xticks_extent</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">min_longitude</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="n">max_longitude</span><span class="o">+</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">yticks_extent</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">min_latitude</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="n">max_latitude</span><span class="o">+</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+
+<span class="n">gl</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">gridlines</span><span class="p">(</span><span class="n">linewidths</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">gl</span><span class="o">.</span><span class="n">xlabels_top</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">gl</span><span class="o">.</span><span class="n">xlabels_bottom</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">gl</span><span class="o">.</span><span class="n">ylabels_left</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">gl</span><span class="o">.</span><span class="n">ylabels_right</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">gl</span><span class="o">.</span><span class="n">xlocator</span> <span class="o">=</span> <span class="n">mticker</span><span class="o">.</span><span class="n">FixedLocator</span><span class="p">(</span><span class="n">xticks_extent</span><span class="p">)</span>
+<span class="n">gl</span><span class="o">.</span><span class="n">ylocator</span> <span class="o">=</span> <span class="n">mticker</span><span class="o">.</span><span class="n">FixedLocator</span><span class="p">(</span><span class="n">yticks_extent</span><span class="p">)</span>
+<span class="n">gl</span><span class="o">.</span><span class="n">xformatter</span> <span class="o">=</span> <span class="n">LONGITUDE_FORMATTER</span>
+<span class="n">gl</span><span class="o">.</span><span class="n">yformatter</span> <span class="o">=</span> <span class="n">LATITUDE_FORMATTER</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/geosciences__Seismology_21_0.png" src="_images/geosciences__Seismology_21_0.png" />
+</div>
+</div>
+<p>Here we can plot a histogram of earthquake magnitudes:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;font.size&#39;</span><span class="p">:</span> <span class="mi">14</span><span class="p">})</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Earthquakes between </span><span class="si">%g</span><span class="s1"> - </span><span class="si">%g</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">year</span><span class="p">),</span>
+                                           <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">year</span><span class="p">)))</span>
+<span class="n">n</span><span class="p">,</span><span class="n">bins</span><span class="p">,</span><span class="n">patches</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">mag</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;pink&#39;</span><span class="p">,</span><span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span>
+                          <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.2</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Magnitude ($M_w$)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Number of earthquakes&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/geosciences__Seismology_23_0.png" src="_images/geosciences__Seismology_23_0.png" />
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "primer-computational-mathematics/book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "."
+        }
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="geosciences__Particle_Image_Velocimetry.html" title="previous page">Particle Image Velocimetry (PIV)</a>
+    <a class='right-next' id="next-link" href="geosciences__Tides.html" title="next page">Tides</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Imperial College London<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="_static/js/index.js"></script>
+    
+  </body>
+</html>
