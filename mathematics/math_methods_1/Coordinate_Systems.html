@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Lecture 1 (Coordinate Systems) &#8212; ESE Jupyter Material</title>
+    <title>Coordinate systems &#8212; ESE Jupyter Material</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
     <link href="../../_static/css/index.css" rel="stylesheet">
     <link rel="stylesheet" href="../../_static/sphinx-book-theme.css" type="text/css" />
@@ -104,7 +104,7 @@
       <a href="intro.html">Math Methods 1</a>
       <ul class="nav sidenav_l3">
       <li class="active">
-        <a href="">Lecture 1 (Coordinate Systems)</a>
+        <a href="">Coordinate systems</a>
       </li>
       <li class="">
         <a href="Vectors.html">Lecture 1 (Vectors)</a>
@@ -222,15 +222,23 @@
     <ul class="nav section-nav flex-column">
     
         <li class="nav-item toc-entry toc-h2">
-            <a href="#cartesian-coordinates" class="nav-link">CARTESIAN COORDINATES</a>
+            <a href="#interactive-plots" class="nav-link">Interactive plots</a>
         </li>
     
         <li class="nav-item toc-entry toc-h2">
-            <a href="#cartesian-to-polar-conversion" class="nav-link">CARTESIAN TO POLAR CONVERSION</a>
+            <a href="#functions" class="nav-link">Functions</a>
         </li>
     
         <li class="nav-item toc-entry toc-h2">
-            <a href="#cylindrical-and-spherical-coordinates" class="nav-link">CYLINDRICAL and SPHERICAL COORDINATES</a>
+            <a href="#cartesian-coordinates" class="nav-link">Cartesian coordinates</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#cartesian-to-polar-conversion" class="nav-link">Cartesian to polar conversion</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#cylindrical-and-spherical-coordinates" class="nav-link">Cylindrical and spherical coordinates</a>
         </li>
     
         <li class="nav-item toc-entry toc-h2">
@@ -252,7 +260,7 @@
         
               <div>
                 
-  <div class="cell docutils container">
+  <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">## This cell just imports necessary modules</span>
 <span class="o">%</span><span class="n">pylab</span> <span class="n">notebook</span>
@@ -264,10 +272,16 @@
 <div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Populating the interactive namespace from numpy and matplotlib
 </pre></div>
 </div>
+<div class="stderr docutils container">
+<pre class="stderr literal-block">/Users/rossberridge/opt/anaconda3/lib/python3.7/site-packages/IPython/core/magics/pylab.py:160: UserWarning: pylab import has clobbered these variables: ['interactive']
+`%matplotlib` prevents importing * from pylab and numpy
+  &quot;\n`%matplotlib` prevents importing * from pylab and numpy&quot;
+</pre>
 </div>
 </div>
-<div class="section" id="lecture-1-coordinate-systems">
-<h1>Lecture 1 (Coordinate Systems)<a class="headerlink" href="#lecture-1-coordinate-systems" title="Permalink to this headline">¶</a></h1>
+</div>
+<div class="section" id="coordinate-systems">
+<h1>Coordinate systems<a class="headerlink" href="#coordinate-systems" title="Permalink to this headline">¶</a></h1>
 <p>This notebook will illustrate how to apply the maths discussed in the lecture using Python.</p>
 <p>In these notebooks, we will adopt the following prefix convention when naming variables:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;s&#39;</span> <span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">g</span><span class="o">.</span> <span class="n">sDotProduct</span><span class="p">)</span> <span class="n">means</span> <span class="n">the</span> <span class="n">variable</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">scalar</span>
@@ -276,7 +290,13 @@
 </pre></div>
 </div>
 <p>To help us apply coordinate transformations, we start by writing a number of functions for each of the different changes of coordinate that we may wish to apply. Note that we could write each of these functions much more efficiently, but as we are quite new to Python we will err on the side of clarity. First, let’s consider the function for converting from 2D Cartesian coordinates to Polar coordinates.</p>
-<div class="cell docutils container">
+<div class="section" id="interactive-plots">
+<h2>Interactive plots<a class="headerlink" href="#interactive-plots" title="Permalink to this headline">¶</a></h2>
+<p>This notebook uses interactive plots that can’t be used on the website. Please download this notebook into jupyter notebooks to gain access to the interactive plots.</p>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">cartesian_to_polar</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Converts 2D Cartesian coordinates to Polar coordinates.&#39;&#39;&#39;</span>
@@ -299,7 +319,7 @@
 </div>
 </div>
 <p>Notice that this function itself calls a function, because there will be circumstances when we need to resolve the ambiguity in the angle theta because the tangent fucntion repeats every 180 (or pi) degrees. Let’s write a function <code class="docutils literal notranslate"><span class="pre">check_angle</span></code> to handle these situations.</p>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">check_angle</span><span class="p">(</span><span class="n">sX</span><span class="p">,</span> <span class="n">sY</span><span class="p">,</span> <span class="n">sAngle</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Adjust Polar coordinate angle based on quadrant, returning angle in</span>
@@ -327,7 +347,7 @@
 </div>
 </div>
 <p>Now consider the reverse function that converts from Polar coordinates to 2D Cartesian.</p>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">polar_to_cartesian</span><span class="p">(</span><span class="n">vCoordinate</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;A function to convert 2D Polar coordinates to Cartesian coordinates.&#39;&#39;&#39;</span>
@@ -346,7 +366,7 @@
 </div>
 </div>
 <p>We can follow this same procedure to define the other functions we might need.</p>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">cartesian_to_cylindrical</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Converts 3D Cartesian coordinates to Cylindrical coordinates.&#39;&#39;&#39;</span>
@@ -422,7 +442,7 @@
 </div>
 </div>
 <p>Finally, we’ll write a function to help us plot the coordinates for illustrative purposes. Don’t worry about this function for now.</p>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_coordinates</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">xSystem</span><span class="o">=</span><span class="s2">&quot;Cart2D&quot;</span><span class="p">,</span><span class="n">projection</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Plots 2D or 3D coordinates of a point on formatted axes with the </span>
@@ -476,7 +496,7 @@
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_vcoordinates</span><span class="p">(</span><span class="n">vCoordinate</span><span class="p">,</span> <span class="n">xSystem</span><span class="o">=</span><span class="s2">&quot;Cart2D&quot;</span><span class="p">,</span> 
                        <span class="n">xlimits</span><span class="o">=</span><span class="p">[</span><span class="mf">0.</span><span class="p">,</span><span class="mf">1.</span><span class="p">],</span> <span class="n">ylimits</span><span class="o">=</span><span class="p">[</span><span class="mf">0.</span><span class="p">,</span><span class="mf">1.</span><span class="p">],</span> <span class="n">projection</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
@@ -548,7 +568,7 @@
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_3Dcoordinates</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="p">,</span><span class="n">xSystem</span><span class="o">=</span><span class="s2">&quot;Cart2D&quot;</span><span class="p">,</span><span class="n">projection</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Plots 3D coordinates of a point on formatted axes with the </span>
@@ -603,8 +623,9 @@
 </div>
 </div>
 </div>
+</div>
 <div class="section" id="cartesian-coordinates">
-<h2>CARTESIAN COORDINATES<a class="headerlink" href="#cartesian-coordinates" title="Permalink to this headline">¶</a></h2>
+<h2>Cartesian coordinates<a class="headerlink" href="#cartesian-coordinates" title="Permalink to this headline">¶</a></h2>
 <p><strong>Lecture 1, slide 3</strong></p>
 <p>Right, so let’s now utilise our functions to convert between different coordinate systems. Let’s start by defining a point in 2D Cartesian coordinates and plotting the point.</p>
 <div class="cell docutils container">
@@ -624,12 +645,12 @@
 </div>
 <div class="cell_output docutils container">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "50b08cd0c22a42479e03b7672ec8ad37", "version_major": 2, "version_minor": 0}
+{"model_id": "bc0c3a9163c3479f844e9288bdca388f", "version_major": 2, "version_minor": 0}
 </script></div>
 </div>
 </div>
 <div class="section" id="cartesian-to-polar-conversion">
-<h2>CARTESIAN TO POLAR CONVERSION<a class="headerlink" href="#cartesian-to-polar-conversion" title="Permalink to this headline">¶</a></h2>
+<h2>Cartesian to polar conversion<a class="headerlink" href="#cartesian-to-polar-conversion" title="Permalink to this headline">¶</a></h2>
 <p><strong>Lecture 1, slide 4</strong></p>
 <p>We can convert these coordinates to Polar coordinates using our function and plot on a Polar diagram.</p>
 <div class="cell docutils container">
@@ -652,7 +673,7 @@
 </div>
 <div class="cell_output docutils container">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "6504385d7cd34c6bb58dec0aefc0b773", "version_major": 2, "version_minor": 0}
+{"model_id": "acbfdc43eb4146a1b5b858a9c4e53692", "version_major": 2, "version_minor": 0}
 </script></div>
 </div>
 <p>We can also convert the Polar coordinates back to Cartesian coordinates</p>
@@ -678,7 +699,7 @@ y = -3904.71
 </div>
 </div>
 <div class="section" id="cylindrical-and-spherical-coordinates">
-<h2>CYLINDRICAL and SPHERICAL COORDINATES<a class="headerlink" href="#cylindrical-and-spherical-coordinates" title="Permalink to this headline">¶</a></h2>
+<h2>Cylindrical and spherical coordinates<a class="headerlink" href="#cylindrical-and-spherical-coordinates" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>Lecture 1, slide 7</p></li>
 <li><p>Lecture 1, slide 10</p></li>
@@ -742,7 +763,7 @@ y = -3904.71
 <div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Plotting spherical coordinates  (6400.0, 5.529203070318037, 1.9704767255015982)  in 3D Cartesian space
 </pre></div>
 </div>
-<img alt="../../_images/Coordinate_Systems_21_1.png" src="../../_images/Coordinate_Systems_21_1.png" />
+<img alt="../../_images/Coordinate_Systems_23_1.png" src="../../_images/Coordinate_Systems_23_1.png" />
 </div>
 </div>
 </div>
