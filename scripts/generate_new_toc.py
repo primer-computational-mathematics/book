@@ -70,6 +70,7 @@ with open('_tmp'+os.sep+'_toc.yml', 'w') as outfile:
 
     for root, dirs, files in os.walk('notebooks'):
 
+        dirs.sort()
         if root == 'notebooks':
             # Skip the base level
             continue
