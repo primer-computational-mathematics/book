@@ -240,44 +240,53 @@
                 
   <div class="section" id="dakota">
 <h1>Dakota<a class="headerlink" href="#dakota" title="Permalink to this headline">¶</a></h1>
-<p>The dakota project provides software for optimisation and uncertainty quantification.</p>
+<p>The <strong>Dakota</strong> project provides software for optimisation and uncertainty quantification.</p>
 <p>Dakota can be used for a broad range of computational tasks as it enables design exploration, risk analysis, model calibration, and quantification of margins and uncertainty with computational models.</p>
 <p>The intended use of Dakota is to aid computational methods developed to better understand the complex physical systems they simulate. In many cases these simulations are used to find the optimal design of a system, or to make prediction for systems that can not be directly tested.</p>
 <p>The use of these computational simulations can lead to better system designs and improved overall performance. Furthermore, a reduced dependence on physical testing can reduce development costs and quicken the design process.</p>
-<p>In this notebook I will summarise how the Dakota library is used to automatize the parameter space investigated in a given computational model using python.</p>
+<p>In this notebook, it will be presented how the Dakota library is used to automatize the parameter space investigated in a given computational model using python programming language.</p>
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
-<p>Dakota can be downloaded from https://dakota.sandia.gov/download.html. For the latest release savethe tar.gv file to downloads and extract it. Make sure the file is the source code. This will be yourDakota installation directory.</p>
-<p>Before attempting to install dakota you must ensure you have the packages cmake and libboost in-stalled. If you dont you will have to find someone with the necessary admin rights to install these.</p>
+<div class="margin sidebar">
+<p class="sidebar-title"><strong>Necessary packages</strong></p>
+<p>Before attempting to install Dakota you must ensure that the packages cmake and libboost are installed on your computer. If you don’t, you will have to find someone with the necessary admin rights to install these. Some of the required tools and libraries are listed <a class="reference external" href="https://dakota.sandia.gov/content/install-required-tools-and-libraries">here</a>.</p>
+</div>
+<p>Dakota can be downloaded from <a class="reference external" href="https://dakota.sandia.gov/download.html">Sandia National Laboratories</a> website. For the latest release, <a class="reference external" href="https://dakota.sandia.gov/download.html">download</a> and extract a distribution file onto your computer. This tutorial will rely on the source code distribution (tar.gv files). The extracted directory will act as your Dakota installation directory.</p>
 <p>To extract the tar.gv file navigate to the file and type the following:</p>
 <p style="background:black">
 <code style="background:black;color:white">tar xvzf file.tar.gz
 </code>
-</p><p>Once the file has been extracted, navigate to the unzipped Dakota source code and find the first foldercontaining a CMakeList.txt file. Once there type the following to access cmake:</p>
+</p><p>Once the file has been extracted, navigate to the unzipped Dakota source code and find the first folder containing a CMakeList.txt file. Once there type the following to access cmake:</p>
 <p style="background:black">
 <code style="background:black;color:white">mkdir build <br>cd build<br>ccmake ..</code>
-</p><p>On the window which appears,press the c key to run configure once. Once configured scroll to CMAKE-INSTALL-PREFIX and edit the variable to something memorable. (e.g /home/name/dakota) Pressthe c key again to configure and then the g key to exit back to the terminal.</p>
-<p>Once back in the terminal type the following to run dakota:</p>
+</p><p>On the window which appears, press the c key to run configure once. Once configured scroll to CMAKE-INSTALL-PREFIX and edit the variable to something memorable (e.g /home/name/dakota). Press the c key again to configure and then the g key to exit back to the terminal.</p>
+<p>Once back in the terminal type the following to install Dakota:</p>
 <p style="background:black">
 <code style="background:black;color:white">make -j4 <br>make install</code>
 </p></div>
 <div class="section" id="python-template-for-dakota">
 <h2>Python template for Dakota<a class="headerlink" href="#python-template-for-dakota" title="Permalink to this headline">¶</a></h2>
-<p>To automatize the parameter space in your model using Dakota you first need to have a python script in which Dakota can adjust the parameters in the model simulations. To do this create a .py file by typing the following in the terminal.</p>
+<p>To automatize the parameter space in your model using Dakota, you first need to have a Python script in which Dakota can adjust the parameters in the model simulations. To do this create a .py file with an editor of choice:</p>
 <p style="background:black">
 <code style="background:black;color:white">gedit file.py
 </code>
-</p><p>Any parameter that is meant to be changed by Dakota, needs to be put in ‘{ }’ brackets. Dakota will evaluate changes in the response functions - print statements. In this case the print statement will be Parameter 1 and Parameter 2. This is implemented by the following:</p>
+</p><p>Any parameter that is meant to be changed by Dakota, needs to be put in ‘{ }’ brackets. Dakota will evaluate changes in the response functions - print statements. In this case the print statement will involve Parameter 1 and Parameter 2. This is implemented by the following:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Parameter1</span> <span class="o">=</span> <span class="p">{</span><span class="n">par1</span><span class="p">}</span>
 <span class="n">Parameter2</span> <span class="o">=</span> <span class="p">{</span><span class="n">par2</span><span class="p">}</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">Parameter1</span><span class="o">*</span><span class="n">Parameter2</span><span class="p">)</span>
+
 </pre></div>
 </div>
-<p>Dakota can automatize more parameters for more complex studies.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Dakota can automatize more parameters for more complex studies. It only allows one print statement in the Python file used as a template. You can still save plots or other useful when running the code. However, make sure to use, for example sys library to print outputs to the terminal that are not to be recognised as response functions by Dakota.</p>
+</div>
 </div>
 <div class="section" id="dakota-bash-file">
 <h2>Dakota bash file<a class="headerlink" href="#dakota-bash-file" title="Permalink to this headline">¶</a></h2>
-<p>The purpose of the bash file is to allow Dakota to investigate the selected parameters in the python file. In this case the bash file, e.g file.sh, creates a copy of the python file (the template file) and using the built in function ’dprepro’ changes the values of these parameters. It then runs the python script and returns the results.</p>
-<p>In the following bash file ’file.py’ is the previously created python file and ’file_temp.in’ is the template file.</p>
+<p>The purpose of the bash file is to allow Dakota to investigate the selected parameters in the python file. In this case the bash file, e.g file.sh, creates a copy of the python file (the template file) and using Dakota executable ‘dprepro’, changes the values of parameters in curly brackets in the code. It then runs the Python script and returns the results.</p>
+<p>In the following bash file ‘file.py’, we use previously created Python file and ‘file_temp.in’ which is the template file (described in the next section).</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#!/bin/sh
 # $1 is params.in FROM Dakota
 # $2 is results.out returned to Dakota
@@ -300,8 +309,8 @@ mv results.tmp $2
 </div>
 <div class="section" id="dakota-input-file">
 <h2>Dakota input file<a class="headerlink" href="#dakota-input-file" title="Permalink to this headline">¶</a></h2>
-<p>The Dakota input file must consist of the following blocks: environment, method, model, variables, interface and responses. Details on these blocks can be found on the Reference Manual and User’s Manual. These can be downloaded from https://dakota.sandia.gov/documentation.html.</p>
-<p>As an exampple in this simple case Dakota puts values ranging between 1 and 2 instead of Parameter1 ’par1’, and values ranging between 3 and 4 instead of Parameter2 ’par2’ in the template. Then, Dakota prints out the response function according to the input parameter into the tabular file ’file.dat’.</p>
+<p>The Dakota input file must consist of the following blocks: environment, method, model, variables, interface and responses. Details on these blocks can be found in the <a class="reference external" href="https://dakota.sandia.gov/documentation.html">Reference Manual and User’s Manual</a>.</p>
+<p>As an example, in this simple case Dakota puts values ranging between 1 and 2 instead of Parameter1 ‘par1’, and values ranging between 3 and 4 instead of Parameter2 ‘par2’ from the template. According to the code above, Dakota will then calculate the product of Parameter1 and Parameter2 and grab the print statement into the tabular file ‘file.dat’. In this example, Dakota will use the efficient global optimisation algorithm that will guess subsequent ‘par1’ and ‘par2’ values to maximise the output, i.e. the print statement from the template file.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>environment
     tabular_data
         tabular_data_file = ’file.dat’
@@ -341,7 +350,7 @@ responses
     
 </pre></div>
 </div>
-<p>Once the python, bash and input files have been created you can run the simulation with dakota usingthe following command line:</p>
+<p>Once the Python, bash and input files have been created, you can run the simulation with dakota using the following command line:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dakota</span> <span class="o">-</span><span class="n">i</span> <span class="n">file</span><span class="o">.</span><span class="ow">in</span> <span class="o">-</span><span class="n">o</span> <span class="n">file</span><span class="o">.</span><span class="n">out</span>
 </pre></div>
 </div>
