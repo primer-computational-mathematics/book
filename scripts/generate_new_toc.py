@@ -3,6 +3,7 @@ import sys
 import os
 from string import Template
 import shutil
+from natsort import natsorted
 
 # remove any previous attempts
 if os.path.isdir('_tmp'):
@@ -68,6 +69,7 @@ with open('_tmp'+os.sep+'_toc.yml', 'w') as outfile:
     outfile.write("- file: " + fix(os.sep.join(('notebooks', 'intro.md'))) + "\n")
 
     for root, dirs, files in os.walk('notebooks'):
+
         if root == 'notebooks':
             # Skip the base level
             continue
@@ -95,7 +97,7 @@ with open('_tmp'+os.sep+'_toc.yml', 'w') as outfile:
                 outfile.write(leveltext[level - 1].substitute(path=fix(filepath)))
                 outfile.write("  " * (level - 1) + 'sections:\n')
 
-        for file in sorted(files, key=str.lower):
+        for file in natsorted(files):#sorted(files, key=str.lower):
             name, ext = os.path.splitext(file)
             filepath = os.sep.join((root, file))
             level = filepath.count(os.sep)
@@ -103,4 +105,5 @@ with open('_tmp'+os.sep+'_toc.yml', 'w') as outfile:
                 outfile.write(leveltext[level].substitute(path=fix(filepath)))
 
     # Index
+    fix('genindex.rst')
     outfile.write("""- title: \"Index\"\n  file: genindex.rst\n""")
