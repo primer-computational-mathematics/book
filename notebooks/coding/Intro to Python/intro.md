@@ -1,4 +1,4 @@
-# Introduction to Python programming language
+# Intro to Python
 
 Notebooks in this section were compiled for year 1 undergraduate students in Earth Science and Engineering Department at Imperial College London.
 
