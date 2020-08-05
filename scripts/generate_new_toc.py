@@ -105,4 +105,5 @@ with open('_tmp'+os.sep+'_toc.yml', 'w') as outfile:
                 outfile.write(leveltext[level].substitute(path=fix(filepath)))
 
     # Index
+    fix('genindex.rst')
     outfile.write("""- title: \"Index\"\n  file: genindex.rst\n""")
