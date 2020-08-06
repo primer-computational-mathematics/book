@@ -240,18 +240,8 @@
         
               <div>
                 
-  <h1>Table of Contents<span class="tocSkip"></span></h1>
-<div class="toc"><ul class="toc-item"><li><span><a href="#What-do-we-mean-by-timestepping?" data-toc-modified-id="What-do-we-mean-by-timestepping?-1"><span class="toc-item-num">1&nbsp;&nbsp;</span>What do we mean by timestepping?</a></span></li><li><span><a href="#Deriving-the-forward-Euler-scheme-from-Taylor-series" data-toc-modified-id="Deriving-the-forward-Euler-scheme-from-Taylor-series-2"><span class="toc-item-num">2&nbsp;&nbsp;</span>Deriving the forward Euler scheme from Taylor series</a></span></li></ul></div><div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="section" id="solving-or-timestepping-an-ordinary-differential-equation-ode">
-<h1>Solving (or “timestepping”) an ordinary differential equation (ODE)<a class="headerlink" href="#solving-or-timestepping-an-ordinary-differential-equation-ode" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="solving-or-timestepping-an-ordinary-differential-equation-ode">
+<span id="timestepping-ode"></span><h1>Solving (or “timestepping”) an ordinary differential equation (ODE)<a class="headerlink" href="#solving-or-timestepping-an-ordinary-differential-equation-ode" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="what-do-we-mean-by-timestepping">
 <h2>What do we mean by timestepping?<a class="headerlink" href="#what-do-we-mean-by-timestepping" title="Permalink to this headline">¶</a></h2>
 <p>The numerical solution of ODEs is a big topic.</p>
@@ -264,7 +254,7 @@ you will be doing this for problems either where <span class="math notranslate n
 \)</p>
 <p>This is describing a solution function of the form <span class="math notranslate nohighlight">\(y\equiv y(t)\)</span>, i.e. the solution <span class="math notranslate nohighlight">\(y\)</span> is a function of one variable - <span class="math notranslate nohighlight">\(t\)</span>.</p>
 <p><span class="math notranslate nohighlight">\(y\)</span> is called the <em>dependent variable</em> and <span class="math notranslate nohighlight">\(t\)</span> the <em>dependent variable</em>.</p>
-<p>[NB. in the case where <span class="math notranslate nohighlight">\(y\)</span> is multi-dimensional - a vector of unknowns/dependent variables - we would talk about a <em>system of ODEs</em>. For the case where there are more than one independent variables then we need to start thinking about <em>partial differential equations (PDEs)</em>, covered later in this module and in ACSE-3].</p>
+<p>[NB. in the case where <span class="math notranslate nohighlight">\(y\)</span> is multi-dimensional - a vector of unknowns/dependent variables - we would talk about a <em>system of ODEs</em>. For the case where there are more than one independent variables then we need to start thinking about <em>partial differential equations (PDEs)</em>].</p>
 <p>For example</p>
 <div class="math notranslate nohighlight">
 \[y' = \exp(t), \qquad\text{or equivalently} \qquad y' = y\]</div>
@@ -300,6 +290,15 @@ you will be doing this for problems either where <span class="math notranslate n
 <p>and see what one step of the forward Euler method does, we will assume that we start at some <span class="math notranslate nohighlight">\(t\)</span> from the exact solution at that time, i.e. the starting point indicated by the red dot in the following image is on the exact solution (black) line.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
 <span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
 <span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;One step of Forward Euler&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
@@ -333,7 +332,7 @@ you will be doing this for problems either where <span class="math notranslate n
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/Timestepping_an_ODE_7_0.png" src="../../_images/Timestepping_an_ODE_7_0.png" />
+<img alt="../../_images/Timestepping_an_ODE_6_0.png" src="../../_images/Timestepping_an_ODE_6_0.png" />
 </div>
 </div>
 <p>The black dot in the figure above shows what the true/exact solution at the new <span class="math notranslate nohighlight">\(n\)</span> level is, while the green dot shows what the numerical solver predicts it to be.</p>
@@ -387,7 +386,7 @@ you will be doing this for problems either where <span class="math notranslate n
 <div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x2c93e4eeb38&gt;]
 </pre></div>
 </div>
-<img alt="../../_images/Timestepping_an_ODE_10_1.png" src="../../_images/Timestepping_an_ODE_10_1.png" />
+<img alt="../../_images/Timestepping_an_ODE_9_1.png" src="../../_images/Timestepping_an_ODE_9_1.png" />
 </div>
 </div>
 </div>
