@@ -22,7 +22,7 @@ The notebooks cover all basic topics covered in year 1 programming course:
     - {ref}`raising_errors`
     - {ref}`try_except`
 10. {ref}`importing`
-11. {ref}`functions`
+11. {ref}`functions_python`
 12. {ref}`tuples`
 13. {ref}`file_handling`
     - {ref}`python_file_handling`
