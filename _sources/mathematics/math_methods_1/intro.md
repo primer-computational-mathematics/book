@@ -1,1 +1,1 @@
-# Mathematical Methods 1
+# Mathematical methods 1

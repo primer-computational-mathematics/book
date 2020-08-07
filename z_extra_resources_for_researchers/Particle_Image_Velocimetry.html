@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Particle Image Velocimetry (PIV) &#8212; ESE Jupyter Material</title>
+    <title>Particle image velocimetry (PIV) &#8212; ESE Jupyter Material</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
     <link href="../_static/css/index.css" rel="stylesheet">
     <link rel="stylesheet" href="../_static/sphinx-book-theme.css" type="text/css" />
@@ -40,7 +40,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Index" href="../genindex.html" />
-    <link rel="prev" title="Google Earth Engine Getting Started" href="Google_Earth_Engine_Getting_Started_.html" />
+    <link rel="prev" title="Google Earth Engine getting started" href="Google_Earth_Engine_Getting_Started_.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="docsearch:language" content="en">
@@ -91,22 +91,22 @@
     <a href="intro.html">Extra resources for researchers</a>
   <ul class="nav sidenav_l2">
     <li class="">
-      <a href="Camera_Calibration.html">Camera Calibration</a>
+      <a href="Camera_Calibration.html">Camera calibration</a>
     </li>
     <li class="">
-      <a href="Cartography_Cartopy.html">Creating maps in Cartopy</a>
+      <a href="Cartography_Cartopy.html">Cartopy (maps)</a>
     </li>
     <li class="">
       <a href="Dakota.html">Dakota</a>
     </li>
     <li class="">
-      <a href="Google_Earth_Engine_Foundations.html">Google Earth Engine Foundations</a>
+      <a href="Google_Earth_Engine_Foundations.html">Google Earth Engine foundations</a>
     </li>
     <li class="">
-      <a href="Google_Earth_Engine_Getting_Started_.html">Google Earth Engine Getting Started</a>
+      <a href="Google_Earth_Engine_Getting_Started_.html">Google Earth Engine getting started</a>
     </li>
     <li class="active">
-      <a href="">Particle Image Velocimetry (PIV)</a>
+      <a href="">Particle image velocimetry (PIV)</a>
     </li>
   </ul>
   </li>
@@ -213,7 +213,7 @@
     <ul class="nav section-nav flex-column">
     
         <li class="nav-item toc-entry toc-h2">
-            <a href="#" class="nav-link">Particle Image Velocimetry (PIV)</a><ul class="nav section-nav flex-column">
+            <a href="#" class="nav-link">Particle image velocimetry (PIV)</a><ul class="nav section-nav flex-column">
                 
         <li class="nav-item toc-entry toc-h3">
             <a href="#seeding" class="nav-link">Seeding</a>
@@ -227,11 +227,11 @@
             <a href="#algorithm" class="nav-link">Algorithm</a>
         </li>
     
-            </ul>
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#demonstration" class="nav-link">Demonstration</a>
         </li>
     
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#demonstration" class="nav-link">Demonstration</a>
+            </ul>
         </li>
     
         <li class="nav-item toc-entry toc-h2">
@@ -245,11 +245,11 @@
             <a href="#applications" class="nav-link">Applications</a>
         </li>
     
-            </ul>
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#references-and-useful-reading" class="nav-link">References and useful reading</a>
         </li>
     
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#references-and-useful-reading" class="nav-link">References And Useful Reading</a>
+            </ul>
         </li>
     
     </ul>
@@ -264,7 +264,7 @@
               <div>
                 
   <div class="section" id="particle-image-velocimetry-piv">
-<h1>Particle Image Velocimetry (PIV)<a class="headerlink" href="#particle-image-velocimetry-piv" title="Permalink to this headline">¶</a></h1>
+<h1>Particle image velocimetry (PIV)<a class="headerlink" href="#particle-image-velocimetry-piv" title="Permalink to this headline">¶</a></h1>
 <p>PIV is an imaging technique to measure the instantaneous velocity distribution within a plane, this can be defined by a laser light sheet, water surface, etc. It achieves this by dividing the images into interrogation windows and local displacement vectors are determined for each region by cross correlating windows between frames; Eularian technique (fixed frame of reference and grid).  A fundamental difference from PTV is that it finds the velocity vector for a group of particles instead of individual particles.</p>
 <div class="section" id="seeding">
 <h2>Seeding<a class="headerlink" href="#seeding" title="Permalink to this headline">¶</a></h2>
@@ -297,7 +297,7 @@ As a general rule of thumbs 10 to 25 particles per interrogation area are good.<
 <div class="section" id="algorithm">
 <h2>Algorithm<a class="headerlink" href="#algorithm" title="Permalink to this headline">¶</a></h2>
 <p>To link the interrogation windows (X) across frames (I) PIV uses a cross-correlation (sliding dot product) algorithm as shown by the equation below:
-\( C(s) = \int \int_IA I_1(X)\cdot I_2(X-s) dX \)</p>
+\[ C(s) = \int \int_IA I_1(X)\cdot I_2(X-s) dX. \]</p>
 <p>This produces a peak at the highest correlation between windows across frames. Accuracy can be improved by sub-pixel interpolation (not included in our script below)</p>
 <div class="figure align-default">
 <a class="reference internal image-reference" href="../_images/cross-correlation-technique-PIV.png"><img alt="../_images/cross-correlation-technique-PIV.png" src="../_images/cross-correlation-technique-PIV.png" style="width: 500px;" /></a>
@@ -305,9 +305,8 @@ As a general rule of thumbs 10 to 25 particles per interrogation area are good.<
 <p>Having calculated the distance, still in pixels but can be mapped into real distances, and having set the timestep between frames, we can calculate the velocity vectors.</p>
 <p>There are many more sophisticated methods that may require a significant investment of time</p>
 </div>
-</div>
 <div class="section" id="demonstration">
-<h1>Demonstration<a class="headerlink" href="#demonstration" title="Permalink to this headline">¶</a></h1>
+<h2>Demonstration<a class="headerlink" href="#demonstration" title="Permalink to this headline">¶</a></h2>
 <p>Required package installation:</p>
 <ul class="simple">
 <li><p>pip install cython numpy</p></li>
@@ -319,7 +318,7 @@ As a general rule of thumbs 10 to 25 particles per interrogation area are good.<
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#import required libraries</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># import required libraries</span>
 <span class="kn">from</span> <span class="nn">openpiv</span> <span class="kn">import</span> <span class="n">tools</span><span class="p">,</span> <span class="n">process</span><span class="p">,</span> <span class="n">validation</span><span class="p">,</span> <span class="n">filters</span><span class="p">,</span> <span class="n">scaling</span> 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
@@ -358,14 +357,14 @@ As a general rule of thumbs 10 to 25 particles per interrogation area are good.<
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># set parameters</span>
 <span class="c1"># resolution low enough to avoid noise / lost correlation</span>
 
-<span class="c1">#size of window over which to take pattern</span>
+<span class="c1"># size of window over which to take pattern</span>
 <span class="n">winsize</span> <span class="o">=</span> <span class="mi">32</span> <span class="c1"># pixels</span>
 
-<span class="c1">#window size over which above pattern is searched in frame 2 </span>
+<span class="c1"># window size over which above pattern is searched in frame 2 </span>
 <span class="n">searchsize</span> <span class="o">=</span> <span class="mi">64</span>  <span class="c1"># pixels, search in image B</span>
 <span class="n">overlap</span> <span class="o">=</span> <span class="mi">12</span> <span class="c1"># pixels</span>
 
-<span class="c1">#time between frames</span>
+<span class="c1"># time between frames</span>
 <span class="n">dt</span> <span class="o">=</span> <span class="mf">0.02</span> <span class="c1"># sec</span>
 </pre></div>
 </div>
@@ -407,6 +406,7 @@ As a general rule of thumbs 10 to 25 particles per interrogation area are good.<
 </div>
 <div class="cell_output docutils container">
 <img alt="../_images/Particle_Image_Velocimetry_10_0.png" src="../_images/Particle_Image_Velocimetry_10_0.png" />
+</div>
 </div>
 </div>
 </div>
@@ -646,9 +646,8 @@ end of iterative process.. Re-arranging vector fields..
 <li><p>Large Scale PIV: can be used with sattelite imagery or drone imagery and requires no tracers</p></li>
 </ul>
 </div>
-</div>
 <div class="section" id="references-and-useful-reading">
-<h1>References And Useful Reading<a class="headerlink" href="#references-and-useful-reading" title="Permalink to this headline">¶</a></h1>
+<h2>References and useful reading<a class="headerlink" href="#references-and-useful-reading" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>Data: http://www.pivchallenge.org</p></li>
 <li><p>PIV challenge, pushing the limits: https://link.springer.com/article/10.1007/s00348-005-0951-2</p></li>
@@ -664,6 +663,7 @@ end of iterative process.. Re-arranging vector fields..
 <li><p>PIVLaB, great to play around with a GUI: https://uk.mathworks.com/matlabcentral/fileexchange/27659-pivlab-particle-image-velocimetry-piv-tool</p></li>
 <li><p>Correlation Image: https://www.researchgate.net/figure/Block-matching-cross-correlation-technique-typically-used-in-PIV-The-position-of-the_fig1_321974432</p></li>
 </ul>
+</div>
 </div>
 
     <script type="text/x-thebe-config">
@@ -694,7 +694,7 @@ end of iterative process.. Re-arranging vector fields..
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="Google_Earth_Engine_Getting_Started_.html" title="previous page">Google Earth Engine Getting Started</a>
+    <a class='left-prev' id="prev-link" href="Google_Earth_Engine_Getting_Started_.html" title="previous page">Google Earth Engine getting started</a>
     <a class='right-next' id="next-link" href="../genindex.html" title="next page">Index</a>
 
     </div>
