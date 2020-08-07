@@ -1,4 +1,4 @@
-# Linear Algebra
+# Linear algebra
 
 Currently available notebooks:
 
