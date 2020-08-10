@@ -1,0 +1,499 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Poisson’s and Laplace’s equation &#8212; ESE Jupyter Material</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/mystnb.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".cell"
+        const thebe_selector_input = ".cell_input div.highlight"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Heat (diffusion) equation" href="10_heat_eq.html" />
+    <link rel="prev" title="Canonical form of second-order linear PDEs" href="8_pde_second_order.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../index.html">
+  
+  <img src="../../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">ESE Jupyter Material</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  
+  <ul class="nav sidenav_l1">
+  <li class="">
+    <a href="../../intro.html">Landing page</a>
+  </li>
+  <li class="">
+    <a href="../../coding/intro.html">Coding</a>
+  </li>
+  <li class="">
+    <a href="../../geosciences/intro.html">Geosciences</a>
+  </li>
+  <li class="active">
+    <a href="../intro.html">Mathematics</a>
+  <ul class="nav sidenav_l2">
+    <li class="">
+      <a href="../calculus/intro.html">Calculus</a>
+    </li>
+    <li class="">
+      <a href="../complex analysis/intro.html">Complex analysis</a>
+    </li>
+    <li class="active">
+      <a href="intro.html">Differential equations</a>
+      <ul class="nav sidenav_l3">
+      <li class="">
+        <a href="1_de_introduction.html">Introduction to differential equations</a>
+      </li>
+      <li class="">
+        <a href="2_linear_des.html">Linear Differential Equations</a>
+      </li>
+      <li class="">
+        <a href="3_first-order_odes.html">First-order ODEs</a>
+      </li>
+      <li class="">
+        <a href="4_higher_ord_lin_odes.html">Higher order Linear ODEs</a>
+      </li>
+      <li class="">
+        <a href="5_ode_series.html">Series ODE</a>
+      </li>
+      <li class="">
+        <a href="6_pde_basicdefinitions.html">Introductory definitions and concepts</a>
+      </li>
+      <li class="">
+        <a href="7_pde_first_order.html">First-order linear PDEs</a>
+      </li>
+      <li class="">
+        <a href="8_pde_second_order.html">Canonical form of second-order linear PDEs</a>
+      </li>
+      <li class="active">
+        <a href="">Poisson’s and Laplace’s equation</a>
+      </li>
+      <li class="">
+        <a href="10_heat_eq.html">Heat (diffusion) equation</a>
+      </li>
+      <li class="">
+        <a href="11_wave_eq.html">Wave equation</a>
+      </li>
+      <li class="">
+        <a href="12_similarity_solutions.html">Self-similar solutions</a>
+      </li>
+    </ul>
+    </li>
+    <li class="">
+      <a href="../linear_algebra/intro.html">Linear algebra</a>
+    </li>
+    <li class="">
+      <a href="../math_methods_1/intro.html">Mathematical methods 1</a>
+    </li>
+    <li class="">
+      <a href="../mathematical_notation/intro.html">Mathematical notation</a>
+    </li>
+    <li class="">
+      <a href="../numerical_methods/intro.html">Numerical methods</a>
+    </li>
+    <li class="">
+      <a href="../series_and_sequences/intro.html">Series and sequences</a>
+    </li>
+    <li class="">
+      <a href="../sets and functions/intro.html">Sets and functions</a>
+    </li>
+    <li class="">
+      <a href="../statistics/intro.html">Statistics</a>
+    </li>
+  </ul>
+  </li>
+  <li class="">
+    <a href="../../z_extra_resources_for_researchers/intro.html">Extra resources for researchers</a>
+  </li>
+  <li class="">
+    <a href="../../genindex.html">Index</a>
+  </li>
+</ul>
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/mathematics/differential_equations/9_poisson_laplace_eq.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        
+        <a class="issues-button"
+            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2Fmathematics/differential_equations/9_poisson_laplace_eq.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/mathematics/differential_equations/9_poisson_laplace_eq.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#laplace-operator" class="nav-link">Laplace operator</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#physical-and-geometric-meaning" class="nav-link">Physical and geometric meaning</a>
+        </li>
+    
+    </ul>
+</nav>
+
+
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="poisson-s-and-laplace-s-equation">
+<h1>Poisson’s and Laplace’s equation<a class="headerlink" href="#poisson-s-and-laplace-s-equation" title="Permalink to this headline">¶</a></h1>
+<span class="target" id="index-0"></span><p id="index-1">Poisson’s equation for an unknown function <span class="math notranslate nohighlight">\(u: \Omega \to \mathbb{R}, \Omega \subseteq \mathbb{R}^n\)</span> is given by</p>
+<div class="math notranslate nohighlight">
+\[ \nabla^2 u = f \]</div>
+<p>For a special case <span class="math notranslate nohighlight">\(f = 0\)</span> we get Laplace’s equation.</p>
+<div class="section" id="laplace-operator">
+<span id="laplacian"></span><h2>Laplace operator<a class="headerlink" href="#laplace-operator" title="Permalink to this headline">¶</a></h2>
+<p>The Laplace operator (or Laplacian), denoted by <span class="math notranslate nohighlight">\(\nabla^2\)</span> or sometimes <span class="math notranslate nohighlight">\(\Delta\)</span>, is defined as</p>
+<div class="math notranslate nohighlight">
+\[ \nabla^2 \equiv \nabla \cdot \nabla = \sum_{i=1}^{n} \frac{\partial^2}{\partial x_i} \]</div>
+<p>The Laplace operator appears in many differential equation, including the wave and heat equations which we will also take a close look at. Therefore we should first make sure that we have a good understanding of the Laplacian, which the reader should be familiar with from vector calculus.</p>
+</div>
+<div class="section" id="physical-and-geometric-meaning">
+<span id="laplace-interpretation"></span><h2>Physical and geometric meaning<a class="headerlink" href="#physical-and-geometric-meaning" title="Permalink to this headline">¶</a></h2>
+<p>Let us find some solutions to the Laplace’s equation, which are called <strong>harmonic functions</strong>. We see that any <span class="math notranslate nohighlight">\(u=\text{const.}\)</span> is a solution, then <span class="math notranslate nohighlight">\(x, y, x^2 - y^2, x^3 - 3xy^2\)</span> and so on. Let us plot their graphs and try to see if we can notice some interesting properties.</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">mpl_toolkits.mplot3d</span> <span class="kn">import</span> <span class="n">Axes3D</span>
+
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">101</span><span class="p">)</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">121</span><span class="p">)</span>
+<span class="n">ax2</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">122</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.25</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;u = 0.25&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$u = x$&#39;</span><span class="p">)</span>
+<span class="c1"># ax2.imshow(X**3 - 3*X*Y**2, cmap=&#39;inferno&#39;, extent=[min(x), max(x), min(x), max(x)])</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">plot_surface</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">X</span><span class="o">**</span><span class="mi">3</span> <span class="o">-</span> <span class="mi">3</span><span class="o">*</span><span class="n">X</span><span class="o">*</span><span class="n">Y</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">rstride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">cstride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;inferno&#39;</span><span class="p">,</span> <span class="n">antialiased</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$u=x^3 - 3xy^2$&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/9_poisson_laplace_eq_3_0.png" src="../../_images/9_poisson_laplace_eq_3_0.png" />
+</div>
+</div>
+<p>Looking at the surface plot on the right, it almost looks like there is something like symmetry going on. For every “extremity” going up, we have an identical one opposite of it, but going down, as if to cancel each other out. It turns out that that is exactly what happens. We can see this on the 1-D case as well, where we have</p>
+<div class="math notranslate nohighlight">
+\[ u(0) = \frac{u(x) + u(-x)}{2}. \]</div>
+<p>Tristan Needham explains this in a more general case (although we could generalise this further to a sphere) very nicely in his book Visual Complex Analysis:</p>
+<blockquote>
+<div><p>The Laplacian of <span class="math notranslate nohighlight">\(u\)</span> at a point <span class="math notranslate nohighlight">\(p\)</span> measures the amount by which the average value of <span class="math notranslate nohighlight">\(u\)</span> on an infinitesimal circle centered at <span class="math notranslate nohighlight">\(p\)</span> exceeds the value of <span class="math notranslate nohighlight">\(u\)</span> at <span class="math notranslate nohighlight">\(p\)</span> itself. More precisely, if <span class="math notranslate nohighlight">\(r\)</span> is the infinitesimal radius of this circle, then <span class="math notranslate nohighlight">\($ \overline{u} - u(p) = \frac{1}{4}r^2 \Delta u $\)</span></p>
+</div></blockquote>
+<p>In our case, where <span class="math notranslate nohighlight">\(\Delta u = 0\)</span>, this means that the value of <span class="math notranslate nohighlight">\(u\)</span> at some point <span class="math notranslate nohighlight">\(p\)</span> is equal to the mean of the infinitesimal circle around <span class="math notranslate nohighlight">\(p\)</span>. Actually, if <span class="math notranslate nohighlight">\(u\)</span> is a harmonic function this is true for a circle of any radius.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f_polar</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">r</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">r</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">x</span><span class="o">**</span><span class="mi">3</span> <span class="o">-</span> <span class="mi">3</span><span class="o">*</span><span class="n">x</span><span class="o">*</span><span class="n">y</span><span class="o">**</span><span class="mi">2</span>
+
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.001</span><span class="p">,</span> <span class="mi">101</span><span class="p">)</span>
+<span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">360</span><span class="p">)</span>
+<span class="n">rr</span><span class="p">,</span> <span class="n">tt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">theta</span><span class="p">)</span>
+
+<span class="n">u</span> <span class="o">=</span> <span class="n">f_polar</span><span class="p">(</span><span class="n">rr</span><span class="p">,</span> <span class="n">tt</span><span class="p">)</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;polar&#39;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">tt</span><span class="p">,</span> <span class="n">rr</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;inferno&#39;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_rgrids</span><span class="p">([])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;mean(u) - u(0,0) = &#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">u</span><span class="p">)</span> <span class="o">-</span> <span class="n">f_polar</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/9_poisson_laplace_eq_5_0.png" src="../../_images/9_poisson_laplace_eq_5_0.png" />
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>mean(u) - u(0,0) =  7.013888888888634e-13
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can easily check this for our example <span class="math notranslate nohighlight">\(u = x^3 - 3xy^2\)</span>, where the mean value in a circle of radius <span class="math notranslate nohighlight">\(R\)</span> centered at <span class="math notranslate nohighlight">\((0, 0)\)</span> is given by</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} \begin{aligned}
+\overline{u} &amp;= \frac{1}{2R \ 2 \pi} \int_{-R}^R \int_0^{2 \pi} u \ d \theta d r \\
+&amp;= \frac{1}{4R \pi} \int_{-R}^R \int_0^{2 \pi} r^3 (\cos^3 \theta - 3 \cos \theta \sin^2 \theta) \ d \theta dr \\
+&amp;= \frac{1}{4R \pi} \int_{-R}^R r^3 \underbrace{\int_0^{2 \pi} (\cos^3 \theta - 3 \cos \theta \sin^2 \theta) \ d \theta}_{= 0} dr = 0
+\end{aligned} \end{split}\]</div>
+<p>So the mean value in the circle is zero and <span class="math notranslate nohighlight">\(u(0, 0)\)</span> is zero as well, as we expected.</p>
+<hr class="docutils" />
+<p>Let us think again about the surface given by a set of points <span class="math notranslate nohighlight">\((x, y, u)\)</span> but this time consider a function <span class="math notranslate nohighlight">\(u\)</span> such that <span class="math notranslate nohighlight">\(\nabla^2 u \neq 0\)</span>. For example:</p>
+<div class="math notranslate nohighlight">
+\[ u(r) = \frac{\sin r}{r}, \qquad r = \sqrt{x^2 + y^2} \]</div>
+<p>for which</p>
+<div class="math notranslate nohighlight">
+\[ \nabla^2 u = \frac{(1 - r^2) \sin r}{r^3} - \frac{\cos r}{r^2} \]</div>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">7.5</span><span class="p">,</span> <span class="mf">7.5</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">X</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">Y</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">r</span><span class="p">)</span><span class="o">/</span><span class="n">r</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">121</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+<span class="n">ax2</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">122</span><span class="p">)</span>
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot_surface</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">rstride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">cstride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;inferno&#39;</span><span class="p">,</span> <span class="n">antialiased</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">extent</span><span class="o">=</span><span class="p">[</span><span class="nb">min</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="nb">min</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">x</span><span class="p">)],</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;inferno&#39;</span><span class="p">)</span>
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s1">&#39;u&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/9_poisson_laplace_eq_8_0.png" src="../../_images/9_poisson_laplace_eq_8_0.png" />
+</div>
+</div>
+<p>We know that on the graph of a function the second derivative is related to the curvature of the graph. In fact, the mean curvature <span class="math notranslate nohighlight">\(\kappa\)</span> of a 3-D surface can be expressed as the divergence of unit normal vectors to the surface \( \hat{n} \):</p>
+<div class="math notranslate nohighlight">
+\[ \kappa = \nabla \cdot \hat{n} \]</div>
+<p>which is a very interesting result! So the curvature is the sum of curvature in one direction + curvature in another direction. We also know that we can express unit normal to the surface as a gradient of a function that gives that surface. This way we recover the Laplacian and its relation to curvature.</p>
+<p>Let us show these vectors <span class="math notranslate nohighlight">\(\nabla u\)</span> overlain on top of <span class="math notranslate nohighlight">\(\Delta u\)</span>.</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">u_x</span> <span class="o">=</span> <span class="n">X</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="o">/</span> <span class="n">r</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">X</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="o">/</span> <span class="n">r</span><span class="o">**</span><span class="mi">3</span>  <span class="c1"># x-component of grad u</span>
+<span class="n">u_y</span> <span class="o">=</span> <span class="n">Y</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="o">/</span> <span class="n">r</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">Y</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="o">/</span> <span class="n">r</span><span class="o">**</span><span class="mi">3</span>  <span class="c1"># y-component of grad u</span>
+<span class="n">lapl_u</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">r</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="o">/</span> <span class="n">r</span><span class="o">**</span><span class="mi">3</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="o">/</span> <span class="n">r</span><span class="o">**</span><span class="mi">2</span>  <span class="c1"># laplacian u</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+
+<span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">lapl_u</span><span class="p">,</span> <span class="n">extent</span><span class="o">=</span><span class="p">[</span><span class="nb">min</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="nb">min</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">x</span><span class="p">)],</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;winter&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="n">X</span><span class="p">[::</span><span class="mi">15</span><span class="p">,</span> <span class="p">::</span><span class="mi">15</span><span class="p">],</span> <span class="n">Y</span><span class="p">[::</span><span class="mi">15</span><span class="p">,</span> <span class="p">::</span><span class="mi">15</span><span class="p">],</span> <span class="n">u_x</span><span class="p">[::</span><span class="mi">15</span><span class="p">,</span> <span class="p">::</span><span class="mi">15</span><span class="p">],</span> <span class="n">u_y</span><span class="p">[::</span><span class="mi">15</span><span class="p">,</span> <span class="p">::</span><span class="mi">15</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;width&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">lapl_u</span><span class="p">),</span> <span class="mi">2</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span> <span class="n">extent</span><span class="o">=</span><span class="p">[</span><span class="nb">min</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="nb">min</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">x</span><span class="p">)],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.75</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\Delta u$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/9_poisson_laplace_eq_10_0.png" src="../../_images/9_poisson_laplace_eq_10_0.png" />
+</div>
+</div>
+<p>Remember that a Laplacian is divergence of a gradient. This makes sense when we look at the figure above, where blues are negative divergence and greens are positive divergence, i.e. Laplacian. So in the areas of positive divergence we have <span class="math notranslate nohighlight">\(\nabla u\)</span> diverging and in negative divergence areas we have <span class="math notranslate nohighlight">\(\nabla u\)</span> converging. We can easily see by comparison with previous figures that these areas correspond to convex and concave parts of <span class="math notranslate nohighlight">\(u\)</span>, with the white contours showing <span class="math notranslate nohighlight">\(\Delta u = 0\)</span>.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "primer-computational-mathematics/book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./mathematics/differential_equations"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="8_pde_second_order.html" title="previous page">Canonical form of second-order linear PDEs</a>
+    <a class='right-next' id="next-link" href="10_heat_eq.html" title="next page">Heat (diffusion) equation</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Imperial College London<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../../_static/js/index.js"></script>
+    
+  </body>
+</html>

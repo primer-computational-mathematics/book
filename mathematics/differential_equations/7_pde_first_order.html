@@ -1,0 +1,484 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>First-order linear PDEs &#8212; ESE Jupyter Material</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/mystnb.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".cell"
+        const thebe_selector_input = ".cell_input div.highlight"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Canonical form of second-order linear PDEs" href="8_pde_second_order.html" />
+    <link rel="prev" title="Introductory definitions and concepts" href="6_pde_basicdefinitions.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../index.html">
+  
+  <img src="../../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">ESE Jupyter Material</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  
+  <ul class="nav sidenav_l1">
+  <li class="">
+    <a href="../../intro.html">Landing page</a>
+  </li>
+  <li class="">
+    <a href="../../coding/intro.html">Coding</a>
+  </li>
+  <li class="">
+    <a href="../../geosciences/intro.html">Geosciences</a>
+  </li>
+  <li class="active">
+    <a href="../intro.html">Mathematics</a>
+  <ul class="nav sidenav_l2">
+    <li class="">
+      <a href="../calculus/intro.html">Calculus</a>
+    </li>
+    <li class="">
+      <a href="../complex analysis/intro.html">Complex analysis</a>
+    </li>
+    <li class="active">
+      <a href="intro.html">Differential equations</a>
+      <ul class="nav sidenav_l3">
+      <li class="">
+        <a href="1_de_introduction.html">Introduction to differential equations</a>
+      </li>
+      <li class="">
+        <a href="2_linear_des.html">Linear Differential Equations</a>
+      </li>
+      <li class="">
+        <a href="3_first-order_odes.html">First-order ODEs</a>
+      </li>
+      <li class="">
+        <a href="4_higher_ord_lin_odes.html">Higher order Linear ODEs</a>
+      </li>
+      <li class="">
+        <a href="5_ode_series.html">Series ODE</a>
+      </li>
+      <li class="">
+        <a href="6_pde_basicdefinitions.html">Introductory definitions and concepts</a>
+      </li>
+      <li class="active">
+        <a href="">First-order linear PDEs</a>
+      </li>
+      <li class="">
+        <a href="8_pde_second_order.html">Canonical form of second-order linear PDEs</a>
+      </li>
+      <li class="">
+        <a href="9_poisson_laplace_eq.html">Poisson’s and Laplace’s equation</a>
+      </li>
+      <li class="">
+        <a href="10_heat_eq.html">Heat (diffusion) equation</a>
+      </li>
+      <li class="">
+        <a href="11_wave_eq.html">Wave equation</a>
+      </li>
+      <li class="">
+        <a href="12_similarity_solutions.html">Self-similar solutions</a>
+      </li>
+    </ul>
+    </li>
+    <li class="">
+      <a href="../linear_algebra/intro.html">Linear algebra</a>
+    </li>
+    <li class="">
+      <a href="../math_methods_1/intro.html">Mathematical methods 1</a>
+    </li>
+    <li class="">
+      <a href="../mathematical_notation/intro.html">Mathematical notation</a>
+    </li>
+    <li class="">
+      <a href="../numerical_methods/intro.html">Numerical methods</a>
+    </li>
+    <li class="">
+      <a href="../series_and_sequences/intro.html">Series and sequences</a>
+    </li>
+    <li class="">
+      <a href="../sets and functions/intro.html">Sets and functions</a>
+    </li>
+    <li class="">
+      <a href="../statistics/intro.html">Statistics</a>
+    </li>
+  </ul>
+  </li>
+  <li class="">
+    <a href="../../z_extra_resources_for_researchers/intro.html">Extra resources for researchers</a>
+  </li>
+  <li class="">
+    <a href="../../genindex.html">Index</a>
+  </li>
+</ul>
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/mathematics/differential_equations/7_pde_first_order.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        
+        <a class="issues-button"
+            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2Fmathematics/differential_equations/7_pde_first_order.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/mathematics/differential_equations/7_pde_first_order.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#method-of-characteristics" class="nav-link">Method of characteristics</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#example-constant-coefficients-homogeneous" class="nav-link">Example: constant coefficients, homogeneous</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#example-general-case" class="nav-link">Example: general case</a>
+        </li>
+    
+    </ul>
+</nav>
+
+
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="first-order-linear-pdes">
+<h1>First-order linear PDEs<a class="headerlink" href="#first-order-linear-pdes" title="Permalink to this headline">¶</a></h1>
+<p>In this section we will consider first-order linear PDEs for an unknown function <span class="math notranslate nohighlight">\(u\)</span> of two variables:</p>
+<div class="math notranslate nohighlight">
+\[ a(x,y)u_x + b(x,y)u_y = f(x, y, u) \]</div>
+<p>The method which we will use to find the solution of such PDEs is called the method of characteristics. This is a very useful method with an intuitive geometric interpretation and it can be applied to even more complicated PDEs, which we will not consider here.</p>
+<div class="section" id="method-of-characteristics">
+<span id="pde1st-characteristics"></span><h2>Method of characteristics<a class="headerlink" href="#method-of-characteristics" title="Permalink to this headline">¶</a></h2>
+<p id="index-0">The main idea behind this method is a popular one: we want to reduce the PDE to an ODE, which are in general much easier to solve. We do that by analysing the PDE along specially chosen curves in <span class="math notranslate nohighlight">\(xy\)</span> plane, which we call characteristic curves or just <strong>characteristics</strong>. We parameterise them by the parameter <span class="math notranslate nohighlight">\(s\)</span>, such that $ x = x(s), y = y(s) $ and we choose them such that the following system of ODEs is satisfied:</p>
+<div class="math notranslate nohighlight">
+\[ \frac{dx}{ds} = a, \quad \frac{dy}{ds} = b, \quad \frac{du}{ds} = f\]</div>
+<p>Then after using the chain rule and substituting this, we have</p>
+<div class="math notranslate nohighlight">
+\[ \frac{du}{ds} = \frac{\partial u}{\partial x} \frac{dx}{ds} + \frac{\partial u}{\partial y} \frac{dy}{ds} = f(x(s), y(s), u(s)) \]</div>
+<p>This simplifies our problem quite a bit, since we have reduced the PDE to an ODE. Let us now look at a few examples.</p>
+<div class="section" id="example-constant-coefficients-homogeneous">
+<h3>Example: constant coefficients, homogeneous<a class="headerlink" href="#example-constant-coefficients-homogeneous" title="Permalink to this headline">¶</a></h3>
+<p>Let us start with the simplest example, where <span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(b\)</span> are constants and <span class="math notranslate nohighlight">\(f \equiv 0\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[ 2u_x + 3u_y = 0, \qquad u(x, 0) = \cos x \]</div>
+<p>Setting</p>
+<div class="math notranslate nohighlight">
+\[ \frac{dx}{ds} = 2, \quad \frac{dy}{ds} = 3\]</div>
+<p>and using the chain rule we get</p>
+<div class="math notranslate nohighlight">
+\[ \frac{du}{ds} = 2u_x + 3u_y = 0 \]</div>
+<p>This means that the PDE along the characteristic line <span class="math notranslate nohighlight">\((x(s), y(s))\)</span> is a constant. We can write the parametrization invariant form of the above equations as</p>
+<div class="math notranslate nohighlight">
+\[ ds = \frac{dx}{2} = \frac{dy}{3} \]</div>
+<p>from which</p>
+<div class="math notranslate nohighlight">
+\[ \frac{dx}{dy} = \frac{2}{3} \]</div>
+<p>So the characteristics are given by <span class="math notranslate nohighlight">\(2y = 3x + c\)</span>, where <span class="math notranslate nohighlight">\(c\)</span> is an integration constant which will determine which characteristic line we are on. Let us plot a couple of them.</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">51</span><span class="p">)</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">cc</span> <span class="ow">in</span> <span class="n">c</span><span class="p">:</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">3</span><span class="o">/</span><span class="mi">2</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">cc</span><span class="p">,</span> <span class="s1">&#39;k-&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">cc</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">5</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mi">2</span> <span class="o">-</span> <span class="n">cc</span><span class="o">/</span><span class="mf">1.5</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">cc</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;darkblue&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">5.4</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">5.7</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+        
+<span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s1">&#39;left&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_position</span><span class="p">(</span><span class="s1">&#39;zero&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s1">&#39;bottom&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_position</span><span class="p">(</span><span class="s1">&#39;zero&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s1">&#39;right&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s1">&#39;top&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+    
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/7_pde_first_order_3_0.png" src="../../_images/7_pde_first_order_3_0.png" />
+</div>
+</div>
+<p>Here we plotted characteristics for different values of <span class="math notranslate nohighlight">\(c\)</span>, which are written in bold along characteristics.</p>
+<p>All characteristics are parallel to each other, of course, and since <span class="math notranslate nohighlight">\(u\)</span> is constant along each characteristic line, <span class="math notranslate nohighlight">\(u\)</span> will only vary if we jump from one characteristic to another. Since <span class="math notranslate nohighlight">\(c\)</span> marks which characteristic we are sitting on, <span class="math notranslate nohighlight">\(u\)</span> will therefore be a function of <span class="math notranslate nohighlight">\(c\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[ u(x(y), y) = f(c) = f(-3x + 2y) \]</div>
+<p>where <span class="math notranslate nohighlight">\(f\)</span> is an arbitrary function of one variable.</p>
+<p>Finally we need to use the auxiliary condition <span class="math notranslate nohighlight">\(u(x, 0) = \cos x\)</span> to find the particular solution. For <span class="math notranslate nohighlight">\(y=0\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[ u(x, 0) = f(-3x) = \cos (x) \]</div>
+<p>Let <span class="math notranslate nohighlight">\(w = -3x\)</span>. Then:</p>
+<div class="math notranslate nohighlight">
+\[ f(w) = \cos (-w/3) \]</div>
+<p>Hence the solution is</p>
+<div class="math notranslate nohighlight">
+\[ u(x, t) = f(-3x + 2y) = \cos(x - \frac{2}{3}y) \]</div>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mpl_toolkits.mplot3d</span> <span class="kn">import</span> <span class="n">Axes3D</span>
+
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">201</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">201</span><span class="p">)</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="n">f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">X</span> <span class="o">-</span> <span class="mi">2</span><span class="o">/</span><span class="mi">3</span> <span class="o">*</span> <span class="n">Y</span><span class="p">)</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">121</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+<span class="n">ax2</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">122</span><span class="p">)</span>
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot_surface</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">rstride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">cstride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;inferno&#39;</span><span class="p">,</span> <span class="n">antialiased</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;inferno&#39;</span><span class="p">,</span> <span class="n">extent</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">extent</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="n">linewidths</span><span class="o">=</span><span class="mf">1.</span><span class="p">)</span>
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">view_init</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="mi">70</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s1">&#39;u&#39;</span><span class="p">)</span>
+    
+<span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$u(x,y) = \cos (x - \frac</span><span class="si">{2}{3}</span><span class="s1">y)$&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/7_pde_first_order_5_0.png" src="../../_images/7_pde_first_order_5_0.png" />
+</div>
+</div>
+<p>Notice that each of the contours is a characteristic, since <span class="math notranslate nohighlight">\(u\)</span> is constant along a characteristic.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>A first-order linear PDE of the form</p>
+<div class="math notranslate nohighlight">
+\[ au_x + bu_y = 0 \]</div>
+<p>has a general solution of the form</p>
+<div class="math notranslate nohighlight">
+\[ u(x, y) = f(bx - ay) \]</div>
+<p>where <span class="math notranslate nohighlight">\(f\)</span> is an arbitrary function of one variable.</p>
+</div>
+</div>
+</div>
+<div class="section" id="example-general-case">
+<h2>Example: general case<a class="headerlink" href="#example-general-case" title="Permalink to this headline">¶</a></h2>
+<p>Let us now consider an inhomogeneous linear problem with variable coefficients.</p>
+<div class="math notranslate nohighlight">
+\[ (x + y)u_x + y u_y = xyu \]</div>
+<p>with the boundary condition $ u(x,y) = e^{x^2/4) $ for <span class="math notranslate nohighlight">\(y = x\)</span>.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "primer-computational-mathematics/book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./mathematics/differential_equations"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="6_pde_basicdefinitions.html" title="previous page">Introductory definitions and concepts</a>
+    <a class='right-next' id="next-link" href="8_pde_second_order.html" title="next page">Canonical form of second-order linear PDEs</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Imperial College London<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../../_static/js/index.js"></script>
+    
+  </body>
+</html>

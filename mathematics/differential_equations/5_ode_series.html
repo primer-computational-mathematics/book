@@ -1,0 +1,404 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Series ODE &#8212; ESE Jupyter Material</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/mystnb.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".cell"
+        const thebe_selector_input = ".cell_input div.highlight"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Introductory definitions and concepts" href="6_pde_basicdefinitions.html" />
+    <link rel="prev" title="Higher order Linear ODEs" href="4_higher_ord_lin_odes.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../index.html">
+  
+  <img src="../../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">ESE Jupyter Material</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  
+  <ul class="nav sidenav_l1">
+  <li class="">
+    <a href="../../intro.html">Landing page</a>
+  </li>
+  <li class="">
+    <a href="../../coding/intro.html">Coding</a>
+  </li>
+  <li class="">
+    <a href="../../geosciences/intro.html">Geosciences</a>
+  </li>
+  <li class="active">
+    <a href="../intro.html">Mathematics</a>
+  <ul class="nav sidenav_l2">
+    <li class="">
+      <a href="../calculus/intro.html">Calculus</a>
+    </li>
+    <li class="">
+      <a href="../complex analysis/intro.html">Complex analysis</a>
+    </li>
+    <li class="active">
+      <a href="intro.html">Differential equations</a>
+      <ul class="nav sidenav_l3">
+      <li class="">
+        <a href="1_de_introduction.html">Introduction to differential equations</a>
+      </li>
+      <li class="">
+        <a href="2_linear_des.html">Linear Differential Equations</a>
+      </li>
+      <li class="">
+        <a href="3_first-order_odes.html">First-order ODEs</a>
+      </li>
+      <li class="">
+        <a href="4_higher_ord_lin_odes.html">Higher order Linear ODEs</a>
+      </li>
+      <li class="active">
+        <a href="">Series ODE</a>
+      </li>
+      <li class="">
+        <a href="6_pde_basicdefinitions.html">Introductory definitions and concepts</a>
+      </li>
+      <li class="">
+        <a href="7_pde_first_order.html">First-order linear PDEs</a>
+      </li>
+      <li class="">
+        <a href="8_pde_second_order.html">Canonical form of second-order linear PDEs</a>
+      </li>
+      <li class="">
+        <a href="9_poisson_laplace_eq.html">Poisson’s and Laplace’s equation</a>
+      </li>
+      <li class="">
+        <a href="10_heat_eq.html">Heat (diffusion) equation</a>
+      </li>
+      <li class="">
+        <a href="11_wave_eq.html">Wave equation</a>
+      </li>
+      <li class="">
+        <a href="12_similarity_solutions.html">Self-similar solutions</a>
+      </li>
+    </ul>
+    </li>
+    <li class="">
+      <a href="../linear_algebra/intro.html">Linear algebra</a>
+    </li>
+    <li class="">
+      <a href="../math_methods_1/intro.html">Mathematical methods 1</a>
+    </li>
+    <li class="">
+      <a href="../mathematical_notation/intro.html">Mathematical notation</a>
+    </li>
+    <li class="">
+      <a href="../numerical_methods/intro.html">Numerical methods</a>
+    </li>
+    <li class="">
+      <a href="../series_and_sequences/intro.html">Series and sequences</a>
+    </li>
+    <li class="">
+      <a href="../sets and functions/intro.html">Sets and functions</a>
+    </li>
+    <li class="">
+      <a href="../statistics/intro.html">Statistics</a>
+    </li>
+  </ul>
+  </li>
+  <li class="">
+    <a href="../../z_extra_resources_for_researchers/intro.html">Extra resources for researchers</a>
+  </li>
+  <li class="">
+    <a href="../../genindex.html">Index</a>
+  </li>
+</ul>
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/mathematics/differential_equations/5_ode_series.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        
+        <a class="issues-button"
+            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2Fmathematics/differential_equations/5_ode_series.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/mathematics/differential_equations/5_ode_series.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#" class="nav-link">Series ODE</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#series-solutions-of-odes" class="nav-link">Series Solutions of ODEs</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#power-series-method" class="nav-link">Power Series Method</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#frobenius-method" class="nav-link">Frobenius method</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+    </ul>
+</nav>
+
+
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="series-ode">
+<h1>Series ODE<a class="headerlink" href="#series-ode" title="Permalink to this headline">¶</a></h1>
+<p>We showed how to solve 2nd order linear ODES with constant coefficients, now consider ODEs where coefficients are functions of the independent variable - here we denote it by <span class="math notranslate nohighlight">\(x\)</span></p>
+<p>It is sufficient to consider the homogeneous equation</p>
+<div class="math notranslate nohighlight" id="equation-eq1">
+<span class="eqno">(24)<a class="headerlink" href="#equation-eq1" title="Permalink to this equation">¶</a></span>\[ P(x)y'' + Q(x)y' + R(x)y = 0 \]</div>
+<p>since the procedure for the corresponding inhomogeneous equation is similar.</p>
+<p>For now we will work with p q r that are polynomials and have no common factors, but can be extended to general analytic functions</p>
+<p>Suppose also that we wish to solve Eq. (1) in the neighborhood
+of a point x0. The solution of Eq. (1) in an interval containing x0 is closely associated
+with the behavior of P in that interval</p>
+<p>A point x0 such that P(x0)’ = 0 is called an <strong>ordinary point</strong>. Since P is continuous, it follows that there is an interval about x0 in which P(x) is never zero. In that interval we can divide Eq. (1) by P(x) to obtain</p>
+<div class="math notranslate nohighlight" id="equation-eq2">
+<span class="eqno">(25)<a class="headerlink" href="#equation-eq2" title="Permalink to this equation">¶</a></span>\[ y'' + p(x)y' + q(x)y = 0 \]</div>
+<p>where p(x), q(x) are continuous functions. Hence,
+according to the existence and uniqueness Theorem 3.2.1, there exists in that interval a
+unique solution of Eq. (1) that also satisfies the initial conditions y(x0) = y0, y’(x0) = y’0 for arbitrary values of y0 and y’0. In this and the following section we discuss the solution of Eq. (1) in the neighborhood of an ordinary point.</p>
+<p>We look for solution of <a class="reference internal" href="#equation-eq1">(24)</a> in the form of a power series:</p>
+<div class="math notranslate nohighlight">
+\[ y = \sum_{n=0}^{\infty} a_n(x-x_0)^n \]</div>
+<p>and we assume that the series converges in the interval $ |x - x_0| &lt; \rho, \ \rho &gt; 0 $.</p>
+</div>
+<div class="section" id="series-solutions-of-odes">
+<h1>Series Solutions of ODEs<a class="headerlink" href="#series-solutions-of-odes" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference internal" href="#equation-eq2">(25)</a> A point <span class="math notranslate nohighlight">\(x = x_0\)</span> is an <strong>ordinary point</strong> if <span class="math notranslate nohighlight">\(p(x)\)</span> and <span class="math notranslate nohighlight">\(q(x)\)</span> are analytic on some interval about <span class="math notranslate nohighlight">\(x_0\)</span>, as opposed to a <strong>singular point</strong>. If <span class="math notranslate nohighlight">\(x_0\)</span> is a singularity of functions <span class="math notranslate nohighlight">\(p(x)\)</span> and <span class="math notranslate nohighlight">\(q(x)\)</span> but such that <span class="math notranslate nohighlight">\((x-x_0)p(x)\)</span> and <span class="math notranslate nohighlight">\((x-x_0)^2 q(x)\)</span> are analytic at <span class="math notranslate nohighlight">\(x_0\)</span>, then <span class="math notranslate nohighlight">\(x_0\)</span> is a <strong>regular singular point</strong>.</p>
+<p>Note that it is possible to translate the point <span class="math notranslate nohighlight">\(x_0\)</span> to the origin. We can also analyse the behaviour at infinity with the transformation <span class="math notranslate nohighlight">\(x = 1/t\)</span>.</p>
+<div class="section" id="power-series-method">
+<h2>Power Series Method<a class="headerlink" href="#power-series-method" title="Permalink to this headline">¶</a></h2>
+<p>A <strong>power series</strong> in powers of <span class="math notranslate nohighlight">\(x-x_0\)</span> is an infinite series</p>
+<div class="math notranslate nohighlight">
+\[ \sum_{m=0}^{\infty} a_m (x - x_0)^m \]</div>
+<p>where <span class="math notranslate nohighlight">\(x\)</span> is a variable, <span class="math notranslate nohighlight">\(x_0\)</span> is a constant called the centre of the series and <span class="math notranslate nohighlight">\(a_m\)</span> are the coefficients of the series. It is possible to translate the point <span class="math notranslate nohighlight">\(x_0\)</span> to the origin, so for convenience we will often want to assume <span class="math notranslate nohighlight">\(x_0 = 0\)</span>. Then</p>
+<div class="math notranslate nohighlight">
+\[ \sum_{m=0}^{\infty} a_m x^m \]</div>
+<p>We assume the solution of <a class="reference internal" href="#equation-eq2">(25)</a> to be of the form of the power series, so that</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} y' = \sum_{m=0}^{\infty} m a_m (x - x_0)^{m-1} \\
+y'' = \sum_{m=0}^{\infty} m(m-1) a_m (x - x_0)^{m-2} \end{split}\]</div>
+<p>The idea to solve <a class="reference internal" href="#equation-eq2">(25)</a> is:</p>
+<ol class="simple">
+<li><p>Represent <span class="math notranslate nohighlight">\(p(x)\)</span> and <span class="math notranslate nohighlight">\(q(x)\)</span> by power series</p></li>
+<li><p>Substitute <span class="math notranslate nohighlight">\(y\)</span> and its derivatives in <a class="reference internal" href="#equation-eq2">(25)</a></p></li>
+<li><p>Equate coefficients of like powers of <span class="math notranslate nohighlight">\(x\)</span> and determine them successively</p></li>
+</ol>
+</div>
+<div class="section" id="frobenius-method">
+<h2>Frobenius method<a class="headerlink" href="#frobenius-method" title="Permalink to this headline">¶</a></h2>
+<p>Consider a second-order linear ODE</p>
+<div class="math notranslate nohighlight">
+\[ y'' + p(x)y' + q(x)y = 0 \]</div>
+<div style="box-shadow: 0px 0px 7px 1px #9DC1BD; padding:15px;">
+<p><strong>Theorem (Fuchs)</strong> If <span class="math notranslate nohighlight">\(x = x_0\)</span> is a regular singular point, then the solutions of a differential equation:
+1. are analytic on some neighbourhood around <span class="math notranslate nohighlight">\(x_0\)</span>
+2. or they have a pole or a logarithmic term.</p>
+</div>
+<p>Fuchs’ theorem allows</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "primer-computational-mathematics/book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./mathematics/differential_equations"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="4_higher_ord_lin_odes.html" title="previous page">Higher order Linear ODEs</a>
+    <a class='right-next' id="next-link" href="6_pde_basicdefinitions.html" title="next page">Introductory definitions and concepts</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Imperial College London<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../../_static/js/index.js"></script>
+    
+  </body>
+</html>
