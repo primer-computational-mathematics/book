@@ -453,7 +453,7 @@
 <span id="file-handling-exercises"></span><h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
 <hr class="docutils" />
 <ul class="simple">
-<li><p><strong>Humidity</strong> You are given a table with average temperature in different countries in the World. Open the file and find the countries ending with <em>stan</em> (like Turkmeni<em>stan</em>) and save their average temperatures in a separate file).</p></li>
+<li><p><strong>Temperature</strong> You are given a table with average temperature in different countries in the World. Open the file and find the countries ending with <em>stan</em> (like Turkmeni<em>stan</em>) and save their average temperatures in a separate file). Columnts are <code class="docutils literal notranslate"><span class="pre">\t</span></code> separated.</p></li>
 </ul>
 <p>The file can be found at <code class="docutils literal notranslate"><span class="pre">'Data\\TempData.txt'</span></code></p>
 <p><strong>HINT</strong>: Structurize the data as a list of tuples</p>
@@ -492,8 +492,56 @@ with open(&#39;Data\\TempData.txt&#39;, &#39;r&#39;) as file:
 </div>
 <hr class="docutils" />
 <ul class="simple">
-<li></li>
+<li><p><strong>Hottest countires</strong>: Using the same file as in the exercise before, via Numpy, find the countries with the average temperature above 27.</p></li>
 </ul>
+<p><strong>HINT</strong>: Set <code class="docutils literal notranslate"><span class="pre">dtype=None</span></code>, remember about delimiters.</p>
+<div class="dropdown admonition">
+<p class="admonition-title">Anwser</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>import numpy as np
+
+data = np.genfromtxt(&#39;Data\\TempData.txt&#39;, delimiter=&#39;\t&#39;, dtype=None)
+
+for i in data:
+
+    if i[1] &gt; 27:
+        print(i)
+</pre></div>
+</div>
+</div>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>Countires per continent</strong> Construct a list of tuples showing how many countires (independent regions) are there in a particulair continent. Consider only the countries with a <code class="docutils literal notranslate"><span class="pre">Three_Letter_Country_Code</span></code> value. Use the Pandas library.</p></li>
+</ul>
+<p>The file can be found at:</p>
+<p><code class="docutils literal notranslate"><span class="pre">Data\\CountryContinent.csv</span></code></p>
+<p><strong>HINT</strong>: Use the <code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">index,</span> <span class="pre">row</span> <span class="pre">in</span> <span class="pre">df.iterrows():</span></code> structure of the <code class="docutils literal notranslate"><span class="pre">for</span></code> loop.</p>
+<div class="dropdown admonition">
+<p class="admonition-title">Anwser</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>from pandas import read_csv
+
+df = read_csv(&#39;Data\\CountryContinent.csv&#39;)
+
+continents = (&#39;Europe&#39;,&#39;Asia&#39;,&#39;Africa&#39;,&#39;Antarctica&#39;,&#39;North America&#39;,&#39;South America&#39;,&#39;Oceania&#39;)
+
+res = []
+
+for i in continents:
+    res.append((i,0))
+
+for index, row in df.iterrows():
+
+    if row[&quot;Three_Letter_Country_Code&quot;] != &quot;nan&quot;:
+
+        for j in range(len(res)):
+
+            if row[&quot;Continent_Name&quot;] == res[j][0]:
+
+                res[j] = (res[j][0],res[j][1]+1)
+
+print(res)
+</pre></div>
+</div>
+</div>
 </div>
 </div>
 

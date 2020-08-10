@@ -252,9 +252,16 @@
 
     </div>
     <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
 
 <nav id="bd-toc-nav">
     <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#exercises" class="nav-link">Exercises</a>
+        </li>
     
     </ul>
 </nav>
@@ -343,6 +350,72 @@ granite 2
 marl 3
 gneiss 4
 shale 5
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="exercises">
+<span id="dictionaries-exercises"></span><h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>Countires per continent</strong> Question very similair to the one in File Handling Section. Change the following code, so that the result is a dictionary:</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">read_csv</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;Data</span><span class="se">\\</span><span class="s1">CountryContinent.csv&#39;</span><span class="p">)</span>
+
+<span class="n">continents</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Europe&#39;</span><span class="p">,</span><span class="s1">&#39;Asia&#39;</span><span class="p">,</span><span class="s1">&#39;Africa&#39;</span><span class="p">,</span><span class="s1">&#39;Antarctica&#39;</span><span class="p">,</span><span class="s1">&#39;North America&#39;</span><span class="p">,</span><span class="s1">&#39;South America&#39;</span><span class="p">,</span><span class="s1">&#39;Oceania&#39;</span><span class="p">)</span>
+
+<span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">continents</span><span class="p">:</span>
+    <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+
+    <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;Three_Letter_Country_Code&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;nan&quot;</span><span class="p">:</span>
+
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">res</span><span class="p">)):</span>
+
+            <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;Continent_Name&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">res</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">0</span><span class="p">]:</span>
+
+                <span class="n">res</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">res</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="n">res</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>[(&#39;Europe&#39;, 57), (&#39;Asia&#39;, 58), (&#39;Africa&#39;, 58), (&#39;Antarctica&#39;, 5), (&#39;North America&#39;, 43), (&#39;South America&#39;, 14), (&#39;Oceania&#39;, 27)]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="dropdown admonition">
+<p class="admonition-title">Anwser</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>from pandas import read_csv
+
+df = read_csv(&#39;Data\\CountryContinent.csv&#39;)
+
+continents = (&#39;Europe&#39;,&#39;Asia&#39;,&#39;Africa&#39;,&#39;Antarctica&#39;,&#39;North America&#39;,&#39;South America&#39;,&#39;Oceania&#39;)
+
+res = {} #change here
+
+for i in continents:
+    res[i] = 0
+
+
+for index, row in df.iterrows():
+
+    if row[&quot;Three_Letter_Country_Code&quot;] != &quot;nan&quot;: 
+
+        #change here
+        
+        res[row[&quot;Continent_Name&quot;]] +=1
+        
+print(res)
 </pre></div>
 </div>
 </div>
