@@ -345,6 +345,19 @@
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">2</span><span class="o">-</span><span class="n">df63d54041bf</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;output.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>  <span class="c1"># w for write</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span>     <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;# Temperature and density data</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="ne">----&gt; </span><span class="mi">3</span>     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">temp</span><span class="p">)):</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span>         <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">,</span><span class="si">{}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">temp</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">density</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+
+<span class="ne">NameError</span>: name &#39;temp&#39; is not defined
+</pre></div>
+</div>
+</div>
 </div>
 </div>
 <div class="section" id="numpy">
@@ -442,7 +455,45 @@
 <ul class="simple">
 <li><p><strong>Humidity</strong> You are given a table with average temperature in different countries in the World. Open the file and find the countries ending with <em>stan</em> (like Turkmeni<em>stan</em>) and save their average temperatures in a separate file).</p></li>
 </ul>
+<p>The file can be found at <code class="docutils literal notranslate"><span class="pre">'Data\\TempData.txt'</span></code></p>
 <p><strong>HINT</strong>: Structurize the data as a list of tuples</p>
+<div class="dropdown admonition">
+<p class="admonition-title">Anwser</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>def isStan(country):
+
+    if len(country) &lt; 4:
+        return False
+    else:
+        return country[-4::] == &quot;stan&quot;
+
+
+
+with open(&#39;Data\\TempData.txt&#39;, &#39;r&#39;) as file:  
+
+    lines = file.readlines()
+
+    nameTemp =[]
+
+    res = 0
+    stan_countries = 0
+
+    for i in range(len(lines)):
+        values = lines[i].split(&#39;\t&#39;)
+        nameTemp.append((values[0].strip(), float(values[1])))
+
+        if(isStan(nameTemp[i][0])):
+            res+= nameTemp[i][1]
+            stan_countries+=1
+
+
+    print (res/stan_countries)
+</pre></div>
+</div>
+</div>
+<hr class="docutils" />
+<ul class="simple">
+<li></li>
+</ul>
 </div>
 </div>
 
