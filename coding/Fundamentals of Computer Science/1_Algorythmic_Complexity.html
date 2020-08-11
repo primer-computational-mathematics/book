@@ -207,9 +207,22 @@
 
     </div>
     <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
 
 <nav id="bd-toc-nav">
     <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#big-oh-notation" class="nav-link">Big Oh Notation</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#constant-time-o-1" class="nav-link">Constant Time \(O(1)\)</a>
+        </li>
+    
+            </ul>
+        </li>
     
     </ul>
 </nav>
@@ -227,7 +240,39 @@
 <p id="index-0">In order to make our programs efficient (or, at least, not horribly inefficient), we can consider how the execution time varies depending on the input size \(n\). Let us define a measure of this efficiency as a function \( T(n)\). Of course, the time it takes to execute a code will vary largely depending on the processor, compiler or disk speed. \( T(n)\) goes around this variance by measuring <em>asymptotic</em> complexity. In this case, only (broadly defined) <em>steps</em> will determine the time it takes to execute an algorithm.</p>
 <p>Now, say we want to add two \(n\)-bit binary digits. One way to do this is to go bit by bit and add the two. We can se that \(n\) operations are involved.
 \[T(n) = c*n\]
-where \(c\) is time it takes to add two bits on a machine.</p>
+where \(c\) is time it takes to add two bits on a machine. On different machines the value of \(c\) may vary, but the linearity of this function is the common factor. Our aim is to abstract away from the details of implementation and think about the fundamental usage of computing resources.</p>
+<div class="section" id="big-oh-notation">
+<h2>Big Oh Notation<a class="headerlink" href="#big-oh-notation" title="Permalink to this headline">¶</a></h2>
+<p>The mathematical definiton of this concept can be found <a class="reference external" href="https://primer-computational-mathematics.github.io/book/mathematics/mathematical_notation/Big_O_notation.html"><strong>here</strong></a>. In simple terms, we say that:</p>
+<p>\[f(n) = O(g(n))\]
+if there exists \(c&gt;0\) and \(n_0&gt;0\) such that</p>
+<p>\[f(n) &lt;= c * g(n)\]for all \(n \geq n_0\).</p>
+<p>\(g(n)\) can be thought of as an <em>upper bound</em> of \(f(n)\) as \(n\) tends to infinity. Here are a couple of examples:</p>
+<p>\[ 3n + 4 = O(n)\]
+\[ n^2 + 17n = O(n^2)\]
+\[2^n = O(2^n)\]
+\[42 = O(1)\]
+but also:</p>
+<p>\[log(n) = O(n)\]
+\[n = O(n^2)\]</p>
+<p>We will now consider different time complexities of algorithms.</p>
+<div class="section" id="constant-time-o-1">
+<h3>Constant Time \(O(1)\)<a class="headerlink" href="#constant-time-o-1" title="Permalink to this headline">¶</a></h3>
+<p>And algorithm is said to run in <em>constant</em> time if its complexity is \(O(1)\). This is usually considered the <em>fastest</em> case (which is true, but only in the <em>asymptotic</em> case). No matter what the input size is, the program will take the same amount of time to terminate. Let us consider some examples:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Hello</span> <span class="pre">World!</span></code>:</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hello World!&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>No matter what <code class="docutils literal notranslate"><span class="pre">n</span></code> is, the function does the same thing, which takes the same time. Therefore its complexity is constant.</p>
+</div>
+</div>
 </div>
 
     <script type="text/x-thebe-config">
