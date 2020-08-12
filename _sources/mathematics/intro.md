@@ -21,6 +21,8 @@ Table of contents:
     - {ref}`big_o_notation`
 6. Numerical Methods
     - {ref}`timestepping_ode`
+    - {ref}`runge_kutta_method`
+    - {ref}`successive_over_relaxation`
 7. Series and Sequences
     - {ref}`fourier_series`
     - {ref}`fourier_transforms`
