@@ -232,6 +232,18 @@
             </ul>
         </li>
     
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#different-complexities" class="nav-link">Different Complexities</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#best-worst-and-average-case-runtimes" class="nav-link">Best, Worst and Average Case Runtimes</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#exercises" class="nav-link">Exercises</a>
+        </li>
+    
     </ul>
 </nav>
 
@@ -255,7 +267,8 @@ where \(c\) is time it takes to add two bits on a machine. On different machines
 <p>\[f(n) = O(g(n))\]
 if there exists \(c&gt;0\) and \(n_0&gt;0\) such that</p>
 <p>\[f(n) \leq c * g(n)\] for all \(n \geq n_0\).</p>
-<p>\(g(n)\) can be thought of as an <em>upper bound</em> of \(f(n)\) as \(n\) tends to infinity. Here are a couple of examples:</p>
+<p>\(g(n)\) can be thought of as an <em>upper bound</em> of \(f(n)\) as \(n\) tends to infinity. In some publications <em>big Theta</em> notation is used. \(\Theta(n)\) can be considered the <em>least upper bound</em>, in algorithm analysis we ofter use both notations interchangeably.</p>
+<p>Here are a couple of examples:</p>
 <p>\[ 3n + 4 = O(n)\]
 \[ n^2 + 17n = O(n^2)\]
 \[2^n = O(2^n)\]
@@ -396,7 +409,91 @@ False
 <div class="figure align-default">
 <a class="reference internal image-reference" href="../../_images/SelectionSort.png"><img alt="../../_images/SelectionSort.png" src="../../_images/SelectionSort.png" style="width: 60%;" /></a>
 </div>
+<p>If we calculate the sum of operations (arithmetic series) we get \(\frac{n*(n+1)}{2} = O(n^2)\). Selection Sort is considered a rather inefficient sorting algorithm.</p>
+<ul class="simple">
+<li><p>Adding Matrices:</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#Adds two square matrices of the same size</span>
+<span class="k">def</span> <span class="nf">addMatrix</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">):</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)):</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">])):</span>
+            
+            <span class="n">temp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">])</span>
+            
+        <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+        
+    <span class="k">return</span> <span class="n">res</span>
+            
+        
+<span class="nb">print</span><span class="p">(</span><span class="n">addMatrix</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]],[[</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">]]))</span>
+</pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>[[4, 4, 4], [4, 4, 4], [4, 4, 4]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>When we want to add two matrices of side lenght \(n\), we have to access all of the cells in the matrix, therefore perform \(n^2\) additions.</p>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="different-complexities">
+<h2>Different Complexities<a class="headerlink" href="#different-complexities" title="Permalink to this headline">¶</a></h2>
+<p>Apart from the three complexities, there are many more which show up quite often. The most notable ones are (we will discuss some of them later)</p>
+<ol class="simple">
+<li><p>Logarythmic \(O(log(n))\) - present in e.g. Binary Search.</p></li>
+<li><p>Loglinear \(O(n*log(n))\) - e.g. Merge Sort.</p></li>
+<li><p>Multi-variable \(O(n*k)\) - e.g. searching for a substing of length \(k\) in a string of length \(n\).</p></li>
+<li><p>Exponential \(O(a^n)\), \(a &gt; 1\) - this is bad.</p></li>
+<li><p>Factorial \(O(n!)\) - even worse (producing all permutations of a string).</p></li>
+</ol>
+</div>
+<hr class="docutils" />
+<div class="section" id="best-worst-and-average-case-runtimes">
+<h2>Best, Worst and Average Case Runtimes<a class="headerlink" href="#best-worst-and-average-case-runtimes" title="Permalink to this headline">¶</a></h2>
+<p>While analyzing algorithms, it is worth considering how the program behaves based on different inputs.</p>
+<ul class="simple">
+<li><p>Best-case runtime complexity is a function defined by the minimum number of steps taken on any input.</p></li>
+<li><p>Worst-case runtime complexity considers the maximum number of steps taken by the algorithm.</p></li>
+<li><p>Average case runtime complexity is probably the most accurate measure of the performance of an algorithm and takes into accout the behaviour of the program when feeded with an <em>average</em> input.</p></li>
+</ul>
+<p>In production, both worst and average runtime complexities are considered (imagine an algorithm with an average \(O(n^2)\) and worst case \(O(n!)\) - that could be easliy exploited!)</p>
+<p>Let us now perform an analysis on a simple search algorithm which finds the number \(x\) in a list \(l\)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">simpleSearch</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">l</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">l</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="n">i</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+            
+<span class="nb">print</span><span class="p">(</span><span class="n">simpleSearch</span><span class="p">(</span><span class="mi">1</span><span class="p">,[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">23</span><span class="p">,</span><span class="mi">4</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>5
+</pre></div>
+</div>
+</div>
+</div>
+<p>Our assumption is that \(x\) is in the list and that the probability that it is at a particulair index is uniform.</p>
+<ol class="simple">
+<li><p>Best-case: \(O(1)\) - in is the zeroth cell</p></li>
+<li><p>Worst-case: \(O(n)\) - have to go through the whole list</p></li>
+<li><p>Average case: \(O(\frac{n}{2}) = O(n)\) - the element will be <em>somewhere in the middle</em></p></li>
+</ol>
+<p>In this case, we can predict that the program will run in linear time.</p>
+</div>
+<hr class="docutils" />
+<div class="section" id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
