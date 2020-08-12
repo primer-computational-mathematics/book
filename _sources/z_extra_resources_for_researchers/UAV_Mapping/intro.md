@@ -1,4 +1,4 @@
-# Remote sensing
+# UAV Mapping
 
 Table of contents:
 1. {ref}`UAV_Mapping_Mission_Plan`
