@@ -11,4 +11,4 @@ For anyone working through these notebooks, the principal used software for proc
 
 The Notebook Structure aims to replicate the following typical workflow:
 
-<p style="text-align:center;"><img src="UAV_Mapping_Data/Workflow.png" style="width:40%"/></p>
+<p style="text-align:center;"><img src="UAV_Mapping_Data/Workflow.png" style="width:70%"/></p>
