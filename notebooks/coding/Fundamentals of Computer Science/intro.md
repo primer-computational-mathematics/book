@@ -1,4 +1,4 @@
-# Fundamentals of Computer Science
+# Fundamentals of computer science
 
 In this section, we are going to present basic concepts and methods which will make your code faster and more elegant. 
 
