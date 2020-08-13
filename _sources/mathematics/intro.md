@@ -23,6 +23,7 @@ Table of contents:
     - {ref}`timestepping_ode`
     - {ref}`runge_kutta_method`
     - {ref}`successive_over_relaxation`
+    - {ref}`ftcs_scheme`
 7. Series and Sequences
     - {ref}`fourier_series`
     - {ref}`fourier_transforms`
