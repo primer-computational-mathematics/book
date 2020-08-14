@@ -40,7 +40,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Flow control statements" href="15_Flow_control_statements.html" />
-    <link rel="prev" title="File handling in Python" href="13_File_handling.html" />
+    <link rel="prev" title="File handling" href="13_File_handling.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="docsearch:language" content="en">
@@ -100,7 +100,7 @@
         <a href="2_Variables.html">Variables</a>
       </li>
       <li class="">
-        <a href="3_If_statement.html">If construct</a>
+        <a href="3_If_statement.html">If statement</a>
       </li>
       <li class="">
         <a href="4_While_loops.html">While loops</a>
@@ -130,7 +130,7 @@
         <a href="12_Tuples.html">Tuples</a>
       </li>
       <li class="">
-        <a href="13_File_handling.html">File handling in Python</a>
+        <a href="13_File_handling.html">File handling</a>
       </li>
       <li class="active">
         <a href="">Dictionaries</a>
@@ -283,7 +283,7 @@
   <div class="section" id="dictionaries">
 <span id="id1"></span><h1>Dictionaries<a class="headerlink" href="#dictionaries" title="Permalink to this headline">¶</a></h1>
 <p id="index-0">A dictionary is a Python data structure that can store data as key-value pairs. The syntax is:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>dict1 = {key1: value1, key2: value2, key3: value3, etc...}
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="n">dict1</span> <span class="o">=</span> <span class="p">{</span><span class="n">key1</span><span class="p">:</span> <span class="n">value1</span><span class="p">,</span> <span class="n">key2</span><span class="p">:</span> <span class="n">value2</span><span class="p">,</span> <span class="n">key3</span><span class="p">:</span> <span class="n">value3</span><span class="p">,</span> <span class="o">...</span><span class="p">}</span>
 </pre></div>
 </div>
 <p>Keys can be strings or numbers and values can be anything: strings, numbers, lists, arrays, etc. Keys must be unique - if you set it twice, the second value replaces the first.</p>
@@ -364,7 +364,7 @@ shale 5
 <span id="dictionaries-exercises"></span><h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
 <hr class="docutils" />
 <ul class="simple">
-<li><p><strong>Countries per continent</strong> Question very similair to the one in File Handling Section. Change the following code, so that the result is a dictionary:</p></li>
+<li><p><strong>Countries per continent</strong> Question very similair to the one in <a class="reference internal" href="13_File_handling.html#file-handling-exercises"><span class="std std-ref">File Handling</span></a> exercises. Change the following code, so that the result is a dictionary:</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -372,56 +372,42 @@ shale 5
 
 <span class="n">df</span> <span class="o">=</span> <span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;Data</span><span class="se">\\</span><span class="s1">CountryContinent.csv&#39;</span><span class="p">)</span>
 
-<span class="n">continents</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Europe&#39;</span><span class="p">,</span><span class="s1">&#39;Asia&#39;</span><span class="p">,</span><span class="s1">&#39;Africa&#39;</span><span class="p">,</span><span class="s1">&#39;Antarctica&#39;</span><span class="p">,</span><span class="s1">&#39;North America&#39;</span><span class="p">,</span><span class="s1">&#39;South America&#39;</span><span class="p">,</span><span class="s1">&#39;Oceania&#39;</span><span class="p">)</span>
-
-<span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
-
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">continents</span><span class="p">:</span>
-    <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+<span class="n">continents</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Continent_Name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>  <span class="c1"># list of continent names from the file</span>
+<span class="n">res</span> <span class="o">=</span> <span class="p">[[</span><span class="n">continent</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">continent</span> <span class="ow">in</span> <span class="n">continents</span><span class="p">]</span>  <span class="c1"># initial list, not counted yet</span>
 
 <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
-
     <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;Three_Letter_Country_Code&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;nan&quot;</span><span class="p">:</span>
 
         <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">res</span><span class="p">)):</span>
-
-            <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;Continent_Name&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">res</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">0</span><span class="p">]:</span>
-
-                <span class="n">res</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">res</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="n">res</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;Continent_Name&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">res</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">0</span><span class="p">]:</span>  <span class="c1"># find correct continent</span>
+                <span class="n">res</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>  <span class="c1"># increase country count by 1</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>[(&#39;Europe&#39;, 57), (&#39;Asia&#39;, 58), (&#39;Africa&#39;, 58), (&#39;Antarctica&#39;, 5), (&#39;North America&#39;, 43), (&#39;South America&#39;, 14), (&#39;Oceania&#39;, 27)]
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>[[&#39;Asia&#39;, 58], [&#39;Europe&#39;, 57], [&#39;Antarctica&#39;, 5], [&#39;Africa&#39;, 58], [&#39;Oceania&#39;, 27], [&#39;North America&#39;, 43], [&#39;South America&#39;, 14]]
 </pre></div>
 </div>
 </div>
 </div>
 <div class="dropdown admonition">
-<p class="admonition-title">Anwser</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>from pandas import read_csv
+<p class="admonition-title">Answer</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">read_csv</span>
 
-df = read_csv(&#39;Data\\CountryContinent.csv&#39;)
+<span class="n">df</span> <span class="o">=</span> <span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;Data</span><span class="se">\\</span><span class="s1">CountryContinent.csv&#39;</span><span class="p">)</span>
+<span class="n">continents</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Continent_Name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
 
-continents = (&#39;Europe&#39;,&#39;Asia&#39;,&#39;Africa&#39;,&#39;Antarctica&#39;,&#39;North America&#39;,&#39;South America&#39;,&#39;Oceania&#39;)
+<span class="n">res</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">continents</span><span class="p">:</span>
+    <span class="n">res</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    
+<span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;Three_Letter_Country_Code&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;nan&quot;</span><span class="p">:</span> 
+        <span class="n">res</span><span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;Continent_Name&quot;</span><span class="p">]]</span> <span class="o">+=</span> <span class="mi">1</span>
 
-res = {} #change here
-
-for i in continents:
-    res[i] = 0
-
-
-for index, row in df.iterrows():
-
-    if row[&quot;Three_Letter_Country_Code&quot;] != &quot;nan&quot;: 
-
-        #change here
-        
-        res[row[&quot;Continent_Name&quot;]] +=1
-        
-print(res)
+<span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -456,7 +442,7 @@ print(res)
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="13_File_handling.html" title="previous page">File handling in Python</a>
+    <a class='left-prev' id="prev-link" href="13_File_handling.html" title="previous page">File handling</a>
     <a class='right-next' id="next-link" href="15_Flow_control_statements.html" title="next page">Flow control statements</a>
 
     </div>
