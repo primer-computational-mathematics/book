@@ -1,4 +1,4 @@
-# Complex Analysis
+# Complex analysis
 
 ```{index} Complex Analysis
 ```
