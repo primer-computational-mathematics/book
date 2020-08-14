@@ -291,7 +291,7 @@
         
               <div>
                 
-  <div class="cell docutils container">
+  <div class="cell tag_hide_input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># This cell just imports the relevant modules</span>
 
@@ -620,7 +620,7 @@ odefun function. However, this will not give you an analytical solution to the O
 </div>
 <p>Example: sand grain with density 2650kg/m3 and radius 1mm sinking in water.</p>
 <p>Initial conditions: v=0 when t=0</p>
-<div class="cell docutils container">
+<div class="cell tag_hide_input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rho_f</span> <span class="o">=</span> <span class="mi">1000</span>
 <span class="n">rho_p</span> <span class="o">=</span> <span class="mi">2650</span>
@@ -657,62 +657,6 @@ odefun function. However, this will not give you an analytical solution to the O
 <span class="n">ax2</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell tag_hide_input docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rho_f</span> <span class="o">=</span> <span class="mi">1000</span>
-<span class="n">rho_p</span> <span class="o">=</span> <span class="mi">2650</span>
-<span class="n">eta</span> <span class="o">=</span> <span class="mf">0.89</span>
-<span class="n">g</span> <span class="o">=</span> <span class="mf">9.81</span>
-<span class="n">a</span> <span class="o">=</span> <span class="mf">1e-3</span>
-<span class="n">C</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">rho_p</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">9</span><span class="o">*</span><span class="n">eta</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">((</span><span class="n">rho_p</span><span class="o">-</span><span class="n">rho_f</span><span class="p">)</span><span class="o">/</span><span class="n">rho_p</span><span class="p">)</span>
-
-<span class="n">a</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">g</span><span class="o">*</span><span class="n">rho_f</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">g</span><span class="o">*</span><span class="n">rho_p</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">9</span><span class="o">*</span><span class="n">eta</span><span class="p">)</span>
-
-<span class="n">b</span> <span class="o">=</span> <span class="n">exp</span><span class="p">(</span><span class="n">eta</span><span class="o">*</span><span class="n">C</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">9</span><span class="o">*</span><span class="n">eta</span><span class="p">)</span>
-
-<span class="n">c</span> <span class="o">=</span> <span class="p">(</span><span class="mi">9</span><span class="o">*</span><span class="n">eta</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">rho_p</span><span class="p">)</span>
-
-<span class="n">t</span> <span class="o">=</span> <span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;t&#39;</span><span class="p">)</span>
-<span class="n">v</span> <span class="o">=</span> <span class="n">Function</span><span class="p">(</span><span class="s1">&#39;v&#39;</span><span class="p">)</span>
-
-<span class="n">v</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">*</span> <span class="n">c</span> <span class="o">*</span> <span class="n">exp</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
-
-<span class="n">time</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.005</span><span class="p">,</span> <span class="mf">0.00005</span><span class="p">)</span>
-
-<span class="n">distance</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">time</span><span class="p">))</span>
-
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">time</span><span class="p">)):</span>
-    <span class="n">distance</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">integrate</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">time</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
-
-
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">((</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">((</span><span class="o">-</span><span class="mf">0.058</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;distance&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Motion of sand grain at the first 0.005 seconds&#39;</span><span class="p">)</span>
-
-<span class="n">line</span><span class="p">,</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([],</span> <span class="p">[],</span> <span class="s1">&#39;ko&#39;</span><span class="p">)</span>
-
-<span class="k">def</span> <span class="nf">init</span><span class="p">():</span>
-    <span class="n">line</span><span class="o">.</span><span class="n">set_data</span><span class="p">([],</span> <span class="p">[])</span>
-    <span class="k">return</span> <span class="p">(</span><span class="n">line</span><span class="p">,)</span>
-
-<span class="k">def</span> <span class="nf">animate</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="n">y</span> <span class="o">=</span> <span class="n">distance</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-    <span class="n">line</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-    <span class="k">return</span> <span class="p">(</span><span class="n">line</span><span class="p">,)</span>
-
-<span class="n">anim</span> <span class="o">=</span> <span class="n">animation</span><span class="o">.</span><span class="n">FuncAnimation</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">animate</span><span class="p">,</span> <span class="n">init_func</span><span class="o">=</span><span class="n">init</span><span class="p">,</span>
-                               <span class="n">frames</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> 
-                               <span class="n">blit</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-<span class="n">HTML</span><span class="p">(</span><span class="n">anim</span><span class="o">.</span><span class="n">to_html5_video</span><span class="p">())</span>
 </pre></div>
 </div>
 </div>
