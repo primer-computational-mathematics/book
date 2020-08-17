@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Chapter 15 – Regularisation &#8212; ESE Jupyter Material</title>
+    <title>Chapter 11 – Underfitting and Overfitting &#8212; ESE Jupyter Material</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
     <link href="../../_static/css/index.css" rel="stylesheet">
     <link rel="stylesheet" href="../../_static/sphinx-book-theme.css" type="text/css" />
@@ -40,8 +40,8 @@
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Chapter 16 – Other Activation Functions" href="Chapter 16 -- Other Activation Functions.html" />
-    <link rel="prev" title="Chapter 14 – Vanishing Gradient 2" href="Chapter 14 -- Vanishing Gradient 2.html" />
+    <link rel="next" title="Chapter 12 – Early-stopping, Dropout &amp; Mini-batch" href="Chapter 12 -- Early-stopping, Dropout &amp; Mini-batch.html" />
+    <link rel="prev" title="Chapter 10 – General Back Propagation" href="Chapter 10 -- General Back Propagation.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="docsearch:language" content="en">
@@ -148,8 +148,8 @@
       <li class="">
         <a href="Chapter 10 -- General Back Propagation.html">Chapter 10 – General Back Propagation</a>
       </li>
-      <li class="">
-        <a href="Chapter 11 -- Underfitting and Overfitting.html">Chapter 11 – Underfitting and Overfitting</a>
+      <li class="active">
+        <a href="">Chapter 11 – Underfitting and Overfitting</a>
       </li>
       <li class="">
         <a href="Chapter 12 -- Early-stopping, Dropout & Mini-batch.html">Chapter 12 – Early-stopping, Dropout & Mini-batch</a>
@@ -160,8 +160,8 @@
       <li class="">
         <a href="Chapter 14 -- Vanishing Gradient 2.html">Chapter 14 – Vanishing Gradient 2</a>
       </li>
-      <li class="active">
-        <a href="">Chapter 15 – Regularisation</a>
+      <li class="">
+        <a href="Chapter 15 -- Regularisation.html">Chapter 15 – Regularisation</a>
       </li>
       <li class="">
         <a href="Chapter 16 -- Other Activation Functions.html">Chapter 16 – Other Activation Functions</a>
@@ -238,7 +238,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../_sources/geosciences/UROP_shapers/Chapter 15 -- Regularisation.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="../../_sources/geosciences/pytorch_image_filtering_ml/Chapter 11 -- Underfitting and Overfitting.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
@@ -255,7 +255,7 @@
     <div class="dropdown-buttons sourcebuttons">
         
         <a class="issues-button"
-            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2Fgeosciences/UROP_shapers/Chapter 15 -- Regularisation.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2Fgeosciences/pytorch_image_filtering_ml/Chapter 11 -- Underfitting and Overfitting.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
         
@@ -275,7 +275,7 @@
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/geosciences/UROP_shapers/Chapter 15 -- Regularisation.ipynb"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/geosciences/pytorch_image_filtering_ml/Chapter 11 -- Underfitting and Overfitting.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="../../_static/images/logo_binder.svg"
@@ -304,33 +304,20 @@
         
               <div>
                 
-  <p>(Regularisation) =</p>
-<div class="section" id="chapter-15-regularisation">
-<h1>Chapter 15 – Regularisation<a class="headerlink" href="#chapter-15-regularisation" title="Permalink to this headline">¶</a></h1>
-<p>One method to solve this issue is to punish the big weights. This approach is called the `regularisation’. Here are two basic forms of it:</p>
-<p>\begin{equation}
-L1 ; Regularisation = - \frac{1}{m} \sum^{m}_{i=1}[y_i*ln(\hat{y}_i) + (1-y_i)*ln(1-\hat{y}_i)] + \lambda(|w_1|+…+|w_n|)
-\end{equation}</p>
-<p>\begin{equation}
-L2 ; Regularisation = - \frac{1}{m} \sum^{m}_{i=1}[y_i*ln(\hat{y}_i) + (1-y_i)*ln(1-\hat{y}_i)] + \lambda(w_1^2+…+w_n^2)
-\end{equation}</p>
-<p>where the higher the constant <span class="math notranslate nohighlight">\(\lambda\)</span> the more we want to punish the bigger weights.</p>
-<p>To choose either <span class="math notranslate nohighlight">\(L1\)</span> or <span class="math notranslate nohighlight">\(L2\)</span>, we need to think of what we want to achieve. <span class="math notranslate nohighlight">\(L1\)</span> prefers to make the not-too-big weights to be close to zero, creating sparse vectors. This is very efficient when we compute big data where most weights are not important, so it does not make sense if we compute all of them. Sparse vectors in this case improves computational-efficiency.</p>
-<p><span class="math notranslate nohighlight">\(L2\)</span>, however, is what we usually use because it reduces the average weight instead of favoring certain small weights.</p>
-<p>We can take the following examples to understand the logic behind them. Suppose we have a weight (<span class="math notranslate nohighlight">\(w_1\)</span>, <span class="math notranslate nohighlight">\(w_2\)</span>) = (1.5, 0.5), then <span class="math notranslate nohighlight">\(L1\)</span> would tend to make it into (1,0) because <span class="math notranslate nohighlight">\(1.5+0.5 &gt; 1+0\)</span>; whereas <span class="math notranslate nohighlight">\(L2\)</span> would make it into (0.75,0.25) because <span class="math notranslate nohighlight">\(0.75^2+0.25^2 &lt; 1^2+0^2 &lt; 1.5^2+0.5^2\)</span>. Remember, all we want is to obtain the minimum summation of weights so that we would obtain the minimum cost.</p>
-<p>What’s more, L2 regularization doesn’t constrain the biases. Of course, it would be easy to modify the regularization procedure to regularize the biases. Empirically, doing this often doesn’t change the results very much, so to some extent it’s merely a convention whether to regularize the biases or not. However, it’s worth noting that having a large bias doesn’t make a neuron sensitive to its inputs in the same way as having large weights. And so we don’t need to worry about large biases enabling our network to learn the noise in our training data. At the same time, allowing large biases gives our networks more flexibility in behaviour - in particular, large biases make it easier for neurons to saturate, which is sometimes desirable. For these reasons we don’t usually include bias terms when regularizing.</p>
-<p>Regularisation also helps to reduce overfitting. We’ve seen empirically that regularization helps reduce overfitting. That’s encouraging but, unfortunately, it’s not obvious why regularization helps! A standard story people tell to explain what’s going on is along the following lines: smaller weights are, in some sense, lower complexity, and so provide a simpler and more powerful explanation for the data, and should thus be preferred. That’s a pretty terse story, though, and contains several elements that perhaps seem dubious or mystifying. Let’s unpack the story and examine it critically. To do that, let’s suppose we have a simple data set for which we wish to build a model:</p>
-<img src="images/regularisation.PNG" width="600">
-<center> Figure 1.26<p>Implicitly, we’re studying some real-world phenomenon here, with x and y representing real-world data. Our goal is to build a model which lets us predict y as a function of x. We could try using neural networks to build such a model, but I’m going to do something even simpler: I’ll try to model y as a polynomial in x. I’m doing this instead of using neural nets because using polynomials will make things particularly transparent. Once we’ve understood the polynomial case, we’ll translate to neural networks. Now, there are ten points in the graph above, which means we can find a unique 9th-order polynomial <span class="math notranslate nohighlight">\(y=a_0x_9+a_1x_8+...+a_9\)</span> which fits the data exactly. Here’s the graph of that polynomial (figure 1.27).</p>
-<img src="images/regularisation1.PNG" width="600">
-<center> Figure 1.27<p>That provides an exact fit. But we can also get a good fit using the linear model <span class="math notranslate nohighlight">\(y=2x\)</span> (figure 1.28):</p>
-<img src="images/regularisation2.PNG" width="600">
-<center> Figure 1.28<p>Which of these is the better model? Which is more likely to be true? And which model is more likely to generalize well to other examples of the same underlying real-world phenomenon? These are difficult questions. In fact, we can’t determine with certainty the answer to any of the above questions, without much more information about the underlying real-world phenomenon. But let’s consider two possibilities: (1) the 9th order polynomial is, in fact, the model which truly describes the real-world phenomenon, and the model will therefore generalize perfectly; (2) the correct model is y=2x, but there’s a little additional noise due to, say, measurement error, and that’s why the model isn’t an exact fit.</p>
-<p>It’s not a priori possible to say which of these two possibilities is correct. (Or, indeed, if some third possibility holds). Logically, either could be true. And it’s not a trivial difference. It’s true that on the data provided there’s only a small difference between the two models. But suppose we want to predict the value of y corresponding to some large value of x, much larger than any shown on the graph above. If we try to do that there will be a dramatic difference between the predictions of the two models, as the 9th order polynomial model comes to be dominated by the <span class="math notranslate nohighlight">\(x_9\)</span> term, while the linear model remains, well, linear.</p>
-<p>One point of view is to say that in science we should go with the simpler explanation, unless compelled not to. When we find a simple model that seems to explain many data points we are tempted to shout “Eureka!” After all, it seems unlikely that a simple explanation should occur merely by coincidence. Rather, we suspect that the model must be expressing some underlying truth about the phenomenon. In the case at hand, the model <span class="math notranslate nohighlight">\(y=2x+noise\)</span> seems much simpler than <span class="math notranslate nohighlight">\(y=a_0x_9+a_1x_8+...+a_9\)</span>. It would be surprising if that simplicity had occurred by chance, and so we suspect that <span class="math notranslate nohighlight">\(y=2x+noise\)</span> expresses some underlying truth. In this point of view, the 9th order model is really just learning the effects of local noise. And so while the 9th order model works perfectly for these particular data points, the model will fail to generalize to other data points, and the noisy linear model will have greater predictive power.</p>
-<p>Let’s see what this point of view means for neural networks. Suppose our network mostly has small weights, as will tend to happen in a regularized network. The smallness of the weights means that the behaviour of the network won’t change too much if we change a few random inputs here and there. That makes it difficult for a regularized network to learn the effects of local noise in the data. Think of it as a way of making it so single pieces of evidence don’t matter too much to the output of the network. Instead, a regularized network learns to respond to types of evidence which are seen often across the training set. By contrast, a network with large weights may change its behaviour quite a bit in response to small changes in the input. And so an unregularized network can use large weights to learn a complex model that carries a lot of information about the noise in the training data. In a nutshell, regularized networks are constrained to build relatively simple models based on patterns seen often in the training data, and are resistant to learning peculiarities of the noise in the training data. The hope is that this will force our networks to do real learning about the phenomenon at hand, and to generalize better from what they learn.</p>
-<p>With that said, this idea of preferring simpler explanation should make we nervous. People sometimes refer to this idea as “Occam’s Razor”, and will zealously apply it as though it has the status of some general scientific principle. But, of course, it’s not a general scientific principle. There is no a priori logical reason to prefer simple explanations over more complex explanations. Indeed, sometimes the more complex explanation turns out to be correct.</p>
-<p>There are three morals to draw from many of the exceptions (more complex explanation turns out to be correct). First, it can be quite a subtle business deciding which of two explanations is truly “simpler”. Second, even if we can make such a judgment, simplicity is a guide that must be used with great caution! Third, the true test of a model is not simplicity, but rather how well it does in predicting new phenomena, in new regimes of behaviour.</p>
+  <div class="section" id="chapter-11-underfitting-and-overfitting">
+<span id="underfitting-and-overfitting-1"></span><h1>Chapter 11 – Underfitting and Overfitting<a class="headerlink" href="#chapter-11-underfitting-and-overfitting" title="Permalink to this headline">¶</a></h1>
+<p>Ok, suppose we have trained a set of weights based on certain dataset, then we change the learning rate and number of iterations, and then train the neural network again. Here we would arrive at a different set of weights. Which set of weight is better? This is a realistic problem. A simple answer would be, why not just choose the model that yields the lowest cost? Let’s look at the following figure.</p>
+<img src="images/threeModels.PNG" width="650">
+<center> Figure 1.21<p>Suppose we have a curve that separates the two groups, and we have three ways of separating them as shown in figure 1.21. Which one out of the three is the best? The first model generally draws the boundary but not clear enough, therefore its cost must be high. The second model has lower cost then the first one but its not perfect as in some dots are wrongly-categorised. The third one on the right hand side should be perfect because it correctly separates the two groups completely. Thus, the cost of the third model should be the minimum. However, does that mean the third model is the best?</p>
+<p>Based on statistics, most data should be good data but some are noises. Those noises can be outliers due to the invisible variables in the dataset. For example, we all think that a student who has <span class="math notranslate nohighlight">\(GPA=4.0\)</span> and <span class="math notranslate nohighlight">\(SAT=2400\)</span> should be accepted by a good university. However, if the scores are fake or he cheated on the exams, or the student had criminal records, then he would of course be rejected. In this case, the model that has only two variables (<span class="math notranslate nohighlight">\(SAT\)</span> and <span class="math notranslate nohighlight">\(GPA\)</span>) would not correctly predict the admission results. Again, this is the consequence of the invisible variables.</p>
+<p>If we can have additional variables for the scenarios we mentioned before in the example, then we would not have noises or outliers. However, we cannot obtain all variables in reality. For example, the admission officer was drunk the day he reviewed the student’s profile and mistook his <span class="math notranslate nohighlight">\(4.0 GPA\)</span> as <span class="math notranslate nohighlight">\(2.0 GPA\)</span>, and then he rejected this student. If we can obtain the variable of how drunk he was, then we can somehow predict how reliable his decision and take this into account in the model. Obviously, we cannot obtain the variable in real life. For some data points, therefore, it is reasonable to be wrongly-categorised. So the second model that has some outliers might actually be better than the third model that has the minimum cost.</p>
+<p>But here is the problem. How do we know if the outlier we saw is actually an outlier due to invisible variable or if it is just a noise. One obvious method would be finding 100 students with <span class="math notranslate nohighlight">\(GPA=4.0\)</span> and <span class="math notranslate nohighlight">\(SAT=2400\)</span> and check if most of them got accepted by a university. If so, then the one student who has the same profile but got rejected would be an outlier. If not, then the student is not an outlier, maybe that university does not like students with perfect scores.</p>
+<p>To generalise this method, although we are unlikely to find the same data like the 100 students and then observe the result, yet we are not about to predict if (<span class="math notranslate nohighlight">\(4.0\)</span> and <span class="math notranslate nohighlight">\(2400\)</span>) can be accepted but rather all combinations of scores. In a sense, we can use a testing dataset (that the AI model has never seen before, i.e. 2,000 students) to test how accurate the AI model is trained based on the training dataset (i.e. 8,000 students), if we have 10,000 students in total.</p>
+<img src="images/threeModels1.PNG" width="650">
+<center> Figure 1.22<p>In the three plots in the figure1.22, the dashed dots are the data from the testing set. The first model has high cost as we mentioned before, but it got 5 out of 6 testing data right, so its accuracy is <span class="math notranslate nohighlight">\(\frac{5}{6}\)</span> (low error). The second model has medium cost, but it got all 6 testing data right, therefore scoring an accuracy of <span class="math notranslate nohighlight">\(\frac{6}{6}\)</span> (zero error). However, for the third model, though it had the lowest cost yet it got only 4 out of 6 data from the testing set right, receiving an accuracy of <span class="math notranslate nohighlight">\(\frac{4}{6}\)</span> (high error). Notice that we use the term lost or cost to measure the performance of the training set and the term error for testing set.</p>
+<img src="images/threeModels2.PNG" width="600">
+<center> Figure 1.23<p>This is like me who has done a lot of past papers. I did not understand the principles behind the problems but simply remember all the answers. So if I do the past paper (training set) again, then I would receive crazily high scores. However, if I were to be tested by a new paper with new problems (testing set), then I would fail so hard. On the contrary, if a student is very smart, let’s call him Elon, if Elon understands the principles behind the questions then he still would not be scoring a perfect mark in the training set compared to me, yet he would be performing much better at the testing set. Obviously, we want Elon.</p>
+<p>In AI, we regard the UCL students who did terrible in past papers and new exams (high cost in training set, low accuracy in testing set) as <span class="math notranslate nohighlight">\(underfit\)</span> <span class="math notranslate nohighlight">\(models\)</span>. For the type of students, like me, who study hard and did well in past papers but fail super hard in new papers (low lost in training set but low accuracy in the testing set), we are called the <span class="math notranslate nohighlight">\(overfit\)</span> <span class="math notranslate nohighlight">\(models\)</span>. For the type of students like Elon, he scores high in the past papers and new papers, so he is the model that we consider as the best. Obviously, we want Elon.</p>
 </div>
 
     <script type="text/x-thebe-config">
@@ -346,7 +333,7 @@ L2 ; Regularisation = - \frac{1}{m} \sum^{m}_{i=1}[y_i*ln(\hat{y}_i) + (1-y_i)*l
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./geosciences/UROP_shapers"
+            path: "./geosciences/pytorch_image_filtering_ml"
         },
         predefinedOutput: true
     }
@@ -361,8 +348,8 @@ L2 ; Regularisation = - \frac{1}{m} \sum^{m}_{i=1}[y_i*ln(\hat{y}_i) + (1-y_i)*l
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="Chapter 14 -- Vanishing Gradient 2.html" title="previous page">Chapter 14 – Vanishing Gradient 2</a>
-    <a class='right-next' id="next-link" href="Chapter 16 -- Other Activation Functions.html" title="next page">Chapter 16 – Other Activation Functions</a>
+    <a class='left-prev' id="prev-link" href="Chapter 10 -- General Back Propagation.html" title="previous page">Chapter 10 – General Back Propagation</a>
+    <a class='right-next' id="next-link" href="Chapter 12 -- Early-stopping, Dropout &amp; Mini-batch.html" title="next page">Chapter 12 – Early-stopping, Dropout &amp; Mini-batch</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

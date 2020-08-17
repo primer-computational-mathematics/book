@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Chapter 3 – Cross Entropy &#8212; ESE Jupyter Material</title>
+    <title>Chapter 13 – Vanishing Gradient 1 &#8212; ESE Jupyter Material</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
     <link href="../../_static/css/index.css" rel="stylesheet">
     <link rel="stylesheet" href="../../_static/sphinx-book-theme.css" type="text/css" />
@@ -40,8 +40,8 @@
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Chapter 4 – Cost Function" href="Chapter 4 -- Cost Function.html" />
-    <link rel="prev" title="Chapter 2 – Maximum Likelihood" href="Chapter 2 -- Maximum Likelihood.html" />
+    <link rel="next" title="Chapter 14 – Vanishing Gradient 2" href="Chapter 14 -- Vanishing Gradient 2.html" />
+    <link rel="prev" title="Chapter 12 – Early-stopping, Dropout &amp; Mini-batch" href="Chapter 12 -- Early-stopping, Dropout &amp; Mini-batch.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="docsearch:language" content="en">
@@ -124,8 +124,8 @@
       <li class="">
         <a href="Chapter 2 -- Maximum Likelihood.html">Chapter 2 – Maximum Likelihood</a>
       </li>
-      <li class="active">
-        <a href="">Chapter 3 – Cross Entropy</a>
+      <li class="">
+        <a href="Chapter 3 -- Cross Entropy.html">Chapter 3 – Cross Entropy</a>
       </li>
       <li class="">
         <a href="Chapter 4 -- Cost Function.html">Chapter 4 – Cost Function</a>
@@ -154,8 +154,8 @@
       <li class="">
         <a href="Chapter 12 -- Early-stopping, Dropout & Mini-batch.html">Chapter 12 – Early-stopping, Dropout & Mini-batch</a>
       </li>
-      <li class="">
-        <a href="Chapter 13 -- Vanishing Gradient 1.html">Chapter 13 – Vanishing Gradient 1</a>
+      <li class="active">
+        <a href="">Chapter 13 – Vanishing Gradient 1</a>
       </li>
       <li class="">
         <a href="Chapter 14 -- Vanishing Gradient 2.html">Chapter 14 – Vanishing Gradient 2</a>
@@ -238,7 +238,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../_sources/geosciences/UROP_shapers/Chapter 3 -- Cross Entropy.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="../../_sources/geosciences/pytorch_image_filtering_ml/Chapter 13 -- Vanishing Gradient 1.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
@@ -255,7 +255,7 @@
     <div class="dropdown-buttons sourcebuttons">
         
         <a class="issues-button"
-            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2Fgeosciences/UROP_shapers/Chapter 3 -- Cross Entropy.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2Fgeosciences/pytorch_image_filtering_ml/Chapter 13 -- Vanishing Gradient 1.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
         
@@ -275,7 +275,7 @@
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/geosciences/UROP_shapers/Chapter 3 -- Cross Entropy.ipynb"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/geosciences/pytorch_image_filtering_ml/Chapter 13 -- Vanishing Gradient 1.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="../../_static/images/logo_binder.svg"
@@ -304,37 +304,44 @@
         
               <div>
                 
-  <div class="section" id="chapter-3-cross-entropy">
-<span id="cross-entropy"></span><h1>Chapter 3 – Cross Entropy<a class="headerlink" href="#chapter-3-cross-entropy" title="Permalink to this headline">¶</a></h1>
-<p>The problem of the Maximum Likelihood approach in the last chapter is that if we have a huge dataset, then the total Prob(Event) will be very low (even if the model is pretty good):</p>
-<p>\begin{equation}
-0.7<em>0.7</em>0.8<em>0.8</em>0.7<em>0.7</em>0.8*0.8 = 9.8%
-\end{equation}</p>
-<p>This is a maximum likelihood approach for a `10 students’ prediction. This prediction is just as good as the previous one, but the total Prob(Event) is significantly lower than the previous one. To solve this problem, we can use natural log:</p>
-<p>\begin{equation}
-ln(A*B) = ln(A) + ln(B)
-\end{equation}</p>
-<p>So for the first AI, we have:</p>
-<p>\begin{equation}
-ln(0.7<em>0.2</em>0.2*0.6) = ln(0.7) + ln(0.2) + ln(0.2) + ln(0.6) = -4.086
-\end{equation}</p>
-<p>According to tradition, we choose the magnitude of the result: 4.086.</p>
-<p>For the second AI prediction, we have:</p>
-<p>\begin{equation}
--ln( 0.7<em>0.7</em>0.8*0.8) = -[ln(0.7) + ln(0.7) + ln(0.8) + ln(0.8)] = 1.16
-\end{equation}</p>
-<p>The lower the score is, the better the prediction. This score is known as the cross-entropy, which can be expressed as follow:</p>
-<p>\begin{equation}
--\sum_{i=1}^m [y_i*ln(p_i)+(1-y_i)*ln(1-p_i)]
-\end{equation}</p>
-<p>where <span class="math notranslate nohighlight">\(y_i\)</span> is the actual result (0 or 1), representing if the <span class="math notranslate nohighlight">\(i^{th}\)</span> student got accepted or rejected; and <span class="math notranslate nohighlight">\(p_i\)</span> is the prob(event) for the <span class="math notranslate nohighlight">\(i^{th}\)</span> student.</p>
-<p>The first part of the equation means how good the AI predicts the students who got accepted; the second part the equation evaluates how well AI predicts the students who got rejected.`</p>
-<p>Another reason for using the cross entropy is the concern of low learning speed caused by the flattened gradient (http://neuralnetworksanddeeplearning.com/chap3.html#eqtn6). Using the cross entropy format should have higher gradient and solves the problem.</p>
-<p>Notice that we do have another form of cost: the quadratic cost.</p>
-<p>\begin{equation}
-C(w,b) = \frac{1}{2n}\sum_x |\hat{y}-y|^2
-\end{equation}</p>
-<p>When should we use the cross-entropy instead of the quadratic cost? In fact, the cross-entropy is nearly always the better choice, provided the output neurons are sigmoid neurons. To see why, consider that when we’re setting up the network we usually initialize the weights and biases using some sort of randomization. It may happen that those initial choices result in the network being decisively wrong for some training input - that is, an output neuron will have saturated near 1, when it should be 0, or vice versa. If we’re using the quadratic cost that will slow down learning. It won’t stop learning completely, since the weights will continue learning from other training inputs, but it’s obviously undesirable.</p>
+  <div class="section" id="chapter-13-vanishing-gradient-1">
+<span id="vanishing-gradient-1"></span><h1>Chapter 13 – Vanishing Gradient 1<a class="headerlink" href="#chapter-13-vanishing-gradient-1" title="Permalink to this headline">¶</a></h1>
+<p>In the chapter of early stopping, we arrived at a conclusion that a good model usually has low cost and low error. However, if a model has low lost and low error, then does that guarantee it to be a good model? I know this is confusing, let’s look at the following example.</p>
+<p>For instance, we have two points: (1,1) and (-1,-1). There are two AI models that can separates them: <span class="math notranslate nohighlight">\(h_1 = x_1 + x_2\)</span> and <span class="math notranslate nohighlight">\(h_2 = 10*x_1 + 10*x_2\)</span>.</p>
+<img src="images/twoSeparators.PNG" width="600">
+<center> Figure 1.24<p>Which one is the better model though? According to our old method, the second model (<span class="math notranslate nohighlight">\(h_2 = 10x_1+10x_2\)</span>) is better because it has much lower lost and error as shown in the table below.</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head"><p>Actual Result</p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(\hat{y}_A\)</span> of Model A</p></th>
+<th class="head"><p>Error of Model A</p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(\hat{y}_B\)</span> of Model B</p></th>
+<th class="head"><p>Error of Model B</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>(1,1)</p></td>
+<td><p>1</p></td>
+<td><p>0.88</p></td>
+<td><p>0.12</p></td>
+<td><p>0.99999979</p></td>
+<td><p>0.00000021</p></td>
+</tr>
+<tr class="row-odd"><td><p>(-1,-1)</p></td>
+<td><p>0</p></td>
+<td><p>0.12</p></td>
+<td><p>0.12</p></td>
+<td><p>0.00000021</p></td>
+<td><p>0.00000021</p></td>
+</tr>
+</tbody>
+</table>
+<p>where $\hat{y}_A $ for (1,1) <span class="math notranslate nohighlight">\(=\frac{1}{1+e^{-(1*1+1*1)} }\approx 0.88\)</span> and <span class="math notranslate nohighlight">\(\hat{y}_A\)</span> for (-1, -1) <span class="math notranslate nohighlight">\(=\frac{1}{1+e^{-(-1*1-1*1)}} \approx 0.12\)</span>.</p>
+<p>So if we assume that the error of the model can be represented by the prediction by the same model, then we can have the table above.</p>
+<p>The point is, the second model seems to have much lower error than the first one even though they are the same separators. This is because the <span class="math notranslate nohighlight">\(\sigma(20)\)</span> for model B is much more approximate to 1 than the <span class="math notranslate nohighlight">\(\sigma(2)\)</span> for model A. Model B seems to be much more confident but that is unjustified.</p>
+<p>To dig into the problem, which is called the vanishing gradient, we need to notice that although the ratio of weights of the two models are the same, yet the gradient of the <span class="math notranslate nohighlight">\(\sigma(h)\)</span> function will be close to zero when <span class="math notranslate nohighlight">\(h\)</span> is really huge. This can be visually seen in the sigmoid function figure, where the gradient is basically flat at the far right hand side.</p>
+<p>This in turn will make the gradients of the cost function in all directions to be close to zero. Remember that in order to update the weight, we need to compute the gradient of the cost function with respect to that weight (equation 1 in chapter Backpropagation). This equation involves the term of <span class="math notranslate nohighlight">\(\frac{\delta \hat{y}}{\delta h_2}\)</span>, which is the gradient of the activation function (i.e. sigma function). If this term is close to zero, then the whole cost function, as a result, will be close to zero. This implies that we are updating the weight with <span class="math notranslate nohighlight">\(\Delta w\)</span> which is close to zero. We are going nowhere.</p>
 </div>
 
     <script type="text/x-thebe-config">
@@ -350,7 +357,7 @@ C(w,b) = \frac{1}{2n}\sum_x |\hat{y}-y|^2
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./geosciences/UROP_shapers"
+            path: "./geosciences/pytorch_image_filtering_ml"
         },
         predefinedOutput: true
     }
@@ -365,8 +372,8 @@ C(w,b) = \frac{1}{2n}\sum_x |\hat{y}-y|^2
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="Chapter 2 -- Maximum Likelihood.html" title="previous page">Chapter 2 – Maximum Likelihood</a>
-    <a class='right-next' id="next-link" href="Chapter 4 -- Cost Function.html" title="next page">Chapter 4 – Cost Function</a>
+    <a class='left-prev' id="prev-link" href="Chapter 12 -- Early-stopping, Dropout &amp; Mini-batch.html" title="previous page">Chapter 12 – Early-stopping, Dropout &amp; Mini-batch</a>
+    <a class='right-next' id="next-link" href="Chapter 14 -- Vanishing Gradient 2.html" title="next page">Chapter 14 – Vanishing Gradient 2</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

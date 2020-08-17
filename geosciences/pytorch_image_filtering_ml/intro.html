@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Chapter 11 – Underfitting and Overfitting &#8212; ESE Jupyter Material</title>
+    <title>Machine Learning &#8212; ESE Jupyter Material</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
     <link href="../../_static/css/index.css" rel="stylesheet">
     <link rel="stylesheet" href="../../_static/sphinx-book-theme.css" type="text/css" />
@@ -40,8 +40,8 @@
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Chapter 12 – Early-stopping, Dropout &amp; Mini-batch" href="Chapter 12 -- Early-stopping, Dropout &amp; Mini-batch.html" />
-    <link rel="prev" title="Chapter 10 – General Back Propagation" href="Chapter 10 -- General Back Propagation.html" />
+    <link rel="next" title="Chapter 0 – Introduction" href="Chapter 0 -- Introduction.html" />
+    <link rel="prev" title="Wave dispersion" href="../Wave_dispersion.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="docsearch:language" content="en">
@@ -113,7 +113,7 @@
       <a href="../Wave_dispersion.html">Wave dispersion</a>
     </li>
     <li class="active">
-      <a href="intro.html">Machine Learning</a>
+      <a href="">Machine Learning</a>
       <ul class="nav sidenav_l3">
       <li class="">
         <a href="Chapter 0 -- Introduction.html">Chapter 0 – Introduction</a>
@@ -148,8 +148,8 @@
       <li class="">
         <a href="Chapter 10 -- General Back Propagation.html">Chapter 10 – General Back Propagation</a>
       </li>
-      <li class="active">
-        <a href="">Chapter 11 – Underfitting and Overfitting</a>
+      <li class="">
+        <a href="Chapter 11 -- Underfitting and Overfitting.html">Chapter 11 – Underfitting and Overfitting</a>
       </li>
       <li class="">
         <a href="Chapter 12 -- Early-stopping, Dropout & Mini-batch.html">Chapter 12 – Early-stopping, Dropout & Mini-batch</a>
@@ -238,9 +238,9 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../_sources/geosciences/UROP_shapers/Chapter 11 -- Underfitting and Overfitting.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="../../_sources/geosciences/pytorch_image_filtering_ml/intro.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
+                data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
             onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
@@ -255,7 +255,7 @@
     <div class="dropdown-buttons sourcebuttons">
         
         <a class="issues-button"
-            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2Fgeosciences/UROP_shapers/Chapter 11 -- Underfitting and Overfitting.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2Fgeosciences/pytorch_image_filtering_ml/intro.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
         
@@ -269,23 +269,6 @@
                     class="fas fa-expand"></i></button></a>
 
         <!-- Launch buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/geosciences/UROP_shapers/Chapter 11 -- Underfitting and Overfitting.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="../../_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        
-        
-    </div>
-</div>
 
     </div>
     <div class="d-none d-md-block col-md-2 bd-toc show">
@@ -304,20 +287,32 @@
         
               <div>
                 
-  <div class="section" id="chapter-11-underfitting-and-overfitting">
-<span id="underfitting-and-overfitting-1"></span><h1>Chapter 11 – Underfitting and Overfitting<a class="headerlink" href="#chapter-11-underfitting-and-overfitting" title="Permalink to this headline">¶</a></h1>
-<p>Ok, suppose we have trained a set of weights based on certain dataset, then we change the learning rate and number of iterations, and then train the neural network again. Here we would arrive at a different set of weights. Which set of weight is better? This is a realistic problem. A simple answer would be, why not just choose the model that yields the lowest cost? Let’s look at the following figure.</p>
-<img src="images/threeModels.PNG" width="650">
-<center> Figure 1.21<p>Suppose we have a curve that separates the two groups, and we have three ways of separating them as shown in figure 1.21. Which one out of the three is the best? The first model generally draws the boundary but not clear enough, therefore its cost must be high. The second model has lower cost then the first one but its not perfect as in some dots are wrongly-categorised. The third one on the right hand side should be perfect because it correctly separates the two groups completely. Thus, the cost of the third model should be the minimum. However, does that mean the third model is the best?</p>
-<p>Based on statistics, most data should be good data but some are noises. Those noises can be outliers due to the invisible variables in the dataset. For example, we all think that a student who has <span class="math notranslate nohighlight">\(GPA=4.0\)</span> and <span class="math notranslate nohighlight">\(SAT=2400\)</span> should be accepted by a good university. However, if the scores are fake or he cheated on the exams, or the student had criminal records, then he would of course be rejected. In this case, the model that has only two variables (<span class="math notranslate nohighlight">\(SAT\)</span> and <span class="math notranslate nohighlight">\(GPA\)</span>) would not correctly predict the admission results. Again, this is the consequence of the invisible variables.</p>
-<p>If we can have additional variables for the scenarios we mentioned before in the example, then we would not have noises or outliers. However, we cannot obtain all variables in reality. For example, the admission officer was drunk the day he reviewed the student’s profile and mistook his <span class="math notranslate nohighlight">\(4.0 GPA\)</span> as <span class="math notranslate nohighlight">\(2.0 GPA\)</span>, and then he rejected this student. If we can obtain the variable of how drunk he was, then we can somehow predict how reliable his decision and take this into account in the model. Obviously, we cannot obtain the variable in real life. For some data points, therefore, it is reasonable to be wrongly-categorised. So the second model that has some outliers might actually be better than the third model that has the minimum cost.</p>
-<p>But here is the problem. How do we know if the outlier we saw is actually an outlier due to invisible variable or if it is just a noise. One obvious method would be finding 100 students with <span class="math notranslate nohighlight">\(GPA=4.0\)</span> and <span class="math notranslate nohighlight">\(SAT=2400\)</span> and check if most of them got accepted by a university. If so, then the one student who has the same profile but got rejected would be an outlier. If not, then the student is not an outlier, maybe that university does not like students with perfect scores.</p>
-<p>To generalise this method, although we are unlikely to find the same data like the 100 students and then observe the result, yet we are not about to predict if (<span class="math notranslate nohighlight">\(4.0\)</span> and <span class="math notranslate nohighlight">\(2400\)</span>) can be accepted but rather all combinations of scores. In a sense, we can use a testing dataset (that the AI model has never seen before, i.e. 2,000 students) to test how accurate the AI model is trained based on the training dataset (i.e. 8,000 students), if we have 10,000 students in total.</p>
-<img src="images/threeModels1.PNG" width="650">
-<center> Figure 1.22<p>In the three plots in the figure1.22, the dashed dots are the data from the testing set. The first model has high cost as we mentioned before, but it got 5 out of 6 testing data right, so its accuracy is <span class="math notranslate nohighlight">\(\frac{5}{6}\)</span> (low error). The second model has medium cost, but it got all 6 testing data right, therefore scoring an accuracy of <span class="math notranslate nohighlight">\(\frac{6}{6}\)</span> (zero error). However, for the third model, though it had the lowest cost yet it got only 4 out of 6 data from the testing set right, receiving an accuracy of <span class="math notranslate nohighlight">\(\frac{4}{6}\)</span> (high error). Notice that we use the term lost or cost to measure the performance of the training set and the term error for testing set.</p>
-<img src="images/threeModels2.PNG" width="600">
-<center> Figure 1.23<p>This is like me who has done a lot of past papers. I did not understand the principles behind the problems but simply remember all the answers. So if I do the past paper (training set) again, then I would receive crazily high scores. However, if I were to be tested by a new paper with new problems (testing set), then I would fail so hard. On the contrary, if a student is very smart, let’s call him Elon, if Elon understands the principles behind the questions then he still would not be scoring a perfect mark in the training set compared to me, yet he would be performing much better at the testing set. Obviously, we want Elon.</p>
-<p>In AI, we regard the UCL students who did terrible in past papers and new exams (high cost in training set, low accuracy in testing set) as <span class="math notranslate nohighlight">\(underfit\)</span> <span class="math notranslate nohighlight">\(models\)</span>. For the type of students, like me, who study hard and did well in past papers but fail super hard in new papers (low lost in training set but low accuracy in the testing set), we are called the <span class="math notranslate nohighlight">\(overfit\)</span> <span class="math notranslate nohighlight">\(models\)</span>. For the type of students like Elon, he scores high in the past papers and new papers, so he is the model that we consider as the best. Obviously, we want Elon.</p>
+  <div class="section" id="machine-learning">
+<h1>Machine Learning<a class="headerlink" href="#machine-learning" title="Permalink to this headline">¶</a></h1>
+<p>Table of contents:</p>
+<p><a class="reference internal" href="Chapter 0 -- Introduction.html#introduction"><span class="std std-ref">Chapter 0 – Introduction</span></a>
+<span class="xref std std-ref">Neural_Network</span><br />
+<a class="reference internal" href="Chapter 2 -- Maximum Likelihood.html#maximum-likelihood"><span class="std std-ref">Chapter 2 – Maximum Likelihood</span></a>
+<a class="reference internal" href="Chapter 3 -- Cross Entropy.html#cross-entropy"><span class="std std-ref">Chapter 3 – Cross Entropy</span></a>
+<span class="xref std std-ref">Cost_Function</span>
+<a class="reference internal" href="Chapter 5 -- Gradient Descent 1.html#gradient-descent-1"><span class="std std-ref">Chapter 5 – Gradient Descent 1</span></a>
+<a class="reference internal" href="Chapter 6 -- Gradient Descent 2.html#gradient-descent-2"><span class="std std-ref">Chapter 6 – Gradient Descent 2</span></a>
+<a class="reference internal" href="Chapter 7 -- Real (Non-linear) Neural Network.html#real-non-linear-neural-network"><span class="std std-ref">Chapter 7 – Real (Non-linear) Neural Network</span></a>
+<a class="reference internal" href="Chapter 8 -- Feedforward.html#feedforward"><span class="std std-ref">Chapter 8 – Feedforward</span></a>
+<span class="xref std std-ref">Back_Propagation</span>
+<a class="reference internal" href="Chapter 10 -- General Back Propagation.html#general-back-propagation"><span class="std std-ref">Chapter 10 – General Back Propagation</span></a>
+<a class="reference internal" href="Chapter 11 -- Underfitting and Overfitting.html#underfitting-and-overfitting-1"><span class="std std-ref">Chapter 11 – Underfitting and Overfitting</span></a>
+<a class="reference internal" href="Chapter 12 -- Early-stopping, Dropout &amp; Mini-batch.html#underfitting-and-overfitting-2"><span class="std std-ref">Chapter 12 – Early-stopping, Dropout &amp; Mini-batch</span></a>
+<a class="reference internal" href="Chapter 13 -- Vanishing Gradient 1.html#vanishing-gradient-1"><span class="std std-ref">Chapter 13 – Vanishing Gradient 1</span></a>
+<a class="reference internal" href="Chapter 14 -- Vanishing Gradient 2.html#vanishing-gradient-2"><span class="std std-ref">Chapter 14 – Vanishing Gradient 2</span></a>
+<span class="xref std std-ref">Regularisation</span>
+<a class="reference internal" href="Chapter 16 -- Other Activation Functions.html#other-activation-functions"><span class="std std-ref">Chapter 16 – Other Activation Functions</span></a>
+<span class="xref std std-ref">Local_Minima_Trap</span>
+<span class="xref std std-ref">Softmax</span>
+<a class="reference internal" href="Chapter 19 -- Hyper-Parameters.html#hyper-parameters"><span class="std std-ref">Chapter 19 – Hyper-Parameters</span></a>
+<a class="reference internal" href="Chapter 20 -- Coding Example.html#coding-example"><span class="std std-ref">Chapter 20 – Coding Example</span></a></p>
+<div class="toctree-wrapper compound">
+</div>
 </div>
 
     <script type="text/x-thebe-config">
@@ -333,7 +328,7 @@
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./geosciences/UROP_shapers"
+            path: "./geosciences/pytorch_image_filtering_ml"
         },
         predefinedOutput: true
     }
@@ -348,8 +343,8 @@
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="Chapter 10 -- General Back Propagation.html" title="previous page">Chapter 10 – General Back Propagation</a>
-    <a class='right-next' id="next-link" href="Chapter 12 -- Early-stopping, Dropout &amp; Mini-batch.html" title="next page">Chapter 12 – Early-stopping, Dropout &amp; Mini-batch</a>
+    <a class='left-prev' id="prev-link" href="../Wave_dispersion.html" title="previous page">Wave dispersion</a>
+    <a class='right-next' id="next-link" href="Chapter 0 -- Introduction.html" title="next page">Chapter 0 – Introduction</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

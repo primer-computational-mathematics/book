@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Chapter 18 – Softmax &#8212; ESE Jupyter Material</title>
+    <title>Chapter 4 – Cost Function &#8212; ESE Jupyter Material</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
     <link href="../../_static/css/index.css" rel="stylesheet">
     <link rel="stylesheet" href="../../_static/sphinx-book-theme.css" type="text/css" />
@@ -40,8 +40,8 @@
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Chapter 19 – Hyper-Parameters" href="Chapter 19 -- Hyper-Parameters.html" />
-    <link rel="prev" title="Chapter 17 – Local Minima Trap" href="Chapter 17 -- Local Minima Trap.html" />
+    <link rel="next" title="Chapter 5 – Gradient Descent 1" href="Chapter 5 -- Gradient Descent 1.html" />
+    <link rel="prev" title="Chapter 3 – Cross Entropy" href="Chapter 3 -- Cross Entropy.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="docsearch:language" content="en">
@@ -127,8 +127,8 @@
       <li class="">
         <a href="Chapter 3 -- Cross Entropy.html">Chapter 3 – Cross Entropy</a>
       </li>
-      <li class="">
-        <a href="Chapter 4 -- Cost Function.html">Chapter 4 – Cost Function</a>
+      <li class="active">
+        <a href="">Chapter 4 – Cost Function</a>
       </li>
       <li class="">
         <a href="Chapter 5 -- Gradient Descent 1.html">Chapter 5 – Gradient Descent 1</a>
@@ -169,8 +169,8 @@
       <li class="">
         <a href="Chapter 17 -- Local Minima Trap.html">Chapter 17 – Local Minima Trap</a>
       </li>
-      <li class="active">
-        <a href="">Chapter 18 – Softmax</a>
+      <li class="">
+        <a href="Chapter 18 -- Softmax.html">Chapter 18 – Softmax</a>
       </li>
       <li class="">
         <a href="Chapter 19 -- Hyper-Parameters.html">Chapter 19 – Hyper-Parameters</a>
@@ -238,7 +238,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../_sources/geosciences/UROP_shapers/Chapter 18 -- Softmax.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="../../_sources/geosciences/pytorch_image_filtering_ml/Chapter 4 -- Cost Function.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
@@ -255,7 +255,7 @@
     <div class="dropdown-buttons sourcebuttons">
         
         <a class="issues-button"
-            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2Fgeosciences/UROP_shapers/Chapter 18 -- Softmax.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2Fgeosciences/pytorch_image_filtering_ml/Chapter 4 -- Cost Function.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
         
@@ -275,7 +275,7 @@
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/geosciences/UROP_shapers/Chapter 18 -- Softmax.ipynb"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/geosciences/pytorch_image_filtering_ml/Chapter 4 -- Cost Function.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="../../_static/images/logo_binder.svg"
@@ -304,21 +304,22 @@
         
               <div>
                 
-  <p>(softmax) =</p>
-<div class="section" id="chapter-18-softmax">
-<h1>Chapter 18 – Softmax<a class="headerlink" href="#chapter-18-softmax" title="Permalink to this headline">¶</a></h1>
-<p>The cross-entropy cost can be used to address the problem of learning slowdown. However, I want to briefly describe another approach to the problem, based on what are called softmax layers of neurons. Softmax is still worth understanding, in part because it’s intrinsically interesting, and in part because we’ll use softmax layers in our discussion of deep neural networks.</p>
-<p>The idea of softmax is to define a new type of output layer for our neural networks. It begins in the same way as with a sigmoid layer, by forming the weighted inputs</p>
+  <p>(Cost_Function) =</p>
+<div class="section" id="chapter-4-cost-function">
+<h1>Chapter 4 – Cost Function<a class="headerlink" href="#chapter-4-cost-function" title="Permalink to this headline">¶</a></h1>
+<p>The previous 2 examples have the same amount of students, so it is a fair comparison. However, if they have different sizes, then the very accurate model with 1000 data would not have better cross-entropy result than the one with 5 data. So we need to divide the amount of the data to make `per capita’ comparison.</p>
 <p>\begin{equation}
-h=w_1x_1 + w_2x_2 + … + b
+Cost = -\frac{1}{m}\sum_{i=1}^m [y_i*ln(p_i)+(1-y_i)*ln(1-p_i)]
 \end{equation}</p>
-<p>However, we don’t apply the sigmoid function to get the output. Instead, in a softmax layer we apply the so-called softmax function</p>
+<p>where the <span class="math notranslate nohighlight">\(p_i\)</span> is the AI’s prediction of the probability of the event happening, which is the same as <span class="math notranslate nohighlight">\(\hat{y}\)</span> notation we used before.</p>
 <p>\begin{equation}
-softmax(h)^{(l)}<em>a = \frac{e^{h^{(n)}</em>{a}}}{\sum_b e^{h^{(n)}_b}}
-\end{equation}
-where <span class="math notranslate nohighlight">\(softmax(h)^{(l)}_a\)</span> is a prediction probability between 0 and 1 in the output layer.</p>
-<p>The sum of the <span class="math notranslate nohighlight">\(softmax(h)^{(l)}_a\)</span> is always 1. In other words, the output from the softmax layer can be thought of as a probability distribution. The fact that a softmax layer outputs a probability distribution is rather pleasing. In many problems it’s convenient to be able to interpret the output activation <span class="math notranslate nohighlight">\(a^{(n)}_a\)</span> as the network’s estimate of the probability that the correct output is <span class="math notranslate nohighlight">\(a^{th}\)</span> neuron in the output layer. So, for instance, in the MNIST classification problem, we can interpret <span class="math notranslate nohighlight">\(a^{(n)}_a\)</span> as the network’s estimated probability that the correct digit classification is the <span class="math notranslate nohighlight">\(a^{th}\)</span> neuron.</p>
-<p>By contrast, if the output layer was a sigmoid layer, then we certainly couldn’t assume that the activations formed a probability distribution. I won’t explicitly prove it, but it should be plausible that the activations from a sigmoid layer won’t in general form a probability distribution. And so with a sigmoid output layer we don’t have such a simple interpretation of the output activations.</p>
+\hat{y} = \sigma(\vec{w}*\vec{x}+b)
+\end{equation}</p>
+<p>So finally, we can obtain the following by replacing <span class="math notranslate nohighlight">\(p_i\)</span> by <span class="math notranslate nohighlight">\(\hat{y}\)</span></p>
+<p>\begin{equation}
+Cost(\vec{w},b) = -\frac{1}{m}\sum_{i=1}^m [y_i<em>ln( \sigma(\vec{w}</em>\vec{x}+b))+(1-y_i)<em>ln(1- \sigma(\vec{w}</em>\vec{x}+b))]
+\end{equation}</p>
+<p>What we want is to find the weights <span class="math notranslate nohighlight">\(w\)</span> and bias <span class="math notranslate nohighlight">\(b\)</span> to minimise the cost. This is a simple multi-variable calculus problem.</p>
 </div>
 
     <script type="text/x-thebe-config">
@@ -334,7 +335,7 @@ where <span class="math notranslate nohighlight">\(softmax(h)^{(l)}_a\)</span> i
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./geosciences/UROP_shapers"
+            path: "./geosciences/pytorch_image_filtering_ml"
         },
         predefinedOutput: true
     }
@@ -349,8 +350,8 @@ where <span class="math notranslate nohighlight">\(softmax(h)^{(l)}_a\)</span> i
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="Chapter 17 -- Local Minima Trap.html" title="previous page">Chapter 17 – Local Minima Trap</a>
-    <a class='right-next' id="next-link" href="Chapter 19 -- Hyper-Parameters.html" title="next page">Chapter 19 – Hyper-Parameters</a>
+    <a class='left-prev' id="prev-link" href="Chapter 3 -- Cross Entropy.html" title="previous page">Chapter 3 – Cross Entropy</a>
+    <a class='right-next' id="next-link" href="Chapter 5 -- Gradient Descent 1.html" title="next page">Chapter 5 – Gradient Descent 1</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

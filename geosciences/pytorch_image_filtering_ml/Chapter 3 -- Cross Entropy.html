@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Chapter 9 – Back Propagation &#8212; ESE Jupyter Material</title>
+    <title>Chapter 3 – Cross Entropy &#8212; ESE Jupyter Material</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
     <link href="../../_static/css/index.css" rel="stylesheet">
     <link rel="stylesheet" href="../../_static/sphinx-book-theme.css" type="text/css" />
@@ -40,8 +40,8 @@
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Chapter 10 – General Back Propagation" href="Chapter 10 -- General Back Propagation.html" />
-    <link rel="prev" title="Chapter 8 – Feedforward" href="Chapter 8 -- Feedforward.html" />
+    <link rel="next" title="Chapter 4 – Cost Function" href="Chapter 4 -- Cost Function.html" />
+    <link rel="prev" title="Chapter 2 – Maximum Likelihood" href="Chapter 2 -- Maximum Likelihood.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="docsearch:language" content="en">
@@ -124,8 +124,8 @@
       <li class="">
         <a href="Chapter 2 -- Maximum Likelihood.html">Chapter 2 – Maximum Likelihood</a>
       </li>
-      <li class="">
-        <a href="Chapter 3 -- Cross Entropy.html">Chapter 3 – Cross Entropy</a>
+      <li class="active">
+        <a href="">Chapter 3 – Cross Entropy</a>
       </li>
       <li class="">
         <a href="Chapter 4 -- Cost Function.html">Chapter 4 – Cost Function</a>
@@ -142,8 +142,8 @@
       <li class="">
         <a href="Chapter 8 -- Feedforward.html">Chapter 8 – Feedforward</a>
       </li>
-      <li class="active">
-        <a href="">Chapter 9 – Back Propagation</a>
+      <li class="">
+        <a href="Chapter 9 -- Back Propagation.html">Chapter 9 – Back Propagation</a>
       </li>
       <li class="">
         <a href="Chapter 10 -- General Back Propagation.html">Chapter 10 – General Back Propagation</a>
@@ -238,7 +238,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../_sources/geosciences/UROP_shapers/Chapter 9 -- Back Propagation.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="../../_sources/geosciences/pytorch_image_filtering_ml/Chapter 3 -- Cross Entropy.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
@@ -255,7 +255,7 @@
     <div class="dropdown-buttons sourcebuttons">
         
         <a class="issues-button"
-            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2Fgeosciences/UROP_shapers/Chapter 9 -- Back Propagation.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2Fgeosciences/pytorch_image_filtering_ml/Chapter 3 -- Cross Entropy.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
         
@@ -275,7 +275,7 @@
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/geosciences/UROP_shapers/Chapter 9 -- Back Propagation.ipynb"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/geosciences/pytorch_image_filtering_ml/Chapter 3 -- Cross Entropy.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="../../_static/images/logo_binder.svg"
@@ -304,96 +304,37 @@
         
               <div>
                 
-  <p>(Back_Propagation) =</p>
-<div class="section" id="chapter-9-back-propagation">
-<h1>Chapter 9 – Back Propagation<a class="headerlink" href="#chapter-9-back-propagation" title="Permalink to this headline">¶</a></h1>
-<p>The ultimate goal of neural network, don’t forget, is to find the best weight and bias. So when we obtain the predicted <span class="math notranslate nohighlight">\(\hat{y}\)</span>, we need to use it to compare with the actual result set <span class="math notranslate nohighlight">\(y\)</span>, and adjust weight and bias matrix <span class="math notranslate nohighlight">\(W\)</span> in accordance.</p>
-<p>The thought process is identical to the previous two layers neural network as we introduced before. However, we have three layers in this case, and potentially much more layers. We need to adjust and update the weight in each layer, instead of just one layer in the two layer example.</p>
-<p>So we need to obtain the gradient of the cost function in order to update weights. Let’s take the example of the first weight in the input layer in figure 1.13 in chapter 8. We need a longer chain rule to obtain the gradient because we have one more layer:</p>
+  <div class="section" id="chapter-3-cross-entropy">
+<span id="cross-entropy"></span><h1>Chapter 3 – Cross Entropy<a class="headerlink" href="#chapter-3-cross-entropy" title="Permalink to this headline">¶</a></h1>
+<p>The problem of the Maximum Likelihood approach in the last chapter is that if we have a huge dataset, then the total Prob(Event) will be very low (even if the model is pretty good):</p>
 <p>\begin{equation}
-\frac{\delta C}{\delta w^{(1)}<em>{11}} = \frac{\delta C}{\delta\hat{y}}\frac{\delta\hat{y}}{\delta h_2} \frac{\delta h_2}{\delta h_1} \frac{\delta h_1}{\delta w^{(1)}</em>{11}}
-\label{real chain rule}
+0.7<em>0.7</em>0.8<em>0.8</em>0.7<em>0.7</em>0.8*0.8 = 9.8%
 \end{equation}</p>
-<p>Note that the gradient of a weight is evaluated by the sum of all data/student (<span class="math notranslate nohighlight">\(y_i\)</span>), as explained in the previous example.</p>
+<p>This is a maximum likelihood approach for a `10 students’ prediction. This prediction is just as good as the previous one, but the total Prob(Event) is significantly lower than the previous one. To solve this problem, we can use natural log:</p>
 <p>\begin{equation}
--\frac{\delta C}{w^{(1)}<em>{11}} = \frac{1}{m} \frac{\delta}{\delta w^{(1)}</em>{11}} [\sum_{i=1}^m [y_i*ln(\sigma(h_2)]+(1-y_i)*ln(1-\sigma(h_2))]
+ln(A*B) = ln(A) + ln(B)
 \end{equation}</p>
-<p>For simplicity, we just derive the gradient for weight <span class="math notranslate nohighlight">\(w^{(1)}_{11}\)</span> for a single <span class="math notranslate nohighlight">\(y\)</span>, and use for loop to sum up them up and divide by <span class="math notranslate nohighlight">\(m\)</span>.</p>
+<p>So for the first AI, we have:</p>
 <p>\begin{equation}
--\frac{\delta C}{w^{(1)}<em>{11}} = \frac{\delta}{\delta w^{(1)}</em>{11}} [y*ln(\sigma(h_2)]+(1-y)*ln(1-\sigma(h_2))]
+ln(0.7<em>0.2</em>0.2*0.6) = ln(0.7) + ln(0.2) + ln(0.2) + ln(0.6) = -4.086
 \end{equation}</p>
-<p>Again, the <span class="math notranslate nohighlight">\(y\)</span> is just a constant, so we put it outside of the differential equation.</p>
+<p>According to tradition, we choose the magnitude of the result: 4.086.</p>
+<p>For the second AI prediction, we have:</p>
 <p>\begin{equation}
--\frac{\delta C}{w^{(1)}<em>{11}} = y*\frac{\delta}{\delta w^{(1)}</em>{11}} ln(\sigma(h_2)]+ (1-y)*\frac{\delta}{\delta w^{(1)}_{11}}ln(1-\sigma(h_2))
-\end{equation}
-where <span class="math notranslate nohighlight">\(\sigma(h_2) = \hat{y}\)</span>.</p>
-<p>We also know that</p>
-<p>\begin{equation}
-h_2 = \sigma(h_1)<em>w^{(2)}<em>{11} + \sigma(h_2)*w^{(2)}</em>{21} + 1</em>w^{(2)}_{31}
+-ln( 0.7<em>0.7</em>0.8*0.8) = -[ln(0.7) + ln(0.7) + ln(0.8) + ln(0.8)] = 1.16
 \end{equation}</p>
-<p>and</p>
+<p>The lower the score is, the better the prediction. This score is known as the cross-entropy, which can be expressed as follow:</p>
 <p>\begin{equation}
-h_1 = w^{(1)}<em>{11}*x_1 + w^{(1)}</em>{21}*x_2 + w^{(1)}<em>{31}*x_3 + w^{(1)}</em>{41}*1
+-\sum_{i=1}^m [y_i*ln(p_i)+(1-y_i)*ln(1-p_i)]
 \end{equation}</p>
-<p>So, for the parts that can be combined into the chain rule:</p>
+<p>where <span class="math notranslate nohighlight">\(y_i\)</span> is the actual result (0 or 1), representing if the <span class="math notranslate nohighlight">\(i^{th}\)</span> student got accepted or rejected; and <span class="math notranslate nohighlight">\(p_i\)</span> is the prob(event) for the <span class="math notranslate nohighlight">\(i^{th}\)</span> student.</p>
+<p>The first part of the equation means how good the AI predicts the students who got accepted; the second part the equation evaluates how well AI predicts the students who got rejected.`</p>
+<p>Another reason for using the cross entropy is the concern of low learning speed caused by the flattened gradient (http://neuralnetworksanddeeplearning.com/chap3.html#eqtn6). Using the cross entropy format should have higher gradient and solves the problem.</p>
+<p>Notice that we do have another form of cost: the quadratic cost.</p>
 <p>\begin{equation}
-\frac{\delta C}{\delta \hat{y}} = \frac{1-y}{1-\hat{y}} - \frac{y}{\hat{y}}
+C(w,b) = \frac{1}{2n}\sum_x |\hat{y}-y|^2
 \end{equation}</p>
-<p>\begin{equation}
-\frac{\delta \hat{y}}{\delta h_2} = \sigma^{‘}(h_2)= \sigma(h_2)[1-\sigma(h_2)]
-\end{equation}</p>
-<p>\begin{equation}
-\frac{\delta h_2}{\delta h_1} = w^{(2)}_{11}\sigma^{‘}(h_1)
-\end{equation}</p>
-<p>\begin{equation}
-\frac{\delta h_1}{\delta w^{(1)}_{11}} = x_1
-\end{equation}</p>
-<p>As a result, we have the gradient of <span class="math notranslate nohighlight">\(w_{11}^{(1)}\)</span> from the input layer to the hidden layer as follow</p>
-<p>\begin{equation}
--\frac{\delta C}{w^{(1)}<em>{11}} = (\frac{1-y}{1-\hat{y}} - \frac{y}{\hat{y}})*\sigma^{‘}(h_2)*w^{(2)}</em>{11}*\sigma^{‘}(h_1)*x_1
-\label{inputToHidden}
-\end{equation}</p>
-<p>On the other hand, we also want to get the gradient of weight (e.g. <span class="math notranslate nohighlight">\(w_{11}^{(2)}\)</span>) from the hidden layer to the output layer:</p>
-<p>\begin{equation}
-\frac{\delta C}{\delta w^{(2)}<em>{11}} = \frac{\delta C}{\delta\hat{y}}\frac{\delta\hat{y}}{\delta h_2} \frac{\delta h_2}{\delta  w^{(2)}</em>{11}}
-\end{equation}</p>
-<p>\begin{equation}
-\frac{\delta C}{\delta w^{(2)}_{11}} = (\frac{1-y}{1-\hat{y}} - \frac{y}{\hat{y}})*\sigma^{‘}(h_2) * \sigma(h_1)
-\label{hiddenToOutput}
-\end{equation}</p>
-<p>We realise that the first two terms are the same in equation \ref{inputToHidden} and \ref{hiddenToOutput}, so we define an `Error Term’ <span class="math notranslate nohighlight">\(\delta^{n-1}\)</span> for simplicity (<span class="math notranslate nohighlight">\(n\)</span> is the number of layers in the network, i.e. <span class="math notranslate nohighlight">\(n=3\)</span>):</p>
-<p>\begin{equation}
-\delta^{n-1} = \frac{\delta C}{\delta \hat{y}}\frac{\delta \hat{y}}{\delta h_2} =  (\frac{1-y}{1-\hat{y}} - \frac{y}{\hat{y}})*\sigma^{‘}(h_2)
-\end{equation}</p>
-<p>So the weight <span class="math notranslate nohighlight">\(w_{11}^{(2)}\)</span> from the hidden to output (<span class="math notranslate nohighlight">\(2nd\)</span>) layer in equation \ref{hiddenToOutput} can be expressed by the <span class="math notranslate nohighlight">\(\delta^2\)</span> for the <span class="math notranslate nohighlight">\(2nd\)</span> layer as</p>
-<p>\begin{equation}
-\frac{\delta C}{\delta w^{(2)}_{11}} = \delta^{3-1} *\sigma(h_1)
-\end{equation}</p>
-<p>And the weight <span class="math notranslate nohighlight">\(w_{11}^{(1)}\)</span> from the input to hidden layer in equation \ref{inputToHidden} can be written as</p>
-<p>\begin{equation}
-\frac{\delta C}{\delta w^{(1)}<em>{11}} = \delta^{3-1} * w^{(2)}</em>{11} * \sigma^{‘}(h_1)*x_1
-\label{inputToHidden1}
-\end{equation}</p>
-<p>To further simplify, we have another `Error Term’ <span class="math notranslate nohighlight">\(\delta^{n-2}\)</span> (i.e. <span class="math notranslate nohighlight">\(\delta^{3-2}\)</span> for the <span class="math notranslate nohighlight">\(1st\)</span> layer)</p>
-<p>\begin{equation}
-\delta^{n-2} = \delta^{n-1} * w^{(2)}_{11} * \sigma^{‘}(h_1)
-\end{equation}</p>
-<p>where <span class="math notranslate nohighlight">\(\delta^1\)</span> is for the next layer to the left, in this 3 layer neural network example, it is for the weight between input and hidden layer. <span class="math notranslate nohighlight">\(\delta^1\)</span> is updated by multiplying the corresponding weight <span class="math notranslate nohighlight">\(w^{(2)}_{11}\)</span> in the current layer and the derivative of sigma of the next layer to the left <span class="math notranslate nohighlight">\(\sigma^{'}(h_1)\)</span>.</p>
-<p>So the equation \ref{inputToHidden1} for weights in the <span class="math notranslate nohighlight">\(1st\)</span> layer can be written as</p>
-<p>\begin{equation}
-\frac{\delta C}{\delta w^{(1)}_{11}} = \delta^1 *x_1
-\label{inputToHidden2}
-\end{equation}</p>
-<p>So in a sense, in the back propagation, we update the weights in layers closer to the output layer first and then update towards the input layer. Every time we go back to one layer, we update the <span class="math notranslate nohighlight">\(\delta^1\)</span> based on the <span class="math notranslate nohighlight">\(\delta^0\)</span> in the previous layer.</p>
-<p>For updating the weight from the hidden to the output (<span class="math notranslate nohighlight">\(2nd\)</span>) layer, we have</p>
-<p>\begin{equation}
-w_i^{(2)’} = w_i^{(2)} - \eta \nabla C =  w_i^{(2)} - \eta \frac{\delta C}{\delta w_i} =   w_i^{(2)} - \eta \sum_{i=1}^m \delta^2\sigma(h_1)
-\end{equation}</p>
-<p>Remember that the <span class="math notranslate nohighlight">\(\delta^0\)</span> is a function of <span class="math notranslate nohighlight">\(y\)</span>, where we need to sum up all <span class="math notranslate nohighlight">\(y_i\)</span> in the dataset.</p>
-<p>For updating the weight from the input to the hidden (<span class="math notranslate nohighlight">\(1st\)</span>) layer, we have</p>
-<p>\begin{equation}
-w_i^{(1)’} = w_i^{(1)} - \eta \nabla C =  w_i^{(1)} - \eta \frac{\delta C}{\delta w_i} =   w_i^{(1)} - \eta \sum_{i=1}^m \delta^1 x_1
-\end{equation}</p>
+<p>When should we use the cross-entropy instead of the quadratic cost? In fact, the cross-entropy is nearly always the better choice, provided the output neurons are sigmoid neurons. To see why, consider that when we’re setting up the network we usually initialize the weights and biases using some sort of randomization. It may happen that those initial choices result in the network being decisively wrong for some training input - that is, an output neuron will have saturated near 1, when it should be 0, or vice versa. If we’re using the quadratic cost that will slow down learning. It won’t stop learning completely, since the weights will continue learning from other training inputs, but it’s obviously undesirable.</p>
 </div>
 
     <script type="text/x-thebe-config">
@@ -409,7 +350,7 @@ w_i^{(1)’} = w_i^{(1)} - \eta \nabla C =  w_i^{(1)} - \eta \frac{\delta C}{\de
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./geosciences/UROP_shapers"
+            path: "./geosciences/pytorch_image_filtering_ml"
         },
         predefinedOutput: true
     }
@@ -424,8 +365,8 @@ w_i^{(1)’} = w_i^{(1)} - \eta \nabla C =  w_i^{(1)} - \eta \frac{\delta C}{\de
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="Chapter 8 -- Feedforward.html" title="previous page">Chapter 8 – Feedforward</a>
-    <a class='right-next' id="next-link" href="Chapter 10 -- General Back Propagation.html" title="next page">Chapter 10 – General Back Propagation</a>
+    <a class='left-prev' id="prev-link" href="Chapter 2 -- Maximum Likelihood.html" title="previous page">Chapter 2 – Maximum Likelihood</a>
+    <a class='right-next' id="next-link" href="Chapter 4 -- Cost Function.html" title="next page">Chapter 4 – Cost Function</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
