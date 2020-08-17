@@ -1,0 +1,391 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Chapter 19 – Hyper-Parameters &#8212; ESE Jupyter Material</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/mystnb.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".cell"
+        const thebe_selector_input = ".cell_input div.highlight"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Remote sensing" href="../remote_sensing/intro.html" />
+    <link rel="prev" title="Chapter 18 – Softmax" href="Chapter 18 -- Softmax.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../index.html">
+  
+  <img src="../../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">ESE Jupyter Material</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  
+  <ul class="nav sidenav_l1">
+  <li class="">
+    <a href="../../intro.html">Landing page</a>
+  </li>
+  <li class="">
+    <a href="../../coding/intro.html">Coding</a>
+  </li>
+  <li class="active">
+    <a href="../intro.html">Geosciences</a>
+  <ul class="nav sidenav_l2">
+    <li class="">
+      <a href="../1D_Heat_Conduction.html">1D heat conduction (layered medium)</a>
+    </li>
+    <li class="">
+      <a href="../1D_Resistivity_Forward_Modelling.html">1D resistivity forward modelling</a>
+    </li>
+    <li class="">
+      <a href="../Climate_Model.html">Climate model</a>
+    </li>
+    <li class="">
+      <a href="../Dynamic_Earth.html">Seafloor ages</a>
+    </li>
+    <li class="">
+      <a href="../Keplerian_Orbits.html">Keplerian orbits</a>
+    </li>
+    <li class="">
+      <a href="../Milankovitch_cycles.html">Milankovitch cycles</a>
+    </li>
+    <li class="">
+      <a href="../Seismology.html">Downloading earthquake data</a>
+    </li>
+    <li class="">
+      <a href="../Tides.html">Tides</a>
+    </li>
+    <li class="">
+      <a href="../Wave_dispersion.html">Wave dispersion</a>
+    </li>
+    <li class="active">
+      <a href="intro.html">Machine Learning</a>
+      <ul class="nav sidenav_l3">
+      <li class="">
+        <a href="Chapter 0 -- Introduction.html">Chapter 0 – Introduction</a>
+      </li>
+      <li class="">
+        <a href="Chapter 1 -- Neural Network.html">Chapter 1 – Neural Network</a>
+      </li>
+      <li class="">
+        <a href="Chapter 2 -- Maximum Likelihood.html">Chapter 2 – Maximum Likelihood</a>
+      </li>
+      <li class="">
+        <a href="Chapter 3 -- Cross Entropy.html">Chapter 3 – Cross Entropy</a>
+      </li>
+      <li class="">
+        <a href="Chapter 4 -- Cost Function.html">Chapter 4 – Cost Function</a>
+      </li>
+      <li class="">
+        <a href="Chapter 5 -- Gradient Descent 1.html">Chapter 5 – Gradient Descent 1</a>
+      </li>
+      <li class="">
+        <a href="Chapter 6 -- Gradient Descent 2.html">Chapter 6 – Gradient Descent 2</a>
+      </li>
+      <li class="">
+        <a href="Chapter 7 -- Real (Non-linear) Neural Network.html">Chapter 7 – Real (Non-linear) Neural Network</a>
+      </li>
+      <li class="">
+        <a href="Chapter 8 -- Feedforward.html">Chapter 8 – Feedforward</a>
+      </li>
+      <li class="">
+        <a href="Chapter 9 -- Back Propagation.html">Chapter 9 – Back Propagation</a>
+      </li>
+      <li class="">
+        <a href="Chapter 10 -- General Back Propagation.html">Chapter 10 – General Back Propagation</a>
+      </li>
+      <li class="">
+        <a href="Chapter 11 -- Underfitting and Overfitting.html">Chapter 11 – Underfitting and Overfitting</a>
+      </li>
+      <li class="">
+        <a href="Chapter 12 -- Early-stopping, Dropout & Mini-batch.html">Chapter 12 – Early-stopping, Dropout & Mini-batch</a>
+      </li>
+      <li class="">
+        <a href="Chapter 13 -- Vanishing Gradient 1.html">Chapter 13 – Vanishing Gradient 1</a>
+      </li>
+      <li class="">
+        <a href="Chapter 14 -- Vanishing Gradient 2.html">Chapter 14 – Vanishing Gradient 2</a>
+      </li>
+      <li class="">
+        <a href="Chapter 15 -- Regularisation.html">Chapter 15 – Regularisation</a>
+      </li>
+      <li class="">
+        <a href="Chapter 16 -- Other Activation Functions.html">Chapter 16 – Other Activation Functions</a>
+      </li>
+      <li class="">
+        <a href="Chapter 17 -- Local Minima Trap.html">Chapter 17 – Local Minima Trap</a>
+      </li>
+      <li class="">
+        <a href="Chapter 18 -- Softmax.html">Chapter 18 – Softmax</a>
+      </li>
+      <li class="active">
+        <a href="">Chapter 19 – Hyper-Parameters</a>
+      </li>
+    </ul>
+    </li>
+    <li class="">
+      <a href="../remote_sensing/intro.html">Remote sensing</a>
+    </li>
+  </ul>
+  </li>
+  <li class="">
+    <a href="../../mathematics/intro.html">Mathematics</a>
+  </li>
+  <li class="">
+    <a href="../../modules/intro.html">Modules</a>
+  </li>
+  <li class="">
+    <a href="../../z_extra_resources_for_researchers/intro.html">Extra resources for researchers</a>
+  </li>
+  <li class="">
+    <a href="../../genindex.html">Index</a>
+  </li>
+</ul>
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/geosciences/UROP_shapers/Chapter 19 -- Hyper-Parameters.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        
+        <a class="issues-button"
+            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2Fgeosciences/UROP_shapers/Chapter 19 -- Hyper-Parameters.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/geosciences/UROP_shapers/Chapter 19 -- Hyper-Parameters.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#broad-strategy" class="nav-link">Broad Strategy</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#specific-recommendations" class="nav-link">Specific Recommendations</a>
+        </li>
+    
+    </ul>
+</nav>
+
+
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="chapter-19-hyper-parameters">
+<span id="hyper-parameters"></span><h1>Chapter 19 – Hyper-Parameters<a class="headerlink" href="#chapter-19-hyper-parameters" title="Permalink to this headline">¶</a></h1>
+<p>How to choose a neural network’s hyper-parameters such as the learning rate,<span class="math notranslate nohighlight">\(\eta\)</span>, the regularization parameter, <span class="math notranslate nohighlight">\(\lambda\)</span>, and so on? I’ve just been supplying values which work pretty well. In practice, when we’re using neural nets to attack a problem, it can be difficult to find good hyper-parameters. Imagine, for example, that we’ve just been introduced to the MNIST problem, and have begun working on it, knowing nothing at all about what hyper-parameters to use. Let’s suppose that by good fortune in our first experiments we choose many of the hyper-parameters in the same way as was done earlier this chapter: 30 hidden neurons, a mini-batch size of 10, training for 30 epochs using the cross-entropy. But we choose a learning rate <span class="math notranslate nohighlight">\(\eta=10.0\)</span> and regularization parameter <span class="math notranslate nohighlight">\(\lambda=1000.0\)</span>. Our classification accuracies are no better than chance! Our network is acting as a random noise generator!</p>
+<p>“Well, that’s easy to fix,” we might say, “just decrease the learning rate and regularization hyper-parameters”. Unfortunately, we don’t a priori know those are the hyper-parameters we need to adjust. Maybe the real problem is that our 30 hidden neuron network will never work well, no matter how the other hyper-parameters are chosen? Maybe we really need at least 100 hidden neurons? Or 300 hidden neurons? Or multiple hidden layers? Or a different approach to encoding the output? Maybe our network is learning, but we need to train for more epochs? Maybe the mini-batches are too small? Maybe we’d do better switching back to the quadratic cost function? Maybe we need to try a different approach to weight initialization? And so on, on and on and on. It’s easy to feel lost in hyper-parameter space. This can be particularly frustrating if our network is very large, or uses a lot of training data, since we may train for hours or days or weeks, only to get no result. If the situation persists, it damages our confidence. Maybe neural networks are the wrong approach to our problem? Maybe we should quit our job and take up beekeeping?</p>
+<p>There are some heuristics which can be used to set the hyper-parameters in a neural network. Of course, I won’t cover everything about hyper-parameter optimization. That’s a huge subject, and it’s not, in any case, a problem that is ever completely solved, nor is there universal agreement amongst practitioners on the right strategies to use. There’s always one more trick we can try to eke out a bit more performance from our network. But the heuristics in this section should get us started.</p>
+<div class="section" id="broad-strategy">
+<h2>Broad Strategy<a class="headerlink" href="#broad-strategy" title="Permalink to this headline">¶</a></h2>
+<p>When using neural networks to attack a new problem the first challenge is to get any non-trivial learning, i.e., for the network to achieve results better than chance. This can be surprisingly difficult, especially when confronting a new class of problem. Let’s look at some strategies we can use if we’re having this kind of trouble.</p>
+<p>Suppose, for example, that we’re attacking MNIST for the first time. We start out enthusiastic, but are a little discouraged when our first network fails completely. The way to go is to strip the problem down. Get rid of all the training and validation images except images which are 0s or 1s. Then try to train a network to distinguish 0s from 1s. Not only is that an inherently easier problem than distinguishing all ten digits, it also reduces the amount of training data by 80 percent, speeding up training by a factor of 5. That enables much more rapid experimentation, and so gives us more rapid insight into how to build a good network.</p>
+<p>We can further speed up experimentation by stripping our network down to the simplest network likely to do meaningful learning. If we believe a [784, 10] network can likely do better-than-chance classification of MNIST digits, then begin our experimentation with such a network. It’ll be much faster than training a [784, 30, 10] network, and we can build back up to the latter.</p>
+<p>We can get another speed up in experimentation by increasing the frequency of monitoring. In many examples, we monitor performance at the end of each training epoch. With 50,000 images per epoch, that means waiting a little while - about ten seconds per epoch, on my laptop, when training a [784, 30, 10] network - before getting feedback on how well the network is learning. Of course, ten seconds isn’t very long, but if we want to trial dozens of hyper-parameter choices it’s annoying, and if we want to trial hundreds or thousands of choices it starts to get debilitating. We can get feedback more quickly by monitoring the validation accuracy more often, say, after every 1,000 training images.</p>
+<p>Furthermore, instead of using the full 10,000 image validation set to monitor performance, we can get a much faster estimate using just 100 validation images. All that matters is that the network sees enough images to do real learning, and to get a pretty good rough estimate of performance. Of course, our program doesn’t currently do this kind of monitoring. But as a kludge to achieve a similar effect for the purposes of illustration, we’ll strip down our training data to just the first 1,000 MNIST training images. Let’s try it and see what happens. (To keep the code below simple I haven’t implemented the idea of using only 0 and 1 images. Of course, that can be done with just a little more work.)</p>
+<p>We’re still getting pure noise! But there’s a big win: we’re now getting feedback in a fraction of a second, rather than once every ten seconds or so. That means we can more quickly experiment with other choices of hyper-parameter, or even conduct experiments trialling many different choices of hyper-parameter nearly simultaneously.</p>
+<p>This all looks very promising as a broad strategy. However, I want to return to that initial stage of finding hyper-parameters that enable a network to learn anything at all. In fact, even the above discussion conveys too positive an outlook. It can be immensely frustrating to work with a network that’s learning nothing. We can tweak hyper-parameters for days, and still get no meaningful response. And so I’d like to re-emphasize that during the early stages we should make sure we can get quick feedback from experiments. Intuitively, it may seem as though simplifying the problem and the architecture will merely slow us down. In fact, it speeds things up, since we are much more quickly find a network with a meaningful signal. Once we’ve got such a signal, we can often get rapid improvements by tweaking the hyper-parameters. As with many things in life, getting started can be the hardest thing to do.</p>
+</div>
+<div class="section" id="specific-recommendations">
+<h2>Specific Recommendations<a class="headerlink" href="#specific-recommendations" title="Permalink to this headline">¶</a></h2>
+<p>Okay, that’s the broad strategy. Let’s now look at some specific recommendations for setting hyper-parameters. As introduced before, the learning rate, <span class="math notranslate nohighlight">\(\eta\)</span>, can be dynamic and change with the gradient.</p>
+<p>Also, for the L2 regularization parameter, <span class="math notranslate nohighlight">\(\lambda\)</span>, we can start with <span class="math notranslate nohighlight">\(\lambda =0\)</span> to determine the value of <span class="math notranslate nohighlight">\(\eta\)</span>. Using that choice of <span class="math notranslate nohighlight">\(\eta\)</span>, we can then use the validation data to select a good value for <span class="math notranslate nohighlight">\(\lambda\)</span>. Start by trialling <span class="math notranslate nohighlight">\(\lambda=1\)</span> and then increase or decrease by factors of 10, as needed to improve performance on the validation data. Once we’ve found a good order of magnitude, we can fine tune our value of <span class="math notranslate nohighlight">\(\lambda\)</span>.</p>
+<p>What’s more, how should we set the mini-batch size? Choosing the best mini-batch size is a compromise. If the size is too small, we won’t get to take full advantage of the benefits of good matrix libraries optimized for fast hardware. If it is too large then we’re simply not updating the weights often enough. What we need is to choose a compromise value which maximizes the speed of learning. Fortunately, the choice of mini-batch size at which the speed is maximized is relatively independent of the other hyper-parameters (apart from the overall architecture), so we don’t need to have optimized those hyper-parameters in order to find a good mini-batch size. The way to go is therefore to use some acceptable (but not necessarily optimal) values for the other hyper-parameters, and then trial a number of different mini-batch sizes. Plot the validation accuracy versus time (as in, real elapsed time, not epoch), and choose whichever mini-batch size gives us the most rapid improvement in performance. With the mini-batch size chosen we can then proceed to optimize the other hyper-parameters.</p>
+<p>However, many of the remarks apply also to other hyper-parameters, including those associated to network architecture, number of epoch (determined by early dropping as mentioned before), other forms of regularization, and some hyper-parameters such as the momentum co-efficient as mentioned earlier.</p>
+<p>Now, we can automate some of the hyper-parameters (number of epoch and learning rate) but for others, such as the mini-batch size, we need to hand pick them. There is this paper (http://dl.acm.org/citation.cfm?id=2188395) about the automating processes of choosing hyper-parameters. It is a common technique called grid search, which systematically searches through a grid in hyper-parameter space. The code from this paper (https://github.com/jaberg/hyperopt) has been used with some success by other researchers.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "primer-computational-mathematics/book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./geosciences/UROP_shapers"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="Chapter 18 -- Softmax.html" title="previous page">Chapter 18 – Softmax</a>
+    <a class='right-next' id="next-link" href="../remote_sensing/intro.html" title="next page">Remote sensing</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Imperial College London<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../../_static/js/index.js"></script>
+    
+  </body>
+</html>
