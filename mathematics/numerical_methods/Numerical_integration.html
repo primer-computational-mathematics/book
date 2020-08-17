@@ -279,25 +279,17 @@
         </li>
     
         <li class="nav-item toc-entry toc-h2">
-            <a href="#weddle-s-rule" class="nav-link">Weddle’s rule</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#other-rules" class="nav-link">Other rules</a><ul class="nav section-nav flex-column">
+            <a href="#weddle-s-rule" class="nav-link">Weddle’s rule</a><ul class="nav section-nav flex-column">
                 
         <li class="nav-item toc-entry toc-h3">
-            <a href="#richardson-extrapolation" class="nav-link">Richardson extrapolation</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#romberg-integration" class="nav-link">Romberg integration</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#newton-cotes-formula" class="nav-link">Newton-Cotes formula</a>
+            <a href="#id1" class="nav-link">Implementation</a>
         </li>
     
             </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#other-rules" class="nav-link">Other rules</a>
         </li>
     
     </ul>
@@ -921,21 +913,138 @@ Area 1000 Simpson&#39;s interval(s) = 2 (error=6.79456e-14)
 </div>
 <div class="section" id="composite-simpson-s-rule">
 <h2>Composite Simpson’s rule<a class="headerlink" href="#composite-simpson-s-rule" title="Permalink to this headline">¶</a></h2>
+<p>If we assume that our interval \([a,b]\) has been split up into \(n\) intervals (or \(n+1\) data points) we can save some function evaluations by writing Simpson’s rule in the following form:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+I_{S} 
+&amp; = \frac{\Delta x}{3}\left[ f \left ( x_0\right ) + 4f \left ( x_1\right ) + 2f\left ( x_2\right ) + 4f \left ( x_3\right ) + \cdots + 2 f \left ( x_{n-2}\right )  + 4 f \left ( x_{n-1}\right ) +  f \left ( x_{n}\right ) \right]\\[5pt]
+&amp; = \frac{\Delta x}{3}\left[ f \left ( x_0\right ) + 2\sum_{i=1}^{n/2 - 1} f\left(x_{2i}\right) + 4\sum_{i=1}^{n/2} f\left(x_{2i-1}\right)  +  f \left ( x_{n}\right ) \right].
+\end{align*}
+\end{split}\]</div>
+<p>This is known as the <a class="reference external" href="http://en.wikipedia.org/wiki/Simpson%27s_rule#Composite_Simpson.27s_rule">composite Simpson’s rule</a>,
+or more precisely the <em>composite Simpson’s 1/3 rule</em>.</p>
+<p>You can find a version of Simpson’s rule implemented by SciPy - <a class="reference external" href="http://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.simps.html"><code class="docutils literal notranslate"><span class="pre">scipy.interpolate.simps</span></code></a>.</p>
+<p>Note that this way of formulating Simpson’s rule (where we do not allow additional function evaluations at the midpoints of intervals - we assume we are only in a position to use the given data points) requires that \(n\) be even.</p>
+<p>This way of writing the composite form in the case of \(n=2\) is equivalent to the formula over \([a,b]\) that introduced the additional midpoint location \(c\).</p>
+<p>Let’s implement this rule:</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">simpsons_composite_rule</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">function</span><span class="p">,</span> <span class="n">number_intervals</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Function to evaluate the composite Simpson&#39;s rule only using</span>
+<span class="sd">    function evaluations at (number_intervals + 1) points.</span>
+<span class="sd">    </span>
+<span class="sd">    This implementation requires that the number of subintervals (number_intervals) be even</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="n">number_intervals</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;number_intervals is not even&quot;</span>
+
+    <span class="n">interval_size</span> <span class="o">=</span> <span class="p">(</span><span class="n">b</span> <span class="o">-</span> <span class="n">a</span><span class="p">)</span> <span class="o">/</span> <span class="n">number_intervals</span>
+    <span class="c1"># Start with the two end member values</span>
+    <span class="n">I_cS2</span> <span class="o">=</span> <span class="n">function</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">+</span> <span class="n">function</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+
+    <span class="c1"># Add in those terms with a coefficient of 4</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">number_intervals</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
+        <span class="n">I_cS2</span> <span class="o">+=</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">function</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">i</span> <span class="o">*</span> <span class="n">interval_size</span><span class="p">)</span>
+
+    <span class="c1"># And those terms with a coefficient of 2</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">number_intervals</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
+        <span class="n">I_cS2</span> <span class="o">+=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">function</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">i</span> <span class="o">*</span> <span class="n">interval_size</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">I_cS2</span> <span class="o">*</span> <span class="p">(</span><span class="n">interval_size</span> <span class="o">/</span> <span class="mf">3.0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s test the rule:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The area found by direct integration = 2&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1000</span><span class="p">):</span>
+    <span class="n">area</span> <span class="o">=</span> <span class="n">simpsons_composite_rule</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Area </span><span class="si">%g</span><span class="s2"> rectangle(s) = </span><span class="si">%g</span><span class="s2"> (error=</span><span class="si">%g</span><span class="s2">)&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">area</span><span class="p">,</span> <span class="nb">abs</span><span class="p">(</span><span class="n">area</span><span class="o">-</span><span class="mi">2</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>The area found by direct integration = 2
+Area 2 rectangle(s) = 2.0944 (error=0.0943951)
+Area 10 rectangle(s) = 2.00011 (error=0.000109517)
+Area 100 rectangle(s) = 2 (error=1.08245e-08)
+Area 1000 rectangle(s) = 2 (error=1.07869e-12)
+</pre></div>
+</div>
+</div>
+</div>
+<p>This is a slight improvement for a simple function like \(\sin\), but will be much more of an improvement for functions which oscillate more, in a relative sense compared to the size of our bins.</p>
 </div>
 <div class="section" id="weddle-s-rule">
 <h2>Weddle’s rule<a class="headerlink" href="#weddle-s-rule" title="Permalink to this headline">¶</a></h2>
+<p>We noted above that Simpson’s rule is fourth-order accurate. Suppose we take an approximation to \(I\) using \(n\) subintervals with Simpson’s rule and call the result \(I_S\), and then apply Simpson’s rule with double the number of intervals (\(2n\)) and call the result \(I_{S_2}\).</p>
+<p>Then we have two estimates for the integral where we expect \(I_{S_2}\) to be approximately \(2^4=16\) times more accurate than \(S\). In particular, we expect the lowest (i.e. the leading) order error term in \(I_{S_2}\) to be precisely one sixteenth that of \(I_S\).</p>
+<p>Similar to how we derived Simpson’s rule by combining what we knew of the error for the midpoint and trapezoidal rules, with this knowledge we can combine the two estimates from Simpson’s rule to derive an even more accurate estimate of \(I\).</p>
+<p>Let’s call this more accurate rule \(I_W\), which we can find by solving:</p>
+<p>\[I_W - I_S = 16 \left ( I_W - I_{S_2} \right ),\]
+for \(I_W\).</p>
+<p>With a bit of manipulation,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+&amp;amp; \;\;\; I_W - I_S = 16 \left ( I_W - I_{S_2} \right ) \\[5pt]
+\implies &amp;amp; \;\;\; I_W - I_S = 16 I_W - 16 I_{S_2} \\[5pt]
+\implies &amp;amp; \;\;\; 15 I_W  = 16 I_{S_2} - I_S \\[5pt]
+\implies &amp;amp; \;\;\; 15 I_W  = 15 I_{S_2} + (I_{S_2} - I_S) ,
+\end{align*}\end{split}\]</div>
+<p>we get this expression</p>
+<p>\[ I_W = I_{S_2} + \frac {\left (I_{S_2} - I_S \right )}{15}.\]</p>
+<p>This is known as <strong>Weddle’s rule</strong>, or the extrapolated Simpson’s rule because it uses two different values for the interval size and extrapolates from these two to obtain an even more accurate result.</p>
+<p>Making a function for this rule is easy as we can just call our Simpson’s rule functions with two values for the number of intervals.</p>
+<div class="section" id="id1">
+<h3>Implementation<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>We can implement this by calling already created functions for composite Simpson’s rule:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">weddles_rule</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">function</span><span class="p">,</span> <span class="n">number_intervals</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Function to evaluate Weddle&#39;s quadrature rule using</span>
+<span class="sd">    appropriate calls to the composite_simpson function</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">S</span> <span class="o">=</span> <span class="n">simpsons_composite_rule</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">function</span><span class="p">,</span> <span class="n">number_intervals</span><span class="p">)</span>
+    <span class="n">S2</span> <span class="o">=</span> <span class="n">simpsons_composite_rule</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">function</span><span class="p">,</span> <span class="n">number_intervals</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">S2</span> <span class="o">+</span> <span class="p">(</span><span class="n">S2</span> <span class="o">-</span> <span class="n">S</span><span class="p">)</span><span class="o">/</span><span class="mf">15.</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can test it in a similar way:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1000</span><span class="p">):</span>
+    <span class="n">area</span> <span class="o">=</span> <span class="n">weddles_rule</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Area with </span><span class="si">%g</span><span class="s2"> Weddle&#39;s interval(s) = </span><span class="si">%g</span><span class="s2"> (error=</span><span class="si">%g</span><span class="s2">)&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">area</span><span class="p">,</span> <span class="nb">abs</span><span class="p">(</span><span class="n">area</span><span class="o">-</span><span class="mi">2</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Area with 2 Weddle&#39;s interval(s) = 1.99857 (error=0.00142927)
+Area with 10 Weddle&#39;s interval(s) = 2 (error=6.44164e-08)
+Area with 100 Weddle&#39;s interval(s) = 2 (error=6.23945e-14)
+Area with 1000 Weddle&#39;s interval(s) = 2 (error=8.88178e-16)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Our final result is much more accurate for fewer required bins:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../../_images/Numerical_integration_37_0.png" src="../../_images/Numerical_integration_37_0.png" />
+</div>
+</div>
+</div>
 </div>
 <div class="section" id="other-rules">
 <h2>Other rules<a class="headerlink" href="#other-rules" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="richardson-extrapolation">
-<h3>Richardson extrapolation<a class="headerlink" href="#richardson-extrapolation" title="Permalink to this headline">¶</a></h3>
-</div>
-<div class="section" id="romberg-integration">
-<h3>Romberg integration<a class="headerlink" href="#romberg-integration" title="Permalink to this headline">¶</a></h3>
-</div>
-<div class="section" id="newton-cotes-formula">
-<h3>Newton-Cotes formula<a class="headerlink" href="#newton-cotes-formula" title="Permalink to this headline">¶</a></h3>
-</div>
+<p>Note that the above technique of using the same rule, but with different values for the interval size, \(h\), to derive a more accurate estimate of the integral is an example of what is more generally called <em>Richardson extrapolation</em>. Performing this approach using the trapezoid rule as the starting point leads to what is termed <em>Romberg integration</em>.</p>
+<p>Taking the idea behind Simpson’s rule which fits a quadratic Lagrange interpolating polynomial to <em>equally spaced</em> points in the interval, end extending to any order Lagrange polynomial leads to the <a class="reference external" href="https://en.wikipedia.org/wiki/Newton%E2%80%93Cotes_formulas"><em>Newton-Cotes</em> family of quadrature rules</a>.</p>
+<p>Note finally, that even wider families exist where the function being integrated is evaluated at non-equally-spaced points. And of course for practical application these ideas need to be extended to more than one dimension.</p>
 </div>
 </div>
 
