@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Order of an ODE &#8212; ESE Jupyter Material</title>
+    <title>ODEs &#8212; ESE Jupyter Material</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
     <link href="../../_static/css/index.css" rel="stylesheet">
     <link rel="stylesheet" href="../../_static/sphinx-book-theme.css" type="text/css" />
@@ -101,16 +101,16 @@
         <a href="Eigenvalues.html">Eigenvalues</a>
       </li>
       <li class="">
-        <a href="Matrices_Linear_Algebra.html">Defining a matrix</a>
+        <a href="Matrices_Linear_Algebra.html">Matrices linear algebra</a>
       </li>
       <li class="">
-        <a href="Modelling.html">Numerical differentiation</a>
+        <a href="Modelling.html">Modelling</a>
       </li>
       <li class="">
         <a href="Multivariable_Calculus.html">Multivariable calculus</a>
       </li>
       <li class="active">
-        <a href="">Order of an ODE</a>
+        <a href="">ODEs</a>
       </li>
       <li class="">
         <a href="Series.html">Series</a>
@@ -231,7 +231,7 @@
     <ul class="nav section-nav flex-column">
     
         <li class="nav-item toc-entry toc-h2">
-            <a href="#" class="nav-link">Order of an ODE</a>
+            <a href="#order-of-an-ode" class="nav-link">Order of an ODE</a>
         </li>
     
         <li class="nav-item toc-entry toc-h2">
@@ -289,8 +289,10 @@
 </div>
 </div>
 </div>
+<div class="section" id="odes">
+<h1>ODEs<a class="headerlink" href="#odes" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="order-of-an-ode">
-<h1>Order of an ODE<a class="headerlink" href="#order-of-an-ode" title="Permalink to this headline">¶</a></h1>
+<h2>Order of an ODE<a class="headerlink" href="#order-of-an-ode" title="Permalink to this headline">¶</a></h2>
 <p>Lecture 7, slide 9</p>
 <p>Use sympy to define dependent and independent variables, constants, ODE, and to find the order of ODEs.</p>
 <div class="cell docutils container">
@@ -319,10 +321,33 @@
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>ODE #1:
+         d       
+η⋅v(t) + ──(v(t))
+         dt      
+The order of ODE #1 is 1
+ODE #2:
+             2      
+            d       
+k⋅x(t) + m⋅───(x(t))
+             2      
+           dt       
+The order of ODE #2 is 2
+ODE #3:
+    2           4      
+   d           d       
+- ───(y(t)) + ───(y(t))
+    2           4      
+  dt          dt       
+The order of ODE #3 is 4
+</pre></div>
+</div>
+</div>
 </div>
 </div>
 <div class="section" id="analytical-solutions">
-<h1>Analytical solutions<a class="headerlink" href="#analytical-solutions" title="Permalink to this headline">¶</a></h1>
+<h2>Analytical solutions<a class="headerlink" href="#analytical-solutions" title="Permalink to this headline">¶</a></h2>
 <p>Lecture 7, slide 14</p>
 <p>Solving ODEs analytically using sympy.dsolve</p>
 <div class="cell docutils container">
@@ -336,6 +361,15 @@
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ODE #4:&quot;</span><span class="p">)</span> 
 <span class="n">pprint</span><span class="p">(</span><span class="n">ode</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The solution to ODE #4 is: &quot;</span><span class="p">,</span> <span class="n">solution</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>ODE #4:
+                  d       
+-2⋅x⋅(1 - y(x)) + ──(y(x))
+                  dx      
+The solution to ODE #4 is:  Eq(y(x), C1*exp(-x**2) + 1)
 </pre></div>
 </div>
 </div>
@@ -379,10 +413,9 @@
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="../../_images/ODEs_6_0.png" src="../../_images/ODEs_6_0.png" />
 </div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The function checkodesol checks that the result from dsolve is indeed a solution to the ode. Basically, it substitutes in ‘solution’ into ‘ode’ and checks that the RHS is zero. If it is, the function returns ‘True’.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -398,11 +431,17 @@
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Checking solution using checkodesol...
+Output from checkodesol: (True, 0)
+y(x) is indeed a solution to ODE #4
+</pre></div>
+</div>
+</div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The mpmath module can handle initial conditions (x0, y0) when solving an initial value problem, using the
-odefun function. However, this will not give you an analytical solution to the ODE, only a numerical solution.</p>
+<p>The function checkodesol checks that the result from dsolve is indeed a solution to the ode. Basically, it substitutes in ‘solution’ into ‘ode’ and checks that the RHS is zero. If it is, the function returns ‘True’.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -415,10 +454,120 @@ odefun function. However, this will not give you an analytical solution to the O
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>x=0.0 , 2.0 , 2.0
+x=0.1 , 1.99004983374917 , 1.990049833749168
+x=0.2 , 1.96078943915232 , 1.960789439152323
+x=0.3 , 1.91393118527123 , 1.9139311852712282
+x=0.4 , 1.85214378896621 , 1.8521437889662113
+x=0.5 , 1.7788007830714 , 1.778800783071405
+x=0.6 , 1.69767632607103 , 1.697676326071031
+x=0.7 , 1.61262639418442 , 1.612626394184416
+x=0.8 , 1.52729242404305 , 1.5272924240430485
+x=0.9 , 1.44485806622294 , 1.444858066222941
+x=1.0 , 1.36787944117144 , 1.3678794411714423
+x=1.1 , 1.29819727942989 , 1.2981972794298873
+x=1.2 , 1.23692775868212 , 1.2369277586821217
+x=1.3 , 1.18451952399299 , 1.1845195239929893
+x=1.4 , 1.14085842092104 , 1.1408584209210448
+x=1.5 , 1.10539922456186 , 1.1053992245618642
+x=1.6 , 1.0773047404433 , 1.0773047404432998
+x=1.7 , 1.05557621261148 , 1.055576212611483
+x=1.8 , 1.03916389509899 , 1.039163895098987
+x=1.9 , 1.02705184686635 , 1.0270518468663503
+x=2.0 , 1.01831563888873 , 1.0183156388887342
+x=2.1 , 1.01215517832991 , 1.012155178329915
+x=2.2 , 1.00790705405159 , 1.0079070540515935
+x=2.3 , 1.00504176025969 , 1.005041760259691
+x=2.4 , 1.00315111159844 , 1.0031511115984444
+x=2.5 , 1.00193045413623 , 1.0019304541362277
+x=2.6 , 1.0011592291739 , 1.0011592291739047
+x=2.7 , 1.00068232805276 , 1.0006823280527564
+x=2.8 , 1.00039366904066 , 1.0003936690406552
+x=2.9 , 1.00022262985692 , 1.0002226298569188
+x=3.0 , 1.00012340980409 , 1.0001234098040868
+x=3.1 , 1.0000670548243 , 1.000067054824303
+x=3.2 , 1.00003571284964 , 1.0000357128496415
+x=3.3 , 1.00001864374233 , 1.0000186437423315
+x=3.4 , 1.00000954016287 , 1.000009540162873
+x=3.5 , 1.00000478511739 , 1.000004785117392
+x=3.6 , 1.0000023525752 , 1.0000023525752
+x=3.7 , 1.00000113372714 , 1.0000011337271388
+x=3.8 , 1.00000053553478 , 1.0000005355347803
+x=3.9 , 1.0000002479596 , 1.0000002479596017
+x=4.0 , 1.00000011253517 , 1.0000001125351747
+x=4.1 , 1.00000005006218 , 1.0000000500621802
+x=4.2 , 1.00000002182958 , 1.000000021829578
+x=4.3 , 1.00000000933029 , 1.0000000093302877
+x=4.4 , 1.00000000390894 , 1.0000000039089385
+x=4.5 , 1.00000000160523 , 1.000000001605228
+x=4.6 , 1.00000000064614 , 1.0000000006461431
+x=4.7 , 1.00000000025494 , 1.0000000002549383
+x=4.8 , 1.0000000000986 , 1.0000000000985951
+x=4.9 , 1.00000000003738 , 1.0000000000373757
+x=5.0 , 1.00000000001389 , 1.000000000013888
+x=5.1 , 1.00000000000506 , 1.0000000000050582
+x=5.2 , 1.00000000000181 , 1.0000000000018059
+x=5.3 , 1.00000000000063 , 1.000000000000632
+x=5.4 , 1.00000000000022 , 1.0000000000002167
+x=5.5 , 1.00000000000007 , 1.0000000000000728
+x=5.6 , 1.00000000000002 , 1.000000000000024
+x=5.7 , 1.00000000000001 , 1.0000000000000078
+x=5.8 , 1.0 , 1.0000000000000024
+x=5.9 , 1.0 , 1.0000000000000007
+x=6.0 , 1.0 , 1.0000000000000002
+x=6.1 , 1.0 , 1.0
+x=6.2 , 1.0 , 1.0
+x=6.3 , 1.0 , 1.0
+x=6.4 , 1.0 , 1.0
+x=6.5 , 1.0 , 1.0
+x=6.6 , 1.0 , 1.0
+x=6.7 , 1.0 , 1.0
+x=6.8 , 1.0 , 1.0
+x=6.9 , 1.0 , 1.0
+x=7.0 , 1.0 , 1.0
+x=7.1 , 1.0 , 1.0
+x=7.2 , 1.0 , 1.0
+x=7.3 , 1.0 , 1.0
+x=7.4 , 1.0 , 1.0
+x=7.5 , 1.0 , 1.0
+x=7.6 , 1.0 , 1.0
+x=7.7 , 1.0 , 1.0
+x=7.8 , 1.0 , 1.0
+x=7.9 , 1.0 , 1.0
+x=8.0 , 1.0 , 1.0
+x=8.1 , 1.0 , 1.0
+x=8.2 , 1.0 , 1.0
+x=8.3 , 1.0 , 1.0
+x=8.4 , 1.0 , 1.0
+x=8.5 , 1.0 , 1.0
+x=8.6 , 1.0 , 1.0
+x=8.7 , 1.0 , 1.0
+x=8.8 , 1.0 , 1.0
+x=8.9 , 1.0 , 1.0
+x=9.0 , 1.0 , 1.0
+x=9.1 , 1.0 , 1.0
+x=9.2 , 1.0 , 1.0
+x=9.3 , 1.0 , 1.0
+x=9.4 , 1.0 , 1.0
+x=9.5 , 1.0 , 1.0
+x=9.6 , 1.0 , 1.0
+x=9.7 , 1.0 , 1.0
+x=9.8 , 1.0 , 1.0
+x=9.9 , 1.0 , 1.0
+x=10.0 , 1.0 , 1.0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The mpmath module can handle initial conditions (x0, y0) when solving an initial value problem, using the
+odefun function. However, this will not give you an analytical solution to the ODE, only a numerical solution.</p>
 </div>
 </div>
 <div class="section" id="separation-of-variables">
-<h1>Separation of variables<a class="headerlink" href="#separation-of-variables" title="Permalink to this headline">¶</a></h1>
+<h2>Separation of variables<a class="headerlink" href="#separation-of-variables" title="Permalink to this headline">¶</a></h2>
 <p>Lecture 7, slide 20</p>
 <p>Solving ODE through separation of variables in Python using sympy.dsolve</p>
 <div class="cell docutils container">
@@ -434,6 +583,17 @@ odefun function. However, this will not give you an analytical solution to the O
 <span class="c1"># Solve the ode for function y(x).using separation of variables.</span>
 <span class="n">solution</span> <span class="o">=</span> <span class="n">dsolve</span><span class="p">(</span><span class="n">ode</span><span class="p">,</span> <span class="n">y</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">hint</span><span class="o">=</span><span class="s1">&#39;separable&#39;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The solution to ODE #5 is: &quot;</span><span class="p">,</span> <span class="n">solution</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>ODE #5:
+              d       
+          1.0⋅──(y(x))
+              dx      
+-cos(x) + ────────────
+              y(x)    
+The solution to ODE #5 is:  Eq(y(x), C1*exp(1.0*sin(x)))
 </pre></div>
 </div>
 </div>
@@ -481,10 +641,13 @@ odefun function. However, this will not give you an analytical solution to the O
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="../../_images/ODEs_14_0.png" src="../../_images/ODEs_14_0.png" />
+</div>
 </div>
 </div>
 <div class="section" id="integration-factor">
-<h1>Integration factor<a class="headerlink" href="#integration-factor" title="Permalink to this headline">¶</a></h1>
+<h2>Integration factor<a class="headerlink" href="#integration-factor" title="Permalink to this headline">¶</a></h2>
 <p>Lecture 7, slide 23</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -500,12 +663,21 @@ odefun function. However, this will not give you an analytical solution to the O
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>ODE #6:
+                 d       
+2⋅x⋅y(x) - 2⋅x + ──(y(x))
+                 dx      
+The solution to ODE #6 is:  Eq(y(x), C1*exp(-x**2) + 1)
+</pre></div>
+</div>
+</div>
 </div>
 </div>
 <div class="section" id="application">
-<h1>Application<a class="headerlink" href="#application" title="Permalink to this headline">¶</a></h1>
+<h2>Application<a class="headerlink" href="#application" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="radioactive-decay">
-<h2>Radioactive decay<a class="headerlink" href="#radioactive-decay" title="Permalink to this headline">¶</a></h2>
+<h3>Radioactive decay<a class="headerlink" href="#radioactive-decay" title="Permalink to this headline">¶</a></h3>
 <p>Lecture 7, slide 26</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -518,6 +690,15 @@ odefun function. However, this will not give you an analytical solution to the O
 <span class="n">pprint</span><span class="p">(</span><span class="n">ode</span><span class="p">)</span>
 <span class="n">solution</span> <span class="o">=</span> <span class="n">dsolve</span><span class="p">(</span><span class="n">ode</span><span class="p">,</span> <span class="n">N</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The solution to ODE #7 is: &quot;</span><span class="p">,</span> <span class="n">solution</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>ODE #7:
+         d       
+l⋅N(t) + ──(N(t))
+         dt      
+The solution to ODE #7 is:  Eq(N(t), C1*exp(-l*t))
 </pre></div>
 </div>
 </div>
@@ -569,14 +750,17 @@ odefun function. However, this will not give you an analytical solution to the O
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="../../_images/ODEs_20_0.png" src="../../_images/ODEs_20_0.png" />
+</div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The plane in the first graph shows that radioactive decay is independent of time, only dependent on the number of radioactive nuclei present.</p>
+<p>The plane in the first graph shows that radioactive decay is independent of time and only dependent on the number of radioactive nuclei present.</p>
 </div>
 </div>
 <div class="section" id="particle-settling">
-<h2>Particle settling<a class="headerlink" href="#particle-settling" title="Permalink to this headline">¶</a></h2>
+<h3>Particle settling<a class="headerlink" href="#particle-settling" title="Permalink to this headline">¶</a></h3>
 <p>Lecture 7, slide 31</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -594,6 +778,16 @@ odefun function. However, this will not give you an analytical solution to the O
 <span class="n">pprint</span><span class="p">(</span><span class="n">ode</span><span class="p">)</span>
 <span class="n">solution</span> <span class="o">=</span> <span class="n">dsolve</span><span class="p">(</span><span class="n">ode</span><span class="p">,</span> <span class="n">v</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The solution to ODE #8 is: &quot;</span><span class="p">,</span> <span class="n">solution</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>ODE #8:
+  g⋅(-ρ_f + ρₚ)   d          9⋅η⋅v(t)
+- ───────────── + ──(v(t)) + ────────
+        ρₚ        dt            2    
+                             2⋅a ⋅ρₚ 
+The solution to ODE #8 is:  Eq(v(t), (-2*a**2*g*rho_f + 2*a**2*g*rho_p + exp(eta*(C1 - 9*t/(2*a**2*rho_p))))/(9*eta))
 </pre></div>
 </div>
 </div>
@@ -638,6 +832,10 @@ odefun function. However, this will not give you an analytical solution to the O
 
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/ODEs_25_0.png" src="../../_images/ODEs_25_0.png" />
 </div>
 </div>
 </div>
