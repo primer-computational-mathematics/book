@@ -244,7 +244,7 @@
         </li>
     
         <li class="nav-item toc-entry toc-h2">
-            <a href="#git-branch-commands" class="nav-link">Git branch commands</a>
+            <a href="#git-branching-commands" class="nav-link">Git branching commands</a>
         </li>
     
         <li class="nav-item toc-entry toc-h2">
@@ -341,8 +341,8 @@ We will be accessing git via the terminal (<em>Git Bash</em> on Windows).</p>
 <li><p>Unused - branch that did not end end up contributing to the final verision of the project.</p></li>
 </ul>
 </div>
-<div class="section" id="git-branch-commands">
-<h2>Git branch commands<a class="headerlink" href="#git-branch-commands" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="git-branching-commands">
+<h2>Git branching commands<a class="headerlink" href="#git-branching-commands" title="Permalink to this headline">¶</a></h2>
 <p>Let us consider the commands dealing with branches:</p>
 <ul class="simple">
 <li><p>Where circle denotes pushed commits.</p></li>
@@ -394,6 +394,65 @@ git status
 </pre></div>
 </div>
 <p>Now your new file is on GitHub!</p>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>Creating a new branch</strong> To see the existing branches type:</p></li>
+</ul>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git branch -a
+</pre></div>
+</div>
+<p>This should mention the <code class="docutils literal notranslate"><span class="pre">master</span></code> branches (remote and local) as well as the <code class="docutils literal notranslate"><span class="pre">HEAD</span></code> which is used as a reference for newly cloning repos. Now our aim is to create a new branch and move to it, there are two ways to do this:</p>
+<p>First:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1">#create a new shell</span>
+git branch new_branch
+<span class="c1">#move to it</span>
+git checkout new_branch
+</pre></div>
+</div>
+<p>Second:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git checkout -b new_branch
+</pre></div>
+</div>
+<p>Now we have a new branch and we can edit it without affecting the code in the <code class="docutils literal notranslate"><span class="pre">master</span></code>. To verify that we have created a branch:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git branch -a
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">new_branch</span></code> is only present locally, to add it to GitHub:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git push --set-upstream origin new_branch
+</pre></div>
+</div>
+<p>Now let us edit the <code class="docutils literal notranslate"><span class="pre">Hello.txt</span></code> file from the first example. You can also use any other text editor of your choice, VS Code or even Notepad:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>vim Hello.txt
+</pre></div>
+</div>
+<p>Edit the file a little bit.</p>
+<p>Now contribute your changes:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git add Hello.txt
+git commit -m <span class="s1">&#39;Changed Hello.txt&#39;</span>
+git push
+</pre></div>
+</div>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>Switching branches</strong></p></li>
+</ul>
+<p>To verify that different branches containg different versions of the repository:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git checkout master
+</pre></div>
+</div>
+<p>Have a look at the file:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>cat Hello.txt
+</pre></div>
+</div>
+<p>They are different, aren’t they?</p>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>Merging</strong> Now, we want to merge the <code class="docutils literal notranslate"><span class="pre">new_branch</span></code> back to the <code class="docutils literal notranslate"><span class="pre">master</span></code>. As we are in the <code class="docutils literal notranslate"><span class="pre">master</span></code> this should be easy:</p></li>
+</ul>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git merge new_branch
+</pre></div>
+</div>
+<p>You might be lucky and have no <strong>merge conflicts</strong> to deal with, if not, keep reading!</p>
 </div>
 </div>
 
