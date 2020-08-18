@@ -1,0 +1,779 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Numerical differentiation &#8212; ESE Jupyter Material</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/mystnb.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".cell"
+        const thebe_selector_input = ".cell_input div.highlight"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Numerical integration" href="Numerical_integration.html" />
+    <link rel="prev" title="Heun’s method" href="Heuns_method.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../index.html">
+  
+  <img src="../../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">ESE Jupyter Material</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  
+  <ul class="nav sidenav_l1">
+  <li class="">
+    <a href="../../intro.html">Landing page</a>
+  </li>
+  <li class="">
+    <a href="../../coding/intro.html">Coding</a>
+  </li>
+  <li class="">
+    <a href="../../geosciences/intro.html">Geosciences</a>
+  </li>
+  <li class="active">
+    <a href="../intro.html">Mathematics</a>
+  <ul class="nav sidenav_l2">
+    <li class="">
+      <a href="../calculus/intro.html">Calculus</a>
+    </li>
+    <li class="">
+      <a href="../complex analysis/intro.html">Complex analysis</a>
+    </li>
+    <li class="">
+      <a href="../differential_equations/intro.html">Differential equations</a>
+    </li>
+    <li class="">
+      <a href="../linear_algebra/intro.html">Linear algebra</a>
+    </li>
+    <li class="">
+      <a href="../mathematical_notation/intro.html">Mathematical notation</a>
+    </li>
+    <li class="active">
+      <a href="intro.html">Numerical methods</a>
+      <ul class="nav sidenav_l3">
+      <li class="">
+        <a href="Euler_method.html">Euler method</a>
+      </li>
+      <li class="">
+        <a href="Forward_time_centred_space.html">Forward Time Centred Space (FTCS) scheme</a>
+      </li>
+      <li class="">
+        <a href="Heuns_method.html">Heun’s method</a>
+      </li>
+      <li class="active">
+        <a href="">Numerical differentiation</a>
+      </li>
+      <li class="">
+        <a href="Numerical_integration.html">Numerical integration</a>
+      </li>
+      <li class="">
+        <a href="Runge_Kutta_method.html">Runge-Kutta integration method</a>
+      </li>
+      <li class="">
+        <a href="Solving_PDEs_SOR.html">Successive over-relaxation (SOR)</a>
+      </li>
+      <li class="">
+        <a href="Timestepping_an_ODE.html">Solving (or “timestepping”) an ordinary differential equation (ODE)</a>
+      </li>
+    </ul>
+    </li>
+    <li class="">
+      <a href="../series_and_sequences/intro.html">Series and sequences</a>
+    </li>
+    <li class="">
+      <a href="../sets and functions/intro.html">Sets and functions</a>
+    </li>
+    <li class="">
+      <a href="../statistics/intro.html">Statistics</a>
+    </li>
+  </ul>
+  </li>
+  <li class="">
+    <a href="../../modules/intro.html">Modules</a>
+  </li>
+  <li class="">
+    <a href="../../z_extra_resources_for_researchers/intro.html">Extra resources for researchers</a>
+  </li>
+  <li class="">
+    <a href="../../genindex.html">Index</a>
+  </li>
+</ul>
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/mathematics/numerical_methods/Numerical_differentiation.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        
+        <a class="issues-button"
+            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2Fmathematics/numerical_methods/Numerical_differentiation.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/mathematics/numerical_methods/Numerical_differentiation.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#definition" class="nav-link">Definition</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#forward-difference-method-fdm" class="nav-link">Forward difference method (FDM)</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#estimating-accuracy" class="nav-link">Estimating accuracy</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#taylor-series-example" class="nav-link">Taylor series example</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#fdm-accuracy" class="nav-link">FDM accuracy</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#central-difference-method-cdm" class="nav-link">Central difference method (CDM)</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#second-derivative" class="nav-link">Second derivative</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#solving-differential-equations" class="nav-link">Solving differential equations</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#euler-method" class="nav-link">Euler method</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#heun-s-method" class="nav-link">Heun’s method</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#runge-kutta-method" class="nav-link">Runge-Kutta method</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#successive-over-relaxation-method" class="nav-link">Successive over-relaxation method</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#forward-time-centred-space-method" class="nav-link">Forward Time Centred Space method</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#exercises" class="nav-link">Exercises</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#a-function-to-perform-numerical-differentiation" class="nav-link">A function to perform numerical differentiation</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#derivative-of-sin-x" class="nav-link">Derivative of \(sin(x)\)</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+    </ul>
+</nav>
+
+
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="numerical-differentiation">
+<span id="nm-num-differentiation"></span><h1>Numerical differentiation<a class="headerlink" href="#numerical-differentiation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="definition">
+<span id="index-0"></span><h2>Definition<a class="headerlink" href="#definition" title="Permalink to this headline">¶</a></h2>
+<p>The classical definition of the derivative of a function \(f\) at a point \(x_0\) is of given by:</p>
+<p>\[f’(x_0)=\lim_{h\rightarrow 0} \frac{f(x_0+h)-f(x_0)}{h}.\]</p>
+<div class="admonition-notation admonition">
+<p class="admonition-title">Notation</p>
+<ol>
+<li><p>Note that the following are all equivalent mathematical ways of writing the derivative of the function \(f\) with respect to \(x\) and evaluated at the location \(x_0\):</p>
+<p>\[f’(x_0) = \frac{df}{dx}(x_0) = \left.\frac{df}{dx}\right|_{x_0}.\]</p>
+</li>
+<li><p>We’re using \(h\) here to denote a small (potentially infinitesimally small) increment to the \(x\) coordinate, as is common. But note that in the literature \(\Delta x\) is commonly used to mean the same thing. Also, for finite \(h\) there is significant overlap here with the mesh spacing in a numerical approximation, as we shall see below, and so \(\Delta x\) is also used.</p></li>
+</ol>
+</div>
+<p>To find the 1st derivative, you will differentiate a function once. To find the 2nd derivative, you will differentiate a function twice. While for many functions, there are analytical solutions, there are also many important functions that do not have analytical solutions. However, finding the differentiation of these function could be important for studying the change of these functions, so numerical differentiation is neccesary.</p>
+<p>There are several different ways that numerical differentiation can be done, and each with their merits and demerits. Higher order accuracy in the numerical differentiation would require more sophisticated methods of numerical differentiation.</p>
+<p>One of the popular ways to do numerical differentiation is through <a class="reference external" href="https://en.wikipedia.org/wiki/Finite_difference"><strong>finite difference</strong></a>. To evaluate the derivative at a point termed \(x_0\), the finite difference method uses point or points around the point \(x_0\) to find the derivative at the point \(x_0\).</p>
+</div>
+<div class="section" id="forward-difference-method-fdm">
+<span id="nm-forward-difference"></span><h2>Forward difference method (FDM)<a class="headerlink" href="#forward-difference-method-fdm" title="Permalink to this headline">¶</a></h2>
+<p id="index-1">The forward difference is a method of finding the derivative at a point. The forward difference works by taking the gradient between a point \(x_0\) and a point in front of \(x_0\). As the point in front of \(x_0\) becomes closer and closer to \(x_0\), then the gradient between \(x_0\) and the point in front of \(x_0\) becomes closer and closer to the derivative of the function at \(x_0\). Because this method uses a point in front of \(x_0\), it has <em>forward</em> in its name, and because it uses the difference between \(x_0\) and the point in front of \(x_0\), it has <em>difference</em> in its name.</p>
+<p>For example, we can turn the formal definition of a derivative given above into an approximation rule by replacing the limit as \(h\) approaches zero (i.e. the \(\text{lim}_{h\rightarrow\infty}\)) with a small but finite \(\Delta x\) value:</p>
+<p>\[ f’(x_0)\approx \frac{f(x_0+\Delta x)-f(x_0)}{\Delta x},;;;; \Delta x&gt;0. \]</p>
+<p>Since this approximate gradient method uses values of \(x\) greater than \(x_0\) (\(\Delta x&gt;0\)), this algorithm is known as the <strong>forward difference method</strong>.</p>
+<p>The figure below illustrates this approximation.</p>
+<div class="cell_output docutils container">
+<img alt="../../_images/Numerical_differentiation_1_0.png" src="../../_images/Numerical_differentiation_1_0.png" />
+</div>
+<p>In the figure the derivative is approximated by the slope of the red line, while the true derivative is the slope of the blue line - if the second (and/or higher) derivative of the function is large then this approximation might not be very good, unless you make \(\Delta x\) very small:</p>
+<div class="cell_output docutils container">
+<img alt="../../_images/Numerical_differentiation_2_0.png" src="../../_images/Numerical_differentiation_2_0.png" />
+</div>
+<div class="dropdown admonition">
+<p class="admonition-title">Exercise: compute first derivative with FDM</p>
+<p>Find an approximation to \(f’(2.36)\) from the following data:</p>
+<p>\[f(2.36) = 0.85866,\\
+f(2.37) = 0.86289,\]</p>
+<p>using the forward difference scheme.</p>
+<p>Solution:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dx</span> <span class="o">=</span> <span class="mf">2.37</span><span class="o">-</span><span class="mf">2.36</span>
+<span class="n">df</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.86289</span><span class="o">-</span><span class="mf">0.85866</span><span class="p">)</span><span class="o">/</span><span class="n">dx</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Derivative with FDM = </span><span class="si">%.5f</span><span class="s2">. &quot;</span> <span class="o">%</span> <span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The answer should be 0.423.</p>
+</div>
+</div>
+<div class="section" id="estimating-accuracy">
+<h2>Estimating accuracy<a class="headerlink" href="#estimating-accuracy" title="Permalink to this headline">¶</a></h2>
+<p>As previously discussed, there are many different methods that are possible to use for numerical differentiation. Ultimately, all methods will move closer to the derivative of the function at the point \(x_0\) as the \(\Delta x\) used becomes smaller and smaller. What differentiates a good method from a bad  method is how accurate the estimate for the derivative is, given that all methods have the same \(\Delta x\) in their equation. Thus what makes a method good/bad is the accuracy of the method.</p>
+<p>We can use a <a class="reference internal" href="../series_and_sequences/Taylor_series.html#taylor-series"><span class="std std-ref">Taylor series</span></a> expansion, or Taylor series analysis, to estimate the accuracy of the method. Recall that Taylor series in one dimension tells us that we can approximate the value of the function at a location in terms of its value, and value of its derivative, at a nearby point:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+f(x_0+h) &amp;= f(x_0) + hf'(x_0) + \frac{h^2}{2!}f''(x_0) + \frac{h^3}{3!}f'''(x_0) + \ldots\\[5pt]
+&amp;= f(x_0)+hf'(x_0) + \frac{h^2}{2!}f''(x_0) + \mathcal{O}(h^3),
+\end{align*}
+\end{split}\]</div>
+<p>where \(\mathcal{O}(h^3)\) represents the collection of terms that are third-order in \(h\) or higher. We call this the Taylor series expansion about (or around) the point \(x_0\) (since all the functions in the expansion on the RHS are evaluated at this point). An equivalent way of writing this expansion would be (just define \(x\) to be \(x_0+h\))</p>
+<p>\[f(x) = f(x_0) + (x - x_0) f’(x_0) + \frac{(x - x_0)^2}{2!} f’’(x_0) + \frac{(x - x_0)^3}{3!} f’’’(x_0) + \mathcal{O}((x - x_0)^4).\]</p>
+<p>The error increases if \(\Delta x\) increase, while the error decreases if the \(\Delta x\) decreases.</p>
+<p>1st order accuracy means that the error and \(\Delta x\) are in a linear relationship. As we make the spacing smaller we expect the error in our derivative to fall linearly, meaning that if we made the spacing 2 times smaller, the error becomes 2 times smaller.</p>
+<div class="section" id="taylor-series-example">
+<h3>Taylor series example<a class="headerlink" href="#taylor-series-example" title="Permalink to this headline">¶</a></h3>
+<p>The figure below represents an exponential function (in blue) and the sum of the first (\(n+1\)) terms of its Taylor series expansion around the point 0 (in red).</p>
+<p style="text-align:center;"><img src="https://upload.wikimedia.org/wikipedia/commons/6/62/Exp_series.gif" width="300px"></p>
+<p>Source: <a class="reference external" href="https://upload.wikimedia.org/wikipedia/commons/6/62/Exp_series.gif">Wikipedia</a></p>
+<p>As can be seen, more terms in the Taylor series means that the function resulting from the Taylor series better match with the actual function. It also means that the Taylor series better match with the function at greater distance away form point 0. Of course, if we are very close to the point 0, then the function obtained from Taylor series with more terms has very little difference to the function obtained from Taylor series with fewer terms; however, if we move further away from the point 0, then the function obtained from Taylor series with more terms remains accurate, while the numerical derivative from the Taylor series with less terms deviates significantly.</p>
+</div>
+<div class="section" id="fdm-accuracy">
+<span id="nm-fdm-accuracy"></span><h3>FDM accuracy<a class="headerlink" href="#fdm-accuracy" title="Permalink to this headline">¶</a></h3>
+<p>Forward difference method is 1st order accurate. Let’s prove it with Taylor series.</p>
+<div class="margin sidebar">
+<p class="sidebar-title">Note</p>
+<p>We state that forward difference method is a numerical differentiation method, that has a certain order of accuracy when finding the numerical derivative at the point \(x_0\). The Taylor series is exact, meaning that the left hand side of the Taylor series is exactly equal to the right hand side of the Taylor series. It should also be noted that moving terms form left hand side of the Taylor series to the right hand side of the Taylor series does not affec the equality of the Taylor series.</p>
+</div>
+<p>To find the accuracy of a numerical differentiation method, we need a comparison between the numerical differentiation method and something exact; thus, we will compare the forward difference method to the Taylor series (exact solution), to understand how much does the estimate differ from the exact.</p>
+<p>Forward difference method:
+\[ f’(x_0)\approx \frac{f(x_0+\Delta x)-f(x_0)}{\Delta x},\quad \Delta x&gt;0. \]</p>
+<p>Taylor series:
+\[ f(x_0+h) = f(x_0) + hf’(x_0) + \frac{h^2}{2!}f’’(x_0) + \frac{h^3}{3!}f’’’(x_0) + \ldots.\]</p>
+<p>Since both \(h\) and \(\Delta x\) refer to very small numbers, by assuming that \(h &gt; 0\) we could say that \(h \approx \Delta x\), and thus rewrite as:</p>
+<p>\[ f’(x_0)\approx \frac{f(x_0+h)-f(x_0)}{h},;;;; h&gt;0,\\
+f(x_0+h) = f(x_0) + hf’(x_0) + \frac{h^2}{2!}f’’(x_0) + \frac{h^3}{3!}f’’’(x_0) + \ldots.\]</p>
+<p>To make comparisons, we take the common parts out, and find the parts that are different:
+\[ f’(x_0)\approx \frac{f(x_0+h)-f(x_0)}{h},\quad h&gt;0,\\
+\frac {f(x_0+h) - f(x_0)}{h}= f’(x_0) + \frac{h^1}{2!}f’’(x_0) + \frac{h^2}{3!}f’’’(x_0) + \ldots.\]</p>
+<p>Making the same thing appear on the LFH of both the FDM and the Taylor Series:
+\[\text{FDM: } f’(x_0)\approx \frac{f(x_0+h)-f(x_0)}{h},\quad h&gt;0,\\
+\text{Taylor series: }f’(x_0) =  \frac {f(x_0+h) - f(x_0)}{h}   - \frac{h^1}{2!}f’’(x_0) - \frac{h^2}{3!}f’’’(x_0) + \ldots.\]</p>
+<p>We see that there are differences between the FDM and the Taylor series for how the derivative of the function at the point \(x_0\) is defined. The Taylor series have several extra terms \(- \frac{h^1}{2!}f’’(x_0) - \frac{h^2}{3!}f’’’(x_0) + \ldots\) compared to the FDM. The extra terms of the Taylor series, start from the term that includes 2nd derivative of the function \(- \frac{h^1}{2!}f’’(x_0)\) and continue onwards to terms that include higher derivatives, like the 3rd, 4th. These extra terms are the difference between the Taylor series and the FDM solution.</p>
+<p>The Taylor series and FDM are similar up to, and not including the 2nd derivative of the function. Thus, because the similarity between the Taylor series and the FDM does not include the 2nd derivative, or any other higher derivative, we say that the FDM is only <strong>1st order accurate</strong>.</p>
+</div>
+</div>
+<div class="section" id="central-difference-method-cdm">
+<span id="nm-central-difference"></span><h2>Central difference method (CDM)<a class="headerlink" href="#central-difference-method-cdm" title="Permalink to this headline">¶</a></h2>
+<p id="index-2">In an attempt to derive a more accurate method we use two Taylor series expansions - one in the positive and one in negative \(x\) direction from \(x_0\). Since we hope to achieve better than first-order accuracy, we include an extra term in the series:</p>
+<p>\[
+f(x_0+ \Delta x) = f(x_0)+\Delta x f’(x_0)+\frac{\Delta x^2}{2}f’’(x_0) + \mathcal{O}(\Delta x^3),\\
+f(x_0- \Delta x) = f(x_0)- \Delta x f’(x_0)+\frac{(-\Delta x)^2}{2}f’’(x_0) + \mathcal{O}((-\Delta x)^3).\]</p>
+<div class="margin sidebar">
+<p class="sidebar-title">Note</p>
+<p>Note that we don’t worry about signs when using the \(\mathcal{O}\) notation.</p>
+</div>
+<p>Using the fact that \((-\Delta x)^2=\Delta x^2\) and the absolute value signs from the definition of \(\mathcal{O}\)):</p>
+<p>\[
+f(x_0+\Delta x) = f(x_0)+\Delta xf’(x_0)+\frac{\Delta x^2}{2}f’’(x_0) + \mathcal{O}(\Delta x^3),\\
+f(x_0-\Delta x) = f(x_0)-\Delta xf’(x_0)+\frac{\Delta x^2}{2}f’’(x_0) + \mathcal{O}(\Delta x^3).\]</p>
+<p>Remember that we are looking for an expression for \(f’(x_0)\). Noticing the sign change between the derivative terms in the two equations, we subtract the second equation from the first to give:</p>
+<p>\[ f(x_0+\Delta x)-f(x_0-\Delta x)=2\Delta xf’(x_0) + \mathcal{O}(\Delta x^3).\]
+Finally, we can rearrange to get an expression for \(f’(x_0)\):</p>
+<p>\[ f’(x_0)=\frac{f(x_0+\Delta x)-f(x_0-\Delta x)}{2\Delta x} + O(\Delta x^2),\]
+which, contrary to the 1st order FDM, is an approximation to the derivative that is <strong>2nd order accurate</strong>.</p>
+<p>By considering an interval symmetric about \(x_0\), we have created a second-order approximation for the derivative of \(f\). This symmetry gives the scheme its name - the <a class="reference external" href="https://en.wikipedia.org/wiki/Central_differencing_scheme">central difference method</a>.</p>
+<p>The figure below illustrates this scheme:</p>
+<div class="cell_output docutils container">
+<img alt="../../_images/Numerical_differentiation_6_0.png" src="../../_images/Numerical_differentiation_6_0.png" />
+</div>
+<p>The derivative is approximated by the slope of the red line, while the true derivative is the slope of the blue line. Even without the analysis above it’s hopefully clear visually why this should in general give a lower error than the forward difference. If we halve \(h\), the error should drop by a factor of 4, rather than 2 in case of 1st order scheme.</p>
+<div class="dropdown admonition">
+<p class="admonition-title">Exercise: compute first derivative with CDM</p>
+<p>Find an approximation to \(f’(0.2)\) from the following data:</p>
+<p>\[f(0.1) = 0.078348,\\
+f(0.2) = 0.138910,\\
+f(0.3) = 0.192916,\]</p>
+<p>using the central difference scheme.</p>
+<p>Solution:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dx</span> <span class="o">=</span> <span class="mf">0.1</span>
+<span class="n">df</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.192916</span><span class="o">-</span><span class="mf">0.078348</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">dx</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Derivative with CDM = </span><span class="si">%.5f</span><span class="s2">. &quot;</span> <span class="o">%</span> <span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The answer should be 0.57284.</p>
+</div>
+<div class="section" id="second-derivative">
+<span id="nm-second-derivative"></span><h3>Second derivative<a class="headerlink" href="#second-derivative" title="Permalink to this headline">¶</a></h3>
+<p id="index-3">Numerical differentiation may be extended to the second derivative by noting that the second derivative is the derivative of the first derivative. That is, if we define a new function \(g\) where:</p>
+<p>\[ g(x) = f’(x), \]</p>
+<p>then</p>
+<p>\[ f’’(x) = g’(x), \]</p>
+<p>a consequence of this (obvious) observation is that we can just apply our differencing formula twice in order to achieve a second derivative, and so on for even higher derivatives.</p>
+<p>Recall that <a class="reference internal" href="#nm-central-difference"><span class="std std-ref">central difference method</span></a> is 2nd order accurate, and superior to the <a class="reference internal" href="#nm-forward-difference"><span class="std std-ref">forward difference method</span></a>. Therefore, we will extend the central difference method to find second derivative.</p>
+<div class="margin sidebar">
+<p class="sidebar-title">Note</p>
+<p>We make this choice since we have a vision to ultimately end up with an approximation that utilises a three-point stencil. Three-point stencil means that the equation at the end will only use three points, namely
+\[f(x_0+\Delta x),\ f(x_0) \text{ and } f(x_0-\Delta x)\].
+If we have used \(\Delta x\) instead, the equation would need more point stencil.</p>
+</div>
+<p>In order to calculate \(f’’(x_0)\) using a central difference method, we first calculate \(f’(x)\) for each of two half intervals, one to the left of \(x_0\) and one to the right:</p>
+<p>\[
+f’\left(x_0+\frac{\Delta x}{2}\right) \approx \frac{f(x_0+\Delta x)-f(x_0)}{\Delta x},\\
+f’\left(x_0-\frac{\Delta x}{2}\right) \approx \frac{f(x_0)-f(x_0-\Delta x)}{\Delta x}.
+\]</p>
+<p>We recognise the formula on the RHS above as first-order forward and backward differences, if we were to consider the derivatives on the LHS to be evaluated at \(x_0\).</p>
+<p>By considering the LHS at \(x_0\pm \Delta x/2\) they are in actual fact second-order <em>central</em> differences where the denominator of the RHS is \(2\times (\Delta x/2)\).</p>
+<p>We can now calculate the second derivative making use of these two values within another central difference. But we must note again that these two values are telling us \(f’(x)\) at the points \(x_0\pm{\Delta x}/{2}\), which are only \(\Delta x\) rather than \(2\Delta x\) apart.</p>
+<p>In the central difference formula, the denominator is the difference of the inputs into the function at the numerator. The inputs here are \(x_0+\frac{\Delta x}{2}\) and \(x_0-\frac{\Delta x}{2}\), so the denominator will be \((x_0+\frac{\Delta x}{2}) - (x_0-\frac{\Delta x}{2})\), which yields \(\Delta x\).</p>
+<p>We must remember this in the denominator of the central difference formula to yield</p>
+<p>\[
+f’’(x_0)\approx\frac{f’(x_0+\frac{\Delta x}{2})-f’(x_0-\frac{\Delta x}{2})}{\Delta x},\\
+f’’(x_0)\approx\frac{\frac{f(x_0+\Delta x)-f(x_0)}{\Delta x}-\frac{f(x_0)-f(x_0-h)}{\Delta x}}{\Delta x},\\
+f’’(x_0)\approx\frac{f(x_0+\Delta x)-2f(x_0)+f(x_0-\Delta x)}{\Delta x^2}.
+\]</p>
+<div class="dropdown admonition">
+<p class="admonition-title">Exercise: compute second derivative</p>
+<p>Find an approximation to \(f’’(1)\) from the following data:</p>
+<p>\[f(0.84) = 0.431711,\\
+f(0.92) = 0.398519,\\
+f(1.00) = 0.367879,\\
+f(1.08) = 0.339596,\\
+f(1.16) = 0.313486.\]</p>
+<p>Solution:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dx</span> <span class="o">=</span> <span class="mf">0.08</span>
+<span class="n">ddf</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.339596</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="mf">0.367879</span> <span class="o">+</span> <span class="mf">0.398519</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">dx</span><span class="o">*</span><span class="n">dx</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;2nd Derivative with CDM = </span><span class="si">%.5f</span><span class="s2">. &quot;</span> <span class="o">%</span> <span class="n">ddf</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The answer should be 0.36828.</p>
+<p>We were given more data than we actually used. An alternative approach would be to use <em>non-centred differencing</em>, e.g. the following is also a valid approximation to the second derivative</p>
+<p>\[f’’(x_0)\approx\frac{f(x_0+2\Delta x)-2f(x_0+\Delta x)+f(x_0)}{\Delta x^2}.\]</p>
+<p>This can come in handy if we need to approximate the value of derivatives at or near to a boundary where we don’t have data beyond that boundary.</p>
+<p>If we wanted to use all of this data, an alternative would be to fit a polynomial, and then differentiate this analytical expression exactly to approximate the derivative at any point between 0.84 and 1.16 (recalling that extrapolation is dangerous).</p>
+</div>
+</div>
+</div>
+<div class="section" id="solving-differential-equations">
+<h2>Solving differential equations<a class="headerlink" href="#solving-differential-equations" title="Permalink to this headline">¶</a></h2>
+<p>One of the most important applications of numerical mathematics in the sciences is the numerical solution of ordinary differential equations (ODEs). While the ODEs you will encounter during your mathematics modules are mostly solvable through analytical solutions, real world ODE are often in the form where it has been proven that no analytical solutions exists. However, many of these ODEs govern important physical processes, and thus, numerical solutions were found for these ODEs.</p>
+<p>To recap through an example, suppose we have the general first-order ODE:</p>
+<div class="margin sidebar">
+<p class="sidebar-title">Note</p>
+<p>For \(u=u(t)\), \(\frac{du}{dt}=u’=\dot{u}\).</p>
+</div>
+<p>\[
+u’(t)=f(u(t),t) \
+u(t_0)=u_0.\]</p>
+<p>That is, the derivative of \(u\) with respect to \(t\) is some known function of \(u\) and \(t\), and we also know the initial condition of \(u\) at some initial time \(t_0\).</p>
+<p>If we manage to solve this equation analytically, the solution will be a function \(u(t)\) which is defined for every \(t&gt;t_0\). Our objective is to find an approximate solution to the ODE at a finite set of points. In this case, we will attempt to find approximate solutions at \(t=t_0,\), \(t_0+\Delta t\), \(t_0+2\Delta t\), \(t_0+3\Delta t\), \(\ldots\).</p>
+<p>It is frequently useful to think of the independent variable, \(t\), as representing time. A numerical method steps forward in time units of \(\Delta t\), attempting to calculate \(u(t+\Delta t)\) in using the previously calculated value \(u(t)\).</p>
+<div class="section" id="euler-method">
+<h3>Euler method<a class="headerlink" href="#euler-method" title="Permalink to this headline">¶</a></h3>
+<p>Euler method is one of the simplest schemes to solve ODEs. You can find the notebook expanding on this method <a class="reference internal" href="Euler_method.html#nm-euler-method"><span class="std std-ref">here</span></a>.</p>
+</div>
+<div class="section" id="heun-s-method">
+<h3>Heun’s method<a class="headerlink" href="#heun-s-method" title="Permalink to this headline">¶</a></h3>
+<p>Heun’s method is a modified/improved version of the Euler method. You can find the notebook expanding on this method <a class="reference internal" href="Heuns_method.html#nm-heun-method"><span class="std std-ref">here</span></a>.</p>
+</div>
+<div class="section" id="runge-kutta-method">
+<h3>Runge-Kutta method<a class="headerlink" href="#runge-kutta-method" title="Permalink to this headline">¶</a></h3>
+<p>Runge-Kutta method is a 4th order interative method of approximating ODEs. You can find the notebook expanding on this method <a class="reference internal" href="Runge_Kutta_method.html#runge-kutta-method"><span class="std std-ref">here</span></a>.</p>
+</div>
+<div class="section" id="successive-over-relaxation-method">
+<h3>Successive over-relaxation method<a class="headerlink" href="#successive-over-relaxation-method" title="Permalink to this headline">¶</a></h3>
+<p>Successive over-relaxation is a method of solving partial differential equations (PDEs). You can find the notebook expanding on this method <a class="reference internal" href="Solving_PDEs_SOR.html#successive-over-relaxation"><span class="std std-ref">here</span></a>.</p>
+</div>
+<div class="section" id="forward-time-centred-space-method">
+<h3>Forward Time Centred Space method<a class="headerlink" href="#forward-time-centred-space-method" title="Permalink to this headline">¶</a></h3>
+<p>Forward Time Centred Space scheme is used for parabolic PDEs. You can find the notebook expanding on this method <a class="reference internal" href="Forward_time_centred_space.html#ftcs-scheme"><span class="std std-ref">here</span></a>.</p>
+</div>
+</div>
+<div class="section" id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="a-function-to-perform-numerical-differentiation">
+<h3>A function to perform numerical differentiation<a class="headerlink" href="#a-function-to-perform-numerical-differentiation" title="Permalink to this headline">¶</a></h3>
+<p>As covered above, the expression</p>
+<p>\[\frac{f(x+\Delta x) - f(x-\Delta x)}{2\Delta x},\]</p>
+<p>can be used to find an approximate derivative of the function \(f(x)\) provided that \(\Delta x\) is appropriately small.</p>
+<p>Let’s write a function <code class="docutils literal notranslate"><span class="pre">diff(f,</span> <span class="pre">x,</span> <span class="pre">dx</span> <span class="pre">=</span> <span class="pre">1.0e-6)</span></code> that returns the approximation of the derivative of a mathematical function represented by a Python function <code class="docutils literal notranslate"><span class="pre">f(x)</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="k">def</span> <span class="nf">diff</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">dx</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">):</span>
+    <span class="n">numerator</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">dx</span><span class="p">)</span> <span class="o">-</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">dx</span><span class="p">)</span>
+    <span class="n">derivative</span> <span class="o">=</span> <span class="n">numerator</span> <span class="o">/</span> <span class="p">(</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">dx</span> <span class="p">)</span>
+    <span class="k">return</span> <span class="n">derivative</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s apply the above formula to differentiate \(f(x) = e^x\) at \(x = 0\), \(f(x) = e^{−2x}\) at \(x = 0\), \(f(x) = \cos(x)\) at \(x = 2\pi\), and \(f(x) = \ln(x)\) at \(x = 1\).</p>
+<p>In each case, using \(\Delta x = 0.01\), let’s write out the error, i.e. the difference between the exact derivative and the result of the formula above.</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dx</span> <span class="o">=</span> <span class="mf">0.01</span>
+<span class="n">x</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span>
+<span class="n">derivative</span> <span class="o">=</span> <span class="n">diff</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">dx</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The approximate derivative of exp(x) at x = 0 is: </span><span class="si">%f</span><span class="s2">. The error is </span><span class="si">%f</span><span class="s2">.&quot;</span>
+      <span class="o">%</span> <span class="p">(</span><span class="n">derivative</span><span class="p">,</span> <span class="nb">abs</span><span class="p">(</span><span class="n">derivative</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)))</span>
+<span class="n">x</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="k">def</span> <span class="nf">g</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="p">)</span>
+
+<span class="n">derivative</span> <span class="o">=</span> <span class="n">diff</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">dx</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The approximate derivative of exp(-2*x) at x = 0 is: </span><span class="si">{0:.5f}</span><span class="s1">.  The error is </span><span class="si">{1:.5f}</span><span class="s1">.&#39;</span>
+        <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">derivative</span><span class="p">,</span> <span class="nb">abs</span><span class="p">(</span><span class="n">derivative</span> <span class="o">-</span> <span class="p">(</span><span class="o">-</span><span class="mf">2.0</span><span class="p">))))</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span>
+<span class="n">derivative</span> <span class="o">=</span> <span class="n">diff</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">dx</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The approximate derivative of cos(x) at x = 2*pi is: </span><span class="si">{0:.5f}</span><span class="s1">.  The error is </span><span class="si">{1:.5f}</span><span class="s1">.&#39;</span>
+        <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">derivative</span><span class="p">,</span> <span class="nb">abs</span><span class="p">(</span><span class="n">derivative</span> <span class="o">-</span> <span class="mi">0</span><span class="p">)))</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span>
+<span class="n">derivative</span> <span class="o">=</span> <span class="n">diff</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">dx</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The approximate derivative of ln(x) at x = 0 is: </span><span class="si">{0:.5f}</span><span class="s1">.  The error is </span><span class="si">{1:.5f}</span><span class="s1">.&#39;</span>
+        <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">derivative</span><span class="p">,</span> <span class="nb">abs</span><span class="p">(</span><span class="n">derivative</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>The approximate derivative of exp(x) at x = 0 is: 1.000017. The error is 0.000017.
+The approximate derivative of exp(-2*x) at x = 0 is: -2.00013.  The error is 0.00013.
+The approximate derivative of cos(x) at x = 2*pi is: 0.00000.  The error is 0.00000.
+The approximate derivative of ln(x) at x = 0 is: 1.00003.  The error is 0.00003.
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="derivative-of-sin-x">
+<h3>Derivative of \(sin(x)\)<a class="headerlink" href="#derivative-of-sin-x" title="Permalink to this headline">¶</a></h3>
+<p>We will compute</p>
+<p>\[\frac{d(\sin x)}{dx}\qquad\textrm{at}\qquad x = 0.8\]</p>
+<p>using FDM and CDM. We will evaluate these derivatives for decreasing values of \(h\) (starting with \(h=1.0\) and halving) and compare the values against the exact solution.</p>
+<p>At first let’s define <code class="docutils literal notranslate"><span class="pre">forward_diff</span></code> and <code class="docutils literal notranslate"><span class="pre">central_diff</span></code> functions:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">forward_diff</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">dx</span><span class="p">):</span>
+    <span class="n">fx</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">fxph</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">dx</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">fxph</span> <span class="o">-</span> <span class="n">fx</span><span class="p">)</span> <span class="o">/</span> <span class="n">dx</span>
+
+
+<span class="k">def</span> <span class="nf">central_diff</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">dx</span><span class="p">):</span>
+    <span class="n">fxph</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">dx</span><span class="p">)</span>
+    <span class="n">fxnh</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">dx</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">fxph</span> <span class="o">-</span> <span class="n">fxnh</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">dx</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We know that the exact solution is \(\frac{d \sin(x){dx}=\cos{x}\), we can evaluate that and store to compare later with the numerical solution:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">exact</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Exact derivative at sin(0.8) = </span><span class="si">%.5f</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="n">exact</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Exact derivative at sin(0.8) = 0.69671.
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now, we can compute solution with two schemes and compare with the exact solution:</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># headers for the following errors outputs</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%20s%40s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="s1">&#39;Forward differencing&#39;</span><span class="p">,</span> <span class="s1">&#39;Central differencing&#39;</span><span class="p">))</span>
+
+<span class="c1"># We&#39;re going to store all the values for plotting,</span>
+<span class="c1"># initialise variable for these</span>
+<span class="n">fd_errors</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">cd_errors</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">dx_all</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">dx</span> <span class="o">=</span> <span class="mf">1.0</span>  <span class="c1"># An initial mesh spacing</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">fd</span> <span class="o">=</span> <span class="n">forward_diff</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="n">dx</span><span class="p">)</span>
+    <span class="n">cd</span> <span class="o">=</span> <span class="n">central_diff</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="n">dx</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%10g</span><span class="s1"> (error=</span><span class="si">%10.2g</span><span class="s1">)         </span><span class="si">%10g</span><span class="s1"> (error=</span><span class="si">%10.2g</span><span class="s1">)&#39;</span> <span class="o">%</span>
+          <span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="nb">abs</span><span class="p">(</span><span class="n">fd</span> <span class="o">-</span> <span class="n">exact</span><span class="p">),</span> <span class="n">cd</span><span class="p">,</span> <span class="nb">abs</span><span class="p">(</span><span class="n">cd</span> <span class="o">-</span> <span class="n">exact</span><span class="p">)))</span>
+    <span class="c1"># Store the h and the errors</span>
+    <span class="n">dx_all</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dx</span><span class="p">)</span>
+    <span class="n">fd_errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">fd</span> <span class="o">-</span> <span class="n">exact</span><span class="p">))</span>
+    <span class="n">cd_errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">cd</span> <span class="o">-</span> <span class="n">exact</span><span class="p">))</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="n">dx</span> <span class="o">/</span> <span class="mi">2</span>  <span class="c1"># Halve h for the next iteration</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Forward differencing                    Central differencing
+  0.256492 (error=      0.44)           0.586258 (error=      0.11)
+  0.492404 (error=       0.2)           0.668038 (error=     0.029)
+  0.600269 (error=     0.096)           0.689472 (error=    0.0072)
+  0.650117 (error=     0.047)           0.694894 (error=    0.0018)
+  0.673843 (error=     0.023)           0.696253 (error=   0.00045)
+  0.685386 (error=     0.011)           0.696593 (error=   0.00011)
+  0.691074 (error=    0.0056)           0.696678 (error=   2.8e-05)
+  0.693897 (error=    0.0028)             0.6967 (error=   7.1e-06)
+  0.695304 (error=    0.0014)           0.696705 (error=   1.8e-06)
+  0.696006 (error=    0.0007)           0.696706 (error=   4.4e-07)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s plot the errors in a log-log plot so that we can see the relationship between the error and the increment:</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set up figure</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">dx_all</span><span class="p">,</span> <span class="n">fd_errors</span><span class="p">,</span> <span class="s1">&#39;b.-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Forward diff.&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">dx_all</span><span class="p">,</span> <span class="n">cd_errors</span><span class="p">,</span> <span class="s1">&#39;k.-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Central diff.&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;$\Delta x$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Error&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Convergence plot&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/Numerical_differentiation_19_0.png" src="../../_images/Numerical_differentiation_19_0.png" />
+</div>
+</div>
+<p>The errors fall linearly in \(\Delta x\) on a log-log plot, therefore they have a polynomial relationship. The slopes of the lines indicate the order of the relationship - slope 1 for forward difference and slope 2 for central difference.</p>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "primer-computational-mathematics/book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./mathematics/numerical_methods"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="Heuns_method.html" title="previous page">Heun’s method</a>
+    <a class='right-next' id="next-link" href="Numerical_integration.html" title="next page">Numerical integration</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Imperial College London<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../../_static/js/index.js"></script>
+    
+  </body>
+</html>
