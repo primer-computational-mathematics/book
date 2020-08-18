@@ -40,8 +40,8 @@
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Numerical integration" href="Numerical_integration.html" />
-    <link rel="prev" title="Heun’s method" href="Heuns_method.html" />
+    <link rel="next" title="Solving (or “timestepping”) an ordinary differential equation (ODE)" href="3_Timestepping_an_ODE.html" />
+    <link rel="prev" title="Interpolation and curve fitting" href="1_Interpolation_curve_fitting.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="docsearch:language" content="en">
@@ -107,31 +107,34 @@
       <a href="intro.html">Numerical methods</a>
       <ul class="nav sidenav_l3">
       <li class="">
-        <a href="Euler_method.html">Euler method</a>
-      </li>
-      <li class="">
-        <a href="Forward_time_centred_space.html">Forward Time Centred Space (FTCS) scheme</a>
-      </li>
-      <li class="">
-        <a href="Heuns_method.html">Heun’s method</a>
+        <a href="1_Interpolation_curve_fitting.html">Interpolation and curve fitting</a>
       </li>
       <li class="active">
         <a href="">Numerical differentiation</a>
       </li>
       <li class="">
-        <a href="Numerical_integration.html">Numerical integration</a>
+        <a href="3_Timestepping_an_ODE.html">Solving (or “timestepping”) an ordinary differential equation (ODE)</a>
       </li>
       <li class="">
-        <a href="Roots_of_equations.html">Roots of equations</a>
+        <a href="4_Euler_method.html">Euler method</a>
       </li>
       <li class="">
-        <a href="Runge_Kutta_method.html">Runge-Kutta integration method</a>
+        <a href="5_Heuns_method.html">Heun’s method</a>
       </li>
       <li class="">
-        <a href="Solving_PDEs_SOR.html">Successive over-relaxation (SOR)</a>
+        <a href="6_Runge_Kutta_method.html">Runge-Kutta method</a>
       </li>
       <li class="">
-        <a href="Timestepping_an_ODE.html">Solving (or “timestepping”) an ordinary differential equation (ODE)</a>
+        <a href="7_Solving_PDEs_SOR.html">Successive over-relaxation method</a>
+      </li>
+      <li class="">
+        <a href="8_Forward_time_centred_space.html">Forward Time Centred Space scheme</a>
+      </li>
+      <li class="">
+        <a href="9_Numerical_integration.html">Numerical integration</a>
+      </li>
+      <li class="">
+        <a href="10_Roots_of_equations.html">Roots of equations</a>
       </li>
     </ul>
     </li>
@@ -196,7 +199,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../_sources/mathematics/numerical_methods/Numerical_differentiation.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="../../_sources/mathematics/numerical_methods/2_Numerical_differentiation.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
@@ -213,7 +216,7 @@
     <div class="dropdown-buttons sourcebuttons">
         
         <a class="issues-button"
-            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2Fmathematics/numerical_methods/Numerical_differentiation.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2Fmathematics/numerical_methods/2_Numerical_differentiation.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
         
@@ -233,7 +236,7 @@
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/mathematics/numerical_methods/Numerical_differentiation.ipynb"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/mathematics/numerical_methods/2_Numerical_differentiation.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="../../_static/images/logo_binder.svg"
@@ -364,11 +367,11 @@
 <p>Since this approximate gradient method uses values of \(x\) greater than \(x_0\) (\(\Delta x&gt;0\)), this algorithm is known as the <strong>forward difference method</strong>.</p>
 <p>The figure below illustrates this approximation.</p>
 <div class="cell_output docutils container">
-<img alt="../../_images/Numerical_differentiation_1_0.png" src="../../_images/Numerical_differentiation_1_0.png" />
+<img alt="../../_images/2_Numerical_differentiation_1_0.png" src="../../_images/2_Numerical_differentiation_1_0.png" />
 </div>
 <p>In the figure the derivative is approximated by the slope of the red line, while the true derivative is the slope of the blue line - if the second (and/or higher) derivative of the function is large then this approximation might not be very good, unless you make \(\Delta x\) very small:</p>
 <div class="cell_output docutils container">
-<img alt="../../_images/Numerical_differentiation_2_0.png" src="../../_images/Numerical_differentiation_2_0.png" />
+<img alt="../../_images/2_Numerical_differentiation_2_0.png" src="../../_images/2_Numerical_differentiation_2_0.png" />
 </div>
 <div class="dropdown admonition">
 <p class="admonition-title">Exercise: compute first derivative with FDM</p>
@@ -454,7 +457,7 @@ which, contrary to the 1st order FDM, is an approximation to the derivative that
 <p>By considering an interval symmetric about \(x_0\), we have created a second-order approximation for the derivative of \(f\). This symmetry gives the scheme its name - the <a class="reference external" href="https://en.wikipedia.org/wiki/Central_differencing_scheme">central difference method</a>.</p>
 <p>The figure below illustrates this scheme:</p>
 <div class="cell_output docutils container">
-<img alt="../../_images/Numerical_differentiation_6_0.png" src="../../_images/Numerical_differentiation_6_0.png" />
+<img alt="../../_images/2_Numerical_differentiation_6_0.png" src="../../_images/2_Numerical_differentiation_6_0.png" />
 </div>
 <p>The derivative is approximated by the slope of the red line, while the true derivative is the slope of the blue line. Even without the analysis above it’s hopefully clear visually why this should in general give a lower error than the forward difference. If we halve \(h\), the error should drop by a factor of 4, rather than 2 in case of 1st order scheme.</p>
 <div class="dropdown admonition">
@@ -524,7 +527,7 @@ f(1.16) = 0.313486.\]</p>
 </div>
 </div>
 <div class="section" id="solving-differential-equations">
-<h2>Solving differential equations<a class="headerlink" href="#solving-differential-equations" title="Permalink to this headline">¶</a></h2>
+<span id="nm-solving-diff-eq"></span><h2>Solving differential equations<a class="headerlink" href="#solving-differential-equations" title="Permalink to this headline">¶</a></h2>
 <p>One of the most important applications of numerical mathematics in the sciences is the numerical solution of ordinary differential equations (ODEs). While the ODEs you will encounter during your mathematics modules are mostly solvable through analytical solutions, real world ODE are often in the form where it has been proven that no analytical solutions exists. However, many of these ODEs govern important physical processes, and thus, numerical solutions were found for these ODEs.</p>
 <p>To recap through an example, suppose we have the general first-order ODE:</p>
 <div class="margin sidebar">
@@ -539,23 +542,23 @@ u(t_0)=u_0.\]</p>
 <p>It is frequently useful to think of the independent variable, \(t\), as representing time. A numerical method steps forward in time units of \(\Delta t\), attempting to calculate \(u(t+\Delta t)\) in using the previously calculated value \(u(t)\).</p>
 <div class="section" id="euler-method">
 <h3>Euler method<a class="headerlink" href="#euler-method" title="Permalink to this headline">¶</a></h3>
-<p>Euler method is one of the simplest schemes to solve ODEs. You can find the notebook expanding on this method <a class="reference internal" href="Euler_method.html#nm-euler-method"><span class="std std-ref">here</span></a>.</p>
+<p>Euler method is one of the simplest schemes to solve ODEs. You can find the notebook expanding on this method <a class="reference internal" href="4_Euler_method.html#nm-euler-method"><span class="std std-ref">here</span></a>.</p>
 </div>
 <div class="section" id="heun-s-method">
 <h3>Heun’s method<a class="headerlink" href="#heun-s-method" title="Permalink to this headline">¶</a></h3>
-<p>Heun’s method is a modified/improved version of the Euler method. You can find the notebook expanding on this method <a class="reference internal" href="Heuns_method.html#nm-heun-method"><span class="std std-ref">here</span></a>.</p>
+<p>Heun’s method is a modified/improved version of the Euler method. You can find the notebook expanding on this method <a class="reference internal" href="5_Heuns_method.html#nm-heun-method"><span class="std std-ref">here</span></a>.</p>
 </div>
 <div class="section" id="runge-kutta-method">
 <h3>Runge-Kutta method<a class="headerlink" href="#runge-kutta-method" title="Permalink to this headline">¶</a></h3>
-<p>Runge-Kutta method is a 4th order interative method of approximating ODEs. You can find the notebook expanding on this method <a class="reference internal" href="Runge_Kutta_method.html#runge-kutta-method"><span class="std std-ref">here</span></a>.</p>
+<p>Runge-Kutta method is a 4th order interative method of approximating ODEs. You can find the notebook expanding on this method <a class="reference internal" href="6_Runge_Kutta_method.html#runge-kutta-method"><span class="std std-ref">here</span></a>.</p>
 </div>
 <div class="section" id="successive-over-relaxation-method">
 <h3>Successive over-relaxation method<a class="headerlink" href="#successive-over-relaxation-method" title="Permalink to this headline">¶</a></h3>
-<p>Successive over-relaxation is a method of solving partial differential equations (PDEs). You can find the notebook expanding on this method <a class="reference internal" href="Solving_PDEs_SOR.html#successive-over-relaxation"><span class="std std-ref">here</span></a>.</p>
+<p>Successive over-relaxation is a method of solving partial differential equations (PDEs). You can find the notebook expanding on this method <a class="reference internal" href="7_Solving_PDEs_SOR.html#successive-over-relaxation"><span class="std std-ref">here</span></a>.</p>
 </div>
 <div class="section" id="forward-time-centred-space-method">
 <h3>Forward Time Centred Space method<a class="headerlink" href="#forward-time-centred-space-method" title="Permalink to this headline">¶</a></h3>
-<p>Forward Time Centred Space scheme is used for parabolic PDEs. You can find the notebook expanding on this method <a class="reference internal" href="Forward_time_centred_space.html#ftcs-scheme"><span class="std std-ref">here</span></a>.</p>
+<p>Forward Time Centred Space scheme is used for parabolic PDEs. You can find the notebook expanding on this method <a class="reference internal" href="8_Forward_time_centred_space.html#ftcs-scheme"><span class="std std-ref">here</span></a>.</p>
 </div>
 </div>
 <div class="section" id="exercises">
@@ -720,7 +723,7 @@ The approximate derivative of ln(x) at x = 0 is: 1.00003.  The error is 0.00003.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/Numerical_differentiation_19_0.png" src="../../_images/Numerical_differentiation_19_0.png" />
+<img alt="../../_images/2_Numerical_differentiation_19_0.png" src="../../_images/2_Numerical_differentiation_19_0.png" />
 </div>
 </div>
 <p>The errors fall linearly in \(\Delta x\) on a log-log plot, therefore they have a polynomial relationship. The slopes of the lines indicate the order of the relationship - slope 1 for forward difference and slope 2 for central difference.</p>
@@ -756,8 +759,8 @@ The approximate derivative of ln(x) at x = 0 is: 1.00003.  The error is 0.00003.
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="Heuns_method.html" title="previous page">Heun’s method</a>
-    <a class='right-next' id="next-link" href="Numerical_integration.html" title="next page">Numerical integration</a>
+    <a class='left-prev' id="prev-link" href="1_Interpolation_curve_fitting.html" title="previous page">Interpolation and curve fitting</a>
+    <a class='right-next' id="next-link" href="3_Timestepping_an_ODE.html" title="next page">Solving (or “timestepping”) an ordinary differential equation (ODE)</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

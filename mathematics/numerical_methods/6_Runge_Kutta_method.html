@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Runge-Kutta integration method &#8212; ESE Jupyter Material</title>
+    <title>Runge-Kutta method &#8212; ESE Jupyter Material</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
     <link href="../../_static/css/index.css" rel="stylesheet">
     <link rel="stylesheet" href="../../_static/sphinx-book-theme.css" type="text/css" />
@@ -40,8 +40,8 @@
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Successive over-relaxation (SOR)" href="Solving_PDEs_SOR.html" />
-    <link rel="prev" title="Roots of equations" href="Roots_of_equations.html" />
+    <link rel="next" title="Successive over-relaxation method" href="7_Solving_PDEs_SOR.html" />
+    <link rel="prev" title="Heun’s method" href="5_Heuns_method.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="docsearch:language" content="en">
@@ -107,31 +107,34 @@
       <a href="intro.html">Numerical methods</a>
       <ul class="nav sidenav_l3">
       <li class="">
-        <a href="Euler_method.html">Euler method</a>
+        <a href="1_Interpolation_curve_fitting.html">Interpolation and curve fitting</a>
       </li>
       <li class="">
-        <a href="Forward_time_centred_space.html">Forward Time Centred Space (FTCS) scheme</a>
+        <a href="2_Numerical_differentiation.html">Numerical differentiation</a>
       </li>
       <li class="">
-        <a href="Heuns_method.html">Heun’s method</a>
+        <a href="3_Timestepping_an_ODE.html">Solving (or “timestepping”) an ordinary differential equation (ODE)</a>
       </li>
       <li class="">
-        <a href="Numerical_differentiation.html">Numerical differentiation</a>
+        <a href="4_Euler_method.html">Euler method</a>
       </li>
       <li class="">
-        <a href="Numerical_integration.html">Numerical integration</a>
-      </li>
-      <li class="">
-        <a href="Roots_of_equations.html">Roots of equations</a>
+        <a href="5_Heuns_method.html">Heun’s method</a>
       </li>
       <li class="active">
-        <a href="">Runge-Kutta integration method</a>
+        <a href="">Runge-Kutta method</a>
       </li>
       <li class="">
-        <a href="Solving_PDEs_SOR.html">Successive over-relaxation (SOR)</a>
+        <a href="7_Solving_PDEs_SOR.html">Successive over-relaxation method</a>
       </li>
       <li class="">
-        <a href="Timestepping_an_ODE.html">Solving (or “timestepping”) an ordinary differential equation (ODE)</a>
+        <a href="8_Forward_time_centred_space.html">Forward Time Centred Space scheme</a>
+      </li>
+      <li class="">
+        <a href="9_Numerical_integration.html">Numerical integration</a>
+      </li>
+      <li class="">
+        <a href="10_Roots_of_equations.html">Roots of equations</a>
       </li>
     </ul>
     </li>
@@ -196,7 +199,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../_sources/mathematics/numerical_methods/Runge_Kutta_method.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="../../_sources/mathematics/numerical_methods/6_Runge_Kutta_method.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
@@ -213,7 +216,7 @@
     <div class="dropdown-buttons sourcebuttons">
         
         <a class="issues-button"
-            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2Fmathematics/numerical_methods/Runge_Kutta_method.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2Fmathematics/numerical_methods/6_Runge_Kutta_method.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
         
@@ -233,7 +236,7 @@
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/mathematics/numerical_methods/Runge_Kutta_method.ipynb"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/mathematics/numerical_methods/6_Runge_Kutta_method.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="../../_static/images/logo_binder.svg"
@@ -295,8 +298,8 @@
         
               <div>
                 
-  <div class="section" id="runge-kutta-integration-method">
-<span id="runge-kutta-method"></span><h1>Runge-Kutta integration method<a class="headerlink" href="#runge-kutta-integration-method" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="runge-kutta-method">
+<span id="id1"></span><h1>Runge-Kutta method<a class="headerlink" href="#runge-kutta-method" title="Permalink to this headline">¶</a></h1>
 <p id="index-0"><a class="reference external" href="https://en.wikipedia.org/wiki/Runge%E2%80%93Kutta_methods">Runge-Kutta</a> (RK4) is most commonly used method for integrating <a class="reference internal" href="../differential_equations/2_linear_des.html#ode-linear"><span class="std std-ref">Ordinary Differential Equations (ODEs)</span></a>. This method takes into account slope at the beginning, middle (twice) and the end of interval to integrate an ODE with a 4th order accuracy.</p>
 <div class="section" id="st-order-ode-integration">
 <h2>1st order ODE integration<a class="headerlink" href="#st-order-ode-integration" title="Permalink to this headline">¶</a></h2>
@@ -437,7 +440,7 @@ with initial values \(x_0 = 1\) and \(y_0=1\) is
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/Runge_Kutta_method_12_0.png" src="../../_images/Runge_Kutta_method_12_0.png" />
+<img alt="../../_images/6_Runge_Kutta_method_12_0.png" src="../../_images/6_Runge_Kutta_method_12_0.png" />
 </div>
 </div>
 <p>As we can see, Runge-Kutta is much more accurate than Euler method. That’s the reson why it is more often used when integrating ODEs. In this case Euler method underestimated the analytical solution.</p>
@@ -503,7 +506,7 @@ numerically with Runge-Kutta method. We will assume again that \(x_0 = 1\), \(y_
 <p>In this example, Euler method overestimated the solution, while RK4 method proves to be very accurate:</p>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
-<img alt="../../_images/Runge_Kutta_method_16_0.png" src="../../_images/Runge_Kutta_method_16_0.png" />
+<img alt="../../_images/6_Runge_Kutta_method_16_0.png" src="../../_images/6_Runge_Kutta_method_16_0.png" />
 </div>
 </div>
 </div>
@@ -631,7 +634,7 @@ This is our first ODE to be solved.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/Runge_Kutta_method_26_0.png" src="../../_images/Runge_Kutta_method_26_0.png" />
+<img alt="../../_images/6_Runge_Kutta_method_26_0.png" src="../../_images/6_Runge_Kutta_method_26_0.png" />
 </div>
 </div>
 <p>The numerical solution looks consistent with behaviour in real world, however, in reality friction dampens the motion.</p>
@@ -678,7 +681,7 @@ This is our first ODE to be solved.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/Runge_Kutta_method_28_0.png" src="../../_images/Runge_Kutta_method_28_0.png" />
+<img alt="../../_images/6_Runge_Kutta_method_28_0.png" src="../../_images/6_Runge_Kutta_method_28_0.png" />
 </div>
 </div>
 </div>
@@ -778,7 +781,7 @@ Therefore,</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/Runge_Kutta_method_36_0.png" src="../../_images/Runge_Kutta_method_36_0.png" />
+<img alt="../../_images/6_Runge_Kutta_method_36_0.png" src="../../_images/6_Runge_Kutta_method_36_0.png" />
 </div>
 </div>
 <p>What happens if we change the external temperature between 0 and 100\(^\circ\)C?</p>
@@ -837,7 +840,7 @@ Therefore,</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/Runge_Kutta_method_38_0.png" src="../../_images/Runge_Kutta_method_38_0.png" />
+<img alt="../../_images/6_Runge_Kutta_method_38_0.png" src="../../_images/6_Runge_Kutta_method_38_0.png" />
 </div>
 </div>
 <p>As the external temperature decreases, the temperature profile in the rod decreases as well. Heat flux, however, increases at the other end of the rod as the gradient in temperature becomes sharper.</p>
@@ -873,8 +876,8 @@ Therefore,</p>
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="Roots_of_equations.html" title="previous page">Roots of equations</a>
-    <a class='right-next' id="next-link" href="Solving_PDEs_SOR.html" title="next page">Successive over-relaxation (SOR)</a>
+    <a class='left-prev' id="prev-link" href="5_Heuns_method.html" title="previous page">Heun’s method</a>
+    <a class='right-next' id="next-link" href="7_Solving_PDEs_SOR.html" title="next page">Successive over-relaxation method</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Forward Time Centred Space (FTCS) scheme &#8212; ESE Jupyter Material</title>
+    <title>Forward Time Centred Space scheme &#8212; ESE Jupyter Material</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
     <link href="../../_static/css/index.css" rel="stylesheet">
     <link rel="stylesheet" href="../../_static/sphinx-book-theme.css" type="text/css" />
@@ -40,8 +40,8 @@
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Heun’s method" href="Heuns_method.html" />
-    <link rel="prev" title="Euler method" href="Euler_method.html" />
+    <link rel="next" title="Numerical integration" href="9_Numerical_integration.html" />
+    <link rel="prev" title="Successive over-relaxation method" href="7_Solving_PDEs_SOR.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="docsearch:language" content="en">
@@ -107,31 +107,34 @@
       <a href="intro.html">Numerical methods</a>
       <ul class="nav sidenav_l3">
       <li class="">
-        <a href="Euler_method.html">Euler method</a>
+        <a href="1_Interpolation_curve_fitting.html">Interpolation and curve fitting</a>
+      </li>
+      <li class="">
+        <a href="2_Numerical_differentiation.html">Numerical differentiation</a>
+      </li>
+      <li class="">
+        <a href="3_Timestepping_an_ODE.html">Solving (or “timestepping”) an ordinary differential equation (ODE)</a>
+      </li>
+      <li class="">
+        <a href="4_Euler_method.html">Euler method</a>
+      </li>
+      <li class="">
+        <a href="5_Heuns_method.html">Heun’s method</a>
+      </li>
+      <li class="">
+        <a href="6_Runge_Kutta_method.html">Runge-Kutta method</a>
+      </li>
+      <li class="">
+        <a href="7_Solving_PDEs_SOR.html">Successive over-relaxation method</a>
       </li>
       <li class="active">
-        <a href="">Forward Time Centred Space (FTCS) scheme</a>
+        <a href="">Forward Time Centred Space scheme</a>
       </li>
       <li class="">
-        <a href="Heuns_method.html">Heun’s method</a>
+        <a href="9_Numerical_integration.html">Numerical integration</a>
       </li>
       <li class="">
-        <a href="Numerical_differentiation.html">Numerical differentiation</a>
-      </li>
-      <li class="">
-        <a href="Numerical_integration.html">Numerical integration</a>
-      </li>
-      <li class="">
-        <a href="Roots_of_equations.html">Roots of equations</a>
-      </li>
-      <li class="">
-        <a href="Runge_Kutta_method.html">Runge-Kutta integration method</a>
-      </li>
-      <li class="">
-        <a href="Solving_PDEs_SOR.html">Successive over-relaxation (SOR)</a>
-      </li>
-      <li class="">
-        <a href="Timestepping_an_ODE.html">Solving (or “timestepping”) an ordinary differential equation (ODE)</a>
+        <a href="10_Roots_of_equations.html">Roots of equations</a>
       </li>
     </ul>
     </li>
@@ -196,7 +199,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../_sources/mathematics/numerical_methods/Forward_time_centred_space.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="../../_sources/mathematics/numerical_methods/8_Forward_time_centred_space.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
@@ -213,7 +216,7 @@
     <div class="dropdown-buttons sourcebuttons">
         
         <a class="issues-button"
-            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2Fmathematics/numerical_methods/Forward_time_centred_space.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2Fmathematics/numerical_methods/8_Forward_time_centred_space.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
         
@@ -233,7 +236,7 @@
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/mathematics/numerical_methods/Forward_time_centred_space.ipynb"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/mathematics/numerical_methods/8_Forward_time_centred_space.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="../../_static/images/logo_binder.svg"
@@ -279,8 +282,8 @@
         
               <div>
                 
-  <div class="section" id="forward-time-centred-space-ftcs-scheme">
-<span id="ftcs-scheme"></span><h1>Forward Time Centred Space (FTCS) scheme<a class="headerlink" href="#forward-time-centred-space-ftcs-scheme" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="forward-time-centred-space-scheme">
+<span id="ftcs-scheme"></span><h1>Forward Time Centred Space scheme<a class="headerlink" href="#forward-time-centred-space-scheme" title="Permalink to this headline">¶</a></h1>
 <p id="index-0"><a class="reference external" href="https://en.wikipedia.org/wiki/FTCS_scheme">Forward Time Centred Space</a> (FTCS) scheme is a method of solving <a class="reference internal" href="../differential_equations/10_heat_eq.html#heat-separation-of-variables"><span class="std std-ref">heat equation</span></a> (or in general parabolic PDEs). In this scheme, we approximate the spatial derivatives at the current time step and the time derivative between current and new time step:</p>
 <p>\[\quad t = t_0+n\Delta t,\quad x=x_0+i\Delta x,\\
 \frac{\partial u}{\partial t}\approx \frac{u_{i}^{n+1}-u_{i}^{n}}{\Delta t},\\
@@ -413,7 +416,7 @@ Used dt = 0.0010.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/Forward_time_centred_space_6_0.png" src="../../_images/Forward_time_centred_space_6_0.png" />
+<img alt="../../_images/8_Forward_time_centred_space_6_0.png" src="../../_images/8_Forward_time_centred_space_6_0.png" />
 </div>
 </div>
 <p>The solution was obtained after 8,522 iterations.</p>
@@ -474,7 +477,7 @@ Maximum dt = 0.0050.
 Used dt = 0.0100.
 </pre></div>
 </div>
-<img alt="../../_images/Forward_time_centred_space_8_1.png" src="../../_images/Forward_time_centred_space_8_1.png" />
+<img alt="../../_images/8_Forward_time_centred_space_8_1.png" src="../../_images/8_Forward_time_centred_space_8_1.png" />
 </div>
 </div>
 <p>We can see that the solution went unstable immediately for a larger \(\Delta t\).</p>
@@ -509,8 +512,8 @@ Used dt = 0.0100.
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="Euler_method.html" title="previous page">Euler method</a>
-    <a class='right-next' id="next-link" href="Heuns_method.html" title="next page">Heun’s method</a>
+    <a class='left-prev' id="prev-link" href="7_Solving_PDEs_SOR.html" title="previous page">Successive over-relaxation method</a>
+    <a class='right-next' id="next-link" href="9_Numerical_integration.html" title="next page">Numerical integration</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

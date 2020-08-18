@@ -40,8 +40,8 @@
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Numerical differentiation" href="Numerical_differentiation.html" />
-    <link rel="prev" title="Forward Time Centred Space (FTCS) scheme" href="Forward_time_centred_space.html" />
+    <link rel="next" title="Runge-Kutta method" href="6_Runge_Kutta_method.html" />
+    <link rel="prev" title="Euler method" href="4_Euler_method.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="docsearch:language" content="en">
@@ -107,31 +107,34 @@
       <a href="intro.html">Numerical methods</a>
       <ul class="nav sidenav_l3">
       <li class="">
-        <a href="Euler_method.html">Euler method</a>
+        <a href="1_Interpolation_curve_fitting.html">Interpolation and curve fitting</a>
       </li>
       <li class="">
-        <a href="Forward_time_centred_space.html">Forward Time Centred Space (FTCS) scheme</a>
+        <a href="2_Numerical_differentiation.html">Numerical differentiation</a>
+      </li>
+      <li class="">
+        <a href="3_Timestepping_an_ODE.html">Solving (or “timestepping”) an ordinary differential equation (ODE)</a>
+      </li>
+      <li class="">
+        <a href="4_Euler_method.html">Euler method</a>
       </li>
       <li class="active">
         <a href="">Heun’s method</a>
       </li>
       <li class="">
-        <a href="Numerical_differentiation.html">Numerical differentiation</a>
+        <a href="6_Runge_Kutta_method.html">Runge-Kutta method</a>
       </li>
       <li class="">
-        <a href="Numerical_integration.html">Numerical integration</a>
+        <a href="7_Solving_PDEs_SOR.html">Successive over-relaxation method</a>
       </li>
       <li class="">
-        <a href="Roots_of_equations.html">Roots of equations</a>
+        <a href="8_Forward_time_centred_space.html">Forward Time Centred Space scheme</a>
       </li>
       <li class="">
-        <a href="Runge_Kutta_method.html">Runge-Kutta integration method</a>
+        <a href="9_Numerical_integration.html">Numerical integration</a>
       </li>
       <li class="">
-        <a href="Solving_PDEs_SOR.html">Successive over-relaxation (SOR)</a>
-      </li>
-      <li class="">
-        <a href="Timestepping_an_ODE.html">Solving (or “timestepping”) an ordinary differential equation (ODE)</a>
+        <a href="10_Roots_of_equations.html">Roots of equations</a>
       </li>
     </ul>
     </li>
@@ -196,7 +199,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../_sources/mathematics/numerical_methods/Heuns_method.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="../../_sources/mathematics/numerical_methods/5_Heuns_method.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
@@ -213,7 +216,7 @@
     <div class="dropdown-buttons sourcebuttons">
         
         <a class="issues-button"
-            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2Fmathematics/numerical_methods/Heuns_method.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2Fmathematics/numerical_methods/5_Heuns_method.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
         
@@ -233,7 +236,7 @@
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/mathematics/numerical_methods/Heuns_method.ipynb"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/mathematics/numerical_methods/5_Heuns_method.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="../../_static/images/logo_binder.svg"
@@ -271,7 +274,7 @@
                 
   <div class="section" id="heun-s-method">
 <span id="nm-heun-method"></span><h1>Heun’s method<a class="headerlink" href="#heun-s-method" title="Permalink to this headline">¶</a></h1>
-<p id="index-0"><a class="reference internal" href="Euler_method.html#nm-euler-method"><span class="std std-ref">Euler’s method</span></a> is first-order accurate because it calculates the derivative using only the information available at the beginning of the time step. Higher-order convergence can be obtained if we also employ information from other points in the interval - the more points that we employ, the more accurate method for solving ODEs can be. <a class="reference external" href="https://en.wikipedia.org/wiki/Heun%27s_method">Heun’s method</a> uses 2 points compared to Euler’s one single point, increasing accuracy.</p>
+<p id="index-0"><a class="reference internal" href="4_Euler_method.html#nm-euler-method"><span class="std std-ref">Euler’s method</span></a> is first-order accurate because it calculates the derivative using only the information available at the beginning of the time step. Higher-order convergence can be obtained if we also employ information from other points in the interval - the more points that we employ, the more accurate method for solving ODEs can be. <a class="reference external" href="https://en.wikipedia.org/wiki/Heun%27s_method">Heun’s method</a> uses 2 points compared to Euler’s one single point, increasing accuracy.</p>
 <p>Heun’s method may be derived by attempting to use derivative information at both the start and the end of the interval:</p>
 <p>\[u(t+\Delta t)\approx u(t)+\frac{\Delta t}{2}\left(u’(t)+u’(t+\Delta t)\right),\\
 u(t+\Delta t)\approx u(t)+\frac{\Delta t}{2}\big(f(u(t),t)+f(u(t+\Delta t),t+\Delta t)\big).\]</p>
@@ -357,7 +360,7 @@ an initial value for \(u\), the start and end time of the integration, and the t
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/Heuns_method_3_0.png" src="../../_images/Heuns_method_3_0.png" />
+<img alt="../../_images/5_Heuns_method_3_0.png" src="../../_images/5_Heuns_method_3_0.png" />
 </div>
 </div>
 </div>
@@ -391,8 +394,8 @@ an initial value for \(u\), the start and end time of the integration, and the t
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="Forward_time_centred_space.html" title="previous page">Forward Time Centred Space (FTCS) scheme</a>
-    <a class='right-next' id="next-link" href="Numerical_differentiation.html" title="next page">Numerical differentiation</a>
+    <a class='left-prev' id="prev-link" href="4_Euler_method.html" title="previous page">Euler method</a>
+    <a class='right-next' id="next-link" href="6_Runge_Kutta_method.html" title="next page">Runge-Kutta method</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
