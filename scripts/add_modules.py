@@ -82,7 +82,7 @@ def write_module_content():
         content += [f'## {year}\n']
 
         for tag in modules_dict.keys():
-            if tag in modules_year[year] and len(modules_dict[tag] > 2):
+            if tag in modules_year[year] and len(modules_dict[tag]) > 2:
 
                 # create target header and badge (first two entries of modules_dict)
                 content += [f'({tag})=\n', f'### {modules_dict[tag][0]}\n', '\n', f'{modules_dict[tag][1]}\n', '\n']
