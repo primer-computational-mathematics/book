@@ -82,7 +82,7 @@ def write_module_content():
         content += [f'## {year}\n']
 
         for tag in modules_dict.keys():
-            if tag in modules_year[year]:
+            if tag in modules_year[year] and len(modules_dict[tag] > 2):
 
                 # create target header and badge (first two entries of modules_dict)
                 content += [f'({tag})=\n', f'### {modules_dict[tag][0]}\n', '\n', f'{modules_dict[tag][1]}\n', '\n']
@@ -112,6 +112,7 @@ modules_dict = {'module-mm1': ['Maths Methods 1'],
                'module-progr': ['Programming for Geoscientists'],
                'module-nm': ['Numerical Methods'],
                'module-rs': ['Remote Sensing'],
+               'module-mech': ['Mechanics'],
                'module-advrs': ['Advanced Remote Sensing'],
                'module-seism': ['Seismology'],
                'module-igp': ['Independent Geophysics Project'],
@@ -120,7 +121,8 @@ modules_dict = {'module-mm1': ['Maths Methods 1'],
                'module-geodyn': ['Geodynamics']}
 
 modules_year = {'Year 1': ['module-mm1', 'module-mm2', 'module-progr', 'module-dynep'],
-                'Year 2': ['module-mse1', 'module-mse2', 'module-nm', 'module-rs', 'module-seism', 'module-fieldgps'],
+                'Year 2': ['module-mse1', 'module-mse2', 'module-nm', 'module-rs',
+                           'module-seism', 'module-mech', 'module-fieldgps'],
                 'Year 3/4': ['module-geoinv', 'module-advrs', 'module-igp', 'module-gmod', 'module-geodyn']}
 
 # module badge buttons, with a {ref}-type link to its header in modules/intro.ipynb
