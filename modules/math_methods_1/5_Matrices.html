@@ -1,0 +1,618 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Matrices (Lecture 4) &#8212; ESE Jupyter Material</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/mystnb.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".cell"
+        const thebe_selector_input = ".cell_input div.highlight"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Eigenvalues (Lecture 5)" href="6_Eigenvalues.html" />
+    <link rel="prev" title="Vector calculus (Lecture 3)" href="4_Vector_Calculus.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../index.html">
+  
+  <img src="../../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">ESE Jupyter Material</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  
+  <ul class="nav sidenav_l1">
+  <li class="">
+    <a href="../../intro.html">Landing page</a>
+  </li>
+  <li class="">
+    <a href="../../coding/intro.html">Coding</a>
+  </li>
+  <li class="">
+    <a href="../../geosciences/intro.html">Geosciences</a>
+  </li>
+  <li class="">
+    <a href="../../mathematics/intro.html">Mathematics</a>
+  </li>
+  <li class="active">
+    <a href="../intro.html">Modules</a>
+  <ul class="nav sidenav_l2">
+    <li class="active">
+      <a href="intro.html">Mathematical methods 1</a>
+      <ul class="nav sidenav_l3">
+      <li class="">
+        <a href="1_Coordinate_Systems.html">Coordinate systems (Lecture 1)</a>
+      </li>
+      <li class="">
+        <a href="2_Vectors.html">Vectors</a>
+      </li>
+      <li class="">
+        <a href="3_Multivariable_Calculus.html">Multivariable calculus (Lecture 2)</a>
+      </li>
+      <li class="">
+        <a href="4_Vector_Calculus.html">Vector calculus (Lecture 3)</a>
+      </li>
+      <li class="active">
+        <a href="">Matrices (Lecture 4)</a>
+      </li>
+      <li class="">
+        <a href="6_Eigenvalues.html">Eigenvalues (Lecture 5)</a>
+      </li>
+      <li class="">
+        <a href="7_Series.html">Series (Lecture 6)</a>
+      </li>
+      <li class="">
+        <a href="8_ODEs.html">ODEs (Lecture 7)</a>
+      </li>
+      <li class="">
+        <a href="9_Modelling.html">Modelling (Lecture 8)</a>
+      </li>
+    </ul>
+    </li>
+  </ul>
+  </li>
+  <li class="">
+    <a href="../../z_extra_resources_for_researchers/intro.html">Extra resources for researchers</a>
+  </li>
+  <li class="">
+    <a href="../../genindex.html">Index</a>
+  </li>
+</ul>
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/modules/math_methods_1/5_Matrices.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        
+        <a class="issues-button"
+            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2Fmodules/math_methods_1/5_Matrices.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/modules/math_methods_1/5_Matrices.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#defining-a-matrix" class="nav-link">Defining a matrix</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#matrix-scalar-multiplication" class="nav-link">Matrix-scalar multiplication</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#matrix-addition-and-subtraction" class="nav-link">Matrix addition and subtraction</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#matrix-matrix-multiplication" class="nav-link">Matrix-matrix multiplication</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#matrix-transpose" class="nav-link">Matrix transpose</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#identity-matrix" class="nav-link">Identity matrix</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#determinants" class="nav-link">Determinants</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#solving-systems-of-linear-equations" class="nav-link">Solving systems of linear equations</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#existence-of-solutions" class="nav-link">Existence of solutions</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#inverse-of-a-matrix" class="nav-link">Inverse of a matrix</a>
+        </li>
+    
+    </ul>
+</nav>
+
+
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="matrices-lecture-4">
+<h1>Matrices (Lecture 4)<a class="headerlink" href="#matrices-lecture-4" title="Permalink to this headline">¶</a></h1>
+<button title="Run code" class="thebelab-button thebe-launch-button"onclick="initThebe()">Run code</button><div class="section" id="defining-a-matrix">
+<h2>Defining a matrix<a class="headerlink" href="#defining-a-matrix" title="Permalink to this headline">¶</a></h2>
+<p><strong>Slide 3</strong></p>
+<p>Remember: when stating the dimension of a matrix (e.g. \(3 \times 3\), \(2 \times 4\), etc) it’s <strong>R</strong>ows Fi<strong>R</strong>st, <strong>C</strong>olumns Se<strong>C</strong>ond.</p>
+<p>Define matrices using <code class="docutils literal notranslate"><span class="pre">numpy.array</span></code>, and find their dimensions using <code class="docutils literal notranslate"><span class="pre">numpy.shape</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># import necessary modules</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># mA is a SQUARE matrix</span>
+<span class="n">mA</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">4</span><span class="p">],</span>
+                <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+                <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span>
+
+<span class="c1"># mB is a NON-SQUARE matrix</span>
+<span class="n">mB</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">],</span>
+               <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">]])</span>
+
+<span class="c1"># So, mA is 3 x 3 matrix, mB is a 2 x 4 matrix.</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The dimension of A is&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">mA</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The dimension of B is&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">mB</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>The dimension of A is (3, 3)
+The dimension of B is (2, 4)
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="matrix-scalar-multiplication">
+<h2>Matrix-scalar multiplication<a class="headerlink" href="#matrix-scalar-multiplication" title="Permalink to this headline">¶</a></h2>
+<p><strong>Slide 5</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mD</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matrix</span><span class="p">([[</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">],</span>
+                <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">]])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;3*D =&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">mD</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>3*D =
+[[  6 -12   3  -6]
+ [ 21  24   0   9]]
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="matrix-addition-and-subtraction">
+<h2>Matrix addition and subtraction<a class="headerlink" href="#matrix-addition-and-subtraction" title="Permalink to this headline">¶</a></h2>
+<p><strong>Slide 6, 7</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mE</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">4</span><span class="p">],</span>
+               <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">]])</span>
+
+<span class="n">mF</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+               <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;E + F =&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mE</span> <span class="o">+</span> <span class="n">mF</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;E - F =&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mE</span> <span class="o">-</span> <span class="n">mF</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>E + F =
+[[ 6 -4]
+ [ 9  7]]
+E - F =
+[[-2 -4]
+ [ 5  9]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>The two matrices being added together must have the same dimension. If they do not, Python will give <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>.</p>
+<p>Adding mE ( \(2 \times 2\) ) and mB ( \(2 \times 4\) ):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">mE</span> <span class="o">+</span> <span class="n">mB</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">4</span><span class="o">-</span><span class="mi">5</span><span class="n">f7c0614b2fd</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="nb">print</span><span class="p">(</span><span class="n">mE</span> <span class="o">+</span> <span class="n">mB</span><span class="p">)</span>
+
+<span class="ne">ValueError</span>: operands could not be broadcast together with shapes (2,2) (2,4) 
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="matrix-matrix-multiplication">
+<h2>Matrix-matrix multiplication<a class="headerlink" href="#matrix-matrix-multiplication" title="Permalink to this headline">¶</a></h2>
+<p><strong>Slide 10</strong></p>
+<p>Matrix-matrix multiplication of two numpy arrays is performed with the <code class="docutils literal notranslate"><span class="pre">&#64;</span></code> operator.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mE</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">4</span><span class="p">],</span>
+               <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span>
+               <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span>
+<span class="n">mH</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+               <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">]])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;E @ H =&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mE</span> <span class="o">@</span> <span class="n">mH</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="matrix-transpose">
+<h2>Matrix transpose<a class="headerlink" href="#matrix-transpose" title="Permalink to this headline">¶</a></h2>
+<p><strong>Slide 12, 13</strong></p>
+<p>Finding the transpose of a matrix using <code class="docutils literal notranslate"><span class="pre">numpy.transpose</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Non-square matrix</span>
+<span class="n">mB</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">4</span><span class="p">],</span>
+               <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span>
+               <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span>
+
+<span class="n">mB_transpose</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">mB</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The transpose of (non-square) B =&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mB_transpose</span><span class="p">)</span>
+
+<span class="c1"># Square matrix</span>
+<span class="n">mB</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">4</span><span class="p">],</span>
+               <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+               <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span>
+
+<span class="n">mB_transpose</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">mB</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The transpose of (square) B =&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mB_transpose</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="identity-matrix">
+<h2>Identity matrix<a class="headerlink" href="#identity-matrix" title="Permalink to this headline">¶</a></h2>
+<p><strong>Slide 15</strong></p>
+<p>Create identity matrix using <code class="docutils literal notranslate"><span class="pre">numpy.identity</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mI</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;I=&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mI</span><span class="p">)</span>
+
+<span class="n">mB</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">4</span><span class="p">],</span>
+               <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+               <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span>
+
+<span class="n">mIB</span> <span class="o">=</span> <span class="n">mI</span> <span class="o">@</span> <span class="n">mB</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;I @ B =&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mIB</span><span class="p">)</span>
+
+<span class="c1"># mIB should be equal to mB</span>
+<span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">mB</span><span class="p">,</span> <span class="n">mIB</span><span class="p">)</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;B = I @ B&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="determinants">
+<h2>Determinants<a class="headerlink" href="#determinants" title="Permalink to this headline">¶</a></h2>
+<p><strong>Slide 16</strong></p>
+<p>Finding determinants of matrices using <code class="docutils literal notranslate"><span class="pre">numpy.linalg.deg</span></code></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 2 x 2 example</span>
+<span class="n">mD</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
+               <span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">]])</span>
+<span class="n">sDet</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">mD</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;det(D) = </span><span class="si">%.2f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">sDet</span><span class="p">)</span> 
+
+<span class="c1"># 3 x 3 example</span>
+<span class="n">mA</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
+               <span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">],</span>
+               <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">]])</span>
+<span class="n">sDet</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">mA</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;det(A) = </span><span class="si">%.2f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">sDet</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="solving-systems-of-linear-equations">
+<h2>Solving systems of linear equations<a class="headerlink" href="#solving-systems-of-linear-equations" title="Permalink to this headline">¶</a></h2>
+<p>Find solutions of a system of linear equations of the form \( A \mathbf{x} = \mathbf{b} \) using <code class="docutils literal notranslate"><span class="pre">numpy.linalg.solve(A,</span> <span class="pre">b)</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set up a system of the form Ax = b</span>
+<span class="n">mA</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">4</span><span class="p">],</span>
+               <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+               <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span>
+<span class="n">vb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">8</span><span class="p">])</span>
+
+<span class="c1"># Solve the system of linear equations</span>
+<span class="n">vX</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">mA</span><span class="p">,</span> <span class="n">vb</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The solution to Ax = b is:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">vX</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="existence-of-solutions">
+<h2>Existence of solutions<a class="headerlink" href="#existence-of-solutions" title="Permalink to this headline">¶</a></h2>
+<p>Is the solution above unique?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compute the determinant of the square matrix A</span>
+<span class="n">sDet</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">mA</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Determinant of A = </span><span class="si">%.3f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">sDet</span><span class="p">)</span> 
+<span class="k">if</span><span class="p">(</span><span class="n">sDet</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The system Ax = b has a UNIQUE solution.&quot;</span><span class="p">)</span> 
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The system Ax = b has either infinite solutions or no solutions.&quot;</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="inverse-of-a-matrix">
+<h2>Inverse of a matrix<a class="headerlink" href="#inverse-of-a-matrix" title="Permalink to this headline">¶</a></h2>
+<p>Compute the inverse of a matrix using <code class="docutils literal notranslate"><span class="pre">numpy.linalg.inv</span></code></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mA_inv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">mA</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The inverse of A is:&quot;</span><span class="p">)</span> 
+<span class="nb">print</span><span class="p">(</span><span class="n">mA_inv</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>A is an object with a set of methods (you’ll learn more about these in the Programming for Geophysicists course). Therefore, you could also use the method <code class="docutils literal notranslate"><span class="pre">getI()</span></code> to compute the inverse by typing</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="o">.</span><span class="n">getI</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>Let us check that <code class="docutils literal notranslate"><span class="pre">A</span> <span class="pre">&#64;</span> <span class="pre">A_inv</span></code> gives the identity matrix I. Note: You may find that some elements of the matrix are around <code class="docutils literal notranslate"><span class="pre">1e-16</span></code> (i.e. \(10^{-16}\) ) instead of exactly zero.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;A @ A_inv=&quot;</span><span class="p">)</span> 
+<span class="nb">print</span><span class="p">(</span><span class="n">mA</span> <span class="o">@</span> <span class="n">mA_inv</span><span class="p">)</span> 
+
+<span class="n">mI</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">mI</span><span class="p">,</span> <span class="n">mA</span> <span class="o">@</span> <span class="n">mA_inv</span><span class="p">)</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;A*A_inv gives the identity matrix&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "primer-computational-mathematics/book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./modules/math_methods_1"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="4_Vector_Calculus.html" title="previous page">Vector calculus (Lecture 3)</a>
+    <a class='right-next' id="next-link" href="6_Eigenvalues.html" title="next page">Eigenvalues (Lecture 5)</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Imperial College London<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../../_static/js/index.js"></script>
+    
+  </body>
+</html>
