@@ -13,6 +13,9 @@ def add_module_badges(fpath):
 
     """
 
+    # Fix fpath for badges, remove _tmp
+    new_fpath = '..' + fpath.split('_tmp')[-1]
+
     with open(fpath, 'r+') as f:
         nb = json.load(f)
 
@@ -50,7 +53,7 @@ def add_module_badges(fpath):
                     # badges and {doc} links to notebook
                     tags_string = ''
                     for tag in _module_tags:
-                        _ref = "{doc}" + f"`{header.strip()} <{fpath}>`"
+                        _ref = "{doc}" + f"`{header.strip()} <{new_fpath}>`"
                         modules_dict[tag] += [_ref]
                         tags_string += modules_dict[tag][1] + ' '
                     tags_string += '\n'
