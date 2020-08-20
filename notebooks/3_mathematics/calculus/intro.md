@@ -1,3 +1,0 @@
-(calculus)=
-# Calculus
-

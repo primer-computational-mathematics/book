@@ -1,1 +1,0 @@
-# Series and sequences
