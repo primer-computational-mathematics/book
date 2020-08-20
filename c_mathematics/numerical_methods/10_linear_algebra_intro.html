@@ -1,0 +1,931 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Linear algebra introduction &#8212; ESE Jupyter Material</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/mystnb.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".cell"
+        const thebe_selector_input = ".cell_input div.highlight"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Gaussian elimination" href="11_Gaussian_elimination.html" />
+    <link rel="prev" title="Roots of equations" href="9_Roots_of_equations.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../index.html">
+  
+  <img src="../../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">ESE Jupyter Material</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  
+  <ul class="nav sidenav_l1">
+  <li class="">
+    <a href="../../intro.html">Landing page</a>
+  </li>
+  <li class="">
+    <a href="../../a_modules/intro.html">Modules</a>
+  </li>
+  <li class="">
+    <a href="../../b_coding/intro.html">Coding</a>
+  </li>
+  <li class="active">
+    <a href="../intro.html">Mathematics</a>
+  <ul class="nav sidenav_l2">
+    <li class="">
+      <a href="../calculus/intro.html">Calculus</a>
+    </li>
+    <li class="">
+      <a href="../complex_analysis/intro.html">Complex analysis</a>
+    </li>
+    <li class="">
+      <a href="../differential_equations/intro.html">Differential equations</a>
+    </li>
+    <li class="">
+      <a href="../linear_algebra/intro.html">Linear algebra</a>
+    </li>
+    <li class="">
+      <a href="../mathematical_notation/intro.html">Mathematical notation</a>
+    </li>
+    <li class="active">
+      <a href="intro.html">Numerical methods</a>
+      <ul class="nav sidenav_l3">
+      <li class="">
+        <a href="1_Interpolation_curve_fitting.html">Interpolation and curve fitting</a>
+      </li>
+      <li class="">
+        <a href="2_Numerical_differentiation.html">Numerical differentiation</a>
+      </li>
+      <li class="">
+        <a href="3_Timestepping_an_ODE.html">Solving or timestepping an ODE</a>
+      </li>
+      <li class="">
+        <a href="4_Heuns_method.html">Heun’s method</a>
+      </li>
+      <li class="">
+        <a href="5_Runge_Kutta_method.html">Runge-Kutta method</a>
+      </li>
+      <li class="">
+        <a href="6_Solving_PDEs_SOR.html">Successive over-relaxation method</a>
+      </li>
+      <li class="">
+        <a href="7_Forward_time_centred_space.html">Forward Time Centred Space scheme</a>
+      </li>
+      <li class="">
+        <a href="8_Numerical_integration.html">Numerical integration</a>
+      </li>
+      <li class="">
+        <a href="9_Roots_of_equations.html">Roots of equations</a>
+      </li>
+      <li class="active">
+        <a href="">Linear algebra introduction</a>
+      </li>
+      <li class="">
+        <a href="11_Gaussian_elimination.html">Gaussian elimination</a>
+      </li>
+      <li class="">
+        <a href="12_LU_decomposition.html">LU decomposition</a>
+      </li>
+    </ul>
+    </li>
+    <li class="">
+      <a href="../series_and_sequences/intro.html">Series and sequences</a>
+    </li>
+    <li class="">
+      <a href="../sets_and_functions/intro.html">Sets and functions</a>
+    </li>
+    <li class="">
+      <a href="../statistics/intro.html">Statistics</a>
+    </li>
+  </ul>
+  </li>
+  <li class="">
+    <a href="../../d_geosciences/intro.html">Geosciences</a>
+  </li>
+  <li class="">
+    <a href="../../e_extra/intro.html">Further resources</a>
+  </li>
+  <li class="">
+    <a href="../../genindex.html">Index</a>
+  </li>
+</ul>
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/c_mathematics/numerical_methods/10_linear_algebra_intro.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        
+        <a class="issues-button"
+            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2Fc_mathematics/numerical_methods/10_linear_algebra_intro.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/c_mathematics/numerical_methods/10_linear_algebra_intro.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#linear-matrix-systems" class="nav-link">Linear (matrix) systems</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#matrices-in-python" class="nav-link">Matrices in Python</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#matrix-objects" class="nav-link">Matrix objects</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#slicing" class="nav-link">Slicing</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#exercises" class="nav-link">Exercises</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#solving-a-linear-system" class="nav-link">Solving a linear system</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#matrix-multiplication" class="nav-link">Matrix multiplication</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#matrix-properties" class="nav-link">Matrix properties</a>
+        </li>
+    
+    </ul>
+</nav>
+
+
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="linear-algebra-introduction">
+<span id="nm-linear-algebra-intro"></span><h1>Linear algebra introduction<a class="headerlink" href="#linear-algebra-introduction" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="linear-matrix-systems">
+<h2>Linear (matrix) systems<a class="headerlink" href="#linear-matrix-systems" title="Permalink to this headline">¶</a></h2>
+<p>We can re-write a system of simultaneous (linear) equations in a matrix form. For example, let’s consider:</p>
+<p>\[\begin{eqnarray*}
+2x + 3y &amp;=&amp; 7 \\
+x - 4y &amp;=&amp; 3
+\end{eqnarray*}\]</p>
+<p>It can be rewritten in a matrix form:</p>
+<p>\[
+\left(
+\begin{array}{rr}
+2 &amp; 3 \\
+1 &amp; -4  \\
+\end{array}
+\right)\left(
+\begin{array}{c}
+x \\
+y \\
+\end{array}
+\right) = \left(
+\begin{array}{c}
+7 \\
+3 \\
+\end{array}
+\right)
+\]</p>
+<p>We understand that this system always has the form of</p>
+<p>\[
+\left(
+\begin{array}{rr}
+a &amp; b \\
+c &amp; d  \\
+\end{array}
+\right)\left(
+\begin{array}{c}
+x \\
+y \\
+\end{array}
+\right) = \left(
+\begin{array}{c}
+e \\
+f \\
+\end{array}
+\right),
+\]</p>
+<p>where \(a,b,c,d,e,f\) are arbitrary constants.</p>
+<p>Let’s call the matrix which stores the coefficients of our system of linear equations to be \(A\)</p>
+<p>\[
+A=
+\left(
+\begin{array}{rr}
+a &amp; b \\
+c &amp; d  \\
+\end{array}
+\right)
+\]</p>
+<p>and the matrix that contains our variables to be \(\mathbf{x}\)</p>
+<p>\[
+\mathbf{x}=
+\left(
+\begin{array}{c}
+x \\
+y  \\
+\end{array}
+\right).
+\]</p>
+<p>The matrix that contains the results of our system of linear equation will be called \(\mathbf{b}\)</p>
+<p>\[
+\mathbf{b}=
+\left(
+\begin{array}{c}
+e \\
+f  \\
+\end{array}
+\right).
+\]</p>
+<p>This system of equations can be represented as the matrix equation
+\[A\pmb{x}=\pmb{b}.\]</p>
+<p>More generally, consider an arbitrary system of \(n\) linear equations for \(n\) unknowns</p>
+<p>\[
+\begin{eqnarray*}
+A_{11}x_1 + A_{12}x_2 + \dots + A_{1n}x_n &amp;=&amp; b_1 \\
+A_{21}x_1 + A_{22}x_2 + \dots + A_{2n}x_n &amp;=&amp; b_2 \\
+\vdots &amp;=&amp; \vdots \\
+A_{n1}x_1 + A_{n2}x_2 + \dots + A_{nn}x_n &amp;=&amp; b_n
+\end{eqnarray*}
+\]</p>
+<p>where \(A_{ij}\) are the constant coefficients of the linear system, \(x_j\) are the unknown variables, and \(b_i\)
+are the terms on the right hand side (RHS). Here the index \(i\) is referring to the equation number
+(the row in the matrix below), with the index \(j\) referring to the component of the unknown
+vector \(\pmb{x}\) (the column of the matrix).</p>
+<p>This system of equations can be represented as the matrix equation \(A\pmb{x}=\pmb{b}\):</p>
+<p>\[
+\left(
+\begin{array}{cccc}
+A_{11} &amp; A_{12} &amp; \dots &amp; A_{1n} \\
+A_{21} &amp; A_{22} &amp; \dots &amp; A_{2n} \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+A_{n1} &amp; A_{n2} &amp; \dots &amp; A_{nn} \\
+\end{array}
+\right)\left(
+\begin{array}{c}
+x_1 \\
+x_2 \\
+\vdots \\
+x_n \\
+\end{array}
+\right)  = \left(
+\begin{array}{c}
+b_1 \\
+b_2 \\
+\vdots \\
+b_n \\
+\end{array}
+\right)
+\]</p>
+<p>We can easily solve the above \(2 \times 2\) example of two equations and two unknowns using substitution (e.g. multiply the second equation by 2 and subtract the first equation from the resulting equation to eliminate \(x\) and hence allowing us to find \(y\), then we could compute \(x\) from the first equation). We find:</p>
+<p>\[ x=\frac{37}{11}, \quad y=\frac{1}{11}.\]</p>
+<div class="margin sidebar">
+<p class="sidebar-title">Note</p>
+<p>Cases where the matrix is non-square, i.e. of shape \(m \times n\) where \(m\ne n\) correspond to the over- or under-determined systems where you have more or less equations than unknowns.</p>
+</div>
+<p>Example systems of \(3\times 3\) are a little more complicated but doable. In this notebook, we consider the case of \(n\times n\), where \(n\) could be billions (e.g. in AI or machine learning).</p>
+</div>
+<div class="section" id="matrices-in-python">
+<h2>Matrices in Python<a class="headerlink" href="#matrices-in-python" title="Permalink to this headline">¶</a></h2>
+<p>We can use <code class="docutils literal notranslate"><span class="pre">numpy.arrays</span></code> to store matrices. The convention for one-dimensional vectors is to call them column vectors and have shape \(n \times 1\). We can extend to higher dimensions through the introduction of matrices as two-dimensional arrays (more generally vectors and matrices are just two examples of <span class="xref std std-ref">tensors</span>).</p>
+<p>We use subscript indices to identify each component of the array or matrix, i.e. we can identify each component of the vector \(\pmb{v}\) by \(v_i\), and each component of the matrix \(A\) by \(A_{ij}\).</p>
+<p>The dimension or shape of a vector/matrix is the number of rows and columns it posesses, i.e. \(n \times 1\) and \(m \times n\) for the examples above. Here is an example of how we can extend our use of the <code class="docutils literal notranslate"><span class="pre">numpy.array</span></code> to two dimensions in order to define a matrix \(A\).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">10.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">],</span>
+              <span class="p">[</span><span class="mf">6.</span><span class="p">,</span> <span class="mf">5.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">],</span>
+              <span class="p">[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">,</span> <span class="mf">7.</span><span class="p">]])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>[[10.  2.  1.]
+ [ 6.  5.  4.]
+ [ 1.  4.  7.]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Check total size of the array storing matrix \(A\). It will be \(3\times3=9\):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">A</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>9
+</pre></div>
+</div>
+</div>
+</div>
+<p>Check the number of dimensions of matrix \(A\):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ndim</span><span class="p">(</span><span class="n">A</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>2
+</pre></div>
+</div>
+</div>
+</div>
+<p>Check the shape of the matrix \(A\):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">A</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>(3, 3)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Transpose matrix \(A\):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>[[10.  6.  1.]
+ [ 2.  5.  4.]
+ [ 1.  4.  7.]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Get the inverse of matrix \(A\):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scipy.linalg</span> <span class="k">as</span> <span class="nn">sl</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">sl</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">A</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>[[ 0.14285714 -0.07518797  0.02255639]
+ [-0.28571429  0.51879699 -0.2556391 ]
+ [ 0.14285714 -0.28571429  0.28571429]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Get the determinant of matrix \(A\):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">sl</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">A</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>133.00000000000003
+</pre></div>
+</div>
+</div>
+</div>
+<div class="margin sidebar">
+<p class="sidebar-title"></p>
+<p>Normal <code class="docutils literal notranslate"><span class="pre">*</span></code> operator does operations element-wise, which we do not want!!!</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
+<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="o">*</span><span class="n">sl</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">A</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>[[ 1.42857143 -0.15037594  0.02255639]
+[-1.71428571  2.59398496 -1.02255639]
+[ 0.14285714 -1.14285714  2.        ]]</p>
+</div>
+<p>Multiply \(A\) with its inverse using the <code class="docutils literal notranslate"><span class="pre">&#64;</span></code> matrix multiplication operator. Note that due to roundoff errors the off diagonal values are not exactly zero:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">A</span> <span class="o">@</span> <span class="n">sl</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">A</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>[[ 1.00000000e+00 -1.66533454e-16  0.00000000e+00]
+ [ 1.11022302e-16  1.00000000e+00  2.22044605e-16]
+ [-2.77555756e-17 -1.66533454e-16  1.00000000e+00]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Another way of multiplying matrices is to use <code class="docutils literal notranslate"><span class="pre">np.dot</span></code> function:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">sl</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">A</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">sl</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">A</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>[[ 1.00000000e+00 -1.66533454e-16  0.00000000e+00]
+ [ 1.11022302e-16  1.00000000e+00  2.22044605e-16]
+ [-2.77555756e-17 -1.66533454e-16  1.00000000e+00]]
+
+
+[[ 1.00000000e+00 -1.66533454e-16  0.00000000e+00]
+ [ 1.11022302e-16  1.00000000e+00  2.22044605e-16]
+ [-2.77555756e-17 -1.66533454e-16  1.00000000e+00]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Initialise vector and matrix of zeros:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>[0. 0. 0.]
+
+
+[[0. 0. 0.]
+ [0. 0. 0.]
+ [0. 0. 0.]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Initialise identity matrix:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>[[1. 0. 0.]
+ [0. 1. 0.]
+ [0. 0. 1.]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="matrix-objects">
+<h3>Matrix objects<a class="headerlink" href="#matrix-objects" title="Permalink to this headline">¶</a></h3>
+<p>Note that NumPy has a matrix object.  We can cast the above two-dimensional arrays into matrix objects and then the star operator does yield the expected matrix product:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">10.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">],</span>
+              <span class="p">[</span><span class="mf">6.</span><span class="p">,</span> <span class="mf">5.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">],</span>
+              <span class="p">[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">,</span> <span class="mf">7.</span><span class="p">]])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">A</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mat</span><span class="p">(</span><span class="n">A</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;numpy.ndarray&#39;&gt;
+&lt;class &#39;numpy.matrix&#39;&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mat</span><span class="p">(</span><span class="n">A</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">mat</span><span class="p">(</span><span class="n">sl</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">A</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>[[ 1.00000000e+00 -1.66533454e-16  0.00000000e+00]
+ [ 1.11022302e-16  1.00000000e+00  2.22044605e-16]
+ [-2.77555756e-17 -1.66533454e-16  1.00000000e+00]]
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="slicing">
+<h3>Slicing<a class="headerlink" href="#slicing" title="Permalink to this headline">¶</a></h3>
+<p>We can use slicing to extract components of matrices:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Single entry, first row, second column</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="c1"># First row</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">,:])</span>
+
+<span class="c1"># last row</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,:])</span>
+
+<span class="c1"># Second column</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="c1"># Extract a 2x2 sub-matrix</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>2.0
+[10.  2.  1.]
+[1. 4. 7.]
+[2. 5. 4.]
+[[5. 4.]
+ [4. 7.]]
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="solving-a-linear-system">
+<h3>Solving a linear system<a class="headerlink" href="#solving-a-linear-system" title="Permalink to this headline">¶</a></h3>
+<p>Let’s quickly consider the \(2 \times 2\) case from the beginning of the notebook that we claimed the solution for to be</p>
+<p>\[x=\frac{37}{11} \quad\text{and}\quad y=\frac{1}{11}.\]</p>
+<p>To solve the matrix equation</p>
+<p>\[ A\pmb{x}=\pmb{b}\]</p>
+<p>we can simply multiply both sides by the inverse of the matrix \(A\) (if \(A\) is <a class="reference external" href="https://en.wikipedia.org/wiki/Invertible_matrix">invertible</a>):</p>
+<p>\[
+\begin{align}
+A\pmb{x} &amp; = \pmb{b}\\
+\implies A^{-1}A\pmb{x} &amp; = A^{-1}\pmb{b}\\
+\implies I\pmb{x} &amp; = A^{-1}\pmb{b}\\
+\implies \pmb{x} &amp; = A^{-1}\pmb{b}
+\end{align}
+\]</p>
+<p>so we can find the solution \(\pmb{x}\) by multiplying the inverse of \(A\) with the RHS vector \(\pmb{b}\).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">2.</span><span class="p">,</span> <span class="mf">3.</span><span class="p">],</span>
+              <span class="p">[</span><span class="mf">1.</span><span class="p">,</span> <span class="o">-</span><span class="mf">4.</span><span class="p">]])</span>
+
+<span class="c1"># Check first whether the determinant of A is non-zero</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Det A = &quot;</span><span class="p">,</span> <span class="n">sl</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">A</span><span class="p">))</span>
+
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">7.</span><span class="p">,</span> <span class="mf">3.</span><span class="p">])</span>
+
+<span class="c1"># Compute A inverse and multiply by b</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;A^-1 @ b =&quot;</span><span class="p">,</span> <span class="n">sl</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">@</span> <span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Det A =  -11.0
+A^-1 @ b = [3.36363636 0.09090909]
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can solve the system using <code class="docutils literal notranslate"><span class="pre">scipy.linalg.solve</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;A^-1 @ b =&quot;</span><span class="p">,</span> <span class="n">sl</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">b</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>A^-1 @ b = [3.36363636 0.09090909]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Check if the solutions match:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">37.</span><span class="o">/</span><span class="mf">11.</span><span class="p">,</span> <span class="mf">1.</span><span class="o">/</span><span class="mf">11.</span><span class="p">]),</span> <span class="n">sl</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">b</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>True
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="matrix-multiplication">
+<h3>Matrix multiplication<a class="headerlink" href="#matrix-multiplication" title="Permalink to this headline">¶</a></h3>
+<p>Let
+\[
+A = \left(
+\begin{array}{ccc}
+1 &amp; 2 &amp; 3 \\
+4 &amp; 5 &amp; 6 \\
+7 &amp; 8 &amp; 9 \\
+\end{array}
+\right)
+\mathrm{\quad\quad and \quad\quad}
+b = \left(
+\begin{array}{c}
+2 \\
+4 \\
+6 \\
+\end{array}
+\right)
+\]</p>
+<p>We will store \(A\) and \(b\) in NumPy arrays. We will create NumPy array \(I\) containing the identity matrix \(I_3\) and perform \(A = A+I\). Then we will substitute third column of \(A\) with \(b\). We will solve \(Ax=b\).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
+              <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span>
+              <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">]])</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;A =&quot;</span><span class="p">,</span> <span class="n">A</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;b = &quot;</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Size of A: &quot;</span><span class="p">,</span> <span class="n">A</span><span class="o">.</span><span class="n">size</span><span class="p">,</span><span class="s2">&quot; and shape of A: &quot;</span><span class="p">,</span><span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Size of b: &quot;</span><span class="p">,</span> <span class="n">b</span><span class="o">.</span><span class="n">size</span><span class="p">,</span><span class="s2">&quot; and shape of b: &quot;</span><span class="p">,</span><span class="n">b</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="n">I</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;I = &quot;</span><span class="p">,</span><span class="n">I</span><span class="p">)</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">A</span> <span class="o">+</span> <span class="n">I</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;A = &quot;</span><span class="p">,</span><span class="n">A</span><span class="p">)</span>
+
+<span class="n">A</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">b</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;A = &quot;</span><span class="p">,</span><span class="n">A</span><span class="p">)</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">sl</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;x = &quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>A = [[1 2 3]
+ [4 5 6]
+ [7 8 9]]
+b =  [2 4 6]
+Size of A:  9  and shape of A:  (3, 3)
+Size of b:  3  and shape of b:  (3,)
+I =  [[1. 0. 0.]
+ [0. 1. 0.]
+ [0. 0. 1.]]
+A =  [[ 2.  2.  3.]
+ [ 4.  6.  6.]
+ [ 7.  8. 10.]]
+A =  [[2. 2. 2.]
+ [4. 6. 4.]
+ [7. 8. 6.]]
+x =  [3.80647894e-17 7.77156117e-17 1.00000000e+00]
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="matrix-properties">
+<h2>Matrix properties<a class="headerlink" href="#matrix-properties" title="Permalink to this headline">¶</a></h2>
+<p>Consider \(N\) linear equations in \(N\) unknowns, \(A\pmb{x}=\pmb{b}\).</p>
+<p>this system has a unique solution provided that the determinant of \(A\), \(\det(A)\), is non-zero. In this case the matrix is said to be non-singular.</p>
+<p>If \(\det(A)=0\) (with \(A\) then termed a singular matrix), then the linear system does not have a unique solution, it may have either infinite or no solutions.</p>
+<p>For example, consider</p>
+<p>\[
+\left(
+\begin{array}{rr}
+2 &amp; 3 \\
+4 &amp; 6  \\
+\end{array}
+\right)\left(
+\begin{array}{c}
+x \\
+y \\
+\end{array}
+\right) = \left(
+\begin{array}{c}
+4 \
+8 \
+\end{array}
+\right).
+\]</p>
+<p>The second equation is simply twice the first, and hence a solution to the first equation is also automatically a solution to the second equation.</p>
+<p>We only have one linearly-independent equation, and our problem is under-constrained - we effectively only have one eqution for two unknowns with infinitely many possibly solutions.</p>
+<p>If we replaced the RHS vector with \((4,7)^T\), then the two equations would be contradictory - in this case we have no solutions.</p>
+<p>Note that a set of vectors where one can be written as a linear sum of the others are termed linearly-dependent. When this is not the case the vectors are termed linearly-independent.</p>
+<div class="admonition-the-following-properties-of-a-square-n-times-n-matrix-are-equivalent admonition">
+<p class="admonition-title">The following properties of a square (n\times n) matrix are equivalent:</p>
+<ul class="simple">
+<li><p>\(\det(A)\ne 0\implies\) A is non-singular</p></li>
+<li><p>the columns of \(A\) are linearly independent</p></li>
+<li><p>the rows of \(A\) are linearly independent</p></li>
+<li><p>the columns of \(A\) span \(n\)-dimensional space (we can reach any point in \(\mathbb{R}^N\) through a linear combination of these vectors)</p></li>
+<li><p>\(A\) is invertible, i.e. there exists a matrix \(A^{-1}\) such that \(A^{-1}A = A A^{-1}=I\)</p></li>
+<li><p>the matrix system \(A\pmb{x}=\pmb{b}\) has a unique solution for every vector \(b\)</p></li>
+</ul>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "primer-computational-mathematics/book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./c_mathematics/numerical_methods"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="9_Roots_of_equations.html" title="previous page">Roots of equations</a>
+    <a class='right-next' id="next-link" href="11_Gaussian_elimination.html" title="next page">Gaussian elimination</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Imperial College London<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../../_static/js/index.js"></script>
+    
+  </body>
+</html>

@@ -1,0 +1,1539 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Numerical Methods I Interpolation and Curve Fitting &#8212; ESE Jupyter Material</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../../../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/sphinx-book-theme.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/language_data.js"></script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/mystnb.js"></script>
+    <script src="../../../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".cell"
+        const thebe_selector_input = ".cell_input div.highlight"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../../index.html">
+  
+  <img src="../../../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">ESE Jupyter Material</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  
+  <ul class="nav sidenav_l1">
+  <li class="">
+    <a href="../../../intro.html">Landing page</a>
+  </li>
+  <li class="">
+    <a href="../../../a_modules/intro.html">Modules</a>
+  </li>
+  <li class="">
+    <a href="../../../b_coding/intro.html">Coding</a>
+  </li>
+  <li class="">
+    <a href="../../intro.html">Mathematics</a>
+  </li>
+  <li class="">
+    <a href="../../../d_geosciences/intro.html">Geosciences</a>
+  </li>
+  <li class="">
+    <a href="../../../e_extra/intro.html">Further resources</a>
+  </li>
+  <li class="">
+    <a href="../../../genindex.html">Index</a>
+  </li>
+</ul>
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../../_sources/c_mathematics/numerical_methods/NM1_2020/NM1_2020_lecture1.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        
+        <a class="issues-button"
+            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2Fc_mathematics/numerical_methods/NM1_2020/NM1_2020_lecture1.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/c_mathematics/numerical_methods/NM1_2020/NM1_2020_lecture1.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#" class="nav-link">Numerical Methods I Interpolation and Curve Fitting</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#contents" class="nav-link">Contents</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#i-curve-fitting-vs-interpolation" class="nav-link">I.    Curve Fitting vs Interpolation</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#ii-interpolation" class="nav-link">II.   Interpolation</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#ii-1-mathematical-expression" class="nav-link">II.   1      Mathematical Expression</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#ii-2-simple-interpolation-example" class="nav-link">II.   2      Simple Interpolation Example</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#iii-simple-least-squared-polynominal-curve-fitting" class="nav-link">III.  Simple Least Squared Polynominal Curve Fitting</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#iv-lagrange-polynominal" class="nav-link">IV.  Lagrange Polynominal</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#iv-1-explaination-of-computational-expense" class="nav-link">IV.  1      Explaination of Computational Expense</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#iv-2-mathematics-of-lagrange-polynominal" class="nav-link">IV.  2      Mathematics of Lagrange Polynominal</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#iv-3-mathematics-of-lagrange-polynominal-but-simpler" class="nav-link">IV.  3      Mathematics of Lagrange Polynominal but Simpler</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#iv-ex-short-proof-of-lagrange-polynominal" class="nav-link">IV.  EX   Short proof of Lagrange Polynominal</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#iv-4-lagrange-and-scipy" class="nav-link">IV.  4      Lagrange and Scipy</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#iv-5-polynominal-error" class="nav-link">IV.  5      Polynominal Error</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#v-newton-polynominal" class="nav-link">V.   Newton Polynominal</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#v-1-recursive-form-and-divided-difference-notation" class="nav-link">V.   1      Recursive Form and Divided Difference Notation</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#v-2-code-implementation-of-v-1" class="nav-link">V.   2      Code Implementation of V.   1</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#vi-extrapolation" class="nav-link">VI.  Extrapolation</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#id1" class="nav-link">—————————————————————————————————————–</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#id2" class="nav-link">I. Curve Fitting vs Interpolation</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#id3" class="nav-link">II. Interpolation</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id4" class="nav-link">II.1 Mathematical Expression</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id5" class="nav-link">II.2 Simple Interpolation Example</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#iii-simple-least-sqaure-polynominal-curve-fitting" class="nav-link">III. Simple  Least Sqaure Polynominal Curve Fitting</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#id6" class="nav-link">IV. Lagrange Polynominal</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id7" class="nav-link">IV.1 Explaination of Computational Expense</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#can-we-do-better" class="nav-link">Can we do better?</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id8" class="nav-link">IV.2 Mathematics of Lagrange Polynominal</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id9" class="nav-link">IV.3 Mathematics of Lagrange Polynominal but Simpler</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#extra-short-proof-of-lagrange-polynominal" class="nav-link">Extra: Short proof of Lagrange Polynominal</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id10" class="nav-link">IV.4 Lagrange and Scipy</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id11" class="nav-link">IV.5 Polynominal Error</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#span-style-color-blue-exercise-1-1-the-lagrange-basis-polynomials-evaluated-at-the-data-locations-span" class="nav-link"><span style="color:blue">Exercise 1.1: The Lagrange basis polynomials evaluated at the data locations </span></a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#span-style-color-blue-exercise-1-2-picewise-linear-lagrange-interpolant-span" class="nav-link"><span style="color:blue">Exercise 1.2: Picewise-linear Lagrange interpolant </span></a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#span-style-color-blue-exercise-1-3-approximating-a-function-span" class="nav-link"><span style="color:blue">Exercise 1.3: Approximating a function </span></a>
+        </li>
+    
+            </ul>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#id12" class="nav-link">V. Newton Polynominal</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id13" class="nav-link">V.1 Recursive Form and Divided Difference Notation</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id14" class="nav-link">V. 2 Code Implementation of V.  1</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#span-style-color-blue-exercise-1-4-squared-error-calculation-span" class="nav-link"><span style="color:blue">Exercise 1.4: Squared error calculation</span></a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#span-style-color-blue-exercise-1-5-degree-of-approximation-span" class="nav-link"><span style="color:blue">Exercise 1.5: Degree of approximation </span></a>
+        </li>
+    
+            </ul>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#id15" class="nav-link">VI. Extrapolation</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#span-style-color-blue-exercise-1-6-extrapolation-span" class="nav-link"><span style="color:blue">Exercise 1.6: Extrapolation </span></a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#span-style-color-blue-exercise-1-7-submarine-landslide-size-in-the-north-atlantic-span" class="nav-link"><span style="color:blue">Exercise 1.7: Submarine landslide size in the North Atlantic </span></a>
+        </li>
+    
+            </ul>
+        </li>
+    
+    </ul>
+</nav>
+
+
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="numerical-methods-i-interpolation-and-curve-fitting">
+<h1>Numerical Methods I Interpolation and Curve Fitting<a class="headerlink" href="#numerical-methods-i-interpolation-and-curve-fitting" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="contents">
+<h2>Contents<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="i-curve-fitting-vs-interpolation">
+<h2>I.    Curve Fitting vs Interpolation<a class="headerlink" href="#i-curve-fitting-vs-interpolation" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="ii-interpolation">
+<h2>II.   Interpolation<a class="headerlink" href="#ii-interpolation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="ii-1-mathematical-expression">
+<h3>II.   1      Mathematical Expression<a class="headerlink" href="#ii-1-mathematical-expression" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="ii-2-simple-interpolation-example">
+<h3>II.   2      Simple Interpolation Example<a class="headerlink" href="#ii-2-simple-interpolation-example" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="iii-simple-least-squared-polynominal-curve-fitting">
+<h2>III.  Simple Least Squared Polynominal Curve Fitting<a class="headerlink" href="#iii-simple-least-squared-polynominal-curve-fitting" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="iv-lagrange-polynominal">
+<h2>IV.  Lagrange Polynominal<a class="headerlink" href="#iv-lagrange-polynominal" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="iv-1-explaination-of-computational-expense">
+<h3>IV.  1      Explaination of Computational Expense<a class="headerlink" href="#iv-1-explaination-of-computational-expense" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="iv-2-mathematics-of-lagrange-polynominal">
+<h3>IV.  2      Mathematics of Lagrange Polynominal<a class="headerlink" href="#iv-2-mathematics-of-lagrange-polynominal" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="iv-3-mathematics-of-lagrange-polynominal-but-simpler">
+<h3>IV.  3      Mathematics of Lagrange Polynominal but Simpler<a class="headerlink" href="#iv-3-mathematics-of-lagrange-polynominal-but-simpler" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="iv-ex-short-proof-of-lagrange-polynominal">
+<h3>IV.  EX   Short proof of Lagrange Polynominal<a class="headerlink" href="#iv-ex-short-proof-of-lagrange-polynominal" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="iv-4-lagrange-and-scipy">
+<h3>IV.  4      Lagrange and Scipy<a class="headerlink" href="#iv-4-lagrange-and-scipy" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="iv-5-polynominal-error">
+<h3>IV.  5      Polynominal Error<a class="headerlink" href="#iv-5-polynominal-error" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="v-newton-polynominal">
+<h2>V.   Newton Polynominal<a class="headerlink" href="#v-newton-polynominal" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="v-1-recursive-form-and-divided-difference-notation">
+<h3>V.   1      Recursive Form and Divided Difference Notation<a class="headerlink" href="#v-1-recursive-form-and-divided-difference-notation" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="v-2-code-implementation-of-v-1">
+<h3>V.   2      Code Implementation of V.   1<a class="headerlink" href="#v-2-code-implementation-of-v-1" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="vi-extrapolation">
+<h2>VI.  Extrapolation<a class="headerlink" href="#vi-extrapolation" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+<div class="section" id="id1">
+<h1>—————————————————————————————————————–<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<p> Real world environment always generate data, and an important part of a scientist's job is to find patterns in these observations. Python provides several libraries which help make predictions based on real world data. This course will be primarily focused on the libraries numpy, scipy and matplotlib. While Python can make prediction based on existing data point, the human eye is still probably currently the best judge on whether those predictions are sensible or not. To start this course off, let's import numpy, scipy and matplotlib.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span>
+<span class="kn">import</span> <span class="nn">scipy</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Note that the above cell needs to be run when you begin a notebook. These libraries need to be imported before the modules in the libraries could be used. If you ever encounter an error message saying Nameerror, name {libary_name} is not defined, then please run the cell above again, so that the libraries specified above are properly imported. </p><p> Let's consider a discrete set of data, and let's start with a dataset with 2 dimensions. </p>
+<p> For example, we could consider the global temperature change over the years. On the x-axis, we could plot the year and on the y-axis, we could plot the temperature. Every year will have a corresponding temperature. </p>
+<p>  We start counting from 0 because Python index starts from 0. The 1st data point will be data point 0, the 2nd data point will be data point 1, and the 3rd data point will be data point 2, etc. and the last datapoint will be called datapoint $N$. In total, we will have $N+1$ data points, since we start counting from 0.  For every data point, there will be an year and a temperature, so there will be an $x$ value and there will be a $y$ value for every data point. </p>
+<p> Since there is a $x$ value and a $y$ value for every data point, we could call the $x$ value of the 1st data point, or data point 0, to be $x_0$, and the y value of the 1st data point, or data point 0, to be $y_0$.We could call the $x$ value of the 2nd data point, or data point 1, to be $x_1$, and the y value of the 2nd data point, or data point 1, to be $y_1$, so on and so forth. We will call the $x$ value of the last data point, or data point $N$, to be $x_N$, and the y value of the last data point, or data point $N$, to be $y_N$.</p>
+<p>Therefore, our two dimensional dataset can be described as</p>
+<p></p>
+$$ Dataset = \{ (x_0, y_0),(x_1, y_1),(x_2, y_2),(x_3, y_3), \ldots, (x_N,y_N) \}$$
+<p></p>
+<p> We could define an index $i$, which goes from $0$ to $N$, and describe our dataset as a set of datapoints with their respective $x$ and $y$, which have their index going from $0$ to $N$. Expressed mathematically: </p>
+<p></p>
+$$ Dataset = (x_i, y_i),\;\;\;\;\;\; where \;\;\;\;\;\; i=0,\ldots,N,$$
+<p></p>
+<p> Or even simpler</p>
+<p></p>
+$$ (x_i, y_i),\;\;\;\;\;\; i=0,\ldots,N,$$</div>
+<div class="section" id="id2">
+<h1>I. Curve Fitting vs Interpolation<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h1>
+<p>The terms curve fitting and interpolation are often used interchageably, but they are actually very different. In both interpolation and curve fitting, we assume there is some kind of function or relationship between the $x$ value and the $y$ value (and maybe even $z$ if the dataset is 3 dimensional, and even more if the dataset has even more dimensions i.e. Machine Learning and Artificial Intelligence) and we seeks to find, from the limited datapoints that are available, the best approximate of this function or relationship. </p>
+<p>In our temperature example where we plotted temperature against year, we seek to answer the question if there is a relationship between the temperature and the year. Has the temperature increased through the years, or has the temperature decreased through the year, or maybe the temperature is unrelated to the year? Maybe our data server went up in flames (this apparently happens way more often than you think, that's why invest in a proper RAID configuration) and we lost the temperature data for some of the years, could we maybe use the relationship we deduced from the rest of the data points to give an estimate of what the temperature for those years without data to be?</p>
+<p>In both curve fitting and interpolation, you begin with some discrete data points.</p>
+<p>With interpolation, you seek a function that typically goes through all of the datapoints, regardless of what the function will end up looking like. Interpolation is typically used when there is great confidence that there are no measurement errors in the data points, and there is no ambiguity in mapping $x$ to $y$, meaning that there are no multiple values of $y$ for a single $x$, similar to how mathematical functions are defined. </p>
+<p>With curve fitting, you simply seek some function that will be a best fit for all the datapoints, and does not neccesarily have to go through all the datapoints. Curve fitting is typically used when there are significant error bars in the data points, and there is ambiguity in mapping $x$ to $y$. </p>
+<p>Although it may seem that interpolation is better than curve fitting, since it goes through all the data points, it should be noted that real world data almost always contains some sort of measurement error. Because interpolation tries to fit all the data points, the function produced through interpolation can vary widly even with the slightest change in the data point. Because curve fitting does not seek to fit all the data points, curve fitting functions are less susceptible to drastic changes when there are changes in the data points. </p>
+<p>Interpolation has the inter word prefix to it, because using the function you got from interpolation, you can make prediction about the $y$ value within the range of the given data points. For example, if I had the temperature data every 5 years since 1990, so I have temperature data for the years 1990, 1995, 2000, 2005, 2010, 2015 and 2020 then interpolation would allow me to make prediction about the temperature data in other years within the range of the data points, so from 1990 to 2020, meaning the years 1991, 1992, 1993, 1994, 1996, 1997, 1998, 1999, 2001, 2002, 2003, 2004, 2006, 2007, 2008, 2009, 2011, 2012, 2013, 2014, 2016, 2017, 2018, 2019. Extrapolation is for what is outside the range of your data points. For example, if I had the temperature data every 5 years since 1990, extrapolation would mean trying to predict the temperature in 2200 or 1600, which is outside the range of the given data points. Extrapolation needs to be done with extreme caution and should generally be avoided. It should be obvious why using temperature data for every 5 years since 1990 to predict how temperature was back in 1600 or will be in 2200 is a bad idea.  </p> 
+<p> Both interpolation and curve fitting can be done in various different ways. This notebook will introduce some of these ways in which interpolation and curve fitting are done. </p></div>
+<div class="section" id="id3">
+<h1>II. Interpolation<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id4">
+<h2>II.1 Mathematical Expression<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p>As stated previously, interpolation seeks to find a function that maps $x$ value in the datapoints to the $y$ value in the corresponding datapoints. Therefore, interpolation can be expressed as :</p>
+<p></p>
+$$y_i = f(x_i),\;\;\;\;\;\; \forall i, \;\;\;\;\;\text{[$\forall \equiv$ "for all"]}$$
+<p></p>
+where the function $f$ is called the interpolant (http://mathworld.wolfram.com/Interpolant.html)
+<p>Because it is called interpolation, we can only make predictions for values of $x$ within the range of $x_i$.</p>
+<div class="math notranslate nohighlight">
+\[ min(x_i)&lt;x&lt;max(x_i) \]</div>
+<p>The requirement for distinct <span class="math notranslate nohighlight">\(x\)</span> locations means that we have a constraint on the <span class="math notranslate nohighlight">\(x_i\)</span>’s which can be written as</p>
+<div class="math notranslate nohighlight">
+\[x_0 &lt; x_1 &lt; \ldots &lt; x_N,\]</div>
+</div>
+<div class="section" id="id5">
+<h2>II.2 Simple Interpolation Example<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<p>It is assumed here that you have had some basic understanding and experience with numpy, scipy and matplotlib libraries.<p><p>The simplest form of interpolation is linear interpolation, which is basically joining all the data points together in a line, and then creating a piecewise function</p>
+<p> Suppose we have a set of arbitrary data: </p>
+<div class="math notranslate nohighlight">
+\[Dataset = \{ (0.5, 0.5), (2.0, 0.4), (4.0, 0.3), (5.0, 0.1), (7.0, 0.9), (9.0, 0.8) \}\]</div>
+<p>The $x$ values of the dataset are </p>
+$$Dataset\;x-values = \{ 0.5, 2.0, 4.0, 5.0, 7.0, 9.0 \}$$
+<p>The $y$ values of the dataset are </p>
+$$Dataset\;y-values = \{ 0.5, 0.4, 0.3, 0.1, 0.9, 0.8 \}$$
+<p>For linear piecewise interpolation, we begin with the first 2 points in the dataset, and then the next 2 point, and the next 2 points and so on and so forth. For the first 2 points, we find a linear equation that is determined by these two points. Linear equations are expressed as:</p>
+<div class="math notranslate nohighlight">
+\[y = mx + c \]</div>
+<p> $m$ is the gradient, $c$ is the y - intercept, and $m$ and $c$ can be found by</p>
+<div class="math notranslate nohighlight">
+\[m = \frac{y_2 - y_1}{x_2 - x_1}\]</div>
+<div class="math notranslate nohighlight">
+\[c = y_1 - mx_1 \;or\; c = y_2 - mx_2 \]</div>
+<p> For the first 2 points $(0.5, 0.5)$ and $(2.0, 0.4)$  we obtain</p>
+<p> For the first 2 points of the dataset, $m = \frac{-1}{15}$ and $c =\frac{8}{15} $
+<p> So for the range $0.5<x<2.0$, the function can be written as</p>
+<div class="math notranslate nohighlight">
+\[f(x) = \frac{-1}{15}x + \frac{8}{15} , 0.5&lt;x&lt;2.0\]</div>
+<p> For the next 2 points $(2.0, 0.4)$ and $(4.0, 0.3)$ we do the same, and we obtain</p>
+<p> For the next 2 points of the dataset, $m = \frac{-1}{20}$ and $c =\frac{1}{2} $
+<p> So for the range $2.0<x<4.0$, the function can be written as</p>
+<div class="math notranslate nohighlight">
+\[f(x) = \frac{-1}{20}x + \frac{1}{2} , 2.0&lt;x&lt;4.0\]</div>
+<p> we can combine the two partial functions above, and obtain </p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  f(x) = \left\{\begin{array} \\
+    \frac{-1}{15}x + \frac{8}{15} , 0.5&lt;x&lt;2.0 \\
+    \frac{-1}{20}x + \frac{1}{2} , 2.0&lt;x&lt;4.0
+  \end{array}\right\}
+\end{split}\]</div>
+<p> We can continue the above process for the next 2 points, and the next 2 points, and eventually we will get a piecewise linear function</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  f(x) = \left\{\begin{array} \\
+    \frac{-1}{15}x + \frac{8}{15} , 0.5&lt;x&lt;2.0 \\
+    \frac{-1}{20}x + \frac{1}{2} , 2.0&lt;x&lt;4.0 \\
+    ...
+  \end{array}\right\}
+\end{split}\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">## Linear Equation Solver</span>
+<span class="c1">## I got angry at all the ads when I was trying to find a solver for linear equations </span>
+
+<span class="n">x1</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;x1 is equal to &quot;</span><span class="p">))</span>
+<span class="n">y1</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;y1 is equal to &quot;</span><span class="p">))</span>
+<span class="n">x2</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;x2 is equal to &quot;</span><span class="p">))</span>
+<span class="n">y2</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;y2 is equal to &quot;</span><span class="p">))</span>
+
+
+<span class="n">m</span> <span class="o">=</span> <span class="p">(</span><span class="n">y2</span><span class="o">-</span><span class="n">y1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">x2</span><span class="o">-</span><span class="n">x1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;m is equal to &quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">y2</span><span class="o">-</span><span class="n">y1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">x2</span><span class="o">-</span><span class="n">x1</span><span class="p">))</span>
+<span class="n">c1</span> <span class="o">=</span> <span class="p">(</span><span class="n">y1</span> <span class="o">-</span> <span class="n">m</span><span class="o">*</span><span class="n">x1</span><span class="p">)</span>
+<span class="n">c2</span> <span class="o">=</span> <span class="p">(</span><span class="n">y2</span> <span class="o">-</span> <span class="n">m</span><span class="o">*</span><span class="n">x2</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">c1</span> <span class="o">==</span> <span class="n">c2</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;c found from 1st point and c found from 2nd point are the same&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">c1</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;wut?&quot;</span><span class="p">)</span>
+
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">15</span><span class="o">-</span><span class="mi">279</span><span class="n">eed20d1e0</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1">## Linear Equation Solver</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> 
+<span class="ne">----&gt; </span><span class="mi">3</span> <span class="n">x1</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;x1 is equal to &quot;</span><span class="p">))</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">y1</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;y1 is equal to &quot;</span><span class="p">))</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">x2</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;x2 is equal to &quot;</span><span class="p">))</span>
+
+<span class="nn">c:\program files (x86)\python38-32\lib\site-packages\ipykernel\kernelbase.py</span> in <span class="ni">raw_input</span><span class="nt">(self, prompt)</span>
+<span class="g g-Whitespace">    </span><span class="mi">858</span>                 <span class="s2">&quot;raw_input was called, but this frontend does not support input requests.&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">859</span>             <span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">860</span>         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_input_request</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">prompt</span><span class="p">),</span>
+<span class="g g-Whitespace">    </span><span class="mi">861</span>             <span class="bp">self</span><span class="o">.</span><span class="n">_parent_ident</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">862</span>             <span class="bp">self</span><span class="o">.</span><span class="n">_parent_header</span><span class="p">,</span>
+
+<span class="nn">c:\program files (x86)\python38-32\lib\site-packages\ipykernel\kernelbase.py</span> in <span class="ni">_input_request</span><span class="nt">(self, prompt, ident, parent, password)</span>
+<span class="g g-Whitespace">    </span><span class="mi">902</span>             <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">903</span>                 <span class="c1"># re-raise KeyboardInterrupt, to truncate traceback</span>
+<span class="ne">--&gt; </span><span class="mi">904</span>                 <span class="k">raise</span> <span class="ne">KeyboardInterrupt</span><span class="p">(</span><span class="s2">&quot;Interrupted by user&quot;</span><span class="p">)</span> <span class="kn">from</span> <span class="bp">None</span>
+<span class="g g-Whitespace">    </span><span class="mi">905</span>             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">906</span>                 <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Invalid Message:&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="ne">KeyboardInterrupt</span>: Interrupted by user
+</pre></div>
+</div>
+</div>
+</div>
+<p> Piecewise linear interpolation can be easily done in Python </p>
+<p> First, let's begin with plotting the points on their own</p>
+<p> I will create 2 numpy arrays to store the arbitray data from above, and use matplotlib to plot. </p>
+<p> The code below is most simplest essential code for plotting it out</p>
+<p> Python will automatically join the points together with lines unless otherwise specified, so the "ko" was used in the plt.plot to ensure that bullets were shown instead of lines.</p><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+
+<span class="n">xi</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">7.0</span><span class="p">,</span> <span class="mf">9.0</span><span class="p">])</span>
+<span class="n">yi</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span><span class="n">yi</span><span class="p">,</span> <span class="s2">&quot;ko&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/NM1_2020_lecture1_18_0.png" src="../../../_images/NM1_2020_lecture1_18_0.png" />
+</div>
+</div>
+<p>The plot above looks rather barebone, and maybe we should add some labels to it, since your lecturers and professors will always tell you to add labels. Once you become a scientific researcher, you will understand the frustration when you find an excellent paper but have no idea what the graphs mean because it is not or just minimally labelled.</p>
+<p>Let's start with adding a title, an axis, and a legend for the plot. Remember, adding title, xlabel, ylabel, and legend always comes after the plot has actually been made! Oh, and let's not forget a 0.1 margin :)</p><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="c1">#Note that this time, numpy is written as np, and matplotlib.pyplot as plt</span>
+<span class="c1">#The main reason is that I have smaller chance of making spelling when calling the libraries and modules</span>
+
+<span class="n">xi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">7.0</span><span class="p">,</span> <span class="mf">9.0</span><span class="p">])</span>
+<span class="n">yi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span><span class="n">yi</span><span class="p">,</span> <span class="s2">&quot;ko&quot;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;raw data&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Our simple raw data&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">margins</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span> <span class="o">=</span> <span class="s2">&quot;best&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/NM1_2020_lecture1_20_0.png" src="../../../_images/NM1_2020_lecture1_20_0.png" />
+</div>
+</div>
+<p> As your Python needs become more sophisticated, you may need to have mutliple things plotted. If so, it is better to organize your plots into subplots. The code below has been provided as an example</p><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+
+
+
+<span class="n">xi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">7.0</span><span class="p">,</span> <span class="mf">9.0</span><span class="p">])</span>
+<span class="n">yi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">])</span>
+
+<span class="c1">#Here, we are setting up the figure</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>   
+<span class="c1"># This means that the variable fig is used to represent plt.figure</span>
+<span class="c1"># This also specifies the size of the figure to 8 and 6</span>
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+<span class="c1"># Our plot is made into one of the subplot of the figure</span>
+
+<span class="k">def</span> <span class="nf">plot_raw_data</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span> <span class="n">yi</span><span class="p">,</span> <span class="n">ax</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;plot x vs y on axes ax, </span>
+<span class="sd">    add axes labels and turn on grid</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span> <span class="n">yi</span><span class="p">,</span> <span class="s1">&#39;ko&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;raw data&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;$x$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;$y$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1">#This function will take in the raw data, and the ax, which refers to the subplot.</span>
+<span class="c1">#First, the data is plotted. </span>
+<span class="c1">#&quot;ko&quot; means it is plotted in points and label gives a label for this dataset to be used in the legend</span>
+<span class="c1">#&quot;ax.set_xlabel&quot; gives the figure a label for the x axis, fontsize = 16 means the font size is 16</span>
+<span class="c1">#&quot;ax.set_ylabel&quot; gives the figure a label for the y axis, fontsize = 16 means the font size is 16</span>
+<span class="c1">#&quot;ax.grid(True)&quot;, default is ax.grid(False), change False to True if want grid to appear on figure</span>
+
+<span class="c1"># For clarity we are going to add a small margin to all the plots.</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">margins</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+
+<span class="c1"># plot the raw data</span>
+<span class="n">plot_raw_data</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span> <span class="n">yi</span><span class="p">,</span> <span class="n">ax1</span><span class="p">)</span>
+
+<span class="c1"># add a figure title</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Our simple raw data&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+
+<span class="c1"># Add a legend</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;best&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/NM1_2020_lecture1_22_0.png" src="../../../_images/NM1_2020_lecture1_22_0.png" />
+</div>
+</div>
+<p> Now, let's plot the piecewise linear function </p>
+<p style="color:red;"> We will use the function from above, so be sure to run the cell above so that the function is loaded!!!</p>
+<p> We will first creat the figure with size 8 and 6, and then add ax1 as a subplot to our figure</p>
+<p></p>We will also set margins as 0.1</p>
+<p>As stated before, the default Python behaviour is to join the dots with lines. </p><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">margins</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+
+<span class="c1"># Plot a piecewise-linear approximation.</span>
+<span class="c1"># We get this simply by connecting the points with straight lines</span>
+<span class="c1"># and this is the default behaviour of the plotting routine so simply</span>
+<span class="c1"># involves a call to &#39;plot&#39; with our data.</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span> <span class="n">yi</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;p/w linear interpolant&#39;</span><span class="p">)</span>
+
+<span class="c1"># The previous raw data is overlaid using the previous function</span>
+<span class="n">plot_raw_data</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span> <span class="n">yi</span><span class="p">,</span> <span class="n">ax1</span><span class="p">)</span>
+
+<span class="c1"># Add a legend</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+
+<span class="c1"># Add a figure title</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Raw data and its p/w linear interpolant&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/NM1_2020_lecture1_24_0.png" src="../../../_images/NM1_2020_lecture1_24_0.png" />
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="iii-simple-least-sqaure-polynominal-curve-fitting">
+<h1>III. Simple  Least Sqaure Polynominal Curve Fitting<a class="headerlink" href="#iii-simple-least-sqaure-polynominal-curve-fitting" title="Permalink to this headline">¶</a></h1>
+<p>Imagine having several points on a graph, and you want a curve that could go through all these points. The curve could be described through a mathematical function that could create a curve. Remember that straight lines could be considered a special case of a curve where the line is straight, much like how in topology, the square is a special case of a rectangle, and a rectangle is a special case of a parallelogram, and parallelogram a special case of a quadrilateral. One of the mathematical function that could create curves is a polynominal function. </p>
+<p> A first degree polynominal function is basically a straight line, and is written in the form of:</p>
+$$ y = mx + c $$
+<p> A second degree polynominal function is basically a curve with a single bend, and is written in the form of:</p>
+$$ y = ax^2 + bx + c$$
+<p> A 3 degree polynominal function is a curve with two bends, and is written in the form of:</p>
+$$ y = ax^3 + bx^2 + cx + d $$
+<p> Thus, a polynominal function of $n$ degree is a curve with $n-1$ bends</p><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">##A snippet to showing polynominal degree and number of bends</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="k">def</span> <span class="nf">poly_plot</span><span class="p">(</span><span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="n">number_of_points</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+    <span class="n">xi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">)</span>
+    <span class="n">yi</span> <span class="o">=</span> <span class="n">a</span><span class="o">*</span><span class="n">xi</span><span class="o">**</span><span class="mi">3</span> <span class="o">+</span> <span class="n">b</span><span class="o">*</span><span class="n">xi</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">c</span><span class="o">*</span><span class="n">xi</span> <span class="o">+</span> <span class="n">d</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span> <span class="n">yi</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    
+<span class="n">poly_plot</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">6</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Cubic polynominals have 2 bends&quot;</span><span class="p">)</span>
+<span class="n">poly_plot</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">6</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Quadratic polynominals have 1 bend&quot;</span><span class="p">)</span>
+<span class="n">poly_plot</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Straight Line have 0 bend&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/NM1_2020_lecture1_27_0.png" src="../../../_images/NM1_2020_lecture1_27_0.png" />
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Cubic polynominals have 2 bends
+</pre></div>
+</div>
+<img alt="../../../_images/NM1_2020_lecture1_27_2.png" src="../../../_images/NM1_2020_lecture1_27_2.png" />
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Quadratic polynominals have 1 bend
+</pre></div>
+</div>
+<img alt="../../../_images/NM1_2020_lecture1_27_4.png" src="../../../_images/NM1_2020_lecture1_27_4.png" />
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Straight Line have 0 bend
+</pre></div>
+</div>
+</div>
+</div>
+<p> A curve that goes through multiple points will have to bend and twist itself so that it goes through these points. Therefore, a curve with a higher polynominal degree, and thus a larger number of bends, will be able to bend and twist itself to better fit the points. </p>
+<p>Numpy's polyfit modules provides such a functionality. By given the degree of the polynominal and the data points you wish to fit the polynominal function to, the module will generate a polynominal function that it believes is the best fit to the data points.</p><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">##I wrote lots of words here, you may have to scroll down to see the full result of executing this cell</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1">##First, we specify the input datapoints through 2 numpy arrays</span>
+<span class="c1">##We also have to specify the degree of the polynominal function</span>
+<span class="c1">##If degree is 1, then it would try to fit a straight line</span>
+<span class="c1">##If degree is 2, then it would try to fit a curve line with one bend</span>
+<span class="c1">## Thus, it is useful to visually inspect the data before to determine how many bends it needs</span>
+<span class="c1">## Let&#39;s say we do a degree 2 polynominal</span>
+
+<span class="n">xi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">7.0</span><span class="p">,</span> <span class="mf">9.0</span><span class="p">])</span>
+<span class="n">yi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">])</span>
+<span class="n">degree</span> <span class="o">=</span> <span class="mi">2</span>
+
+<span class="c1">##Second, we generate the coefficients of the polynominal function</span>
+<span class="c1">##For a straight line, the coefficients are a and b</span>
+<span class="c1">##For a single bend curve, the coefficients are a, b and c</span>
+<span class="c1">##For a 2 bend curve, the coefficients are a, b, c and d</span>
+<span class="c1">##So on and so forth</span>
+<span class="c1">##We will use np.polyfit to generate the coefficients</span>
+<span class="c1">##Numpy polyfit work for 2D, and takes in two arrays and the degree of the polynonimal you want to fit</span>
+
+<span class="n">poly_coeffs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">polyfit</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span><span class="n">yi</span><span class="p">,</span> <span class="n">degree</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;These are the coefficients of the polynominal&quot;</span><span class="p">,</span> <span class="n">poly_coeffs</span><span class="p">)</span>
+
+<span class="c1">##Then, we need to turn this polynominal into a function</span>
+<span class="c1">##An example is given of how this polynominal can be turned into a polynominal function</span>
+<span class="c1">##However, you could simply use the np.poly1d to do this instead</span>
+<span class="k">def</span> <span class="nf">func1</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">poly_coeffs</span><span class="p">)):</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">+</span> <span class="n">poly_coeffs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">x</span> <span class="o">**</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">poly_coeffs</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">i</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">y</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span> <span class="n">yi</span><span class="p">,</span> <span class="s2">&quot;bo&quot;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;data points&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">func1</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;2D polynominal&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;best&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Curve fitting using numpy.polyfit&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">margins</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>  <span class="c1">##It is always a good habit to close plt once you finished plotting a graph</span>
+
+<span class="c1">##Instead of the above, use np.poly1d</span>
+<span class="c1">##np.poly1d takes the coefficients. Here the coefficients are in poly_coeffs</span>
+<span class="c1">##So my code will be np.poly1d(poly_coeffs)</span>
+<span class="c1">##We will name our function p1 </span>
+<span class="n">p1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">poly1d</span><span class="p">(</span><span class="n">poly_coeffs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;This is the polynominal equation&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">p1</span><span class="p">)</span>
+<span class="c1">##As you can see p1 has x inside. </span>
+<span class="c1">##p1 will take the x value that you give it, and for every x value given, will output a result</span>
+<span class="c1">##Result is found by substituting x into the the p1</span>
+<span class="c1">##For example</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;These are some results of substituing the number in p1() into x for the 2D polynominal&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;This is the result of substituing 0.05 into p1 &quot;</span><span class="p">,</span> <span class="n">p1</span><span class="p">(</span><span class="mf">0.05</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;This is the result of substituing 2.15 into p1 &quot;</span><span class="p">,</span> <span class="n">p1</span><span class="p">(</span><span class="mf">2.15</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;This is the result of substituing 7.85 into p1 &quot;</span><span class="p">,</span> <span class="n">p1</span><span class="p">(</span><span class="mf">7.85</span><span class="p">))</span>
+
+<span class="c1">##To make a graph out from the function p1 that we found</span>
+<span class="c1">##We need to draw a line using matplotlib</span>
+<span class="c1">##The functions from np.poly1d can also take in arrays</span>
+<span class="c1">##If the functions took in an array with n numbers, then it will output an array</span>
+<span class="c1">##Output array will have the result of substituing the n numbers into the function, in order</span>
+<span class="c1">##Therefore, to make a graph, we can make the function take in a sufficiently large, evenly spaced array</span>
+<span class="c1">##between the ranges we want it to display. </span>
+<span class="c1">##We can use numpy.linspace to create our sufficiently large, evenly space array</span>
+<span class="c1">##Remind: np.linspace(start of range, end of range, number of evenly space elements in the array)</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;These are 100 evenly spaced numbers between 0 and 10&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Substituting these number in our function, we obtain other 100 numbers as a result of substituion&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">p1</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+
+<span class="c1">##These two arrays will be used to plot the polynominal</span>
+<span class="c1">##Since a large number of points will look like a line</span>
+<span class="c1">##We will also plot the data points too, to see how good does our 2D polynominal fit</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">p1</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;2D polynominal&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span> <span class="n">yi</span><span class="p">,</span> <span class="s2">&quot;bo&quot;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;data points&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Curve Fitting using np.polyfit&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span> <span class="o">=</span> <span class="s2">&quot;best&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">margins</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span> <span class="c1">##It is always a good habit to close plt once you finished plotting a graph</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>These are the coefficients of the polynominal [ 0.02013603 -0.13983999  0.55279339]
+</pre></div>
+</div>
+<img alt="../../../_images/NM1_2020_lecture1_29_1.png" src="../../../_images/NM1_2020_lecture1_29_1.png" />
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>This is the polynominal equation
+         2
+0.02014 x - 0.1398 x + 0.5528
+These are some results of substituing the number in p1() into x for the 2D polynominal
+This is the result of substituing 0.05 into p1  0.5458517293141258
+This is the result of substituing 2.15 into p1  0.3452162121592002
+This is the result of substituing 7.85 into p1  0.69588202381182
+These are 100 evenly spaced numbers between 0 and 10
+[ 0.          0.1010101   0.2020202   0.3030303   0.4040404   0.50505051
+  0.60606061  0.70707071  0.80808081  0.90909091  1.01010101  1.11111111
+  1.21212121  1.31313131  1.41414141  1.51515152  1.61616162  1.71717172
+  1.81818182  1.91919192  2.02020202  2.12121212  2.22222222  2.32323232
+  2.42424242  2.52525253  2.62626263  2.72727273  2.82828283  2.92929293
+  3.03030303  3.13131313  3.23232323  3.33333333  3.43434343  3.53535354
+  3.63636364  3.73737374  3.83838384  3.93939394  4.04040404  4.14141414
+  4.24242424  4.34343434  4.44444444  4.54545455  4.64646465  4.74747475
+  4.84848485  4.94949495  5.05050505  5.15151515  5.25252525  5.35353535
+  5.45454545  5.55555556  5.65656566  5.75757576  5.85858586  5.95959596
+  6.06060606  6.16161616  6.26262626  6.36363636  6.46464646  6.56565657
+  6.66666667  6.76767677  6.86868687  6.96969697  7.07070707  7.17171717
+  7.27272727  7.37373737  7.47474747  7.57575758  7.67676768  7.77777778
+  7.87878788  7.97979798  8.08080808  8.18181818  8.28282828  8.38383838
+  8.48484848  8.58585859  8.68686869  8.78787879  8.88888889  8.98989899
+  9.09090909  9.19191919  9.29292929  9.39393939  9.49494949  9.5959596
+  9.6969697   9.7979798   9.8989899  10.        ]
+Substituting these number in our function, we obtain other 100 numbers as a result of substituion
+[0.55279339 0.53887359 0.52536468 0.51226667 0.49957956 0.48730335
+ 0.47543803 0.46398362 0.4529401  0.44230747 0.43208575 0.42227492
+ 0.41287499 0.40388596 0.39530782 0.38714058 0.37938424 0.3720388
+ 0.36510425 0.3585806  0.35246785 0.346766   0.34147504 0.33659499
+ 0.33212582 0.32806756 0.3244202  0.32118373 0.31835816 0.31594348
+ 0.31393971 0.31234683 0.31116485 0.31039376 0.31003358 0.31008429
+ 0.3105459  0.3114184  0.31270181 0.31439611 0.31650131 0.3190174
+ 0.3219444  0.32528229 0.32903108 0.33319076 0.33776135 0.34274283
+ 0.34813521 0.35393848 0.36015266 0.36677773 0.3738137  0.38126056
+ 0.38911833 0.39738699 0.40606654 0.415157   0.42465835 0.4345706
+ 0.44489375 0.4556278  0.46677274 0.47832858 0.49029532 0.50267296
+ 0.51546149 0.52866092 0.54227125 0.55629247 0.5707246  0.58556762
+ 0.60082154 0.61648635 0.63256206 0.64904867 0.66594618 0.68325459
+ 0.70097389 0.71910409 0.73764519 0.75659718 0.77596008 0.79573387
+ 0.81591855 0.83651414 0.85752062 0.878938   0.90076628 0.92300546
+ 0.94565553 0.9687165  0.99218837 1.01607113 1.04036479 1.06506935
+ 1.09018481 1.11571116 1.14164842 1.16799657]
+</pre></div>
+</div>
+<img alt="../../../_images/NM1_2020_lecture1_29_3.png" src="../../../_images/NM1_2020_lecture1_29_3.png" />
+</div>
+</div>
+<p> Let's check what happens if the number of degrees increases for our polynominal increases</p><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+
+<span class="n">xi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">7.0</span><span class="p">,</span> <span class="mf">9.0</span><span class="p">])</span>
+<span class="n">yi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span><span class="n">yi</span><span class="p">,</span> <span class="s2">&quot;bo&quot;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;data points&quot;</span><span class="p">)</span>
+
+<span class="n">degrees</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="c1">## Python will complain polyfit may be poorly conditioned if the number of degrees here is too high!</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">degrees</span><span class="p">)):</span>
+    <span class="n">poly_coeffs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">polyfit</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span> <span class="n">yi</span><span class="p">,</span> <span class="n">degrees</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">p1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">poly1d</span><span class="p">(</span><span class="n">poly_coeffs</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">p1</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">label</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">degrees</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot;D Polynominal&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Curve Fitting using np.polyfit&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span> <span class="o">=</span> <span class="s2">&quot;best&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">margins</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span> <span class="c1">##It is always a good habit to close plt once you finished plotting a graph</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/NM1_2020_lecture1_31_0.png" src="../../../_images/NM1_2020_lecture1_31_0.png" />
+</div>
+</div>
+<p> As shown above, increasing the number of degrees makes the curve fit the data points better.</p></div>
+<div class="section" id="id6">
+<h1>IV. Lagrange Polynominal<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h1>
+<p> While the least square polynominal works quite well, it is rather computationally expensive. While useful in solving small scale problems, real world data is often very complicated, and we should try to seek better methods to save computational power </p><div class="section" id="id7">
+<h2>IV.1 Explaination of Computational Expense<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<p>Assume we have two pieces of information and want to fit a linear line - let’s write these out:</p>
+<p>\begin{align*}
+(1) &amp; ;;;; y_0 = a_0 + a_1,x_0, \[5pt]
+(2) &amp; ;;;; y_1 = a_0 + a_1,x_1.
+\end{align*}</p>
+<p>We are assuming we know the <span class="math notranslate nohighlight">\(x\)</span>’s and the <span class="math notranslate nohighlight">\(y\)</span>’s, and we want to find the <span class="math notranslate nohighlight">\(a\)</span>’s.</p>
+<p>There are multiple ways we could solve this, one way is to think about how you solve simultaneous equations - e.g. rearrange the second equation to give an expression for <span class="math notranslate nohighlight">\(a_1\)</span> in terms of <span class="math notranslate nohighlight">\(a_0\)</span>, and so on, …. [we’ll return to these ideas in a later lecture].</p>
+<p>However this isn’t easy to do with large amounts of data.</p>
+<p>Instead we can note that this is equivalent to forming and solving the linear system</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{pmatrix}
+1 &amp; x_0  \\
+1 &amp; x_1 
+\end{pmatrix}
+\begin{pmatrix}
+a_0\\
+a_1
+\end{pmatrix}
+=
+\begin{pmatrix}
+y_0\\
+y_1
+\end{pmatrix}.
+\end{split}\]</div>
+<p>Note that we can also interpret this as a <em>linear combination</em> of a <a href="https://en.wikipedia.org/wiki/Basis_(linear_algebra)"><em>basis</em></a> made up of single-term polynomials:</p>
+<div class="math notranslate nohighlight">
+\[1, \; x, \; x^2, \; \ldots, \; x^N.\]</div>
+<p>These single term polynomials are also referred to as <a class="reference external" href="https://en.wikipedia.org/wiki/Monomial"><em>monomials</em></a>.</p>
+<p>Our linear example from earlier is an example of this with two free parameters.</p>
+<p>We will come back to monomials, as well as other (NB. a basis is not unique) potential functions/polynomials to use as basis functions later -  we will see below that other basis options can be more convenient when actually implementing interpolation.</p>
+<div class="section" id="can-we-do-better">
+<h3>Can we do better?<a class="headerlink" href="#can-we-do-better" title="Permalink to this headline">¶</a></h3>
+<p>While this is perhaps the simplest (it’s consistent with the simplest definition of a polynomial we are used to seeing) and the most obvious way to proceed, we should ask ourselves can we do better?</p>
+<p>i.e. can we try to use a different (less obvious) basis that might mean we don’t have a (potentially large, and difficult) matrix system to solve for the coefficients?</p>
+</div>
+</div>
+<div class="section" id="id8">
+<h2>IV.2 Mathematics of Lagrange Polynominal<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<p>The answer is yes, and <a class="reference external" href="http://mathworld.wolfram.com/LagrangeInterpolatingPolynomial.html">Lagrange polynomials</a> are a particularly popular choice for constructing an interpolant for a given data set.</p>
+<p>Given a set of <span class="math notranslate nohighlight">\((N+1)\)</span> points as above, the Lagrange polynomial is defined as the linear combination</p>
+<div class="math notranslate nohighlight">
+\[L(x) := \sum_{i=0}^{N} y_i \ell_i(x),\]</div>
+<p>where the <span class="math notranslate nohighlight">\(\ell_i(x)\)</span> are a new choice for our basis functions (different to the monomials, but the same idea in that they form a <a href="https://en.wikipedia.org/wiki/Basis_(linear_algebra)"><em>basis</em></a>), and the <span class="math notranslate nohighlight">\(y_i\)</span> are the <span class="math notranslate nohighlight">\(N+1\)</span> weights/coefficients corresponding to this basis.</p>
+<p>Note that this is not a typo and we are not re-using notation here - we will see that <strong>the weights in this approach actually ARE the same as the <span class="math notranslate nohighlight">\(y_i\)</span>’s making up the data we are interpolating!</strong></p>
+<p>This is the whole point of this approach - we no longer have to compute the weights by inverting a matrix system as we had to above with monomials.</p>
+<p>Now, by construction in this approach, we know the weights directly from the given data.</p>
+<p>The functions <span class="math notranslate nohighlight">\(\ell_i(x)\)</span> are known as the <em>Lagrange basis polynomials</em> and are defined by the product</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\ell_i(x) := \prod_{\begin{smallmatrix}0\le m\le N\\ m\neq i\end{smallmatrix}} \frac{x-x_m}{x_i-x_m} = \frac{(x-x_0)}{(x_i-x_0)} \cdots \frac{(x-x_{i-1})}{(x_i-x_{i-1})} \frac{(x-x_{i+1})}{(x_i-x_{i+1})} \cdots \frac{(x-x_N)}{(x_i-x_N)},\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(0\le i\le N\)</span>.</p>
+<p>If <span class="math notranslate nohighlight">\(N=0\)</span> (<em>i.e.</em> if there is only one point in the data set), there is only one Lagrange basis polynomial defined by convention as <span class="math notranslate nohighlight">\(\ell_0=1\)</span>.</p>
+<p>Notice from the definition of these basis functions the clear requirement that no two <span class="math notranslate nohighlight">\(x_i\)</span> are the same, <span class="math notranslate nohighlight">\(x_i - x_m \neq 0\)</span>, so this expression is always well-defined (i.e. we never get a divide by zero!).</p>
+<p>The reason pairs <span class="math notranslate nohighlight">\(x_i = x_j\)</span> with <span class="math notranslate nohighlight">\(y_i\neq y_j\)</span> are not allowed is that no interpolation function <span class="math notranslate nohighlight">\(L\)</span> such that <span class="math notranslate nohighlight">\(y_i = L(x_i)\)</span> would exist; a <strong>function</strong> can only return a single unique value for each argument <span class="math notranslate nohighlight">\(x_i\)</span> (this uniqueness is part of the definition of a <a href="https://en.wikipedia.org/wiki/Function_(mathematics)"><em>function</em></a>).</p>
+<p>On the other hand, if also <span class="math notranslate nohighlight">\(y_i = y_j\)</span>, then those two points would actually be one single point - we would thus have redundant data and really we could throw one away and would be looking for a degree <span class="math notranslate nohighlight">\(N-1\)</span> degree to interpolate <span class="math notranslate nohighlight">\(N\)</span> <strong>distinct</strong> data points.</p>
+<p>For all <span class="math notranslate nohighlight">\(j\neq i\)</span>, <span class="math notranslate nohighlight">\(\ell_j(x)\)</span> includes the term <span class="math notranslate nohighlight">\((x-x_i)\)</span> in the numerator (the thing on the top), so the whole product will be zero when evaluated at <span class="math notranslate nohighlight">\(x=x_i\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\ell_{j\ne i}(x_i) =
+\prod_{\begin{smallmatrix}0\le m\le N\\ m\neq j\end{smallmatrix}}
+ \frac{x_i-x_m}{x_j-x_m} = \frac{(x_i-x_0)}{(x_j-x_0)} \cdots \frac{(x_i-x_i)}{(x_j-x_i)} \cdots \frac{(x_i-x_N)}{(x_j-x_N)} = 0.\end{split}\]</div>
+<p>On the other hand a basis function <span class="math notranslate nohighlight">\(i\)</span> evaluated at location <span class="math notranslate nohighlight">\(x_i\)</span> returns 1:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\ell_i(x_i) = 
+\prod_{\begin{smallmatrix}0\le m\le N\\ m\neq i\end{smallmatrix}}
+\frac{x_i-x_m}{x_i-x_m} = 1.\end{split}\]</div>
+<p>In other words, all of the basis functions/polynomials are zero at the exact locations of the data (<span class="math notranslate nohighlight">\(x=x_i\)</span>), except for <span class="math notranslate nohighlight">\(\ell_i(x)\)</span>, for which it holds that <span class="math notranslate nohighlight">\(\ell_i(x_i)=1\)</span>, because it lacks the <span class="math notranslate nohighlight">\((x-x_i)\)</span> term in the product.</p>
+<p>It follows that</p>
+<div class="math notranslate nohighlight">
+\[y_i \ell_i(x_i)=y_i,\]</div>
+<p>and therefore at each point <span class="math notranslate nohighlight">\(x_i\)</span></p>
+<div class="math notranslate nohighlight">
+\[L(x_i)=0+0+\dots + y_i + 0 +\ldots +0=y_i,\]</div>
+<p>showing that <span class="math notranslate nohighlight">\(L\)</span> does indeed interpolate (i.e. pass through) the data points exactly.</p>
+</div>
+<div class="section" id="id9">
+<h2>IV.3 Mathematics of Lagrange Polynominal but Simpler<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
+<p>Ok, so all the above was taken from previous year lecture notes, and sound really complicated.</p>
+<p>I will be trying to give a short explaination of what is said above, that will be skipping a lot details and rigorous math magic.</p>
+<p>There are several ways to write your polynominal. You have the most usual way to write a polynominal, which is basically writing it as</p>
+<div class="math notranslate nohighlight">
+\[ Polynominal = \Sigma^n_{k=0} a_k x^k \]</div>
+<p>For degree 2 polynominal, this would look like</p>
+<div class="math notranslate nohighlight">
+\[ Polynominal = ax^2 +bx + c \]</div>
+<p>For degree 3 polynominal, this would look like</p>
+<div class="math notranslate nohighlight">
+\[ Polynominal = ax^3 +bx^2 + cx + d \]</div>
+<p>For degree 4 polynominal, this would look like</p>
+<div class="math notranslate nohighlight">
+\[ Polynominal = ax^4 +bx^3 + cx^2 + dx + e \]</div>
+<p>However, there are also other ways of writing a polynominal.</p>
+<p>Moreover, you can add, subtract, multiply polynominals, or divide polynominals by constants(not polynominals) and they will still end up as polynominals.
+Therefore, if you only have the 3 operations above, and only polynominals to play with, and only division by constant then your end result will always be a polynominal.</p>
+<p>Note that if you work a polynominal function using something other than the 3 operations above, or use something other than a polynominal function, such as a trigonometric function, their end result may not be a polynominal! Because Lagrange Polynominal has the word Polynominal to it, if Lagrange Polynominal is used for interpolating something which is not a Polynominal, there could be serious errors. This could be extended to any other form of Polynominal, like the Newton Polynominal too. Basically, trying to use a polynominal function to describe something which is actually not polynominal, like trigonometric or logarithmic, can result in serious errors.</p>
+<p>You can think of the Lagrange Polynominal as another form of writing the polynominal. As stated before, although Lagrange Polynominal looks more complicated, it is actually less computationally expensive if you are trying to fit a lot of points using Lagrange Polynominal. You can say that the Lagrange Polynominal is a form of writing the standard polynominal in such a way that makes the computer easier to do interpolation, when there are a lot of data points involved.</p>
+<p>Since Lagrange polynominal is useful for interpolating, then to arrive at our Lagrange Polynominal, we always begin from our data points. Our data point can be written as below, where <span class="math notranslate nohighlight">\((x_0,y_0)\)</span> is used to represent a data point at the beginning,<span class="math notranslate nohighlight">\((x_i,y_i)\)</span> is used to represent a data point in the middle, <span class="math notranslate nohighlight">\((x_N,y_N)\)</span> is used to represent a data point at the end.</p>
+<div class="math notranslate nohighlight">
+\[(x_0,y_0), \ldots (x_i,y_i), \ldots(x_N,y_N)\]</div>
+<p>From these points, we build out the Lagrange Basis Polynominal for each and every one of the data points, using the formula below. We can represent an arbitray data point as <span class="math notranslate nohighlight">\((x_i,y_i)\)</span> and the Lagrange Basis Polynominal for that point to be <span class="math notranslate nohighlight">\(\ell_i(x)\)</span></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\ell_i(x) := \prod_{\begin{smallmatrix}0\le m\le N\\ m\neq i\end{smallmatrix}} \frac{x-x_m}{x_i-x_m} = \frac{(x-x_0)}{(x_i-x_0)} \cdots \frac{(x-x_{i-1})}{(x_i-x_{i-1})} \frac{(x-x_{i+1})}{(x_i-x_{i+1})} \cdots \frac{(x-x_N)}{(x_i-x_N)},\end{split}\]</div>
+<p><span class="math notranslate nohighlight">\(\prod\)</span> is similar to <span class="math notranslate nohighlight">\(\Sigma\)</span>, just instead of adding, it’s multiplying</p>
+<p><span class="math notranslate nohighlight">\(0\le m\le N\)</span> and <span class="math notranslate nohighlight">\(m\neq i\)</span> means that <span class="math notranslate nohighlight">\(m\)</span> goes from 0 to N, but skips over <span class="math notranslate nohighlight">\(i\)</span></p>
+<p>Since <span class="math notranslate nohighlight">\(m\)</span> goes from <span class="math notranslate nohighlight">\(0\)</span> to <span class="math notranslate nohighlight">\(N\)</span>, but skips <span class="math notranslate nohighlight">\(i\)</span>, then the first terms in the product will be, beginning with <span class="math notranslate nohighlight">\(m\)</span> at <span class="math notranslate nohighlight">\(0\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[m = 0\]</div>
+<div class="math notranslate nohighlight">
+\[\frac{x-x_m}{x_i-x_m}\]</div>
+<div class="math notranslate nohighlight">
+\[\frac{x-x_0}{x_i-x_0}\]</div>
+<p>Your Langrange Basis Polynominal becomes</p>
+<div class="math notranslate nohighlight">
+\[\ell_i(x) := (\frac{x-x_0}{x_i-x_0}) \ldots\]</div>
+<p>Since <span class="math notranslate nohighlight">\(m\)</span> iterates goes from <span class="math notranslate nohighlight">\(0\)</span> to <span class="math notranslate nohighlight">\(N\)</span>, but skips <span class="math notranslate nohighlight">\(i\)</span>, then the second term in the product will be, continuing with <span class="math notranslate nohighlight">\(m\)</span> going to <span class="math notranslate nohighlight">\(1\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[m = 1\]</div>
+<div class="math notranslate nohighlight">
+\[\frac{x-x_m}{x_i-x_m}\]</div>
+<div class="math notranslate nohighlight">
+\[\frac{x-x_1}{x_i-x_1}\]</div>
+<p>Your Langrange Basis Polynominal becomes</p>
+<div class="math notranslate nohighlight">
+\[\ell_i(x) := (\frac{x-x_0}{x_i-x_0})(\frac{x-x_1}{x_i-x_1}) \ldots\]</div>
+<p>Since <span class="math notranslate nohighlight">\(m\)</span> iterates goes from <span class="math notranslate nohighlight">\(0\)</span> to <span class="math notranslate nohighlight">\(N\)</span>, but skips <span class="math notranslate nohighlight">\(i\)</span>, then the third term in the product will be, continuing with <span class="math notranslate nohighlight">\(m\)</span> going to <span class="math notranslate nohighlight">\(2\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[m = 2\]</div>
+<div class="math notranslate nohighlight">
+\[\frac{x-x_m}{x_i-x_m}\]</div>
+<div class="math notranslate nohighlight">
+\[\frac{x-x_2}{x_i-x_2}\]</div>
+<p>Your Langrange Basis Polynominal becomes</p>
+<div class="math notranslate nohighlight">
+\[\ell_i(x) := (\frac{x-x_0}{x_i-x_0})(\frac{x-x_1}{x_i-x_1})(\frac{x-x_2}{x_i-x_2}) \ldots\]</div>
+<p>So on and so forth, <span style="color:red;"> Note that here we assumed that <span class="math notranslate nohighlight">\(i\neq0, 1 or 2\)</span>. If <span class="math notranslate nohighlight">\(i = 0, 1 or 2\)</span>, we have to skip it, since the condition is that <span class="math notranslate nohighlight">\(m\neq i\)</span> </style></p>
+<p>Remember that <span class="math notranslate nohighlight">\(m\)</span> skips over <span class="math notranslate nohighlight">\(i\)</span>, there will be no</p>
+<div class="math notranslate nohighlight">
+\[\frac{x-x_i}{x_i-x_i}\]</div>
+<p>Because this would cause division by zero</p>
+<div class="math notranslate nohighlight">
+\[\frac{x-x_i}{x_i-x_i} = \frac{x-x_i}{0}\]</div>
+<p>Once you multiply every</p>
+<div class="math notranslate nohighlight">
+\[\frac{x-x_m}{x_i-x_m}\]</div>
+<p>you got from substituting <span class="math notranslate nohighlight">\(m\)</span> from <span class="math notranslate nohighlight">\(m = 0\)</span> to <span class="math notranslate nohighlight">\(m = N\)</span>, and skipping <span class="math notranslate nohighlight">\(m = i\)</span> in the middle to avoid division by zero, you have obtained Lagrange Basis Polynominal for the data point, shown below.</p>
+<p>Notice how to show that <span class="math notranslate nohighlight">\(m\)</span> skips over <span class="math notranslate nohighlight">\(i\)</span> the middle part is shown where there is <span class="math notranslate nohighlight">\(i-1\)</span> and <span class="math notranslate nohighlight">\(i+1\)</span> but no <span class="math notranslate nohighlight">\(i\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\ell_i(x) := \prod_{\begin{smallmatrix}0\le m\le N\\ m\neq i\end{smallmatrix}} \frac{x-x_m}{x_i-x_m} = \frac{(x-x_0)}{(x_i-x_0)} \cdots \frac{(x-x_{i-1})}{(x_i-x_{i-1})} \frac{(x-x_{i+1})}{(x_i-x_{i+1})} \cdots \frac{(x-x_N)}{(x_i-x_N)},\end{split}\]</div>
+<p>Now, from your Lagarange Basis Polynominal, you can build your Lagrange Polynominal. The Lagrange Basis Polynominal is called a basis here because it serves as a building block for the Lagrange Polynominal</p>
+<p>Your Lagrange Polynominal looks like</p>
+<div class="math notranslate nohighlight">
+\[L(x) := \sum_{i=0}^{N} y_i \ell_i(x),\]</div>
+<p><span class="math notranslate nohighlight">\(L(x)\)</span> has <span class="math notranslate nohighlight">\(L\)</span> which stands for Lagrange Polynominal, and <span class="math notranslate nohighlight">\(x\)</span> is the input into the Lagrange Polynominal</p>
+<p><span class="math notranslate nohighlight">\(\Sigma\)</span> means summation, and the summation goes from <span class="math notranslate nohighlight">\(i=0\)</span> to <span class="math notranslate nohighlight">\(N\)</span>, so from the beginning of the data points with data point <span class="math notranslate nohighlight">\(0\)</span> to the end of the data points so data point <span class="math notranslate nohighlight">\(N\)</span></p>
+<p>What is inside <span class="math notranslate nohighlight">\(\Sigma\)</span> is what is to be summed. <span class="math notranslate nohighlight">\(y_i\)</span> is the <span class="math notranslate nohighlight">\(y\)</span> value of the data point <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(\ell_i(x)\)</span> is the Lagrange Basis Polynominal for that point.</p>
+<p>For example,</p>
+<p>The first data point will be data point <span class="math notranslate nohighlight">\((x_0, y_0)\)</span>
+The first data point will have its Lagrange Basis Polynominal, following the procedure outlined above, to be <span class="math notranslate nohighlight">\(\ell_0(x)\)</span>
+The y value of the first data point is <span class="math notranslate nohighlight">\(y_0\)</span></p>
+<p>Therefore, your Lagrange Polynominal becomes for now</p>
+<div class="math notranslate nohighlight">
+\[L(x) := y_0\ell_0(x) + \ldots \]</div>
+<p>The second data point will be data point <span class="math notranslate nohighlight">\((x_1, y_1)\)</span></p>
+<p>The second data point will have its Lagrange Basis Polynominal, following the procedure outlined above, to be <span class="math notranslate nohighlight">\(\ell_1(x)\)</span></p>
+<p>The y value of the first data point is <span class="math notranslate nohighlight">\(y_1\)</span></p>
+<p>Therefore, your Lagrange Polynominal becomes for now</p>
+<div class="math notranslate nohighlight">
+\[L(x) := y_0\ell_0(x) + y_1\ell_1(x) + \ldots \]</div>
+<p>The third data point will be data point <span class="math notranslate nohighlight">\((x_2, y_2)\)</span></p>
+<p>The second data point will have its Lagrange Basis Polynominal, following the procedure outlined above, to be <span class="math notranslate nohighlight">\(\ell_2(x)\)</span></p>
+<p>The y value of the first data point is <span class="math notranslate nohighlight">\(y_2\)</span></p>
+<p>Therefore, your Lagrange Polynominal becomes for now</p>
+<div class="math notranslate nohighlight">
+\[L(x) := y_0\ell_0(x) + y_1\ell_1(x) + y_2\ell_2(x) + \ldots \]</div>
+<p>So on and so forth</p>
+<p>Till your reach and finish all of the data points</p>
+<p>Therefore, your Lagrange Polynominal eventually becomes</p>
+<div class="math notranslate nohighlight">
+\[L(x) := y_0\ell_0(x) + y_1\ell_1(x) + y_2\ell_2(x) + \ldots + y_N\ell_N(x) \]</div>
+</div>
+<div class="section" id="extra-short-proof-of-lagrange-polynominal">
+<h2>Extra: Short proof of Lagrange Polynominal<a class="headerlink" href="#extra-short-proof-of-lagrange-polynominal" title="Permalink to this headline">¶</a></h2>
+<p>Although the exact process of how this Lagrange polynominal came to be is beyond the scope of this course, for those who are curious, there is a simple proof to show the validity of the Lagrange polynominal. To check the validity of Lagrange Polynominal, we substitute the <span class="math notranslate nohighlight">\(x_i\)</span> into our Lagrange Polynominal and see if we are able to obtain <span class="math notranslate nohighlight">\(y_i\)</span>, meaning that</p>
+<div class="math notranslate nohighlight">
+\[L(x_i) = y_i \;\;is\;\; True \]</div>
+<p>We start from the Lagrange Polynominal that we have previously found</p>
+<div class="math notranslate nohighlight">
+\[L(x) := y_0\ell_0(x) + y_1\ell_1(x) + y_2\ell_2(x) + \ldots + y_N\ell_N(x) \]</div>
+<p>We substitute <span class="math notranslate nohighlight">\(x_i\)</span> into the Lagrange Polynominal</p>
+<div class="math notranslate nohighlight">
+\[L(x_i) := y_0\ell_0(x_i) + y_1\ell_1(x_i) + y_2\ell_2(x_i) + \ldots + y_N\ell_N(x_i) \]</div>
+<p>We will call the subscript of <span class="math notranslate nohighlight">\(\ell\)</span> to be <span class="math notranslate nohighlight">\(j\)</span>. <span class="math notranslate nohighlight">\(x_i\)</span> is from a data point, and is fixed. From the Langrange Polynominal above, the first term has <span class="math notranslate nohighlight">\(j=0\)</span>, the next term has <span class="math notranslate nohighlight">\(j=1\)</span>, and then <span class="math notranslate nohighlight">\(j=2\)</span>, so on and so forth, till the last point with <span class="math notranslate nohighlight">\(j = N\)</span>. Therefore, there will be two situation, when <span class="math notranslate nohighlight">\(i = j\)</span> and when <span class="math notranslate nohighlight">\(i \neq j\)</span></p>
+<p>Let’s first look at the cases when <span class="math notranslate nohighlight">\(i \neq j\)</span> and then at the cases when <span class="math notranslate nohighlight">\(i = j\)</span></p>
+<p>When <span class="math notranslate nohighlight">\(i \neq j\)</span> :</p>
+<p>From our Lagrange Basis Polynominal, we know that</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\ell_i(x) := \prod_{\begin{smallmatrix}0\le m\le N\\ m\neq i\end{smallmatrix}} \frac{x-x_m}{x_i-x_m} = \frac{(x-x_0)}{(x_i-x_0)} \cdots \frac{(x-x_{i-1})}{(x_i-x_{i-1})} \frac{(x-x_{i+1})}{(x_i-x_{i+1})} \cdots \frac{(x-x_N)}{(x_i-x_N)},\end{split}\]</div>
+<p>There is a small bit of confusion since the subscript of <span class="math notranslate nohighlight">\(\ell\)</span> is <span class="math notranslate nohighlight">\(i\)</span>, but we could make some adjustments and change the subscript of <span class="math notranslate nohighlight">\(\ell\)</span> to <span class="math notranslate nohighlight">\(j\)</span> to make sure we do not confuse <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(j\)</span></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\ell_j(x) := \prod_{\begin{smallmatrix}0\le m\le N\\ m\neq j\end{smallmatrix}} \frac{x-x_m}{x_j-x_m} = \frac{(x-x_0)}{(x_j-x_0)} \cdots \frac{(x-x_{j-1})}{(x_j-x_{j-1})} \frac{(x-x_{j+1})}{(x_j-x_{j+1})} \cdots \frac{(x-x_N)}{(x_j-x_N)},\end{split}\]</div>
+<p>If <span class="math notranslate nohighlight">\(i\)</span> is not equal to <span class="math notranslate nohighlight">\(j\)</span>, then since <span class="math notranslate nohighlight">\(m\)</span> is not equal to <span class="math notranslate nohighlight">\(j\)</span> then <span class="math notranslate nohighlight">\(m\)</span> can be equal to <span class="math notranslate nohighlight">\(i\)</span>. As <span class="math notranslate nohighlight">\(m\)</span> goes from <span class="math notranslate nohighlight">\(0\)</span> to <span class="math notranslate nohighlight">\(N\)</span>, going through all possible values for <span class="math notranslate nohighlight">\(i\)</span> in the process, there will be a <span class="math notranslate nohighlight">\(1\)</span> fraction in all of the fractions which are multiplied together in the Lagrange Basis Polynominal where <span class="math notranslate nohighlight">\(m\)</span> = <span class="math notranslate nohighlight">\(i\)</span>.</p>
+<p>Recall that the numerator term of the Lagrange Basis Polynominal is</p>
+<div class="math notranslate nohighlight">
+\[(x_i - x_m)\]</div>
+<p>Because <span class="math notranslate nohighlight">\(m\)</span> = <span class="math notranslate nohighlight">\(i\)</span>, this fraction results in <span class="math notranslate nohighlight">\((x_i - x_m)\)</span> at the numerator becoming <span class="math notranslate nohighlight">\((x_{i=m} - x_{i=m})\)</span> giving <span class="math notranslate nohighlight">\((x_{i=m} - x_{i=m}) =0\)</span> in the numerator of <span class="math notranslate nohighlight">\(1\)</span> of fraction which are multiplied together in the Lagrange Basis Polynominal, resulting in the whole Lagrange Basis Polynominal becoming <span class="math notranslate nohighlight">\(0\)</span>. Expressed Mathematically,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\ell_{j\ne i}(x_i) =
+\prod_{\begin{smallmatrix}0\le m\le N\\ m\neq j\end{smallmatrix}}
+ \frac{x_i-x_m}{x_j-x_m} = \frac{(x_i-x_0)}{(x_j-x_0)} \cdots \frac{(x_i-x_i)}{(x_j-x_i)} \cdots \frac{(x_i-x_N)}{(x_j-x_N)} = 0.\end{split}\]</div>
+<p>When <span class="math notranslate nohighlight">\(i = j\)</span> :</p>
+<p>From our Lagrange Basis Polynominal, we know that</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\ell_i(x) := \prod_{\begin{smallmatrix}0\le m\le N\\ m\neq i\end{smallmatrix}} \frac{x-x_m}{x_i-x_m} = \frac{(x-x_0)}{(x_i-x_0)} \cdots \frac{(x-x_{i-1})}{(x_i-x_{i-1})} \frac{(x-x_{i+1})}{(x_i-x_{i+1})} \cdots \frac{(x-x_N)}{(x_i-x_N)},\end{split}\]</div>
+<p>There is a small bit of confusion since the subscript of <span class="math notranslate nohighlight">\(\ell\)</span> is actually <span class="math notranslate nohighlight">\(i\)</span>, but we could make some adjustments and change the subscript of <span class="math notranslate nohighlight">\(\ell\)</span> to <span class="math notranslate nohighlight">\(j\)</span> to make sure we do not confuse <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(j\)</span></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\ell_j(x) := \prod_{\begin{smallmatrix}0\le m\le N\\ m\neq j\end{smallmatrix}} \frac{x-x_m}{x_j-x_m} = \frac{(x-x_0)}{(x_j-x_0)} \cdots \frac{(x-x_{j-1})}{(x_j-x_{j-1})} \frac{(x-x_{j+1})}{(x_j-x_{j+1})} \cdots \frac{(x-x_N)}{(x_j-x_N)},\end{split}\]</div>
+<p>If <span class="math notranslate nohighlight">\(i\)</span> equal to <span class="math notranslate nohighlight">\(j\)</span>, then since <span class="math notranslate nohighlight">\(m\)</span> is not equal to <span class="math notranslate nohighlight">\(j\)</span> then <span class="math notranslate nohighlight">\(m\)</span> cannot be equal to <span class="math notranslate nohighlight">\(i\)</span>; thereforem, the expression simplifies to</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\ell_i(x_i) = 
+\prod_{\begin{smallmatrix}0\le m\le N\\ m\neq i\end{smallmatrix}}
+\frac{x_i-x_m}{x_i-x_m} =
+\prod_{\begin{smallmatrix}0\le m\le N\\ m\neq i\end{smallmatrix}}
+1=1.\end{split}\]</div>
+<p>From above, I understand that the Lagrange Basis Polynominal is <span class="math notranslate nohighlight">\(0\)</span> when <span class="math notranslate nohighlight">\(i\neq j\)</span>, and only has value of <span class="math notranslate nohighlight">\(1\)</span> when <span class="math notranslate nohighlight">\(i = j\)</span></p>
+<p>Recalling the Lagrange Polynominal</p>
+<div class="math notranslate nohighlight">
+\[L(x_i) := y_0\ell_0(x_i) + y_1\ell_1(x_i) + y_2\ell_2(x_i) + \ldots + y_N\ell_N(x_i) \]</div>
+<p>I could simplify the Lagrange polynominal knowing that Lagrange Basis Polynominal is <span class="math notranslate nohighlight">\(0\)</span> when <span class="math notranslate nohighlight">\(i\neq j\)</span>, and only has value of <span class="math notranslate nohighlight">\(1\)</span> when <span class="math notranslate nohighlight">\(i = j\)</span>, resulting in</p>
+<div class="math notranslate nohighlight">
+\[L(x_{i=j}) := y_{i=j}\ell_{i=j}(x_{i=j}) \]</div>
+<div class="math notranslate nohighlight">
+\[L(x_{i=j}) := y_{i=j}\ell_{i=j}(x_{i=j}) \]</div>
+<p>Since I know that the Lagrange basis polynominal is eqaul to <span class="math notranslate nohighlight">\(1\)</span>, then</p>
+<div class="math notranslate nohighlight">
+\[L(x_{i=j}) := y_{i=j}\]</div>
+<p>or</p>
+<div class="math notranslate nohighlight">
+\[L(x_i) = y_i \]</div>
+</div>
+<div class="section" id="id10">
+<h2>IV.4 Lagrange and Scipy<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
+<p>With that said about Lagrange, it would usually involve many lines of code, if not for scipy.</p>
+<p>The scipy module scipy.interpolate.lagrange can be used to generate Lagrange polynominal from a dataset</p>
+<p>Notice how lagrange is under scipy.interpolate? Scipy actually provides many other interpolators, and you can check them them out. <a class="reference external" href="http://docs.scipy.org/doc/scipy/reference/interpolate.html">Scipy Interpolators</a>. Each of these have their stronger and weaker points, so do check the documentations before interpolating.</p>
+<p>Note that Lagrange interpolation is actually slower than least square polynominal if there are only few data points.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="kn">import</span> <span class="nn">scipy.interpolate</span> <span class="k">as</span> <span class="nn">si</span>
+
+<span class="c1">### Our raw data from earlier - you can also test on our three data point example</span>
+<span class="n">xi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">7.0</span><span class="p">,</span> <span class="mf">9.0</span><span class="p">])</span>
+<span class="n">yi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">])</span>
+
+<span class="c1"># Create the Lagrange polynomial for the given points.</span>
+<span class="n">lp</span> <span class="o">=</span> <span class="n">si</span><span class="o">.</span><span class="n">lagrange</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span> <span class="n">yi</span><span class="p">)</span>
+<span class="c1"># above we executed &#39;import scipy.interpolate as si&#39;</span>
+<span class="c1"># and so this line is calling the &#39;lagrange&#39; function from the </span>
+<span class="c1"># &#39;interpolate&#39; sub-package within scipy.</span>
+
+<span class="c1"># Evaluate this function at a high resolution (100 points here) so that </span>
+<span class="c1"># we get a smooth well-resolved line when we plot our polynomial</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.4</span><span class="p">,</span> <span class="mf">9.1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="c1"># set up the figure</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">margins</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+
+<span class="c1"># actually plot (x,y)=(x,lp(x)) on the axes with the label ax1</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">lp</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Lagrange interpolating polynomial&#39;</span><span class="p">)</span>
+
+<span class="c1"># Overlay raw data on the same axes</span>
+<span class="n">plot_raw_data</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span> <span class="n">yi</span><span class="p">,</span> <span class="n">ax1</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Lagrange interpolating polynomial (SciPy)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+
+<span class="c1"># Add a legend</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/NM1_2020_lecture1_59_0.png" src="../../../_images/NM1_2020_lecture1_59_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="id11">
+<h2>IV.5 Polynominal Error<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h2>
+<p>Lagrange Interpolation is based on the Lagrange Polynominal, which is a polynominal function. Because of that, Lagrange Interpolation will have errors when interpolating something which is not a polynominal, such as a trigonometric or logarithmic function like <span class="math notranslate nohighlight">\(sin\)</span> or <span class="math notranslate nohighlight">\(exp\)</span>. However, many natural phenomena are actually non polynominal, especially quantities under positive and negative feedback.</p>
+<p>The error when using Lagrange Interpolation to interpolate a non polynominal function can be proven to be proportional to:</p>
+<ol class="simple">
+<li><p>The distance of the point from any of the data points.</p></li>
+</ol>
+<p>The Lagrange polynominal is generated using the data points, i.e. xi and yi. While we are certain that the polynominal must pass through these data points, we are less certain what the shape of the polynominal is when the function is away from the points. The further away we are from the data points, the less certain we are about the shape of the function, and thus less certain about the values we get from observing the function.</p>
+<ol class="simple">
+<li><p>The <span class="math notranslate nohighlight">\((N+1)th\)</span> derivative of that function evaluated at some location within the bounds of the data</p></li>
+</ol>
+<p>Basically, if the function is having lots of bends and curves in order to pass through the points, then the more likely that there will be errors.</p>
+<p>Check out Lagrange Remainder Theorem for curiosity!</p>
+<div class="section" id="span-style-color-blue-exercise-1-1-the-lagrange-basis-polynomials-evaluated-at-the-data-locations-span">
+<h3><span style="color:blue">Exercise 1.1: The Lagrange basis polynomials evaluated at the data locations </span><a class="headerlink" href="#span-style-color-blue-exercise-1-1-the-lagrange-basis-polynomials-evaluated-at-the-data-locations-span" title="Permalink to this headline">¶</a></h3>
+<p>For a given <span class="math notranslate nohighlight">\(i\)</span>, what value does <span class="math notranslate nohighlight">\(\ell_i(x_j)\)</span> takes for every value of <span class="math notranslate nohighlight">\(j\)</span> (i.e. for each of the data points). <span style="color:green">Hint: Look again at the definition of basis polynomials.</span></p>
+<p>What is the mathematical name for the function <span class="math notranslate nohighlight">\(\ell_i(x)\)</span></p>
+</div>
+<div class="section" id="span-style-color-blue-exercise-1-2-picewise-linear-lagrange-interpolant-span">
+<h3><span style="color:blue">Exercise 1.2: Picewise-linear Lagrange interpolant </span><a class="headerlink" href="#span-style-color-blue-exercise-1-2-picewise-linear-lagrange-interpolant-span" title="Permalink to this headline">¶</a></h3>
+<p>What are the Lagrange basis polynomials when <span class="math notranslate nohighlight">\(N=1\)</span>?</p>
+<p>Evaluate by <em>pen and paper</em> the linear approximation <span class="math notranslate nohighlight">\(L_1(x)\)</span> (i.e. the Lagrange polynomial of degree 1) which passes through the two points <span class="math notranslate nohighlight">\((0.0,0.1),(1.0,0.9)\)</span>.</p>
+<p>Notice that this method is just a glorified approach to obtain the equation of a line you are familar with: <span class="math notranslate nohighlight">\(y=mx+c\)</span>.</p>
+</div>
+<div class="section" id="span-style-color-blue-exercise-1-3-approximating-a-function-span">
+<h3><span style="color:blue">Exercise 1.3: Approximating a function </span><a class="headerlink" href="#span-style-color-blue-exercise-1-3-approximating-a-function-span" title="Permalink to this headline">¶</a></h3>
+<p>Sample the function <span class="math notranslate nohighlight">\(y(x)=x^3\)</span> at the points <span class="math notranslate nohighlight">\(x=(1,2,3)\)</span>.</p>
+<p>Write your own Python function to construct the Lagrange polynomials <span class="math notranslate nohighlight">\(L_0\)</span> (the constant interpolant going through the <span class="math notranslate nohighlight">\(x=2\)</span> data point only), <span class="math notranslate nohighlight">\(L_1\)</span> (the linear interpolant going through the <span class="math notranslate nohighlight">\(x=1\)</span> and <span class="math notranslate nohighlight">\(x=3\)</span> points) and <span class="math notranslate nohighlight">\(L_2\)</span> (the quadratic interpolant going through all three points). Plot the resulting polynomials along with the error compared to the original exact function.</p>
+<p><strong>Tip</strong>: Using the function <a class="reference external" href="http://matplotlib.org/examples/pylab_examples/fill_between_demo.html">fill_between</a> provides a nice way of illustrating the difference between graphs.</p>
+</div>
+</div>
+</div>
+<div class="section" id="id12">
+<h1>V. Newton Polynominal<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id13">
+<h2>V.1 Recursive Form and Divided Difference Notation<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h2>
+<p>Similar to Lagrange polynominal, you could also think of the Newton Polynominal as another way to write your polynominal so that it is easier to be interpolated.
+Calculating the Newton Polynominal will yield the same polynominal as the Lagrange Polynominal since the Polynominal with the smallest degree to pass through each data point is unique. In essence, you could think of the Newton Polynominal as another way to arrive at the same polynominal that Lagrange polynominal would arrive at, that may be arguably easier to implement than the Lagrange polynominal.</p>
+<p>Our data point can be written as below, where <span class="math notranslate nohighlight">\((x_0,y_0)\)</span> is used to represent a data point at the beginning,<span class="math notranslate nohighlight">\((x_i,y_i)\)</span> is used to represent a data point in the middle, <span class="math notranslate nohighlight">\((x_N,y_N)\)</span> is used to represent a data point at the end.</p>
+<div class="math notranslate nohighlight">
+\[(x_0,y_0), \ldots (x_i,y_i), \ldots(x_N,y_N)\]</div>
+<p>The Newton Polynominal of a certain degree has the following form</p>
+<div class="math notranslate nohighlight">
+\[ P_N(x) = a_0 +(x-x_0)a_1 + (x-x_0)(x-x_1)a_2 + \cdots + (x-x_0)(x-x_1)\ldots(x-x_N)a_N,\]</div>
+<p>We use <span class="math notranslate nohighlight">\(P(x)\)</span> to represent our Newton Polynominal and we add a subscript <span class="math notranslate nohighlight">\(N\)</span> to denote that it is a Newton Polynominal of <span class="math notranslate nohighlight">\(N\)</span> degrees.</p>
+<p>To obtain our Newton Polynominal, we need to find <span class="math notranslate nohighlight">\(a_0, a_1, \ldots, a_N\)</span>. <span class="math notranslate nohighlight">\(a_0, a_1, \ldots, a_N\)</span> are our <span class="math notranslate nohighlight">\(N+1\)</span> free parameters we need to find using the data points we have we have in the given data.</p>
+<p><span style="color:red;"> Thus, we basically need to find <span class="math notranslate nohighlight">\(a_0, a_1, \ldots, a_N\)</span></span></p>
+<p>Efficient derivation of an algorithm to compute the Newton polynomial follows from noticing that we can write this polynomial in a <a href="https://en.wikipedia.org/wiki/Recursion_(computer_science)"><em>recursive form</em></a>.</p>
+<p>Consider for example a case with <span class="math notranslate nohighlight">\(N=3\)</span>:</p>
+<p>\begin{align}
+P_3(x) &amp;= a_0 +(x-x_0)a_1 + (x-x_0)(x-x_1)a_2 + (x-x_0)(x-x_1)(x-x_2)a_3\[5pt]
+&amp;= a_0 +(x-x_0)[a_1 + (x-x_1)[a_2 + (x-x_2)a_3]].
+\end{align}</p>
+<p>Notice that substituting in the <span class="math notranslate nohighlight">\(x_i\)</span>, so 1st <span class="math notranslate nohighlight">\(x_0\)</span>, then <span class="math notranslate nohighlight">\(x_1\)</span>, then <span class="math notranslate nohighlight">\(x_2\)</span>, <span class="math notranslate nohighlight">\(\ldots\)</span>, <span class="math notranslate nohighlight">\(x_N\)</span> values leads to a set of equations where we can easily evaluate the unknowns <span class="math notranslate nohighlight">\(a_0, a_1, \ldots\)</span> using ‘back (or forward) substitution’ (we’ll see what this means in the example that follows, and we will also return to this idea in Lecture 5/6).</p>
+<p>We’ll see an example of this now with our <span class="math notranslate nohighlight">\(P_3(x)\)</span></p>
+<div class="math notranslate nohighlight">
+\[ P_3(x)= a_0 +(x-x_0)[a_1 + (x-x_1)[a_2 + (x-x_2)a_3]]\]</div>
+<ol class="simple">
+<li><p>Substitute <span class="math notranslate nohighlight">\(x=x_0\)</span>: We have <span class="math notranslate nohighlight">\(a_0 = P_3(x_0)\)</span>, and we know that our interpolant <span class="math notranslate nohighlight">\(P_3(x)\)</span> evaluated at <span class="math notranslate nohighlight">\(x_0\)</span> must return <span class="math notranslate nohighlight">\(y_0\)</span>. Hence,</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[a_0 = y_0.\]</div>
+<ol class="simple">
+<li><p>Now substitute <span class="math notranslate nohighlight">\(x=x_1\)</span>: We have $P_3(x_1) = a_0 +(x_1-x_0)a_1 = y_0 +(x_1-x_0)a_1 $, the LHS of this is <span class="math notranslate nohighlight">\(y_1\)</span>, and we know everything on the RHS as we have already calculated <span class="math notranslate nohighlight">\(a_0 = y_0\)</span>. We can thus trivially rearrange to yield</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[ a_1 = \frac{(y_1 - y_0)}{(x_1-x_0)}.\]</div>
+<p>I also notice that</p>
+<div class="math notranslate nohighlight">
+\[ a_1 = \frac{(y_1 - a_0)}{(x_1-x_0)}.\]</div>
+<ol class="simple">
+<li><p>Substituting <span class="math notranslate nohighlight">\(x=x_2\)</span> yields</p></li>
+</ol>
+<p>\begin{align*}
+&amp; y_2 = P_3(x_2) = a_0 +(x_2-x_0)[a_1 + (x_2-x_1)a_2] = y_0 + (x_2-x_0)\left[ \frac{(y_1 - y_0)}{(x_1-x_0)} + (x_2-x_1)a_2\right]\[5pt]
+&amp;\implies a_2 = \frac{ \frac{(y_2 - y_0)}{(x_2-x_0)} - \frac{(y_1 - y_0)}{(x_1-x_0)}}{x_2-x_1}.
+\end{align*}</p>
+<div class="math notranslate nohighlight">
+\[a_2 = \frac{ \frac{(y_2 - y_0)}{(x_2-x_0)} - a_1}{x_2-x_1}\]</div>
+<ol class="simple">
+<li><p>And so on …</p></li>
+</ol>
+<p>To define an algorithm for this method in general let’s first introducing the following <a class="reference external" href="https://en.wikipedia.org/wiki/Divided_differences"><em>divided difference</em></a> notation</p>
+<p>\begin{alignat*}{2}
+\Delta y_i &amp;= \frac{y_i-y_0}{x_i-x_0},;;    &amp;&amp; i=1,2,\ldots, N,\[10pt]
+\Delta^2 y_i &amp;= \frac{\Delta y_i-\Delta y_1}{x_i-x_1},;;    &amp;&amp; i=2, 3,\ldots, N,\[10pt]
+&amp;\vdots\[5pt]
+\Delta^N y_N &amp;= \frac{\Delta^{N-1} y_N-\Delta^{N-1} y_{N-1}}{x_N-x_{N-1}}.
+\end{alignat*}</p>
+<p>With a bit of thought we can hopefully see from the above example that the coefficients of the interpolating polynomial in the general case are given by</p>
+<div class="math notranslate nohighlight">
+\[a_0=y_0,\;\;\;\;\; a_1 = \Delta y_1, \;\;\;\;\; a_2 = \Delta^2 y_2, \;\;\;\;\; \ldots \;\;\;\;\; a_N = \Delta^N y_N.\]</div>
+</div>
+<div class="section" id="id14">
+<h2>V. 2 Code Implementation of V.  1<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">scipy.interpolate</span> <span class="k">as</span> <span class="nn">si</span>
+<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+
+<span class="c1"># consider the above example data again</span>
+<span class="n">xi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">7.0</span><span class="p">,</span> <span class="mf">9.0</span><span class="p">])</span>
+<span class="n">yi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">])</span>
+
+
+<span class="k">def</span> <span class="nf">calculate_newton_poly_coeffs</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span> <span class="n">yi</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Evaluate the coefficients a_i recursively using Newton&#39;s method</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="c1"># initialise the array &#39;a&#39; with yi, but take a copy to ensure we don&#39;t</span>
+    <span class="c1"># overwrite our yi data!</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">yi</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="c1"># we have N+1 data points, and so</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+
+    <span class="c1"># for each k, we compute Δ^k y_i from the a_i = Δ^(k-1) y_i of the previous iteration:</span>
+    <span class="c1">##Work through the for loop and write everything down</span>
+    <span class="c1">##After you have finished the entire looping</span>
+    <span class="c1">##Compare and see that the equation below actually works to produce the desired result</span>
+    
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+        <span class="c1"># but only for i&gt;=k</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">a</span><span class="p">[</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">/</span><span class="p">(</span><span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="n">xi</span><span class="p">[</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">a</span>
+
+
+<span class="c1"># Given the coefficients a, and the data locations xi,</span>
+<span class="c1"># define a function to evaluate the Newton polynomial</span>
+<span class="c1"># at locations given in the array x.</span>
+<span class="c1"># NB. this is just an evaluation of the P_n(x) = ... formula</span>
+<span class="c1"># given at the start of this section.</span>
+
+<span class="k">def</span> <span class="nf">eval_newton_poly</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">xi</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Function to evaluate the Newton polynomial</span>
+<span class="sd">    at x, given the data point xi and the polynomial coeffs a</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">xi</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>  <span class="c1"># polynomial degree</span>
+    <span class="c1"># recursively build up polynomial evaluated at x</span>
+    <span class="n">P</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">N</span><span class="p">]</span> 
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">P</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">N</span><span class="o">-</span><span class="n">k</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">xi</span><span class="p">[</span><span class="n">N</span><span class="o">-</span><span class="n">k</span><span class="p">])</span><span class="o">*</span><span class="n">P</span>
+    <span class="k">return</span> <span class="n">P</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># set up figure</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+
+<span class="c1"># add a small margin </span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">margins</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+
+<span class="c1"># Evaluate the coefficients of the Newton polynomial</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">calculate_newton_poly_coeffs</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span> <span class="n">yi</span><span class="p">)</span>
+<span class="c1"># Evaluate the polynomial at high resolution and plot</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.4</span><span class="p">,</span> <span class="mf">9.1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">eval_newton_poly</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">xi</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Newton poly&#39;</span><span class="p">)</span>
+
+<span class="c1"># Overlay raw data</span>
+<span class="c1">## Remember that we are going to reuse this?</span>
+<span class="c1">## Run the cell from above :)</span>
+<span class="n">plot_raw_data</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span> <span class="n">yi</span><span class="p">,</span> <span class="n">ax1</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Newton interpolating polynomial (our implementation)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+
+<span class="c1"># Add a legend</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/NM1_2020_lecture1_77_0.png" src="../../../_images/NM1_2020_lecture1_77_0.png" />
+</div>
+</div>
+<div class="section" id="span-style-color-blue-exercise-1-4-squared-error-calculation-span">
+<h3><span style="color:blue">Exercise 1.4: Squared error calculation</span><a class="headerlink" href="#span-style-color-blue-exercise-1-4-squared-error-calculation-span" title="Permalink to this headline">¶</a></h3>
+<p>As described in the docs (<a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.polyfit.html">numpy.polyfit</a>), least squares fitting minimises the sum of the squares of the differences between the data provided and the polynomial approximation, i.e. it minimises the expression</p>
+<div class="math notranslate nohighlight">
+\[E = \sum_{i=0}^{N} (P(x_i) - y_i)^2,\]</div>
+<p>where <span class="math notranslate nohighlight">\(P(x_i)\)</span> is the value of the polynomial function that has been fit to the data evaluated at point <span class="math notranslate nohighlight">\(x_i\)</span>, and <span class="math notranslate nohighlight">\(y_i\)</span> is the <span class="math notranslate nohighlight">\(i^{th}\)</span> data value.</p>
+<img src="https://upload.wikimedia.org/wikipedia/commons/b/b0/Linear_least_squares_example2.svg" style="width: 300px">
+<p><em>(Wikipedia: https://en.wikipedia.org/wiki/Linear_least_squares) We’re computing the sum of the squares of the distances indicated in green.</em></p>
+<p>Write a Python function that evaluates the squared error, <span class="math notranslate nohighlight">\(E\)</span>, and use this function to evaluate the error for each of the polynomials calculated above.</p>
+<p><strong>Tip</strong>: Try to pass the function <em>p</em> in as an argument to your error calculation function. One of the great features of Python is that it is easy to pass in functions as arguments.</p>
+<p>Why is the square of the difference used?</p>
+</div>
+<div class="section" id="span-style-color-blue-exercise-1-5-degree-of-approximation-span">
+<h3><span style="color:blue">Exercise 1.5: Degree of approximation </span><a class="headerlink" href="#span-style-color-blue-exercise-1-5-degree-of-approximation-span" title="Permalink to this headline">¶</a></h3>
+<p>Extend the example above by fitting and plotting polynomials of increasing degree past cubic. At what <em>degree</em> does the resulting polynomial approximation equate to the Lagrange interpolant?</p>
+<p>Why does this make sense?</p>
+<p><strong>Hint</strong>: think about the number of free parameters in a polynomial, and the amount of data you have.</p>
+</div>
+</div>
+</div>
+<div class="section" id="id15">
+<h1>VI. Extrapolation<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h1>
+<p><em>Interpolation</em> by definition is used to estimate <span class="math notranslate nohighlight">\(y\)</span> for values of <span class="math notranslate nohighlight">\(x\)</span> within the bounds of the available data (here <span class="math notranslate nohighlight">\([0.5,9]\)</span>) with some confidence. <em>Extrapolation</em> on the other hand is the process of estimating (e.g. using the interpolating function) <span class="math notranslate nohighlight">\(y\)</span> <em>outside</em> the bounds of the available data. However, extrapolation requires a great deal of care as it will become increasingly inaccurate as you go further out of bounds.</p>
+<div class="section" id="span-style-color-blue-exercise-1-6-extrapolation-span">
+<h2><span style="color:blue">Exercise 1.6: Extrapolation </span><a class="headerlink" href="#span-style-color-blue-exercise-1-6-extrapolation-span" title="Permalink to this headline">¶</a></h2>
+<p>Recreate the plots in the example above for different degrees of polynomial, setting the x-range from -2.0 to 11.0. What do you notice about extrapolation when you use higher degree polynomials.</p>
+</div>
+<div class="section" id="span-style-color-blue-exercise-1-7-submarine-landslide-size-in-the-north-atlantic-span">
+<h2><span style="color:blue">Exercise 1.7: Submarine landslide size in the North Atlantic </span><a class="headerlink" href="#span-style-color-blue-exercise-1-7-submarine-landslide-size-in-the-north-atlantic-span" title="Permalink to this headline">¶</a></h2>
+<p>Open the data file <span class="xref myst">Length-Width.dat</span> (located in the data directory) giving the lengths and widths of submarine landslides in the North Atlantic basin [from <a class="reference external" href="http://www.sciencedirect.com/science/article/pii/S0025322704002774">Huhnerbach &amp; Masson, 2004</a>, Fig. 7].  Fit a linear best fit line using polyfit and try to recreate the image below.</p>
+<p><strong>Hint</strong>: You will need to take the log of the data before fitting a line to it. </span></p>
+<p><img alt="&quot;Cloud of point data for submarine landslide widths and depths in the North Atlantic, and a correspondong best (linear) curve fit.&quot;" src="c_mathematics/numerical_methods/NM1_2020/images/Width-Length.png" /></p>
+<p>Reference: <a class="reference external" href="http://www.sciencedirect.com/science/article/pii/S0025322704002774">V. Huhnerbach, D.G. Masson, Landslides in the North Atlantic and its adjacent seas:
+an analysis of their morphology, setting and behaviour, Marine Geology 213 (2004) 343 – 362.</a></p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "primer-computational-mathematics/book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./c_mathematics/numerical_methods/NM1_2020"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Imperial College London<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../../../_static/js/index.js"></script>
+    
+  </body>
+</html>

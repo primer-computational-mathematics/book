@@ -1,0 +1,704 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Successive over-relaxation method &#8212; ESE Jupyter Material</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/mystnb.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".cell"
+        const thebe_selector_input = ".cell_input div.highlight"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Forward Time Centred Space scheme" href="7_Forward_time_centred_space.html" />
+    <link rel="prev" title="Runge-Kutta method" href="5_Runge_Kutta_method.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../index.html">
+  
+  <img src="../../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">ESE Jupyter Material</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  
+  <ul class="nav sidenav_l1">
+  <li class="">
+    <a href="../../intro.html">Landing page</a>
+  </li>
+  <li class="">
+    <a href="../../a_modules/intro.html">Modules</a>
+  </li>
+  <li class="">
+    <a href="../../b_coding/intro.html">Coding</a>
+  </li>
+  <li class="active">
+    <a href="../intro.html">Mathematics</a>
+  <ul class="nav sidenav_l2">
+    <li class="">
+      <a href="../calculus/intro.html">Calculus</a>
+    </li>
+    <li class="">
+      <a href="../complex_analysis/intro.html">Complex analysis</a>
+    </li>
+    <li class="">
+      <a href="../differential_equations/intro.html">Differential equations</a>
+    </li>
+    <li class="">
+      <a href="../linear_algebra/intro.html">Linear algebra</a>
+    </li>
+    <li class="">
+      <a href="../mathematical_notation/intro.html">Mathematical notation</a>
+    </li>
+    <li class="active">
+      <a href="intro.html">Numerical methods</a>
+      <ul class="nav sidenav_l3">
+      <li class="">
+        <a href="1_Interpolation_curve_fitting.html">Interpolation and curve fitting</a>
+      </li>
+      <li class="">
+        <a href="2_Numerical_differentiation.html">Numerical differentiation</a>
+      </li>
+      <li class="">
+        <a href="3_Timestepping_an_ODE.html">Solving or timestepping an ODE</a>
+      </li>
+      <li class="">
+        <a href="4_Heuns_method.html">Heun’s method</a>
+      </li>
+      <li class="">
+        <a href="5_Runge_Kutta_method.html">Runge-Kutta method</a>
+      </li>
+      <li class="active">
+        <a href="">Successive over-relaxation method</a>
+      </li>
+      <li class="">
+        <a href="7_Forward_time_centred_space.html">Forward Time Centred Space scheme</a>
+      </li>
+      <li class="">
+        <a href="8_Numerical_integration.html">Numerical integration</a>
+      </li>
+      <li class="">
+        <a href="9_Roots_of_equations.html">Roots of equations</a>
+      </li>
+      <li class="">
+        <a href="10_linear_algebra_intro.html">Linear algebra introduction</a>
+      </li>
+      <li class="">
+        <a href="11_Gaussian_elimination.html">Gaussian elimination</a>
+      </li>
+      <li class="">
+        <a href="12_LU_decomposition.html">LU decomposition</a>
+      </li>
+    </ul>
+    </li>
+    <li class="">
+      <a href="../series_and_sequences/intro.html">Series and sequences</a>
+    </li>
+    <li class="">
+      <a href="../sets_and_functions/intro.html">Sets and functions</a>
+    </li>
+    <li class="">
+      <a href="../statistics/intro.html">Statistics</a>
+    </li>
+  </ul>
+  </li>
+  <li class="">
+    <a href="../../d_geosciences/intro.html">Geosciences</a>
+  </li>
+  <li class="">
+    <a href="../../e_extra/intro.html">Further resources</a>
+  </li>
+  <li class="">
+    <a href="../../genindex.html">Index</a>
+  </li>
+</ul>
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/c_mathematics/numerical_methods/6_Solving_PDEs_SOR.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        
+        <a class="issues-button"
+            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2Fc_mathematics/numerical_methods/6_Solving_PDEs_SOR.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/c_mathematics/numerical_methods/6_Solving_PDEs_SOR.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#sor-algorithm" class="nav-link">SOR algorithm</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#checker-boarding" class="nav-link">Checker-boarding</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#solving-potential-flow-with-sor-method" class="nav-link">Solving potential flow with SOR method</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#continuity" class="nav-link">Continuity</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#stream-functions" class="nav-link">Stream functions</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#potential-flow" class="nav-link">Potential flow</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#boundary-conditions" class="nav-link">Boundary conditions</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#electrical-current-potential-flow" class="nav-link">Electrical current potential flow</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+    </ul>
+</nav>
+
+
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="successive-over-relaxation-method">
+<span id="successive-over-relaxation"></span><h1>Successive over-relaxation method<a class="headerlink" href="#successive-over-relaxation-method" title="Permalink to this headline">¶</a></h1>
+<p id="index-0">A very large proportion of the world’s supercomputing capacity is dedicated to solving <a class="reference internal" href="../differential_equations/6_pde_basicdefinitions.html#pde-basic-partial-differentiation"><span class="std std-ref">PDEs</span></a> - climate and weather simulations, aerodynamics, structural simulations, etc.</p>
+<p>PDEs describe quantities that vary continuously with respect to a set of independent variables. Computers can only store a finite number of discrete quantities. Therefore, the actual solution can only by approximated.</p>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Successive_over-relaxation">Successive over-relaxation (SOR)</a> is a numerical method for solving a linear system of equations - equations that have a linear comination of differential terms. Coefficients in such equation can be functions of the independent variables but not the dependent ones. For example:
+\[f_1(x,y)\frac{\partial u}{\partial x} +f_2(x,y)\frac{\partial u}{\partial y}+f_3(x,y)u=f_4(x,y).\]</p>
+<p>Linear 2nd order PDEs in 2D can be approximated as
+\[a_{i,j}u_{i+1,j}+b_{i,j}u_{i-1,j}+c_{i,j}u_{i,j+1}+d_{i,j}u_{i,j-1}+e_{i,j}u_{i,j}=f_{i,j},\]
+where prefactors \(a,b,c,d,e\) and \(f\) are matrices (functions of position).</p>
+<p>SOR algorithm is an iterative method of solving linear equations. Iterative methods work by successively reducing the error in the solution. By error, we define the residual between the old and new solution. As we do not know the final solution, we cannot use the error in the dependent variable. The residual at point (\(i,j\)) is:
+\[\xi_{i,j}=a_{i,j}u_{i+1,j}+b_{i,j}u_{i-1,j}+c_{i,j}u_{i,j+1}+d_{i,j}u_{i,j-1}+e_{i,j}u_{i,j}-f_{i,j}.\]</p>
+<p>The iterations then continue until the average magnitude of the residual drops a certain value. You may also wish to ensure that the maximum residual is below a set value as well:
+\[\frac{\sum\sum |\xi_{i,j}|}{i_{max}j_{max}}&lt;\xi_{Critical}.\]</p>
+<div class="section" id="sor-algorithm">
+<h2>SOR algorithm<a class="headerlink" href="#sor-algorithm" title="Permalink to this headline">¶</a></h2>
+<p>From finite difference approximation:
+\[a_{i,j}u_{i+1,j}^{correct}+b_{i,j}u_{i-1,j}^{correct}+c_{i,j}u_{i,j+1}^{correct}+d_{i,j}u_{i,j-1}^{correct}+e_{i,j}u_{i,j}^{correct}-f_{i,j}=0.\]</p>
+<p>By definition, the residual is:</p>
+<p>\[a_{i,j}u_{i+1,j}^{guess}+b_{i,j}u_{i-1,j}^{guess}+c_{i,j}u_{i,j+1}^{guess}+d_{i,j}u_{i,j-1}^{guess}+e_{i,j}u_{i,j}^{guess}-f_{i,j}=\xi_{i,j}.\]</p>
+<p>If we subtract the residual equation from the finite difference approximation, we get:
+\[\xi_{i,j}= a_{i,j}(u_{i+1,j}^{guess}-u_{i+1,j}^{correct})+b_{i,j}(u_{i-1,j}^{guess}-u_{i-1,j}^{correct})+c_{i,j}(u_{i,j+1}^{guess}-u_{i,j+1}^{correct})+\\
++d_{i,j}(u_{i,j-1}^{guess}-u_{i,j-1}^{correct})+e_{i,j}(u_{i,j}^{guess}-u_{i,j}^{correct}).\]</p>
+<p>Assuming that error at the central point is more important than the other errors:
+\[u_{i,j}^{correct}\approx u_{i,j}^{guess}-\frac{\xi_{i,j}}{e_{i,j}}.\]</p>
+<p>This approximation can be used to update our estimates:
+\[u_{i,j}^{new}=u_{i,j}^{old}-\omega\frac{\xi_{i,j}}{e_{i,j}},\]
+where \(\omega\) is the relaxation factor.</p>
+<div class="admonition-the-relaxation-factor-omega admonition">
+<p class="admonition-title">The relaxation factor (\omega):</p>
+<ul class="simple">
+<li><p>solutions are generally stable for values between 0 and 2</p></li>
+<li><p>below 1 it is known us under-relaxation and convergence is always slower</p></li>
+<li><p>above 1 convergence can be quicker</p></li>
+<li><p>for some systems optimum value of \(\omega\) can be obtained theoretically, though generally the best value is found by trial and error</p></li>
+</ul>
+</div>
+<div class="section" id="checker-boarding">
+<h3>Checker-boarding<a class="headerlink" href="#checker-boarding" title="Permalink to this headline">¶</a></h3>
+<p>SOR is potentially unstable if new values are used in the updating as they become available. To ensure that this doesn’t happen, we have to use two arrays, one for new values and one for old values, which uses twice as much memory.</p>
+<p>Alternatively, we can do checker-boarding, where we imagine the solution grid like a chess board. We solve for black squares on one iteration and white squares on another iteration.</p>
+<div class="figure align-default">
+<a class="reference internal image-reference" href="../../_images/SOR_electrical_current_checker_boarding.PNG"><img alt="../../_images/SOR_electrical_current_checker_boarding.PNG" src="../../_images/SOR_electrical_current_checker_boarding.PNG" style="width: 500px;" /></a>
+</div>
+</div>
+</div>
+<div class="section" id="solving-potential-flow-with-sor-method">
+<h2>Solving potential flow with SOR method<a class="headerlink" href="#solving-potential-flow-with-sor-method" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="continuity">
+<h3>Continuity<a class="headerlink" href="#continuity" title="Permalink to this headline">¶</a></h3>
+<p>Many PDEs express conservation of quantities, e.g. mass, volume, heat, charge, etc. Conservation can be expressed using a continuity equation:
+\[\nabla\cdot\hat{F}+\frac{\partial \phi}{\partial t}=S,\]
+where \(\hat{F}\) is the flux of \(\phi\) and \(S\) is the rate of generation of \(\phi\).</p>
+<p>At steady state and no generation, the equation can be simplified to:
+\[\nabla\cdot\hat{F}=0.\]</p>
+</div>
+<div class="section" id="stream-functions">
+<h3>Stream functions<a class="headerlink" href="#stream-functions" title="Permalink to this headline">¶</a></h3>
+<p>Stream functions can be used to represent 2D steady state systems that exhibit continuity. A stream function is a scalar field where flow follows a constant value of the function (or in other words - a constant value of the stream function represents a streamline).</p>
+<p>The stream function \(\psi\) is related to flux:
+\[F_{x}=\frac{\partial \psi}{\partial y},\quad F_{y}=-\frac{\partial\psi}{\partial x}.\]</p>
+<p>If this is substituted into the steady state continuity equation, you can see that it is always satisfied:
+\[\nabla\cdot\hat{F}=\frac{\partial F_x}{\partial x}+\frac{\partial F_y}{\partial y}=\frac{\partial}{\partial x}\Big(\frac{\partial \psi}{\partial y}\Big)+\frac{\partial}{\partial y}\Big(-\frac{\partial \psi}{\partial x}\Big)=0.\]</p>
+</div>
+<div class="section" id="potential-flow">
+<h3>Potential flow<a class="headerlink" href="#potential-flow" title="Permalink to this headline">¶</a></h3>
+<p>Potential flow is when the flux of a quantity is proportional to the gradient of a driving potential:
+\[\hat{F}=-k\nabla P.\]
+Many systems exhibit potential flow, e.g. electrical conduction, heat conduction, diffusion, flow through porous media.</p>
+<p>If \(k\) is constant, then the system is irrotational:
+\[\nabla\times\hat{F}=0.\]</p>
+<p>If we combine that with continuity equation (i.e. stream functions are applicable), then
+\[\nabla\times\hat{F}=\nabla\times \begin{pmatrix}\frac{\partial\psi}{\partial y}\
+-\frac{\partial \psi}{\partial x}\end{pmatrix}=0.\]</p>
+<p>Recall that cross product of a 2D vector, will yield a vector in z-direction:
+\[\frac{\partial }{\partial y}\Big(\frac{\partial\psi}{\partial y}\Big)-\frac{\partial}{\partial x}\Big(-\frac{\partial \psi}{\partial x}\Big)=\nabla^2\psi = 0.\]</p>
+<p>Therefore, the Laplacian of the stream function is zero.</p>
+</div>
+<div class="section" id="boundary-conditions">
+<h3>Boundary conditions<a class="headerlink" href="#boundary-conditions" title="Permalink to this headline">¶</a></h3>
+<p>If boundaries are flux boundary conditions (i.e. \(F_x=\frac{\partial \psi}{\partial y}, F_y=-\frac{\partial \psi}{\partial x}\)), the stream function is a constant value along a boundary for a zero flux condition and changes linearly for a constant flux.</p>
+</div>
+<div class="section" id="electrical-current-potential-flow">
+<h3>Electrical current potential flow<a class="headerlink" href="#electrical-current-potential-flow" title="Permalink to this headline">¶</a></h3>
+<p>Electrical current is flowing through a square block. The top and left walls are insulated and current flows uniformly in through the bottom and out of the right wall. The block is 1 m by 1 m and total current is 100 A.</p>
+<div class="figure align-default">
+<a class="reference internal image-reference" href="../../_images/SOR_electrical_current_domain.PNG"><img alt="../../_images/SOR_electrical_current_domain.PNG" src="../../_images/SOR_electrical_current_domain.PNG" style="width: 500px;" /></a>
+</div>
+<p>What are the values of stream function along the boundaries?</p>
+<p>The non-insulating sides of the box have flux of 100 A/m. The following equations relate the flux to stream functions:
+\[f_x = \frac{\partial \psi}{\partial y},\quad f_y = -\frac{\partial \psi}{\partial x}.\]</p>
+<p>If we integrate flux along bottom boundary, where \(f_y =100\), we get:
+\[\psi_{lower}=\int -f_y dx=-100\int dx = -100x+A,\]
+where \(A\) is an integration constant. Similarly, at the right boundary  we have \(f_x =100\), so:
+\[\psi_{right}=\int f_x dy=100\int dy=100y+B,\]
+where \(B\) is an integration constant.</p>
+<p>For the left and upper boundary, fluxes are zero, therefore:
+\[\psi_{left}=0+C, \quad \psi_{upper}=0+D,\]
+where \(C\) and \(D\) are integration constants. Since stream function must be continuous as we move around the boundary, \(C=D\). For lower boundary to match left boundary at point \((0,0)\), we can see that \(A=C\). Finally, we get that \(B=C-100\) and all equations are then:
+\[\psi_{lower}=C-100x,\\
+\psi_{upper}=\psi_{left}=C,\\
+\psi_{right} = 100(y-1)+C.\]</p>
+<p>If we choose \(C=100\), then value of \(\psi\) along the boundary is positive everywhere:</p>
+<div class="figure align-default">
+<a class="reference internal image-reference" href="../../_images/SOR_electrical_current_psi.PNG"><img alt="../../_images/SOR_electrical_current_psi.PNG" src="../../_images/SOR_electrical_current_psi.PNG" style="width: 500px;" /></a>
+</div>
+<p>Now we will want to calculate the value for electrical current paths at all internal locations using the derived boundary conditions and Simultaneous Over Relaxation method on a grid 100 by 100. We will iteratively update the values using checker-boarding. We will stop the simulation when the average magnitude of the residual becomes sufficiently small.</p>
+<p>At first, let’s discretise the problem. The main equation to be solved will be:
+\[\nabla^2\psi = \frac{\partial^2\psi}{\partial x^2}+\frac{\partial^2\psi}{\partial y^2}=0.\]</p>
+<p>Finite difference approximations to the equation above is:
+\[\frac{\psi_{i+1,j}+\psi_{i-1,j}-2\psi_{i,j}}{\Delta x^2}+\frac{\psi_{i,j+1}+\psi_{i,j-1}-2\psi_{i,j}}{\Delta y^2}=0.\]</p>
+<p>In our problem, we have \(\Delta x = \Delta y\), so
+\[\frac{\psi_{i+1,j}+\psi_{i-1,j}+\psi_{i,j+1}+\psi_{i,j-1}-4\psi_{i,j}}{\Delta x^2}=0.\]</p>
+<p>If we recall the definition of the residual, we can infer that:
+\[a_{i,j}=b_{i,j}=c_{i,j}=d_{i,j}=\frac{1}{\Delta x^2}, \quad e_{i,j}=-\frac{4}{\Delta x^2}.\]</p>
+<p>The Laplacian is zero, meaning that \(f_{i,j}=0\) everywhere. For any function \(\psi_{i,j}\) we can calculate the residual at each point:
+\[\xi_{i,j}=\frac{1}{\Delta x^2}\Big(\psi_{i+1,j}+\psi_{i-1,j}+\psi_{i,j+1}+\psi_{i,j-1}-4\psi_{i,j}\Big)-0.\]</p>
+<p>The residual will tell us how far the Laplacian at that point is from the desired value, or how wrong our solution is. We can take an initial guess for \(\psi_{i,j}=0\) everywhere and use residual error to correct for the guessed value:
+\[\psi_{i,j}^{new}=\psi_{i,j}^{old}-\frac{\xi_{i,j}}{e_{i,j}}.\]</p>
+<p>We will use checker-boarding to avoid storing twice the amount of data.</p>
+<p>To continue iterating, we will examine total error from all points in the domain:
+\[E=\sum_{i,j}|\xi_{i,j}|.\]
+We will check whether this value is lower than a threshold, for example we will set it at \( 10^{-6}\).</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;font.size&#39;</span><span class="p">:</span> <span class="mi">12</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Set up the problem:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="mi">101</span>                <span class="c1"># Number of grid points</span>
+<span class="n">psi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n</span><span class="p">,</span><span class="n">n</span><span class="p">))</span>  <span class="c1"># Array to store stream function</span>
+<span class="n">C</span> <span class="o">=</span> <span class="mi">100</span>                <span class="c1"># Set constant C</span>
+<span class="n">l</span> <span class="o">=</span> <span class="mi">1</span>                  <span class="c1"># Set length of the box</span>
+<span class="n">dx</span> <span class="o">=</span> <span class="n">l</span><span class="o">/</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>           <span class="c1"># Find increment</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">n</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;dx = </span><span class="si">%.2f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">dx</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>dx = 0.01
+</pre></div>
+</div>
+</div>
+</div>
+<p>Set boundary conditions:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">psi</span><span class="p">)):</span>
+    <span class="n">psi</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">C</span>               <span class="c1"># Left boundary</span>
+    <span class="n">psi</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="n">C</span> <span class="c1"># Right boundary</span>
+    <span class="n">psi</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">C</span><span class="o">-</span><span class="mi">100</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>      <span class="c1"># Lower boudary</span>
+    <span class="n">psi</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">C</span>             <span class="c1"># Upeer boundary</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Plot boundary conditions:</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Mask points with psi = 0</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">psi</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">,</span> <span class="n">psi</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">),</span> <span class="n">origin</span><span class="o">=</span><span class="s2">&quot;lower&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/6_Solving_PDEs_SOR_11_0.png" src="../../_images/6_Solving_PDEs_SOR_11_0.png" />
+</div>
+</div>
+<p>Set up and run SOR algorithm:</p>
+<div class="margin sidebar">
+<p class="sidebar-title">Pseudocode for SOR algorithm</p>
+<p>You can find a pseudocode version of the algorithm <a class="reference external" href="https://en.wikipedia.org/wiki/Successive_over-relaxation#Algorithm">here</a>. You may wish to rewrite the code in a way that suits you the most!!</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mf">1.</span>
+<span class="n">b</span> <span class="o">=</span> <span class="mf">1.</span>
+<span class="n">c</span> <span class="o">=</span> <span class="mf">1.</span>
+<span class="n">d</span> <span class="o">=</span> <span class="mf">1.</span>
+<span class="n">e</span> <span class="o">=</span> <span class="o">-</span><span class="mf">4.</span>
+<span class="n">f</span> <span class="o">=</span> <span class="mf">0.</span>
+<span class="n">w</span> <span class="o">=</span> <span class="mf">1.7</span>
+
+<span class="n">resid_crit</span> <span class="o">=</span> <span class="mf">1.0e-6</span>
+
+<span class="c1"># Arbitrary value at the begining, higher than resid_crit</span>
+<span class="n">resid_ave</span> <span class="o">=</span> <span class="mf">100.</span>
+
+<span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="k">while</span> <span class="n">resid_ave</span> <span class="o">&gt;</span> <span class="n">resid_crit</span><span class="p">:</span>
+    
+    <span class="c1"># Set at 0 so we can sum it up later</span>
+    <span class="n">resid_ave</span> <span class="o">=</span> <span class="mf">0.</span> 
+
+    <span class="c1"># Set count for points in checker-boarding</span>
+    <span class="n">cnt_points</span> <span class="o">=</span> <span class="mi">0</span>
+    
+    <span class="c1"># Loop over internal points only</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            
+            <span class="c1"># Checker-boarding</span>
+            <span class="k">if</span> <span class="p">((</span><span class="n">i</span><span class="o">+</span><span class="n">j</span><span class="p">)</span><span class="o">%</span><span class="mi">2</span><span class="p">)</span><span class="o">==</span><span class="n">count</span><span class="o">%</span><span class="mi">2</span><span class="p">:</span>
+                
+                <span class="c1"># Residual</span>
+                <span class="n">residual</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">psi</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">b</span> <span class="o">*</span> <span class="n">psi</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">c</span> <span class="o">*</span> <span class="n">psi</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span> <span class="n">d</span> <span class="o">*</span> <span class="n">psi</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">e</span> <span class="o">*</span> <span class="n">psi</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">-</span> <span class="n">f</span>
+                
+                <span class="c1"># Update psi value</span>
+                <span class="n">psi</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">+=</span> <span class="o">-</span><span class="n">w</span><span class="o">*</span><span class="n">residual</span><span class="o">/</span><span class="n">e</span>
+                
+                <span class="c1"># Update resid_ave as a sum of residuals</span>
+                <span class="n">resid_ave</span> <span class="o">+=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">residual</span><span class="p">)</span> 
+                
+                <span class="n">cnt_points</span> <span class="o">+=</span> <span class="mi">1</span>
+    
+    <span class="c1">#  Get average residual</span>
+    <span class="n">resid_ave</span> <span class="o">=</span> <span class="n">resid_ave</span><span class="o">/</span><span class="n">cnt_points</span>
+    
+    <span class="c1"># Print every 1000-dth residual</span>
+    <span class="k">if</span> <span class="n">count</span><span class="o">%</span><span class="mi">1000</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Residual: </span><span class="si">%.7f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">resid_ave</span><span class="p">)</span>
+    
+    <span class="c1"># Count iterations</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="n">count</span> <span class="o">+</span> <span class="mi">1</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;SOR conducted a total of </span><span class="si">%g</span><span class="s2"> iterations to obtain approximate solution.&quot;</span> <span class="o">%</span> <span class="n">count</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Final residual: </span><span class="si">%.7f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">resid_ave</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Residual: 3.0605999
+Residual: 0.0400534
+Residual: 0.0023906
+Residual: 0.0001427
+Residual: 0.0000085
+
+
+SOR conducted a total of 4761 iterations to obtain approximate solution.
+Final residual: 0.0000010
+</pre></div>
+</div>
+</div>
+</div>
+<p>The SOR algorithm solved for stream function \(\psi\) until convergence. We can plot the obtained stream function:</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">psi</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s2">&quot;lower&quot;</span><span class="p">,</span> <span class="n">extent</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span>
+          <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;jet_r&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;$\psi(x,y)$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Stream function solution</span><span class="se">\n</span><span class="s2">obtained with SOR&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s2">&quot;equal&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/6_Solving_PDEs_SOR_15_0.png" src="../../_images/6_Solving_PDEs_SOR_15_0.png" />
+</div>
+</div>
+<p>Now that we have \(\psi\) in the whole domain, we can calculate flux vectors. In this case, flux vectors will represent current.</p>
+<p>We can calculate fluxes inside the domain by central differences:
+\[f_{x, i,j}=\frac{\psi_{i,j+1}-\psi_{i,j-1}}{2\Delta x},\\
+f_{y, i,j}=-\frac{\psi_{i+1,j}-\psi_{i-1,j}}{2\Delta x},\]</p>
+<p>remembering that \(\Delta x=\Delta y\).</p>
+<p>At the lower boundary we can use central difference to calculate \(x\) component of the flux as it requires to use points in \(y\) direction. For the \(y\) component of the flux, we will need to use forward difference:
+\[f_{y, i,0}=-\frac{\psi_{i,1}-\psi_{i,0}}{\Delta x}.\]</p>
+<p>Similiarly, at the upper boundary we must use backwards difference:
+\[f_{y, i,n}=-\frac{\psi_{i,n}-\psi_{i,n-1}}{\Delta x}.\]</p>
+<p>At the left and right boundaries, the \(x\) component will be:
+\[f_{y, 0,j}=\frac{\psi_{1,j}-\psi_{0,j}}{\Delta x},\\
+f_{y, n,j}=\frac{\psi_{n,j}-\psi_{n-1,j}}{\Delta x}.\]</p>
+<p>We can implement these formulae to calculate fluxes:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n</span><span class="p">,</span><span class="n">n</span><span class="p">))</span>
+<span class="n">fy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n</span><span class="p">,</span><span class="n">n</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        
+        <span class="k">if</span> <span class="p">(</span><span class="n">i</span><span class="o">&gt;=</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">fy</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="n">psi</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">-</span><span class="n">psi</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">j</span><span class="p">])</span><span class="o">/</span><span class="p">(</span><span class="mf">2.0</span><span class="o">*</span><span class="n">dx</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">i</span><span class="o">&gt;=</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">fy</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="n">psi</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">-</span><span class="n">psi</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">j</span><span class="p">])</span><span class="o">/</span><span class="n">dx</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">fy</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="n">psi</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">-</span><span class="n">psi</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">])</span><span class="o">/</span><span class="n">dx</span>
+            
+        <span class="k">if</span> <span class="p">(</span><span class="n">j</span><span class="o">&gt;=</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">j</span><span class="o">&lt;</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">fx</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">psi</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">psi</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">/</span><span class="p">(</span><span class="mf">2.0</span><span class="o">*</span><span class="n">dx</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">j</span><span class="o">&gt;=</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">fx</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">psi</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">-</span><span class="n">psi</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">/</span><span class="n">dx</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">fx</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">psi</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">psi</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">])</span><span class="o">/</span><span class="n">dx</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>If we overlay vector plot of fluxes on top of the stream function, we can observe that highest stream function value is in the upper left part of the domain, where the largest fluxes occur:</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">n</span><span class="p">)</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">psi</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s2">&quot;lower&quot;</span><span class="p">,</span> <span class="n">extent</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span>
+          <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;jet_r&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;$\psi(x,y)$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="n">X</span><span class="p">[::</span><span class="mi">5</span><span class="p">,::</span><span class="mi">5</span><span class="p">],</span> <span class="n">Y</span><span class="p">[::</span><span class="mi">5</span><span class="p">,::</span><span class="mi">5</span><span class="p">],</span>
+           <span class="n">np</span><span class="o">.</span><span class="n">rot90</span><span class="p">(</span><span class="o">-</span><span class="n">fx</span><span class="p">[::</span><span class="mi">5</span><span class="p">,::</span><span class="mi">5</span><span class="p">],</span><span class="mi">2</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">rot90</span><span class="p">(</span><span class="o">-</span><span class="n">fy</span><span class="p">[::</span><span class="mi">5</span><span class="p">,::</span><span class="mi">5</span><span class="p">],</span><span class="mi">2</span><span class="p">),</span>
+           <span class="n">scale</span><span class="o">=</span><span class="mi">3000</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.003</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Stream function and</span><span class="se">\n</span><span class="s2">current vectors&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s2">&quot;equal&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/6_Solving_PDEs_SOR_19_0.png" src="../../_images/6_Solving_PDEs_SOR_19_0.png" />
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "primer-computational-mathematics/book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./c_mathematics/numerical_methods"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="5_Runge_Kutta_method.html" title="previous page">Runge-Kutta method</a>
+    <a class='right-next' id="next-link" href="7_Forward_time_centred_space.html" title="next page">Forward Time Centred Space scheme</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Imperial College London<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../../_static/js/index.js"></script>
+    
+  </body>
+</html>

@@ -1,0 +1,1243 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Lecture 3: Numerical Integration &#8212; ESE Jupyter Material</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../../../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/sphinx-book-theme.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/language_data.js"></script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/mystnb.js"></script>
+    <script src="../../../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".cell"
+        const thebe_selector_input = ".cell_input div.highlight"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../../index.html">
+  
+  <img src="../../../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">ESE Jupyter Material</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  
+  <ul class="nav sidenav_l1">
+  <li class="">
+    <a href="../../../intro.html">Landing page</a>
+  </li>
+  <li class="">
+    <a href="../../../a_modules/intro.html">Modules</a>
+  </li>
+  <li class="">
+    <a href="../../../b_coding/intro.html">Coding</a>
+  </li>
+  <li class="">
+    <a href="../../intro.html">Mathematics</a>
+  </li>
+  <li class="">
+    <a href="../../../d_geosciences/intro.html">Geosciences</a>
+  </li>
+  <li class="">
+    <a href="../../../e_extra/intro.html">Further resources</a>
+  </li>
+  <li class="">
+    <a href="../../../genindex.html">Index</a>
+  </li>
+</ul>
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../../_sources/c_mathematics/numerical_methods/NM1_2020/NM1_2020_lecture3.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        
+        <a class="issues-button"
+            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2Fc_mathematics/numerical_methods/NM1_2020/NM1_2020_lecture3.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/c_mathematics/numerical_methods/NM1_2020/NM1_2020_lecture3.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#contents" class="nav-link">Contents</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#i-introduction-to-numerical-integration" class="nav-link">I         .    Introduction to Numerical Integration</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#ii-rule-1-midpoint-rule-a-k-a-rectangle-method" class="nav-link">II        .    Rule 1: Midpoint Rule a.k.a Rectangle Method</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#iii-good-bad-numerical-integration-methods" class="nav-link">III       .    Good/Bad Numerical Integration Methods</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#iv-rule-2-trapezoid-rule" class="nav-link">IV       .    Rule 2: Trapezoid Rule</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#v-error-analysis" class="nav-link">V        .    Error Analysis</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#vi-rule-3-simpson-s-rule" class="nav-link">VI       .    Rule 3: Simpson’s Rule</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#vii-rule-4-composite-simpson-s-rule" class="nav-link">VII      .    Rule 4: Composite Simpson’s Rule</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#viii-rule-5-weddle-s-rule" class="nav-link">VIII     .    Rule 5: Weddle’s Rule</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#aside-richardson-extrapolation-romberg-integration-and-newton-cotes-formula" class="nav-link">Aside:    (Richardson) extrapolation, Romberg integration and Newton-Cotes formula</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#id1" class="nav-link">I.   Introduction to Numerical Integration</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#integration-example" class="nav-link">Integration example</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#id2" class="nav-link">II.    Rule 1: Midpoint rule a.k.a Rectangle Method</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#implementing-a-midpoint-rule-function" class="nav-link">Implementing a midpoint rule function</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#span-style-color-blue-exercise-3-1-midpoint-rule-convergence-plot-span" class="nav-link"><span style="color:blue">Exercise 3.1: Midpoint rule convergence plot</span></a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#id3" class="nav-link">III. Good/Bad Numerical Integration Methods</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#id4" class="nav-link">IV.     Rule 2: Trapezoid rule</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#span-style-color-blue-exercise-3-2-complete-the-implementation-of-the-trapezoid-rule-below-span" class="nav-link"><span style="color:blue">Exercise 3.2: Complete the implementation of the trapezoid rule below</span></a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#id5" class="nav-link">V.   Error Analysis</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#example-concave-down-sine-wave" class="nav-link">Example: Concave Down Sine Wave</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#id6" class="nav-link">VI.     Rule 3: Simpson’s rule</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#span-style-color-blue-exercise-3-3-implementing-simpson-s-rule-span" class="nav-link"><span style="color:blue">Exercise 3.3: Implementing Simpson’s rule</span></a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#observations" class="nav-link">Observations</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#id7" class="nav-link">VII.     Rule 4: Composite Simpson’s Rule</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#id8" class="nav-link">VIII.      Rule 5: Weddle’s rule</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#span-style-color-blue-exercise-3-4-implementing-weddle-s-rule-span" class="nav-link"><span style="color:blue">Exercise 3.4: Implementing Weddle’s rule</span></a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#id9" class="nav-link">Aside: (Richardson) extrapolation, Romberg integration and Newton-Cotes formula</a>
+        </li>
+    
+    </ul>
+</nav>
+
+
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="lecture-3-numerical-integration">
+<h1>Lecture 3: Numerical Integration<a class="headerlink" href="#lecture-3-numerical-integration" title="Permalink to this headline">¶</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># some imports we will make at the start of every notebook</span>
+<span class="c1"># later notebooks may add to this with specific SciPy modules</span>
+
+<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="contents">
+<h2>Contents<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="i-introduction-to-numerical-integration">
+<h2>I         .    Introduction to Numerical Integration<a class="headerlink" href="#i-introduction-to-numerical-integration" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="ii-rule-1-midpoint-rule-a-k-a-rectangle-method">
+<h2>II        .    Rule 1: Midpoint Rule a.k.a Rectangle Method<a class="headerlink" href="#ii-rule-1-midpoint-rule-a-k-a-rectangle-method" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="iii-good-bad-numerical-integration-methods">
+<h2>III       .    Good/Bad Numerical Integration Methods<a class="headerlink" href="#iii-good-bad-numerical-integration-methods" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="iv-rule-2-trapezoid-rule">
+<h2>IV       .    Rule 2: Trapezoid Rule<a class="headerlink" href="#iv-rule-2-trapezoid-rule" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="v-error-analysis">
+<h2>V        .    Error Analysis<a class="headerlink" href="#v-error-analysis" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="vi-rule-3-simpson-s-rule">
+<h2>VI       .    Rule 3: Simpson’s Rule<a class="headerlink" href="#vi-rule-3-simpson-s-rule" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="vii-rule-4-composite-simpson-s-rule">
+<h2>VII      .    Rule 4: Composite Simpson’s Rule<a class="headerlink" href="#vii-rule-4-composite-simpson-s-rule" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="viii-rule-5-weddle-s-rule">
+<h2>VIII     .    Rule 5: Weddle’s Rule<a class="headerlink" href="#viii-rule-5-weddle-s-rule" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="aside-richardson-extrapolation-romberg-integration-and-newton-cotes-formula">
+<h2>Aside:    (Richardson) extrapolation, Romberg integration and Newton-Cotes formula<a class="headerlink" href="#aside-richardson-extrapolation-romberg-integration-and-newton-cotes-formula" title="Permalink to this headline">¶</a></h2>
+<p><span style="color:red"> I might end up using interval when I actually intend to say subinterval, sorry …. </span></p>
+</div>
+<div class="section" id="id1">
+<h2>I.   Introduction to Numerical Integration<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>Numerical Integration is involves finding the integration of a function. While Sympy can be used to do analytical integration, there are actually many functions for which finding an analytical solution to integration is very difficult, and numerical integration is used instead.</p>
+<p>To understand how to perform numerical integration, we first need to understand what exactly is the purpose of integration. For a 1D function, integration means finding the area underneath the curve. However, integration can also be extended for a 2D function and even a 3D function, and some of these will be covered in your Mathematics modules.</p>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Numerical_integration"><em>Quadrature</em></a> is the term used for numerical evaluation of a <em>definite</em> (i.e. over a range <span class="math notranslate nohighlight">\([a,b]\)</span>) integral, or in 1D finding the area under a curve.</p>
+<img src="https://upload.wikimedia.org/wikipedia/commons/f/f2/Integral_as_region_under_curve.svg" style="width: 400px">
+<p><em>(Wikipedia: https://upload.wikimedia.org/wikipedia/commons/f/f2/Integral_as_region_under_curve.svg)</em></p>
+<p>Wondered why the symbol of integration looks like that? The symbol of integration actually comes from the cursive of capital letter <span class="math notranslate nohighlight">\(S\)</span>, meaning summation. But why would it come from the idea of summation? Well, integration is very much related to summation.</p>
+<p>We know that for a 1D function, which will be our primary topic of discussion today, if we evaluate an integral, we find the area under the function, as illustrated in the figure above. If your curve was a straight line (remember, straight lines are but a subset of curves which has no curves), then it would be rather straightforward to calculate the area under the curve, since you would either have a rectangle if your line was a horizontal straight line, or a trapezoid if your line was not a horizontal straight line. Yet, what happens if your line got a bunch of bend and curves?</p>
+<p>For example, we could have an a very simple equation like</p>
+<div class="math notranslate nohighlight">
+\[f(x) = sin(x) +5\]</div>
+<p>You probably don’t need matplotlib to tell you that this equation is a sinusoidal function. Well, now your shape becomes complicated, and you cannot evaluate the area as easily as you would have done when the line was straight and the area was a rectangle or trapezoid. Therefore, integration comes in to help you find the area. But how does integration actually magically get you the area underneath the curve?</p>
+<p>Welll, what integration essentially does is basically breaking the area into smaller and smaller parts, evaluating the area of each part, and then summing each small part together. The small part of the area can be approximated to be a rectangle, a trapezoid, or some other weird shape if you find it suitable.</p>
+<p>A very simple example, using rectangles are shown below.</p>
+<img src="https://upload.wikimedia.org/wikipedia/commons/2/28/Riemann_integral_regular.gif" style="width: 400px">
+<p>I make the observation from the gif that as each rectangle slice becomes thinner and thinner slices, the summed area from the rectangles become more and more closely fitting to the area under the curve. It should be understable that if the rectangle slice becomes infinitely thin, then the summed area from the rectangle would become so close to the area underneath the curve that the two would be essentially the same.</p>
+<p>It should also be noted that although the example shown uses rectangular slices, it is noted neccesary to use rectangular slices. It is not even neccesasry to use slices that are of the the same width. Even if you used slices with different width, and which are not rectangles, like trapezoids for example, you could still make the slices increasingly thinner so that the summation of the area under the slices becomes closer and closer to the area underneath the curve, until the slices becomes infinitely thin, and the summed area of slices becomes essentially equal to the area under the curve.</p>
+<p>For those of you who adore mathematics, you can find the rigorous mathematics for the above searching Riemann integral on wikipedia. Of course, integration has come a long way since the Riemann integral, and other integrals were developed to deal with the deficiencies with the Riemann integral, but well these are not for now, and for now, let’s stick with the Riemann Integral and well, deficiencies, what are those?</p>
+<p>As with previous lectures, the choice of approximation method, as well as the size of the intervals (basically how thick of thin the slices are, but sounding more professional and cool), will control the error.  Better methods as well as smaller (i.e. more to cover our total interval of interest: <span class="math notranslate nohighlight">\([a,b]\)</span>) sub-intervals will lead to lower errors, but will generally cost more to compute.</p>
+<p>Here the following quadrature methods will be covered in the context of a simple function:</p>
+<ul class="simple">
+<li><p>Midpoint rule (also known as the Rectangle Method)</p></li>
+<li><p>Trapezoid rule</p></li>
+<li><p>Simpson’s rule</p></li>
+<li><p>Composite Simpson’s rule</p></li>
+<li><p>Weddle’s rule.</p></li>
+</ul>
+</div>
+<div class="section" id="integration-example">
+<h2>Integration example<a class="headerlink" href="#integration-example" title="Permalink to this headline">¶</a></h2>
+<p>Let’s begin with a simple function to demonstrate some of the most basic methods for performing numerical integration:</p>
+<div class="math notranslate nohighlight">
+\[f\left ( x \right ) := \sin \left ( x \right ),\]</div>
+<p>and assume that we want to know what the area under the <span class="math notranslate nohighlight">\(\,\sin\,\)</span> function between 0 and <span class="math notranslate nohighlight">\(\pi\)</span>, i.e. <span class="math notranslate nohighlight">\([a,b]=[0,\pi]\)</span>.</p>
+<p>The indefinite integral (or anti-derivative) of <span class="math notranslate nohighlight">\(\,\sin \left ( x \right )\,\)</span> is of course <span class="math notranslate nohighlight">\(\,-\cos \left ( x \right )\,\)</span> (plus a constant of integration, <span class="math notranslate nohighlight">\(C\)</span>, which we can simply ignore as we saw above as it drops out as soon as we perform a <em>definite</em> integral).</p>
+<p>Since we know the indefinite integral exactly in this case, we can perform the definite integration (i.e. find the area under the curve) ourselves exactly by hand:</p>
+<div class="math notranslate nohighlight">
+\[I :=  \int_{0}^{\pi} \sin \left ( x \right ) = \left [ -\cos\left ( x \right )+ C \right ]_{0}^{\pi} =-\cos\left ( \pi \right ) - (-\cos\left ( 0 \right )) =-\cos\left ( \pi \right ) + \cos\left ( 0 \right ) = -(-1) + 1 = 2.
+\]</div>
+<p>[We included the constant <span class="math notranslate nohighlight">\(C\)</span> here to just to emphasise again the fact that it’s present doesn’t matter - we can legitimately just not write it down in this type of expression.]</p>
+<p>Let’s start by plotting the function between these points.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># set up figure</span>
+<span class="c1">##First we create a figure</span>
+<span class="c1">##Then we make our plot a subplot of the figure</span>
+<span class="c1">##Subplots come in handy when you are making multiple plots on a single figure</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+
+<span class="c1"># Get the value of pi from numpy and generate 100 equally spaced values from 0 to pi.</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="c1"># Calculate sin at these points.</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="c1"># plot</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">)</span>
+
+<span class="c1"># Set x axis limits between 0 and pi.</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">])</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">])</span>
+
+<span class="c1"># Label axis.</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;$x$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;$f(x)=\sin(x)$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;An example function we wish to integrate&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+
+<span class="c1"># Overlay a grid.</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/NM1_2020_lecture3_10_0.png" src="../../../_images/NM1_2020_lecture3_10_0.png" />
+</div>
+</div>
+<p>Now let’s investigate the different quadrature rules, finding the area under the curve and seeing how it differs from the true area which we know is 2.</p>
+</div>
+<div class="section" id="id2">
+<h2>II.    Rule 1: Midpoint rule a.k.a Rectangle Method<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>The <em>midpoint rule</em> is perhaps the simplest quadrature rule.</p>
+<p>For reasons you will see below it is sometimes also called the <em>rectangle method</em>.</p>
+<p>Consider one of the subintervals <span class="math notranslate nohighlight">\(\,[x_i, x_{i+1}].\)</span></p>
+<p>The midpoint rule approximates the integral over this (the <span class="math notranslate nohighlight">\(i\)</span>-th) subinterval by the area of a rectangle, with a base of length <span class="math notranslate nohighlight">\(\,(x_{i+1}-x_i)\,\)</span> and a height given by the value of <span class="math notranslate nohighlight">\(\,f(x)\,\)</span> at the midpoint of that interval (i.e. at <span class="math notranslate nohighlight">\(\,x=(x_{i+1}+x_i)/2\)</span>):</p>
+<div class="math notranslate nohighlight">
+\[ I_M^{(i)} := (x_{i+1}-x_i) \;\; \times \;\; f \left ( \frac {x_{i+1}+x_i} {2} \right ), \;\;\;\;\;\;\text{for}
+\;\;\;\;\;\; 0\le i \le n-1.\]</div>
+<p>The midpoint estimate of <span class="math notranslate nohighlight">\(I\)</span> then simply involves summing up over all the subintervals:</p>
+<div class="math notranslate nohighlight">
+\[I_M := \sum_{i=0}^{n-1} \, f \left ( \frac {x_{i+1}+x_i} {2} \right )\, (x_{i+1}-x_i).\]</div>
+<p>Ok, so basically, what the midpoint rule does is rather simple.</p>
+<ol class="simple">
+<li><p>So you have a curve, and you have an interval of the curve for which you want to calculate the area underneath that interval. You will divide that interval of the curve into smaller pieces, and each small piece will be called a subinterval.</p></li>
+<li><p>We assume that your interval begins at <span class="math notranslate nohighlight">\(x_0\)</span> and ends at <span class="math notranslate nohighlight">\(x_n\)</span>. We can pick a random subinterval <span class="math notranslate nohighlight">\([x_i,x_{i+1}]\)</span> where <span class="math notranslate nohighlight">\(0\le i \le n-1\)</span>. For example, your 1st interval will be <span class="math notranslate nohighlight">\([x_0,x_1]\)</span> and your <span class="math notranslate nohighlight">\(i=0\)</span>, and your last interval will be <span class="math notranslate nohighlight">\([x_{n-1},x_n]\)</span> and your <span class="math notranslate nohighlight">\(i=n-1\)</span>.</p></li>
+<li><p>For every subinterval, we approxiamte the slice to be a rectangle. To find the area of the rectangle we need to find the width and the height. The width of the rectangle is simply the width of the subinterval. The height of the rectangle can be estimated as the value of the function at the midpoint of the subinterval, so <span class="math notranslate nohighlight">\(f \left ( \frac {x_{i+1}+x_i} {2} \right )\)</span>.  To find the area we simply multiply the width of the rectangle by the height of the rectangle.</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[Width \;\; of \;\; Rectangle = x_{i+1} - x_i\]</div>
+<div class="math notranslate nohighlight">
+\[Height \;\; of \;\; Rectangle = f \left ( \frac {x_{i+1}+x_i} {2} \right ) \]</div>
+<div class="math notranslate nohighlight">
+\[Area \;\; of \;\; Rectangle = (x_{i+1} - x_i) f \left ( \frac {x_{i+1}+x_i} {2} \right )\]</div>
+<p>Generalizing the above for all slices, where <span class="math notranslate nohighlight">\(I_M^{(i)}\)</span> is simpley the area of the subinterval <span class="math notranslate nohighlight">\([x_i,x_{i+1}]\)</span>. <span class="math notranslate nohighlight">\(M\)</span> subscript here denotes the use of the Midpoint Method</p>
+<div class="math notranslate nohighlight">
+\[ I_M^{(i)} := (x_{i+1}-x_i) \;\; \times \;\; f \left ( \frac {x_{i+1}+x_i} {2} \right ), \;\;\;\;\;\;\text{for}
+\;\;\;\;\;\; 0\le i \le n-1.\]</div>
+<ol class="simple">
+<li><p>To find the area under the curve, we need to sum up all of the areas from the subinterval, so we are going to use the summation symbol. We knoe that the subinterval index goes from the first subinterval where <span class="math notranslate nohighlight">\(i=0\)</span> to the last subinterval where <span class="math notranslate nohighlight">\(i=n-1\)</span>, thus we arrive at</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[I_M := \sum_{i=0}^{n-1} \, f \left ( \frac {x_{i+1}+x_i} {2} \right )\, (x_{i+1}-x_i).\]</div>
+<p>Note that we dropped <span class="math notranslate nohighlight">\(i\)</span> prefix from <span class="math notranslate nohighlight">\(I\)</span> because now it is the whole area under the curve, not just the area from one subinterval.</p>
+<p>Let’s write some code to plot the idea as well as compute an estimate of the integral using the midpoint rule.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># this is a matplotlib function that allows us to easily plot rectangles</span>
+<span class="c1"># which will be useful for visualising what the midpoint rule does</span>
+<span class="kn">from</span> <span class="nn">matplotlib.patches</span> <span class="kn">import</span> <span class="n">Rectangle</span>
+
+
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The function we wish to integrate&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+
+<span class="c1"># Get the value of pi from numpy and generate equally spaced values from 0 to pi.</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="c1"># plot</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">margins</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+
+<span class="c1"># Label axis.</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;$x$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;$f(x)=\sin(x)$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Approximating a function with rectangles&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+
+<span class="c1"># Overlay a grid.</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">number_intervals</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">xi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">number_intervals</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">I_M</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">number_intervals</span><span class="p">):</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">Rectangle</span><span class="p">((</span><span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mf">0.0</span><span class="p">),</span> <span class="p">(</span><span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span>
+                            <span class="n">f</span><span class="p">((</span><span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span> <span class="n">fill</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+    <span class="n">I_M</span> <span class="o">+=</span> <span class="n">f</span><span class="p">((</span><span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+
+<span class="c1"># use an explicit show here to force the figure to appear before the following print.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The sum of the areas of the rectangles is (I_M): </span><span class="si">{:.12f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">I_M</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/NM1_2020_lecture3_13_0.png" src="../../../_images/NM1_2020_lecture3_13_0.png" />
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>The sum of the areas of the rectangles is (I_M): 2.033281476926
+</pre></div>
+</div>
+</div>
+</div>
+<p>A complex example looks like this, where the red line shows the original function we wish to compute the integral of, and the blue rectangles <em>approximate</em> the area under that function for a number of sub-intervals:</p>
+<img src="http://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Integration_rectangle.svg/340px-Integration_rectangle.svg.png" width="600"></div>
+<div class="section" id="implementing-a-midpoint-rule-function">
+<h2>Implementing a midpoint rule function<a class="headerlink" href="#implementing-a-midpoint-rule-function" title="Permalink to this headline">¶</a></h2>
+<p>Clearly the sum of the areas of all the rectangles provides an estimate of the true integral. In the case above we observe an error of around 1.5%.</p>
+<p>[Note that the SciPy module features many different integration functions, and you can find thorough documentation for these functions (including methods not covered in this course) <a class="reference external" href="http://docs.scipy.org/doc/scipy/reference/integrate.html">here</a>. This library does not contain a function for the midpoint rule, but it is trivial to create our own.]</p>
+<p>As we are going to compare different rules below, let’s implement a midpoint rule function.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">midpoint_rule</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">function</span><span class="p">,</span> <span class="n">number_intervals</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Our implementation of the midpoint quadrature rule.</span>
+<span class="sd">    </span>
+<span class="sd">    a and b are the end points for our interval of interest.</span>
+<span class="sd">    </span>
+<span class="sd">    &#39;function&#39; is the function of x \in [a,b] which we can evaluate as needed.</span>
+<span class="sd">    </span>
+<span class="sd">    number_intervals is the number of subintervals/bins we split [a,b] into.</span>
+<span class="sd">    </span>
+<span class="sd">    Returns the integral of function(x) over [a,b].</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">interval_size</span> <span class="o">=</span> <span class="p">(</span><span class="n">b</span> <span class="o">-</span> <span class="n">a</span><span class="p">)</span><span class="o">/</span><span class="n">number_intervals</span>
+
+    <span class="c1"># Some examples of some asserts which might be useful here - </span>
+    <span class="c1"># you should get into the habit of using these sorts of checks as much as is possible/sensible.</span>
+    <span class="k">assert</span> <span class="n">interval_size</span> <span class="o">&gt;</span> <span class="mi">0</span>
+    <span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">number_intervals</span><span class="p">)</span> <span class="o">==</span> <span class="nb">int</span>
+    
+    <span class="c1"># Initialise to zero the variable that will contain the cumulative sum of all the areas</span>
+    <span class="n">I_M</span> <span class="o">=</span> <span class="mf">0.0</span>
+    
+    <span class="c1"># Find the first midpoint -- i.e. the centre point of the base of the first rectangle</span>
+    <span class="n">mid</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="p">(</span><span class="n">interval_size</span><span class="o">/</span><span class="mf">2.0</span><span class="p">)</span>
+    <span class="c1"># and loop until we get past b, creating and summing the area of each rectangle</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">mid</span> <span class="o">&lt;</span> <span class="n">b</span><span class="p">):</span>
+        <span class="c1"># Find the area of the current rectangle and add it to the running total</span>
+        <span class="c1"># this involves an evaluation of the function at the subinterval midpoint</span>
+        <span class="n">I_M</span> <span class="o">+=</span> <span class="n">interval_size</span> <span class="o">*</span> <span class="n">function</span><span class="p">(</span><span class="n">mid</span><span class="p">)</span>
+        <span class="c1"># Move the midpoint up to the next centre of the interval</span>
+        <span class="n">mid</span> <span class="o">+=</span> <span class="n">interval_size</span>
+
+    <span class="c1"># Return our running total result</span>
+    <span class="k">return</span> <span class="n">I_M</span>
+
+<span class="c1"># check the function runs and agrees with our first version used to generate the schematic plot of the method above:</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;midpoint_rule(0, np.pi, np.sin, number_intervals=5) = &#39;</span><span class="p">,</span> <span class="n">midpoint_rule</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">,</span> <span class="n">number_intervals</span><span class="o">=</span><span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>midpoint_rule(0, np.pi, np.sin, number_intervals=5) =  2.033281476926104
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Now let&#39;s test the midpoint function. </span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The exact area found by direct integration = 2&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1000</span><span class="p">):</span>
+    <span class="n">area</span> <span class="o">=</span> <span class="n">midpoint_rule</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Area </span><span class="si">%d</span><span class="s2"> rectangle(s) = </span><span class="si">%g</span><span class="s2"> (error=</span><span class="si">%g</span><span class="s2">)&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">area</span><span class="p">,</span> <span class="nb">abs</span><span class="p">(</span><span class="n">area</span><span class="o">-</span><span class="mi">2</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>The exact area found by direct integration = 2
+Area 1 rectangle(s) = 3.14159 (error=1.14159)
+Area 2 rectangle(s) = 2.22144 (error=0.221441)
+Area 10 rectangle(s) = 2.00825 (error=0.00824841)
+Area 100 rectangle(s) = 2.00008 (error=8.22491e-05)
+Area 1000 rectangle(s) = 2 (error=8.22467e-07)
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="span-style-color-blue-exercise-3-1-midpoint-rule-convergence-plot-span">
+<h2><span style="color:blue">Exercise 3.1: Midpoint rule convergence plot</span><a class="headerlink" href="#span-style-color-blue-exercise-3-1-midpoint-rule-convergence-plot-span" title="Permalink to this headline">¶</a></h2>
+<p>Plot the log-log plot mentioned below.</p>
+<p>We can observe from the slope of the log-log plot of error against number of subintervals that the error is a quadratic function of the inverse of the number of subintervals (or equivalently is quadratically dependent on the spacing between the points - the interval size).</p>
+<p>This demonstrates that (for this particular example at least), the method demonstrates second-order accuracy - if we halve the interval size the error goes down by a factor of 4!</p>
+<p>The simplicity of this method is its weakness, as rectangles (i.e. a flat top) are rarely a good approximation for the shape of a smooth function.</p>
+</div>
+<div class="section" id="id3">
+<h2>III. Good/Bad Numerical Integration Methods<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>We observe that for the rectangle method, if the subintervals are large, then the method becomes inaccurate. We also observe that if the subintervals become smaller and smaller, then the area calculated becomes closer and closer to the exact area under the curve. We also note that to have small intervals, we need to evaluate the function at more and more points. I see that for 5 subintervals, we will need to evaluate 6 points in total.</p>
+<p>In numerical integration, given an <span class="math notranslate nohighlight">\(\infty\)</span> number of points, and thus an <span class="math notranslate nohighlight">\(\infty\)</span> Note:<span class="math notranslate nohighlight">\((\infty - 1 = \infty )\)</span> number of subintervals, any numerical integration method will result in the area summed from the subinterval becoming closer and closer to the area under the curve.</p>
+<p>However, it should be noted that computational power is not infinite. While the examples here demonstrated can easily be calculated, real world examples are often very complex, and significant computational power may be required to compute even just a single point. Yet to get an accurate calculation of the area under the curve, we need more and more points, for more and more subintervals. Thus, we reach a conflict. To have a more accurate area under the curve, we need more points, but getting more points requires more computational power, which is often limited.</p>
+<p>Thus, a good numerical integration method must be able to be both accurate in finding the area underneath even if only a few points can be calculated.</p>
+</div>
+<div class="section" id="id4">
+<h2>IV.     Rule 2: Trapezoid rule<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p>As previously stated, the slices we use do not have to be rectangles, they can also be trapezoids. Rectangle rule is very similar to the trapezoid rule except for one small difference.</p>
+<p>For the height of the rectangle, the rectangle rule, the width of the subinterval is multiplied by</p>
+<div class="math notranslate nohighlight">
+\[f(\frac{x_i + x{i+1}}{2})\]</div>
+<p>while for the trapezoid rule, the width of the subinterval will instead by multiplied by</p>
+<div class="math notranslate nohighlight">
+\[\frac{f(x_i) + f(x_{i+1})}{2}\]</div>
+<p>Oh, and we will also change the subscript. For the midpoint rule, a.k.a the rectangle rule, the subscript was <span class="math notranslate nohighlight">\(M\)</span>, while for the trapezoid rule, the subscipt will accordingly be <span class="math notranslate nohighlight">\(T\)</span>. Do write down both methods on pen and paper, side by side, and it should be plainly obvious their similarities and differences.</p>
+<p>If we change the shape of the rectangle to a trapezoid (i.e. the top of the shape now being a linear line fit defined by the values of the function at the two end points of the subinterval, rather than the constant value used in the midpoint rule), we arrive at the trapezoid, or trapezoidal, rule.</p>
+<p>The trapezoid rule approximates the integral by the area of a trapezoid with base <span class="math notranslate nohighlight">\((x_{i+1}-x_i)\)</span> and the left- and right-hand-sides equal to the values of the function at the two end points.</p>
+<p>In this case the area of the shape approximating the integral over one subinterval, is given by:</p>
+<div class="math notranslate nohighlight">
+\[I_T^{(i)} := (x_{i+1}-x_i) \;\; \times \;\; 
+\left( \frac {f\left ( x_{i+1}\right ) + f \left (x_{i} \right )} {2} \right)
+\;\;\;\;\;\;\text{for}
+\;\;\;\;\;\; 0\le i \le n-1.\]</div>
+<p>The trapezoidal estimate of <span class="math notranslate nohighlight">\(I\)</span> then simply involves summing up over all the subintervals:</p>
+<div class="math notranslate nohighlight">
+\[I_T := \sum_{i=0}^{n-1}\,   \left(\frac{f(x_{i+1}) + f(x_{i})}{2}\right )\, (x_{i+1}-x_i). \]</div>
+<p>Ok, so basically, what the trapezoid rule does is rather simple.</p>
+<ol class="simple">
+<li><p>So you have a curve, and you have an interval of the curve for which you want to calculate the area underneath that interval. You will divide that interval of the curve into smaller pieces, and each small piece will be called a subinterval.</p></li>
+<li><p>We assume that your interval begins at <span class="math notranslate nohighlight">\(x_0\)</span> and ends at <span class="math notranslate nohighlight">\(x_n\)</span>. We can pick a random subinterval <span class="math notranslate nohighlight">\([x_i,x_{i+1}]\)</span> where <span class="math notranslate nohighlight">\(0\le i \le n-1\)</span>. For example, your 1st interval will be <span class="math notranslate nohighlight">\([x_0,x_1]\)</span> and your <span class="math notranslate nohighlight">\(i=0\)</span>, and your last interval will be <span class="math notranslate nohighlight">\([x_{n-1},x_n]\)</span> and your <span class="math notranslate nohighlight">\(i=n-1\)</span>.</p></li>
+<li><p>For every subinterval, we approxiamte the slice to be a trapezoid. To find the area of the trapezoid we need to find the width and the average between the two bases. The width of the rectangle is simply the width of the subinterval. The average of the two bases of the trapezoid can be estimated as the average between the value of the function at <span class="math notranslate nohighlight">\((x_i)\)</span> and <span class="math notranslate nohighlight">\((x_{i+1})\)</span>,so $ \left ( \frac {f(x_{i+1})+f(x_i)} {2} \right )$.  To find the area we simply multiply the width of the rectangle by the height of the rectangle.</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[Width \;\; of \;\; Rectangle = x_{i+1} - x_i\]</div>
+<div class="math notranslate nohighlight">
+\[Height \;\; of \;\; Rectangle = \left( \frac {f\left ( x_{i+1}\right ) + f \left (x_{i} \right )} {2} \right) \]</div>
+<div class="math notranslate nohighlight">
+\[Area \;\; of \;\; Rectangle = (x_{i+1} - x_i) \left( \frac {f\left ( x_{i+1}\right ) + f \left (x_{i} \right )} {2} \right)\]</div>
+<p>Generalizing the above for all slices, where <span class="math notranslate nohighlight">\(I_T^{(i)}\)</span> is simpley the area of the subinterval <span class="math notranslate nohighlight">\([x_i,x_{i+1}]\)</span>. <span class="math notranslate nohighlight">\(T\)</span> subscript here denotes the use of the Trapzoid Method</p>
+<div class="math notranslate nohighlight">
+\[ I_T^{(i)} := (x_{i+1}-x_i) \;\; \times \;\; \left( \frac {f\left ( x_{i+1}\right ) + f \left (x_{i} \right )} {2} \right) , \;\;\;\;\;\;\text{for}
+\;\;\;\;\;\; 0\le i \le n-1.\]</div>
+<ol class="simple">
+<li><p>To find the area under the curve, we need to sum up all of the areas from the subinterval, so we are going to use the summation symbol. We know that the subinterval index goes from the first subinterval where <span class="math notranslate nohighlight">\(i=0\)</span> to the last subinterval where <span class="math notranslate nohighlight">\(i=n-1\)</span>, thus we arrive at</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[I_T := \sum_{i=0}^{n-1}\,   \left(\frac{f(x_{i+1}) + f(x_{i})}{2}\right )\, (x_{i+1}-x_i). \]</div>
+<p>Note that we dropped <span class="math notranslate nohighlight">\(i\)</span> prefix from <span class="math notranslate nohighlight">\(I\)</span> because now it is the whole area under the curve, not just the area from one subinterval.</p>
+<p>Let’s write some code to plot the idea and compute an estimate of the integral.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># this is a matplotlib function that allows us to plot polygons</span>
+<span class="kn">from</span> <span class="nn">matplotlib.patches</span> <span class="kn">import</span> <span class="n">Polygon</span>
+
+
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The function we wish to integrate&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+
+<span class="c1"># Get the value of pi from numpy and generate equally spaced values from 0 to pi.</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="c1"># plot</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">margins</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+
+<span class="c1"># Label axis.</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;$x$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;$\sin(x)$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Approximating function with trapezoids&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+
+<span class="c1"># Overlay a grid.</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">number_intervals</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">xi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">number_intervals</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">I_T</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">number_intervals</span><span class="p">):</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">Polygon</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">f</span><span class="p">(</span><span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="p">])],</span> <span class="p">[</span>
+                  <span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="n">f</span><span class="p">(</span><span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])],</span> <span class="p">[</span><span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="mi">0</span><span class="p">]]),</span> <span class="n">closed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+    <span class="n">I_T</span> <span class="o">+=</span> <span class="p">((</span><span class="n">f</span><span class="p">(</span><span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="n">f</span><span class="p">(</span><span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The sum of the areas of the trapezoids is (I_T): </span><span class="si">{:.12f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">I_T</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/NM1_2020_lecture3_27_0.png" src="../../../_images/NM1_2020_lecture3_27_0.png" />
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>The sum of the areas of the trapezoids is (I_T): 1.933765598093
+</pre></div>
+</div>
+</div>
+</div>
+<p>For our pictorial example used above the approximation looks like it should be more accurate than the midpoint rule:</p>
+<img src="http://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Integration_trapezoid.svg/340px-Integration_trapezoid.svg.png" width="600">
+<p>the tops of the shapes (now trapezoids) are approximating the variation of the function with a linear function, rather than a flat (constant) function.  This looks like it should give more accurate results, but see below.</p>
+<p>Note that numpy has a function for the trapezoid rule, <a href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.trapz.html">numpy.trapz</a>, but we’ll make our own that works in a similar way to our midpoint rule function.</p>
+</div>
+<div class="section" id="span-style-color-blue-exercise-3-2-complete-the-implementation-of-the-trapezoid-rule-below-span">
+<h2><span style="color:blue">Exercise 3.2: Complete the implementation of the trapezoid rule below</span><a class="headerlink" href="#span-style-color-blue-exercise-3-2-complete-the-implementation-of-the-trapezoid-rule-below-span" title="Permalink to this headline">¶</a></h2>
+<p>Test your function in a similar way to above,  compute another log-log plot of the error and compare with the midpoint rule.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">trapezoidal_rule</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">function</span><span class="p">,</span> <span class="n">number_intervals</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Our implementation of the trapezoidal quadrature rule.</span>
+<span class="sd">    </span>
+<span class="sd">    Note that as discussed in the lecture this version of the implementation </span>
+<span class="sd">    performs redundant function evaluations - see the composite implementation </span>
+<span class="sd">    in the homework for a more efficient version.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">interval_size</span> <span class="o">=</span> <span class="p">(</span><span class="n">b</span> <span class="o">-</span> <span class="n">a</span><span class="p">)</span><span class="o">/</span><span class="n">number_intervals</span>
+
+    <span class="k">assert</span> <span class="n">interval_size</span> <span class="o">&gt;</span> <span class="mi">0</span>
+    <span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">number_intervals</span><span class="p">)</span> <span class="o">==</span> <span class="nb">int</span>
+
+    <span class="n">I_T</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+    <span class="c1"># Loop to create each trapezoid</span>
+    <span class="c1"># note this function takes a slightly different approach to Midpoint </span>
+    <span class="c1"># (a for loop rather than a while loop) to achieve the same thing</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">number_intervals</span><span class="p">):</span>
+
+        
+        <span class="c1"># add your code here!</span>
+        
+        
+
+    <span class="c1"># Return our running total result</span>
+        <span class="k">return</span> <span class="n">I_T</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">  File</span><span class="nn"> &quot;&lt;ipython-input-8-7f576896a891&gt;&quot;</span><span class="gt">, line </span><span class="mi">26</span>
+    <span class="k">return</span> <span class="n">I_T</span>
+    <span class="o">^</span>
+<span class="ne">IndentationError</span>: expected an indented block
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The exact area found by direct integration = 2&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1000</span><span class="p">):</span>
+    <span class="n">area</span> <span class="o">=</span> <span class="n">trapezoidal_rule</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Area </span><span class="si">%d</span><span class="s2"> trapezoid(s) = </span><span class="si">%g</span><span class="s2"> (error=</span><span class="si">%g</span><span class="s2">)&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">area</span><span class="p">,</span> <span class="nb">abs</span><span class="p">(</span><span class="n">area</span><span class="o">-</span><span class="mi">2</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>The exact area found by direct integration = 2
+</pre></div>
+</div>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">9</span><span class="o">-</span><span class="mi">73</span><span class="n">a6ddbdabc6</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The exact area found by direct integration = 2&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1000</span><span class="p">):</span>
+<span class="ne">----&gt; </span><span class="mi">3</span>     <span class="n">area</span> <span class="o">=</span> <span class="n">trapezoidal_rule</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span>     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Area </span><span class="si">%d</span><span class="s2"> trapezoid(s) = </span><span class="si">%g</span><span class="s2"> (error=</span><span class="si">%g</span><span class="s2">)&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">area</span><span class="p">,</span> <span class="nb">abs</span><span class="p">(</span><span class="n">area</span><span class="o">-</span><span class="mi">2</span><span class="p">)))</span>
+
+<span class="ne">NameError</span>: name &#39;trapezoidal_rule&#39; is not defined
+</pre></div>
+</div>
+</div>
+</div>
+<p>You should have found the following errors:</p>
+<p><code class="docutils literal notranslate"><span class="pre">The</span> <span class="pre">area</span> <span class="pre">found</span> <span class="pre">by</span> <span class="pre">direct</span> <span class="pre">integration</span> <span class="pre">=</span> <span class="pre">2</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">Area</span> <span class="pre">1</span> <span class="pre">trapezoid(s)</span> <span class="pre">=</span> <span class="pre">1.92367e-16</span> <span class="pre">(error=2)</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">Area</span> <span class="pre">2</span> <span class="pre">trapezoid(s)</span> <span class="pre">=</span> <span class="pre">1.5708</span> <span class="pre">(error=0.429204)</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">Area</span> <span class="pre">10</span> <span class="pre">trapezoid(s)</span> <span class="pre">=</span> <span class="pre">1.98352</span> <span class="pre">(error=0.0164765)</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">Area</span> <span class="pre">100</span> <span class="pre">trapezoid(s)</span> <span class="pre">=</span> <span class="pre">1.99984</span> <span class="pre">(error=0.000164496)</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">Area</span> <span class="pre">1000</span> <span class="pre">trapezoid(s)</span> <span class="pre">=</span> <span class="pre">2</span> <span class="pre">(error=1.64493e-06)</span></code></p>
+</div>
+<div class="section" id="id5">
+<h2>V.   Error Analysis<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<p>It is important to understand the errors of the numerical integration method we are using. If there are a limited number of slices, the area covered by the slices from trapezoid rule or the midpoint rule will not be slightly different from the actual area under the curve. Of course, if we increase the number of slices, the error becomes smaller; however, we also increase the computational power required.</p>
+<p>A good numerical integration method should be able to have few slices, meaning using little computational power, but still be able to have a small error only. Thus, to know if the numerical integration method we used is a good or a bad method, we need to analyse the errors, or more exactly the change in the errors with numbers of slcies, of our numerical integration method.</p>
+<p>Ah, and we could also use the error analysis we do to for the rectangle and the trapezoid rule to arrive at Simpson’s, the cooler Simpson’s (no, it’s not actually called like that) and the Weddle Rules! These are rules coming from the error analysis, whose error quickly decreases as the number of slices increase.</p>
+<p>A good method will have a rapid decrease in the error when increasing the number of slices, while a bad method will have a slow decrease in the error when increasing the number of slices.</p>
+<p>The accuracy of a quadrature, i.e. the mid point rule, the trapezoidal rule etc. is predicted by examining its behaviour in relationship with polynominals.</p>
+<p>We say that the <strong>degree of accuracy</strong> or the <strong>degree of precision</strong> of a quadrature rule is equal to <span class="math notranslate nohighlight">\(M\)</span> if it is exact for all polynomials of degree up to and including <span class="math notranslate nohighlight">\(M\)</span>, but not exact for some polynomial of degree <span class="math notranslate nohighlight">\(M+1\)</span>.</p>
+<p>Take the trapezoid rule for example. If we are using a degree <span class="math notranslate nohighlight">\(1\)</span> polynominal, or a straight line, then the trapzoid rule will be able to give exactly the area underneath the straight line.</p>
+<p>Again, take the trapezoid rule, but this time we are using a degree <span class="math notranslate nohighlight">\(2\)</span> polynominal, or a parabola, or a curve with one single bend, then the trapzeoid rule will fail to give the exact area, as the straight lines of the trapezoid will not be able to account for the curviness of the parabola.</p>
+<p>Thus, we say that the <strong>degree of accuracy</strong> or the <strong>degree of precision</strong> of a trapezoid rule, which is a quadrature rule is equal to <span class="math notranslate nohighlight">\(1\)</span> if it is exact for all polynomials of degree up to and including <span class="math notranslate nohighlight">\(1\)</span>, but not exact for some polynomial of degree <span class="math notranslate nohighlight">\(1+1\)</span>.</p>
+<p><span style="color:red">For the Trapezoid Rule or the Mid Point Rule, we have the degree of accuracy or precision being <span class="math notranslate nohighlight">\(1\)</span> but the method is <span class="math notranslate nohighlight">\(2nd\)</span> order accurate, since if we halve the interval size the error goes down by a factor of 4!</span></p>
+<p>Clearly both the midpoint and trapezoid rules will give the exact result for both constant and linear functions,</p>
+<p>but they are not exact for quadratics [you could test our codes yourself on the function <span class="math notranslate nohighlight">\(x^2\)</span> to demonstrate this].</p>
+<p>Therefore, they have a degree of precision of 1.</p>
+<div class="section" id="example-concave-down-sine-wave">
+<h3>Example: Concave Down Sine Wave<a class="headerlink" href="#example-concave-down-sine-wave" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="kn">import</span> <span class="nn">scipy</span> 
+
+<span class="c1"># this is a matplotlib function that allows us to easily plot rectangles</span>
+<span class="c1"># which will be useful for visualising what the midpoint rule does</span>
+<span class="kn">from</span> <span class="nn">matplotlib.patches</span> <span class="kn">import</span> <span class="n">Rectangle</span>
+
+
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The function we wish to integrate&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+
+<span class="c1"># Get the value of pi from numpy and generate equally spaced values from 0 to pi.</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="c1"># plot</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">margins</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+
+<span class="c1"># Label axis.</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;$x$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;$f(x)=\sin(x)$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Approximating a function with rectangles&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+
+<span class="c1"># Overlay a grid.</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">number_intervals</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">xi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">number_intervals</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">I_M</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">number_intervals</span><span class="p">):</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">Rectangle</span><span class="p">((</span><span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mf">0.0</span><span class="p">),</span> <span class="p">(</span><span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span>
+                            <span class="n">f</span><span class="p">((</span><span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span> <span class="n">fill</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+    <span class="n">I_M</span> <span class="o">+=</span> <span class="n">f</span><span class="p">((</span><span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+
+<span class="c1"># use an explicit show here to force the figure to appear before the following print.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The sum of the areas of the rectangles is (I_M): </span><span class="si">{:.12f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">I_M</span><span class="p">))</span>
+
+<span class="c1"># this is a matplotlib function that allows us to plot polygons</span>
+<span class="kn">from</span> <span class="nn">matplotlib.patches</span> <span class="kn">import</span> <span class="n">Polygon</span>
+
+
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The function we wish to integrate&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+
+<span class="c1"># Get the value of pi from numpy and generate equally spaced values from 0 to pi.</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="c1"># plot</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">margins</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+
+<span class="c1"># Label axis.</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;$x$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;$\sin(x)$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Approximating function with trapezoids&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+
+<span class="c1"># Overlay a grid.</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">number_intervals</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">xi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">number_intervals</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">I_T</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">number_intervals</span><span class="p">):</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">Polygon</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">f</span><span class="p">(</span><span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="p">])],</span> <span class="p">[</span>
+                  <span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="n">f</span><span class="p">(</span><span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])],</span> <span class="p">[</span><span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="mi">0</span><span class="p">]]),</span> <span class="n">closed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+    <span class="n">I_T</span> <span class="o">+=</span> <span class="p">((</span><span class="n">f</span><span class="p">(</span><span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="n">f</span><span class="p">(</span><span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The sum of the areas of the trapezoids is (I_T): </span><span class="si">{:.12f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">I_T</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/NM1_2020_lecture3_36_0.png" src="../../../_images/NM1_2020_lecture3_36_0.png" />
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>The sum of the areas of the rectangles is (I_M): 1.004124203954
+</pre></div>
+</div>
+<img alt="../../../_images/NM1_2020_lecture3_36_2.png" src="../../../_images/NM1_2020_lecture3_36_2.png" />
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>The sum of the areas of the trapezoids is (I_T): 0.991761768755
+</pre></div>
+</div>
+</div>
+</div>
+<p>For the “concave-down” (i.e. the first half of a sine wave) function we chose above, notice from the plot that the trapezoidal rule will <strong>consistently underestimate</strong> the area under the curve, as the line segments approximating the function are always under the concave function curve.</p>
+<p>In contrast, the mid-point rule will have parts of each rectangle above and below the curve, hence to a certain extent the <strong>errors will cancel</strong> each other out.</p>
+<p>This is why, <em>for this particular example</em>, the errors in the mid-point rule turn out to be approximately half those in the trapezoidal rule.</p>
+<p>While this result turns out to be <em>generally</em> true for smooth functions, we can always come up with (counter) examples where the trapezoid rule will win (can you think of an example?).</p>
+<p>Taylor series analysis can be used to formally construct upper bounds on the quadrature error for both methods.</p>
+<p>We know that the error when integrating constant and linear functions is zero for our two rules, so let’s first consider an example of integrating a quadratic polynomial.</p>
+<p>We know analytically that</p>
+<div class="math notranslate nohighlight">
+\[\int_{0}^{1} x^{2}\,dx = \left.\frac{1}{3}x^3\right|_0^1=\frac {1}{3}.\]</div>
+<p>Numerically, the midpoint rule on a single interval gives</p>
+<p>\begin{equation}
+I_M = 1 \left(\frac {1}{2}\right)^{2} = \frac {1}{4},
+\end{equation}</p>
+<p>while the trapezoidal rule gives</p>
+<p>\begin{equation}
+I_T = 1 \frac {0+1^{2}}{2} = \frac {1}{2}.
+\end{equation}</p>
+<p>The error for <span class="math notranslate nohighlight">\(I_M\)</span> is therefore <span class="math notranslate nohighlight">\(1/3 - 1/4 = 1/12\)</span>, while the error for <span class="math notranslate nohighlight">\(I_T\)</span> is <span class="math notranslate nohighlight">\(1/3 - 1/2 = -1/6\)</span>.</p>
+<p>Therefore, the midpoint rule is twice as accurate as the trapezoid rule:</p>
+<div class="math notranslate nohighlight">
+\[|E_M| = \frac{1}{2} |E_T|,\]</div>
+<p>where <span class="math notranslate nohighlight">\(|E|\)</span> indicates the error (the absolute value of the difference from the exact solution).</p>
+<p>This is the case for this simple example, and we can see from the actual error values printed above that it also appears to be approximately true for the sine case (which is not a simple polynomial) as well.</p>
+<p>We will use this knowledge to generate new more accurate rules below, but first let’s sketch how you can go about a more rigorous analysis/estimation of errors.</p>
+<p>In short, for our half sinewave, since we know that the area of half a sine wave is 1, the rectangle method overestimates it by about 0.4%, while the trapezoid method underestimates it for 0.9%.</p>
+<p>We notice that in this situation, the rectangle method <strong>overestimates</strong> while the trapezoid method <strong>underestimates</strong>.
+We also notice that the underestimate of the trapezoid rule is about <strong>twice</strong> the overestimate of the rectangle method.</p>
+<p>So, well, could we combine twice the <strong>overestimate</strong> from the rectangle method and once the <strong>underestimate</strong> from the trapezoid method, and then divide everything by <strong>3</strong> since it’s 2 parts rectangle and one part trapezoid rule, to obtain something more accurate?</p>
+<img src="images/SIMPSONS.png"></div>
+</div>
+<div class="section" id="id6">
+<h2>VI.     Rule 3: Simpson’s rule<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<p>Knowing the error estimates from the two rules explored so far opens up the potential for us to combine them in an appropriate manner to create a new quadrature rule, generally more accurate than either one separately.</p>
+<p>Suppose <span class="math notranslate nohighlight">\(I_S\)</span> indicates an unknown, but more accurate, estimate of the integral over an interval.</p>
+<p>Then, as seen above, as <span class="math notranslate nohighlight">\(I_T\)</span> has an error that is approximately <span class="math notranslate nohighlight">\(-2\)</span> times the error in <span class="math notranslate nohighlight">\(I_M\)</span>, the following relation must hold approximately:</p>
+<div class="math notranslate nohighlight">
+\[I_S - I_T \approx -2 \left ( I_S - I_M\right ).\]</div>
+<p>This follows from the fact that <span class="math notranslate nohighlight">\(\,I - I_T \approx -2 \left ( I - I_M\right )\)</span>, provided that <span class="math notranslate nohighlight">\(I_S\)</span> is closer to <span class="math notranslate nohighlight">\(I\)</span> than either of the other two estimates.</p>
+<p>Replacing this approximately equals sign with actual equality defines <span class="math notranslate nohighlight">\(I_S\)</span> for us in terms of things we know.</p>
+<p>We can rearrange this to give an expression for <span class="math notranslate nohighlight">\(I_S\)</span> that yields a more accurate estimate of the integral than either <span class="math notranslate nohighlight">\(I_M\)</span> or <span class="math notranslate nohighlight">\(I_T\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[I_S := \frac{2}{3}I_M + \frac{1}{3}I_T.\]</div>
+<p>We combined twice the <strong>overestimate</strong> from the rectangle method and once the <strong>underestimate</strong> from the trapezoid method, and then divide everything by <strong>3</strong> since it’s 2 parts rectangle and one part trapezoid rule, to obtain something more accurate!</p>
+<p>What we’re doing here is using the fact that we know something about (the <em>leading order</em> behaviour of the) two errors, and we can therefore combine them to cancel this error to a certain extent.</p>
+<p>This estimate will generally be more accurate than either <span class="math notranslate nohighlight">\(M\)</span> or <span class="math notranslate nohighlight">\(T\)</span> alone. The error won’t actually be zero in general as we’re only cancelling out the leading order term in the error, but a consequence is that we will be left with higher-degree terms in the error expansion of the new quadrature rule which should be smaller (at least in the asymptotic limit), and converge faster.</p>
+<p>The resulting quadrature method in this case is known as <a class="reference external" href="http://en.wikipedia.org/wiki/Simpson%27s_rule">Simpson’s rule</a>:</p>
+<p>Let’s expand the Simpsons rule by substituting in what we know about the Rectangle Rule and the Trapezoid Rule</p>
+<p>\begin{align*}
+I_S &amp;:= \frac{2}{3}I_M + \frac{1}{3}I_T \[5pt]
+&amp;= \frac{2}{3}  (b-a)f\left ( \frac{a+b}{2}\right ) + \frac{1}{3}(b-a)\frac{(f(a) + f(b))}{2} \[5pt]
+&amp; = \frac{(b-a)}{6}\left( f \left ( a\right ) + 4f \left ( c\right ) + f\left ( b\right )\right),
+\end{align*}</p>
+<p>where <span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(b\)</span> are the end points of an interval and <span class="math notranslate nohighlight">\(c = \left ( a+b\right )/2\)</span> is the midpoint.</p>
+<p>Note that an alternate derivation of the same rule involves fitting a <em>quadratic function</em> (i.e. <span class="math notranslate nohighlight">\(P_2(x)\)</span> rather than the constant and linear approximations already considered) that interpolates the integral at the two end points of the interval, <span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(b\)</span>, as well as at the midpoint, <span class="math notranslate nohighlight">\(c = \left ( a+b\right )/2\)</span>, and calculating the integral under that polynomial approximation.</p>
+<p>See the homework exercise, and note that we’ll come back to this idea a bit later when we introduce the Newton-Cotes family of quadrature rules.</p>
+<p>Let’s plot what this method is doing and compute the integral for our sine case.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># this is a matplotlib function that allows us to plot polygons</span>
+<span class="c1"># use this to plot the straight sides, and add an approximate</span>
+<span class="c1"># quadratic at the top.</span>
+<span class="kn">from</span> <span class="nn">matplotlib.patches</span> <span class="kn">import</span> <span class="n">Polygon</span>
+
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The function we wish to integrate&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="c1"># Get the value of pi from numpy and generate equally spaced values from 0 to pi.</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="c1"># plot</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">margins</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+
+<span class="c1"># Label axis.</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;sin(x)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Approximating a function with shapes with quadratic tops&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+
+<span class="c1"># Overlay a grid.</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">number_intervals</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">xi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">number_intervals</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">I_S</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">number_intervals</span><span class="p">):</span>
+    <span class="c1"># use a non-closed Polygon to visualise the straight sides of each interval </span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">Polygon</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">f</span><span class="p">(</span><span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="p">])],</span> <span class="p">[</span><span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="n">f</span><span class="p">(</span><span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])]]),</span>
+                          <span class="n">closed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+    <span class="c1"># add the quadratic top - fit a quadratic using numpy</span>
+    <span class="n">poly_coeff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">polyfit</span><span class="p">((</span><span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="p">(</span><span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span><span class="o">/</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">xi</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]),</span>
+                            <span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span> <span class="n">f</span><span class="p">((</span><span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span><span class="o">/</span><span class="mf">2.0</span><span class="p">),</span> <span class="n">f</span><span class="p">(</span><span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])),</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="c1"># plot the quadratic using 20 plotting points within the interval </span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="mi">20</span><span class="p">),</span>
+             <span class="n">f</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="mi">20</span><span class="p">)),</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="c1"># add in the area of the interval shape to our running total using Simpson&#39;s formula</span>
+    <span class="n">I_S</span> <span class="o">+=</span> <span class="p">((</span><span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">/</span><span class="mf">6.</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">+</span> <span class="mi">4</span> <span class="o">*</span>
+                                     <span class="n">f</span><span class="p">((</span><span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span><span class="o">/</span><span class="mf">2.0</span><span class="p">)</span> <span class="o">+</span> <span class="n">f</span><span class="p">(</span><span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The Simpson&#39;s rule approximation (I_S): </span><span class="si">{:.12f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">I_S</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/NM1_2020_lecture3_43_0.png" src="../../../_images/NM1_2020_lecture3_43_0.png" />
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>The Simpson&#39;s rule approximation (I_S): 2.000109517315
+</pre></div>
+</div>
+</div>
+</div>
+<p>It looks like a much closer fit to the function:</p>
+<img src="http://upload.wikimedia.org/wikipedia/commons/5/50/Integration_simpson.png" width="600">
+<p>Let’s make a function to test it out…</p>
+</div>
+<div class="section" id="span-style-color-blue-exercise-3-3-implementing-simpson-s-rule-span">
+<h2><span style="color:blue">Exercise 3.3: Implementing Simpson’s rule</span><a class="headerlink" href="#span-style-color-blue-exercise-3-3-implementing-simpson-s-rule-span" title="Permalink to this headline">¶</a></h2>
+<p>Complete an implementation of Simpson’s rule and test it on our sine function.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">simpsons_rule</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">function</span><span class="p">,</span> <span class="n">number_intervals</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Function to evaluate Simpson&#39;s rule. </span>
+<span class="sd">    </span>
+<span class="sd">    Note that this implementation takes the function as an argument, </span>
+<span class="sd">    and evaluates this at the midpoint of subintervals in addition to the </span>
+<span class="sd">    end point. Hence additional information is generated and used through </span>
+<span class="sd">    additional function evaluations. </span>
+<span class="sd">    </span>
+<span class="sd">    This is different to the function/implementation available with SciPy  </span>
+<span class="sd">    where discrete data only is passed to the function. </span>
+<span class="sd">    </span>
+<span class="sd">    Bear this in mind when comparing results - there will be a factor of two</span>
+<span class="sd">    in the definition of &quot;n&quot; we need to be careful about!</span>
+<span class="sd">    </span>
+<span class="sd">    Also note that this version of the function performs redundant function </span>
+<span class="sd">    evaluations - see the **composite** implementation below.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Add your code here!</span>
+        
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The area found by direct integration = 2&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1000</span><span class="p">):</span>
+    <span class="n">area</span> <span class="o">=</span> <span class="n">simpsons_rule</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Area </span><span class="si">%d</span><span class="s2"> rectangle(s) = </span><span class="si">%g</span><span class="s2"> (error=</span><span class="si">%g</span><span class="s2">)&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">area</span><span class="p">,</span> <span class="nb">abs</span><span class="p">(</span><span class="n">area</span><span class="o">-</span><span class="mi">2</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>You should find:</p>
+<p><code class="docutils literal notranslate"><span class="pre">The</span> <span class="pre">area</span> <span class="pre">found</span> <span class="pre">by</span> <span class="pre">direct</span> <span class="pre">integration</span> <span class="pre">=</span> <span class="pre">2</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">Area</span> <span class="pre">1</span> <span class="pre">rectangle(s)</span> <span class="pre">=</span> <span class="pre">2.0944</span> <span class="pre">(error=0.0943951)</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">Area</span> <span class="pre">2</span> <span class="pre">rectangle(s)</span> <span class="pre">=</span> <span class="pre">2.00456</span> <span class="pre">(error=0.00455975)</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">Area</span> <span class="pre">20</span> <span class="pre">rectangle(s)</span> <span class="pre">=</span> <span class="pre">2</span> <span class="pre">(error=4.23093e-07)</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">Area</span> <span class="pre">200</span> <span class="pre">rectangle(s)</span> <span class="pre">=</span> <span class="pre">2</span> <span class="pre">(error=4.228e-11)</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">Area</span> <span class="pre">2000</span> <span class="pre">rectangle(s)</span> <span class="pre">=</span> <span class="pre">2</span> <span class="pre">(error=2.22045e-15)</span></code></p>
+<p>For this simple function you should find far smaller errors, and which drop much more rapidly with smaller <span class="math notranslate nohighlight">\(h\)</span> (or more sub-intervals).</p>
+</div>
+<div class="section" id="observations">
+<h2>Observations<a class="headerlink" href="#observations" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>The errors are lower than for the midpoint and trapezoidal rules, and the method converge more rapidly - i.e. the relative improvement only gets better for more subintervals.</p></li>
+<li><p>This expression now integrates up to cubics exactly (by construction), so it is of order 4 (as confirmed by the convergence plot above).</p></li>
+<li><p><span style="color:red">For the Simpsons Rule, we have the degree of accuracy or precision being <span class="math notranslate nohighlight">\(3\)</span> but the method is <span class="math notranslate nohighlight">\(4th\)</span> order accurate, since if we halve the interval size the error goes down by a factor of <span class="math notranslate nohighlight">\(2^4 =16\)</span>!. Simpsons rule integrates to cubics exactly, so since it’s integrating exactly, cubics cannot contribute to the error. Only the quartic(4th) contribute to the error, so it’s 4th order accurate</span></p></li>
+<li><p>We’re getting down to errors close to machine precision now when we use 1000 subintervals. Remember: your average consumer grade hardware can only handle that many decimal points, and you will need some rather expensive hardware to have even higher levels of precisions. Continuing with 1000 subintervals is actually not helpful as the error that you will get stops decreasing as it is so small that your computer stops being able to discriminate it from 0 But remember we may well either have a relatively small number of data points, or want to minimise the number of function evaluations well below this relatively high number. This will mean that for problems with lots of variation, and/or in higher dimensions, that we still work to do in improving our quadrature methods.</p></li>
+<li><p>As was the case with our first Trapezoidal implementation, we are performing unnecessary function evaluations here; we can fix this issue through the implementation of a so-called <em>composite</em> version of the rule, which still gives the same result as your Simpson’s rule, but makes it but easier for the computer. The Composite Simpsons Rule still does many evaluations, but fewer evaluations than your Standard Simpson’s Rule.</p></li>
+<li><p>You could always try to derive the Composite Simpson’s Rule from the Simpsons Rule! I think this was covered in A Level Further Mathematics, at least when I was in high school.</p></li>
+</ul>
+</div>
+<div class="section" id="id7">
+<h2>VII.     Rule 4: Composite Simpson’s Rule<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<p>If we assume that our interval <span class="math notranslate nohighlight">\([a,b]\)</span> has been split up into <span class="math notranslate nohighlight">\(n\)</span> intervals (or <span class="math notranslate nohighlight">\(n+1\)</span> data points) we can save some function evaluations by writing Simpson’s Rule in the following form (note here we do not introduce any additional midpoint function evaluations)</p>
+<p>\begin{align*}
+I_{S}
+&amp; = \frac{\Delta x}{3}\left[ f \left ( x_0\right ) + 4f \left ( x_1\right ) + 2f\left ( x_2\right ) + 4f \left ( x_3\right ) + \cdots + 2 f \left ( x_{n-2}\right )  + 4 f \left ( x_{n-1}\right ) +  f \left ( x_{n}\right ) \right]\[5pt]
+&amp; = \frac{\Delta x}{3}\left[ f \left ( x_0\right ) + 2\sum_{i=1}^{n/2 - 1} f\left(x_{2i}\right) + 4\sum_{i=1}^{n/2} f\left(x_{2i-1}\right)  +  f \left ( x_{n}\right ) \right].
+\end{align*}</p>
+<p>This is known as the <a class="reference external" href="http://en.wikipedia.org/wiki/Simpson%27s_rule#Composite_Simpson.27s_rule">Composite Simpson’s rule</a>,
+or more precisely the <em>composite Simpson’s 1/3 rule</em>.</p>
+<p>This is the version of Simpson’s rule implemented by Scipy <a class="reference external" href="http://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.simps.html"><code class="docutils literal notranslate"><span class="pre">scipy.interpolate.simps</span></code></a>.</p>
+<p>Note that this way of formulating Simpson’s rule (where we do not allow additional function evaluations at the midpoints of intervals - we assume we are only in a position to use the given data points) requires that <span class="math notranslate nohighlight">\(n\)</span> be even.</p>
+<p>This way of writing the composite form in the case of <span class="math notranslate nohighlight">\(n=2\)</span> is equivalent to the formula over <span class="math notranslate nohighlight">\([a,b]\)</span> that introduced the additional midpoint location <span class="math notranslate nohighlight">\(c\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">simpsons_composite_rule</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">function</span><span class="p">,</span> <span class="n">number_intervals</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Function to evaluate the composite Simpson&#39;s rule only using</span>
+<span class="sd">    function evaluations at (number_intervals + 1) points.</span>
+<span class="sd">    </span>
+<span class="sd">    This implementation requires that the number of subintervals (number_intervals) be even</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="n">number_intervals</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;number_intervals is not even&quot;</span>
+
+    <span class="n">interval_size</span> <span class="o">=</span> <span class="p">(</span><span class="n">b</span> <span class="o">-</span> <span class="n">a</span><span class="p">)</span> <span class="o">/</span> <span class="n">number_intervals</span>
+    <span class="c1"># start with the two end member values</span>
+    <span class="n">I_cS2</span> <span class="o">=</span> <span class="n">function</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">+</span> <span class="n">function</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+
+    <span class="c1"># add in those terms with a coefficient of 4</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">number_intervals</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
+        <span class="n">I_cS2</span> <span class="o">+=</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">function</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">i</span> <span class="o">*</span> <span class="n">interval_size</span><span class="p">)</span>
+
+    <span class="c1"># and those terms with a coefficient of 2</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">number_intervals</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
+        <span class="n">I_cS2</span> <span class="o">+=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">function</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">i</span> <span class="o">*</span> <span class="n">interval_size</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">I_cS2</span> <span class="o">*</span> <span class="p">(</span><span class="n">interval_size</span> <span class="o">/</span> <span class="mf">3.0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The area found by direct integration = 2&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1000</span><span class="p">):</span>
+    <span class="n">area</span> <span class="o">=</span> <span class="n">simpsons_composite_rule</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Area </span><span class="si">%d</span><span class="s2"> rectangle(s) = </span><span class="si">%g</span><span class="s2"> (error=</span><span class="si">%g</span><span class="s2">)&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">area</span><span class="p">,</span> <span class="nb">abs</span><span class="p">(</span><span class="n">area</span><span class="o">-</span><span class="mi">2</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>This is a slight improvement for a simple function like <span class="math notranslate nohighlight">\(\sin\)</span>, but will be much more of an improvement for functions which oscillate more, in a relative sense compared to the size of our bins.</p>
+</div>
+<div class="section" id="id8">
+<h2>VIII.      Rule 5: Weddle’s rule<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<p>We noted above that Simpson’s rule is fourth-order accurate. <span style="color:red">For the Simpsons Rule, we have the degree of accuracy or precision being <span class="math notranslate nohighlight">\(3\)</span> but the method is <span class="math notranslate nohighlight">\(4th\)</span> order accurate, since if we halve the interval size the error goes down by a factor of <span class="math notranslate nohighlight">\(2^4 =16\)</span>!</span></p>
+<p>Suppose we take an approximation to <span class="math notranslate nohighlight">\(I\)</span> using <span class="math notranslate nohighlight">\(n\)</span> subintervals with Simpson’s rule and call the result <span class="math notranslate nohighlight">\(I_S\)</span>, and then apply Simpson’s rule with double the number of intervals (<span class="math notranslate nohighlight">\(2n\)</span>) and call the result <span class="math notranslate nohighlight">\(I_{S_2}\)</span>.</p>
+<p>Then we have two estimates for the integral where we expect <span class="math notranslate nohighlight">\(I_{S_2}\)</span> to be approximately <span class="math notranslate nohighlight">\(2^4=16\)</span> times more accurate than <span class="math notranslate nohighlight">\(S\)</span>. In particular, we expect the lowest (i.e. the leading) order error term in <span class="math notranslate nohighlight">\(I_{S_2}\)</span> to be precisely one sixteenth that of <span class="math notranslate nohighlight">\(I_S\)</span>.<span style="color:red">For the Simpsons Rule, we have the degree of accuracy or precision being <span class="math notranslate nohighlight">\(3\)</span> but the method is <span class="math notranslate nohighlight">\(4th\)</span> order accurate, since if we halve the interval size the error goes down by a factor of <span class="math notranslate nohighlight">\(2^4 =16\)</span>!</span></p>
+<p>Similar to how we derived Simpson’s rule by combining what we knew of the error for the midpoint and trapezoidal rules, with this knowledge we can combine the two estimates from Simpson’s rule to derive an even more accurate estimate of <span class="math notranslate nohighlight">\(I\)</span>:</p>
+<p>Basically,</p>
+<p>You have your Simpsons rule, where you know it’s 4th order accurate. 4th order accurate means that if the subinterval decreases by 2, then the error will also decrease by 16 times. You do the Simpsons Rule as usual, and you get that the area under the curve found through the Simpsons Rule is <span class="math notranslate nohighlight">\(I_S\)</span>. There is a certain error, let’s call it <span class="math notranslate nohighlight">\(E_S\)</span> in <span class="math notranslate nohighlight">\(I_S\)</span></p>
+<p>You have your Simpsons rule, but this time, you make the subintervals <span class="math notranslate nohighlight">\(2\)</span> times smaller, thus decreasing the error by <span class="math notranslate nohighlight">\(16\)</span> times, and you get the area under the curve <span class="math notranslate nohighlight">\(I_{S2}\)</span>. There is a certain error, let’s call it <span class="math notranslate nohighlight">\(E_{S2}\)</span> in <span class="math notranslate nohighlight">\(I_{S2}\)</span>.</p>
+<p>Since for <span class="math notranslate nohighlight">\(I_{S2}\)</span>, compared to <span class="math notranslate nohighlight">\(I_{S}\)</span>, you made the intervals <span class="math notranslate nohighlight">\(2\)</span> times samller, the error from <span class="math notranslate nohighlight">\(I_{S2}\)</span>, so <span class="math notranslate nohighlight">\(E_{S2}\)</span>, will be well 16 times smaller than the error from <span class="math notranslate nohighlight">\(I_S\)</span>, so <span class="math notranslate nohighlight">\(E_S\)</span></p>
+<p>We can therefore write the relationship between <span class="math notranslate nohighlight">\(E_S\)</span> and <span class="math notranslate nohighlight">\(E_{S2}\)</span> as</p>
+<div class="math notranslate nohighlight">
+\[E_S \approx E_{S2} \times 16\]</div>
+<p>Now, suppose we name our more accurate integral to be <span class="math notranslate nohighlight">\(I_W\)</span>. The difference between the more accurate integral and the Simpsons Rule integral <span class="math notranslate nohighlight">\(I_S\)</span> is the error of the Simpsons Rule <span class="math notranslate nohighlight">\(E_S\)</span>, and I can write the relationship as</p>
+<div class="math notranslate nohighlight">
+\[I_W = I_S + E_S\]</div>
+<p>The difference between the more accurate integral and the Simpsons Rule integral with 2 times smaller subintervals <span class="math notranslate nohighlight">\(I_S2\)</span> is the error of the Simpsons Rule <span class="math notranslate nohighlight">\(E_S2\)</span>, and I can write the relationship as</p>
+<div class="math notranslate nohighlight">
+\[I_W = I_{S2} + E_{S2}\]</div>
+<p>Performing Subsitution using the 3 equations above, I arrive at</p>
+<div class="math notranslate nohighlight">
+\[I_W - I_S = 16 \left ( I_W - I_{S_2} \right ),\]</div>
+<p>A bit of manipulation:</p>
+<p>\begin{align*}
+&amp; ;;; I_W - I_S = 16 \left ( I_W - I_{S_2} \right ) \[5pt]
+\implies &amp; ;;; I_W - I_S = 16 I_W - 16 I_{S_2} \[5pt]
+\implies &amp; ;;; 15 I_W  = 16 I_{S_2} - I_S \[5pt]
+\implies &amp; ;;; 15 I_W  = 15 I_{S_2} + (I_{S_2} - I_S) ,
+\end{align*}</p>
+<p>leads us to the expression</p>
+<div class="math notranslate nohighlight">
+\[ I_W = I_{S_2} + \frac {\left (I_{S_2} - I_S \right )}{15}.\]</div>
+<p>This is known as <em>Weddle’s rule</em>, or the <em>extrapolated Simpson’s rule</em> because it uses two different values for the interval size and <em>extrapolates</em> from these two to obtain an even more accurate result.</p>
+<p>Making a function for this rule is easy as we can just call our Simpson’s rule functions with two values for the number of intervals.</p>
+</div>
+<div class="section" id="span-style-color-blue-exercise-3-4-implementing-weddle-s-rule-span">
+<h2><span style="color:blue">Exercise 3.4: Implementing Weddle’s rule</span><a class="headerlink" href="#span-style-color-blue-exercise-3-4-implementing-weddle-s-rule-span" title="Permalink to this headline">¶</a></h2>
+<p>Write a function which implements Weddle’s rule using appropriate calls to the simpsons and simpsons_composite functions written above.</p>
+<p>Ultimately you should be able to generate a comparison image that looks something like this:</p>
+<img src="./images/weddle_convergence.png" width=500x></div>
+<div class="section" id="id9">
+<h2>Aside: (Richardson) extrapolation, Romberg integration and Newton-Cotes formula<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
+<p>Note that the above technique of using the same rule, but with different values for the interval size, <span class="math notranslate nohighlight">\(h\)</span>, to derive a more accurate estimate of the integral is an example of what is more generally called <em>Richardson extrapolation</em>.</p>
+<p>Performing this approach using the trapezoid rule as the starting point leads to what is termed <em>Romberg integration</em>.</p>
+<p>Taking the idea behind Simpson’s rule which fit a quadratic Lagrange interpolating polynomial to <em>equally spaced</em> points in the interval, end extending to any order Lagrange polynomial leads to the <a class="reference external" href="https://en.wikipedia.org/wiki/Newton%E2%80%93Cotes_formulas"><em>Newton-Cotes</em> family of quadrature rules</a>.</p>
+<p>Note finally, that even wider families exist where the function being integrated is evaluated at non-equally-spaced points.</p>
+<p>And of course for practical application these ideas need to be extended to more than one dimension.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "primer-computational-mathematics/book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./c_mathematics/numerical_methods/NM1_2020"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Imperial College London<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../../../_static/js/index.js"></script>
+    
+  </body>
+</html>

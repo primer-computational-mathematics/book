@@ -1,0 +1,640 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Algorithmic complexity &#8212; ESE Jupyter Material</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/mystnb.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".cell"
+        const thebe_selector_input = ".cell_input div.highlight"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Intro to Python" href="../Intro to Python/intro.html" />
+    <link rel="prev" title="Fundamentals of Computer Science" href="intro.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../index.html">
+  
+  <img src="../../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">ESE Jupyter Material</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  
+  <ul class="nav sidenav_l1">
+  <li class="">
+    <a href="../../intro.html">Landing page</a>
+  </li>
+  <li class="">
+    <a href="../../a_modules/intro.html">Modules</a>
+  </li>
+  <li class="active">
+    <a href="../intro.html">Coding</a>
+  <ul class="nav sidenav_l2">
+    <li class="">
+      <a href="../NumPy_Arrays.html">NumPy arrays</a>
+    </li>
+    <li class="">
+      <a href="../jupyter_book_guide.html">Jupyter Book guide</a>
+    </li>
+    <li class="active">
+      <a href="intro.html">Fundamentals of Computer Science</a>
+      <ul class="nav sidenav_l3">
+      <li class="active">
+        <a href="">Algorithmic complexity</a>
+      </li>
+    </ul>
+    </li>
+    <li class="">
+      <a href="../Intro to Python/intro.html">Intro to Python</a>
+    </li>
+    <li class="">
+      <a href="../Pandas/intro.html">Pandas</a>
+    </li>
+    <li class="">
+      <a href="../Programming Tools/intro.html">Programming Tools</a>
+    </li>
+  </ul>
+  </li>
+  <li class="">
+    <a href="../../c_mathematics/intro.html">Mathematics</a>
+  </li>
+  <li class="">
+    <a href="../../d_geosciences/intro.html">Geosciences</a>
+  </li>
+  <li class="">
+    <a href="../../e_extra/intro.html">Further resources</a>
+  </li>
+  <li class="">
+    <a href="../../genindex.html">Index</a>
+  </li>
+</ul>
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/b_coding/Fundamentals of Computer Science/1_Algorythmic_Complexity.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        
+        <a class="issues-button"
+            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2Fb_coding/Fundamentals of Computer Science/1_Algorythmic_Complexity.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/b_coding/Fundamentals of Computer Science/1_Algorythmic_Complexity.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#big-o-notation" class="nav-link">Big O notation</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#constant-time-o-1" class="nav-link">Constant time \(O(1)\)</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#linear-time-o-n" class="nav-link">Linear time \(O(n)\)</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#quadratic-time-o-n-2" class="nav-link">Quadratic time \(O(n^2)\)</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#different-complexities" class="nav-link">Different complexities</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#best-worst-and-average-case-runtimes" class="nav-link">Best, worst and average case runtimes</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#exercises" class="nav-link">Exercises</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#references" class="nav-link">References:</a>
+        </li>
+    
+    </ul>
+</nav>
+
+
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="algorithmic-complexity">
+<span id="algorythmic-complexity"></span><h1>Algorithmic complexity<a class="headerlink" href="#algorithmic-complexity" title="Permalink to this headline">¶</a></h1>
+<p id="index-0">In order to make our programs efficient (or, at least, not horribly inefficient), we can consider how the execution time varies depending on the input size \(n\). Let us define a measure of this efficiency as a function \( T(n)\). Of course, the time it takes to execute a code will vary largely depending on the processor, compiler or disk speed. \( T(n)\) goes around this variance by measuring <em>asymptotic</em> complexity. In this case, only (broadly defined) <em>steps</em> will determine the time it takes to execute an algorithm.</p>
+<p>Now, say we want to add two \(n\)-bit binary digits. One way to do this is to go bit by bit and add the two. We can see that \(n\) operations are involved.
+\[T(n) = c*n\]
+where \(c\) is the time it takes to add two bits on a machine. On different machines, the value of \(c\) may vary, but the linearity of this function is the common factor. Our aim is to abstract away from the details of implementation and think about the fundamental usage of computing resources.</p>
+<div class="section" id="big-o-notation">
+<h2>Big O notation<a class="headerlink" href="#big-o-notation" title="Permalink to this headline">¶</a></h2>
+<p>The mathematical definiton of this concept can be found <a class="reference external" href="https://primer-computational-mathematics.github.io/book/mathematics/mathematical_notation/Big_O_notation.html"><strong>here</strong></a>. In simple terms, we say that:</p>
+<p>\[f(n) = O(g(n))\]
+if there exists \(c&gt;0\) and \(n_0&gt;0\) such that</p>
+<p>\[f(n) \leq c * g(n)\] for all \(n \geq n_0\).</p>
+<p>\(g(n)\) can be thought of as an <em>upper bound</em> of \(f(n)\) as \(n\) tends to infinity. In some publications <em>big Theta</em> notation is used. \(\Theta(n)\) can be considered the <em>least upper bound</em>, in algorithm analysis we ofter use both notations interchangeably.</p>
+<p>Here are a couple of examples:</p>
+<p>\[ 3n + 4 = O(n)\]
+\[ n^2 + 17n = O(n^2)\]
+\[2^n = O(2^n)\]
+\[42 = O(1)\]
+but also:</p>
+<p>\[log(n) = O(n)\]
+\[n = O(n^2)\]</p>
+<p>We will now consider different time complexities of algorithms.</p>
+<hr class="docutils" />
+<div class="section" id="constant-time-o-1">
+<h3>Constant time \(O(1)\)<a class="headerlink" href="#constant-time-o-1" title="Permalink to this headline">¶</a></h3>
+<p>An algorithm is said to run in <em>constant</em> time if its complexity is \(O(1)\). This is usually considered the <em>fastest</em> case (which is true but only in the <em>asymptotic</em> sense). No matter what the input size is, the program will take the same amount of time to terminate. Let us consider some examples:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Hello</span> <span class="pre">World!</span></code>:</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hello World!&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>No matter what <code class="docutils literal notranslate"><span class="pre">n</span></code> is, the function does the same thing, which takes the same time. Therefore its complexity is constant.</p>
+<ul class="simple">
+<li><p>Checking if an integer is odd or not:</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">n</span> <span class="o">&amp;</span> <span class="mi">1</span> <span class="o">==</span> <span class="mi">1</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="mi">7</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="mi">2349017324987123948729382</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>True
+False
+</pre></div>
+</div>
+</div>
+</div>
+<p>In this case, we only need to check if the zeroth bit of the binary representation is set to 1. The number of operations does not depend on the value or the size of the input number.</p>
+<ul class="simple">
+<li><p>Searching a dictionary:</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">d</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">d</span><span class="p">[</span><span class="s1">&#39;B&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">d</span><span class="p">[</span><span class="s1">&#39;C&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;B&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>2
+</pre></div>
+</div>
+</div>
+</div>
+<p>Dictionaries are data structures which can be queried in constant time. If we have a key, we can retrieve an element instantaneously.</p>
+</div>
+<hr class="docutils" />
+<div class="section" id="linear-time-o-n">
+<h3>Linear time \(O(n)\)<a class="headerlink" href="#linear-time-o-n" title="Permalink to this headline">¶</a></h3>
+<p>This complexity appears in real-life problems much more frequently than constant time. The program is said to run in <em>linear</em> time if the time it takes is proportional to the input size:</p>
+<ul class="simple">
+<li><p>Finding a maximum in an unsorted list:</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">l</span><span class="p">):</span>
+    <span class="n">_max</span> <span class="o">=</span> <span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">l</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="n">_max</span><span class="p">:</span>
+            <span class="n">_max</span>  <span class="o">=</span> <span class="n">i</span>       
+    <span class="k">return</span> <span class="n">_max</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="o">-</span><span class="mi">3</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>9
+</pre></div>
+</div>
+</div>
+</div>
+<p>As we do not know anything about the order of elements in this list, we need to check every element in order to <em>see</em> if it is not the greatest. The longer the list, the more such checks are needed. In general, when we need to go trough some data structure a constant number of times, we are dealing with linear time.</p>
+</div>
+<hr class="docutils" />
+<div class="section" id="quadratic-time-o-n-2">
+<h3>Quadratic time \(O(n^2)\)<a class="headerlink" href="#quadratic-time-o-n-2" title="Permalink to this headline">¶</a></h3>
+<p>The <em>quadratic</em> time complexity is also a very popular case. It often might not be the most efficient solution and can point to better complexities such as \(O(n*log(n))\). However, there are problems in which such traversal is necessary.</p>
+<ul class="simple">
+<li><p><strong>Selection sort</strong>:</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">swap</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">l</span><span class="p">):</span>
+    <span class="n">temp</span> <span class="o">=</span> <span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">l</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+    <span class="n">l</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp</span>
+
+<span class="k">def</span> <span class="nf">selectionSort</span><span class="p">(</span><span class="n">l</span><span class="p">):</span>
+    
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+    
+    <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+        <span class="n">swap</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="o">+</span><span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">:]</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">:])),</span><span class="n">l</span><span class="p">)</span>
+        <span class="n">i</span><span class="o">+=</span><span class="mi">1</span>
+        
+    <span class="k">return</span> <span class="n">l</span>
+    
+<span class="nb">print</span><span class="p">(</span><span class="n">selectionSort</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>[2, 3, 3, 4, 5, 6, 7, 8, 9]
+</pre></div>
+</div>
+</div>
+</div>
+<p>The algorithm works as follows:</p>
+<ol class="simple">
+<li><p>Find the minimum of the list and swap it with the first element.</p></li>
+<li><p>Now consider all elements behind the first index</p></li>
+<li><p>Find the minimum of this sublist and swap it with the first element (of the sublist)S</p></li>
+</ol>
+<p>A diagram says more than a 1000 words:</p>
+<div class="figure align-default">
+<a class="reference internal image-reference" href="../../_images/SelectionSort.png"><img alt="../../_images/SelectionSort.png" src="../../_images/SelectionSort.png" style="width: 60%;" /></a>
+</div>
+<p>If we calculate the sum of operations (arithmetic series) we get \(\frac{n*(n+1)}{2} = O(n^2)\). Selection Sort is considered a rather inefficient sorting algorithm.</p>
+<ul class="simple">
+<li><p>Adding Matrices:</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#Adds two square matrices of the same size</span>
+<span class="k">def</span> <span class="nf">addMatrix</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">):</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)):</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">])):</span>
+            
+            <span class="n">temp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">])</span>
+            
+        <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+        
+    <span class="k">return</span> <span class="n">res</span>
+            
+        
+<span class="nb">print</span><span class="p">(</span><span class="n">addMatrix</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]],[[</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">]]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>[[4, 4, 4], [4, 4, 4], [4, 4, 4]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>When we want to add two matrices of side length \(n\), we have to access all of the cells in the matrix, therefore perform \(n^2\) additions.</p>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="different-complexities">
+<h2>Different complexities<a class="headerlink" href="#different-complexities" title="Permalink to this headline">¶</a></h2>
+<p>Apart from the three complexities, there are many more which show up quite often. The most notable ones are (we will discuss some of them later)</p>
+<ol class="simple">
+<li><p>Logarythmic \(O(log(n))\) - present in e.g. Binary Search.</p></li>
+<li><p>Loglinear \(O(n*log(n))\) - e.g. Merge Sort.</p></li>
+<li><p>Multi-variable \(O(n*k)\) - e.g. searching for a substing of length \(k\) in a string of length \(n\).</p></li>
+<li><p>Exponential \(O(a^n)\), \(a &gt; 1\) - this is bad.</p></li>
+<li><p>Factorial \(O(n!)\) - even worse (producing all permutations of a string).</p></li>
+</ol>
+</div>
+<hr class="docutils" />
+<div class="section" id="best-worst-and-average-case-runtimes">
+<h2>Best, worst and average case runtimes<a class="headerlink" href="#best-worst-and-average-case-runtimes" title="Permalink to this headline">¶</a></h2>
+<p>While analyzing algorithms, it is worth considering how the program behaves based on different inputs.</p>
+<ul class="simple">
+<li><p>Best-case runtime complexity is a function defined by the minimum number of steps taken on any input.</p></li>
+<li><p>Worst-case runtime complexity considers the maximum number of steps taken by the algorithm.</p></li>
+<li><p>Average case runtime complexity is probably the most accurate measure of the performance of an algorithm and takes into account the behaviour of the program when fed with an <em>average</em> input.</p></li>
+</ul>
+<p>In production, both worst and average runtime complexities are considered (imagine an algorithm with an average \(O(n^2)\) and worst-case \(O(n!)\) - that could be easily exploited!)</p>
+<p>Let us now perform an analysis on a simple search algorithm which finds the number \(x\) in a list \(l\)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">simpleSearch</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">l</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">l</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="n">i</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+            
+<span class="nb">print</span><span class="p">(</span><span class="n">simpleSearch</span><span class="p">(</span><span class="mi">1</span><span class="p">,[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">23</span><span class="p">,</span><span class="mi">4</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>5
+</pre></div>
+</div>
+</div>
+</div>
+<p>Our assumption is that \(x\) is in the list and that the probability that it is at a particular index is uniform.</p>
+<ol class="simple">
+<li><p>Best-case: \(O(1)\) - in is the zeroth cell</p></li>
+<li><p>Worst-case: \(O(n)\) - have to go through the whole list</p></li>
+<li><p>Average case: \(O(\frac{n}{2}) = O(n)\) - the element will be <em>somewhere in the middle</em></p></li>
+</ol>
+<p>In this case, we can predict that the program will run in linear time.</p>
+</div>
+<hr class="docutils" />
+<div class="section" id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Which Big O</strong> category do these functions fall into (least upper bound):</p></li>
+</ul>
+<ol class="simple">
+<li><p>\( 4n^3 + 2n\)</p></li>
+<li><p>\(\sum_{i=0}^{n} i^2\)</p></li>
+<li><p>\(log(log(n))\)</p></li>
+<li><p>34562</p></li>
+</ol>
+<div class="dropdown admonition">
+<p class="admonition-title">Anwser</p>
+<ol class="simple">
+<li><p>\(O(n^3)\)</p></li>
+<li><p>\(O(n^3)\)</p></li>
+<li><p>\(O(log(log(n))\)</p></li>
+<li><p>\(O(1)\)</p></li>
+</ol>
+</div>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>Multiplying Matrices</strong> We want to multiply two square matrices of side length \(n\) of the same size using the following code:</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">mulMatrix</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">):</span>
+    
+    <span class="n">C</span> <span class="o">=</span> <span class="p">[([</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">))]</span>
+    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)):</span>
+            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)):</span>
+                <span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">+=</span> <span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">k</span><span class="p">]</span><span class="o">*</span><span class="n">B</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="n">j</span><span class="p">])</span>
+                
+    <span class="k">return</span> <span class="n">C</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="n">mulMatrix</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">]],</span>
+                <span class="p">[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>[[3, 6, 9], [6, 12, 18], [9, 18, 27]]
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>What is the algorythmic complexity of this algorithm?</strong></p>
+<div class="dropdown admonition">
+<p class="admonition-title">Anwser</p>
+<p>\(O(n^3)\)</p>
+</div>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>Insertion Sort</strong> algorithm works according to the steps:</p></li>
+</ul>
+<ol class="simple">
+<li><p>Take the minimum element from the list and swap it with the first element.</p></li>
+<li><p>Now elements before index 1 are sorted</p></li>
+<li><p>Take the minimum element from the unsorted portion of the list and put it at an appropriate position in the sorted portion.</p></li>
+<li><p>Repeat untill the whole list is sorted.</p></li>
+</ol>
+<p>The following GIF should be helpful:</p>
+<img src="https://upload.wikimedia.org/wikipedia/commons/9/9c/Insertion-sort-example.gif" width="80%">
+<p>Source: <a class="reference external" href="https://upload.wikimedia.org/wikipedia/commons/9/9c/Insertion-sort-example.gif">Wikimedia Commons</a></p>
+<p><strong>What is the algorythmic complexity of this algorithm?</strong></p>
+<div class="dropdown admonition">
+<p class="admonition-title">Anwser</p>
+<p>\(O(n^2)\)</p>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="references">
+<h2>References:<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Victor S.Adamchik, CMU, 2009 <a class="reference external" href="https://www.cs.cmu.edu/~adamchik/15-121/lectures/Algorithmic%20Complexity/complexity.html">Algorythmic Complexity</a></p></li>
+<li><p>Adrian Mejia, Medium, 2018 <a class="reference external" href="https://medium.com/&#64;amejiarosario/8-time-complexity-examples-that-every-programmer-should-know-171bd21e5ba">8 time complexity examples that every programmer should know</a></p></li>
+</ul>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "primer-computational-mathematics/book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./b_coding/Fundamentals of Computer Science"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="intro.html" title="previous page">Fundamentals of Computer Science</a>
+    <a class='right-next' id="next-link" href="../Intro to Python/intro.html" title="next page">Intro to Python</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Imperial College London<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../../_static/js/index.js"></script>
+    
+  </body>
+</html>

@@ -1,0 +1,1025 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Numerical Methods &#8212; ESE Jupyter Material</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../../../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/sphinx-book-theme.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/language_data.js"></script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/mystnb.js"></script>
+    <script src="../../../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".cell"
+        const thebe_selector_input = ".cell_input div.highlight"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../../index.html">
+  
+  <img src="../../../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">ESE Jupyter Material</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  
+  <ul class="nav sidenav_l1">
+  <li class="">
+    <a href="../../../intro.html">Landing page</a>
+  </li>
+  <li class="">
+    <a href="../../../a_modules/intro.html">Modules</a>
+  </li>
+  <li class="">
+    <a href="../../../b_coding/intro.html">Coding</a>
+  </li>
+  <li class="">
+    <a href="../../intro.html">Mathematics</a>
+  </li>
+  <li class="">
+    <a href="../../../d_geosciences/intro.html">Geosciences</a>
+  </li>
+  <li class="">
+    <a href="../../../e_extra/intro.html">Further resources</a>
+  </li>
+  <li class="">
+    <a href="../../../genindex.html">Index</a>
+  </li>
+</ul>
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../../_sources/c_mathematics/numerical_methods/NM1_2020/NM1_2020_lecture7.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        
+        <a class="issues-button"
+            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2Fc_mathematics/numerical_methods/NM1_2020/NM1_2020_lecture7.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/c_mathematics/numerical_methods/NM1_2020/NM1_2020_lecture7.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#" class="nav-link">Numerical Methods</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#lecture-7-numerical-linear-algebra-iii" class="nav-link">Lecture 7: Numerical Linear Algebra III</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#contents" class="nav-link">Contents</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#i-ill-conditioned-matrices" class="nav-link">I.     Ill - Conditioned Matrices</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#ii-round-off-errors" class="nav-link">II.    Round Off Errors</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#iii-algorithm-stability" class="nav-link">III.   Algorithm Stability</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#iv-direct-vs-iterative-methods" class="nav-link">IV.   Direct vs Iterative Methods</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#v-iterative-methods-jacobi-s-method" class="nav-link">V.    Iterative Methods - Jacobi’s Method</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#vi-iterative-methods-gauss-seidel-method" class="nav-link">VI.   Iterative Methods - Gauss - Seidel Method</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#vii-sparse-matrices" class="nav-link">VII.  Sparse Matrices</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#viii-extra-how-to-guide" class="nav-link">VIII.  EXTRA: How to Guide</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#learning-objectives" class="nav-link">Learning objectives:</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id1" class="nav-link">I.     Ill-conditioned matrices</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#vector-norms" class="nav-link">Vector norms</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#matrix-norms" class="nav-link">Matrix norms</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#span-style-color-blue-exercise-7-1-matrix-norms-span" class="nav-link"><span style="color:blue">Exercise 7.1: matrix norms</span></a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#matrix-conditioning" class="nav-link">Matrix conditioning</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h5">
+            <a href="#example" class="nav-link">Example</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#span-style-color-blue-exercise-7-2-ill-conditioned-matrix-span" class="nav-link"><span style="color:blue">Exercise 7.2: Ill-conditioned matrix</span></a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#ii-roundoff-errors" class="nav-link">II.    Roundoff errors</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id2" class="nav-link">III.    Algorithm stability</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id3" class="nav-link">IV.    Direct vs Iterative Methods</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id4" class="nav-link">V.    Iterative methods - Jacobi’s method</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#vi-iterative-methods-gauss-seidel-s-method" class="nav-link">VI.    Iterative methods - Gauss-Seidel’s method</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#span-style-color-blue-exercise-7-3-implement-gauss-seidel-s-method-span" class="nav-link"><span style="color:blue">Exercise 7.3: Implement Gauss-Seidel’s method.</span></a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#viii-sparse-matrices" class="nav-link">VIII.    Sparse matrices</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#an-example-of-a-sparse-matrix" class="nav-link">An example of a sparse matrix</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#extra-how-to-guide" class="nav-link">EXTRA.    How - to - Guide</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+    </ul>
+</nav>
+
+
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="numerical-methods">
+<h1>Numerical Methods<a class="headerlink" href="#numerical-methods" title="Permalink to this headline">¶</a></h1>
+</div>
+<div class="section" id="lecture-7-numerical-linear-algebra-iii">
+<h1>Lecture 7: Numerical Linear Algebra III<a class="headerlink" href="#lecture-7-numerical-linear-algebra-iii" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="contents">
+<h2>Contents<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="i-ill-conditioned-matrices">
+<h2>I.     Ill - Conditioned Matrices<a class="headerlink" href="#i-ill-conditioned-matrices" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="ii-round-off-errors">
+<h2>II.    Round Off Errors<a class="headerlink" href="#ii-round-off-errors" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="iii-algorithm-stability">
+<h2>III.   Algorithm Stability<a class="headerlink" href="#iii-algorithm-stability" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="iv-direct-vs-iterative-methods">
+<h2>IV.   Direct vs Iterative Methods<a class="headerlink" href="#iv-direct-vs-iterative-methods" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="v-iterative-methods-jacobi-s-method">
+<h2>V.    Iterative Methods - Jacobi’s Method<a class="headerlink" href="#v-iterative-methods-jacobi-s-method" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="vi-iterative-methods-gauss-seidel-method">
+<h2>VI.   Iterative Methods - Gauss - Seidel Method<a class="headerlink" href="#vi-iterative-methods-gauss-seidel-method" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="vii-sparse-matrices">
+<h2>VII.  Sparse Matrices<a class="headerlink" href="#vii-sparse-matrices" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="viii-extra-how-to-guide">
+<h2>VIII.  EXTRA: How to Guide<a class="headerlink" href="#viii-extra-how-to-guide" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="learning-objectives">
+<h2>Learning objectives:<a class="headerlink" href="#learning-objectives" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Introduce ill-conditioned matrices (via matrix norms and condition number)</p></li>
+<li><p>Consider direct vs iterative/indirect methods</p></li>
+<li><p>Example iterative algorithm: the Jacobi and Gauss-Seidel methods</p></li>
+<li><p>Sparse matrices and a pointer to more advanced algorithms (supplementary readings)</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">scipy.linalg</span> <span class="k">as</span> <span class="nn">sl</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id1">
+<h2>I.     Ill-conditioned matrices<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>The conditioning (or lack of, i.e. the ill-conditioning) of matrices we are trying to invert (to obtain the inverse, or to find the solution to a linear matrix system) is incredibly important for the success of any algorithm.</p>
+<p>When we started talking about matrices we noted that as long as the matrix is non-singular, i.e. <span class="math notranslate nohighlight">\(\det(A)\ne 0\)</span>, then an inverse exists, and a linear system with that <span class="math notranslate nohighlight">\(A\)</span> has a unique solution.</p>
+<p>But what happens when we consider a matrix that is nearly singular, i.e. <span class="math notranslate nohighlight">\(\det(A)\)</span> is very small?</p>
+<p>Well smallness is a relative term and so we need to ask the question of how large or small <span class="math notranslate nohighlight">\(\det(A)\)</span> is compared to something.</p>
+<p>That something is the <em>norm</em> of the matrix.</p>
+<p>Basically matrices come in all shape and sizes, and their determinants come in all kinds of values. We know that a ill conditioned matrix has a determinant that is small in absolute terms, but the size of determinants is a relative thing, and we need some kind of comparison who determine what is “small” and what is “large”. Thus, we can create such a reference calculating the Norms of the matrix. For now, we will explore how to find the norm, and some slides later, we will explore how does the Norm relate to the ill conditioning of the matrix.</p>
+<p>Note: for Norms, we are always talking in absolute terms, meaning Norms are always positive.</p>
+<p>Note: for Norms, we use the <span class="math notranslate nohighlight">\(||||\)</span></p>
+<div class="section" id="vector-norms">
+<h3>Vector norms<a class="headerlink" href="#vector-norms" title="Permalink to this headline">¶</a></h3>
+<p>Just as for vectors <span class="math notranslate nohighlight">\(\pmb{v}\)</span> (assumed a <span class="math notranslate nohighlight">\(n\times 1\)</span> column vector) where we have multiple possible norms to help us decide quantify the magnitude of a vector:</p>
+<p>\begin{align}
+|\pmb{v}|<em>2 &amp; = \sqrt{v_1^2 + v_2^2 + \ldots + v_n^2} = \left(\sum</em>{i=1}^n v_i^2 \right)^{1/2}, &amp;\quad{\textrm{the two-norm or Euclidean norm}}\
+|\pmb{v}|<em>1  &amp; = |v_1| + |v_2| + \ldots + |v_n| = \sum</em>{i=1}^n |v_i|, &amp;\quad{\textrm{the one-norm or taxi-cab norm}}\
+|\pmb{v}|<em>{\infty}  &amp;= \max{|v_1|,|v_2|, \ldots, |v_n| = \max</em>{i=1}^n |v_i|, &amp;\quad{\textrm{the max-norm or infinity norm}}
+\end{align}</p>
+</div>
+<div class="section" id="matrix-norms">
+<h3>Matrix norms<a class="headerlink" href="#matrix-norms" title="Permalink to this headline">¶</a></h3>
+<p>We can define measures of the size of matrices, e.g. for <span class="math notranslate nohighlight">\(A\)</span> which for complete generality we will assume is of shape <span class="math notranslate nohighlight">\(m\times n\)</span>:</p>
+<p>\begin{align}
+|A|<em>F &amp; = \left(\sum</em>{i=1}^m \sum_{j=1}^n A_{ij}^2 \right)^{1/2}, &amp;\quad{\textrm{the matrix Euclidean or Frobenius norm}}\
+|A|<em>{\infty} &amp; = \max</em>{i=1}^m \sum_{j=1}^n|A_{i,j}|, &amp;\quad{\textrm{the maximum absolute row-sum norm}}\
+\end{align}</p>
+<p>Note that while these norms give different results (in both the vector and matrix cases), they are consistent or equivalent in that they are always within a constant factor of one another (a result that is true for finite-dimensional or discrete problems as here). This means we don’t really need to worry too much about which norm we’re using.</p>
+<p>Let’s evaluate some examples.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">10.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">],[</span><span class="mf">6.</span><span class="p">,</span> <span class="mf">5.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">],[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">,</span> <span class="mf">7.</span><span class="p">]])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>[[10.  2.  1.]
+ [ 6.  5.  4.]
+ [ 1.  4.  7.]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">sl</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">A</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>15.748015748023622
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># the Frobenius norm - the default</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sl</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="s1">&#39;fro&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>15.748015748023622
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># the maximum absolute row-sum</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sl</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>15.0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># the maximum absolute column-sum</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sl</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>17.0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># the two-norm - note not the same as the Frobenius norm - also termed the spectral norm</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sl</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>13.793091098640064
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># which is defined as (!!!!)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">sl</span><span class="o">.</span><span class="n">eigvals</span><span class="p">(</span> <span class="n">A</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">A</span><span class="p">))))))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>13.793091098640064
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="span-style-color-blue-exercise-7-1-matrix-norms-span">
+<h3><span style="color:blue">Exercise 7.1: matrix norms</span><a class="headerlink" href="#span-style-color-blue-exercise-7-1-matrix-norms-span" title="Permalink to this headline">¶</a></h3>
+<p>Write some code to explicitly compute the two matrix norms defined mathematically above (i.e. the Frobenius and the maximum absolute row-sum norms) and compare against the values found above using in-built scipy functions.</p>
+<p>Also, based on the above code and comments, what is the mathematical definition of the 1-norm and the 2-norm?</p>
+</div>
+<div class="section" id="matrix-conditioning">
+<h3>Matrix conditioning<a class="headerlink" href="#matrix-conditioning" title="Permalink to this headline">¶</a></h3>
+<p>The (ill-)conditioning of a matrix is measured with the matrix condition number:</p>
+<div class="math notranslate nohighlight">
+\[\textrm{cond}(A) = \|A\|\|A^{-1}\|\]</div>
+<p>If this is close to one then <span class="math notranslate nohighlight">\(A\)</span> is termed well-conditioned; the value increases with the degree of ill-conditioning, reaching infinity for a singular matrix.</p>
+<p>Let’s evaluate the condition number for the matrix above.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">10.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">],[</span><span class="mf">6.</span><span class="p">,</span> <span class="mf">5.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">],[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">,</span> <span class="mf">7.</span><span class="p">]])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">cond</span><span class="p">(</span><span class="n">A</span><span class="p">))</span>  <span class="c1"># let&#39;s use the in-built condition number function</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sl</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">sl</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">sl</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">A</span><span class="p">),</span><span class="mi">2</span><span class="p">))</span>  <span class="c1"># so the default condition number uses the matrix two-norm</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">cond</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="s1">&#39;fro&#39;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sl</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="s1">&#39;fro&#39;</span><span class="p">)</span><span class="o">*</span><span class="n">sl</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">sl</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">A</span><span class="p">),</span><span class="s1">&#39;fro&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>[[10.  2.  1.]
+ [ 6.  5.  4.]
+ [ 1.  4.  7.]]
+10.713371881346792
+10.713371881346786
+12.463616561943589
+12.463616561943587
+</pre></div>
+</div>
+</div>
+</div>
+<p>The condition number is expensive to compute, and so in practice the relative size of the determinant of the matrix can be gauged based on the magnitude of the entries of the matrix.</p>
+<div class="section" id="example">
+<h4>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h4>
+<p>We know that a singular matrix does not result in a unique solution to its corresponding linear matrix system. But what are the consequences of near-singularity (ill-conditioning)?</p>
+<p>Consider the following example</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\left(
+  \begin{array}{cc}
+    2 &amp; 1 \\
+    2 &amp; 1 + \epsilon  \\
+  \end{array}
+\right)\left(
+  \begin{array}{c}
+    x \\
+    y \\
+  \end{array}
+\right) = \left(
+  \begin{array}{c}
+    3 \\
+    0 \\
+  \end{array}
+\right)
+\end{split}\]</div>
+<p>Clearly when <span class="math notranslate nohighlight">\(\epsilon=0\)</span> the two columns/rows are not linear independent, and hence the determinant of this matrix is zero, the condition number is infinite, and the linear system does not have a solution (as the two equations would be telling us the contradictory information that <span class="math notranslate nohighlight">\(2x+y\)</span> is equal to 3 and is also equal to 0).</p>
+</div>
+</div>
+<div class="section" id="span-style-color-blue-exercise-7-2-ill-conditioned-matrix-span">
+<h3><span style="color:blue">Exercise 7.2: Ill-conditioned matrix</span><a class="headerlink" href="#span-style-color-blue-exercise-7-2-ill-conditioned-matrix-span" title="Permalink to this headline">¶</a></h3>
+<p>For the example above, consider a range of small values for <span class="math notranslate nohighlight">\(\epsilon\)</span> and calculate the matrix determinant and condition number.</p>
+<p>You should find for <span class="math notranslate nohighlight">\(\epsilon=0.001\)</span> that <span class="math notranslate nohighlight">\(\det(A)=0.002\)</span> (i.e. quite a lot smaller than the other coefficients in the matrix) and <span class="math notranslate nohighlight">\(\textrm{cond}(A)\approx 5000\)</span>.</p>
+<p>Using <code class="docutils literal notranslate"><span class="pre">sl.inv(A)</span> <span class="pre">&#64;</span> <span class="pre">b</span></code> you should also be able to compute the solution <span class="math notranslate nohighlight">\(\pmb{x}=(1501.5,-3000.)^T\)</span>.</p>
+<p>What happens when you make a very small change to the coefficients of the matrix (e.g. set <span class="math notranslate nohighlight">\(\epsilon=0.002\)</span>)?</p>
+<p>You should find that this change of just <span class="math notranslate nohighlight">\(0.1\%\)</span> in one of the coefficients of the matrix results in a <span class="math notranslate nohighlight">\(100\%\)</span> change in both components of the solution!</p>
+<p><span style="color:red">This is the consequence of the matrix being ill-conditioned - we should not trust the numerical solution to ill-conditioned problems.</span></p>
+<p>A way to see this is to recognise that computers do not perform arithmetic exactly - they necessarily have to <a class="reference external" href="http://www.mathwords.com/t/truncating_a_number.htm">truncate numbers</a> at a certain number of significant figures, performing multiple operations with these truncated numbers can lead to an erosion of accuracy. Often this is not a problem, but these so-called <a class="reference external" href="http://mathworld.wolfram.com/RoundoffError.html">roundoff</a> errors in algorithms generating <span class="math notranslate nohighlight">\(A\)</span>, or operating on <span class="math notranslate nohighlight">\(A\)</span> as in Gaussian elimination, will lead to small inaccuracies in the coefficients of the matrix. Hence, in the case of ill-conditioned problems, will fall foul of the issue seen above where a very small error in an input to the algorithm led to a far larger error in an output.</p>
+</div>
+</div>
+<div class="section" id="ii-roundoff-errors">
+<h2>II.    Roundoff errors<a class="headerlink" href="#ii-roundoff-errors" title="Permalink to this headline">¶</a></h2>
+<p>Note that in this course we have largely ignored the limitations of the floating point arithmetic performed by computers, including round-off errors.</p>
+<p>This is often the topic of the first lecture of courses, or first chapter of books, on Numerical Methods or Numerical Analysis - do take a look at some examples if you are interested.</p>
+<p>Also take a look at <em>D. Goldberg 1991: What every computer scientist should know about floating-point arithmetic, ACM Computing Surveys 23, Pages 5-48</em>.</p>
+<p>For some examples of catastrophic failures due to round off errors see <a class="reference external" href="https://www.ma.utexas.edu/users/arbogast/misc/disasters.html">https://www.ma.utexas.edu/users/arbogast/misc/disasters.html</a> and <a href="https://profs.info.uaic.ro/~ancai/CN/bibliografie/CN_disasters.htm">Prof. Kees Vuik page link updated since previous one had access restriction</a> and <a class="reference external" href="http://www.ima.umn.edu/~arnold/disasters/sleipner.html">the sinking of the Sleipner A offshore platform</a>.</p>
+<p>As an example, consider the mathematical formula</p>
+<div class="math notranslate nohighlight">
+\[f(x)=(1-x)^{10}.\]</div>
+<p>We can of course relatively easily expand this out by hand</p>
+<div class="math notranslate nohighlight">
+\[f(x)=1- 10x + 45x^2 - 120x^3 + 210x^4 - 252x^5 + 210x^6 - 120x^7 + 45x^8 - 10x^9 + x^{10}.\]</div>
+<p>Mathematically these two expressions for <span class="math notranslate nohighlight">\(f(x)\)</span> are identical; when evaluated by a computer different operations will be performed, which (we hope) should give the same answer. For numbers <span class="math notranslate nohighlight">\(x\)</span> away from <span class="math notranslate nohighlight">\(1\)</span> these two expressions do return (pretty much) the same answer.</p>
+<p>However, for <span class="math notranslate nohighlight">\(x\)</span> close to 1 the second expression adds and subtracts individual terms of increasing size which should largely cancel out, but they don’t to sufficient accuracy due to round off errors; these errors accumulate with more and more operations, leading a loss of significance <a class="reference external" href="https://en.wikipedia.org/wiki/Loss_of_significance">https://en.wikipedia.org/wiki/Loss_of_significance</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f1</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">-</span> <span class="n">x</span><span class="p">)</span><span class="o">**</span><span class="mi">10</span>
+
+<span class="k">def</span> <span class="nf">f2</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">-</span> <span class="mf">10.</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="mf">45.</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mf">120.</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">3</span> <span class="o">+</span>
+           <span class="mf">210.</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">4</span> <span class="o">-</span> <span class="mf">252.</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">5</span> <span class="o">+</span> <span class="mf">210.</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">6</span> <span class="o">-</span>
+           <span class="mf">120.</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">7</span> <span class="o">+</span> <span class="mf">45.</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">8</span> <span class="o">-</span> <span class="mf">10.</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">9</span> <span class="o">+</span> <span class="n">x</span><span class="o">**</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="n">x</span><span class="o">=</span><span class="mf">0.6</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f1</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="n">f2</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="mf">1.</span><span class="o">-</span><span class="n">f1</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">/</span><span class="n">f2</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="c1"># values computed in different ways and their relative difference</span>
+<span class="n">x</span><span class="o">=</span><span class="mf">0.8</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f1</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="n">f2</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="mf">1.</span><span class="o">-</span><span class="n">f1</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">/</span><span class="n">f2</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> 
+<span class="n">x</span><span class="o">=</span><span class="mf">0.95</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f1</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="n">f2</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="mf">1.</span><span class="o">-</span><span class="n">f1</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">/</span><span class="n">f2</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>0.00010485760000000006 0.00010485760000436464 4.1623815505431594e-11
+1.0239999999999978e-07 1.0240001356576212e-07 1.3247813024364063e-07
+9.765625000000086e-14 1.2378986724570495e-13 0.21111273343425307
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="k">def</span> <span class="nf">f1</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">-</span> <span class="n">x</span><span class="p">)</span><span class="o">**</span><span class="mi">10</span>
+
+<span class="k">def</span> <span class="nf">f2</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">-</span> <span class="mf">10.</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="mf">45.</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mf">120.</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">3</span> <span class="o">+</span>
+           <span class="mf">210.</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">4</span> <span class="o">-</span> <span class="mf">252.</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">5</span> <span class="o">+</span> <span class="mf">210.</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">6</span> <span class="o">-</span>
+           <span class="mf">120.</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">7</span> <span class="o">+</span> <span class="mf">45.</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">8</span> <span class="o">-</span> <span class="mf">10.</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">9</span> <span class="o">+</span> <span class="n">x</span><span class="o">**</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="n">xi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span> <span class="n">f1</span><span class="p">(</span><span class="n">xi</span><span class="p">),</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;(1. - x)**10 Unexpanded&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span> <span class="n">f2</span><span class="p">(</span><span class="n">xi</span><span class="p">),</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;(1. - x)**10 Expanded&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="s2">&quot;True&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Seems Not Different, right?&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span> <span class="mf">1.</span> <span class="o">-</span><span class="n">f1</span><span class="p">(</span><span class="n">xi</span><span class="p">)</span><span class="o">/</span><span class="n">f2</span><span class="p">(</span><span class="n">xi</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Relative Difference in %&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="s2">&quot;True&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;That&#39;s exactly why it&#39;s dangerous!!!&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="c1">## Zoomed in Plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mf">0.75</span><span class="p">,</span> <span class="mf">1.25</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span> <span class="mf">1.</span> <span class="o">-</span><span class="n">f1</span><span class="p">(</span><span class="n">xi</span><span class="p">)</span><span class="o">/</span><span class="n">f2</span><span class="p">(</span><span class="n">xi</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Relative Difference in %&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="s2">&quot;True&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;That&#39;s exactly why it&#39;s DANGERous!!! But with the DANGER ZOOMED AND ALL CAPPED&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+
+
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/NM1_2020_lecture7_24_0.png" src="../../../_images/NM1_2020_lecture7_24_0.png" />
+<img alt="../../../_images/NM1_2020_lecture7_24_1.png" src="../../../_images/NM1_2020_lecture7_24_1.png" />
+<img alt="../../../_images/NM1_2020_lecture7_24_2.png" src="../../../_images/NM1_2020_lecture7_24_2.png" />
+</div>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>III.    Algorithm stability<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p><span style="color:red">The susceptibility for a numerical algorithm to dampen (inevitable) errors, rather than to magnify them as we have seen in examples above, is termed <em>stability</em>.  This is a concern for numerical linear algebra as considered here, as well as for the numerical solution of differential equations as you will see in NM2.  In that case you don’t want small errors to grow and accumulate as you propagate the solution to an ODE or PDE forward in time say.</span></p>
+<p><span style="color:red">If your algorithm is not inherently stable, or has other limitation, you need to understand and appreciate this, as it can cause catastrophic failures!</span></p>
+</div>
+<div class="section" id="id3">
+<h2>IV.    Direct vs Iterative Methods<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>Two types/families of methods exist to solve matrix systems.  These are termed <em>direct</em> methods and <em>iterative</em> (or <em>indirect</em>) methods.</p>
+<p>Direct methods perform operations on the linear equations (the matrix system), e.g. the substitution of one equation into another which we performed two weeks ago for your example <span class="math notranslate nohighlight">\(2\times 2\)</span> system considered in MM1. This (and the subsequent Gaussian elimination algorithm) transformed the equations making up the linear system into equivalent ones with the aim of eliminating unknowns from some of the equations and hence allowing for easy solution through back (or forward) substitution.</p>
+<p>Also, in MM1 you (may have) learnt Cramer’s rule which gives an explicit formula for the inverse of a matrix, or for the solution of a linear matrix system.  It was pointed out that the computational cost (in terms of arithmetic operations required; also termed complexity) scaled like <span class="math notranslate nohighlight">\((n+1)!\)</span>, whereas the Gaussian elimination method (which is basically the substitution method descrined above, and implemented over the previous two lectures) scaled like <span class="math notranslate nohighlight">\(n^3\)</span>.  For large <span class="math notranslate nohighlight">\(n\)</span> Gaussian elimination will clearly be more efficient - you considered the case where <span class="math notranslate nohighlight">\(n=100\)</span> in MM1 for example. <span class="math notranslate nohighlight">\(n\)</span> here refers to the number of unknowns or equations, or sometimes termed the <em>degrees of freedom</em> of the problem.</p>
+<p>An advantage of direct methods is that they provide the exact solution (assuming exact arithmetic, i.e. ignoring the round off related issues mentioned above) in a finite number of operations.</p>
+<p>However, as pointed out previously, <span class="math notranslate nohighlight">\(n\)</span> could be billions for hard-core applications such as in numerical weather forecasting. In this case the <span class="math notranslate nohighlight">\(n^3\)</span> operations required of a direct algorithm such as Gaussian elimination is completely prohibitive. In an attempt to further reduce this cost <em>iterative</em> algorithms were devised.</p>
+<p>These algorithms start with an initial guess at the solution (<span class="math notranslate nohighlight">\(\pmb{x}_0\)</span>), and <em>iteratively</em> improve this producing a series of approximate answers <span class="math notranslate nohighlight">\(\pmb{x}_k\)</span>. For the <em>exact</em> answer to the matrix system <span class="math notranslate nohighlight">\(A\pmb{x} = \pmb{b}\)</span>, we know that the residual vector <span class="math notranslate nohighlight">\(\pmb{r} = A\pmb{x}-\pmb{b}\)</span> is zero. For our iterative procedure, we can use the norm of the residual vector <span class="math notranslate nohighlight">\(\pmb{r}_k = A\pmb{x}_k-\pmb{b}\)</span> based on the approximate solution <span class="math notranslate nohighlight">\(\pmb{x}_k\)</span>, as a measure of how close we are to solving the equation (the norm <span class="math notranslate nohighlight">\(\|\pmb{r}_k\|\)</span> expresses this as a single number). As we iterate further, we hope to drive down this number and we may stop the iterations at some small (non-zero) residual norm tolerance level. The final iteration gives us an answer <span class="math notranslate nohighlight">\(\pmb{x}_k\)</span> which is still an approximation to the solution and not the exact solution we would obtain with direct methods.  The residual norm tolerance stopping criteria therefore needs to be thought about carefully, e.g. depending on how accurate a solution <span class="math notranslate nohighlight">\(\pmb{x}\)</span> we require.</p>
+<p>Since well through iterative methods, <span class="math notranslate nohighlight">\(\pmb{x}_k\)</span> is still very much an approximation rather than an exact answer, you could imagine why weather forecasting, which uses iterative methods, is still very much an approximation rather than an exact answer. However, our current exact methods are prohibitively expensive in terms of time taken, so iterative method is the best we have. You could imagine why weather forecasting is very strict on time. For large agricultural farms which use remote sensing for weather monitoring and forecast, it would be useless to tell them the exact solution to a storm a long time after the storm has passed and devastated the crop production because you tried to solve the equations involved exactly, and from the time the storm was on the horizon it took you such a long time to find the exact solution, assuming that such an exact solution even exist in the 1st place. Our most powerful supercomputers are needed for weather forecasting even if we used iterative methods, and many of us in the department will still find the computational power insufficient to tackle some of the problems at hand.</p>
+<p>We have already considered Gaussian elimination (and back substitution) as examples of direct solution methods. We’ll consider an example of an iterative method now.</p>
+</div>
+<div class="section" id="id4">
+<h2>V.    Iterative methods - Jacobi’s method<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p>Consider our matrix system</p>
+<div class="math notranslate nohighlight">
+\[A\pmb{x}=\pmb{b} \quad \iff \quad \sum_{j=1}^nA_{ij}x_j=b_i,\quad \textrm{for}\quad i=1,2,\ldots, n.\]</div>
+<p>Let’s rewrite this by pulling out the term involving <span class="math notranslate nohighlight">\(x_i\)</span> (i.e. for each row <span class="math notranslate nohighlight">\(i\)</span> pull out the diagonal from the summation):</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}A_{ii}x_i + \sum_{\substack{j=1\\ j\ne i}}^nA_{ij}x_j=b_i,\quad  i=1,2,\ldots, n.\end{split}\]</div>
+<p>We can then come up with a formula for our unknown <span class="math notranslate nohighlight">\(x_i\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}x_i = \frac{1}{A_{ii}}\left(b_i- \sum_{\substack{j=1\\ j\ne i}}^nA_{ij}x_j\right),\quad  i=1,2,\ldots, n.\end{split}\]</div>
+<p>Now of course for each individual <span class="math notranslate nohighlight">\(x_i\)</span>, all the other components of <span class="math notranslate nohighlight">\(\pmb{x}\)</span> appearing on the RHS are also unknown and so this is an example of an implicit formula which doesn’t help us directly, but does suggest the following iterative scheme:</p>
+<ul class="simple">
+<li><p>Starting from a guess at the solution <span class="math notranslate nohighlight">\(\pmb{x}^{(0)}\)</span></p></li>
+<li><p>iterate for <span class="math notranslate nohighlight">\(k&gt;0\)</span>
+<span class="math notranslate nohighlight">\($x_i^{(k)} = \frac{1}{A_{ii}}\left(b_i- \sum_{\substack{j=1\\ j\ne i}}^nA_{ij}x_j^{(k-1)}\right),\quad  i=1,2,\ldots, n.\)</span>$</p></li>
+</ul>
+<p>Note that for this iteration, for a fixed <span class="math notranslate nohighlight">\(k\)</span>, it does not matter in which order we perform the operations over <span class="math notranslate nohighlight">\(i\)</span> as the right hand side only contains the entries of <span class="math notranslate nohighlight">\(\pmb{x}\)</span> at the previous iteration.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">10.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mf">3.</span><span class="p">,</span> <span class="mf">5.</span><span class="p">],[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">14.</span><span class="p">,</span> <span class="mf">6.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">],[</span><span class="o">-</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">,</span> <span class="mf">16.</span><span class="p">,</span> <span class="o">-</span><span class="mi">4</span><span class="p">],[</span><span class="mf">5.</span> <span class="p">,</span><span class="mf">4.</span> <span class="p">,</span><span class="mf">3.</span> <span class="p">,</span><span class="mf">11.</span> <span class="p">]])</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mf">3.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">])</span>
+
+<span class="c1"># an initial guess at the solution - here just a vector of zeros of length the number of rows in A</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> 
+
+<span class="n">tol</span> <span class="o">=</span> <span class="mf">1.e-6</span> <span class="c1"># iteration tolerance</span>
+<span class="n">it_max</span> <span class="o">=</span> <span class="mi">1000</span> <span class="c1"># upper limit on iterations if we don&#39;t hit tolerance</span>
+<span class="n">residuals</span><span class="o">=</span><span class="p">[]</span> <span class="c1"># store residuals</span>
+
+<span class="k">for</span> <span class="n">it</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">it_max</span><span class="p">):</span>
+    <span class="n">x_new</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="c1"># initialise the new solution vector</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="n">x_new</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.</span><span class="o">/</span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">])</span> <span class="o">*</span> <span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:</span><span class="n">i</span><span class="p">],</span> <span class="n">x</span><span class="p">[:</span><span class="n">i</span><span class="p">])</span> 
+                                   <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:],</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]))</span>
+
+    <span class="n">residual</span> <span class="o">=</span> <span class="n">sl</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">A</span> <span class="o">@</span> <span class="n">x</span> <span class="o">-</span> <span class="n">b</span><span class="p">)</span>  <span class="c1"># calculate the norm of the residual r=Ax-b for this latest guess</span>
+    <span class="n">residuals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">residual</span><span class="p">)</span> <span class="c1"># store it for later plotting</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">residual</span> <span class="o">&lt;</span> <span class="n">tol</span><span class="p">):</span> <span class="c1"># if less than our required tolerance jump out of the iteration and end.</span>
+        <span class="k">break</span>
+
+    <span class="n">x</span> <span class="o">=</span> <span class="n">x_new</span> <span class="c1"># update old solution</span>
+
+<span class="c1"># plot the log of the residual against iteration number </span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">residuals</span><span class="p">)</span> <span class="c1"># plot the log of the residual against iteration number </span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Iteration&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Residual&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Convergence plot&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">x_new</span><span class="p">)</span> <span class="c1"># our solution vector</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sl</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">@</span> <span class="n">b</span><span class="p">)</span>  <span class="c1"># check against scipy</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/NM1_2020_lecture7_28_0.png" src="../../../_images/NM1_2020_lecture7_28_0.png" />
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>[-0.16340811 -0.01532703  0.27335262  0.36893551]
+[-0.16340816 -0.01532706  0.27335264  0.36893555]
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="vi-iterative-methods-gauss-seidel-s-method">
+<h2>VI.    Iterative methods - Gauss-Seidel’s method<a class="headerlink" href="#vi-iterative-methods-gauss-seidel-s-method" title="Permalink to this headline">¶</a></h2>
+<p>We can make a small improvement to Jacobi’s method using the updated components of the solution vector as soon as they become available:</p>
+<ul class="simple">
+<li><p>Starting from a guess at the solution <span class="math notranslate nohighlight">\(\pmb{x}^{(0)}\)</span></p></li>
+<li><p>iterate for <span class="math notranslate nohighlight">\(k&gt;0\)</span>
+<span class="math notranslate nohighlight">\($x_i^{(k)} = \frac{1}{A_{ii}}\left(b_i- \sum_{\substack{j=1\\ j&lt; i}}^nA_{ij}x_j^{(k)} - \sum_{\substack{j=1\\ j&gt; i}}^nA_{ij}x_j^{(k-1)}\right),\quad  i=1,2,\ldots, n.\)</span>$</p></li>
+</ul>
+<p>Note that as opposed to Jacobi, we can overwrite the entries of <span class="math notranslate nohighlight">\(\pmb{x}\)</span> as they are updated, with Jacobi we need to store both the new as well as the old iteration (i.e. not overwrite the old entries until we have finished with them - which was not until the end of every iteration).</p>
+<p>As we are using updated knowledge immediately, the Gauss-Seidel algorithm should converge faster than Jacobi, but note that this convergence can only be <em>guaranteed</em> for matrices which are diagonally dominant (for every row, the magnitude of value on the main diagonal is greater than the sum of the magnitudes of all the other entries in that row), or if the matrix is <em>symmetric positive definite</em> (a property we won’t define in this course).</p>
+<div class="section" id="span-style-color-blue-exercise-7-3-implement-gauss-seidel-s-method-span">
+<h3><span style="color:blue">Exercise 7.3: Implement Gauss-Seidel’s method.</span><a class="headerlink" href="#span-style-color-blue-exercise-7-3-implement-gauss-seidel-s-method-span" title="Permalink to this headline">¶</a></h3>
+<p>Generalise the Jacobi code to solve the matrix problem using Gauss-Seidel’s method.</p>
+</div>
+</div>
+<div class="section" id="viii-sparse-matrices">
+<h2>VIII.    Sparse matrices<a class="headerlink" href="#viii-sparse-matrices" title="Permalink to this headline">¶</a></h2>
+<p>Note that the matrices which result from the numerical solution of differential equations are generally  <em>sparse</em> (<a class="reference external" href="https://en.wikipedia.org/wiki/Sparse_matrix">https://en.wikipedia.org/wiki/Sparse_matrix</a>) which means that most entries are zero (the alternative is termed <em>dense</em>).  Knowing which entries are zero means that we can devise more efficient matrix storage methods, as well as more efficient implementations of the above algorithms (e.g. by not bothering to do operations that we know involve multiplications by zero - we know the answer will be zero).</p>
+<p>As an example, for the two iterative methods shown above (Jacobi and Gauss Seidel), the cost of <em>each</em> iteration is quadratically dependent on the number of unknowns <span class="math notranslate nohighlight">\(n\)</span>, since we need to loop through all the entries of the <span class="math notranslate nohighlight">\(n\times n\)</span> matrix <span class="math notranslate nohighlight">\(A\)</span>. For a fixed number of iterations the computational cost of these methods therefore scales as <span class="math notranslate nohighlight">\(n^2\)</span>. If we know that each row only contains a fixed, small number of non-zero entries however (as for example the matrix in the example below), we can simply skip the zero entries and the cost <em>per iteration</em> becomes linear in <span class="math notranslate nohighlight">\(n\)</span>. These scalings of <span class="math notranslate nohighlight">\(n^2\)</span> for <em>dense</em> and <span class="math notranslate nohighlight">\(n\)</span> for <em>sparse</em> matrices for the cost per iteration are typical for iterative methods. Unfortunately this does not mean that the overall cost of an iterative method is also <span class="math notranslate nohighlight">\(n^2\)</span> or <span class="math notranslate nohighlight">\(n\)</span>, as the number of iterations that is needed to achieve a certain accuracy quite often also increases for larger problem sizes. The number of required iterations typically only increases very slowly however, so that the cost of the method is still considerably cheaper than direct methods, in particular for very large problems.</p>
+<p>A huge range of iterative solution methods exist and the literature on this topic is massive. Below is an example of using scipy to access the Conjugate Gradient algorithm which is a popular example of a method suitable for matrices which result from the numerical solution of differential equations.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scipy.sparse.linalg</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">main_diag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>   <span class="c1">#just a vector of ones</span>
+<span class="n">off_diag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># to make it a bit more interesting make the off-diagonals random</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">main_diag</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="mf">1.</span><span class="o">*</span><span class="n">off_diag</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="mf">1.</span><span class="o">*</span><span class="n">off_diag</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="c1"># A random RHS vector</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="c1"># print our A in &quot;dense&quot; matrix format</span>
+
+<span class="n">sA</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">sparse</span><span class="o">.</span><span class="n">csr_matrix</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="c1"># The same matrix in a &quot;sparse&quot; matrix data structure where only non-zeros stored</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;This is the same matrix but now stored in a sparse matrix data structure.&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sA</span><span class="p">)</span>
+
+<span class="c1"># now use a scipy iterative algorithm (Conjugate Gradient) to solve</span>
+
+<span class="c1"># First define a (callback) function which we are allowed to pass to the solver; here this is coded such that it will store and print the iteration numbers and residuals - basically a method to output some diagnostic information on the solver as it executes</span>
+<span class="k">def</span> <span class="nf">gen_callback_cg</span><span class="p">():</span>
+    <span class="n">diagnostics</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">it</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">residuals</span><span class="o">=</span><span class="p">[])</span> 
+    <span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="n">xk</span><span class="p">):</span>   <span class="c1"># xk is the solution computed by CG at each iteration</span>
+        <span class="n">diagnostics</span><span class="p">[</span><span class="s2">&quot;it&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">diagnostics</span><span class="p">[</span><span class="s2">&quot;residuals&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sl</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">A</span> <span class="o">@</span> <span class="n">xk</span> <span class="o">-</span> <span class="n">b</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">diagnostics</span><span class="p">[</span><span class="s2">&quot;it&quot;</span><span class="p">],</span> <span class="n">sl</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">A</span> <span class="o">@</span> <span class="n">xk</span> <span class="o">-</span> <span class="n">b</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">callback</span>    
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Now we execute the CG algorithm on our problem, with our callback function returning information on the residual at each iteration.&#39;</span><span class="p">)</span>
+<span class="n">x_sol</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">sparse</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">cg</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">x0</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-10</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">gen_callback_cg</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>[[-2.          0.01579799  0.         ...  0.          0.
+   0.        ]
+ [ 0.01579799 -2.          0.96907927 ...  0.          0.
+   0.        ]
+ [ 0.          0.96907927 -2.         ...  0.          0.
+   0.        ]
+ ...
+ [ 0.          0.          0.         ... -2.          0.293628
+   0.        ]
+ [ 0.          0.          0.         ...  0.293628   -2.
+   0.02000908]
+ [ 0.          0.          0.         ...  0.          0.02000908
+  -2.        ]]
+This is the same matrix but now stored in a sparse matrix data structure.
+  (0, 0)	-2.0
+  (0, 1)	0.01579798887096051
+  (1, 0)	0.01579798887096051
+  (1, 1)	-2.0
+  (1, 2)	0.9690792657586554
+  (2, 1)	0.9690792657586554
+  (2, 2)	-2.0
+  (2, 3)	0.4426848628892317
+  (3, 2)	0.4426848628892317
+  (3, 3)	-2.0
+  (3, 4)	0.33287797242853423
+  (4, 3)	0.33287797242853423
+  (4, 4)	-2.0
+  (4, 5)	0.8349961890669807
+  (5, 4)	0.8349961890669807
+  (5, 5)	-2.0
+  (5, 6)	0.2759243129018931
+  (6, 5)	0.2759243129018931
+  (6, 6)	-2.0
+  (6, 7)	0.5899642313423469
+  (7, 6)	0.5899642313423469
+  (7, 7)	-2.0
+  (7, 8)	0.5338100213881314
+  (8, 7)	0.5338100213881314
+  (8, 8)	-2.0
+  :	:
+  (41, 41)	-2.0
+  (41, 42)	0.6990321498971347
+  (42, 41)	0.6990321498971347
+  (42, 42)	-2.0
+  (42, 43)	0.44120676550363935
+  (43, 42)	0.44120676550363935
+  (43, 43)	-2.0
+  (43, 44)	0.6627012118552
+  (44, 43)	0.6627012118552
+  (44, 44)	-2.0
+  (44, 45)	0.08354089874916015
+  (45, 44)	0.08354089874916015
+  (45, 45)	-2.0
+  (45, 46)	0.06076481090638697
+  (46, 45)	0.06076481090638697
+  (46, 46)	-2.0
+  (46, 47)	0.2600948682739955
+  (47, 46)	0.2600948682739955
+  (47, 47)	-2.0
+  (47, 48)	0.29362800321791604
+  (48, 47)	0.29362800321791604
+  (48, 48)	-2.0
+  (48, 49)	0.02000907848336786
+  (49, 48)	0.02000907848336786
+  (49, 49)	-2.0
+Now we execute the CG algorithm on our problem, with our callback function returning information on the residual at each iteration.
+1 2.3562251696335856
+2 1.0239182056504734
+3 0.401992541842747
+4 0.223770573282838
+5 0.10784772944319773
+6 0.04528275512406776
+7 0.016783187792529596
+8 0.007841550759271124
+9 0.003427366089593852
+10 0.0013261858767582826
+11 0.0005783870772007964
+12 0.0002434899030345161
+13 7.049175749160568e-05
+14 2.7297491399353727e-05
+15 9.758147321408194e-06
+16 2.1383778140400358e-06
+17 8.453340360899756e-07
+18 4.027234283292924e-07
+19 1.244334213076751e-07
+20 3.765897211891967e-08
+21 1.380157208085994e-08
+22 3.2245429787673083e-09
+23 1.211810534395043e-09
+24 3.697853422438397e-10
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="an-example-of-a-sparse-matrix">
+<h2>An example of a sparse matrix<a class="headerlink" href="#an-example-of-a-sparse-matrix" title="Permalink to this headline">¶</a></h2>
+<p>Let us consider an electric circuit arranged in a regular grid of <span class="math notranslate nohighlight">\(n\)</span> rows and <span class="math notranslate nohighlight">\(m\)</span> columns. The nodes in the grid are numbered from 0 to <span class="math notranslate nohighlight">\(nm-1\)</span> as indicated in the diagram below.</p>
+<p><img alt="bla" src="c_mathematics/numerical_methods/NM1_2020/images/circuit.png" /></p>
+<p>We want to calculate the electric potential <span class="math notranslate nohighlight">\(V_i\)</span> in all of the nodes <span class="math notranslate nohighlight">\(i\)</span>. A node <span class="math notranslate nohighlight">\(i\)</span> somewhere in the middle of the circuit is connected via resistor to nodes <span class="math notranslate nohighlight">\(i-1\)</span> and <span class="math notranslate nohighlight">\(i+1\)</span> to the left and right respectively, and to the nodes <span class="math notranslate nohighlight">\(i-m\)</span> and <span class="math notranslate nohighlight">\(i+m\)</span> in the rows above and below. For simplicity we assume that all resistors have the same resistance value <span class="math notranslate nohighlight">\(R\)</span>. The first and last node of the circuit (0 and <span class="math notranslate nohighlight">\(nm-1\)</span>) to a battery via two additional resistors, with the same resistance value <span class="math notranslate nohighlight">\(R\)</span>.</p>
+<p>The sum of the currents coming into a node is zero (if we use a sign convention where a current coming into a node is positive and a current going out is negative. The currents between two nodes can be calculated using Ohm’s law: <span class="math notranslate nohighlight">\(I=V/R\)</span> where <span class="math notranslate nohighlight">\(R\)</span> is the resistance of the resistor, and <span class="math notranslate nohighlight">\(V\)</span> is the potential difference between two nodes, say <span class="math notranslate nohighlight">\(V=V_i-V_{i-1}\)</span>. Therefore we can write:</p>
+<p>\begin{eqnarray}
+0 &amp;=&amp; I_{i-1\to i} + I_{i+1\to i} + I_{i-m\to i} + I_{i+m\to i} \
+&amp;=&amp; V_{i-1\to i}/R + V_{i+1\to i}/R + V_{i-m\to i}/R + V_{i+m\to i}/R \
+&amp;=&amp; (V_{i}-V_{i-1})/R + (V_{i}-V_{i+1})/R + (V_{i}-V_{i-m})/R + (V_{i}-V_{i+m})/R \
+&amp;=&amp; (4V_{i}-V_{i-1}-V_{i+1}-V_{i-m}-V_{i+m})/R
+\end{eqnarray}</p>
+<p>This gives us one linear equation for each node in the circuit (with slight modifications for nodes that are not in the interior). These can be combined into a linear system <span class="math notranslate nohighlight">\(Ax=b\)</span> which is assembled in the code below:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="mi">4</span> <span class="c1"># number of rows</span>
+<span class="n">m</span> <span class="o">=</span> <span class="mi">3</span> <span class="c1"># number of columns</span>
+<span class="n">V_battery</span> <span class="o">=</span> <span class="mf">5.0</span> <span class="c1"># voltage on the right of the battery</span>
+
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n</span><span class="o">*</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="o">*</span><span class="n">m</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="n">row</span><span class="o">*</span><span class="n">m</span> <span class="o">+</span> <span class="n">column</span> <span class="c1"># node number</span>
+        <span class="k">if</span> <span class="n">column</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span> <span class="c1"># left neighbour</span>
+            <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="o">-</span><span class="mf">1.0</span>
+            <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="mf">1.0</span>
+        <span class="k">if</span> <span class="n">column</span><span class="o">&lt;</span><span class="n">m</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span> <span class="c1"># right neighbour</span>
+            <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="o">-</span><span class="mf">1.0</span>
+            <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="mf">1.0</span>
+        <span class="k">if</span> <span class="n">row</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span> <span class="c1"># neighbour above</span>
+            <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="o">-</span><span class="n">m</span><span class="p">]</span> <span class="o">+=</span> <span class="o">-</span><span class="mf">1.0</span>
+            <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="mf">1.0</span>
+        <span class="k">if</span> <span class="n">row</span><span class="o">&lt;</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span> <span class="c1"># neighbour below</span>
+            <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="o">+</span><span class="n">m</span><span class="p">]</span> <span class="o">+=</span> <span class="o">-</span><span class="mf">1.0</span>
+            <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="mf">1.0</span>
+
+<span class="c1"># connecting node 0 to the battery: I = (V_0 - 0)/R</span>
+<span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="mf">1.0</span> 
+<span class="c1"># connecting last node nm-1 to the battery: I = (V_0 - V_battery)/R = V_0/R - V_battery/R</span>
+<span class="n">A</span><span class="p">[</span><span class="n">n</span><span class="o">*</span><span class="n">m</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="o">*</span><span class="n">m</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="mf">1.0</span>
+<span class="c1"># the V_battery/R term is a constant that does not depend on the unknowns, so ends up in the rhs vector b</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="n">m</span><span class="p">)</span>
+<span class="n">b</span><span class="p">[</span><span class="n">n</span><span class="o">*</span><span class="n">m</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">V_battery</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>[[ 3. -1.  0. -1.  0.  0.  0.  0.  0.  0.  0.  0.]
+ [-1.  3. -1.  0. -1.  0.  0.  0.  0.  0.  0.  0.]
+ [ 0. -1.  2.  0.  0. -1.  0.  0.  0.  0.  0.  0.]
+ [-1.  0.  0.  3. -1.  0. -1.  0.  0.  0.  0.  0.]
+ [ 0. -1.  0. -1.  4. -1.  0. -1.  0.  0.  0.  0.]
+ [ 0.  0. -1.  0. -1.  3.  0.  0. -1.  0.  0.  0.]
+ [ 0.  0.  0. -1.  0.  0.  3. -1.  0. -1.  0.  0.]
+ [ 0.  0.  0.  0. -1.  0. -1.  4. -1.  0. -1.  0.]
+ [ 0.  0.  0.  0.  0. -1.  0. -1.  3.  0.  0. -1.]
+ [ 0.  0.  0.  0.  0.  0. -1.  0.  0.  2. -1.  0.]
+ [ 0.  0.  0.  0.  0.  0.  0. -1.  0. -1.  3. -1.]
+ [ 0.  0.  0.  0.  0.  0.  0.  0. -1.  0. -1.  3.]]
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="extra-how-to-guide">
+<h2>EXTRA.    How - to - Guide<a class="headerlink" href="#extra-how-to-guide" title="Permalink to this headline">¶</a></h2>
+<p>Always check the solvability before actually trying to solve it! You could use determinant and Norms, or the Gaussian - Jordan to check!</p>
+<p>For system of linear equations</p>
+<ul class="simple">
+<li><p>If the problem you are solving has very few unknowns and very few equations, i.e. 3 or less, maybe more for some of you who are more math savvy, then solve it by hand</p></li>
+<li><p>If the problem you are solving has few unknowns and few equations, use Gaussian Elimination, preferably through LU decomposition using Doolittle Algorithm and maybe implement partial pivoting for <span class="math notranslate nohighlight">\(0\)</span> on the diagonal</p></li>
+<li><p>f the problem you are solving has lots of unknowns and lots of equation, and finding the exact solution would take ages, and well you don’t have ages of time to solve the problem, then preferably Iterative Methods, such as the Jacobi Method or Gauss - Seidel Method.</p></li>
+</ul>
+<p>For numerical solutions to differential equations that are generally sparse - maybe use Conjugate Gradient Algorithm or some other algorithm that reduces the number of operations for sparse matrices, especially for very large sparse matrices.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "primer-computational-mathematics/book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./c_mathematics/numerical_methods/NM1_2020"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Imperial College London<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../../../_static/js/index.js"></script>
+    
+  </body>
+</html>

@@ -1,0 +1,494 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Handling errors &#8212; ESE Jupyter Material</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/mystnb.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".cell"
+        const thebe_selector_input = ".cell_input div.highlight"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Importing in Python" href="10_Importing.html" />
+    <link rel="prev" title="Nested lists" href="8_Nested_lists.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../index.html">
+  
+  <img src="../../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">ESE Jupyter Material</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  
+  <ul class="nav sidenav_l1">
+  <li class="">
+    <a href="../../intro.html">Landing page</a>
+  </li>
+  <li class="">
+    <a href="../../a_modules/intro.html">Modules</a>
+  </li>
+  <li class="active">
+    <a href="../intro.html">Coding</a>
+  <ul class="nav sidenav_l2">
+    <li class="">
+      <a href="../NumPy_Arrays.html">NumPy arrays</a>
+    </li>
+    <li class="">
+      <a href="../jupyter_book_guide.html">Jupyter Book guide</a>
+    </li>
+    <li class="">
+      <a href="../Fundamentals of Computer Science/intro.html">Fundamentals of Computer Science</a>
+    </li>
+    <li class="active">
+      <a href="intro.html">Intro to Python</a>
+      <ul class="nav sidenav_l3">
+      <li class="">
+        <a href="1_Printing_and_formatting_statements.html">Printing and formatting statements</a>
+      </li>
+      <li class="">
+        <a href="2_Variables.html">Variables</a>
+      </li>
+      <li class="">
+        <a href="3_If_statement.html">If statement</a>
+      </li>
+      <li class="">
+        <a href="4_While_loops.html">While loops</a>
+      </li>
+      <li class="">
+        <a href="5_Lists.html">Lists</a>
+      </li>
+      <li class="">
+        <a href="6_For_loops.html">For loops</a>
+      </li>
+      <li class="">
+        <a href="7_List_comprehensions.html">List comprehensions</a>
+      </li>
+      <li class="">
+        <a href="8_Nested_lists.html">Nested lists</a>
+      </li>
+      <li class="active">
+        <a href="">Handling errors</a>
+      </li>
+      <li class="">
+        <a href="10_Importing.html">Importing in Python</a>
+      </li>
+      <li class="">
+        <a href="11_Functions.html">Creating custom functions</a>
+      </li>
+      <li class="">
+        <a href="12_Tuples.html">Tuples</a>
+      </li>
+      <li class="">
+        <a href="13_File_handling.html">File handling</a>
+      </li>
+      <li class="">
+        <a href="14_Dictionaries.html">Dictionaries</a>
+      </li>
+      <li class="">
+        <a href="15_Flow_control_statements.html">Flow control statements</a>
+      </li>
+      <li class="">
+        <a href="16_Sets.html">Sets</a>
+      </li>
+      <li class="">
+        <a href="17_Matplotlib.html">Plotting data with Matplotlib</a>
+      </li>
+    </ul>
+    </li>
+    <li class="">
+      <a href="../Pandas/intro.html">Pandas</a>
+    </li>
+    <li class="">
+      <a href="../Programming Tools/intro.html">Programming Tools</a>
+    </li>
+  </ul>
+  </li>
+  <li class="">
+    <a href="../../c_mathematics/intro.html">Mathematics</a>
+  </li>
+  <li class="">
+    <a href="../../d_geosciences/intro.html">Geosciences</a>
+  </li>
+  <li class="">
+    <a href="../../e_extra/intro.html">Further resources</a>
+  </li>
+  <li class="">
+    <a href="../../genindex.html">Index</a>
+  </li>
+</ul>
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/b_coding/Intro to Python/9_Handling_errors.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        
+        <a class="issues-button"
+            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2Fb_coding/Intro to Python/9_Handling_errors.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/b_coding/Intro to Python/9_Handling_errors.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#error-types" class="nav-link">Error types</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#raising-errors" class="nav-link">Raising errors</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#catching-errors" class="nav-link">Catching errors</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#try-and-except-blocks" class="nav-link">Try and except blocks</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#exercises" class="nav-link">Exercises</a>
+        </li>
+    
+    </ul>
+</nav>
+
+
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="handling-errors">
+<span id="id1"></span><h1>Handling errors<a class="headerlink" href="#handling-errors" title="Permalink to this headline">¶</a></h1>
+<p>When an <em>error</em> occurs in Python, an <em>exception</em> is <em>raised</em>.</p>
+<div class="section" id="error-types">
+<span id="id2"></span><h2>Error types<a class="headerlink" href="#error-types" title="Permalink to this headline">¶</a></h2>
+<p>The full list of built-in exceptions is available in the <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#concrete-exceptions">documentation</a>.</p>
+<p>For example, when we create a tuple with only four elements and want to print the 5th element, we get this error message:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="n">flower_names</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;iris&quot;</span><span class="p">,</span> <span class="s2">&quot;poppy&quot;</span><span class="p">,</span> <span class="s2">&quot;dandelion&quot;</span><span class="p">,</span> <span class="s2">&quot;rose&quot;</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">flower_names</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
+
+    <span class="o">---------------------------------------------------------------------------</span>
+    <span class="ne">IndexError</span>                                <span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">)</span>
+    <span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">2</span><span class="o">-</span><span class="mi">3497</span><span class="n">b57dd596</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+          <span class="mi">4</span>                 <span class="s2">&quot;rose&quot;</span><span class="p">)</span>
+          <span class="mi">5</span> 
+    <span class="o">----&gt;</span> <span class="mi">6</span> <span class="nb">print</span><span class="p">(</span><span class="n">flower_names</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
+
+    <span class="ne">IndexError</span><span class="p">:</span> <span class="nb">tuple</span> <span class="n">index</span> <span class="n">out</span> <span class="n">of</span> <span class="nb">range</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">IndexError</span></code> refers to incorrect index, such as out of bounds.</p>
+</div>
+<div class="section" id="raising-errors">
+<span id="id3"></span><h2>Raising errors<a class="headerlink" href="#raising-errors" title="Permalink to this headline">¶</a></h2>
+<p>In-built functions trigger or <code class="docutils literal notranslate"><span class="pre">raise</span></code> errors in Python. We can do that as well by using <em>raise</em>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="k">raise</span> <span class="ne">ValueError</span>
+
+    <span class="o">---------------------------------------------------------------------------</span>
+    <span class="ne">ValueError</span>                                <span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">)</span>
+    <span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">5</span><span class="o">-</span><span class="n">e4c8e09828d5</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+    <span class="o">----&gt;</span> <span class="mi">1</span> <span class="k">raise</span> <span class="ne">ValueError</span>
+
+    <span class="ne">ValueError</span><span class="p">:</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="catching-errors">
+<h2>Catching errors<a class="headerlink" href="#catching-errors" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="try-and-except-blocks">
+<span id="try-except"></span><h3>Try and except blocks<a class="headerlink" href="#try-and-except-blocks" title="Permalink to this headline">¶</a></h3>
+<p>To handle errors in the code gracefully, we can use <code class="docutils literal notranslate"><span class="pre">try</span></code> and <code class="docutils literal notranslate"><span class="pre">except</span></code> blocks to avoid unnecessary crashes of the program. The <code class="docutils literal notranslate"><span class="pre">try</span></code> block executes the program and if the program fails, exception is raised and we can recover from the error. This is especially useful if we do not want our program to crash (imagine YouTube crashing!). The syntax is:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    try:
+        # some code
+    except ExceptionName1:
+        # code to be executed if ExceptionName1 is raised
+    except ExceptionName2:
+        # code to be executed if ExceptionName2 is raised
+    …
+    except:
+        # lines to execute if there was an exception not caught above
+    else:
+        # lines to execute if there was no exception at all
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">else</span></code> is optional, at least one <code class="docutils literal notranslate"><span class="pre">except</span></code> needs to be raised. An example code below:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="s2">&quot;ten&quot;</span>
+
+<span class="c1"># Try to create a number out of a string</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="nb">float</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    
+<span class="c1"># Raise an error if characters are not numbers    </span>
+<span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ValueError.</span><span class="se">\n</span><span class="s2">Please use digits in your string.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>ValueError.
+Please use digits in your string.
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="exercises">
+<span id="handling-errors-exercises"></span><h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>Identify</strong> which errors will be thrown in the following code samples (without running it!):</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span> <span class="o">+=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span>
+<span class="n">s</span><span class="p">[</span><span class="mi">9</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;str&quot;</span> <span class="o">+</span> <span class="mi">7</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="mi">5000</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="dropdown admonition">
+<p class="admonition-title">Answer</p>
+<ol class="simple">
+<li><p>NameError</p></li>
+<li><p>IndexError</p></li>
+<li><p>TypeError</p></li>
+<li><p>OverflowError</p></li>
+</ol>
+</div>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>Types are gone!</strong> Say we have a list:</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>        <span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;blob&quot;</span><span class="p">,</span> <span class="s2">&quot;boom&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="nb">print</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Compute the sum of the numerical elements of the list (do not use the <code class="docutils literal notranslate"><span class="pre">type()</span></code> function!). Is the sum what you expected? Do you notice anything interesting regarding the boolean constants?</p>
+<div class="margin sidebar">
+<p class="sidebar-title"></p>
+<p>You can look up here more on flow control statemnts, such as <a class="reference internal" href="15_Flow_control_statements.html#pass"><span class="std std-ref">pass statement</span></a>.</p>
+</div>
+<p><strong>HINT</strong>: Consider using a <code class="docutils literal notranslate"><span class="pre">pass</span></code> statement in the <code class="docutils literal notranslate"><span class="pre">except</span></code> block which circumvents (<em>ignores</em>) the raised error and continues the execution.</p>
+<div class="dropdown admonition">
+<p class="admonition-title">Answer</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;blob&quot;</span><span class="p">,</span> <span class="s2">&quot;boom&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="nb">print</span><span class="p">]</span>
+
+<span class="n">res</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">l</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">res</span> <span class="o">+=</span> <span class="n">element</span>
+    <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+        <span class="k">pass</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "primer-computational-mathematics/book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./b_coding/Intro to Python"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="8_Nested_lists.html" title="previous page">Nested lists</a>
+    <a class='right-next' id="next-link" href="10_Importing.html" title="next page">Importing in Python</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Imperial College London<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../../_static/js/index.js"></script>
+    
+  </body>
+</html>
