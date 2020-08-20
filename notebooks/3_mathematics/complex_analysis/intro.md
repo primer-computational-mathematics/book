@@ -9,32 +9,31 @@
 
 ```
 
-Table of contents:
+## Table of contents
 
-1. {doc}`introduction`
+1. {doc}`*introduction`
     - {ref}`comp_numbers`
     - {ref}`comp_algebra`
-2. {doc}`complex_plane`
+2. {doc}`*complex_plane`
     - {ref}`comp_trig_form`
     - {ref}`comp_polar_form`
-3. {doc}`complex_functions`
+3. {doc}`*complex_functions`
     - {ref}`colour_wheel_graph`
     - {ref}`comp_polynomial`
     - {ref}`comp_rational`
     - {ref}`comp_exp`
     - {ref}`comp_log`
     - {ref}`comp_trig`
-4. {doc}`holomorphic_functions`
+4. {doc}`*holomorphic_functions`
     - {ref}`comp_diff`
     - {ref}`cre`
-5. {doc}`integrating`
+5. {doc}`*integrating`
     - {ref}`comp_contours`
     - {ref}`comp_cont_int`
     - {ref}`comp_cauchy_th`
-6. {doc}`residuals`
-7. {doc}`conformal_mapping`
-    - {ref}`conf_map_lin`
-    - {ref}`conf_map_power`
+6. {doc}`*fractals`
+    - {ref}`fractals_koch`
+    - {ref}`fractals_mandelbrot`
 
 
 ## Further reading and references

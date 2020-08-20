@@ -1,10 +1,9 @@
 # Differential equations
 
-```{sidebar} <p style="font-size:1px; color:red">.</p>
-
+```{index} Differential equations
 ```
 
-Table of contents:
+## Table of contents
 
 **INTRODUCTION**
 
@@ -26,7 +25,7 @@ Table of contents:
     - {ref}`2nd_ord_lin_ode`
     - {ref}`nth_ord_lin_ode`
     - {ref}`lin_const_coeffs`
-3. **{doc}`5_ode_series`
+3. **{doc}`5_ode_series`**
     
 **PART II: PARTIAL DIFFERENTIAL EQUATIONS**
 
