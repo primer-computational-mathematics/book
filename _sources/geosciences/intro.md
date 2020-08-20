@@ -1,3 +1,6 @@
 # Geosciences
 
-Landing page for the geosciences primer
+Table of contents:
+
+```{tableofcontents}
+```
