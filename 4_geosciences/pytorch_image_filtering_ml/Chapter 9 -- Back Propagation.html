@@ -1,0 +1,450 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Chapter 9 – Back Propagation &#8212; ESE Jupyter Material</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/mystnb.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".cell"
+        const thebe_selector_input = ".cell_input div.highlight"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Chapter 10 – General Back Propagation" href="Chapter 10 -- General Back Propagation.html" />
+    <link rel="prev" title="Chapter 8 – Feedforward" href="Chapter 8 -- Feedforward.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../index.html">
+  
+  <img src="../../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">ESE Jupyter Material</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  
+  <ul class="nav sidenav_l1">
+  <li class="">
+    <a href="../../intro.html">Landing page</a>
+  </li>
+  <li class="">
+    <a href="../../2_coding/intro.html">Coding</a>
+  </li>
+  <li class="">
+    <a href="../../3_mathematics/intro.html">Mathematics</a>
+  </li>
+  <li class="">
+    <a href="../../1_modules/intro.html">Modules</a>
+  </li>
+  <li class="active">
+    <a href="../intro.html">Geosciences</a>
+  <ul class="nav sidenav_l2">
+    <li class="">
+      <a href="../1D_Heat_Conduction.html">1D heat conduction (layered medium)</a>
+    </li>
+    <li class="">
+      <a href="../1D_Resistivity_Forward_Modelling.html">1D resistivity forward modelling</a>
+    </li>
+    <li class="">
+      <a href="../Climate_Model.html">Climate model</a>
+    </li>
+    <li class="">
+      <a href="../Dynamic_Earth.html">Seafloor ages</a>
+    </li>
+    <li class="">
+      <a href="../Keplerian_Orbits.html">Keplerian orbits</a>
+    </li>
+    <li class="">
+      <a href="../Milankovitch_cycles.html">Milankovitch cycles</a>
+    </li>
+    <li class="">
+      <a href="../Seismology.html">Downloading earthquake data</a>
+    </li>
+    <li class="">
+      <a href="../Tides.html">Tides</a>
+    </li>
+    <li class="">
+      <a href="../Wave_dispersion.html">Wave dispersion</a>
+    </li>
+    <li class="active">
+      <a href="intro.html">Machine Learning</a>
+      <ul class="nav sidenav_l3">
+      <li class="">
+        <a href="Chapter 0 -- Introduction.html">Chapter 0 – Introduction</a>
+      </li>
+      <li class="">
+        <a href="Chapter 1 -- Neural Network.html">Chapter 1 – Neural Network</a>
+      </li>
+      <li class="">
+        <a href="Chapter 2 -- Maximum Likelihood.html">Chapter 2 – Maximum Likelihood</a>
+      </li>
+      <li class="">
+        <a href="Chapter 3 -- Cross Entropy.html">Chapter 3 – Cross Entropy</a>
+      </li>
+      <li class="">
+        <a href="Chapter 4 -- Cost Function.html">Chapter 4 – Cost Function</a>
+      </li>
+      <li class="">
+        <a href="Chapter 5 -- Gradient Descent 1.html">Chapter 5 – Gradient Descent 1</a>
+      </li>
+      <li class="">
+        <a href="Chapter 6 -- Gradient Descent 2.html">Chapter 6 – Gradient Descent 2</a>
+      </li>
+      <li class="">
+        <a href="Chapter 7 -- Real (Non-linear) Neural Network.html">Chapter 7 – Real (Non-linear) Neural Network</a>
+      </li>
+      <li class="">
+        <a href="Chapter 8 -- Feedforward.html">Chapter 8 – Feedforward</a>
+      </li>
+      <li class="active">
+        <a href="">Chapter 9 – Back Propagation</a>
+      </li>
+      <li class="">
+        <a href="Chapter 10 -- General Back Propagation.html">Chapter 10 – General Back Propagation</a>
+      </li>
+      <li class="">
+        <a href="Chapter 11 -- Underfitting and Overfitting.html">Chapter 11 – Underfitting and Overfitting</a>
+      </li>
+      <li class="">
+        <a href="Chapter 12 -- Early-stopping, Dropout & Mini-batch.html">Chapter 12 – Early-stopping, Dropout & Mini-batch</a>
+      </li>
+      <li class="">
+        <a href="Chapter 13 -- Vanishing Gradient 1.html">Chapter 13 – Vanishing Gradient 1</a>
+      </li>
+      <li class="">
+        <a href="Chapter 14 -- Vanishing Gradient 2.html">Chapter 14 – Vanishing Gradient 2</a>
+      </li>
+      <li class="">
+        <a href="Chapter 15 -- Regularisation.html">Chapter 15 – Regularisation</a>
+      </li>
+      <li class="">
+        <a href="Chapter 16 -- Other Activation Functions.html">Chapter 16 – Other Activation Functions</a>
+      </li>
+      <li class="">
+        <a href="Chapter 17 -- Local Minima Trap.html">Chapter 17 – Local Minima Trap</a>
+      </li>
+      <li class="">
+        <a href="Chapter 18 -- Softmax.html">Chapter 18 – Softmax</a>
+      </li>
+      <li class="">
+        <a href="Chapter 19 -- Hyper-Parameters.html">Chapter 19 – Hyper-Parameters</a>
+      </li>
+      <li class="">
+        <a href="Chapter 20 -- Coding Example.html">Chapter 20 – Coding Example</a>
+      </li>
+    </ul>
+    </li>
+    <li class="">
+      <a href="../remote_sensing/intro.html">Remote sensing</a>
+    </li>
+  </ul>
+  </li>
+  <li class="">
+    <a href="../../5_extra/intro.html">Extra resources for researchers</a>
+  </li>
+  <li class="">
+    <a href="../../genindex.html">Index</a>
+  </li>
+</ul>
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/4_geosciences/pytorch_image_filtering_ml/Chapter 9 -- Back Propagation.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        
+        <a class="issues-button"
+            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2F4_geosciences/pytorch_image_filtering_ml/Chapter 9 -- Back Propagation.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/4_geosciences/pytorch_image_filtering_ml/Chapter 9 -- Back Propagation.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+    </ul>
+</nav>
+
+
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <p>(Back_Propagation) =</p>
+<div class="section" id="chapter-9-back-propagation">
+<h1>Chapter 9 – Back Propagation<a class="headerlink" href="#chapter-9-back-propagation" title="Permalink to this headline">¶</a></h1>
+<p>The ultimate goal of neural network, don’t forget, is to find the best weight and bias. So when we obtain the predicted <span class="math notranslate nohighlight">\(\hat{y}\)</span>, we need to use it to compare with the actual result set <span class="math notranslate nohighlight">\(y\)</span>, and adjust weight and bias matrix <span class="math notranslate nohighlight">\(W\)</span> in accordance.</p>
+<p>The thought process is identical to the previous two layers neural network as we introduced before. However, we have three layers in this case, and potentially much more layers. We need to adjust and update the weight in each layer, instead of just one layer in the two layer example.</p>
+<p>So we need to obtain the gradient of the cost function in order to update weights. Let’s take the example of the first weight in the input layer in figure 1.13 in chapter 8. We need a longer chain rule to obtain the gradient because we have one more layer:</p>
+<p>\begin{equation}
+\frac{\delta C}{\delta w^{(1)}<em>{11}} = \frac{\delta C}{\delta\hat{y}}\frac{\delta\hat{y}}{\delta h_2} \frac{\delta h_2}{\delta h_1} \frac{\delta h_1}{\delta w^{(1)}</em>{11}}
+\label{real chain rule}
+\end{equation}</p>
+<p>Note that the gradient of a weight is evaluated by the sum of all data/student (<span class="math notranslate nohighlight">\(y_i\)</span>), as explained in the previous example.</p>
+<p>\begin{equation}
+-\frac{\delta C}{w^{(1)}<em>{11}} = \frac{1}{m} \frac{\delta}{\delta w^{(1)}</em>{11}} [\sum_{i=1}^m [y_i*ln(\sigma(h_2)]+(1-y_i)*ln(1-\sigma(h_2))]
+\end{equation}</p>
+<p>For simplicity, we just derive the gradient for weight <span class="math notranslate nohighlight">\(w^{(1)}_{11}\)</span> for a single <span class="math notranslate nohighlight">\(y\)</span>, and use for loop to sum up them up and divide by <span class="math notranslate nohighlight">\(m\)</span>.</p>
+<p>\begin{equation}
+-\frac{\delta C}{w^{(1)}<em>{11}} = \frac{\delta}{\delta w^{(1)}</em>{11}} [y*ln(\sigma(h_2)]+(1-y)*ln(1-\sigma(h_2))]
+\end{equation}</p>
+<p>Again, the <span class="math notranslate nohighlight">\(y\)</span> is just a constant, so we put it outside of the differential equation.</p>
+<p>\begin{equation}
+-\frac{\delta C}{w^{(1)}<em>{11}} = y*\frac{\delta}{\delta w^{(1)}</em>{11}} ln(\sigma(h_2)]+ (1-y)*\frac{\delta}{\delta w^{(1)}_{11}}ln(1-\sigma(h_2))
+\end{equation}
+where <span class="math notranslate nohighlight">\(\sigma(h_2) = \hat{y}\)</span>.</p>
+<p>We also know that</p>
+<p>\begin{equation}
+h_2 = \sigma(h_1)<em>w^{(2)}<em>{11} + \sigma(h_2)*w^{(2)}</em>{21} + 1</em>w^{(2)}_{31}
+\end{equation}</p>
+<p>and</p>
+<p>\begin{equation}
+h_1 = w^{(1)}<em>{11}*x_1 + w^{(1)}</em>{21}*x_2 + w^{(1)}<em>{31}*x_3 + w^{(1)}</em>{41}*1
+\end{equation}</p>
+<p>So, for the parts that can be combined into the chain rule:</p>
+<p>\begin{equation}
+\frac{\delta C}{\delta \hat{y}} = \frac{1-y}{1-\hat{y}} - \frac{y}{\hat{y}}
+\end{equation}</p>
+<p>\begin{equation}
+\frac{\delta \hat{y}}{\delta h_2} = \sigma^{‘}(h_2)= \sigma(h_2)[1-\sigma(h_2)]
+\end{equation}</p>
+<p>\begin{equation}
+\frac{\delta h_2}{\delta h_1} = w^{(2)}_{11}\sigma^{‘}(h_1)
+\end{equation}</p>
+<p>\begin{equation}
+\frac{\delta h_1}{\delta w^{(1)}_{11}} = x_1
+\end{equation}</p>
+<p>As a result, we have the gradient of <span class="math notranslate nohighlight">\(w_{11}^{(1)}\)</span> from the input layer to the hidden layer as follow</p>
+<p>\begin{equation}
+-\frac{\delta C}{w^{(1)}<em>{11}} = (\frac{1-y}{1-\hat{y}} - \frac{y}{\hat{y}})*\sigma^{‘}(h_2)*w^{(2)}</em>{11}*\sigma^{‘}(h_1)*x_1
+\label{inputToHidden}
+\end{equation}</p>
+<p>On the other hand, we also want to get the gradient of weight (e.g. <span class="math notranslate nohighlight">\(w_{11}^{(2)}\)</span>) from the hidden layer to the output layer:</p>
+<p>\begin{equation}
+\frac{\delta C}{\delta w^{(2)}<em>{11}} = \frac{\delta C}{\delta\hat{y}}\frac{\delta\hat{y}}{\delta h_2} \frac{\delta h_2}{\delta  w^{(2)}</em>{11}}
+\end{equation}</p>
+<p>\begin{equation}
+\frac{\delta C}{\delta w^{(2)}_{11}} = (\frac{1-y}{1-\hat{y}} - \frac{y}{\hat{y}})*\sigma^{‘}(h_2) * \sigma(h_1)
+\label{hiddenToOutput}
+\end{equation}</p>
+<p>We realise that the first two terms are the same in equation \ref{inputToHidden} and \ref{hiddenToOutput}, so we define an `Error Term’ <span class="math notranslate nohighlight">\(\delta^{n-1}\)</span> for simplicity (<span class="math notranslate nohighlight">\(n\)</span> is the number of layers in the network, i.e. <span class="math notranslate nohighlight">\(n=3\)</span>):</p>
+<p>\begin{equation}
+\delta^{n-1} = \frac{\delta C}{\delta \hat{y}}\frac{\delta \hat{y}}{\delta h_2} =  (\frac{1-y}{1-\hat{y}} - \frac{y}{\hat{y}})*\sigma^{‘}(h_2)
+\end{equation}</p>
+<p>So the weight <span class="math notranslate nohighlight">\(w_{11}^{(2)}\)</span> from the hidden to output (<span class="math notranslate nohighlight">\(2nd\)</span>) layer in equation \ref{hiddenToOutput} can be expressed by the <span class="math notranslate nohighlight">\(\delta^2\)</span> for the <span class="math notranslate nohighlight">\(2nd\)</span> layer as</p>
+<p>\begin{equation}
+\frac{\delta C}{\delta w^{(2)}_{11}} = \delta^{3-1} *\sigma(h_1)
+\end{equation}</p>
+<p>And the weight <span class="math notranslate nohighlight">\(w_{11}^{(1)}\)</span> from the input to hidden layer in equation \ref{inputToHidden} can be written as</p>
+<p>\begin{equation}
+\frac{\delta C}{\delta w^{(1)}<em>{11}} = \delta^{3-1} * w^{(2)}</em>{11} * \sigma^{‘}(h_1)*x_1
+\label{inputToHidden1}
+\end{equation}</p>
+<p>To further simplify, we have another `Error Term’ <span class="math notranslate nohighlight">\(\delta^{n-2}\)</span> (i.e. <span class="math notranslate nohighlight">\(\delta^{3-2}\)</span> for the <span class="math notranslate nohighlight">\(1st\)</span> layer)</p>
+<p>\begin{equation}
+\delta^{n-2} = \delta^{n-1} * w^{(2)}_{11} * \sigma^{‘}(h_1)
+\end{equation}</p>
+<p>where <span class="math notranslate nohighlight">\(\delta^1\)</span> is for the next layer to the left, in this 3 layer neural network example, it is for the weight between input and hidden layer. <span class="math notranslate nohighlight">\(\delta^1\)</span> is updated by multiplying the corresponding weight <span class="math notranslate nohighlight">\(w^{(2)}_{11}\)</span> in the current layer and the derivative of sigma of the next layer to the left <span class="math notranslate nohighlight">\(\sigma^{'}(h_1)\)</span>.</p>
+<p>So the equation \ref{inputToHidden1} for weights in the <span class="math notranslate nohighlight">\(1st\)</span> layer can be written as</p>
+<p>\begin{equation}
+\frac{\delta C}{\delta w^{(1)}_{11}} = \delta^1 *x_1
+\label{inputToHidden2}
+\end{equation}</p>
+<p>So in a sense, in the back propagation, we update the weights in layers closer to the output layer first and then update towards the input layer. Every time we go back to one layer, we update the <span class="math notranslate nohighlight">\(\delta^1\)</span> based on the <span class="math notranslate nohighlight">\(\delta^0\)</span> in the previous layer.</p>
+<p>For updating the weight from the hidden to the output (<span class="math notranslate nohighlight">\(2nd\)</span>) layer, we have</p>
+<p>\begin{equation}
+w_i^{(2)’} = w_i^{(2)} - \eta \nabla C =  w_i^{(2)} - \eta \frac{\delta C}{\delta w_i} =   w_i^{(2)} - \eta \sum_{i=1}^m \delta^2\sigma(h_1)
+\end{equation}</p>
+<p>Remember that the <span class="math notranslate nohighlight">\(\delta^0\)</span> is a function of <span class="math notranslate nohighlight">\(y\)</span>, where we need to sum up all <span class="math notranslate nohighlight">\(y_i\)</span> in the dataset.</p>
+<p>For updating the weight from the input to the hidden (<span class="math notranslate nohighlight">\(1st\)</span>) layer, we have</p>
+<p>\begin{equation}
+w_i^{(1)’} = w_i^{(1)} - \eta \nabla C =  w_i^{(1)} - \eta \frac{\delta C}{\delta w_i} =   w_i^{(1)} - \eta \sum_{i=1}^m \delta^1 x_1
+\end{equation}</p>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "primer-computational-mathematics/book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./4_geosciences/pytorch_image_filtering_ml"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="Chapter 8 -- Feedforward.html" title="previous page">Chapter 8 – Feedforward</a>
+    <a class='right-next' id="next-link" href="Chapter 10 -- General Back Propagation.html" title="next page">Chapter 10 – General Back Propagation</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Imperial College London<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../../_static/js/index.js"></script>
+    
+  </body>
+</html>

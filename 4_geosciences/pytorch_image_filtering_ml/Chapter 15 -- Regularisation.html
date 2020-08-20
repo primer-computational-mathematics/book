@@ -1,0 +1,387 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Chapter 15 – Regularisation &#8212; ESE Jupyter Material</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/mystnb.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".cell"
+        const thebe_selector_input = ".cell_input div.highlight"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Chapter 16 – Other Activation Functions" href="Chapter 16 -- Other Activation Functions.html" />
+    <link rel="prev" title="Chapter 14 – Vanishing Gradient 2" href="Chapter 14 -- Vanishing Gradient 2.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../index.html">
+  
+  <img src="../../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">ESE Jupyter Material</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  
+  <ul class="nav sidenav_l1">
+  <li class="">
+    <a href="../../intro.html">Landing page</a>
+  </li>
+  <li class="">
+    <a href="../../2_coding/intro.html">Coding</a>
+  </li>
+  <li class="">
+    <a href="../../3_mathematics/intro.html">Mathematics</a>
+  </li>
+  <li class="">
+    <a href="../../1_modules/intro.html">Modules</a>
+  </li>
+  <li class="active">
+    <a href="../intro.html">Geosciences</a>
+  <ul class="nav sidenav_l2">
+    <li class="">
+      <a href="../1D_Heat_Conduction.html">1D heat conduction (layered medium)</a>
+    </li>
+    <li class="">
+      <a href="../1D_Resistivity_Forward_Modelling.html">1D resistivity forward modelling</a>
+    </li>
+    <li class="">
+      <a href="../Climate_Model.html">Climate model</a>
+    </li>
+    <li class="">
+      <a href="../Dynamic_Earth.html">Seafloor ages</a>
+    </li>
+    <li class="">
+      <a href="../Keplerian_Orbits.html">Keplerian orbits</a>
+    </li>
+    <li class="">
+      <a href="../Milankovitch_cycles.html">Milankovitch cycles</a>
+    </li>
+    <li class="">
+      <a href="../Seismology.html">Downloading earthquake data</a>
+    </li>
+    <li class="">
+      <a href="../Tides.html">Tides</a>
+    </li>
+    <li class="">
+      <a href="../Wave_dispersion.html">Wave dispersion</a>
+    </li>
+    <li class="active">
+      <a href="intro.html">Machine Learning</a>
+      <ul class="nav sidenav_l3">
+      <li class="">
+        <a href="Chapter 0 -- Introduction.html">Chapter 0 – Introduction</a>
+      </li>
+      <li class="">
+        <a href="Chapter 1 -- Neural Network.html">Chapter 1 – Neural Network</a>
+      </li>
+      <li class="">
+        <a href="Chapter 2 -- Maximum Likelihood.html">Chapter 2 – Maximum Likelihood</a>
+      </li>
+      <li class="">
+        <a href="Chapter 3 -- Cross Entropy.html">Chapter 3 – Cross Entropy</a>
+      </li>
+      <li class="">
+        <a href="Chapter 4 -- Cost Function.html">Chapter 4 – Cost Function</a>
+      </li>
+      <li class="">
+        <a href="Chapter 5 -- Gradient Descent 1.html">Chapter 5 – Gradient Descent 1</a>
+      </li>
+      <li class="">
+        <a href="Chapter 6 -- Gradient Descent 2.html">Chapter 6 – Gradient Descent 2</a>
+      </li>
+      <li class="">
+        <a href="Chapter 7 -- Real (Non-linear) Neural Network.html">Chapter 7 – Real (Non-linear) Neural Network</a>
+      </li>
+      <li class="">
+        <a href="Chapter 8 -- Feedforward.html">Chapter 8 – Feedforward</a>
+      </li>
+      <li class="">
+        <a href="Chapter 9 -- Back Propagation.html">Chapter 9 – Back Propagation</a>
+      </li>
+      <li class="">
+        <a href="Chapter 10 -- General Back Propagation.html">Chapter 10 – General Back Propagation</a>
+      </li>
+      <li class="">
+        <a href="Chapter 11 -- Underfitting and Overfitting.html">Chapter 11 – Underfitting and Overfitting</a>
+      </li>
+      <li class="">
+        <a href="Chapter 12 -- Early-stopping, Dropout & Mini-batch.html">Chapter 12 – Early-stopping, Dropout & Mini-batch</a>
+      </li>
+      <li class="">
+        <a href="Chapter 13 -- Vanishing Gradient 1.html">Chapter 13 – Vanishing Gradient 1</a>
+      </li>
+      <li class="">
+        <a href="Chapter 14 -- Vanishing Gradient 2.html">Chapter 14 – Vanishing Gradient 2</a>
+      </li>
+      <li class="active">
+        <a href="">Chapter 15 – Regularisation</a>
+      </li>
+      <li class="">
+        <a href="Chapter 16 -- Other Activation Functions.html">Chapter 16 – Other Activation Functions</a>
+      </li>
+      <li class="">
+        <a href="Chapter 17 -- Local Minima Trap.html">Chapter 17 – Local Minima Trap</a>
+      </li>
+      <li class="">
+        <a href="Chapter 18 -- Softmax.html">Chapter 18 – Softmax</a>
+      </li>
+      <li class="">
+        <a href="Chapter 19 -- Hyper-Parameters.html">Chapter 19 – Hyper-Parameters</a>
+      </li>
+      <li class="">
+        <a href="Chapter 20 -- Coding Example.html">Chapter 20 – Coding Example</a>
+      </li>
+    </ul>
+    </li>
+    <li class="">
+      <a href="../remote_sensing/intro.html">Remote sensing</a>
+    </li>
+  </ul>
+  </li>
+  <li class="">
+    <a href="../../5_extra/intro.html">Extra resources for researchers</a>
+  </li>
+  <li class="">
+    <a href="../../genindex.html">Index</a>
+  </li>
+</ul>
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/4_geosciences/pytorch_image_filtering_ml/Chapter 15 -- Regularisation.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        
+        <a class="issues-button"
+            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2F4_geosciences/pytorch_image_filtering_ml/Chapter 15 -- Regularisation.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/4_geosciences/pytorch_image_filtering_ml/Chapter 15 -- Regularisation.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+    </ul>
+</nav>
+
+
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <p>(Regularisation) =</p>
+<div class="section" id="chapter-15-regularisation">
+<h1>Chapter 15 – Regularisation<a class="headerlink" href="#chapter-15-regularisation" title="Permalink to this headline">¶</a></h1>
+<p>One method to solve this issue is to punish the big weights. This approach is called the `regularisation’. Here are two basic forms of it:</p>
+<p>\begin{equation}
+L1 ; Regularisation = - \frac{1}{m} \sum^{m}_{i=1}[y_i*ln(\hat{y}_i) + (1-y_i)*ln(1-\hat{y}_i)] + \lambda(|w_1|+…+|w_n|)
+\end{equation}</p>
+<p>\begin{equation}
+L2 ; Regularisation = - \frac{1}{m} \sum^{m}_{i=1}[y_i*ln(\hat{y}_i) + (1-y_i)*ln(1-\hat{y}_i)] + \lambda(w_1^2+…+w_n^2)
+\end{equation}</p>
+<p>where the higher the constant <span class="math notranslate nohighlight">\(\lambda\)</span> the more we want to punish the bigger weights.</p>
+<p>To choose either <span class="math notranslate nohighlight">\(L1\)</span> or <span class="math notranslate nohighlight">\(L2\)</span>, we need to think of what we want to achieve. <span class="math notranslate nohighlight">\(L1\)</span> prefers to make the not-too-big weights to be close to zero, creating sparse vectors. This is very efficient when we compute big data where most weights are not important, so it does not make sense if we compute all of them. Sparse vectors in this case improves computational-efficiency.</p>
+<p><span class="math notranslate nohighlight">\(L2\)</span>, however, is what we usually use because it reduces the average weight instead of favoring certain small weights.</p>
+<p>We can take the following examples to understand the logic behind them. Suppose we have a weight (<span class="math notranslate nohighlight">\(w_1\)</span>, <span class="math notranslate nohighlight">\(w_2\)</span>) = (1.5, 0.5), then <span class="math notranslate nohighlight">\(L1\)</span> would tend to make it into (1,0) because <span class="math notranslate nohighlight">\(1.5+0.5 &gt; 1+0\)</span>; whereas <span class="math notranslate nohighlight">\(L2\)</span> would make it into (0.75,0.25) because <span class="math notranslate nohighlight">\(0.75^2+0.25^2 &lt; 1^2+0^2 &lt; 1.5^2+0.5^2\)</span>. Remember, all we want is to obtain the minimum summation of weights so that we would obtain the minimum cost.</p>
+<p>What’s more, L2 regularization doesn’t constrain the biases. Of course, it would be easy to modify the regularization procedure to regularize the biases. Empirically, doing this often doesn’t change the results very much, so to some extent it’s merely a convention whether to regularize the biases or not. However, it’s worth noting that having a large bias doesn’t make a neuron sensitive to its inputs in the same way as having large weights. And so we don’t need to worry about large biases enabling our network to learn the noise in our training data. At the same time, allowing large biases gives our networks more flexibility in behaviour - in particular, large biases make it easier for neurons to saturate, which is sometimes desirable. For these reasons we don’t usually include bias terms when regularizing.</p>
+<p>Regularisation also helps to reduce overfitting. We’ve seen empirically that regularization helps reduce overfitting. That’s encouraging but, unfortunately, it’s not obvious why regularization helps! A standard story people tell to explain what’s going on is along the following lines: smaller weights are, in some sense, lower complexity, and so provide a simpler and more powerful explanation for the data, and should thus be preferred. That’s a pretty terse story, though, and contains several elements that perhaps seem dubious or mystifying. Let’s unpack the story and examine it critically. To do that, let’s suppose we have a simple data set for which we wish to build a model:</p>
+<img src="images/regularisation.PNG" width="600">
+<center> Figure 1.26<p>Implicitly, we’re studying some real-world phenomenon here, with x and y representing real-world data. Our goal is to build a model which lets us predict y as a function of x. We could try using neural networks to build such a model, but I’m going to do something even simpler: I’ll try to model y as a polynomial in x. I’m doing this instead of using neural nets because using polynomials will make things particularly transparent. Once we’ve understood the polynomial case, we’ll translate to neural networks. Now, there are ten points in the graph above, which means we can find a unique 9th-order polynomial <span class="math notranslate nohighlight">\(y=a_0x_9+a_1x_8+...+a_9\)</span> which fits the data exactly. Here’s the graph of that polynomial (figure 1.27).</p>
+<img src="images/regularisation1.PNG" width="600">
+<center> Figure 1.27<p>That provides an exact fit. But we can also get a good fit using the linear model <span class="math notranslate nohighlight">\(y=2x\)</span> (figure 1.28):</p>
+<img src="images/regularisation2.PNG" width="600">
+<center> Figure 1.28<p>Which of these is the better model? Which is more likely to be true? And which model is more likely to generalize well to other examples of the same underlying real-world phenomenon? These are difficult questions. In fact, we can’t determine with certainty the answer to any of the above questions, without much more information about the underlying real-world phenomenon. But let’s consider two possibilities: (1) the 9th order polynomial is, in fact, the model which truly describes the real-world phenomenon, and the model will therefore generalize perfectly; (2) the correct model is y=2x, but there’s a little additional noise due to, say, measurement error, and that’s why the model isn’t an exact fit.</p>
+<p>It’s not a priori possible to say which of these two possibilities is correct. (Or, indeed, if some third possibility holds). Logically, either could be true. And it’s not a trivial difference. It’s true that on the data provided there’s only a small difference between the two models. But suppose we want to predict the value of y corresponding to some large value of x, much larger than any shown on the graph above. If we try to do that there will be a dramatic difference between the predictions of the two models, as the 9th order polynomial model comes to be dominated by the <span class="math notranslate nohighlight">\(x_9\)</span> term, while the linear model remains, well, linear.</p>
+<p>One point of view is to say that in science we should go with the simpler explanation, unless compelled not to. When we find a simple model that seems to explain many data points we are tempted to shout “Eureka!” After all, it seems unlikely that a simple explanation should occur merely by coincidence. Rather, we suspect that the model must be expressing some underlying truth about the phenomenon. In the case at hand, the model <span class="math notranslate nohighlight">\(y=2x+noise\)</span> seems much simpler than <span class="math notranslate nohighlight">\(y=a_0x_9+a_1x_8+...+a_9\)</span>. It would be surprising if that simplicity had occurred by chance, and so we suspect that <span class="math notranslate nohighlight">\(y=2x+noise\)</span> expresses some underlying truth. In this point of view, the 9th order model is really just learning the effects of local noise. And so while the 9th order model works perfectly for these particular data points, the model will fail to generalize to other data points, and the noisy linear model will have greater predictive power.</p>
+<p>Let’s see what this point of view means for neural networks. Suppose our network mostly has small weights, as will tend to happen in a regularized network. The smallness of the weights means that the behaviour of the network won’t change too much if we change a few random inputs here and there. That makes it difficult for a regularized network to learn the effects of local noise in the data. Think of it as a way of making it so single pieces of evidence don’t matter too much to the output of the network. Instead, a regularized network learns to respond to types of evidence which are seen often across the training set. By contrast, a network with large weights may change its behaviour quite a bit in response to small changes in the input. And so an unregularized network can use large weights to learn a complex model that carries a lot of information about the noise in the training data. In a nutshell, regularized networks are constrained to build relatively simple models based on patterns seen often in the training data, and are resistant to learning peculiarities of the noise in the training data. The hope is that this will force our networks to do real learning about the phenomenon at hand, and to generalize better from what they learn.</p>
+<p>With that said, this idea of preferring simpler explanation should make we nervous. People sometimes refer to this idea as “Occam’s Razor”, and will zealously apply it as though it has the status of some general scientific principle. But, of course, it’s not a general scientific principle. There is no a priori logical reason to prefer simple explanations over more complex explanations. Indeed, sometimes the more complex explanation turns out to be correct.</p>
+<p>There are three morals to draw from many of the exceptions (more complex explanation turns out to be correct). First, it can be quite a subtle business deciding which of two explanations is truly “simpler”. Second, even if we can make such a judgment, simplicity is a guide that must be used with great caution! Third, the true test of a model is not simplicity, but rather how well it does in predicting new phenomena, in new regimes of behaviour.</p>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "primer-computational-mathematics/book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./4_geosciences/pytorch_image_filtering_ml"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="Chapter 14 -- Vanishing Gradient 2.html" title="previous page">Chapter 14 – Vanishing Gradient 2</a>
+    <a class='right-next' id="next-link" href="Chapter 16 -- Other Activation Functions.html" title="next page">Chapter 16 – Other Activation Functions</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Imperial College London<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../../_static/js/index.js"></script>
+    
+  </body>
+</html>

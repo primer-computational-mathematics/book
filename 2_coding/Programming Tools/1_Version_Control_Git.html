@@ -1,0 +1,668 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Version control Git &#8212; ESE Jupyter Material</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/mystnb.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".cell"
+        const thebe_selector_input = ".cell_input div.highlight"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Mathematics" href="../../3_mathematics/intro.html" />
+    <link rel="prev" title="Programming Tools" href="intro.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../index.html">
+  
+  <img src="../../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">ESE Jupyter Material</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  
+  <ul class="nav sidenav_l1">
+  <li class="">
+    <a href="../../intro.html">Landing page</a>
+  </li>
+  <li class="active">
+    <a href="../intro.html">Coding</a>
+  <ul class="nav sidenav_l2">
+    <li class="">
+      <a href="../NumPy_Arrays.html">NumPy arrays</a>
+    </li>
+    <li class="">
+      <a href="../jupyter_book_guide.html">Jupyter Book guide</a>
+    </li>
+    <li class="">
+      <a href="../Pandas/intro.html">Pandas</a>
+    </li>
+    <li class="">
+      <a href="../Intro to Python/intro.html">Intro to Python</a>
+    </li>
+    <li class="">
+      <a href="../Fundamentals of Computer Science/intro.html">Fundamentals of Computer Science</a>
+    </li>
+    <li class="active">
+      <a href="intro.html">Programming Tools</a>
+      <ul class="nav sidenav_l3">
+      <li class="active">
+        <a href="">Version control Git</a>
+      </li>
+    </ul>
+    </li>
+  </ul>
+  </li>
+  <li class="">
+    <a href="../../3_mathematics/intro.html">Mathematics</a>
+  </li>
+  <li class="">
+    <a href="../../1_modules/intro.html">Modules</a>
+  </li>
+  <li class="">
+    <a href="../../4_geosciences/intro.html">Geosciences</a>
+  </li>
+  <li class="">
+    <a href="../../5_extra/intro.html">Extra resources for researchers</a>
+  </li>
+  <li class="">
+    <a href="../../genindex.html">Index</a>
+  </li>
+</ul>
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/2_coding/Programming Tools/1_Version_Control_Git.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        
+        <a class="issues-button"
+            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2F2_coding/Programming Tools/1_Version_Control_Git.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/2_coding/Programming Tools/1_Version_Control_Git.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#setting-up-git" class="nav-link">Setting up Git</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#my-first-git-repo" class="nav-link">My first Git repo</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#basic-git-commands" class="nav-link">Basic Git commands</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#advanced-commands" class="nav-link">Advanced commands:</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#git-workflow" class="nav-link">Git workflow</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#git-branching-commands" class="nav-link">Git branching commands</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#examples" class="nav-link">Examples</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#exercises" class="nav-link">Exercises</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#references" class="nav-link">References</a>
+        </li>
+    
+    </ul>
+</nav>
+
+
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="version-control-git">
+<span id="id1"></span><h1>Version control Git<a class="headerlink" href="#version-control-git" title="Permalink to this headline">¶</a></h1>
+<p>As a future researcher, professional or enthusiast you will find out that maintaing a high standard of code is a considerable challenge. This can get even harder when multiple programmers are involved. Coding can be very rewarding, but it is also full of pitfalls and requires a <em>trial-and-error</em> approach.</p>
+<p>This is where <strong>version control</strong> comes in. It is a software which allows you to track the development of your coding project. It also enables your peers to work on different versions of the same structure.</p>
+<p>The most well known version control facility is <a class="reference external" href="https://git-scm.com/">git</a> but there are others such as <a class="reference external" href="https://www.mercurial-scm.org/">mercurial</a>. We are going to tackle the former. There are many platforms that allow to host git repositories, but the most well known is <a class="reference external" href="https://github.com/">GitHub</a>. This is the one we are going to use.</p>
+<div class="section" id="setting-up-git">
+<h2>Setting up Git<a class="headerlink" href="#setting-up-git" title="Permalink to this headline">¶</a></h2>
+<p>If you are on macOS or most distributions of Linux, you have git already configured on your machine.
+For Windows, you will need to download and install <a class="reference external" href="https://gitforwindows.org/">Git for Windows</a>.
+We will be accessing git via the terminal (<em>Git Bash</em> on Windows).</p>
+</div>
+<div class="section" id="my-first-git-repo">
+<h2>My first Git repo<a class="headerlink" href="#my-first-git-repo" title="Permalink to this headline">¶</a></h2>
+<p>We create a repository on Github and then connect to it with the terminal.</p>
+<p>If you want to try the first option, check out <a class="reference external" href="https://kbroman.org/github_tutorial/pages/init.html">this page</a>. Otherwise follow these steps.</p>
+<ol class="simple">
+<li><p>Create a GitHub account <a class="reference external" href="https://github.com/join">here</a></p></li>
+<li><p>Click your profile picture in the upper right corner -&gt; Your Repositories -&gt; New (Green)</p></li>
+<li><p>Choose a name (“MyFirstRepo”?)</p></li>
+<li><p>Set to Private</p></li>
+<li><p>Initialise this repository with a README (used to describe the repository)</p></li>
+<li><p>Create Repository (Green)</p></li>
+</ol>
+<p>Now your repository is on Github, time to connect it to your local machine.</p>
+<ol class="simple">
+<li><p>In the repository window click Code (Green)</p></li>
+<li><p>Copy the given link (you might have an option to use SHH or HTTPS - the latter will be simpler for now)</p></li>
+<li><p>Now go to the terminal</p></li>
+<li><p>Type  <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">&lt;link&gt;</span></code> e.g  <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">https://github.com/funnyaccount/MyFirstRepoTutorial</span></code> and hit enter. You might be asked for your GitHub  credentials.</p></li>
+</ol>
+<p>Congratulations, your repo is on your machine!</p>
+</div>
+<div class="section" id="basic-git-commands">
+<h2>Basic Git commands<a class="headerlink" href="#basic-git-commands" title="Permalink to this headline">¶</a></h2>
+<p>Now we will go through different commands and their effect on the repository:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">&lt;link&gt;</span></code> - creates a copy of the repo on your machine.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">add</span> <span class="pre">&lt;file/directory&gt;</span></code> - stages changes for a commit. It is the first part of the two-step process of creating a new snapshot. Files must to be added before the commit. It needs to be run with an argument e.g.:</p>
+<p> <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">add</span> <span class="pre">text.txt</span></code> - stages the <code class="docutils literal notranslate"><span class="pre">text.txt</span></code> file</p>
+<p> <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">add</span> <span class="pre">dir</span></code> - stages the whole <code class="docutils literal notranslate"><span class="pre">dir</span></code></p>
+<p> <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">add</span> <span class="pre">.</span> </code> - stages all the unstaged files, <strong>very common</strong>.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">commit</span> <span class="pre">-m</span> <span class="pre">&quot;message&quot;</span></code> - saves the snapshot in the project hostory. It works like a photo, anything staged with <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">add</span></code> will become a part of this snapshot. It is a good practice to run it with the <code class="docutils literal notranslate"><span class="pre">-m</span></code> flag followed by a brief message what was done. Without <code class="docutils literal notranslate"><span class="pre">-m</span></code> you might be prompted to do it in a terminal text editor such as Vim, read about the <a class="reference external" href="https://www.fprintf.net/vimCheatSheet.html">Vim commands</a>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">status</span></code> - shows which files are staged, modified or untracked.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">pull</span></code> - updates the local repository with the changes made on the remote one. If you work in a team and you friend commited code, you might want to <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">pull</span></code> to have those changes on your machine.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">push</span></code> - updates the remote repository with your commits. <strong>You need to us this command to update the code on GitHub</strong>.</p></li>
+</ul>
+<div class="section" id="advanced-commands">
+<h3>Advanced commands:<a class="headerlink" href="#advanced-commands" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">init</span></code> - initalizes a new Git repository and begins tracking the directory. Adds a hidden subfloder required for the version control. Have a look at the exercises if you want to try it!</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">stash</span></code> - this command is used quite unfrequently. It locally saves the work that is not ready to commit and gives a clean working directory. For instance, when working on a new feature that’s not complete, but an urgent bug needs attention:</p>
+<p> <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">stash</span> <span class="pre">-u</span></code> - saves the untracked files as well</p>
+<p> <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">stash</span> <span class="pre">pop</span></code> - brings th stashed work back to the directory</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">fetch</span></code> - downloads meta-data but does not change the files on your machine. It allows you which files are changes in the latast version of a branch, but does no implement those changes. Follwed by  <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">merge</span> <span class="pre">FETCH_HEAD</span></code> works the same as  <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">pull</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">log</span></code> - shows a chronological commit history for a repo.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="git-workflow">
+<h2>Git workflow<a class="headerlink" href="#git-workflow" title="Permalink to this headline">¶</a></h2>
+<p>For now, the history of our project looks like that:</p>
+<div class="figure align-default">
+<a class="reference internal image-reference" href="../../_images/GitWorkFlowSingle.png"><img alt="../../_images/GitWorkFlowSingle.png" src="../../_images/GitWorkFlowSingle.png" style="width: 100%;" /></a>
+</div>
+<p>Where circle denotes pushed commits.</p>
+<p>The commands we have discussed enable us to work on one <em>branch</em>. A branch is a version of a project. The great power of Git comes when we work on multiple branches. Such multi-branch project can have the following structure:</p>
+<div class="figure align-default">
+<a class="reference internal image-reference" href="../../_images/GitWorkFlow.png"><img alt="../../_images/GitWorkFlow.png" src="../../_images/GitWorkFlow.png" style="width: 100%;" /></a>
+</div>
+<p><strong>Master</strong> is usually the main branch of the project. All branches stem (immediately or not) from the master. When two braches become one, we say that they are <em>merged</em>. It is a good practice to merge all branches at the end of development process (unless the one of the branches is not relevant to the project). Cosider the branches from the diagram:</p>
+<ul class="simple">
+<li><p>FixRunner - there was a broken runner function in the structure of the project. One of the developers branched from the Master branch to fix it and then merged them.</p></li>
+<li><p>FrontEnd - the team working of the front end works created this branch not to intefere with the rest of developers. It is merged with the Master at the end of the production cycle.</p></li>
+<li><p>OpenScreen - a feature developed by some people in the front end team.</p></li>
+<li><p>Unused - branch that did not end end up contributing to the final verision of the project.</p></li>
+</ul>
+</div>
+<div class="section" id="git-branching-commands">
+<h2>Git branching commands<a class="headerlink" href="#git-branching-commands" title="Permalink to this headline">¶</a></h2>
+<p>Let us consider the commands dealing with branches:</p>
+<ul class="simple">
+<li><p>Where circle denotes pushed commits.</p></li>
+</ul>
+<p>The commands we have discussed enable us to work on one <em>branch</em>. A branch is a version of a project. The great power of Git comes when we work on multiple branches. Such multi-branch project can have the following structure:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">branch</span></code> - this command has multiple effects depending on the arguments:</p>
+<p> <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">branch</span></code> - shows the branches being worked on locally.
+ <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">branch</span> <span class="pre">-a</span></code> - shows remote and local branches.
+ <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">branch</span> <span class="pre">&lt;branch_name&gt;</span></code> - creates a new branch.
+ <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">branch</span> <span class="pre">-d</span> <span class="pre">&lt;branch_name&gt;</span></code> - deletes a branch.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">checkout</span></code> - used to switch branches:</p>
+<p> <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">checkout</span> <span class="pre">&lt;branch_name&gt;</span></code> - move to an existing branch.
+ <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">checkout</span> <span class="pre">-b</span> <span class="pre">&lt;branch_name&gt;</span></code> - create a brnach and move to it.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">merge</span> <span class="pre">&lt;branch_name&gt;</span></code> - merges a a branch into the current working branch (<code class="docutils literal notranslate"><span class="pre">&lt;branch_name&gt;</span></code> will no longer be an independent branch).</p></li>
+</ul>
+</div>
+<div class="section" id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>Contributing</strong></p></li>
+</ul>
+<p>Now your repository is in the home directory. Now you will need to enter this directory on your machine:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> MyFirstRepoTutorial
+</pre></div>
+</div>
+<p>Now we will create a new file in that folder:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>vim Hello.txt
+</pre></div>
+</div>
+<p>This will take you to the Vim text editor. Type <code class="docutils literal notranslate"><span class="pre">i</span></code> to enter the editing mode. Type some text, when finished type click the <code class="docutils literal notranslate"><span class="pre">esc</span></code> button. Then type <code class="docutils literal notranslate"><span class="pre">w</span></code> and enter. Finally type <code class="docutils literal notranslate"><span class="pre">qa</span></code> and enter. New file is created!</p>
+<p>Now type in terminal:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git status
+</pre></div>
+</div>
+<p>This should tell you that <code class="docutils literal notranslate"><span class="pre">Hello.txt</span></code> is untracked. To change this:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git add .
+git status
+</pre></div>
+</div>
+<p>Now the file is tracked, congrats! We now need to commit:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git commit -m <span class="s1">&#39;Hello file created&#39;</span>
+</pre></div>
+</div>
+<p>Finally:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git push
+</pre></div>
+</div>
+<p>Now your new file is on GitHub!</p>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>Creating a new branch</strong></p></li>
+</ul>
+<p>To see the existing branches type:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git branch -a
+</pre></div>
+</div>
+<p>This should mention the <code class="docutils literal notranslate"><span class="pre">master</span></code> branches (remote and local) as well as the <code class="docutils literal notranslate"><span class="pre">HEAD</span></code> which is used as a reference for newly cloning repos. Now our aim is to create a new branch and move to it, there are two ways to do this:</p>
+<p>First:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1">#create a new shell</span>
+git branch new_branch
+<span class="c1">#move to it</span>
+git checkout new_branch
+</pre></div>
+</div>
+<p>Second:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git checkout -b new_branch
+</pre></div>
+</div>
+<p>Now we have a new branch and we can edit it without affecting the code in the <code class="docutils literal notranslate"><span class="pre">master</span></code>. To verify that we have created a branch:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git branch -a
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">new_branch</span></code> is only present locally, to add it to GitHub:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git push --set-upstream origin new_branch
+</pre></div>
+</div>
+<p>Now let us edit the <code class="docutils literal notranslate"><span class="pre">Hello.txt</span></code> file from the first example. You can also use any other text editor of your choice, VS Code or even Notepad:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>vim Hello.txt
+</pre></div>
+</div>
+<p>Edit the file a little bit.</p>
+<p>Now contribute your changes:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git add Hello.txt
+git commit -m <span class="s1">&#39;Changed Hello.txt&#39;</span>
+git push
+</pre></div>
+</div>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>Switching branches</strong></p></li>
+</ul>
+<p>To verify that different branches containg different versions of the repository:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git checkout master
+</pre></div>
+</div>
+<p>Have a look at the file:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>cat Hello.txt
+</pre></div>
+</div>
+<p>They are different, aren’t they?</p>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>Merging</strong></p></li>
+</ul>
+<p>Now, we want to merge the <code class="docutils literal notranslate"><span class="pre">new_branch</span></code> back to the <code class="docutils literal notranslate"><span class="pre">master</span></code>. As we are in the <code class="docutils literal notranslate"><span class="pre">master</span></code> this should be easy:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git merge new_branch
+</pre></div>
+</div>
+<p>You might be lucky and have no <strong>merge conflicts</strong> to deal with, if not, keep reading!</p>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>Merge Conflicts</strong></p></li>
+</ul>
+<p>When merging branches, we might encounter issues related to the different versions of the same file. Let us induce such case. We are now in the <code class="docutils literal notranslate"><span class="pre">master</span></code> branch, create a following file <code class="docutils literal notranslate"><span class="pre">pyth.py</span></code> in the repository (which should be in your Home directory):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">n</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="mi">67</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>add and commit:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git add .
+git commit -m <span class="s1">&#39;Python file&#39;</span>
+</pre></div>
+</div>
+<p>Now switch to the <code class="docutils literal notranslate"><span class="pre">new_branch</span></code>:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git checkout new_branch
+</pre></div>
+</div>
+<p>Create the <code class="docutils literal notranslate"><span class="pre">pyth.py</span></code> Python file:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mi">18</span><span class="o">*</span><span class="n">n</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="mi">67</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>add and commit:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git add .
+git commit -m <span class="s1">&#39;Python file&#39;</span>
+</pre></div>
+</div>
+<p>Finally back to the <code class="docutils literal notranslate"><span class="pre">master</span></code>:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git checkout master
+git merge new_branch
+</pre></div>
+</div>
+<p>This should print the following error message:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>Auto-merging pyth.py
+CONFLICT <span class="o">(</span>content<span class="o">)</span>: Merge conflict in pyth.py
+Automatic merge failed<span class="p">;</span> fix conflicts and <span class="k">then</span> commit the result.
+</pre></div>
+</div>
+<p>Now have a look at your Python file:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+<span class="o">&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span> <span class="n">HEAD</span>
+    <span class="k">return</span> <span class="n">n</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span>
+<span class="o">=======</span>
+    <span class="k">return</span> <span class="mi">18</span><span class="o">*</span><span class="n">n</span>
+<span class="o">&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span> <span class="n">new_branch</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="mi">67</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>In order to resolve this conflict, you will have to delete the the <code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;&lt;&lt;&lt;</span></code> and <code class="docutils literal notranslate"><span class="pre">=====</span></code> markers together with branch names. <strong>You also need to choose which version you want.</strong> e.g.:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+
+    <span class="k">return</span> <span class="mi">18</span><span class="o">*</span><span class="n">n</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="mi">67</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>commit and add:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git add .
+git commit -m <span class="s1">&#39;Python file merged!&#39;</span>
+</pre></div>
+</div>
+<p>Good job, you have resolved your first merge conflict!</p>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>Deleting branches</strong></p></li>
+</ul>
+<p>It is a good practice to delete branches which are no longer used. Time to say goodbye to the <code class="docutils literal notranslate"><span class="pre">new_branch</span></code>:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git branch -d new_branch
+</pre></div>
+</div>
+<p>You can also delete it on GitHub by going to the branches section of your repo.</p>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>Undo</strong></p></li>
+</ul>
+<p>It happend to everyone, you have just pushed something that you did not want to. This is where the <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">revert</span></code> command comes in. You will need to supply a commit hash (which can be found using the <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">log</span></code> command. In this case we want to undo the very last commit, which is referenced under the name <code class="docutils literal notranslate"><span class="pre">HEAD</span></code>.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git revert HEAD
+git push
+</pre></div>
+</div>
+<p>Oof…</p>
+</div>
+<div class="section" id="exercises">
+<span id="version-control-git-exercises"></span><h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">.gitignore</span></code> Sometimes you will want to ignore some files in your repository, maybe you just want to keep them to yourself or they are irrelevant to the project. The <code class="docutils literal notranslate"><span class="pre">.gitignore</span></code> allows you to do exacltly that. In it, you list the files you want to ignore. <strong>Do the following</strong>:</p></li>
+</ul>
+<ol class="simple">
+<li><p>Create a file <code class="docutils literal notranslate"><span class="pre">irrelevant.txt</span></code> in your repo</p></li>
+<li><p>Create a file <code class="docutils literal notranslate"><span class="pre">.gitignore</span></code> and insert the name of the file from (1)</p></li>
+<li><p>Add, commit, and push. Did it change anything?</p></li>
+</ol>
+<div class="dropdown admonition">
+<p class="admonition-title">Anwser</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>vim irrelevant.txt
+<span class="c1">#type something in that file</span>
+vim .gitignore
+<span class="c1"># insert the name of that file</span>
+git add .
+git commit -m <span class="s1">&#39;commit message&#39;</span>
+git push
+</pre></div>
+</div>
+<p>This should just add the .gitignore file to your repo. If you want to know more about ignoring files, try <a class="reference external" href="https://git-scm.com/docs/gitignore">here</a>.</p>
+</div>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">stash</span></code> Now try the following:</p></li>
+</ul>
+<ol class="simple">
+<li><p>Create a file <code class="docutils literal notranslate"><span class="pre">test.txt</span></code> in your repo and edit it</p></li>
+<li><p>Stash with unversioned files, add, commit and push (anything to commit actually?)</p></li>
+<li><p>Did anything change on Github?</p></li>
+<li><p>Now now pop from the stash, add, commit and push</p></li>
+<li><p>Can you see your file back?</p></li>
+</ol>
+<div class="dropdown admonition">
+<p class="admonition-title">Anwser</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>vim test.txt
+<span class="c1">#type something in that file</span>
+git stash -u
+git add . <span class="c1">#nothing to add</span>
+git commit -m <span class="s1">&#39;commit message&#39;</span> <span class="c1">#nothing to commit</span>
+git push <span class="c1">#nothing to push</span>
+git stash pop
+git add .
+git commit -m <span class="s1">&#39;commit message&#39;</span> 
+git push 
+</pre></div>
+</div>
+<p>Now the <code class="docutils literal notranslate"><span class="pre">test.txt</span></code> should be on GitHub.</p>
+</div>
+</div>
+<div class="section" id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Git Handbook, 2020, <a class="reference external" href="https://guides.github.com/introduction/git-handbook/">What’s a version control system?</a></p></li>
+<li><p>Brian Kerr, beanstalk, 2016 <a class="reference external" href="http://guides.beanstalkapp.com/version-control/common-git-commands.html">Common Git Commands</a></p></li>
+<li><p>GitHub Docs, 2020 <a class="reference external" href="https://docs.github.com/en/github/using-git/ignoring-files">Ignoring files</a></p></li>
+</ul>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "primer-computational-mathematics/book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./2_coding/Programming Tools"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="intro.html" title="previous page">Programming Tools</a>
+    <a class='right-next' id="next-link" href="../../3_mathematics/intro.html" title="next page">Mathematics</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Imperial College London<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../../_static/js/index.js"></script>
+    
+  </body>
+</html>

@@ -1,0 +1,446 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Chapter 8 – Feedforward &#8212; ESE Jupyter Material</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/mystnb.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".cell"
+        const thebe_selector_input = ".cell_input div.highlight"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Chapter 9 – Back Propagation" href="Chapter 9 -- Back Propagation.html" />
+    <link rel="prev" title="Chapter 7 – Real (Non-linear) Neural Network" href="Chapter 7 -- Real (Non-linear) Neural Network.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../index.html">
+  
+  <img src="../../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">ESE Jupyter Material</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  
+  <ul class="nav sidenav_l1">
+  <li class="">
+    <a href="../../intro.html">Landing page</a>
+  </li>
+  <li class="">
+    <a href="../../2_coding/intro.html">Coding</a>
+  </li>
+  <li class="">
+    <a href="../../3_mathematics/intro.html">Mathematics</a>
+  </li>
+  <li class="">
+    <a href="../../1_modules/intro.html">Modules</a>
+  </li>
+  <li class="active">
+    <a href="../intro.html">Geosciences</a>
+  <ul class="nav sidenav_l2">
+    <li class="">
+      <a href="../1D_Heat_Conduction.html">1D heat conduction (layered medium)</a>
+    </li>
+    <li class="">
+      <a href="../1D_Resistivity_Forward_Modelling.html">1D resistivity forward modelling</a>
+    </li>
+    <li class="">
+      <a href="../Climate_Model.html">Climate model</a>
+    </li>
+    <li class="">
+      <a href="../Dynamic_Earth.html">Seafloor ages</a>
+    </li>
+    <li class="">
+      <a href="../Keplerian_Orbits.html">Keplerian orbits</a>
+    </li>
+    <li class="">
+      <a href="../Milankovitch_cycles.html">Milankovitch cycles</a>
+    </li>
+    <li class="">
+      <a href="../Seismology.html">Downloading earthquake data</a>
+    </li>
+    <li class="">
+      <a href="../Tides.html">Tides</a>
+    </li>
+    <li class="">
+      <a href="../Wave_dispersion.html">Wave dispersion</a>
+    </li>
+    <li class="active">
+      <a href="intro.html">Machine Learning</a>
+      <ul class="nav sidenav_l3">
+      <li class="">
+        <a href="Chapter 0 -- Introduction.html">Chapter 0 – Introduction</a>
+      </li>
+      <li class="">
+        <a href="Chapter 1 -- Neural Network.html">Chapter 1 – Neural Network</a>
+      </li>
+      <li class="">
+        <a href="Chapter 2 -- Maximum Likelihood.html">Chapter 2 – Maximum Likelihood</a>
+      </li>
+      <li class="">
+        <a href="Chapter 3 -- Cross Entropy.html">Chapter 3 – Cross Entropy</a>
+      </li>
+      <li class="">
+        <a href="Chapter 4 -- Cost Function.html">Chapter 4 – Cost Function</a>
+      </li>
+      <li class="">
+        <a href="Chapter 5 -- Gradient Descent 1.html">Chapter 5 – Gradient Descent 1</a>
+      </li>
+      <li class="">
+        <a href="Chapter 6 -- Gradient Descent 2.html">Chapter 6 – Gradient Descent 2</a>
+      </li>
+      <li class="">
+        <a href="Chapter 7 -- Real (Non-linear) Neural Network.html">Chapter 7 – Real (Non-linear) Neural Network</a>
+      </li>
+      <li class="active">
+        <a href="">Chapter 8 – Feedforward</a>
+      </li>
+      <li class="">
+        <a href="Chapter 9 -- Back Propagation.html">Chapter 9 – Back Propagation</a>
+      </li>
+      <li class="">
+        <a href="Chapter 10 -- General Back Propagation.html">Chapter 10 – General Back Propagation</a>
+      </li>
+      <li class="">
+        <a href="Chapter 11 -- Underfitting and Overfitting.html">Chapter 11 – Underfitting and Overfitting</a>
+      </li>
+      <li class="">
+        <a href="Chapter 12 -- Early-stopping, Dropout & Mini-batch.html">Chapter 12 – Early-stopping, Dropout & Mini-batch</a>
+      </li>
+      <li class="">
+        <a href="Chapter 13 -- Vanishing Gradient 1.html">Chapter 13 – Vanishing Gradient 1</a>
+      </li>
+      <li class="">
+        <a href="Chapter 14 -- Vanishing Gradient 2.html">Chapter 14 – Vanishing Gradient 2</a>
+      </li>
+      <li class="">
+        <a href="Chapter 15 -- Regularisation.html">Chapter 15 – Regularisation</a>
+      </li>
+      <li class="">
+        <a href="Chapter 16 -- Other Activation Functions.html">Chapter 16 – Other Activation Functions</a>
+      </li>
+      <li class="">
+        <a href="Chapter 17 -- Local Minima Trap.html">Chapter 17 – Local Minima Trap</a>
+      </li>
+      <li class="">
+        <a href="Chapter 18 -- Softmax.html">Chapter 18 – Softmax</a>
+      </li>
+      <li class="">
+        <a href="Chapter 19 -- Hyper-Parameters.html">Chapter 19 – Hyper-Parameters</a>
+      </li>
+      <li class="">
+        <a href="Chapter 20 -- Coding Example.html">Chapter 20 – Coding Example</a>
+      </li>
+    </ul>
+    </li>
+    <li class="">
+      <a href="../remote_sensing/intro.html">Remote sensing</a>
+    </li>
+  </ul>
+  </li>
+  <li class="">
+    <a href="../../5_extra/intro.html">Extra resources for researchers</a>
+  </li>
+  <li class="">
+    <a href="../../genindex.html">Index</a>
+  </li>
+</ul>
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/4_geosciences/pytorch_image_filtering_ml/Chapter 8 -- Feedforward.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        
+        <a class="issues-button"
+            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2F4_geosciences/pytorch_image_filtering_ml/Chapter 8 -- Feedforward.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/4_geosciences/pytorch_image_filtering_ml/Chapter 8 -- Feedforward.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+    </ul>
+</nav>
+
+
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="chapter-8-feedforward">
+<span id="feedforward"></span><h1>Chapter 8 – Feedforward<a class="headerlink" href="#chapter-8-feedforward" title="Permalink to this headline">¶</a></h1>
+<p>Let’s take a look at how feedforward is processed in a three layers neural net.</p>
+<img src="images/feedForward.PNG" width="500">
+<center> Figure 1.13<p>From the figure 1.13 above, we know that the two input values for the first and the second neuron in the hidden layer are</p>
+<p>\begin{equation}
+h_1^{(1)} = w_{11}^{(1)}*x_1 + w_{21}^{(1)}*x_2 + w_{31}^{(1)}*x_3+ w_{41}^{(1)}*1
+\end{equation}</p>
+<p>\begin{equation}
+h_2^{(1)} = w_{12}^{(2)}*x_1 + w_{22}^{(2)}*x_2 + w_{32}^{(2)}*x_3+ w_{42}^{(2)}*1
+\end{equation}</p>
+<p>where the <span class="math notranslate nohighlight">\(w^{(n)}_{4m}\)</span> term is the bias term in the form of weight.</p>
+<p>To simplify the two equations above, we can use matrix</p>
+<p>\begin{equation}
+H^{(1)} = [h_1^{(1)} ;; h_2^{(1)}] = [x_1 ;; x_2 ;; x_3 ;; 1]
+\begin{bmatrix}
+w^{(1)}<em>{11} &amp; w^{(1)}</em>{12} \
+w^{(1)}<em>{21} &amp; w^{(1)}</em>{22} \
+w^{(1)}<em>{31} &amp; w^{(1)}</em>{32} \
+w^{(1)}<em>{41} &amp; w^{(1)}</em>{4
+2}
+\end{bmatrix}
+\end{equation}</p>
+<p>Similarly, the two outputs from the input layer can be the inputs for the hidden layer</p>
+<p>\begin{equation}
+\sigma(H^{(1)}) = [\sigma(h_1^{(1)}) ;; \sigma( h_2^{(1)})]
+\end{equation}</p>
+<p>This in turns can be the input values for the next layer (output layer)</p>
+<p>\begin{equation}
+h^{(2)} = w^{(2)}_{11}* \sigma(h^{(1)}<em>1)+w^{(2)}</em>{21} *\sigma(h^{(1)}<em>2)+w^{(2)}</em>{31}*1
+\end{equation}</p>
+<p>Again, we can simplify this equation by using matrix</p>
+<p>\begin{equation}
+H^{(2)} = [\sigma(h_1^{(1)}) ;;\sigma(h_2^{(1)}) ; ; 1]
+\begin{bmatrix}
+w^{(2)}<em>{11} \
+w^{(2)}</em>{21} \
+w^{(2)}_{31}
+\end{bmatrix}
+\end{equation}</p>
+<p>Then we send this value <span class="math notranslate nohighlight">\(h^{(2)}\)</span> into the sigma function in the final output layer to obtain the prediction</p>
+<p>\begin{equation}
+\hat{y} = \sigma(h^{(2)})
+\end{equation}</p>
+<p>To put all the equation of three layers together, we can have</p>
+<p>\begin{equation}
+\hat{y} = \sigma(\sigma([x_1 ;; x_2 ;; x_3 ;; 1]
+\begin{bmatrix}
+w^{(1)}<em>{11} &amp; w^{(1)}</em>{12} \
+w^{(1)}<em>{21} &amp; w^{(1)}</em>{22} \
+w^{(1)}<em>{31} &amp; w^{(1)}</em>{32} \
+w^{(1)}<em>{41} &amp; w^{(1)}</em>{42}
+\end{bmatrix})
+\begin{bmatrix}
+w^{(2)}<em>{11} \
+w^{(2)}</em>{21} \
+w^{(2)}_{31}
+\end{bmatrix})
+\end{equation}</p>
+<p>Or we can simplify it to be</p>
+<p>\begin{equation}
+\hat{y} = \sigma(\sigma(xW^{(1)})W^{(2)})
+\end{equation}</p>
+<p>This is the feedforward process: based on the known weights <span class="math notranslate nohighlight">\(W\)</span> and input <span class="math notranslate nohighlight">\(x\)</span> to calculate the prediction <span class="math notranslate nohighlight">\(\hat{y}\)</span>.</p>
+<p>Finally, it’s easy to write code computing the output from a Network instance. We begin by defining the sigmoid function:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">sigmoid</span><span class="p">(</span><span class="n">z</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mf">1.0</span><span class="o">/</span><span class="p">(</span><span class="mf">1.0</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">z</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Note that when the input z is a vector or Numpy array, Numpy automatically applies the function sigmoid elementwise, that is, in vectorized form.</p>
+<p>We then add a feedforward method to the Network class, which, given an input a for the network, returns the corresponding output:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">feedforward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returning the output a, which is the input to the next layer&quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">b</span><span class="p">,</span> <span class="n">w</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">biases</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">weights</span><span class="p">):</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="n">sigmoid</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span><span class="o">+</span><span class="n">b</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">a</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "primer-computational-mathematics/book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./4_geosciences/pytorch_image_filtering_ml"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="Chapter 7 -- Real (Non-linear) Neural Network.html" title="previous page">Chapter 7 – Real (Non-linear) Neural Network</a>
+    <a class='right-next' id="next-link" href="Chapter 9 -- Back Propagation.html" title="next page">Chapter 9 – Back Propagation</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Imperial College London<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../../_static/js/index.js"></script>
+    
+  </body>
+</html>

@@ -1,0 +1,564 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>First-order ODEs &#8212; ESE Jupyter Material</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/mystnb.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".cell"
+        const thebe_selector_input = ".cell_input div.highlight"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Higher order Linear ODEs" href="4_higher_ord_lin_odes.html" />
+    <link rel="prev" title="Linear Differential Equations" href="2_linear_des.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../index.html">
+  
+  <img src="../../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">ESE Jupyter Material</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  
+  <ul class="nav sidenav_l1">
+  <li class="">
+    <a href="../../intro.html">Landing page</a>
+  </li>
+  <li class="">
+    <a href="../../2_coding/intro.html">Coding</a>
+  </li>
+  <li class="active">
+    <a href="../intro.html">Mathematics</a>
+  <ul class="nav sidenav_l2">
+    <li class="">
+      <a href="../numerical_methods/intro.html">Numerical methods</a>
+    </li>
+    <li class="">
+      <a href="../statistics/intro.html">Statistics</a>
+    </li>
+    <li class="">
+      <a href="../sets_and_functions/intro.html">Sets and functions</a>
+    </li>
+    <li class="">
+      <a href="../linear_algebra/intro.html">Linear algebra</a>
+    </li>
+    <li class="">
+      <a href="../calculus/intro.html">Calculus</a>
+    </li>
+    <li class="active">
+      <a href="intro.html">Differential equations</a>
+      <ul class="nav sidenav_l3">
+      <li class="">
+        <a href="1_de_introduction.html">Introduction to differential equations</a>
+      </li>
+      <li class="">
+        <a href="2_linear_des.html">Linear Differential Equations</a>
+      </li>
+      <li class="active">
+        <a href="">First-order ODEs</a>
+      </li>
+      <li class="">
+        <a href="4_higher_ord_lin_odes.html">Higher order Linear ODEs</a>
+      </li>
+      <li class="">
+        <a href="5_ode_series.html">Series ODE</a>
+      </li>
+      <li class="">
+        <a href="6_pde_basicdefinitions.html">Introductory definitions and concepts</a>
+      </li>
+      <li class="">
+        <a href="7_pde_first_order.html">First-order linear PDEs</a>
+      </li>
+      <li class="">
+        <a href="8_pde_second_order.html">Canonical form of second-order linear PDEs</a>
+      </li>
+      <li class="">
+        <a href="9_poisson_laplace_eq.html">Poisson’s and Laplace’s equation</a>
+      </li>
+      <li class="">
+        <a href="10_heat_eq.html">Heat (diffusion) equation</a>
+      </li>
+      <li class="">
+        <a href="11_wave_eq.html">Wave equation</a>
+      </li>
+      <li class="">
+        <a href="12_similarity_solutions.html">Self-similar solutions</a>
+      </li>
+    </ul>
+    </li>
+    <li class="">
+      <a href="../series_and_sequences/intro.html">Series and sequences</a>
+    </li>
+    <li class="">
+      <a href="../mathematical_notation/intro.html">Mathematical notation</a>
+    </li>
+    <li class="">
+      <a href="../complex_analysis/intro.html">Complex analysis</a>
+    </li>
+  </ul>
+  </li>
+  <li class="">
+    <a href="../../1_modules/intro.html">Modules</a>
+  </li>
+  <li class="">
+    <a href="../../4_geosciences/intro.html">Geosciences</a>
+  </li>
+  <li class="">
+    <a href="../../5_extra/intro.html">Extra resources for researchers</a>
+  </li>
+  <li class="">
+    <a href="../../genindex.html">Index</a>
+  </li>
+</ul>
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/3_mathematics/differential_equations/3_first-order_odes.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        
+        <a class="issues-button"
+            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2F3_mathematics/differential_equations/3_first-order_odes.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/3_mathematics/differential_equations/3_first-order_odes.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#direction-field" class="nav-link">Direction field</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#direct-integration" class="nav-link">Direct integration</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#separation-of-variables" class="nav-link">Separation of variables</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#reduction-to-separable-form" class="nav-link">Reduction to separable form</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#exact-odes" class="nav-link">Exact ODEs</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#reduction-to-exact-form-integrating-factors" class="nav-link">Reduction to exact form. Integrating factors</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#first-order-linear-differential-equation" class="nav-link">First order linear differential equation</a>
+        </li>
+    
+    </ul>
+</nav>
+
+
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="first-order-odes">
+<h1>First-order ODEs<a class="headerlink" href="#first-order-odes" title="Permalink to this headline">¶</a></h1>
+<span class="target" id="index-0"></span><p id="index-1">ODEs of first order contain only the first derivative <span class="math notranslate nohighlight">\(y'\)</span>, so they take the form</p>
+<div class="math notranslate nohighlight" id="equation-implicit">
+<span class="eqno">(3)<a class="headerlink" href="#equation-implicit" title="Permalink to this equation">¶</a></span>\[ F(x, y, y') = 0 \]</div>
+<p>or often</p>
+<div class="math notranslate nohighlight" id="equation-explicit">
+<span class="eqno">(4)<a class="headerlink" href="#equation-explicit" title="Permalink to this equation">¶</a></span>\[ y' = \frac{dy}{dx} = f(x, y) \]</div>
+<p>where <span class="math notranslate nohighlight">\(y\)</span> is the dependent variable and <span class="math notranslate nohighlight">\(x\)</span> is the independent variable and <span class="math notranslate nohighlight">\(f\)</span> is any function of them. The ODE in eq. <a class="reference internal" href="#equation-implicit">(3)</a> is written in <em>implicit</em> form, while it is written <em>explicitly</em> in eq. <a class="reference internal" href="#equation-explicit">(4)</a>.</p>
+<div class="section" id="direction-field">
+<span id="ode-dirfield"></span><h2>Direction field<a class="headerlink" href="#direction-field" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplpot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="direct-integration">
+<h2>Direct integration<a class="headerlink" href="#direct-integration" title="Permalink to this headline">¶</a></h2>
+<p>The basic technique in solving differential equations is integration. We can directly integrate an ODE of the form</p>
+<div class="math notranslate nohighlight">
+\[ \frac{du}{dx} = f(x) \]</div>
+</div>
+<div class="section" id="separation-of-variables">
+<span id="index-2"></span><h2>Separation of variables<a class="headerlink" href="#separation-of-variables" title="Permalink to this headline">¶</a></h2>
+<p>If we can reduce an ODE through algebraic manipulations to the form</p>
+<div class="math notranslate nohighlight">
+\[ \frac{du}{dx} = g(x)h(u) \]</div>
+<p>we call it a <strong>separable</strong> equation. If <span class="math notranslate nohighlight">\(h(u) = 0\)</span> then the solution is <span class="math notranslate nohighlight">\(u =\)</span> const. If <span class="math notranslate nohighlight">\(h(y) \neq 0\)</span> we can divide through by it and integrate with respect to <span class="math notranslate nohighlight">\(x\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[ \int \frac{du}{h(u)} = \int g(x) dx + c \]</div>
+<p>to find the general solution.</p>
+<p><strong>Example 2.</strong> Let us find the general solution of</p>
+<div class="math notranslate nohighlight">
+\[ u' = e^{2x-1} u^2 \]</div>
+<p>This is a separable equation … integrate both sides w.r.t. <span class="math notranslate nohighlight">\(x\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[ \int \frac{du}{u^2} = \int e^{2x-1} dx \]</div>
+<div class="dropdown admonition">
+<p class="admonition-title">Example: <span class="math notranslate nohighlight">\(y' + ky = 0, \quad k \in \mathbb{R}\)</span></p>
+<p>Consider a simple, but very important, ODE <span class="math notranslate nohighlight">\(y' = -ky\)</span>, where <span class="math notranslate nohighlight">\(k\)</span> is a constant. The question we need to be asking ourselves is “<em>what function when differentiated is equal to itself times some <span class="math notranslate nohighlight">\(-k\)</span>?</em>” The answer is the exponential function</p>
+<div class="math notranslate nohighlight">
+\[ y = Ce^{-kx} \quad \longrightarrow \quad y' = -kC e^{-kx} \]</div>
+<p>With practice this type of questions and the answers to them will come more naturally. If an answer is not obvious (and most often it will not be), you could try solving it using some method. Let us do that:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} \frac{dy}{dx} = -k y \\
+\frac{dy}{y} dx = -k \\
+\int \frac{dy}{y} = \int -k dx \\
+\ln y = -kx + \tilde{C} \\
+y = e^{-kx + \tilde{C}} = Ce^{-kx}\end{split}\]</div>
+</div>
+</div>
+<div class="section" id="reduction-to-separable-form">
+<h2>Reduction to separable form<a class="headerlink" href="#reduction-to-separable-form" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="exact-odes">
+<h2>Exact ODEs<a class="headerlink" href="#exact-odes" title="Permalink to this headline">¶</a></h2>
+<p>If a function <span class="math notranslate nohighlight">\(u(x, y)\)</span> has continuous partial derivatives, its <strong>differential</strong> (also called its <em>total differential</em>) is</p>
+<div class="math notranslate nohighlight">
+\[ du = \frac{\partial u}{\partial x} dx + \frac{\partial u}{\partial y} dy \]</div>
+<p>From here it follows that if <span class="math notranslate nohighlight">\(u(x, y) =\)</span> const, then <span class="math notranslate nohighlight">\(du = 0\)</span>.</p>
+<p>A first-order ODE <span class="math notranslate nohighlight">\(M(x, y) + N(x, y)y' = 0\)</span>, written as</p>
+<div class="math notranslate nohighlight" id="equation-1">
+<span class="eqno">(5)<a class="headerlink" href="#equation-1" title="Permalink to this equation">¶</a></span>\[ M(x, y) dx + N(x, y) dy = 0 \]</div>
+<p>is called an <strong>exact differential equation</strong> if the differential form <span class="math notranslate nohighlight">\(M(x, y) dx + N(x, y) dy\)</span> is <strong>exact</strong>, that is, this form is the differential</p>
+<div class="math notranslate nohighlight" id="equation-2">
+<span class="eqno">(6)<a class="headerlink" href="#equation-2" title="Permalink to this equation">¶</a></span>\[ du = \frac{\partial u}{\partial x} dx + \frac{\partial u}{\partial y} dy \]</div>
+<p>of some function <span class="math notranslate nohighlight">\(u(x, y)\)</span>. Then (1) can be written</p>
+<div class="math notranslate nohighlight">
+\[ du = 0 \]</div>
+<p>By integration we immediately obtain the general solution of (1) in the form</p>
+<div class="math notranslate nohighlight">
+\[ u(x, y) = c \]</div>
+<p>This is called an <strong>implicit solution</strong></p>
+<p>Comparing (1) and (2), we see that (1) is an exact differential equation if there is some function <span class="math notranslate nohighlight">\(u(x, y)\)</span> such that</p>
+<div class="math notranslate nohighlight" id="equation-4ab">
+<span class="eqno">(7)<a class="headerlink" href="#equation-4ab" title="Permalink to this equation">¶</a></span>\[ \frac{\partial u}{\partial x} = M, \qquad \frac{\partial u}{\partial y} = N \]</div>
+<p>Necessary and sufficient condition for (1) to be an exact differential equation</p>
+<div class="math notranslate nohighlight">
+\[ \frac{\partial M}{\partial y} = \frac{\partial^2 u}{\partial y \partial x} = \frac{\partial^2 u}{\partial x \partial y} = \frac{\partial N}{\partial x} \]</div>
+<p>If (1) is exact, the function <span class="math notranslate nohighlight">\(u(x, y)\)</span> can be found by inspection or in the following systematic way. From 4a we have by integration w.r.t. x</p>
+<div class="math notranslate nohighlight" id="equation-6">
+<span class="eqno">(8)<a class="headerlink" href="#equation-6" title="Permalink to this equation">¶</a></span>\[ u = \int M dx + k(y) \]</div>
+<p>where <span class="math notranslate nohighlight">\(k(y)\)</span> is the “constant” of integration. To determine <span class="math notranslate nohighlight">\(k(y)\)</span>, we derive <span class="math notranslate nohighlight">\(\partial u / \partial y\)</span> from (6), use (4b) to get <span class="math notranslate nohighlight">\(dk/dy\)</span>, and integrate <span class="math notranslate nohighlight">\(dk/dy\)</span> to get <span class="math notranslate nohighlight">\(k\)</span>.</p>
+<p>Could have done the same with 4b to get</p>
+<div class="math notranslate nohighlight">
+\[ u = \int N dy + l(x) \]</div>
+<div class="tip admonition">
+<p class="admonition-title">Physical interpretation: conservative force</p>
+<p>Recall that a force <span class="math notranslate nohighlight">\(\mathbf{F}\)</span> is <a class="reference external" href="https://en.wikipedia.org/wiki/Conservative_force">conservative</a> if the work done while moving between two points is independent of the path taken. Then it can be expressed as a gradient of potential <span class="math notranslate nohighlight">\(\mathbf{F} = \nabla \Phi = (\Phi_x, \Phi_y)\)</span>.</p>
+<p>Consider a force field <span class="math notranslate nohighlight">\(\mathbf{F} = (P, Q)\)</span> along an infinitesimal path <span class="math notranslate nohighlight">\(\mathbf{dr} = (dx, dy)\)</span></p>
+<div class="math notranslate nohighlight">
+\[ \mathbf{F \ dr} = Pdx + Qdy = \frac{\partial \Phi}{\partial x} dx + \frac{\partial \Phi}{\partial y} dy \]</div>
+<p>The exactness condition is</p>
+<div class="math notranslate nohighlight">
+\[ \frac{\partial P}{\partial y} = \frac{\partial^2 \Phi}{\partial x \partial y} = \frac{\partial^2 \Phi}{\partial y \partial x} = \frac{\partial Q}{\partial x} \]</div>
+<p>which is satisfied. Therefore, the exactness of a differential equation can be identified with physical systems in which there is a potential.</p>
+</div>
+<div class="section" id="reduction-to-exact-form-integrating-factors">
+<h3>Reduction to exact form. Integrating factors<a class="headerlink" href="#reduction-to-exact-form-integrating-factors" title="Permalink to this headline">¶</a></h3>
+<p>Nonexact equation</p>
+<div class="math notranslate nohighlight" id="equation-12">
+<span class="eqno">(9)<a class="headerlink" href="#equation-12" title="Permalink to this equation">¶</a></span>\[ P(x, y) dx + Q(x, y) dy = 0 \]</div>
+<p>multiply by a function F that will in general be a function of both x and y</p>
+<div class="math notranslate nohighlight">
+\[ FP dx + FQ dy = 0 \]</div>
+<p>which is exact. F(x, y) is then called an <strong>integrating factor</strong> of that equation.</p>
+<p>HOW TO FIND INT FACTORS</p>
+<p>In simpler cases may find by inspection. In general:</p>
+<p>The exactness condition $ \partial M / \partial y = \partial N / \partial x $, so for <span class="math notranslate nohighlight">\(FP dx + FQ dy = 0\)</span> the exactness condition is</p>
+<div class="math notranslate nohighlight">
+\[ \frac{\partial}{\partial y} (FP) = \frac{\partial}{\partial x} (FQ) \]</div>
+<div class="math notranslate nohighlight">
+\[ F_y P + FP_y = F_x Q + FQ_x \]</div>
+<p>In general this would be difficult to solve, so we try a simpler case. IN many practical cases there are factors that depend only on one variable. We let <span class="math notranslate nohighlight">\(F = F(x)\)</span> so the above becomes</p>
+<div class="math notranslate nohighlight">
+\[ FP_y = F'Q + FQ_x \]</div>
+<div class="math notranslate nohighlight" id="equation-16">
+<span class="eqno">(10)<a class="headerlink" href="#equation-16" title="Permalink to this equation">¶</a></span>\[ \frac{1}{F} \frac{d F}{dx} = R, \quad where \quad R = \frac{1}{Q} \left( \frac{\partial P}{\partial y} - \frac{\partial Q}{\partial x} \right) \]</div>
+<p>This proves the following theorem: If (12) is such that the right side R of 16 depends only on x, then (12) has an integrating factor F = F(x) which is obtained by integrating 16 and taking exponents on both sides</p>
+<div class="math notranslate nohighlight">
+\[ F(x) = \exp \int R(x) dx \]</div>
+<p>Similarly, if F* = F*(y), then instead of 16</p>
+<div class="math notranslate nohighlight">
+\[ \frac{1}{F*} \frac{d F*}{dy} = R*, \quad where \quad R* = \frac{1}{P} \left( \frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y} \right) \]</div>
+<p>and</p>
+<div class="math notranslate nohighlight">
+\[ F*(y) = \exp \int R*(y) dy \]</div>
+</div>
+</div>
+<div class="section" id="first-order-linear-differential-equation">
+<span id="first-lin-ode"></span><h2>First order linear differential equation<a class="headerlink" href="#first-order-linear-differential-equation" title="Permalink to this headline">¶</a></h2>
+<p>A general first-order linear ODE is of the form</p>
+<div class="math notranslate nohighlight">
+\[ u' + p(x) u = r(x) \]</div>
+<p>In engineering r(x) is often called the input and y(x) the output of the response to the input (and, if given, to the initial condition)</p>
+<p>We find the solution to the homogeneous equation <span class="math notranslate nohighlight">\(u_h(x)\)</span> and then one particular solution <span class="math notranslate nohighlight">\(u_p(x)\)</span> to obtain the complete solution <span class="math notranslate nohighlight">\(u\)</span>. The corresponding homogeneous equation</p>
+<div class="math notranslate nohighlight">
+\[ u'(x) + p(x) u(x) = 0 \]</div>
+<p>is separable, so the solution can be found by <strong>separation of parameters</strong></p>
+<div class="math notranslate nohighlight">
+\[ \frac{u'}{u} = -p \]</div>
+<p>and integrating from <span class="math notranslate nohighlight">\(x_0\)</span> to <span class="math notranslate nohighlight">\(x\)</span></p>
+<div class="math notranslate nohighlight">
+\[\begin{split} \ln u(x) - \ln u(x_0) = - \int_{x_0}^x p(s) ds \\ 
+u_h(x) = C e^{- \int_{x_0}^x p(s) ds}\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(s\)</span> is a dummy variable that we use so to not confuse the integration variable with the upper integration limit <span class="math notranslate nohighlight">\(x\)</span>. The reason why we are integrating from <span class="math notranslate nohighlight">\(x_0\)</span> to <span class="math notranslate nohighlight">\(x\)</span> will become clear very soon.</p>
+<p>We find the particular solution by <strong>variation of parameters</strong> where <span class="math notranslate nohighlight">\(C\)</span> is no longer a constant but a function of <span class="math notranslate nohighlight">\(x\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[ u_p(x) = C(x) e^{- \int_{x_0}^x p(s) ds} \]</div>
+<p>We plug this back into the original equation and solve for <span class="math notranslate nohighlight">\(C(x)\)</span></p>
+<div class="math notranslate nohighlight">
+\[\begin{split} u'_p + pu_p = (C' - Cp) e^{- \int p} + pCe^{- \int p} = C' e^{- \int p} = r \\
+C' = r e^{\int p} \\
+C(x) = \int_{x_0}^x r(s) e^{\int_{x_0}^s p(\sigma) d\sigma} ds
+\end{split}\]</div>
+<p>The solution to the inhomogeneous problem is</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} \begin{aligned}
+u(x) &amp; = u_p + u_h \\
+&amp; = e^{- \int_{x_0}^x p(s) \ ds} \left ( \int_{x_0}^x r(s) \ e^{\int_{x_0}^s p(\sigma) d\sigma} \ ds + C \right ) \\
+&amp; = e^{- \int_{x_0}^x p(s) \ ds} \left ( \int_{x_0}^x r(s) \ e^{\int_{x_0}^s p(\sigma) d\sigma} \ ds + u(x_0) \right )
+\end{aligned} \end{split}\]</div>
+<div class="margin sidebar">
+<p class="sidebar-title">No integration limit</p>
+<p>Kreyszig omits the integration limits when writing this. Doing this only changes the constant of integration:</p>
+<div class="math notranslate nohighlight">
+\[ u(x) = e^{-h} \left ( \int e^h r \ dx + c \right), \quad h = \int p(x) \ dx \]</div>
+</div>
+<p>where <span class="math notranslate nohighlight">\(C = u(x_0)\)</span> because for <span class="math notranslate nohighlight">\(x=x_0\)</span> all integrals are <span class="math notranslate nohighlight">\(0\)</span>; this is why we integrated from <span class="math notranslate nohighlight">\(x_0\)</span> but, of course, we did not have to. If we did not, only the constant would be different. Rewriting this in a more convenient way</p>
+<div class="math notranslate nohighlight">
+\[ u(x) = e^{-h} \left ( \int_{x_0}^x e^h r \ ds + u(x_0) \right), \quad h = \int_{x_0}^x \ p(s) \ ds \]</div>
+<p><strong>Note.</strong> We can rewrite the above as</p>
+<div class="math notranslate nohighlight">
+\[ u(x) e^{\int_{x_0}^x \ p(s) \ ds} = \int_{x_0}^x \ r(s) \ e^{\int_{x_0}^s p(\sigma) d\sigma} \ ds + u(x_0) \]</div>
+<p>After differentiating both sides we get</p>
+<div class="math notranslate nohighlight">
+\[ u' e^{\int_{x_0}^x \ p(s) \ ds} + p(x) u e^{\int_{x_0}^x \ p(s) \ ds} = r(x) \ e^{\int_{x_0}^x \ p(s) \ ds}\]</div>
+<p>We see that <span class="math notranslate nohighlight">\(e^{\int_{x_0}^x p(s) ds}\)</span> is the <strong>integrating factor</strong> so we could have found the solution by multiplying both sides of the equation by it.</p>
+<div class="dropdown admonition">
+<p class="admonition-title">Example: <span class="math notranslate nohighlight">\(xy' + 4y = 8x^4, \quad y(1) = 2\)</span></p>
+<p>(Kreyszig PS 1.5, Q7)</p>
+<p>We divide both sides by <span class="math notranslate nohighlight">\(x\)</span> to get standard form:</p>
+<div class="math notranslate nohighlight">
+\[ y' + \frac{4}{x}y = 8x^3, \quad y(1) = 2 \]</div>
+<p>Now we see that <span class="math notranslate nohighlight">\(p(x) = \frac{4}{x}, r(x) = 8x^3\)</span> and the condition <span class="math notranslate nohighlight">\(y(x_0) = y(1) = 2\)</span>. We first calculate <span class="math notranslate nohighlight">\(h\)</span></p>
+<div class="math notranslate nohighlight">
+\[ h = \int_{x_0}^x p(s) ds = \int_1^x \frac{4}{s} ds = 4 \ln s \bigg\rvert_{s = 1}^x = 4 \ln x \]</div>
+<p>Plug this into our solution</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} \begin{aligned}
+y(x) &amp; = e^{-h} \left ( \int_{x_0}^x e^h r ds + y(x_0) \right) \\
+&amp; = e^{-4 \ln x} \left( \int_1^s e^{4 \ln s} 8s^3 ds + 2 \right) \\
+&amp; = \frac{1}{x^4} \left( 8 \int_1^x s^7 ds + 2 \right) \\
+&amp; = \frac{1}{x^4} \left( s^8 \bigg\rvert_{s=1}^x + 2 \right) \\
+&amp; = x^4 + \frac{1}{x^4}
+\end{aligned} \end{split}\]</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "primer-computational-mathematics/book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./3_mathematics/differential_equations"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="2_linear_des.html" title="previous page">Linear Differential Equations</a>
+    <a class='right-next' id="next-link" href="4_higher_ord_lin_odes.html" title="next page">Higher order Linear ODEs</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Imperial College London<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../../_static/js/index.js"></script>
+    
+  </body>
+</html>

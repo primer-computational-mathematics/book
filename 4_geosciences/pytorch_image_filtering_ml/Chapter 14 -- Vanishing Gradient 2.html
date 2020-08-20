@@ -1,0 +1,431 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Chapter 14 – Vanishing Gradient 2 &#8212; ESE Jupyter Material</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/mystnb.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".cell"
+        const thebe_selector_input = ".cell_input div.highlight"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Chapter 15 – Regularisation" href="Chapter 15 -- Regularisation.html" />
+    <link rel="prev" title="Chapter 13 – Vanishing Gradient 1" href="Chapter 13 -- Vanishing Gradient 1.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../index.html">
+  
+  <img src="../../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">ESE Jupyter Material</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  
+  <ul class="nav sidenav_l1">
+  <li class="">
+    <a href="../../intro.html">Landing page</a>
+  </li>
+  <li class="">
+    <a href="../../2_coding/intro.html">Coding</a>
+  </li>
+  <li class="">
+    <a href="../../3_mathematics/intro.html">Mathematics</a>
+  </li>
+  <li class="">
+    <a href="../../1_modules/intro.html">Modules</a>
+  </li>
+  <li class="active">
+    <a href="../intro.html">Geosciences</a>
+  <ul class="nav sidenav_l2">
+    <li class="">
+      <a href="../1D_Heat_Conduction.html">1D heat conduction (layered medium)</a>
+    </li>
+    <li class="">
+      <a href="../1D_Resistivity_Forward_Modelling.html">1D resistivity forward modelling</a>
+    </li>
+    <li class="">
+      <a href="../Climate_Model.html">Climate model</a>
+    </li>
+    <li class="">
+      <a href="../Dynamic_Earth.html">Seafloor ages</a>
+    </li>
+    <li class="">
+      <a href="../Keplerian_Orbits.html">Keplerian orbits</a>
+    </li>
+    <li class="">
+      <a href="../Milankovitch_cycles.html">Milankovitch cycles</a>
+    </li>
+    <li class="">
+      <a href="../Seismology.html">Downloading earthquake data</a>
+    </li>
+    <li class="">
+      <a href="../Tides.html">Tides</a>
+    </li>
+    <li class="">
+      <a href="../Wave_dispersion.html">Wave dispersion</a>
+    </li>
+    <li class="active">
+      <a href="intro.html">Machine Learning</a>
+      <ul class="nav sidenav_l3">
+      <li class="">
+        <a href="Chapter 0 -- Introduction.html">Chapter 0 – Introduction</a>
+      </li>
+      <li class="">
+        <a href="Chapter 1 -- Neural Network.html">Chapter 1 – Neural Network</a>
+      </li>
+      <li class="">
+        <a href="Chapter 2 -- Maximum Likelihood.html">Chapter 2 – Maximum Likelihood</a>
+      </li>
+      <li class="">
+        <a href="Chapter 3 -- Cross Entropy.html">Chapter 3 – Cross Entropy</a>
+      </li>
+      <li class="">
+        <a href="Chapter 4 -- Cost Function.html">Chapter 4 – Cost Function</a>
+      </li>
+      <li class="">
+        <a href="Chapter 5 -- Gradient Descent 1.html">Chapter 5 – Gradient Descent 1</a>
+      </li>
+      <li class="">
+        <a href="Chapter 6 -- Gradient Descent 2.html">Chapter 6 – Gradient Descent 2</a>
+      </li>
+      <li class="">
+        <a href="Chapter 7 -- Real (Non-linear) Neural Network.html">Chapter 7 – Real (Non-linear) Neural Network</a>
+      </li>
+      <li class="">
+        <a href="Chapter 8 -- Feedforward.html">Chapter 8 – Feedforward</a>
+      </li>
+      <li class="">
+        <a href="Chapter 9 -- Back Propagation.html">Chapter 9 – Back Propagation</a>
+      </li>
+      <li class="">
+        <a href="Chapter 10 -- General Back Propagation.html">Chapter 10 – General Back Propagation</a>
+      </li>
+      <li class="">
+        <a href="Chapter 11 -- Underfitting and Overfitting.html">Chapter 11 – Underfitting and Overfitting</a>
+      </li>
+      <li class="">
+        <a href="Chapter 12 -- Early-stopping, Dropout & Mini-batch.html">Chapter 12 – Early-stopping, Dropout & Mini-batch</a>
+      </li>
+      <li class="">
+        <a href="Chapter 13 -- Vanishing Gradient 1.html">Chapter 13 – Vanishing Gradient 1</a>
+      </li>
+      <li class="active">
+        <a href="">Chapter 14 – Vanishing Gradient 2</a>
+      </li>
+      <li class="">
+        <a href="Chapter 15 -- Regularisation.html">Chapter 15 – Regularisation</a>
+      </li>
+      <li class="">
+        <a href="Chapter 16 -- Other Activation Functions.html">Chapter 16 – Other Activation Functions</a>
+      </li>
+      <li class="">
+        <a href="Chapter 17 -- Local Minima Trap.html">Chapter 17 – Local Minima Trap</a>
+      </li>
+      <li class="">
+        <a href="Chapter 18 -- Softmax.html">Chapter 18 – Softmax</a>
+      </li>
+      <li class="">
+        <a href="Chapter 19 -- Hyper-Parameters.html">Chapter 19 – Hyper-Parameters</a>
+      </li>
+      <li class="">
+        <a href="Chapter 20 -- Coding Example.html">Chapter 20 – Coding Example</a>
+      </li>
+    </ul>
+    </li>
+    <li class="">
+      <a href="../remote_sensing/intro.html">Remote sensing</a>
+    </li>
+  </ul>
+  </li>
+  <li class="">
+    <a href="../../5_extra/intro.html">Extra resources for researchers</a>
+  </li>
+  <li class="">
+    <a href="../../genindex.html">Index</a>
+  </li>
+</ul>
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/4_geosciences/pytorch_image_filtering_ml/Chapter 14 -- Vanishing Gradient 2.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        
+        <a class="issues-button"
+            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2F4_geosciences/pytorch_image_filtering_ml/Chapter 14 -- Vanishing Gradient 2.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/4_geosciences/pytorch_image_filtering_ml/Chapter 14 -- Vanishing Gradient 2.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+    </ul>
+</nav>
+
+
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="chapter-14-vanishing-gradient-2">
+<span id="vanishing-gradient-2"></span><h1>Chapter 14 – Vanishing Gradient 2<a class="headerlink" href="#chapter-14-vanishing-gradient-2" title="Permalink to this headline">¶</a></h1>
+<p>This section is a more detailed discussion of what caused the vanishing gradient. For beginners, just skip this bit and go to the next section, the Regularisation. I originally put this section at the very end of the study notes, but I feel like for a better consistency and structure, it is better to put it here. Readers should be heading back to this section after finishing the `Specific Recommendations’ section.</p>
+<p>Anyway, let’s go back to vanishing gradient. In the commonly used MNIST example, if we’re doing visual pattern recognition, then the neurons in the first layer might learn to recognize edges, the neurons in the second layer could learn to recognize more complex shapes, say triangle or rectangles, built up from edges. The third layer would then recognize still more complex shapes. And so on. These multiple layers of abstraction seem likely to give deep networks a compelling advantage in learning to solve complex pattern recognition problems. Moreover, there are theoretical results suggesting that deep networks are intrinsically more powerful than shallow networks.</p>
+<p>How can we train such deep networks? We can train deep networks using our workhorse learning algorithm - stochastic gradient descent by backpropagation. But we’ll run into trouble, with our deep networks not performing much (if at all) better than shallow networks.</p>
+<p>When we look closely, we’ll discover that the different layers in our deep network are learning at vastly different speeds. In particular, when later layers in the network are learning well, early layers often get stuck during training, learning almost nothing at all. This stuckness isn’t simply due to bad luck. Rather, there are fundamental reasons the learning slowdown occurs, connected to our use of gradient-based learning techniques.</p>
+<p>As we delve into the problem more deeply, we’ll learn that the opposite phenomenon can also occur: the early layers may be learning well, but later layers can become stuck. In fact, we’ll find that there’s an intrinsic instability associated to learning by gradient descent in deep, many-layer neural networks. This instability tends to result in either the early or the later layers getting stuck during training.</p>
+<p>This is because of the vanishing gradient. To get insight into why the vanishing gradient problem occurs, let’s consider the simplest deep neural network: one with just a single neuron in each layer, as we discussed before in figure 1.14 in chapter General Back Propagation.</p>
+<p>Recall the gradient of <span class="math notranslate nohighlight">\(w_1\)</span> in the input layer, <span class="math notranslate nohighlight">\(\frac{\delta C}{\delta w_1}\)</span> can be expressed by the equation 12 in chapter General Back Propagation we derived earlier. Excepting the very last term (<span class="math notranslate nohighlight">\(\frac{\delta C}{\delta \boldsymbol{y}}\)</span>), this expression is a product of terms of the form <span class="math notranslate nohighlight">\(w_j\sigma^{'}(h_j)\)</span>. To understand how each of those terms behave, let’s look at a plot of the function <span class="math notranslate nohighlight">\(\sigma^{'}(h_j)\)</span>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># make the figure be plotted at the centre</span>
+<span class="kn">from</span> <span class="nn">IPython.core.display</span> <span class="kn">import</span> <span class="n">HTML</span>
+<span class="n">HTML</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">&lt;style&gt;</span>
+<span class="s2">.output_png {</span>
+<span class="s2">    display: table-cell;</span>
+<span class="s2">    text-align: center;</span>
+<span class="s2">    vertical-align: middle;</span>
+<span class="s2">}</span>
+<span class="s2">&lt;/style&gt;</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+<style>
+.output_png {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+}
+</style>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="n">N</span>  <span class="o">=</span> <span class="mi">100</span>
+
+<span class="k">def</span> <span class="nf">sigmoid</span><span class="p">(</span><span class="n">z</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The sigmoid function.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="mf">1.0</span><span class="o">/</span><span class="p">(</span><span class="mf">1.0</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">z</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+    
+    <span class="n">sigmoid_prime</span> <span class="o">=</span> <span class="n">sigmoid</span><span class="p">(</span><span class="n">z</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">z</span><span class="p">))</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">sigmoid_prime</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;$z$&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;$sigmoid_prime(z)$&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Figure 1.4 Sigma Prime Function&#39;</span><span class="p">)</span>
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/Chapter 14 -- Vanishing Gradient 2_9_0.png" src="../../_images/Chapter 14 -- Vanishing Gradient 2_9_0.png" />
+</div>
+</div>
+<p>The derivative reaches a maximum at <span class="math notranslate nohighlight">\(\sigma^{'}(0)=1/4\)</span>. Now, if we use our standard approach to initializing the weights in the network, then we’ll choose the weights using a Gaussian with mean 0 and standard deviation 1. So the weights will usually satisfy <span class="math notranslate nohighlight">\(|w_j|&lt;1\)</span>. Putting these observations together, we see that the terms <span class="math notranslate nohighlight">\(w_j\sigma^{'}(h_j)\)</span> will usually satisfy <span class="math notranslate nohighlight">\(|w_j\sigma^{'}(h_j)|&lt;1/4\)</span>. And when we take a product of many such terms, the product will tend to exponentially decrease: the more terms, the smaller the product will be. This is starting to smell like a possible explanation for the vanishing gradient problem.</p>
+<p>Of course, this is an informal argument, not a rigorous proof that the vanishing gradient problem will occur. There are several possible escape clauses. In particular, we might wonder whether the weights <span class="math notranslate nohighlight">\(w_j\)</span> could grow during training. If they do, it’s possible the terms <span class="math notranslate nohighlight">\(w_j\sigma^{'}(h_j)\)</span> in the product will no longer satisfy <span class="math notranslate nohighlight">\(|w_j\sigma^{'}(h_j)|&lt;1/4\)</span>. Indeed, if the terms get large enough - greater than 1 - then we will no longer have a vanishing gradient problem. Instead, the gradient will actually grow exponentially as we move backward through the layers. Instead of a vanishing gradient problem, we’ll have an exploding gradient problem.</p>
+<p>However, the fundamental problem here isn’t so much the vanishing gradient problem or the exploding gradient problem. It’s that the gradient in early layers is the product of terms from all the later layers. When there are many layers, that’s an intrinsically unstable situation. The only way all layers can learn at close to the same speed is if all those products of terms come close to balancing out. Without some mechanism or underlying reason for that balancing to occur, it’s highly unlikely to happen simply by chance. In short, the real problem here is that neural networks suffer from an unstable gradient problem. As a result, if we use standard gradient-based learning techniques, different layers in the network will tend to learn at wildly different speeds.</p>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "primer-computational-mathematics/book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./4_geosciences/pytorch_image_filtering_ml"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="Chapter 13 -- Vanishing Gradient 1.html" title="previous page">Chapter 13 – Vanishing Gradient 1</a>
+    <a class='right-next' id="next-link" href="Chapter 15 -- Regularisation.html" title="next page">Chapter 15 – Regularisation</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Imperial College London<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../../_static/js/index.js"></script>
+    
+  </body>
+</html>

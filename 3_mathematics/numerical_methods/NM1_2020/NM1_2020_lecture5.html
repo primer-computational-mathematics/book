@@ -1,0 +1,2077 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Numerical Methods &#8212; ESE Jupyter Material</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../../../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/sphinx-book-theme.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/language_data.js"></script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/mystnb.js"></script>
+    <script src="../../../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".cell"
+        const thebe_selector_input = ".cell_input div.highlight"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../../index.html">
+  
+  <img src="../../../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">ESE Jupyter Material</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  
+  <ul class="nav sidenav_l1">
+  <li class="">
+    <a href="../../../intro.html">Landing page</a>
+  </li>
+  <li class="">
+    <a href="../../../2_coding/intro.html">Coding</a>
+  </li>
+  <li class="">
+    <a href="../../intro.html">Mathematics</a>
+  </li>
+  <li class="">
+    <a href="../../../1_modules/intro.html">Modules</a>
+  </li>
+  <li class="">
+    <a href="../../../4_geosciences/intro.html">Geosciences</a>
+  </li>
+  <li class="">
+    <a href="../../../5_extra/intro.html">Extra resources for researchers</a>
+  </li>
+  <li class="">
+    <a href="../../../genindex.html">Index</a>
+  </li>
+</ul>
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../../_sources/3_mathematics/numerical_methods/NM1_2020/NM1_2020_lecture5.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        
+        <a class="issues-button"
+            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2F3_mathematics/numerical_methods/NM1_2020/NM1_2020_lecture5.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/3_mathematics/numerical_methods/NM1_2020/NM1_2020_lecture5.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#" class="nav-link">Numerical Methods</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#lecture-5-numerical-linear-algebra-i" class="nav-link">Lecture 5: Numerical Linear Algebra I</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#learning-objectives" class="nav-link">Learning objectives:</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#contents" class="nav-link">Contents</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#i-introduction-linear-matrix-systems" class="nav-link">I.    Introduction - Linear (Matrix Systems)</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#ii-matrices-in-python" class="nav-link">II.   Matrices in Python</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#iii-properties-of-matrices-determinants-singularity-solvability-of-linear-systems-etc" class="nav-link">III.  Properties of matrices: determinants, singularity, solvability of linear systems, etc</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#iv-gaussian-elimination-method" class="nav-link">IV.  Gaussian Elimination - Method</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#v-gaussian-elimination-algorithm-and-code" class="nav-link">V.  Gaussian Elimination - Algorithm and Code</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#vi-gaussian-jordan-elimination" class="nav-link">VI.   Gaussian Jordan Elimination</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id1" class="nav-link">I.    Introduction - Linear (Matrix) Systems</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id2" class="nav-link">II.    Matrices in Python</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#span-style-color-blue-exercise-5-1-solving-a-linear-system-span" class="nav-link"><span style="color:blue">Exercise 5.1: Solving a linear system </span></a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#span-style-color-blue-aside-matrix-objects-span" class="nav-link"><span style="color:blue">Aside: matrix objects </span></a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#span-style-color-blue-slicing-span" class="nav-link"><span style="color:blue">Slicing </span></a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#span-style-color-blue-exercise-5-2-matrix-manipulation-in-python-span" class="nav-link"><span style="color:blue">Exercise 5.2: Matrix manipulation in Python </span></a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id3" class="nav-link">III.    Properties of matrices: determinants, singularity, solvability of linear systems, etc</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id4" class="nav-link">IV.    Gaussian elimination - Method</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#span-style-color-blue-exercise-5-3-gaussian-elimination-3-times-3-example-by-hand-span" class="nav-link"><span style="color:blue">Exercise 5.3: Gaussian elimination 3 \times 3 example (by hand) </span></a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id5" class="nav-link">V.    Gaussian elimination - algorithm and code</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#span-style-color-blue-exercise-5-3-gaussian-elimination-span" class="nav-link"><span style="color:blue">Exercise 5.3: Gaussian elimination</span></a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#back-substitution" class="nav-link">Back substitution</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#span-style-color-blue-exercise-5-5-back-substitution-span" class="nav-link"><span style="color:blue">Exercise 5.5: Back substitution</span></a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#vi-gauss-jordan-elimination" class="nav-link">VI.    Gauss-Jordan elimination</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#matrix-inversion" class="nav-link">Matrix inversion</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#span-style-color-blue-exercise-5-6-matrix-inversion-span" class="nav-link"><span style="color:blue">Exercise 5.6: Matrix inversion</span></a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#span-style-color-blue-exercise-5-6-zeros-on-the-diagonal-span" class="nav-link"><span style="color:blue">Exercise 5.6: Zeros on the diagonal</span></a>
+        </li>
+    
+            </ul>
+        </li>
+    
+            </ul>
+        </li>
+    
+    </ul>
+</nav>
+
+
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="numerical-methods">
+<h1>Numerical Methods<a class="headerlink" href="#numerical-methods" title="Permalink to this headline">¶</a></h1>
+</div>
+<div class="section" id="lecture-5-numerical-linear-algebra-i">
+<h1>Lecture 5: Numerical Linear Algebra I<a class="headerlink" href="#lecture-5-numerical-linear-algebra-i" title="Permalink to this headline">¶</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">scipy.linalg</span> <span class="k">as</span> <span class="nn">sl</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="learning-objectives">
+<h2>Learning objectives:<a class="headerlink" href="#learning-objectives" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Manipulation of matrices and matrix equations in Python</p></li>
+<li><p>Reminder on properties of matrices (from MM1): determinants, singularity etc</p></li>
+<li><p>Algorithms for the solution of linear systems</p></li>
+<li><p>Gaussian elimination, including back substitution</p></li>
+</ul>
+</div>
+<div class="section" id="contents">
+<h2>Contents<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="i-introduction-linear-matrix-systems">
+<h2>I.    Introduction - Linear (Matrix Systems)<a class="headerlink" href="#i-introduction-linear-matrix-systems" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="ii-matrices-in-python">
+<h2>II.   Matrices in Python<a class="headerlink" href="#ii-matrices-in-python" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="iii-properties-of-matrices-determinants-singularity-solvability-of-linear-systems-etc">
+<h2>III.  Properties of matrices: determinants, singularity, solvability of linear systems, etc<a class="headerlink" href="#iii-properties-of-matrices-determinants-singularity-solvability-of-linear-systems-etc" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="iv-gaussian-elimination-method">
+<h2>IV.  Gaussian Elimination - Method<a class="headerlink" href="#iv-gaussian-elimination-method" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="v-gaussian-elimination-algorithm-and-code">
+<h2>V.  Gaussian Elimination - Algorithm and Code<a class="headerlink" href="#v-gaussian-elimination-algorithm-and-code" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="vi-gaussian-jordan-elimination">
+<h2>VI.   Gaussian Jordan Elimination<a class="headerlink" href="#vi-gaussian-jordan-elimination" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="id1">
+<h2>I.    Introduction - Linear (Matrix) Systems<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>Recall from your Mathematical Methods I course that the we can re-write a system of simultaneous (linear) equations in matrix form.  For example, in week 4 of MM1 you considered the following example:</p>
+<p>\begin{eqnarray*}
+2x + 3y &amp;=&amp; 7 \
+x - 4y &amp;=&amp; 3
+\end{eqnarray*}</p>
+<p>and it was noted that this can be written in matrix form as</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\left(
+  \begin{array}{rr}
+    2 &amp; 3 \\
+    1 &amp; -4  \\
+  \end{array}
+\right)\left(
+  \begin{array}{c}
+    x \\
+    y \\
+  \end{array}
+\right) = \left(
+  \begin{array}{c}
+    7 \\
+    3 \\
+  \end{array}
+\right)
+\end{split}\]</div>
+<p>We understand that this system of simultaneous equation with 2 equations always has the form of</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\left(
+  \begin{array}{rr}
+    a &amp; b \\
+    c &amp; d  \\
+  \end{array}
+\right)\left(
+  \begin{array}{c}
+    x \\
+    y \\
+  \end{array}
+\right) = \left(
+  \begin{array}{c}
+    e \\
+    f \\
+  \end{array}
+\right)
+\end{split}\]</div>
+<p>Where <span class="math notranslate nohighlight">\(a,b,c,d,e,f\)</span> are arbitrary constants.</p>
+<p>Let’s call the matrix which stores the coefficients of our system of linear equations to be <strong>A</strong></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+A=
+\left(
+  \begin{array}{rr}
+    a &amp; b \\
+    c &amp; d  \\
+  \end{array}
+\right)
+\end{split}\]</div>
+<p>And the matrix that contains our variables to be <strong>x</strong></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+x=
+\left(
+  \begin{array}{c}
+    x \\
+    y  \\
+  \end{array}
+\right)
+\end{split}\]</div>
+<p>Yeah, I know it’s kinda confusing why this matrix is called <strong>x</strong> when it’s got both <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> inside, because instinctively you would think that it should contain only <span class="math notranslate nohighlight">\(x\)</span>. However, this is just a name we give to the matrix, and it should be well known by now that those doing Engineering and Sciences are not the best people at naming various things. We could have equally named this <strong>c</strong>, or <strong>z</strong>, or <strong>insert some other letter of the alphabet</strong>, as long as we remember that this is a matrix used to store the variable. To help yourself in the future, you might want to write the letters used to represent the matrix in one color, for example, red, and the letters used to represent the variables or constants in the matrix in another color for example, blue, since you should have all those wonderful colored pens from your various field trips. This would be especially helpful during your Math Methods (or whatever they may have renamed this course to be in future) you are doing this year and next year to avoid confusion, and I mean this seriously, it really helps a lot. The matrices here were intentionally not colored to encourage you to write these things down in your favorite colored pens, and reinforce which are matrices and which are not, and totally not because I am too lazy to change the color,<span class= "irony"><span style="color:red"> TOTALLY NOT! BELIEVE ME!</span></span></p>
+<p>And the matrix that contains the results of our system of linear equation to be <strong>b</strong></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+b=
+\left(
+  \begin{array}{c}
+    e \\
+    f  \\
+  \end{array}
+\right)
+\end{split}\]</div>
+<p>This system of equations can be represented as the matrix equation <span class="math notranslate nohighlight">\(A\pmb{x}=\pmb{b}\)</span></p>
+<p>We could do the same procedure for equations which have <span class="math notranslate nohighlight">\(3\)</span> variables inside of them, for example</p>
+<p>\begin{eqnarray*}
+2x + 3y +z &amp;=&amp; 7 \
+x - 4y + 2z&amp;=&amp; 3 \
+3x + 5y + 3z&amp;=&amp; 10 \
+\end{eqnarray*}</p>
+<p>and it was noted that this can be written in matrix form as</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\left(
+  \begin{array}{rrr}
+    2 &amp; 3 &amp; 1 \\
+    1 &amp; -4  &amp; 2\\
+    3 &amp; 5  &amp;3 
+  \end{array}
+\right)\left(
+  \begin{array}{c}
+    x \\
+    y \\
+    z \\
+  \end{array}
+\right) = \left(
+  \begin{array}{c}
+    7 \\
+    3 \\
+    10 \\
+  \end{array}
+\right)
+\end{split}\]</div>
+<p>We understand that this system of simultaneous equation with 2 equations always has the form of</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\left(
+  \begin{array}{rr}
+    a &amp; b &amp; c \\
+    d &amp; e &amp; f \\
+    g  &amp;h &amp;i  \\
+  \end{array}
+\right)\left(
+  \begin{array}{c}
+    x \\
+    y \\
+    z \\
+  \end{array}
+\right) = \left(
+  \begin{array}{c}
+    j \\
+    k \\
+    l \\
+  \end{array}
+\right)
+\end{split}\]</div>
+<p>Where <span class="math notranslate nohighlight">\(a,b,c,d,e,f\)</span> are arbitrary constants.</p>
+<p>Let’s call the matrix which stores the coefficients of our system of linear equations to be <strong>A</strong></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+A=
+\left(
+  \begin{array}{rrr}
+    a &amp; b &amp; c \\
+    d &amp; e &amp; f \\
+    g  &amp;h &amp;i  \\
+  \end{array}
+\right)
+\end{split}\]</div>
+<p>And the matrix that contains our variables to be <strong>x</strong></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+x=
+\left(
+  \begin{array}{c}
+    x \\
+    y \\
+    z \\
+  \end{array}
+\right)
+\end{split}\]</div>
+<p>And the matrix that contains the results of our system of linear equation to be <strong>b</strong></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+b=
+\left(
+  \begin{array}{c}
+    j \\
+    k \\
+    l \\
+  \end{array}
+\right)
+\end{split}\]</div>
+<p>This system of equations can again be represented as the matrix equation <span class="math notranslate nohighlight">\(A\pmb{x}=\pmb{b}\)</span></p>
+<p>Note here that although the letters I have used for the matrices are in alphabetical order, it is not neccesary to be in alphabetical order. Basically, you could put whatever letter you want instead of $a, b, c, d, etc. $ that I have placed here. Indeed, because many letters in Engineering are often used to represent stuff, like <span class="math notranslate nohighlight">\(c\)</span> is often used for the speed of light, <span class="math notranslate nohighlight">\(u,v\)</span> is used for velocity, <span class="math notranslate nohighlight">\(i,j,k\)</span> is often used for indexing, it is often better to not use letters as placeholder for values in the matrix and instead let’s use something else to avoid confusion. While you as a human might be able to distinguish which <span class="math notranslate nohighlight">\(c\)</span> means the speed of light, and which <span class="math notranslate nohighlight">\(c\)</span> is simply a placeholder in your matrix, your computer might not be smart enough to do so, and might get very confused.</p>
+<p>For example, taking our
+<span class="math notranslate nohighlight">\($
+\left(
+  \begin{array}{rrr}
+    2 &amp; 3 &amp; 1 \\
+    1 &amp; -4  &amp; 2\\
+    3 &amp; 5  &amp;3 
+  \end{array}
+\right)\left(
+  \begin{array}{c}
+    x \\
+    y \\
+    z \\
+  \end{array}
+\right) = \left(
+  \begin{array}{c}
+    7 \\
+    3 \\
+    10 \\
+  \end{array}
+\right)
+$\)</span></p>
+<p>and the generalization</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\left(
+  \begin{array}{rr}
+    a &amp; b &amp; c \\
+    d &amp; e &amp; f \\
+    g  &amp;h &amp;i  \\
+  \end{array}
+\right)\left(
+  \begin{array}{c}
+    x \\
+    y \\
+    z \\
+  \end{array}
+\right) = \left(
+  \begin{array}{c}
+    j \\
+    k \\
+    l \\
+  \end{array}
+\right)
+\end{split}\]</div>
+<p>Here, <span class="math notranslate nohighlight">\(c\)</span> is simply a placeholder for the number 1. If you used <span class="math notranslate nohighlight">\(c\)</span> for light speed before, the computer might get very confused and instead try to solve</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\left(
+  \begin{array}{rrr}
+    2 &amp; 3 &amp; 3000000 \\
+    1 &amp; -4  &amp; 2\\
+    3 &amp; 5  &amp;3 
+  \end{array}
+\right)\left(
+  \begin{array}{c}
+    x \\
+    y \\
+    z \\
+  \end{array}
+\right) = \left(
+  \begin{array}{c}
+    7 \\
+    3 \\
+    10 \\
+  \end{array}
+\right)
+\end{split}\]</div>
+<p>while the you are actually trying to solve for</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\left(
+  \begin{array}{rrr}
+    2 &amp; 3 &amp; 1 \\
+    1 &amp; -4  &amp; 2\\
+    3 &amp; 5  &amp;3 
+  \end{array}
+\right)\left(
+  \begin{array}{c}
+    x \\
+    y \\
+    z \\
+  \end{array}
+\right) = \left(
+  \begin{array}{c}
+    7 \\
+    3 \\
+    10 \\
+  \end{array}
+\right)
+\end{split}\]</div>
+<p>.</p>
+<p>Indeed, to avoid your computer getting confused at why there is strange 3 million in there,
+We could instead use the position in the matrix to name them
+For example:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+A=
+\left(
+  \begin{array}{rrr}
+    A_{11} &amp; A_{12} &amp; A_{13} \\
+    A_{21} &amp; A_{22} &amp; A_{23} \\
+    A_{31} &amp; A_{32} &amp; A_{33}  \\
+  \end{array}
+\right)
+\end{split}\]</div>
+<p>and</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+x=
+\left(
+  \begin{array}{c}
+    x_1 \\
+    x_2 \\
+    x_3 \\
+  \end{array}
+\right)
+\end{split}\]</div>
+<p>We call them <span class="math notranslate nohighlight">\(x_1\)</span>,<span class="math notranslate nohighlight">\(x_2\)</span>,<span class="math notranslate nohighlight">\(x_3\)</span>, because we are running out of letters!</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+b=
+\left(
+  \begin{array}{c}
+    b_1 \\
+    b_2 \\
+    b_3 \\
+  \end{array}
+\right)
+\end{split}\]</div>
+<p>Thus we write</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\left(
+  \begin{array}{rrr}
+    A_{11} &amp; A_{12} &amp; A_{13} \\
+    A_{21} &amp; A_{22} &amp; A_{23} \\
+    A_{31} &amp; A_{32} &amp; A_{33}  \\
+  \end{array}
+\right)
+\left(
+  \begin{array}{c}
+    x_1 \\
+    x_2 \\
+    x_3 \\
+  \end{array}
+\right)
+=
+\left(
+  \begin{array}{c}
+    b_1 \\
+    b_2 \\
+    b_3 \\
+  \end{array}
+\right)
+\end{split}\]</div>
+<p>And still, our matrix form of <span class="math notranslate nohighlight">\(Ax = b\)</span> remains</p>
+<p>We understand that the above can easily be extended to 4 variables and we get</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+A=
+\left(
+  \begin{array}{rrrr}
+    A_{11} &amp; A_{12} &amp; A_{13} &amp; A_{14} \\
+    A_{21} &amp; A_{22} &amp; A_{23} &amp; A_{24}\\
+    A_{31} &amp; A_{32} &amp; A_{33} &amp; A_{34} \\
+    A_{41} &amp; A_{42} &amp; A_{43} &amp; A_{44} \\
+  \end{array}
+\right)
+\end{split}\]</div>
+<p>and</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+x=
+\left(
+  \begin{array}{c}
+    x_1 \\
+    x_2 \\
+    x_3 \\
+    x_4 \\
+  \end{array}
+\right)
+\end{split}\]</div>
+<p>We call them <span class="math notranslate nohighlight">\(x_1\)</span>,<span class="math notranslate nohighlight">\(x_2\)</span>,<span class="math notranslate nohighlight">\(x_3\)</span>, because we are running out of letters!</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+b=
+\left(
+  \begin{array}{c}
+    b_1 \\
+    b_2 \\
+    b_3 \\
+    b_4 \\
+  \end{array}
+\right)
+\end{split}\]</div>
+<p>Thus we write</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\left(
+  \begin{array}{rrrr}
+    A_{11} &amp; A_{12} &amp; A_{13} &amp; A_{14} \\
+    A_{21} &amp; A_{22} &amp; A_{23} &amp; A_{24}\\
+    A_{31} &amp; A_{32} &amp; A_{33} &amp; A_{34} \\
+    A_{41} &amp; A_{42} &amp; A_{43} &amp; A_{44} \\
+  \end{array}
+\right)
+\left(
+  \begin{array}{c}
+    x_1 \\
+    x_2 \\
+    x_3 \\
+    x_4 \\
+  \end{array}
+\right)
+=
+\left(
+  \begin{array}{c}
+    b_1 \\
+    b_2 \\
+    b_3 \\
+    b_4 \\
+  \end{array}
+\right)
+\end{split}\]</div>
+<p>More generally, consider the arbitrary system of <span class="math notranslate nohighlight">\(n\)</span> linear equations for <span class="math notranslate nohighlight">\(n\)</span> unknowns</p>
+<p>\begin{eqnarray*}
+A_{11}x_1 + A_{12}x_2 + \dots + A_{1n}x_n &amp;=&amp; b_1 \
+A_{21}x_1 + A_{22}x_2 + \dots + A_{2n}x_n &amp;=&amp; b_2 \
+\vdots &amp;=&amp; \vdots \
+A_{n1}x_1 + A_{n2}x_2 + \dots + A_{nn}x_n &amp;=&amp; b_n
+\end{eqnarray*}</p>
+<p>where <span class="math notranslate nohighlight">\(A_{ij}\)</span> are the constant coefficients of the linear system, <span class="math notranslate nohighlight">\(x_j\)</span> are the unknown variables, and <span class="math notranslate nohighlight">\(b_i\)</span>
+are the terms on the right hand side (RHS).  Here the index <span class="math notranslate nohighlight">\(i\)</span> is referring to the equation number
+(the row in the matrix below), with the index <span class="math notranslate nohighlight">\(j\)</span> referring to the component of the unknown
+vector <span class="math notranslate nohighlight">\(\pmb{x}\)</span> (the column of the matrix).</p>
+<p>This system of equations can be represented as the matrix equation <span class="math notranslate nohighlight">\(A\pmb{x}=\pmb{b}\)</span></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\left(
+  \begin{array}{cccc}
+    A_{11} &amp; A_{12} &amp; \dots &amp; A_{1n} \\
+    A_{21} &amp; A_{22} &amp; \dots &amp; A_{2n} \\
+    \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+    A_{n1} &amp; A_{n2} &amp; \dots &amp; A_{nn} \\
+  \end{array}
+\right)\left(
+         \begin{array}{c}
+           x_1 \\
+           x_2 \\
+           \vdots \\
+           x_n \\
+         \end{array}
+       \right)  = \left(
+                   \begin{array}{c}
+                     b_1 \\
+                     b_2 \\
+                     \vdots \\
+                     b_n \\
+                   \end{array}
+                 \right)
+\end{split}\]</div>
+<p>We can easily solve the above <span class="math notranslate nohighlight">\(2 \times 2\)</span> example of two equations and two unknowns using substitution (e.g. multiply the second equation by 2 and subtract the first equation from the resulting equation to eliminate <span class="math notranslate nohighlight">\(x\)</span> and hence allowing us to find <span class="math notranslate nohighlight">\(y\)</span>, then we could compute <span class="math notranslate nohighlight">\(x\)</span> from the first equation). We find:</p>
+<div class="math notranslate nohighlight">
+\[ x=37/11, \quad y=1/11.\]</div>
+<p>In MM1 you also considered <span class="math notranslate nohighlight">\(3 \times 3\)</span> examples which were a little more complicated but still doable.  This lecture considers the case of <span class="math notranslate nohighlight">\(n \times n\)</span> where <span class="math notranslate nohighlight">\(n\)</span> could easily be billions(think about AI and ML and think about how complex human decision process can be. What are the various different factors that compelled you to make such a choice in such a situation, there could be billions of different things; even very trivial things could be important in your decision making, don’t worry, you will learn how to make the computer do these equations for you, instead of doing them yourselves. The method introduced in this lecture, the Gaussian elimination is a classic, and you probably have been doing it without knowing about it. Actual real world examples would use much more advanced and sophisticated algorithms than Gaussian elimination to deal with these massive matrices, but Gaussian elimination is a good bridge between your A Level Math and becoming an AI or ML expert!)! This case arises when you solve a differential equation numerically on a discrete mesh or grid. Here you would typically obtain one unknown and one (discrete, linear or nonlinear) equation at every grid point. You could generate an arbitrarily large matrix system simply by generating a finer mesh.</p>
+<p>Note that you will solve differential equations numerically in the follow-up course Numerical Methods II.</p>
+<p>Cases where the matrix is non-square, i.e. of shape <span class="math notranslate nohighlight">\(m \times n\)</span> where <span class="math notranslate nohighlight">\(m\ne n\)</span> correspond to the (over- or under-determined) system where you have more or less equations than unknowns - we won’t consider these in this lecture.</p>
+</div>
+<div class="section" id="id2">
+<h2>II.    Matrices in Python<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>We have already used numpy arrays to store one-dimensional vectors of numbers.</p>
+<p>The convention is that these are generally considered to be <em>column</em> vectors and have shape <span class="math notranslate nohighlight">\(n \times 1\)</span>.</p>
+<p>We can extend to higher dimensions through the introduction of matrices as two-dimensional arrays (more generally vectors and matrices are just two examples of tensors).</p>
+<p>We use subscript indices to identify each component of the array or matrix, i.e. we can identify each component of the vector <span class="math notranslate nohighlight">\(\pmb{v}\)</span> by <span class="math notranslate nohighlight">\(v_i\)</span>, and each component of the matrix <span class="math notranslate nohighlight">\(A\)</span> by <span class="math notranslate nohighlight">\(A_{ij}\)</span>.</p>
+<p>Note that it is a convention that vectors are either underlined or bold, and generally lower case letters, whereas matrices are plain capital letters.</p>
+<p>The <em>dimension</em> or <em>shape</em> of a vector/matrix is the number of rows and columns it posesses, i.e. <span class="math notranslate nohighlight">\(n \times 1\)</span> and <span class="math notranslate nohighlight">\(m \times n\)</span> for the examples above.</p>
+<p>Here is an example of how we can extend our use of the numpy array object to two dimensions in order to define a matrix <span class="math notranslate nohighlight">\(A\)</span> and some examples of some operations we can make on it.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">10.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">],[</span><span class="mf">6.</span><span class="p">,</span> <span class="mf">5.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">],[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">,</span> <span class="mf">7.</span><span class="p">]])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>[[10.  2.  1.]
+ [ 6.  5.  4.]
+ [ 1.  4.  7.]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># the total size of the array storing A - here 9 for a 3x3 matrix</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">A</span><span class="p">))</span>  
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>9
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># the number of dimensions of the matrix A</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ndim</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="p">)</span>    
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>2
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># the shape of the matrix A</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">A</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>(3, 3)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># the transpose of the matrix A</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>[[10.  6.  1.]
+ [ 2.  5.  4.]
+ [ 1.  4.  7.]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># the inverse of the matrix A - computed using a scipy algorithm</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sl</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">A</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># the determinant of the matrix A - computed using a scipy algorithm</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sl</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">A</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Multiply A with its inverse using the @ matrix multiplication operator. </span>
+<span class="c1"># Note that due to roundoff errors the off diagonal values are not exactly zero.</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">A</span> <span class="o">@</span> <span class="n">sl</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">A</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>[[ 1.00000000e+00 -1.11022302e-16  5.55111512e-17]
+ [-2.22044605e-16  1.00000000e+00  2.22044605e-16]
+ [-8.32667268e-17 -3.33066907e-16  1.00000000e+00]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># The @ operator is fairly new, you may also see use of numpy.dot:</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">sl</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">A</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>[[ 1.00000000e+00 -1.11022302e-16  5.55111512e-17]
+ [-2.22044605e-16  1.00000000e+00  2.22044605e-16]
+ [-8.32667268e-17 -3.33066907e-16  1.00000000e+00]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># same way to achieve the same thing</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">sl</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">A</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>[[ 1.00000000e+00 -1.11022302e-16  5.55111512e-17]
+ [-2.22044605e-16  1.00000000e+00  2.22044605e-16]
+ [-8.32667268e-17 -3.33066907e-16  1.00000000e+00]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># note that the * operator simply does operations element-wise - here this</span>
+<span class="c1"># is not what we want!</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="o">*</span><span class="n">sl</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">A</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>[[ 1.42857143 -0.15037594  0.02255639]
+ [-1.71428571  2.59398496 -1.02255639]
+ [ 0.14285714 -1.14285714  2.        ]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># how to initialise a vector of zeros </span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>[0. 0. 0.]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># how to initialise a matrix of zeros </span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>[[0. 0. 0.]
+ [0. 0. 0.]
+ [0. 0. 0.]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># how to initialise a 3rd-order tensor of zeros</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>[[[0. 0. 0.]
+  [0. 0. 0.]
+  [0. 0. 0.]]
+
+ [[0. 0. 0.]
+  [0. 0. 0.]
+  [0. 0. 0.]]
+
+ [[0. 0. 0.]
+  [0. 0. 0.]
+  [0. 0. 0.]]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># how to initialise the identity matrix, I or Id</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>[[1. 0. 0.]
+ [0. 1. 0.]
+ [0. 0. 1.]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s quickly consider the <span class="math notranslate nohighlight">\(2 \times 2\)</span> case from MM1 recreated above where we claimed that <span class="math notranslate nohighlight">\(x=37/11\)</span> and <span class="math notranslate nohighlight">\(y=1/11\)</span>.</p>
+<p>To solve the matrix equation</p>
+<div class="math notranslate nohighlight">
+\[ A\pmb{x}=\pmb{b} \]</div>
+<p>we can simply multiply both sides by the inverse of the matrix <span class="math notranslate nohighlight">\(A\)</span> (if <span class="math notranslate nohighlight">\(A\)</span> is invertible and if we know what the inverse is of course!):</p>
+<p>\begin{align}
+A\pmb{x} &amp; = \pmb{b}\
+\implies A^{-1}A\pmb{x} &amp; = A^{-1}\pmb{b}\
+\implies I\pmb{x} &amp; = A^{-1}\pmb{b}\
+\implies \pmb{x} &amp; = A^{-1}\pmb{b}
+\end{align}</p>
+<p>so we can find the solution <span class="math notranslate nohighlight">\(\pmb{x}\)</span> by multiplying the inverse of <span class="math notranslate nohighlight">\(A\)</span> with the RHS vector <span class="math notranslate nohighlight">\(\pmb{b}\)</span>.</p>
+<div class="section" id="span-style-color-blue-exercise-5-1-solving-a-linear-system-span">
+<h3><span style="color:blue">Exercise 5.1: Solving a linear system </span><a class="headerlink" href="#span-style-color-blue-exercise-5-1-solving-a-linear-system-span" title="Permalink to this headline">¶</a></h3>
+<p>Formulate and solve the linear system and check you get the answer quoted above.</p>
+</div>
+<div class="section" id="span-style-color-blue-aside-matrix-objects-span">
+<h3><span style="color:blue">Aside: matrix objects </span><a class="headerlink" href="#span-style-color-blue-aside-matrix-objects-span" title="Permalink to this headline">¶</a></h3>
+<p>Note that numpy does possess a matrix object as a sub-class of the numpy array.  We can cast the above two-dimensional arrays into matrix objects and then the star operator does yield the expected matrix product:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># A is an n-dimensional array (n-2 here)</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">10.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">],[</span><span class="mf">6.</span><span class="p">,</span> <span class="mf">5.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">],[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">,</span> <span class="mf">7.</span><span class="p">]])</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">A</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;numpy.ndarray&#39;&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># this casts the array A into the matrix class</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mat</span><span class="p">(</span><span class="n">A</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;numpy.matrix&#39;&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># for these objects * is standard matrix multuiplication </span>
+<span class="c1"># and we can check that A*A^{-1}=I as expected</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mat</span><span class="p">(</span><span class="n">A</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">mat</span><span class="p">(</span><span class="n">sl</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">A</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>[[ 1.00000000e+00 -1.11022302e-16  5.55111512e-17]
+ [-2.22044605e-16  1.00000000e+00  2.22044605e-16]
+ [-8.32667268e-17 -3.33066907e-16  1.00000000e+00]]
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="span-style-color-blue-slicing-span">
+<h3><span style="color:blue">Slicing </span><a class="headerlink" href="#span-style-color-blue-slicing-span" title="Permalink to this headline">¶</a></h3>
+<p>Remember from last year’s Python module that just as for arrays or lists, we can use <em>slicing</em>  in order to extract components of matrices, for example:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">10.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">],[</span><span class="mf">6.</span><span class="p">,</span> <span class="mf">5.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">],[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">,</span> <span class="mf">7.</span><span class="p">]])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>[[10.  2.  1.]
+ [ 6.  5.  4.]
+ [ 1.  4.  7.]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># single entry, first row, second column</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>2.0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># first row</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">,:])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>[10.  2.  1.]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># last row</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,:])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>[1. 4. 7.]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># second column</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>[2. 5. 4.]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># extract a 2x2 sub-matrix</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>[[5. 4.]
+ [4. 7.]]
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="span-style-color-blue-exercise-5-2-matrix-manipulation-in-python-span">
+<h3><span style="color:blue">Exercise 5.2: Matrix manipulation in Python </span><a class="headerlink" href="#span-style-color-blue-exercise-5-2-matrix-manipulation-in-python-span" title="Permalink to this headline">¶</a></h3>
+<p>Let
+<span class="math notranslate nohighlight">\($
+A = \left(
+  \begin{array}{ccc}
+    1 &amp; 2 &amp; 3 \\
+    4 &amp; 5 &amp; 6 \\
+    7 &amp; 8 &amp; 9 \\
+  \end{array}
+\right)
+\mathrm{\quad\quad and \quad\quad}
+b = \left(
+  \begin{array}{c}
+    2 \\
+    4 \\
+    6 \\
+  \end{array}
+\right)
+$\)</span></p>
+<ul class="simple">
+<li><p>Store <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(b\)</span> in NumPy array structures. Print them.</p></li>
+<li><p>Print their shape and size. What is the difference ?</p></li>
+<li><p>Create a NumPy array <span class="math notranslate nohighlight">\(I\)</span> containing the identity matrix <span class="math notranslate nohighlight">\(I_3\)</span>. Do <span class="math notranslate nohighlight">\(A = A+I\)</span>.</p></li>
+<li><p>Substitute the 3rd column of <span class="math notranslate nohighlight">\(A\)</span> with <span class="math notranslate nohighlight">\(b\)</span>.</p></li>
+<li><p>Solve <span class="math notranslate nohighlight">\(Ax=b\)</span>.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="id3">
+<h2>III.    Properties of matrices: determinants, singularity, solvability of linear systems, etc<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>Consider <span class="math notranslate nohighlight">\(N\)</span> linear equations in <span class="math notranslate nohighlight">\(N\)</span> unknowns, <span class="math notranslate nohighlight">\(A\pmb{x}=\pmb{b}\)</span>.</p>
+<p>From MM1 you learnt that this system has a <em>unique solution</em> provided that the determinant of A, <span class="math notranslate nohighlight">\(\det(A)\)</span>, is non-zero. In this case the matrix is said to be <em>non-singular</em>.</p>
+<p>If <span class="math notranslate nohighlight">\(\det(A)=0\)</span> (with <span class="math notranslate nohighlight">\(A\)</span> then termed a <em>singular matrix</em>), then the linear system does <em>not</em> have a unique solution, it may have either infinite <em>or</em> no solutions.</p>
+<p>For example, consider</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\left(
+  \begin{array}{rr}
+    2 &amp; 3 \\
+    4 &amp; 6  \\
+  \end{array}
+\right)\left(
+  \begin{array}{c}
+    x \\
+    y \\
+  \end{array}
+\right) = \left(
+  \begin{array}{c}
+    4 \\
+    8 \\
+  \end{array}
+\right)
+\end{split}\]</div>
+<p>The second equation is simply twice the first, and hence a solution to the first equation is also automatically a solution to the second equation.</p>
+<p>We hence only have one <em>linearly-independent</em> equation, and our problem is under-constrained: we effectively only have one eqution for two unknowns with infinitely many possibly solutions.</p>
+<p>If we replaced the RHS vector with <span class="math notranslate nohighlight">\((4,7)^T\)</span>, then the two equations would be contradictory: in this case we have no solutions.</p>
+<p>Note that a set of vectors where one can be written as a linear sum of the others are termed <em>linearly-dependent</em>. When this is not the case the vectors are termed <em>linearly-independent</em>.</p>
+<p>The following properties of a square <span class="math notranslate nohighlight">\(n\times n\)</span> matrix are equivalent:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\det(A)\ne 0\)</span> - A is non-singular</p></li>
+<li><p>The columns of <span class="math notranslate nohighlight">\(A\)</span> are linearly independent</p></li>
+<li><p>The rows of <span class="math notranslate nohighlight">\(A\)</span> are linearly independent</p></li>
+<li><p>The columns of A <em>span</em> <span class="math notranslate nohighlight">\(n\)</span>-dimensional space (recall MM1 - we can reach any point in <span class="math notranslate nohighlight">\(\mathbb{R}^N\)</span> through a linear combination of these vectors - note that this is simply what the operation <span class="math notranslate nohighlight">\(A\pmb{x}\)</span> is doing of course if you write it out)</p></li>
+<li><p><span class="math notranslate nohighlight">\(A\)</span> is invertible, i.e. there exists a matrix <span class="math notranslate nohighlight">\(A^{-1}\)</span> such that <span class="math notranslate nohighlight">\(A^{-1}A = A A^{-1}=I\)</span></p></li>
+<li><p>the matrix system <span class="math notranslate nohighlight">\(A\pmb{x}=\pmb{b}\)</span> has a unique solution for every vector <span class="math notranslate nohighlight">\(b\)</span></p></li>
+</ul>
+</div>
+<div class="section" id="id4">
+<h2>IV.    Gaussian elimination - Method<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p>The Gaussian elimination algorithm is simply a systematic implementation of the method of equation substitution we used above to solve the <span class="math notranslate nohighlight">\(2\times 2\)</span> system (i.e. where we “multiply the second equation by 2 and subtract the first equation from the resulting equation to <em>eliminate</em> <span class="math notranslate nohighlight">\(x\)</span> and hence allowing us to find <span class="math notranslate nohighlight">\(y\)</span>, we can then compute <span class="math notranslate nohighlight">\(x\)</span> from the first equation”).</p>
+<p>So <em>Gaussian elimination</em>  as the method is atributed to the mathematician <em>Gauss</em> (although it was certainly known before his time) and <em>elimination</em> as we seek to eliminate unknowns.</p>
+<p>To perform this method for arbitrarily large systems (on paper) we form the so-called <em>augmented matrix</em></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+[A|\pmb{b}] = 
+\left[
+  \begin{array}{rr|r}
+    2 &amp; 3 &amp; 7 \\
+    1 &amp; -4 &amp; 3  \\
+  \end{array}
+\right]
+\end{split}\]</div>
+<p>Note that this encodes the equations (including the RHS values); we can perform so-called <em>row operations</em> and as long as we are consistent with what we do for the LHS and RHS components then what this system is describing will not change - a solution to the updated system will be the same as the solution to the original system.</p>
+<p>Our task is to update the system so we can easily read off the solution - of course this is exactly what we do via the substitution approach:</p>
+<p>First we multiplied the second equation by 2, this yield the updated augmented matrix:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\left[
+  \begin{array}{rr|r}
+    2 &amp; 3 &amp; 7 \\
+    2 &amp; -8 &amp; 6 \\
+  \end{array}
+\right]
+\end{split}\]</div>
+<p>We can use the following notation to describe this operation:</p>
+<div class="math notranslate nohighlight">
+\[ Eq. (2) \leftarrow 2\times Eq. (2) \]</div>
+<p>Note importantly that this does not change anything about what these pair of equations are telling us about the unknown solution vector <span class="math notranslate nohighlight">\(\pmb{x}\)</span> which although it doesn’t appear is implicilty defined by this augmented equation.</p>
+<p>The next step was to subtract the first equation from the updated second ($ Eq. (2) \leftarrow Eq. (2) - Eq. (1) $):</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\left[
+  \begin{array}{rr|r}
+    2 &amp; 3 &amp; 7 \\
+    0 &amp; -11 &amp; -1 \\
+  \end{array}
+\right]
+\end{split}\]</div>
+<p>The square matrix that is now in the <span class="math notranslate nohighlight">\(A\)</span> position of this augmented system is an example of an <em>upper-triangular</em> matrix - all entries below the diagonal are zero.</p>
+<p>For such a matrix we can perform back substitution - starting at the bottom to solve trivially for the final unknown (<span class="math notranslate nohighlight">\(y\)</span> here which clearly takes the value <span class="math notranslate nohighlight">\(-1/-11\)</span>), and then using this knowledge working our way up to solve for each remaining unknown in turn, here just <span class="math notranslate nohighlight">\(x\)</span> (solving <span class="math notranslate nohighlight">\(2x + 3\times (1/11) = 7\)</span>).</p>
+<p>Note that we can perform the similar substitution if we had a lower triangular matrix, first finding the first unknown and then working our way forward through the remaining unknowns - hence in this case <em>forward substitution</em>.</p>
+<p>Note that if we wished we could of course continue working on the augmented matrix to make the <span class="math notranslate nohighlight">\(A\)</span> component diagonal: divide the second equation by 11 and multiply by 3 ($ Eq. (2) \leftarrow (3/11)\times Eq. (2) <span class="math notranslate nohighlight">\() and add it to the first (\)</span> Eq. (1) \leftarrow Eq. (1) +  Eq. (2) $):</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\left[
+  \begin{array}{rr|r}
+    2 &amp; 0 &amp; 7-3/11\\
+    0 &amp; -3 &amp; -3/11 \\
+  \end{array}
+\right]
+\end{split}\]</div>
+<p>and we can further make it the identity by dividing the rows by <span class="math notranslate nohighlight">\(2\)</span> and <span class="math notranslate nohighlight">\(-3\)</span> respectively ($ Eq. (1) \leftarrow (1/2)\times Eq. (1) $, $ Eq. (2) \leftarrow (-1/3)\times Eq. (2) $) :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\left[
+  \begin{array}{rr|r}
+    1 &amp; 0 &amp; (7-3/11)/2 \\
+    0 &amp; 1 &amp; 1/11 \\
+  \end{array}
+\right]
+\end{split}\]</div>
+<p>Each of these augmented matrices encodes exactly the same information as the original matrix system in terms of the unknown vector <span class="math notranslate nohighlight">\(\pmb{x}\)</span>, and hence this is telling us that</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} \pmb{x} = I \pmb{x} = \left[
+  \begin{array}{c}
+    (7-3/11)/2 \\
+    1/11 \\
+  \end{array}
+\right]
+\end{split}\]</div>
+<p>i.e. exactly the solution we found when we performed back substitution from the upper-triangular form of the augmented system.</p>
+<div class="section" id="span-style-color-blue-exercise-5-3-gaussian-elimination-3-times-3-example-by-hand-span">
+<h3><span style="color:blue">Exercise 5.3: Gaussian elimination <span class="math notranslate nohighlight">\(3 \times 3\)</span> example (by hand) </span><a class="headerlink" href="#span-style-color-blue-exercise-5-3-gaussian-elimination-3-times-3-example-by-hand-span" title="Permalink to this headline">¶</a></h3>
+<p>Consider the system of linear equations</p>
+<p>\begin{align*}
+2x + 3y - 4z &amp;= 5 \
+6x + 8y + 2z &amp;= 3 \
+4x + 8y - 6z &amp;= 19
+\end{align*}</p>
+<p>write this in matrix form, form the corresponding augmented system and perform row operations until you get to upper-triangular form, find the solution using back substitution (<strong>do this all with pen and paper</strong>).</p>
+<p>Write some code to check your answer using <code class="docutils literal notranslate"><span class="pre">sl.inv(A)</span> <span class="pre">&#64;</span> <span class="pre">b</span></code>.</p>
+<p>You should find <span class="math notranslate nohighlight">\(x=-6\)</span>, <span class="math notranslate nohighlight">\(y=5\)</span>, <span class="math notranslate nohighlight">\(z=-1/2\)</span>.</p>
+<p>I will also include the scheme to solve this below, but please only look at the scheme to do this if you are seriously stuck, and have given a good attempt at solving this and is still stuck. Thinking hard about something help reinforce the thing in your mind.</p>
+<p>We begin by noting that Gaussian Elimination has two major parts for solving this equation.</p>
+<p>The 1st part is converting it to an upper triangle form,</p>
+<p>and the 2nd part is back substitution.</p>
+<p>We are trying to solve the system of equation given by:</p>
+<p>\begin{align*}
+2x + 3y - 4z &amp;= 5 \
+6x + 8y + 2z &amp;= 3 \
+4x + 8y - 6z &amp;= 19
+\end{align*}</p>
+<p>For Gaussian Elimination, the 1st part is obtaining the upper triangle form</p>
+<p>We begin by taking the first and second equations, so equations 1 and 2</p>
+<p>Gaussian elimination works in sequence, so you’ll see lots of “fist, second, third etc.”</p>
+<p>\begin{align*}
+2x + 3y - 4z &amp;= 5 \
+6x + 8y + 2z &amp;= 3 \
+\end{align*}</p>
+<p>We note that the first unknown we have is the unknown <span class="math notranslate nohighlight">\(x\)</span> and so we begn with eliminating <span class="math notranslate nohighlight">\(x\)</span></p>
+<p>We note that the coefficient of unknown <span class="math notranslate nohighlight">\(x\)</span> in the first equation, i.e. <span class="math notranslate nohighlight">\(2x+3y-4z=5\)</span> is <span class="math notranslate nohighlight">\(2\)</span></p>
+<p>We note that the coefficient of unknown <span class="math notranslate nohighlight">\(x\)</span> in the second equation, i.e. <span class="math notranslate nohighlight">\(6x+8y+2z=3\)</span> is <span class="math notranslate nohighlight">\(6\)</span></p>
+<p>I understand that to get from <span class="math notranslate nohighlight">\(2\)</span> of the first equation, to the <span class="math notranslate nohighlight">\(6\)</span> of the second equation, I need to multiply <span class="math notranslate nohighlight">\(2\)</span> by <span class="math notranslate nohighlight">\(3\)</span> to obtain <span class="math notranslate nohighlight">\(6\)</span>. I get the <span class="math notranslate nohighlight">\(3\)</span> from dividing the coefficient of the unknown <span class="math notranslate nohighlight">\(x\)</span> in 2nd equation <span class="math notranslate nohighlight">\(6\)</span> by the coefficient of the unknown <span class="math notranslate nohighlight">\(x\)</span> in the 1st equation <span class="math notranslate nohighlight">\(2\)</span>, i.e. <span class="math notranslate nohighlight">\(6/2=3\)</span>
+Thus I will multiply the 1st equation by <span class="math notranslate nohighlight">\(3\)</span></p>
+<p>After multiplying the first equation by 3, I will obtain the first and second equation as</p>
+<p>\begin{align*}
+6x + 9y - 12z &amp;= 15 \
+6x + 8y + 2z &amp;= 3 \
+\end{align*}</p>
+<p>Then, I will subtract equation 1 from equation 2, so that the unknown <span class="math notranslate nohighlight">\(x\)</span> is eliminated from equation 2.
+Subtracting equation 1 from equation 2, I obtain</p>
+<div class="math notranslate nohighlight">
+\[6x + 8y + 2z - (6x+9y-12z) = 3-15\]</div>
+<div class="math notranslate nohighlight">
+\[-1y + 14z = -12\]</div>
+<p>I will use the result of this subtraction to update my equation 2, thus, now I have an equation 2 that will not have the unknown <span class="math notranslate nohighlight">\(x\)</span></p>
+<p>\begin{align*}
+2x + 3y - 4z &amp;= 5 \
+0x - 1y + 14z &amp;= -12 \
+4x + 8y - 6z &amp;= 19
+\end{align*}</p>
+<p>Thus, we have succesfully eliminated the unknown <span class="math notranslate nohighlight">\(x\)</span> from one of the equations!</p>
+<p>Then, we continue by taking the equations 1 and 3</p>
+<p>\begin{align*}
+2x + 3y - 4z &amp;= 5 \
+4x + 8y - 6z &amp;= 19
+\end{align*}</p>
+<p>We note that the first unknown we have is the unknown <span class="math notranslate nohighlight">\(x\)</span> and so we begn with eliminating <span class="math notranslate nohighlight">\(x\)</span></p>
+<p>We note that the coefficient of unknown <span class="math notranslate nohighlight">\(x\)</span> in the first equation, i.e. <span class="math notranslate nohighlight">\(2x+3y-4z=5\)</span> is <span class="math notranslate nohighlight">\(2\)</span></p>
+<p>We note that the coefficient of unknown <span class="math notranslate nohighlight">\(x\)</span> in the third equation, i.e. <span class="math notranslate nohighlight">\(4x+8y-6z=19\)</span> is <span class="math notranslate nohighlight">\(4\)</span></p>
+<p>I understand that to get from <span class="math notranslate nohighlight">\(2\)</span> of the first equation, to the <span class="math notranslate nohighlight">\(4\)</span> of the third equation, I need to multiply <span class="math notranslate nohighlight">\(2\)</span> by <span class="math notranslate nohighlight">\(2\)</span> to obtain <span class="math notranslate nohighlight">\(4\)</span>. I get the <span class="math notranslate nohighlight">\(2\)</span> from dividing the coefficient of the unknown <span class="math notranslate nohighlight">\(x\)</span> in 3rd equation <span class="math notranslate nohighlight">\(4\)</span> by the coefficient of the unknown <span class="math notranslate nohighlight">\(x\)</span> in the 1st equation <span class="math notranslate nohighlight">\(2\)</span>, i.e. <span class="math notranslate nohighlight">\(4/2=2\)</span>
+Thus I will multiply the 1st equation by <span class="math notranslate nohighlight">\(2\)</span></p>
+<p>After multiplying the first equation by 2, I will obtain the first and second equation as</p>
+<p>\begin{align*}
+4x + 6y - 8z &amp;= 10 \
+4x + 8y - 6z &amp;= 19
+\end{align*}</p>
+<p>Then, I will subtract equation 1 from equation 3, so that the unknown <span class="math notranslate nohighlight">\(x\)</span> is eliminated from equation 3.
+Subtracting equation 1 from equation 3, I obtain</p>
+<div class="math notranslate nohighlight">
+\[4x + 8y - 6z - (4x+6y-8z) = 19 - 10\]</div>
+<div class="math notranslate nohighlight">
+\[2y + 2z = 9\]</div>
+<p>I will use the result of this subtraction to update my equation 3, thus, now I have an equation 3 that will not have the unknown <span class="math notranslate nohighlight">\(x\)</span></p>
+<p>\begin{align*}
+2x + 3y - 4z &amp;= 5 \
+0x - 1y  + 14z &amp;= -12 \
+0x + 2y + 2z &amp;= 9
+\end{align*}</p>
+<p>Thus, we have succesfully eliminated the unknown <span class="math notranslate nohighlight">\(x\)</span> from another one of the equations!</p>
+<p>Well, after we have done equation 1 equation 2, and then equation 1 equation 3, the only pair left we could use is equation 2 and equation 3. <span style="color:red">Note the sequential way we are doing this, so 1-2, then 1-3, then 2-3. If it would have 4 unknowns, and 4 equations that neither over nor underconstrains,  then you would do 1-2, 1-3, 1-4, 2-3, 2-4, 3-4. If 5 unknown, and 5 equations that neither over nor underconstrains, then 1-2, 1-3, 1-4, 1-5, 2-3, 2-4, 2-5, 3-4, 3-5, 4-5. You could extend this to even more unknowns, and more equations, assuming that the number of equations is enough to ensure than there is neither overconstraining nor underconstraning. You could do this in Python through a double for loop and editing the start and end of your loop, or use pandas library (you do not need to use pandas though)! Make sure you do the loop correctly before you begin writing the actual operations! </span></p>
+<p>After our previous updates, we have equation 2 and equation 3 as</p>
+<p>\begin{align*}
+0x - 1y  + 14z &amp;= -12 \
+0x + 2y + 2z &amp;= 9
+\end{align*}</p>
+<p>We note that the first unknown we have is the unknown <span class="math notranslate nohighlight">\(y\)</span>(Note: <span class="math notranslate nohighlight">\(0x\)</span> does not count)and so we begn with eliminating <span class="math notranslate nohighlight">\(y\)</span></p>
+<p>We note that the coefficient of unknown <span class="math notranslate nohighlight">\(y\)</span> in the 2nd equation,  i.e. <span class="math notranslate nohighlight">\(-1y + 14z =-12\)</span> is <span class="math notranslate nohighlight">\(-1\)</span></p>
+<p>We note that the coefficient of unknown <span class="math notranslate nohighlight">\(y\)</span> in the 3rd equation, i.e. <span class="math notranslate nohighlight">\(2y+2z = 9\)</span> is <span class="math notranslate nohighlight">\(2\)</span></p>
+<p>I understand that to get from <span class="math notranslate nohighlight">\(1\)</span> of the 2nd equation, to the <span class="math notranslate nohighlight">\(2\)</span> of the 3rd equation, I need to multiply <span class="math notranslate nohighlight">\(-1\)</span> by <span class="math notranslate nohighlight">\(-2\)</span> to obtain <span class="math notranslate nohighlight">\(2\)</span>. I get the <span class="math notranslate nohighlight">\(-2\)</span> from dividing the coefficient of the unknown <span class="math notranslate nohighlight">\(y\)</span> in 3rd equation <span class="math notranslate nohighlight">\(2\)</span> by the coefficient of the unknown <span class="math notranslate nohighlight">\(y\)</span> in the 2nd equation <span class="math notranslate nohighlight">\(-1\)</span>, i.e. <span class="math notranslate nohighlight">\(2/-1=-2\)</span>
+Thus I will multiply the 1st equation by <span class="math notranslate nohighlight">\(-2\)</span></p>
+<p>After multiplying the first equation by <span class="math notranslate nohighlight">\(-2\)</span>, I will obtain the first and second equation as</p>
+<p>\begin{align*}
+0x + 2y  - 28z &amp;= 24 \
+0x + 2y + 2z &amp;= 9
+\end{align*}</p>
+<p>Then, I will subtract equation 2 from equation 3, so that the unknown <span class="math notranslate nohighlight">\(y\)</span> is eliminated from equation 3.
+Subtracting equation 1 from equation 3, I obtain</p>
+<div class="math notranslate nohighlight">
+\[(2y + 2z) - (2y - 28z) = 24 - 9\]</div>
+<div class="math notranslate nohighlight">
+\[ 0y - 30z = 15\]</div>
+<p>I will use the result of this subtraction to update my equation 3, thus, now I have an equation 3 that will not have the unknown <span class="math notranslate nohighlight">\(y\)</span></p>
+<p>\begin{align*}
+2x + 3y - 4z &amp;= 5 \
+0x + y  - 14z &amp;= 12 \
+0x + 0y - 30z &amp;= 15
+\end{align*}</p>
+<p>Thus, we have succesfully eliminated the unknown <span class="math notranslate nohighlight">\(y\)</span> from one of the equations!
+Now, our equations look like they have a triangle where the coefficients are <span class="math notranslate nohighlight">\(0\)</span> and another triangle where the coefficients are <span class="math notranslate nohighlight">\(\neq 0\)</span>. Because the triangle where coefficients are <span class="math notranslate nohighlight">\(\neq 0\)</span> is above the triangle where the coefficients are <span class="math notranslate nohighlight">\(0\)</span>, this form is called the Upper Triangle Form.</p>
+<p>Note that there is also the Lower Triangle Form, which is pretty much the mirror image of the Upper Triangle Form. The procedure to find the Lower Triangle Form is essentially the same as the procedure to find the Upper Triangle Form, but this time we work our way up, instead of the way down, since well it’s like a mirror. So for a 3 unknown, 3 equation, instead of 1-2, 1-3, 2-3, you will go instead 3-2, 3-1, 2-1.</p>
+<p>The step following the obtainment of the Upper Triangle Form is Back Substitution.</p>
+<p>Let’s start from the Upper Triangle Form</p>
+<p>Since we are doing <strong>back</strong> substitution, we start from the last equation and go to the 1st equation, so for our case, equation 3, then 2 then 1.
+If you had Lower Triangle Form, well, your <strong>back</strong> substitution,(it’s like reverse the <strong>back</strong> so you get, uhm, <strong>no back</strong>) you will start from the first equation and go to last equation, so, if you had 3 unknown, 3 equation, not overconstrain or underconstrain, then you go 1-2-3.</p>
+<p>Note that unlike when we were doing our Triangle Form which required 2 equations at once, back substitution only needs 1 equation at once.</p>
+<p>\begin{align*}
+2x + 3y - 4z &amp;= 5 \
+0x + y  - 14z &amp;= 12 \
+0x + 0y - 30z &amp;= 15
+\end{align*}</p>
+<p>I don’t know the value of any of the unknowns yet.</p>
+<p>From equation 3, I notice that</p>
+<div class="math notranslate nohighlight">
+\[ 0x + 0y - 30z = 15 \]</div>
+<p>Since I don’t know any unknowns yet, I cannot substitute.</p>
+<p>Which is basically</p>
+<div class="math notranslate nohighlight">
+\[-30z = 15\]</div>
+<div class="math notranslate nohighlight">
+\[z = -15/30 = -1/2\]</div>
+<p>So we have found one of the unknowns, and we know that <span class="math notranslate nohighlight">\(z = -1/2\)</span></p>
+<p>Then I will proceed to equation 2.</p>
+<p>I know the value of the unknown <span class="math notranslate nohighlight">\(z\)</span> being <span class="math notranslate nohighlight">\(z=-1/2\)</span></p>
+<p>From equation 2, I notice that</p>
+<div class="math notranslate nohighlight">
+\[0x + y  - 14z = 12\]</div>
+<p>I know that <span class="math notranslate nohighlight">\(z = -1/2\)</span>, so I can substitute, and I get</p>
+<div class="math notranslate nohighlight">
+\[ +y - 14 \times -1/2 = 12 \]</div>
+<div class="math notranslate nohighlight">
+\[ y +7 = 12 \]</div>
+<div class="math notranslate nohighlight">
+\[ y = 5 \]</div>
+<p>So we have found another one of the unknowns, and we know that <span class="math notranslate nohighlight">\(y = 5\)</span> and <span class="math notranslate nohighlight">\(z = -1/2\)</span></p>
+<p>Then I will proceed to equation 1.</p>
+<p>I know the value of the unknown <span class="math notranslate nohighlight">\(z\)</span> being <span class="math notranslate nohighlight">\(z=-1/2\)</span> and the unknown <span class="math notranslate nohighlight">\(y\)</span> being <span class="math notranslate nohighlight">\(y = 5\)</span></p>
+<p>From equation 1, I notice that</p>
+<div class="math notranslate nohighlight">
+\[ 2x + 3y - 4z = 5 \]</div>
+<p>I know that <span class="math notranslate nohighlight">\(y = 5\)</span> and <span class="math notranslate nohighlight">\(z = -1/2\)</span>, so I can substitute, and I get</p>
+<div class="math notranslate nohighlight">
+\[ 2x + 3\times5 - 4 \times -1/2 = 5 \]</div>
+<div class="math notranslate nohighlight">
+\[ 2x + 15 +2 =5 \]</div>
+<div class="math notranslate nohighlight">
+\[ 2x = -12 \]</div>
+<div class="math notranslate nohighlight">
+\[ x = -6\]</div>
+<p>So we have found another one of the unknowns, and we know that <span class="math notranslate nohighlight">\(x = -6\)</span> and <span class="math notranslate nohighlight">\(y = 5\)</span> and <span class="math notranslate nohighlight">\(z = -1/2\)</span></p>
+<p>We can convert this into Matrix form <span class="math notranslate nohighlight">\(Ax = b\)</span></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+A=
+\left(
+  \begin{array}{rrr}
+    A_{11} &amp; A_{12} &amp; A_{13} \\
+    A_{21} &amp; A_{22} &amp; A_{23} \\
+    A_{31} &amp; A_{32} &amp; A_{33}  \\
+  \end{array}
+\right)
+\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+A=
+\left(
+  \begin{array}{rrr}
+    2 &amp; 3 &amp; -4 \\
+    6 &amp; 8 &amp; 2 \\
+    4 &amp; 8 &amp; -6  \\
+  \end{array}
+\right)
+\end{split}\]</div>
+<p>and</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+x=
+\left(
+  \begin{array}{c}
+    x_1 \\
+    x_2 \\
+    x_3 \\
+  \end{array}
+\right)
+\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+x=
+\left(
+  \begin{array}{c}
+    x \\
+    y \\
+    z \\
+  \end{array}
+\right)
+\end{split}\]</div>
+<p>and</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+b=
+\left(
+  \begin{array}{c}
+    b_1 \\
+    b_2 \\
+    b_3 \\
+  \end{array}
+\right)
+\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+b=
+\left(
+  \begin{array}{c}
+    5 \\
+    3 \\
+    19 \\
+  \end{array}
+\right)
+\end{split}\]</div>
+<p>Thus we write</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\left(
+  \begin{array}{rrr}
+    2 &amp; 3 &amp; -4 \\
+    6 &amp; 8 &amp; 2 \\
+    4 &amp; 8 &amp; -6  \\
+  \end{array}
+\right)
+\left(
+  \begin{array}{c}
+    x \\
+    y \\
+    z \\
+  \end{array}
+\right)
+=
+\left(
+  \begin{array}{c}
+    5 \\
+    3 \\
+    19 \\
+  \end{array}
+\right)
+\end{split}\]</div>
+<p>Do try to follow the same procedure outlined above to solve the equation,</p>
+<p>and see how would you write the above procedure in matrix form instead,</p>
+<p>and once you have finished, try to think about how to implement it in Python code.</p>
+<p>Separate your code into two parts, the part where you do the conversion to <strong>Upper Triangle form</strong> (or <strong>Back Triangle Form</strong> if you wish, noting the order of doing things), and the part where you do <strong>Back Substitution</strong>.</p>
+</div>
+</div>
+<div class="section" id="id5">
+<h2>V.    Gaussian elimination - algorithm and code<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<p>Notice that we are free to perform the following operations on the augmented system without changing the corresponding solution:</p>
+<ul class="simple">
+<li><p>Exchange two rows (refer to the section on <em>partial pivoting</em> next week)</p></li>
+<li><p>Multiply a row by a non-zero constant (<span class="math notranslate nohighlight">\(Eq. (i)\leftarrow \lambda \times Eq.(i)\)</span>)</p></li>
+<li><p>Subtracting a (non-zero) multiple of one row with another (<span class="math notranslate nohighlight">\(Eq. (i)\leftarrow Eq. (i) - \lambda \times Eq.(j)\)</span>)</p></li>
+</ul>
+<p>Note that the equation/row being subtracted is termed the <em>pivot</em>.</p>
+<p>Let’s consider the algorithm mid-way working on an arbitrary matrix system, i.e. assume that the first <span class="math notranslate nohighlight">\(k\)</span> rows (i.e. above the horizontal dashed line in the matrix below) have already been transformed into upper-triangular form, while the equations/rows below are not yet in this form.</p>
+<p>The augmented equation in this case can be assumed to look like</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\left[
+  \begin{array}{rrrrrrrrr|r}
+    A_{11} &amp; A_{12} &amp; A_{13} &amp; \cdots &amp; A_{1k} &amp; \cdots &amp; A_{1j} &amp; \cdots &amp; A_{1n} &amp; b_1 \\
+    0      &amp; A_{22} &amp; A_{23} &amp; \cdots &amp; A_{2k} &amp; \cdots &amp; A_{2j} &amp; \cdots &amp; A_{2n} &amp; b_2 \\
+    0      &amp; 0      &amp; A_{33} &amp; \cdots &amp; A_{3k} &amp; \cdots &amp; A_{3j} &amp; \cdots &amp; A_{3n} &amp; b_3 \\
+    \vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots &amp; \ddots &amp; \vdots &amp; \ddots &amp; \vdots &amp; \vdots \\
+    0      &amp; 0      &amp; 0      &amp; \cdots &amp; A_{kk} &amp; \cdots &amp; A_{kj} &amp; \cdots &amp; A_{kn} &amp; b_k \\    
+\hdashline
+    \vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots &amp; \ddots &amp; \vdots &amp; \ddots &amp; \vdots &amp; \vdots \\
+    0      &amp; 0      &amp; 0      &amp; \cdots &amp; A_{ik} &amp; \cdots &amp; A_{ij} &amp; \cdots &amp; A_{in} &amp; b_i \\
+    \vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots &amp; \ddots &amp; \vdots &amp; \ddots &amp; \vdots &amp; \vdots \\
+    0      &amp; 0      &amp; 0      &amp; \cdots &amp; A_{nk} &amp; \cdots &amp; A_{nj} &amp; \cdots &amp; A_{nn} &amp; b_n \\
+\end{array}
+\right]
+\end{split}\]</div>
+<p>Remember that here as we are mid-way through the algorithm the <span class="math notranslate nohighlight">\(A\)</span>’s and <span class="math notranslate nohighlight">\(b\)</span>’s in the above are <strong>not</strong> the same as in the original system!</p>
+<p>Our aim as a next step in the algorithm is to use row <span class="math notranslate nohighlight">\(k\)</span> (the “pivot row”) to <em>eliminate</em> <span class="math notranslate nohighlight">\(A_{ik}\)</span>, and we need to do this for all of the rows <span class="math notranslate nohighlight">\(i\)</span> below the pivot, i.e. for all <span class="math notranslate nohighlight">\(i&gt;k\)</span>.</p>
+<p>Note that the zeros to the left of the leading term in the pivot row means that these operations will not mess up the fact that we have all the zeros we are looking for in the lower left part of the matrix.</p>
+<p>To eliminate <span class="math notranslate nohighlight">\(A_{ik}\)</span> for a single row <span class="math notranslate nohighlight">\(i\)</span> we need to perform the operation
+<span class="math notranslate nohighlight">\($ Eq. (i)\leftarrow Eq. (i) - \frac{A_{ik}}{A_{kk}} \times Eq.(k) $\)</span></p>
+<p>or equivalently</p>
+<p>\begin{align}
+A_{ij} &amp;\leftarrow A_{ij} - \frac{A_{ik}}{A_{kk}} A_{kj}, \quad j=k,k+1,\ldots,n\
+b_i &amp;\leftarrow b_i - \frac{A_{ik}}{A_{kk}} b_{k}
+\end{align}</p>
+<p><span class="math notranslate nohighlight">\(j\)</span> only needs to run from <span class="math notranslate nohighlight">\(k\)</span> upwards as we can assume that the earlier entries in column <span class="math notranslate nohighlight">\(i\)</span> have already been set to zero, and also that the corresponding terms from the pivot row are also zero (we don’t need to perform operations that we know involve the addition of zeros!).</p>
+<p>And to eliminate these entries for all rows below the pivot we need to repeat for all <span class="math notranslate nohighlight">\(i&gt;k\)</span>.</p>
+<div class="section" id="span-style-color-blue-exercise-5-3-gaussian-elimination-span">
+<h3><span style="color:blue">Exercise 5.3: Gaussian elimination</span><a class="headerlink" href="#span-style-color-blue-exercise-5-3-gaussian-elimination-span" title="Permalink to this headline">¶</a></h3>
+<p>Write some code that takes a matrix <span class="math notranslate nohighlight">\(A\)</span> and a vector <span class="math notranslate nohighlight">\(\pmb{b}\)</span> and converts it into upper-triangular form using the above algorithm. For the <span class="math notranslate nohighlight">\(2 \times 2\)</span> and <span class="math notranslate nohighlight">\(3\times 3\)</span> examples from above compare the resulting <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(\pmb{b}\)</span> you obtain following elimination.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">upper_triangle</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; A function to covert A into upper triangluar form through row operations.</span>
+<span class="sd">    The same row operations are performed on the vector b.</span>
+<span class="sd">    </span>
+<span class="sd">    Note that this implementation does not use partial pivoting which is introduced below.</span>
+<span class="sd">    </span>
+<span class="sd">    Also note that A and b are overwritten, and hence we do not need to return anything</span>
+<span class="sd">    from the function.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+    <span class="n">rows</span><span class="p">,</span> <span class="n">cols</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+    <span class="c1"># check A is square</span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">rows</span> <span class="o">==</span> <span class="n">cols</span><span class="p">)</span>
+    <span class="c1"># and check A has the same numner of rows as the size of the vector b</span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">rows</span> <span class="o">==</span> <span class="n">n</span><span class="p">)</span>
+
+    <span class="c1"># Loop over each pivot row - all but the last row which we will never need to use as a pivot</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="c1"># Loop over each row below the pivot row, including the last row which we do need to update</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">.................</span>
+            <span class="o">...........</span>
+            <span class="o">...........</span>
+
+<span class="c1"># Test our code on our 2x2 and 3x3 examples from above</span>
+
+<span class="n">A</span> <span class="o">=</span> <span class="o">.......</span>
+<span class="n">b</span> <span class="o">=</span> <span class="o">.......</span>
+
+<span class="n">upper_triangle</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+
+<span class="c1"># Here is a new trick for you - &quot;pretty print&quot;</span>
+<span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Our A matrix following row operations to transform it into upper-triangular form:&#39;</span><span class="p">)</span>
+<span class="n">pprint</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The correspondingly updated b vector:&#39;</span><span class="p">)</span>
+<span class="n">pprint</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="back-substitution">
+<h3>Back substitution<a class="headerlink" href="#back-substitution" title="Permalink to this headline">¶</a></h3>
+<p>Now that we have an augmented system in the upper-triangular form</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\left[
+  \begin{array}{rrrrr|r}
+    A_{11} &amp; A_{12} &amp; A_{13} &amp; \cdots &amp; A_{1n} &amp;  b_1 \\
+    0      &amp; A_{22} &amp; A_{23} &amp; \cdots &amp; A_{2n} &amp;  b_2 \\
+    0      &amp; 0      &amp; A_{33} &amp; \cdots &amp; A_{3n} &amp;  b_3 \\
+    \vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots &amp; \vdots \\
+    0      &amp; 0      &amp; 0      &amp; \cdots &amp; A_{nn} &amp;  b_n \\    
+\end{array}
+\right]
+\end{split}\]</div>
+<p>where the solution <span class="math notranslate nohighlight">\(\pmb{x}\)</span> of the original system also satisfies <span class="math notranslate nohighlight">\(A\pmb{x}=\pmb{b}\)</span> for the <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(\pmb{b}\)</span> in the above upper-triangular form (rather than the original <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(\pmb{b}\)</span>!).</p>
+<p>We can solve the final equation row to yield</p>
+<div class="math notranslate nohighlight">
+\[x_n = \frac{b_n}{A_{nn}}\]</div>
+<p>The second to last equation then yields (note we’ve introduced a comma in the subscripts here simply to make the more complex double indices easier to read)</p>
+<p>\begin{align}
+A_{n-1,n-1}x_{n-1} + A_{n-1,n}x_n &amp;= b_{n-1}\
+\implies x_{n-1} = \frac{b_{n-1} - A_{n-1,n}x_n}{A_{n-1,n-1}}\
+\implies x_{n-1} = \frac{b_{n-1} - A_{n-1,n}\frac{b_n}{A_{nn}}}{A_{n-1,n-1}}
+\end{align}</p>
+<p>and so on to row <span class="math notranslate nohighlight">\(k\)</span> which yields</p>
+<p>\begin{align}
+A_{k,k}x_{k} + A_{k,k+1}x_{k+1} +\cdots +  A_{k,n}x_n &amp;= b_{k}\
+\iff A_{k,k}x_{k} + \sum_{j=k+1}^{n}A_{kj}x_j &amp;= b_{k}\
+\implies x_{k} &amp;= \left( b_k - \sum_{j=k+1}^{n}A_{kj}x_j\right)\frac{1}{A_{kk}}
+\end{align}</p>
+</div>
+<div class="section" id="span-style-color-blue-exercise-5-5-back-substitution-span">
+<h3><span style="color:blue">Exercise 5.5: Back substitution</span><a class="headerlink" href="#span-style-color-blue-exercise-5-5-back-substitution-span" title="Permalink to this headline">¶</a></h3>
+<p>Extend your code to perform back substitution and hence to obtain the final solution <span class="math notranslate nohighlight">\(\pmb{x}\)</span>.  Check against the solutions found earlier.  Come up with some random <span class="math notranslate nohighlight">\(n\times n\)</span> matrices (you can use <code class="docutils literal notranslate"><span class="pre">np.random.rand</span></code> for that) and check your code against <code class="docutils literal notranslate"><span class="pre">sl.inv(A)&#64;b</span></code> (remember to use the original <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(\pmb{b}\)</span> here of course!)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># This function assumes that A is already an upper triangular matrix, </span>
+<span class="c1"># e.g. we have already run our upper_triangular function if needed.</span>
+
+<span class="k">def</span> <span class="nf">back_substitution</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Function to perform back subsitution on the system Ax=b.</span>
+<span class="sd">    </span>
+<span class="sd">    Returns the solution x.</span>
+<span class="sd">    </span>
+<span class="sd">    Assumes that A is on upper triangular form.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+    <span class="c1"># Check A is square and its number of rows and columns same as size of the vector b</span>
+    <span class="n">rows</span><span class="p">,</span> <span class="n">cols</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">rows</span> <span class="o">==</span> <span class="n">cols</span><span class="p">)</span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">rows</span> <span class="o">==</span> <span class="n">n</span><span class="p">)</span>
+    <span class="c1"># We can/should check that A is upper triangular using np.triu which is the </span>
+    <span class="c1"># upper triangular part of a matrix - if A is already upper triangular, then</span>
+    <span class="c1"># it should of course match the upper-triangular component of A!!</span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">triu</span><span class="p">(</span><span class="n">A</span><span class="p">)))</span>
+    
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="c1"># start at the end (row n-1) and work backwards</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">............</span>
+        <span class="o">..................</span>
+
+    <span class="k">return</span> <span class="n">x</span>
+
+
+<span class="c1"># This A is the upper triangular matrix carried forward</span>
+<span class="c1"># from the Python box above, and b the correspondingly updated b vector.</span>
+<span class="n">A</span> <span class="o">=</span> <span class="o">..........</span>
+<span class="n">b</span> <span class="o">=</span> <span class="o">..........</span>
+
+<span class="c1"># print the solution using our codes</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">back_substitution</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Our solution: &#39;</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>  
+
+<span class="c1"># Reinitialise A and b !</span>
+<span class="c1"># remember our functions overwrote them</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">2.</span><span class="p">,</span> <span class="mf">3.</span><span class="p">,</span> <span class="o">-</span><span class="mf">4.</span><span class="p">],</span>
+                 <span class="p">[</span><span class="mf">6.</span><span class="p">,</span> <span class="mf">8.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">],</span>
+                 <span class="p">[</span><span class="mf">4.</span><span class="p">,</span> <span class="mf">8.</span><span class="p">,</span> <span class="o">-</span><span class="mf">6.</span><span class="p">]])</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">5.</span><span class="p">,</span> <span class="mf">3.</span><span class="p">,</span> <span class="mf">19.</span><span class="p">])</span>
+
+<span class="c1"># check our answer against what SciPy gives us by multiplying b by A inverse </span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;SciPy solution: &#39;</span><span class="p">,</span><span class="n">sl</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">@</span> <span class="n">b</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Success: &#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">sl</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">@</span> <span class="n">b</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="vi-gauss-jordan-elimination">
+<h2>VI.    Gauss-Jordan elimination<a class="headerlink" href="#vi-gauss-jordan-elimination" title="Permalink to this headline">¶</a></h2>
+<p>Recall that for the augmented matrix example we did by hand above we continued past the upper-triangular form so that the augmented matrix had the identity matrix in the <span class="math notranslate nohighlight">\(A\)</span> location. This algorithm has the name Gauss-Jordan elimination but note that it requires more operations than the conversion to upper-triangular form followed by back subsitution and so is only of academic interest.</p>
+<div class="section" id="matrix-inversion">
+<h3>Matrix inversion<a class="headerlink" href="#matrix-inversion" title="Permalink to this headline">¶</a></h3>
+<p>Note that if we were to form the augmented equation with the full identity matrix in the place of the vector <span class="math notranslate nohighlight">\(\pmb{b}\)</span>, i.e. <span class="math notranslate nohighlight">\([A|I]\)</span> and performed row operations exactly as above until <span class="math notranslate nohighlight">\(A\)</span> is transformed into the identity matrix <span class="math notranslate nohighlight">\(I\)</span>, then we would be left with the inverse of <span class="math notranslate nohighlight">\(A\)</span> in the original <span class="math notranslate nohighlight">\(I\)</span> location, i.e.</p>
+<div class="math notranslate nohighlight">
+\[ [A|I] \rightarrow [I|A^{-1}] \]</div>
+<p>Ok, so the details above is sparse, and probably not quite sufficient. I suppose that some will get to coding right away, but let me give some hints to those who are, well, confused, and see if it helps alleviate the confusion. Those of you who don’t need the hints can go straight to the next exercise. :)</p>
+<p>I have typed a bunch of matrices, see if can find what the sequence of matrices mean. You should feel that the operations are oddly familiar.</p>
+<p>Note that due to my low dexterity stat, although I double checked, there may be typos in the steps below.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+A=
+\left(
+  \begin{array}{rrr}
+    2 &amp; -1 &amp; 0 \\
+    -1 &amp; 2 &amp; -1 \\
+    0  &amp; -1 &amp; 2  \\
+  \end{array}
+\right)
+\;\;\;\;\;\;\;\;I=
+\left(
+  \begin{array}{rrr}
+    1 &amp; 0 &amp; 0 \\
+    0 &amp; 1 &amp; 0 \\
+    0 &amp; 0 &amp; 1  \\
+  \end{array}
+\right)
+\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[---------------------------------------------------------------------------------------------------------------------\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\left(
+  \begin{array}{rrr}
+    2 &amp; -1 &amp; 0 \\
+    2 &amp; -4 &amp; +2 \\
+    0  &amp; -1 &amp; 2  \\
+  \end{array}
+\right)
+\;\;\;\;\;\;\;\;\;
+\left(
+  \begin{array}{rrr}
+    1 &amp; 0 &amp; 0 \\
+    0 &amp; -2 &amp; 0 \\
+    0  &amp; 0 &amp; 1  \\
+  \end{array}
+\right)
+\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\left(
+  \begin{array}{rrr}
+    2 &amp; -1 &amp; 0 \\
+    0 &amp; -3 &amp; +2 \\
+    0  &amp; -1 &amp; 2  \\
+  \end{array}
+\right)
+\;\;\;\;\;\;\;\;\;
+\left(
+  \begin{array}{rrr}
+    1 &amp; 0 &amp; 0 \\
+    -1 &amp; -2 &amp; 0 \\
+    0  &amp; 0 &amp; 1  \\
+  \end{array}
+\right)
+\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\left(
+  \begin{array}{rrr}
+    2 &amp; -1 &amp; 0 \\
+    0 &amp; -3 &amp; +2 \\
+    0  &amp; -3 &amp; 6  \\
+  \end{array}
+\right)
+\;\;\;\;\;\;\;\;\;
+\left(
+  \begin{array}{rrr}
+    1 &amp; 0 &amp; 0 \\
+    -1 &amp; -2 &amp; 0 \\
+    0  &amp; 0 &amp; 3  \\
+  \end{array}
+\right)
+\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\left(
+  \begin{array}{rrr}
+    2 &amp; -1 &amp; 0 \\
+    0 &amp; -3 &amp; +2 \\
+    0  &amp; 0 &amp; 4  \\
+  \end{array}
+\right)
+\;\;\;\;\;\;\;\;\;
+\left(
+  \begin{array}{rrr}
+    1 &amp; 0 &amp; 0 \\
+    -1 &amp; -2 &amp; 0 \\
+    1  &amp; 2 &amp; 3  \\
+  \end{array}
+\right)
+\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[---------------------------------------------------------------------------------------------------------------------\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\left(
+  \begin{array}{rrr}
+    2 &amp; -1 &amp; 0 \\
+    0 &amp; -6 &amp; +4 \\
+    0  &amp; 0 &amp; 4  \\
+  \end{array}
+\right)
+\;\;\;\;\;\;\;\;\;
+\left(
+  \begin{array}{rrr}
+    1 &amp; 0 &amp; 0 \\
+    -2 &amp; -4 &amp; 0 \\
+    1  &amp; 2 &amp; 3  \\
+  \end{array}
+\right)
+\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\left(
+  \begin{array}{rrr}
+    2 &amp; -1 &amp; 0 \\
+    0 &amp; -6 &amp; 0 \\
+    0  &amp; 0 &amp; 4  \\
+  \end{array}
+\right)
+\;\;\;\;\;\;\;\;\;
+\left(
+  \begin{array}{rrr}
+    1 &amp; 0 &amp; 0 \\
+    -3 &amp; -6 &amp; -3 \\
+    1  &amp; 2 &amp; 3  \\
+  \end{array}
+\right)
+\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\left(
+  \begin{array}{rrr}
+    12 &amp; -6 &amp; 0 \\
+    0 &amp; -6 &amp; 0 \\
+    0  &amp; 0 &amp; 4  \\
+  \end{array}
+\right)
+\;\;\;\;\;\;\;\;\;
+\left(
+  \begin{array}{rrr}
+    6 &amp; 0 &amp; 0 \\
+    -3 &amp; -6 &amp; -3 \\
+    1  &amp; 2 &amp; 3  \\
+  \end{array}
+\right)
+\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\left(
+  \begin{array}{rrr}
+    -12 &amp; 0 &amp; 0 \\
+    0 &amp; -6 &amp; 0 \\
+    0  &amp; 0 &amp; 4  \\
+  \end{array}
+\right)
+\;\;\;\;\;\;\;\;\;
+\left(
+  \begin{array}{rrr}
+    -9 &amp; -6 &amp; -3 \\
+    -3 &amp; -6 &amp; -3 \\
+    1  &amp; 2 &amp; 3  \\
+  \end{array}
+\right)
+\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[---------------------------------------------------------------------------------------------------------------------\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\left(
+  \begin{array}{rrr}
+    1 &amp; 0 &amp; 0 \\
+    0 &amp; 1 &amp; 0 \\
+    0  &amp; 0 &amp; 1  \\
+  \end{array}
+\right)
+\;\;\;\;\;\;\;\;\;
+\left(
+  \begin{array}{rrr}
+    3/4 &amp; 1/2 &amp; 1/4 \\
+    1/2 &amp; 1 &amp; 1/2 \\
+    1/4 &amp; 2/4 &amp; 3/4  \\
+  \end{array}
+\right)
+\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[---------------------------------------------------------------------------------------------------------------------\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+A^{-1}=
+\left(
+  \begin{array}{rrr}
+    3/4 &amp; 1/2 &amp; 1/4 \\
+    1/2 &amp; 1 &amp; 1/2 \\
+    1/4 &amp; 2/4 &amp; 3/4  \\
+  \end{array}
+\right)
+\end{split}\]</div>
+</div>
+<div class="section" id="span-style-color-blue-exercise-5-6-matrix-inversion-span">
+<h3><span style="color:blue">Exercise 5.6: Matrix inversion</span><a class="headerlink" href="#span-style-color-blue-exercise-5-6-matrix-inversion-span" title="Permalink to this headline">¶</a></h3>
+<p>Try updating your code to construct the inverse matrix. Check your answer against the inverse matrix given by a built-in function.</p>
+<p>Hint: Once you have performed your Gaussian elimination to transform <span class="math notranslate nohighlight">\(A\)</span> into an upper triangular matrix, perform another elimination “from bottom to top” to transform <span class="math notranslate nohighlight">\(A\)</span> into a diagonal matrix.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Updated version of the upper_triangular function that</span>
+<span class="c1"># assumes that a matrix, B, is in the old vector location</span>
+<span class="c1"># in the augmented system, and applies the same operations to</span>
+<span class="c1"># B as to A</span>
+<span class="k">def</span> <span class="nf">upper_triangle2</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">):</span>
+    <span class="c1"># your code here</span>
+
+                
+<span class="c1"># Function which transforms the matrix into lower triangular </span>
+<span class="c1"># form - the point here is that if you give it a </span>
+<span class="c1"># matrix that is already in upper triangular form, then the </span>
+<span class="c1"># result will be a diagonal matrix</span>
+<span class="k">def</span> <span class="nf">lower_triangle2</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">):</span>
+    <span class="c1"># your code here</span>
+
+    
+<span class="c1"># Let&#39;s redefine A as our matrix above</span>
+<span class="n">A</span> <span class="o">=</span> <span class="c1"># your code here</span>
+<span class="c1"># and B is the identity of the corresponding size</span>
+<span class="n">B</span> <span class="o">=</span> <span class="c1"># your code here</span>
+
+<span class="c1"># transform A into upper triangular form (and perform the same operations on B)</span>
+<span class="c1"># your code here</span>
+
+<span class="c1"># now make this updated A lower triangular as well (the result should be diagonal)</span>
+<span class="c1"># your code here</span>
+
+<span class="c1"># final step is just to divide each row through by the value of the diagonal</span>
+<span class="c1"># to end up with the identity in the place of A</span>
+<span class="c1"># your code here</span>
+
+<span class="c1"># print final A and B and check solution</span>
+<span class="c1"># your code here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="span-style-color-blue-exercise-5-6-zeros-on-the-diagonal-span">
+<h3><span style="color:blue">Exercise 5.6: Zeros on the diagonal</span><a class="headerlink" href="#span-style-color-blue-exercise-5-6-zeros-on-the-diagonal-span" title="Permalink to this headline">¶</a></h3>
+<p>You may have noticed above that we have no way of guaranteeing that the <span class="math notranslate nohighlight">\(A_{kk}\)</span> we divide through by in the Guassian elimination or back substitution algorithms is non-zero (or not very small which will also lead to computational problems).
+Note also that we commented that we are free to exchange two rows in our augmented system - how could you use this fact to build robustness into our algorithms in order to deal with matrices for which our algorithms do lead to very small or zero <span class="math notranslate nohighlight">\(A_{kk}\)</span> values?</p>
+<p>See if you can figure out how to do this - more on this next week!</p>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "primer-computational-mathematics/book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./3_mathematics/numerical_methods/NM1_2020"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Imperial College London<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../../../_static/js/index.js"></script>
+    
+  </body>
+</html>

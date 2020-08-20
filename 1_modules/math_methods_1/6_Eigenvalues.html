@@ -1,0 +1,754 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Eigenvalues (Lecture 5) &#8212; ESE Jupyter Material</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/mystnb.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".cell"
+        const thebe_selector_input = ".cell_input div.highlight"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Series (Lecture 6)" href="7_Series.html" />
+    <link rel="prev" title="Matrices (Lecture 4)" href="5_Matrices.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../index.html">
+  
+  <img src="../../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">ESE Jupyter Material</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  
+  <ul class="nav sidenav_l1">
+  <li class="">
+    <a href="../../intro.html">Landing page</a>
+  </li>
+  <li class="">
+    <a href="../../2_coding/intro.html">Coding</a>
+  </li>
+  <li class="">
+    <a href="../../3_mathematics/intro.html">Mathematics</a>
+  </li>
+  <li class="active">
+    <a href="../intro.html">Modules</a>
+  <ul class="nav sidenav_l2">
+    <li class="active">
+      <a href="intro.html">Mathematical methods 1</a>
+      <ul class="nav sidenav_l3">
+      <li class="">
+        <a href="1_Coordinate_Systems.html">Coordinate systems (Lecture 1)</a>
+      </li>
+      <li class="">
+        <a href="2_Vectors.html">Vectors (Lecture 1)</a>
+      </li>
+      <li class="">
+        <a href="3_Multivariable_Calculus.html">Multivariable calculus (Lecture 2)</a>
+      </li>
+      <li class="">
+        <a href="4_Vector_Calculus.html">Vector calculus (Lecture 3)</a>
+      </li>
+      <li class="">
+        <a href="5_Matrices.html">Matrices (Lecture 4)</a>
+      </li>
+      <li class="active">
+        <a href="">Eigenvalues (Lecture 5)</a>
+      </li>
+      <li class="">
+        <a href="7_Series.html">Series (Lecture 6)</a>
+      </li>
+      <li class="">
+        <a href="8_ODEs.html">ODEs (Lecture 7)</a>
+      </li>
+      <li class="">
+        <a href="9_Modelling.html">Modelling (Lecture 8)</a>
+      </li>
+    </ul>
+    </li>
+  </ul>
+  </li>
+  <li class="">
+    <a href="../../4_geosciences/intro.html">Geosciences</a>
+  </li>
+  <li class="">
+    <a href="../../5_extra/intro.html">Extra resources for researchers</a>
+  </li>
+  <li class="">
+    <a href="../../genindex.html">Index</a>
+  </li>
+</ul>
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/1_modules/math_methods_1/6_Eigenvalues.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        
+        <a class="issues-button"
+            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2F1_modules/math_methods_1/6_Eigenvalues.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/1_modules/math_methods_1/6_Eigenvalues.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#transformation-matrices" class="nav-link">Transformation matrices</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#eigenvalues-of-a-2-times-2-matrix" class="nav-link">Eigenvalues of a \( 2 \times 2 \) matrix</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#eigenvectors-of-a-2-times-2-matrix" class="nav-link">Eigenvectors of a \(2 \times 2\) matrix</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#plotting-function" class="nav-link">Plotting function</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#repeated-eigenvalues" class="nav-link">Repeated eigenvalues</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#real-and-complex-eigenvalues" class="nav-link">Real and complex eigenvalues</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#example-eigenvalue-problem" class="nav-link">Example eigenvalue problem</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#symmetric-matrices" class="nav-link">Symmetric matrices</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#eigenvalue-problem-for-a-3-times-3-matrix" class="nav-link">Eigenvalue problem for a \(3 \times 3\) matrix</a>
+        </li>
+    
+    </ul>
+</nav>
+
+
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="eigenvalues-lecture-5">
+<h1>Eigenvalues (Lecture 5)<a class="headerlink" href="#eigenvalues-lecture-5" title="Permalink to this headline">¶</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># This cell just imports relevant modules</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="c1"># import pylab</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">pi</span>
+<span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">sin</span><span class="p">,</span> <span class="n">cos</span><span class="p">,</span> <span class="n">Function</span><span class="p">,</span> <span class="n">Symbol</span><span class="p">,</span> <span class="n">diff</span><span class="p">,</span> <span class="n">integrate</span><span class="p">,</span> <span class="n">matrices</span>
+<span class="c1"># %matplotlib inline</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="transformation-matrices">
+<h2>Transformation matrices<a class="headerlink" href="#transformation-matrices" title="Permalink to this headline">¶</a></h2>
+<p><strong>Slide 9</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define the transformation matrix in Python using numpy.array</span>
+<span class="n">mD</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.25</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+               <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">]])</span>
+
+<span class="c1"># A list of coordinate vectors in the form [x,y]. </span>
+<span class="c1"># These are stored as numpy arrays so we can easily multiply them </span>
+<span class="c1"># by the transformation matrix.</span>
+<span class="n">vCoordinates</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]),</span>
+               <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]),</span>
+               <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]),</span>
+               <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">])]</span>
+
+<span class="c1"># Take each coordinate and transform it</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">vCoordinates</span><span class="p">)):</span>
+    <span class="c1"># We need to reshape the array so it is conformable</span>
+    <span class="c1"># (i.e. it is of the right dimension for matrix-vector</span>
+    <span class="c1"># multiplication). In this case, we need it to be 2 x 1.</span>
+    <span class="n">vCoordinates</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">vCoordinates</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Transformed vCoordinates[</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">] = </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">mD</span> <span class="o">@</span> <span class="n">vCoordinates</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> 
+
+<span class="n">sDet</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">mD</span><span class="p">)</span>
+<span class="n">sVolStrain</span> <span class="o">=</span> <span class="n">sDet</span> <span class="o">-</span> <span class="mi">1</span>  <span class="c1"># The volumetric strain</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Determinant of D is: </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">sDet</span><span class="p">)</span> 
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;This implies:&quot;</span><span class="p">)</span>
+
+<span class="k">if</span><span class="p">(</span><span class="n">sVolStrain</span> <span class="o">==</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No volume change&quot;</span><span class="p">)</span> 
+<span class="k">elif</span><span class="p">(</span><span class="n">sVolStrain</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Increase in volume&quot;</span><span class="p">)</span> 
+<span class="k">elif</span><span class="p">(</span><span class="n">sVolStrain</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">sVolStrain</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Decrease in volume&quot;</span><span class="p">)</span> 
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No geological meaning&quot;</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Transformed vCoordinates[0] = 
+ [[1.25]
+ [0.  ]]
+Transformed vCoordinates[1] = 
+ [[0. ]
+ [0.8]]
+Transformed vCoordinates[2] = 
+ [[-1.25]
+ [ 0.  ]]
+Transformed vCoordinates[3] = 
+ [[ 0. ]
+ [-0.8]]
+Determinant of D is: 1.000000
+This implies:
+No geological meaning
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="eigenvalues-of-a-2-times-2-matrix">
+<h2>Eigenvalues of a \( 2 \times 2 \) matrix<a class="headerlink" href="#eigenvalues-of-a-2-times-2-matrix" title="Permalink to this headline">¶</a></h2>
+<p><strong>Slide 18</strong></p>
+<p>A simple way of finding eigenvalues is to use the <code class="docutils literal notranslate"><span class="pre">numpy.linalg.eigvals</span></code> function:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mA</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">],</span>
+               <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]])</span> 
+
+<span class="n">sEigValues</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigvals</span><span class="p">(</span><span class="n">mA</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The eigenvalues of mA are: &quot;</span><span class="p">,</span> <span class="n">sEigValues</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>The eigenvalues of mA are:  [ 3. -1.]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Alternatively, we could work out the characteristic polynomial for \( \lambda \) and then find the roots. We do that using the <code class="docutils literal notranslate"><span class="pre">np.poly(A)</span></code> function which computes \( \det ( A - \lambda I ) \) and returns a list of scalar coefficients <code class="docutils literal notranslate"><span class="pre">[X,</span> <span class="pre">Y,</span> <span class="pre">Z]</span></code> for the characteristic polynomial \( X \lambda^2 + Y \lambda + Z \)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sCharacteristicPoly</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">poly</span><span class="p">(</span><span class="n">mA</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The characteristic polynomial of mA is: (</span><span class="si">%d</span><span class="s2">*lambda**2) + (</span><span class="si">%d</span><span class="s2">*lambda) + (</span><span class="si">%d</span><span class="s2">)&quot;</span> 
+      <span class="o">%</span> <span class="p">(</span><span class="n">sCharacteristicPoly</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">sCharacteristicPoly</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">sCharacteristicPoly</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+
+<span class="c1"># Finds the roots (in this case, these will be the eigenvalues)</span>
+<span class="n">sRoots</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">roots</span><span class="p">(</span><span class="n">sCharacteristicPoly</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The roots of the characteristic polynomial are: &quot;</span><span class="p">,</span> <span class="n">sRoots</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>The characteristic polynomial of mA is: (1*lambda**2) + (-2*lambda) + (-2)
+The roots of the characteristic polynomial are:  [ 3. -1.]
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="eigenvectors-of-a-2-times-2-matrix">
+<h2>Eigenvectors of a \(2 \times 2\) matrix<a class="headerlink" href="#eigenvectors-of-a-2-times-2-matrix" title="Permalink to this headline">¶</a></h2>
+<p><strong>Slide 20</strong></p>
+<p>A simple way of finding eigenvectors is to use the <code class="docutils literal notranslate"><span class="pre">numpy.linalg.eig</span></code> function. Note that this gives BOTH the eigenvalues in an array (say <code class="docutils literal notranslate"><span class="pre">sEigValues</span></code>) <strong>AND</strong> eigenvectors in a matrix data type (say <code class="docutils literal notranslate"><span class="pre">vEigVectors</span></code>).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mA</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">],</span>
+               <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]])</span> 
+                  
+<span class="c1"># The i-th eigenvector, stored in the column vEigVectors[:,i], </span>
+<span class="c1"># corresponds to the eigenvalue stored in sEigValues[i].</span>
+<span class="p">(</span><span class="n">sEigValues</span><span class="p">,</span> <span class="n">vEigVectors</span><span class="p">)</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">mA</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">sEigValues</span><span class="p">)):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Eigenvalue #&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="s2">&quot;is:&quot;</span><span class="p">,</span> <span class="n">sEigValues</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> 
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The corresponding eigenvector is:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">vEigVectors</span><span class="p">[:,</span><span class="n">i</span><span class="p">])</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Eigenvalue # 1 is: 3.0000000000000004
+The corresponding eigenvector is:
+ [0.89442719 0.4472136 ]
+Eigenvalue # 2 is: -0.9999999999999996
+The corresponding eigenvector is:
+ [-0.89442719  0.4472136 ]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="plotting-function">
+<h3>Plotting function<a class="headerlink" href="#plotting-function" title="Permalink to this headline">¶</a></h3>
+<p>Let us plot these eigenvectors:</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_ellipse</span><span class="p">(</span><span class="n">mM</span><span class="p">):</span>  <span class="c1">#, horizontal_scale, vertical_scale):</span>
+    
+    <span class="p">(</span><span class="n">sEigValues</span><span class="p">,</span> <span class="n">vEigVectors</span><span class="p">)</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">mM</span><span class="p">)</span> 
+    
+    <span class="c1"># points (eigenvectors) on unit circle</span>
+    <span class="n">sp1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">vEigVectors</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">vEigVectors</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]])</span> 
+    <span class="n">sp2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">vEigVectors</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">vEigVectors</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]])</span>
+    
+    <span class="c1"># transformed points (eigenvectors)</span>
+    <span class="n">tsp1</span> <span class="o">=</span> <span class="n">mM</span> <span class="o">@</span> <span class="n">sp1</span>
+    <span class="n">tsp2</span> <span class="o">=</span> <span class="n">mM</span> <span class="o">@</span> <span class="n">sp2</span>
+    
+    <span class="c1"># ellipse</span>
+    <span class="n">x0</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># x-position of center</span>
+    <span class="n">y0</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># y-position of center</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">sEigValues</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="c1"># radius on x-axis</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">sEigValues</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>  <span class="c1"># radius on y-axis</span>
+    <span class="n">t_rot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan</span><span class="p">(</span><span class="n">vEigVectors</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="n">vEigVectors</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>  <span class="c1"># rotation angle</span>
+    
+    <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">pi</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+    
+    <span class="n">Ell</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">a</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">t</span><span class="p">),</span> <span class="n">b</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">t</span><span class="p">)])</span>  <span class="c1"># points on an ellipse</span>
+    <span class="n">R_rot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">cos</span><span class="p">(</span><span class="n">t_rot</span><span class="p">),</span> <span class="o">-</span><span class="n">sin</span><span class="p">(</span><span class="n">t_rot</span><span class="p">)],[</span><span class="n">sin</span><span class="p">(</span><span class="n">t_rot</span><span class="p">),</span> <span class="n">cos</span><span class="p">(</span><span class="n">t_rot</span><span class="p">)]])</span>  <span class="c1"># 2-D rotation matrix</span>
+    <span class="n">Ell_rot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="n">Ell</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Ell</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+        <span class="n">Ell_rot</span><span class="p">[:,</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">R_rot</span> <span class="o">@</span> <span class="n">Ell</span><span class="p">[:,</span><span class="n">i</span><span class="p">]</span>  <span class="c1"># rotated ellipse coordinates</span>
+        
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">12</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="n">sp1</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">sp1</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;eigenvector 1 = [</span><span class="si">{</span><span class="n">vEigVectors</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">vEigVectors</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">]&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="n">tsp1</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">tsp1</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="s1">&#39;k--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;eigenvalue 1 = </span><span class="si">{:.0f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sEigValues</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">sp1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">tsp1</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="p">[</span><span class="n">sp1</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">tsp1</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="s1">&#39;ro&#39;</span><span class="p">)</span>
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="n">sp2</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">sp2</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;eigenvector 2 = [</span><span class="si">{</span><span class="n">vEigVectors</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">vEigVectors</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">]&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="n">tsp2</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">tsp2</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="s1">&#39;b--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;eigenvalue 2 = </span><span class="si">{:.0f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sEigValues</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span> 
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">sp2</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">tsp2</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="p">[</span><span class="n">sp2</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">tsp2</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="s1">&#39;bo&#39;</span><span class="p">)</span>
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">t</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">t</span><span class="p">),</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;unit circle&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x0</span><span class="o">+</span><span class="n">Ell_rot</span><span class="p">[</span><span class="mi">0</span><span class="p">,:],</span> <span class="n">y0</span><span class="o">+</span><span class="n">Ell_rot</span><span class="p">[</span><span class="mi">1</span><span class="p">,:],</span> <span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;transformed unit circle&#39;</span><span class="p">)</span>
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    
+    <span class="n">ang</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">sp1</span> <span class="o">@</span> <span class="n">sp2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">ang</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The eigenvectors are orthogonal&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The eigenvectors are not orthogonal&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">M</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
+              <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+
+<span class="c1"># call the function we defined above</span>
+<span class="n">plot_ellipse</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/6_Eigenvalues_12_0.png" src="../../_images/6_Eigenvalues_12_0.png" />
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>The eigenvectors are not orthogonal
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="repeated-eigenvalues">
+<h2>Repeated eigenvalues<a class="headerlink" href="#repeated-eigenvalues" title="Permalink to this headline">¶</a></h2>
+<p><strong>Slide 24</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#NOTE: Here we could also define mA using numpy.identity(2).</span>
+<span class="n">mA</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+               <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+
+<span class="c1">#NOTE: NumPy will give ALL eigenvalues, including the repeated ones.</span>
+<span class="p">(</span><span class="n">sEigValues</span><span class="p">,</span> <span class="n">vEigVectors</span><span class="p">)</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">mA</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">sEigValues</span><span class="p">)):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Eigenvalue #&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="s2">&quot; is: &quot;</span><span class="p">,</span> <span class="n">sEigValues</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> 
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The corresponding eigenvector is:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">vEigVectors</span><span class="p">[:,</span><span class="n">i</span><span class="p">])</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Eigenvalue # 1  is:  1.0
+The corresponding eigenvector is:
+ [1. 0.]
+Eigenvalue # 2  is:  1.0
+The corresponding eigenvector is:
+ [0. 1.]
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="real-and-complex-eigenvalues">
+<h2>Real and complex eigenvalues<a class="headerlink" href="#real-and-complex-eigenvalues" title="Permalink to this headline">¶</a></h2>
+<p><strong>Slide 28</strong></p>
+<p>NumPy prints out complex numbers in the form \(c = a + bj\), where \(j\) is the imaginary number. We can use <code class="docutils literal notranslate"><span class="pre">numpy.real(c)</span></code> and <code class="docutils literal notranslate"><span class="pre">numpy.imag(c)</span></code> to print the real and imaginary parts respectively.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mA</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+               <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span> 
+
+<span class="n">sEigValues</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigvals</span><span class="p">(</span><span class="n">mA</span><span class="p">)</span> 
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The eigenvalues of A are:&quot;</span><span class="p">,</span> <span class="n">sEigValues</span><span class="p">)</span> 
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The real part of the first eigenvalue is:&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">sEigValues</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span> 
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The imaginary part of the first eigenvalue is:&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">imag</span><span class="p">(</span><span class="n">sEigValues</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>The eigenvalues of A are: [0.+1.j 0.-1.j]
+The real part of the first eigenvalue is: 0.0
+The imaginary part of the first eigenvalue is: 1.0
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="example-eigenvalue-problem">
+<h2>Example eigenvalue problem<a class="headerlink" href="#example-eigenvalue-problem" title="Permalink to this headline">¶</a></h2>
+<p><strong>Slide 30</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mM</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+               <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]])</span>
+
+<span class="p">(</span><span class="n">sEigValues</span><span class="p">,</span> <span class="n">vEigVectors</span><span class="p">)</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">mA</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">sEigValues</span><span class="p">)):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Eigenvalue #&quot;</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;is:&quot;</span><span class="p">,</span> <span class="n">sEigValues</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> 
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The corresponding eigenvector is:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">vEigVectors</span><span class="p">[:,</span><span class="n">i</span><span class="p">])</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Eigenvalue # 1 is: 1j
+The corresponding eigenvector is:
+ [0.70710678+0.j         0.        +0.70710678j]
+Eigenvalue # 2 is: -1j
+The corresponding eigenvector is:
+ [0.70710678-0.j         0.        -0.70710678j]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">M</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+              <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]])</span>
+
+<span class="c1"># call the function we defined above</span>
+<span class="n">plot_ellipse</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/6_Eigenvalues_19_0.png" src="../../_images/6_Eigenvalues_19_0.png" />
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>The eigenvectors are orthogonal
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="symmetric-matrices">
+<h2>Symmetric matrices<a class="headerlink" href="#symmetric-matrices" title="Permalink to this headline">¶</a></h2>
+<p><strong>Slide 31</strong></p>
+<p>Unfortunately, because referencing a column of the matrix vEigVectors also returns another array data type (essentially a ‘sub-array’ of vEigVectors), we cannot use the <code class="docutils literal notranslate"><span class="pre">numpy.dot</span></code> function (which only operates on vectors/1D arrays). Instead, we’ll simply use <code class="docutils literal notranslate"><span class="pre">numpy.transpose</span></code> to perform the dot product instead.</p>
+<p>Note: We could also use <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.vdot.html"><code class="docutils literal notranslate"><span class="pre">numpy.vdot</span></code></a> - read the documentation for more info.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mNonSymmetric</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
+                          <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+                              
+<span class="p">(</span><span class="n">sEigValues</span><span class="p">,</span> <span class="n">vEigVectors</span><span class="p">)</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">mNonSymmetric</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">sEigValues</span><span class="p">)):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Eigenvalue #&quot;</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;is:&quot;</span><span class="p">,</span> <span class="n">sEigValues</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> 
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The corresponding eigenvector is:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">vEigVectors</span><span class="p">[:,</span><span class="n">i</span><span class="p">])</span> 
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The dot product of the two eigenvectors is:&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">vEigVectors</span><span class="p">[:,</span><span class="mi">0</span><span class="p">])</span> <span class="o">@</span> <span class="n">vEigVectors</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Eigenvalue # 1 is: 3.0000000000000004
+The corresponding eigenvector is:
+ [0.89442719 0.4472136 ]
+Eigenvalue # 2 is: -0.9999999999999996
+The corresponding eigenvector is:
+ [-0.89442719  0.4472136 ]
+The dot product of the two eigenvectors is: -0.6000000000000001
+</pre></div>
+</div>
+</div>
+</div>
+<p>Above, the dot product of the two eigenvectors was different from zero.</p>
+<p>Below, the dot product should be zero as the two eigenvectors are orthogonal for any symmetric matrix.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mSymmetric</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                       <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]])</span>
+                              
+<span class="p">(</span><span class="n">sEigValues</span><span class="p">,</span> <span class="n">vEigVectors</span><span class="p">)</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">mSymmetric</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">sEigValues</span><span class="p">)):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Eigenvalue #&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="s2">&quot; is: &quot;</span><span class="p">,</span> <span class="n">sEigValues</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> 
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The corresponding eigenvector is:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">vEigVectors</span><span class="p">[:,</span><span class="n">i</span><span class="p">])</span> 
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The dot product of the two eigenvectors is: &quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">vEigVectors</span><span class="p">[:,</span><span class="mi">0</span><span class="p">])</span> <span class="o">@</span> <span class="n">vEigVectors</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Eigenvalue # 1  is:  4.0
+The corresponding eigenvector is:
+ [ 0.70710678 -0.70710678]
+Eigenvalue # 2  is:  2.0
+The corresponding eigenvector is:
+ [0.70710678 0.70710678]
+The dot product of the two eigenvectors is:  0.0
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="eigenvalue-problem-for-a-3-times-3-matrix">
+<h2>Eigenvalue problem for a \(3 \times 3\) matrix<a class="headerlink" href="#eigenvalue-problem-for-a-3-times-3-matrix" title="Permalink to this headline">¶</a></h2>
+<p><strong>Slide 37</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mM</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+               <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+               <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span>
+
+<span class="p">(</span><span class="n">sEigValues</span><span class="p">,</span> <span class="n">vEigVectors</span><span class="p">)</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">mM</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">sEigValues</span><span class="p">)):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Eigenvalue #&quot;</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot; is: &quot;</span><span class="p">,</span> <span class="n">sEigValues</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> 
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The corresponding eigenvector is:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">vEigVectors</span><span class="p">[:,</span><span class="n">i</span><span class="p">])</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Eigenvalue # 1  is:  1.0
+The corresponding eigenvector is:
+ [-0.90453403  0.30151134  0.30151134]
+Eigenvalue # 2  is:  4.999999999999998
+The corresponding eigenvector is:
+ [0.57735027 0.57735027 0.57735027]
+Eigenvalue # 3  is:  0.9999999999999997
+The corresponding eigenvector is:
+ [ 0.04093652 -0.46313831  0.88534011]
+</pre></div>
+</div>
+</div>
+</div>
+<p>If the values of \(x_1, x_2\) or \(x_3\) are ‘free’ (i.e. can be chosen arbitrarily to obtain an independent eigenvector), NumPy does not necessarily choose values of 0 or 1, which is why the eigenvectors printed out here are different from those in your notes. They still satisfy the equation \( (A - \lambda I) \mathbf{x} = 0\) and are still independent eigenvectors.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "primer-computational-mathematics/book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./1_modules/math_methods_1"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="5_Matrices.html" title="previous page">Matrices (Lecture 4)</a>
+    <a class='right-next' id="next-link" href="7_Series.html" title="next page">Series (Lecture 6)</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Imperial College London<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../../_static/js/index.js"></script>
+    
+  </body>
+</html>
