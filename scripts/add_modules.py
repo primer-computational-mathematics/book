@@ -14,7 +14,7 @@ def add_module_badges(fpath):
     """
 
     # Fix fpath for badges, remove _tmp
-    new_fpath = '.' + fpath.split('_tmp')[-1]
+    new_fpath = fpath.split('_tmp')[-1].split('.ipynb')[0]
 
     with open(fpath, 'r+') as f:
         nb = json.load(f)
