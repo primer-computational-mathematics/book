@@ -1,0 +1,1054 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>LU decomposition &#8212; ESE Jupyter Material</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/mystnb.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".cell"
+        const thebe_selector_input = ".cell_input div.highlight"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Statistics" href="../statistics/intro.html" />
+    <link rel="prev" title="Gaussian elimination" href="11_Gaussian_elimination.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../index.html">
+  
+  <img src="../../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">ESE Jupyter Material</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  
+  <ul class="nav sidenav_l1">
+  <li class="">
+    <a href="../../intro.html">Landing page</a>
+  </li>
+  <li class="">
+    <a href="../../2_coding/intro.html">Coding</a>
+  </li>
+  <li class="active">
+    <a href="../intro.html">Mathematics</a>
+  <ul class="nav sidenav_l2">
+    <li class="active">
+      <a href="intro.html">Numerical methods</a>
+      <ul class="nav sidenav_l3">
+      <li class="">
+        <a href="1_Interpolation_curve_fitting.html">Interpolation and curve fitting</a>
+      </li>
+      <li class="">
+        <a href="2_Numerical_differentiation.html">Numerical differentiation</a>
+      </li>
+      <li class="">
+        <a href="3_Timestepping_an_ODE.html">Solving or timestepping an ODE</a>
+      </li>
+      <li class="">
+        <a href="4_Heuns_method.html">Heun’s method</a>
+      </li>
+      <li class="">
+        <a href="5_Runge_Kutta_method.html">Runge-Kutta method</a>
+      </li>
+      <li class="">
+        <a href="6_Solving_PDEs_SOR.html">Successive over-relaxation method</a>
+      </li>
+      <li class="">
+        <a href="7_Forward_time_centred_space.html">Forward Time Centred Space scheme</a>
+      </li>
+      <li class="">
+        <a href="8_Numerical_integration.html">Numerical integration</a>
+      </li>
+      <li class="">
+        <a href="9_Roots_of_equations.html">Roots of equations</a>
+      </li>
+      <li class="">
+        <a href="10_linear_algebra_intro.html">Linear algebra introduction</a>
+      </li>
+      <li class="">
+        <a href="11_Gaussian_elimination.html">Gaussian elimination</a>
+      </li>
+      <li class="active">
+        <a href="">LU decomposition</a>
+      </li>
+    </ul>
+    </li>
+    <li class="">
+      <a href="../statistics/intro.html">Statistics</a>
+    </li>
+    <li class="">
+      <a href="../sets_and_functions/intro.html">Sets and functions</a>
+    </li>
+    <li class="">
+      <a href="../linear_algebra/intro.html">Linear algebra</a>
+    </li>
+    <li class="">
+      <a href="../calculus/intro.html">Calculus</a>
+    </li>
+    <li class="">
+      <a href="../differential_equations/intro.html">Differential equations</a>
+    </li>
+    <li class="">
+      <a href="../series_and_sequences/intro.html">Series and sequences</a>
+    </li>
+    <li class="">
+      <a href="../mathematical_notation/intro.html">Mathematical notation</a>
+    </li>
+    <li class="">
+      <a href="../complex_analysis/intro.html">Complex analysis</a>
+    </li>
+  </ul>
+  </li>
+  <li class="">
+    <a href="../../1_modules/intro.html">Modules</a>
+  </li>
+  <li class="">
+    <a href="../../4_geosciences/intro.html">Geosciences</a>
+  </li>
+  <li class="">
+    <a href="../../5_extra/intro.html">Extra resources for researchers</a>
+  </li>
+  <li class="">
+    <a href="../../genindex.html">Index</a>
+  </li>
+</ul>
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/3_mathematics/numerical_methods/12_LU_decomposition.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        
+        <a class="issues-button"
+            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2F3_mathematics/numerical_methods/12_LU_decomposition.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/3_mathematics/numerical_methods/12_LU_decomposition.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#motivation" class="nav-link">Motivation</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#theory" class="nav-link">Theory</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#doolittle-algorithm" class="nav-link">Doolittle algorithm</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#exercise" class="nav-link">Exercise</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#implementation" class="nav-link">Implementation</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#partial-pivoting" class="nav-link">Partial pivoting</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id1" class="nav-link">Implementation</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+    </ul>
+</nav>
+
+
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="lu-decomposition">
+<span id="nm-lu-decomposition"></span><h1>LU decomposition<a class="headerlink" href="#lu-decomposition" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="motivation">
+<span id="index-0"></span><h2>Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline">¶</a></h2>
+<p>The Gaussian elimination solves a matrix system with one RHS vector \(\pmb{b}\). We often have to deal with problems where we have multiple RHS vectors, all with the same matrix \(A\).</p>
+<p>We could call the same code (e.g. <code class="docutils literal notranslate"><span class="pre">upper_triangle</span></code> and <code class="docutils literal notranslate"><span class="pre">back_substitution</span></code> from <a class="reference internal" href="11_Gaussian_elimination.html#nm-gaussian-elimination-code"><span class="std std-ref">Gaussian elimination</span></a> notebook) multiple times to solve all of these corresponding linear systems, but note that as the elimination algorithm is actually performing operations based upon (the same) \(A\) each time, we would actually be wasting time repeating exactly the same operations - this is therefore clearly not an efficient solution to the problem.</p>
+<p>We could easily generalise our Gaussian elimination/back substitution algorithms to include multiple RHS column vectors in the augmented system, perform the same sequence of row operations (but now only once) to transform the matrix to upper-triangular form, and then perform back substitution on each of the transformed RHS vectors from the augmented system - cf. the use of Gaussian elimination to compute the inverse to a matrix by placing the identity on the right of the augmented system.</p>
+<p>However, it is often the case that each RHS vector depends on the solutions to the matrix systems obtained from some or all of the earlier RHS vectors, and so this generalisation would not work in this case. For example, our discrete system could be of the form</p>
+<p>\[A\pmb{x}^{n+1} = \pmb{b}(\pmb{x}^n, \ldots)\]</p>
+<div class="margin sidebar">
+<p class="sidebar-title">Note</p>
+<p>This is true if our model is linear, in the nonlinear case \(A\) would be updated evey time step.</p>
+</div>
+<p>where \(\pmb{x}^{n+1}\) is the numerical solution of an ordinary or partial differential equation at time level \(n+1\), the RHS is a function of the the solution at the previous time level \(n\) (and possibly other things such as forcing terms, represented by the \(\ldots\) above. \(A\) is then a discretisation of the differential equation written in the form that it maps the old solution to the new one. Time stepping this problem invovles solving the same linear system multiple times with different RHSs.</p>
+</div>
+<div class="section" id="theory">
+<h2>Theory<a class="headerlink" href="#theory" title="Permalink to this headline">¶</a></h2>
+<p>To deal with this situation efficiently we decompose or factorise the matrix \(A\) in such a way that it is cheap to compute a new solution vector \(\pmb{x}\) for any given RHS vector \(\pmb{b}\). This decomposition involves a lower- and an upper-triangular matrix, hence the name <strong>LU decomposition</strong>. These matrices encode the steps conducted in Gaussian elimination, so we don’t have to explicilty conduct all of the operations again and again.</p>
+<p>Mathematically, let’s assume that we have already found/constructed a lower-triangular matrix (\(L\) - where all entries above the diagonal are zero) and an upper-triangular matrix (\(U\) - where all entries below the diagonal are zero) such that we can write</p>
+<p>\[ A = LU.\]</p>
+<p>In this case the matrix system we need to solve for \(\pmb{x}\) becomes</p>
+<p>\[ A\pmb{x} = \pmb{b} \iff (LU)\pmb{x} = L(U\pmb{x}) = \pmb{b}.\]</p>
+<p>Notice that the matrix-vector product \(U\pmb{x}\) is itself a vector, let’s call it \(\pmb{c}\) for the time-being (i.e. \(\pmb{c}=U\pmb{x}\)).</p>
+<p>The above system then reads</p>
+<p>\[ L\pmb{c} = \pmb{b}, \]</p>
+<p>where \(L\) is a matrix and \(\pmb{c}\) is an unknown.</p>
+<p>As \(L\) is in the lower-triangular form, we can use forward substitution (generalising the back subsitution algorithm/code) to very easily find \(\pmb{c}\) in relatively few operations (we don’t need to call the entire Gaussian elimination algorithm).</p>
+<p>Once we know \(\pmb{c}\) we then solve the second linear system</p>
+<p>\[ U\pmb{x} = \pmb{c},\]</p>
+<p>where now we can use the fact that \(U\) is upper-triangular to use our back substitution algorithm again very efficiently to give the solution \(\pmb{x}\) we require.</p>
+<p>So for a given \(\pmb{b}\) we can find the corresponding \(\pmb{x}\) very efficiently, we can therefore do this repeatedly as each new \(\pmb{b}\) is given to us.</p>
+<p>Our challenge is therefore to find the matrices \(L\) and \(U\) allowing us to perform the decomposition \(A=LU\).</p>
+</div>
+<div class="section" id="doolittle-algorithm">
+<h2>Doolittle algorithm<a class="headerlink" href="#doolittle-algorithm" title="Permalink to this headline">¶</a></h2>
+<p>Recall the comment above on the \(L\) and \(U\) matrices encoding the steps taken in Gaussian elimination. Let’s see how this works through the development of the so-called <strong>Doolittle algorithm</strong>.</p>
+<p>Let’s consider an example matrix:</p>
+<p>\[
+A=\begin{bmatrix}
+{\color{black}5} &amp; {\color{black}7} &amp; {\color{black}5} &amp; {\color{black}9}\\
+{\color{black}5} &amp; {\color{black}14} &amp; {\color{black}7} &amp; {\color{black}10}\\
+{\color{black}20} &amp; {\color{black}77} &amp; {\color{black}41} &amp; {\color{black}48}\\
+{\color{black}25} &amp; {\color{black}91} &amp; {\color{black}55} &amp; {\color{black}67}\\
+\end{bmatrix}
+\]</p>
+<p>The first step of Gaussian elimination is to set the sub-diagonal elements in the first column to zero by subtracting multiples of the first row from each of the subsequent rows.</p>
+<p>For this example, this requires the row operations</p>
+<p>\[
+\begin{align}
+Eq. (2) &amp;\leftarrow Eq. (2) - 1\times Eq. (1)\\
+Eq. (3) &amp;\leftarrow Eq. (3) - 4\times Eq. (1)\\
+Eq. (4) &amp;\leftarrow Eq. (4) - 5\times Eq. (1)\\
+\end{align}
+\]</p>
+<p>or mathematically, and for each element of the matrix (remembering that we are adding rows together - while one of
+the entries of a row will end up being zero, this also has the consequence of updating the rest of the values in that row, hence the iteration over \(j\) below):</p>
+<p>\[
+\begin{align}
+A_{2j} &amp;\leftarrow A_{2j} - \frac{A_{21}}{A_{11}} A_{1j} = A_{2j} - \frac{5}{5} \times A_{1j}, \quad j=1,2,3,4\\
+A_{3j} &amp;\leftarrow A_{3j} - \frac{A_{31}}{A_{11}} A_{1j} = A_{3j} - \frac{20}{5} \times A_{1j}, \quad j=1,2,3,4\\
+A_{4j} &amp;\leftarrow A_{4j} - \frac{A_{41}}{A_{11}} A_{1j} = A_{4j} - \frac{25}{5} \times A_{1j}, \quad j=1,2,3,4\\
+\end{align}
+\]</p>
+<p>Notice that we can also write these exact operations on elements in terms of multiplication by a carefully chosen lower-triangular matrix where the non-zero’s below the diagonal are restricted to a single column, e.g. for the example above</p>
+<p>\[
+\begin{bmatrix}
+{\color{black}1} &amp; {\color{black}0} &amp; {\color{black}0} &amp; {\color{black}0}\\
+{\color{Orange}{-1}} &amp; {\color{black}1} &amp; {\color{black}0} &amp; {\color{black}0}\\
+{\color{Orange}{-4}} &amp; {\color{black}0} &amp; {\color{black}1} &amp; {\color{black}0}\\
+{\color{Orange}{-5}} &amp; {\color{black}0} &amp; {\color{black}0} &amp; {\color{black}1}\\<br />
+\end{bmatrix}\qquad\times\qquad\begin{bmatrix}
+{\color{black}5} &amp; {\color{black}7} &amp; {\color{black}5} &amp; {\color{black}9}\\
+{\color{black}5} &amp; {\color{black}14} &amp; {\color{black}7} &amp; {\color{black}10}\\
+{\color{black}20} &amp; {\color{black}77} &amp; {\color{black}41} &amp; {\color{black}48}\\
+{\color{black}25} &amp; {\color{black}91} &amp; {\color{black}55} &amp; {\color{black}67}\\<br />
+\end{bmatrix}\qquad=\qquad\begin{bmatrix}
+{\color{black}5} &amp; {\color{black}7} &amp; {\color{black}5} &amp; {\color{black}9}\\
+{\color{blue}{0}} &amp; {\color{blue}{7}} &amp; {\color{blue}{2}} &amp; {\color{blue}{1}}\\
+{\color{blue}{0}} &amp; {\color{blue}{49}} &amp; {\color{blue}{21}} &amp; {\color{blue}{12}}\\
+{\color{blue}{0}} &amp; {\color{blue}{56}} &amp; {\color{blue}{30}} &amp; {\color{blue}{22}}\\<br />
+\end{bmatrix}
+\]</p>
+<p>The lower-triangular matrix (let’s call this one \(L_0\)) is thus encoding the first step in Gaussian elimination.</p>
+<p>The next step involves taking the second row of the updated matrix as the new pivot (we will ignore partial pivoting for simplicity), and subtracting multiples of this row from those below in order to set the zeros below the diagonal in the second column to zero.</p>
+<p>Note that this step can be achieved here with the multiplication by the following lower-triangular matrix (call this one \(L_1\))</p>
+<p>\[
+\begin{bmatrix}
+{\color{black}1} &amp; {\color{black}0} &amp; {\color{black}0} &amp; {\color{black}0}\\
+{\color{black}0} &amp; {\color{black}1} &amp; {\color{black}0} &amp; {\color{black}0}\\
+{\color{black}0} &amp; {\color{Orange}{-7}} &amp; {\color{black}1} &amp; {\color{black}0}\\
+{\color{black}0} &amp; {\color{Orange}{-8}} &amp; {\color{black}0} &amp; {\color{black}1}\\
+\end{bmatrix}\qquad\times\qquad\begin{bmatrix}
+{\color{black}5} &amp; {\color{black}7} &amp; {\color{black}5} &amp; {\color{black}9}\\
+{\color{black}0} &amp; {\color{black}7} &amp; {\color{black}2} &amp; {\color{black}1}\\
+{\color{black}0} &amp; {\color{black}49} &amp; {\color{black}21} &amp; {\color{black}12}\\
+{\color{black}0} &amp; {\color{black}56} &amp; {\color{black}30} &amp; {\color{black}22}\\
+\end{bmatrix}\qquad=\qquad\begin{bmatrix}
+{\color{black}5} &amp; {\color{black}7} &amp; {\color{black}5} &amp; {\color{black}9}\\
+{\color{black}0} &amp; {\color{black}7} &amp; {\color{black}2} &amp; {\color{black}1}\\
+{\color{black}0} &amp; {\color{blue}{0}} &amp; {\color{blue}{7}} &amp; {\color{blue}{5}}\\
+{\color{black}0} &amp; {\color{blue}{0}} &amp; {\color{blue}{14}} &amp; {\color{blue}{14}}\\
+\end{bmatrix}
+\]</p>
+<p>and finally for this example to get rid the of the leading 14 on the final row:</p>
+<p>\[
+\begin{bmatrix}
+{\color{black}1} &amp; {\color{black}0} &amp; {\color{black}0} &amp; {\color{black}0}\\
+{\color{black}0} &amp; {\color{black}1} &amp; {\color{black}0} &amp; {\color{black}0}\\
+{\color{black}0} &amp; {\color{black}0} &amp; {\color{black}1} &amp; {\color{black}0}\\
+{\color{black}0} &amp; {\color{black}0} &amp; {\color{Orange}{-2}} &amp; {\color{black}{1}}\\
+\end{bmatrix}\qquad\times\qquad\begin{bmatrix}
+{\color{black}5} &amp; {\color{black}7} &amp; {\color{black}5} &amp; {\color{black}9}\\
+{\color{black}0} &amp; {\color{black}7} &amp; {\color{black}2} &amp; {\color{black}1}\\
+{\color{black}0} &amp; {\color{black}0} &amp; {\color{black}7} &amp; {\color{black}5}\\
+{\color{black}0} &amp; {\color{black}0} &amp; {\color{black}14} &amp; {\color{black}14}\\
+\end{bmatrix}\qquad=\qquad\begin{bmatrix}
+{\color{black}5} &amp; {\color{black}7} &amp; {\color{black}5} &amp; {\color{black}9}\\
+{\color{black}0} &amp; {\color{black}7} &amp; {\color{black}2} &amp; {\color{black}1}\\
+{\color{black}0} &amp; {\color{black}0} &amp; {\color{black}7} &amp; {\color{black}5}\\
+{\color{black}0} &amp; {\color{black}0} &amp; {\color{blue}{0}} &amp; {\color{blue}{4}}\\
+\end{bmatrix}
+\]</p>
+<p>where this lower triangular matrix we will call \(L_2\), and the RHS matrix is now in upper-triangular form as we expect from Gaussian elimination (call this \(U\)).</p>
+<p>In summary, the above operations (starting from \(A\), first multipling on the left by \(L_0\), the multiplying the result on the left by \(L_1\) and so on to arrive at an upper trianglualr matrix \(U\)) can be written as</p>
+<p>\[ L_2(L_1(L_0A)) = U.\]</p>
+<p>Note that these special lower-triangular matrices \(L_0, \ldots\) are all examples of what is known as <em>atomic</em> lower-triangular matrices: a special form of unitriangular matrix - the diagonals are unity, where the off-diagonal entries are all zero apart from in a single column.</p>
+<p>Notice that for these special, simple matrices, their inverse is simply the original with the sign of those off-diagnonals changed:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  \begin{bmatrix}
+    1      &amp; 0      &amp; \cdots      &amp;        &amp;              &amp;        &amp;         &amp;   &amp; 0 \\
+    0      &amp; 1      &amp; 0           &amp; \cdots &amp;              &amp;        &amp;         &amp;   &amp; 0 \\
+    0      &amp; \ddots &amp; \ddots      &amp; \ddots &amp;              &amp;        &amp;         &amp;   &amp;  \vdots \\
+    \vdots &amp; \ddots &amp; \ddots      &amp; \ddots &amp;              &amp;        &amp;         &amp;   &amp;  \\
+           &amp;        &amp;             &amp;   0    &amp;   1          &amp;  0     &amp;         &amp; &amp;  &amp;  \\        
+           &amp;        &amp;             &amp;   0    &amp;   l_{i+1,i}  &amp;  1     &amp;  \ddots &amp;   &amp;  &amp;  \\ 
+           &amp;        &amp;             &amp;   0    &amp;   l_{i+2,i}  &amp;  0     &amp;  \ddots &amp;   &amp; &amp;  \\
+           &amp;        &amp;             &amp; \vdots &amp;   \vdots     &amp; \vdots &amp;  \ddots &amp;   &amp; 0 &amp;  \\               
+    0      &amp; \cdots &amp;             &amp; 0      &amp;   l_{n,i}    &amp; 0      &amp;  \cdots &amp; 0 &amp; 1 &amp;  \\    
+\end{bmatrix}^{-1}
+=
+\begin{bmatrix}
+    1      &amp; 0      &amp; \cdots      &amp;        &amp;              &amp;        &amp;         &amp;   &amp; 0 \\
+    0      &amp; 1      &amp; 0           &amp; \cdots &amp;              &amp;        &amp;         &amp;   &amp; 0 \\
+    0      &amp; \ddots &amp; \ddots      &amp; \ddots &amp;              &amp;        &amp;         &amp;   &amp;  \vdots \\
+    \vdots &amp; \ddots &amp; \ddots      &amp; \ddots &amp;              &amp;        &amp;         &amp;   &amp;  \\
+           &amp;        &amp;             &amp;   0    &amp;   1          &amp;  0     &amp;         &amp; &amp;  &amp;  \\          
+           &amp;        &amp;             &amp;   0    &amp;   -l_{i+1,i}  &amp;  1     &amp;  \ddots &amp;   &amp;  &amp;  \\ 
+           &amp;        &amp;             &amp;   0    &amp;   -l_{i+2,i}  &amp;  0     &amp;  \ddots &amp;   &amp; &amp;  \\  
+           &amp;        &amp;             &amp; \vdots &amp;   \vdots     &amp; \vdots &amp;  \ddots &amp;   &amp; 0 &amp;  \\               
+    0      &amp; \cdots &amp;             &amp; 0      &amp;   -l_{n,i}    &amp; 0      &amp;  \cdots &amp; 0 &amp; 1 &amp;  \\    
+\end{bmatrix}
+\end{split}\]</div>
+<div class="section" id="exercise">
+<h3>Exercise<a class="headerlink" href="#exercise" title="Permalink to this headline">¶</a></h3>
+<p>Convince yourselves of the following facts:</p>
+<ol class="simple">
+<li><p>the above statement on what the inverse of the special \(L\) matrices is - check on a small example.</p></li>
+<li><p>the multiplication of arbitrary lower-triangular square matrices is also lower-triangular.</p></li>
+<li><p>\(L_2(L_1(L_0A)) = U \implies A = L_0^{-1}(L_1^{-1}(L_2^{-1}U))\)</p></li>
+<li><p>and hence that \(A=LU\) where \(U\) is the upper-triangular matrix found at the end of Guassian elimination, and where \(L\) is the following matrix
+\[L = L_0^{-1}L_1^{-1}L_2^{-1}.\]</p></li>
+<li><p>finally, compute this product of these lower-triangular matrices to show that
+\[L =
+\begin{bmatrix}
+{\color{black}1} &amp; {\color{black}0} &amp; {\color{black}0} &amp; {\color{black}0}\\
+{\color{black}{1}} &amp; {\color{black}1} &amp; {\color{black}0} &amp; {\color{black}0}\\
+{\color{black}{4}} &amp; {\color{black}7} &amp; {\color{black}1} &amp; {\color{black}0}\\
+{\color{black}{5}} &amp; {\color{black}8} &amp; {\color{black}2} &amp; {\color{black}1}\\<br />
+\end{bmatrix}
+\]
+i.e. that the multiplication of these individual atomic matrices (importantly in this order) simply merges the entries from the non-zero columns of each atomic matrix, and hence is both lower-triangular, as well as trivial to compute.</p></li>
+</ol>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">linalg</span>
+<span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+
+<span class="c1"># as above: A matrix,</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">5.</span><span class="p">,</span> <span class="mf">7.</span> <span class="p">,</span> <span class="mf">5.</span><span class="p">,</span> <span class="mf">9.</span><span class="p">],</span>
+            <span class="p">[</span><span class="mf">5.</span><span class="p">,</span> <span class="mf">14.</span><span class="p">,</span>   <span class="mf">7.</span><span class="p">,</span>  <span class="mf">10.</span><span class="p">],</span>
+            <span class="p">[</span><span class="mf">20.</span><span class="p">,</span> <span class="mf">77.</span><span class="p">,</span> <span class="mf">41.</span><span class="p">,</span> <span class="mf">48.</span><span class="p">],</span>
+            <span class="p">[</span><span class="mf">25.</span><span class="p">,</span> <span class="mf">91.</span><span class="p">,</span>  <span class="mf">55.</span><span class="p">,</span> <span class="mf">67.</span><span class="p">]])</span>
+
+<span class="c1"># lower triangular matrices,</span>
+<span class="n">L0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]])</span>
+<span class="n">L1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">7</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">8</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]])</span>
+<span class="n">L2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">]])</span>
+
+<span class="c1"># and their inverse matrices</span>
+<span class="n">L0_</span> <span class="o">=</span> <span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">L0</span><span class="p">)</span>
+<span class="n">L1_</span> <span class="o">=</span> <span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">L1</span><span class="p">)</span>
+<span class="n">L2_</span> <span class="o">=</span> <span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">L2</span><span class="p">)</span>
+
+<span class="c1"># our base matrix</span>
+<span class="n">pprint</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+
+<span class="c1"># ad: The multiplication of arbitrary lower-triangular</span>
+<span class="c1"># square matrices is also lower-triangular</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Question 1:&quot;</span><span class="p">)</span>
+<span class="n">pprint</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">L0</span><span class="p">,</span> <span class="n">L1</span><span class="p">))</span>
+<span class="n">pprint</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">L2</span><span class="p">,</span> <span class="n">L1</span><span class="p">))</span>
+
+<span class="c1"># ad: L2(L1(L0 A)) = U</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Question 2:&quot;</span><span class="p">)</span>
+<span class="n">U</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">L2</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">L1</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">L0</span><span class="p">,</span> <span class="n">A</span><span class="p">)))</span>
+<span class="n">pprint</span><span class="p">(</span><span class="n">U</span><span class="p">)</span>
+
+<span class="c1"># ad: A = L0^-1(L1^-1(L2^-1 U))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Question 3:&quot;</span><span class="p">)</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">L0_</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">L1_</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">L2_</span><span class="p">,</span> <span class="n">U</span><span class="p">)))</span> 
+<span class="n">pprint</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+
+<span class="c1"># ad: L = L0^-1 L1^-1 L2^-1</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Question 4:&quot;</span><span class="p">)</span>
+<span class="n">L</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">L0_</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">L1_</span><span class="p">,</span><span class="n">L2_</span><span class="p">))</span>
+<span class="n">pprint</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+
+<span class="c1"># ad: A = LU</span>
+<span class="c1"># numpy.allclose takes two numpy arrays and checks </span>
+<span class="c1"># whether all elements are identical to some tolerance</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Question 5:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">U</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>array([[ 5.,  7.,  5.,  9.],
+       [ 5., 14.,  7., 10.],
+       [20., 77., 41., 48.],
+       [25., 91., 55., 67.]])
+Question 1:
+array([[ 1,  0,  0,  0],
+       [-1,  1,  0,  0],
+       [-4, -7,  1,  0],
+       [-5, -8,  0,  1]])
+array([[ 1,  0,  0,  0],
+       [ 0,  1,  0,  0],
+       [ 0, -7,  1,  0],
+       [ 0,  6, -2,  1]])
+Question 2:
+array([[5., 7., 5., 9.],
+       [0., 7., 2., 1.],
+       [0., 0., 7., 5.],
+       [0., 0., 0., 4.]])
+Question 3:
+array([[ 5.,  7.,  5.,  9.],
+       [ 5., 14.,  7., 10.],
+       [20., 77., 41., 48.],
+       [25., 91., 55., 67.]])
+Question 4:
+array([[1., 0., 0., 0.],
+       [1., 1., 0., 0.],
+       [4., 7., 1., 0.],
+       [5., 8., 2., 1.]])
+Question 5:
+True
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="implementation">
+<h2>Implementation<a class="headerlink" href="#implementation" title="Permalink to this headline">¶</a></h2>
+<p>We can build an LU code easily from <a class="reference internal" href="11_Gaussian_elimination.html#nm-gaussian-elimination"><span class="std std-ref">Gaussian elimination code</span></a>. The final \(U\) matrix we need here is as was already constructed through Gaussian elimination, the entries of \(L\) we need are simply the \({A_{ik}}/{A_{kk}}\) multipliers we computed as part of the elimination, but threw away previously.</p>
+<p>For a given pivot row \(k\), for each of these multipliers (for every row below the pivot), as we compute them we know that we are going to transform the augmented matrix in order to achieve a new zero below the diagonal - we can store each multiplier in this position before moving on to the following row, we implicitly know that the diagonals of \(L\) will be unity and so don’t need to store these (and noting that we don’t actually have a space for them anyway!). We then move on to the following pivot row, replacing the zeros in the corresponding column we are zero’ing, but again using the now spare space to store the multipliers.</p>
+<p>For example, for the case above</p>
+<p>\[ A =
+\begin{bmatrix}
+{\color{black}5} &amp; {\color{black}7} &amp; {\color{black}5} &amp; {\color{black}9}\\
+{\color{black}5} &amp; {\color{black}14} &amp; {\color{black}7} &amp; {\color{black}10}\\
+{\color{black}20} &amp; {\color{black}77} &amp; {\color{black}41} &amp; {\color{black}48}\\
+{\color{black}25} &amp; {\color{black}91} &amp; {\color{black}55} &amp; {\color{black}67}\\<br />
+\end{bmatrix}\quad\rightarrow\quad
+\begin{bmatrix}
+{\color{black}5} &amp; {\color{black}7} &amp; {\color{black}5} &amp; {\color{black}9}\\
+{\color{blue}{1}} &amp; {\color{black}{7}} &amp; {\color{black}{2}} &amp; {\color{black}{1}}\\
+{\color{blue}{4}} &amp; {\color{black}{49}} &amp; {\color{black}{21}} &amp; {\color{black}{12}}\\
+{\color{blue}{5}} &amp; {\color{black}{56}} &amp; {\color{black}{30}} &amp; {\color{black}{22}}\\<br />
+\end{bmatrix}\quad\rightarrow\quad
+\begin{bmatrix}
+{\color{black}5} &amp; {\color{black}7} &amp; {\color{black}5} &amp; {\color{black}9}\\
+{\color{blue}1} &amp; {\color{black}7} &amp; {\color{black}2} &amp; {\color{black}1}\\
+{\color{blue}4} &amp; {\color{blue}{7}} &amp; {\color{black}{7}} &amp; {\color{black}{5}}\\
+{\color{blue}5} &amp; {\color{blue}{8}} &amp; {\color{black}{14}} &amp; {\color{black}{14}}\\
+\end{bmatrix}\quad\rightarrow\quad
+\begin{bmatrix}
+{\color{black}5} &amp; {\color{black}7} &amp; {\color{black}5} &amp; {\color{black}9}\\
+{\color{blue}1} &amp; {\color{black}7} &amp; {\color{black}2} &amp; {\color{black}1}\\
+{\color{blue}4} &amp; {\color{blue}7} &amp; {\color{black}7} &amp; {\color{black}5}\\
+{\color{blue}5} &amp; {\color{blue}8} &amp; {\color{blue}{2}} &amp; {\color{black}{4}}\\
+\end{bmatrix}
+= [\color{blue}L\backslash U]
+\]</p>
+<p>Starting from <a class="reference internal" href="11_Gaussian_elimination.html#nm-gaussian-elimination"><span class="std std-ref">Gaussian elimination code</span></a> we will compute the LU decomposition of a matrix. First, we will store \(L\) and \(U\) in two different matrices:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">LU_dec</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+    <span class="c1"># Upper triangular matrix contains gaussian elimination result</span>
+    <span class="c1"># We won&#39;t change A in-place but create a local copy</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">m</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">shape</span>
+    <span class="c1"># Lower triangular matrix has identity diagonal and scaling factors</span>
+    <span class="c1"># Start from the identity:</span>
+    <span class="n">L</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="c1"># Loop over each pivot row.</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="c1"># Loop over each equation below the pivot row.</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+            <span class="c1"># Define the scaling factor outside the innermost</span>
+            <span class="c1"># loop otherwise its value gets changed.</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">k</span><span class="p">]</span><span class="o">/</span><span class="n">A</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">k</span><span class="p">])</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+                <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">-</span> <span class="n">s</span><span class="o">*</span><span class="n">A</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">j</span><span class="p">]</span>
+            <span class="c1"># Scaling factors make up the lower matrix </span>
+            <span class="n">L</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">s</span>
+    <span class="c1"># A now is the upper triangular matrix U</span>
+    <span class="k">return</span> <span class="n">L</span><span class="p">,</span> <span class="n">A</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Test the code:</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span> <span class="mf">5.</span><span class="p">,</span> <span class="mf">7.</span><span class="p">,</span>   <span class="mf">5.</span><span class="p">,</span>  <span class="mf">9.</span><span class="p">],</span>
+              <span class="p">[</span> <span class="mf">5.</span><span class="p">,</span> <span class="mf">14.</span><span class="p">,</span>  <span class="mf">7.</span><span class="p">,</span> <span class="mf">10.</span><span class="p">],</span>
+              <span class="p">[</span><span class="mf">20.</span><span class="p">,</span> <span class="mf">77.</span><span class="p">,</span> <span class="mf">41.</span><span class="p">,</span> <span class="mf">48.</span><span class="p">],</span>
+              <span class="p">[</span><span class="mf">25.</span><span class="p">,</span> <span class="mf">91.</span> <span class="p">,</span><span class="mf">55.</span><span class="p">,</span> <span class="mf">67.</span><span class="p">]])</span>
+
+<span class="n">L</span><span class="p">,</span> <span class="n">U</span> <span class="o">=</span> <span class="n">LU_dec</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+
+<span class="n">pprint</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+<span class="n">pprint</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+<span class="n">pprint</span><span class="p">(</span><span class="n">U</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">L</span><span class="p">,</span><span class="n">U</span><span class="p">),</span> <span class="n">A</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>array([[ 5.,  7.,  5.,  9.],
+       [ 5., 14.,  7., 10.],
+       [20., 77., 41., 48.],
+       [25., 91., 55., 67.]])
+array([[1., 0., 0., 0.],
+       [1., 1., 0., 0.],
+       [4., 7., 1., 0.],
+       [5., 8., 2., 1.]])
+array([[5., 7., 5., 9.],
+       [0., 7., 2., 1.],
+       [0., 0., 7., 5.],
+       [0., 0., 0., 4.]])
+True
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="partial-pivoting">
+<h2>Partial pivoting<a class="headerlink" href="#partial-pivoting" title="Permalink to this headline">¶</a></h2>
+<p>Problems can occur in a numerical implementation of our algorithm if <span class="math notranslate nohighlight">\(A_{kk}\)</span> divided through by in the Gaussian elimination and/or back substitution algorithms might be zero (or close to zero).</p>
+<p>Using Gaussian elimination as an example, let’s again consider the algorithm mid-way working on an arbitrary matrix system, i.e. assume that the first \(k\) rows have already been transformed into upper-triangular form, while the equations/rows below are not yet in this form:</p>
+<p>\[
+\begin{bmatrix}
+A_{11} &amp; A_{12} &amp; A_{13} &amp; \cdots &amp; A_{1k}  &amp; \cdots &amp; A_{1n} &amp; b_1 \\
+0      &amp; A_{22} &amp; A_{23} &amp; \cdots &amp; A_{2k} &amp; \cdots &amp; A_{2n} &amp; b_2 \\
+0      &amp; 0      &amp; A_{33} &amp; \cdots &amp; A_{3k}  &amp; \cdots &amp; A_{3n} &amp; b_3 \\
+\vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots  &amp; \ddots &amp; \vdots &amp; \vdots \\
+\hdashline<br />
+0      &amp; 0      &amp; 0      &amp; \cdots &amp; A_{kk}  &amp; \cdots &amp; A_{kn} &amp; b_k \\<br />
+\vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots  &amp; \ddots &amp; \vdots &amp; \vdots \\
+0      &amp; 0      &amp; 0      &amp; \cdots &amp; A_{nk}  &amp; \cdots &amp; A_{nn} &amp; b_n \\
+\end{bmatrix}
+\]</p>
+<p>We have drawn the horizontal dashed line one row higher, as we are not going to blindly asssume that it is wise to take the current row \(k\) as the pivot row, and \(A_{kk}\) as the so-called pivot element.</p>
+<p><strong>Partial pivoting</strong> selects the best pivot (row or element) as the one where the \(A_{ik}\) (for \(i\ge k\)) value is largest (relative to the other values of components in its own row \(i\)), and then swaps this row with the current \(k\) row.</p>
+<p>To generalise our codes above we would simply need to search for this row, and perform the row swap operation.</p>
+<p>Python’s <code class="docutils literal notranslate"><span class="pre">scipy.linalg</span></code> library has its own implementation of the LU decomposition, that uses partial pivoting.</p>
+<div class="dropdown admonition">
+<p class="admonition-title">Example of partial pivoting</p>
+<p>Suppose that we have the matrix \(\pmb{A}\) from before</p>
+<p>\[
+A =
+\begin{bmatrix}
+5 &amp; 7 &amp; 5 &amp;  9 \\
+5 &amp; 14 &amp; 7 &amp; 10 \\
+20 &amp; 77 &amp;41 &amp; 48 \\
+25 &amp; 91 &amp; 55 &amp; 67 \\
+\end{bmatrix}
+\]</p>
+<p>and then we do some timeskipping and skip to partway through</p>
+<p>\[
+A =
+\begin{bmatrix}
+5 &amp; 7 &amp; 5 &amp;  9 \\
+0 &amp; 7 &amp; 2 &amp; 1 \\
+0 &amp; 49 &amp;21 &amp; 12 \\
+0 &amp; 56 &amp; 30 &amp; 22 \\
+\end{bmatrix}.
+\]</p>
+<p>Now, magic happens for the sake of illustrating the partial pivoting - “magic magic poof poof and magically \(7\) becomes \(0\)”:</p>
+<p>\[
+A =
+\begin{bmatrix}
+5 &amp; 7 &amp; 5 &amp;  9 \\
+0 &amp; 0 &amp; 2 &amp; 1 \\
+0 &amp; 49 &amp;21 &amp; 12 \\
+0 &amp; 56 &amp; 30 &amp; 22 \\
+\end{bmatrix}
+\]</p>
+<p>Suppose that the matrix storing our unknowns is</p>
+<p>\[
+\pmb{x} =
+\begin{bmatrix}
+x \\
+y \\
+z \\
+\text{letter after }z
+\end{bmatrix}
+\]</p>
+<p>And the matrix storing the results of our equations, after all of the Gaussian elimination previously that have modified the matrix \(\pmb{b}\)</p>
+<p>\[
+\pmb{b} =
+\begin{bmatrix}
+b_1 \\
+b_2 \\
+b_3 \\
+b_4
+\end{bmatrix}
+\]</p>
+<p>Writing this in equation this would be</p>
+<p>\[
+5x + 7y + 5z + 9(\text{letter after }z) = b_1 \\
+0x + 0y + 2z + 1(\text{letter after }z) = b_2 \\
+0x + 49y + 21z + 12(\text{letter after }z) = b_3  \\
+0x + 56y + 30z + 22(\text{letter after }z) = b_4
+\]</p>
+<p>Now, we are going to use equation 2 and equation 3</p>
+<p>\[
+A =
+\begin{bmatrix}
+5 &amp; 7 &amp; 5 &amp;  9 \\
+0 &amp; 0 &amp; 2 &amp; 1 \\
+0 &amp; 49 &amp;21 &amp; 12 \\
+0 &amp; 56 &amp; 30 &amp; 22 \\
+\end{bmatrix}
+\]</p>
+<p>The coefficient of the second unknown in the second equation is 0. The coefficient of the second unknown in the third equation is 49. Thus, I will divide the coefficient of the 3rd equation with the coefficient of the 2nd equation, and then I would multiply the coefficient of the 3rd equation by the quotient. As such, I will divide \(49/0\), and then, I will get an error since you cannot divide by \(0\). It does not neccesarily have to be \(0\) to give errors, even if it is very close to \(0\), it will still give an error.</p>
+<p>Thus what can I do?</p>
+<p>Well, I need two equations. I cannot use the equation 2 because there is a \(0\). Then, I will use equation 3 and equation 4. Therefore, let’s swap the position of equation 4 and equation 2.</p>
+<p>\[
+A =
+\begin{bmatrix}
+5 &amp; 7 &amp; 5 &amp;  9 \\
+0 &amp; 56 &amp; 30 &amp; 22 \\
+0 &amp; 49 &amp;21 &amp; 12 \\
+0 &amp; 0 &amp; 2 &amp; 1 \\
+\end{bmatrix}
+\]</p>
+<p>Remember when you swap rows in matrix \(\pmb{A}\), you must also swap rows in the matrix \(\pmb{b}\). Matrix \(\pmb{x}\) does not have to swapped since the order of the variables has not changed.</p>
+<p>The matrix storing our unknowns remains</p>
+<p>\[
+\pmb{x} =
+\begin{bmatrix}
+x \\
+y \\
+z \\
+\text{letter after }z
+\end{bmatrix}
+\]</p>
+<p>And the matrix storing the results of our equations</p>
+<p>\[
+\pmb{b} =
+\begin{bmatrix}
+b_1 \\
+b_4 \\
+b_3 \\
+b_2
+\end{bmatrix}
+\]</p>
+<p>Writing this in equation this would be</p>
+<p>\[
+5x + 7y + 5z + 9(\text{letter after }z) = b_1 \\
+0x + 56y + 30z + 22(\text{letter after }z) = b_4 \\
+0x + 49y + 21z + 12(\text{letter after }z) = b_3  \\
+0x + 0y + 2z + 1(\text{letter after }z) = b_2
+\]</p>
+<p>Inspecting this equation, we see that the equation is essentially the same as it was before the swap, so we can say that our action to swap it is a valid action. I have rewritten the equation before the swap as reference</p>
+<p>\[
+5x + 7y + 5z + 9(\text{letter after }z) = b_1 \\
+0x + 0y + 2z + 1(\text{letter after }z) = b_2 \\
+0x + 49y + 21z + 12(\text{letter after }z) = b_3  \\
+0x + 56y + 30z + 22(\text{letter after }z) = b_4
+\]</p>
+<p>Now let’s continue, after we finished swapping, and we will focus only on getting to the upper triangle form, and only on matrix \(\pmb{A}\). The matrix \(\pmb{b}\) will also change accordingly as detailed in the previous lecture, but let’s focus on matrix \(\pmb{A}\):</p>
+<p>\[
+A =
+\begin{bmatrix}
+5 &amp; 7 &amp; 5 &amp;  9 \\
+0 &amp; 56 &amp; 30 &amp; 22 \\
+0 &amp; 56 &amp; 24 &amp; 96/7 \\
+0 &amp; 0 &amp; 2 &amp; 1 \\
+\end{bmatrix}
+\]</p>
+<p>\[
+A =
+\begin{bmatrix}
+5 &amp; 7 &amp; 5 &amp;  9 \\
+0 &amp; 56 &amp; 30 &amp; 22 \\
+0 &amp; 0 &amp; -6 &amp; 96/7 -22 \\
+0 &amp; 0 &amp; 2 &amp; 1 \\
+\end{bmatrix}
+\]</p>
+<p>We will not encounter the problem with dividing by zero anymore, at least for this matrix.</p>
+<p>This matrix was nice and only required one swap. But if your matrix has lots of \(0\) or very small numbers, then maybe you might need more swaps. You might also want to nondimensionalize that matrix. That is, of course assuming that the equations contain enough information to actually allow you to solve the equation. You could use the determinant, or the <a class="reference internal" href="11_Gaussian_elimination.html#nm-gauss-jordan-elimination"><span class="std std-ref">Gauss-Jordan elimination</span></a> to check if there is actually a solution. You should always check the solvability of an equation before solving it, since trying to solve an equation which cannot be solved is wasted effort.</p>
+<p>You could use conditionals to control the swapping or the skipping of rows. Although the example here used \(0\), it could be a very small number too, and not neccesary \(0\) that could cause the problem, so maybe it would be nice to compare the conditional to a certain threshold to decided whether to swap or not.</p>
+</div>
+<p>Example partial pivoting using <code class="docutils literal notranslate"><span class="pre">scipy.linalg</span></code>:</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scipy.linalg</span> <span class="k">as</span> <span class="nn">sl</span>
+
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span> <span class="mf">5.</span><span class="p">,</span> <span class="mf">7.</span><span class="p">,</span>   <span class="mf">5.</span><span class="p">,</span>  <span class="mf">9.</span><span class="p">],</span>
+               <span class="p">[</span> <span class="mf">5.</span><span class="p">,</span> <span class="mf">14.</span><span class="p">,</span>  <span class="mf">7.</span><span class="p">,</span> <span class="mf">10.</span><span class="p">],</span>
+               <span class="p">[</span><span class="mf">20.</span><span class="p">,</span> <span class="mf">77.</span><span class="p">,</span> <span class="mf">41.</span><span class="p">,</span> <span class="mf">48.</span><span class="p">],</span>
+               <span class="p">[</span><span class="mf">25.</span><span class="p">,</span> <span class="mf">91.</span> <span class="p">,</span><span class="mf">55.</span><span class="p">,</span> <span class="mf">67.</span><span class="p">]])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;A =&quot;</span><span class="p">,</span> <span class="n">A</span><span class="p">)</span>
+
+<span class="n">P</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">U</span> <span class="o">=</span> <span class="n">sl</span><span class="o">.</span><span class="n">lu</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+
+<span class="c1"># P here is a &#39;permutation matrix&#39; that performs</span>
+<span class="c1"># swaps based upon partial pivoting</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;P =&quot;</span><span class="p">,</span> <span class="n">P</span><span class="p">)</span>
+
+<span class="c1"># The lower-triangular matrix</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+
+<span class="c1"># The upper-triangular matrix</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">U</span><span class="p">)</span>
+
+<span class="c1"># Double check that P*L*U does indeed equal A</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Does P*L*U = A?&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">P</span> <span class="o">@</span> <span class="n">L</span> <span class="o">@</span> <span class="n">U</span><span class="p">,</span> <span class="n">A</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>A = [[ 5.  7.  5.  9.]
+ [ 5. 14.  7. 10.]
+ [20. 77. 41. 48.]
+ [25. 91. 55. 67.]]
+P = [[0. 1. 0. 0.]
+ [0. 0. 0. 1.]
+ [0. 0. 1. 0.]
+ [1. 0. 0. 0.]]
+[[ 1.          0.          0.          0.        ]
+ [ 0.2         1.          0.          0.        ]
+ [ 0.8        -0.375       1.          0.        ]
+ [ 0.2         0.375       0.33333333  1.        ]]
+[[ 25.          91.          55.          67.        ]
+ [  0.         -11.2         -6.          -4.4       ]
+ [  0.           0.          -5.25        -7.25      ]
+ [  0.           0.           0.           0.66666667]]
+Does P*L*U = A? True
+</pre></div>
+</div>
+</div>
+</div>
+<p>Looking at the form of \(P\) above, we can re-order the rows in advance and consider the LU decomposition of the matrix where \(P=I\), as below. As we haven’t bothered implementing pivoting ourselves, check that your LU implementation recreates the \(A\), \(L\) and \(U\) below.</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">25.</span> <span class="p">,</span><span class="mf">91.</span> <span class="p">,</span><span class="mf">55.</span> <span class="p">,</span><span class="mf">67.</span><span class="p">],</span>
+               <span class="p">[</span> <span class="mf">5.</span><span class="p">,</span>  <span class="mf">7.</span><span class="p">,</span>  <span class="mf">5.</span><span class="p">,</span>  <span class="mf">9.</span><span class="p">],</span> 
+               <span class="p">[</span><span class="mf">20.</span><span class="p">,</span> <span class="mf">77.</span><span class="p">,</span> <span class="mf">41.</span><span class="p">,</span> <span class="mf">48.</span><span class="p">],</span>
+               <span class="p">[</span> <span class="mf">5.</span><span class="p">,</span> <span class="mf">14.</span><span class="p">,</span> <span class="mf">7.</span><span class="p">,</span>  <span class="mf">10.</span><span class="p">]])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;A =&quot;</span><span class="p">,</span> <span class="n">A</span><span class="p">)</span>
+
+<span class="n">P</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">U</span> <span class="o">=</span> <span class="n">sl</span><span class="o">.</span><span class="n">lu</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+
+<span class="c1"># P here is a &#39;permutation matrix&#39; that performs</span>
+<span class="c1"># swaps based upon partial pivoting</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;P =&quot;</span><span class="p">,</span> <span class="n">P</span><span class="p">)</span>
+
+<span class="c1"># The lower-triangular matrix</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+
+<span class="c1"># The upper-triangular matrix</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">U</span><span class="p">)</span>
+
+<span class="c1"># Double check that P*L*U does indeed equal A</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Does P*L*U = A?&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">P</span> <span class="o">@</span> <span class="n">L</span> <span class="o">@</span> <span class="n">U</span><span class="p">,</span> <span class="n">A</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>A = [[25. 91. 55. 67.]
+ [ 5.  7.  5.  9.]
+ [20. 77. 41. 48.]
+ [ 5. 14.  7. 10.]]
+P = [[1. 0. 0. 0.]
+ [0. 1. 0. 0.]
+ [0. 0. 1. 0.]
+ [0. 0. 0. 1.]]
+[[ 1.          0.          0.          0.        ]
+ [ 0.2         1.          0.          0.        ]
+ [ 0.8        -0.375       1.          0.        ]
+ [ 0.2         0.375       0.33333333  1.        ]]
+[[ 25.          91.          55.          67.        ]
+ [  0.         -11.2         -6.          -4.4       ]
+ [  0.           0.          -5.25        -7.25      ]
+ [  0.           0.           0.           0.66666667]]
+Does P*L*U = A? True
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id1">
+<h3>Implementation<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>See below the code implementation to partial pivoting:</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># This function is not necessary but makes the LU_dec_pp function less cluttered</span>
+<span class="c1"># Making general operations into functions is good way of improving readability</span>
+<span class="c1"># and reducing your workload later!</span>
+<span class="k">def</span> <span class="nf">swap_rows</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">k</span><span class="p">):</span>
+    <span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">j</span><span class="p">,:])</span>
+    <span class="n">C</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">k</span><span class="p">,:])</span>
+    <span class="c1"># second label, BUT NOT CREATING A 2ND ARRAY.</span>
+    <span class="c1"># Try it for yourself if you want.</span>
+    <span class="n">A</span><span class="p">[</span><span class="n">k</span><span class="p">,:]</span> <span class="o">=</span> <span class="n">B</span>
+    <span class="n">A</span><span class="p">[</span><span class="n">j</span><span class="p">,:]</span> <span class="o">=</span> <span class="n">C</span>
+    <span class="k">return</span> <span class="n">A</span>
+
+<span class="c1"># A function to perform LU decomposition with partial pivoting</span>
+<span class="k">def</span> <span class="nf">LU_dec_pp</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+    <span class="n">m</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> <span class="c1"># we won&#39;t modify in place but create local copy</span>
+    <span class="n">P_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+    <span class="n">L</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+        <span class="n">j</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">k</span><span class="p">:,</span><span class="n">k</span><span class="p">]))</span> 
+        <span class="c1"># Find the index of the largest ABSOLUTE value. np.argmax will return </span>
+        <span class="c1"># the index of the largest element in an array</span>
+        <span class="n">j</span><span class="o">+=</span> <span class="n">k</span>               <span class="c1"># A[1+2,2] = A[3,2] = 3!        </span>
+        <span class="n">A</span>  <span class="o">=</span> <span class="n">swap_rows</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">k</span><span class="p">)</span>
+        <span class="n">P_</span> <span class="o">=</span> <span class="n">swap_rows</span><span class="p">(</span><span class="n">P_</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">k</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">m</span><span class="p">):</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="n">k</span><span class="p">]</span><span class="o">/</span><span class="n">A</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">k</span><span class="p">]</span>
+            <span class="n">A</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="n">k</span><span class="p">:]</span> <span class="o">-=</span> <span class="n">A</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">k</span><span class="p">:]</span><span class="o">*</span><span class="n">s</span>  
+            <span class="n">L</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">s</span>
+    <span class="n">U</span> <span class="o">=</span> <span class="n">A</span>   
+    <span class="k">return</span> <span class="n">P_</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">U</span>
+
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span> <span class="mf">5.</span><span class="p">,</span> <span class="mf">7.</span><span class="p">,</span>   <span class="mf">5.</span><span class="p">,</span>  <span class="mf">9.</span><span class="p">],</span>
+              <span class="p">[</span> <span class="mf">5.</span><span class="p">,</span> <span class="mf">14.</span><span class="p">,</span>  <span class="mf">7.</span><span class="p">,</span> <span class="mf">10.</span><span class="p">],</span>
+              <span class="p">[</span><span class="mf">20.</span><span class="p">,</span> <span class="mf">77.</span><span class="p">,</span> <span class="mf">41.</span><span class="p">,</span> <span class="mf">48.</span><span class="p">],</span>
+              <span class="p">[</span><span class="mf">25.</span><span class="p">,</span> <span class="mf">91.</span> <span class="p">,</span><span class="mf">55.</span><span class="p">,</span> <span class="mf">67.</span><span class="p">]])</span>
+
+<span class="n">P</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">U</span> <span class="o">=</span> <span class="n">LU_dec_pp</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+<span class="n">pprint</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+<span class="n">pprint</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+<span class="n">pprint</span><span class="p">(</span><span class="n">U</span><span class="p">)</span>
+<span class="n">pprint</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">L</span><span class="p">,</span><span class="n">U</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Have we succeeded in creating partial pivoting?&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">L</span><span class="p">,</span><span class="n">U</span><span class="p">)),</span> <span class="n">A</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>array([[ 5.,  7.,  5.,  9.],
+       [ 5., 14.,  7., 10.],
+       [20., 77., 41., 48.],
+       [25., 91., 55., 67.]])
+array([[ 1.        ,  0.        ,  0.        ,  0.        ],
+       [ 0.2       ,  1.        ,  0.        ,  0.        ],
+       [ 0.8       , -0.375     ,  1.        ,  0.        ],
+       [ 0.2       ,  0.375     ,  0.33333333,  1.        ]])
+array([[ 25.        ,  91.        ,  55.        ,  67.        ],
+       [  0.        , -11.2       ,  -6.        ,  -4.4       ],
+       [  0.        ,   0.        ,  -5.25      ,  -7.25      ],
+       [  0.        ,   0.        ,   0.        ,   0.66666667]])
+array([[ 5.,  7.,  5.,  9.],
+       [ 5., 14.,  7., 10.],
+       [20., 77., 41., 48.],
+       [25., 91., 55., 67.]])
+Have we succeeded in creating partial pivoting? True
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "primer-computational-mathematics/book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./3_mathematics/numerical_methods"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="11_Gaussian_elimination.html" title="previous page">Gaussian elimination</a>
+    <a class='right-next' id="next-link" href="../statistics/intro.html" title="next page">Statistics</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Imperial College London<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../../_static/js/index.js"></script>
+    
+  </body>
+</html>

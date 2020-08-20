@@ -36,7 +36,10 @@ Table of contents:
     * {ref}`nm_newton_method`
     * {ref}`nm_quasi_newton_method`
     * {ref}`nm_secant_method`
-
+6. {ref}`Numerical linear algebra <nm_linear_algebra_intro>`
+    * {ref}`nm_gaussian_elimination`
+    * {ref}`nm_gauss_jordan_elimination`
+    * {ref}`nm_lu_decomposition`
 
 
 ## References
