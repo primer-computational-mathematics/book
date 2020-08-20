@@ -101,7 +101,7 @@ def write_module_content():
 
 
 modules_path = os.sep.join(('_tmp',
-                            fix('notebooks/modules/intro.ipynb', copy=False)))
+                            fix('notebooks/1_modules/intro.ipynb', copy=False)))
 
 modules_dict = {'module-mm1': ['Maths Methods 1'],
                'module-mm2': ['Maths Methods 2'],
