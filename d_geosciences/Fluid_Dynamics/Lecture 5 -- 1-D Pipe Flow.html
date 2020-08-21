@@ -1,0 +1,763 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Lecture 5 – 1-D Pipe Flow &#8212; ESE Jupyter Material</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/mystnb.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".cell"
+        const thebe_selector_input = ".cell_input div.highlight"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Remote sensing" href="../remote_sensing/intro.html" />
+    <link rel="prev" title="Fluid Dynamics" href="intro.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../index.html">
+  
+  <img src="../../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">ESE Jupyter Material</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  
+  <ul class="nav sidenav_l1">
+  <li class="">
+    <a href="../../intro.html">Landing page</a>
+  </li>
+  <li class="">
+    <a href="../../a_modules/intro.html">Modules</a>
+  </li>
+  <li class="">
+    <a href="../../b_coding/intro.html">Coding</a>
+  </li>
+  <li class="">
+    <a href="../../c_mathematics/intro.html">Mathematics</a>
+  </li>
+  <li class="active">
+    <a href="../intro.html">Geosciences</a>
+  <ul class="nav sidenav_l2">
+    <li class="">
+      <a href="../1D_Heat_Conduction.html">1D heat conduction (layered medium)</a>
+    </li>
+    <li class="">
+      <a href="../1D_Resistivity_Forward_Modelling.html">1D resistivity forward modelling</a>
+    </li>
+    <li class="">
+      <a href="../Climate_Model.html">Climate model</a>
+    </li>
+    <li class="">
+      <a href="../Dynamic_Earth.html">Seafloor ages</a>
+    </li>
+    <li class="">
+      <a href="../Keplerian_Orbits.html">Keplerian orbits</a>
+    </li>
+    <li class="">
+      <a href="../Milankovitch_cycles.html">Milankovitch cycles</a>
+    </li>
+    <li class="">
+      <a href="../Seismology.html">Downloading earthquake data</a>
+    </li>
+    <li class="">
+      <a href="../Tides.html">Tides</a>
+    </li>
+    <li class="">
+      <a href="../Wave_dispersion.html">Wave dispersion</a>
+    </li>
+    <li class="active">
+      <a href="intro.html">Fluid Dynamics</a>
+      <ul class="nav sidenav_l3">
+      <li class="active">
+        <a href="">Lecture 5 – 1-D Pipe Flow</a>
+      </li>
+    </ul>
+    </li>
+    <li class="">
+      <a href="../remote_sensing/intro.html">Remote sensing</a>
+    </li>
+  </ul>
+  </li>
+  <li class="">
+    <a href="../../e_extra/intro.html">Further resources</a>
+  </li>
+  <li class="">
+    <a href="../../genindex.html">Index</a>
+  </li>
+</ul>
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/d_geosciences/Fluid_Dynamics/Lecture 5 -- 1-D Pipe Flow.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        
+        <a class="issues-button"
+            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2Fd_geosciences/Fluid_Dynamics/Lecture 5 -- 1-D Pipe Flow.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/d_geosciences/Fluid_Dynamics/Lecture 5 -- 1-D Pipe Flow.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#channel-flow" class="nav-link">Channel Flow</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#problem-6-1" class="nav-link">Problem 6.1</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#problem-6-2" class="nav-link">Problem 6.2</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#problem-6-3" class="nav-link">Problem 6.3</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#problem-6-4" class="nav-link">Problem 6.4</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#pipe-flow" class="nav-link">Pipe Flow</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#problem-6-7" class="nav-link">Problem 6.7</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#problem-6-8" class="nav-link">Problem 6.8</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#problem-6-9" class="nav-link">Problem 6.9</a>
+        </li>
+    
+    </ul>
+</nav>
+
+
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="lecture-5-1-d-pipe-flow">
+<span id="one-d-pipe-flow"></span><h1>Lecture 5 – 1-D Pipe Flow<a class="headerlink" href="#lecture-5-1-d-pipe-flow" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="channel-flow">
+<h2>Channel Flow<a class="headerlink" href="#channel-flow" title="Permalink to this headline">¶</a></h2>
+<p>We consider the one-dimensional ﬂow of a Newtonian viscous ﬂuid in a channel between parallel plates as a model for channel ﬂow.</p>
+<img src="img/F61.PNG" width="500">
+<center> Figure 6.1: (a) The force balance on a layer of ﬂuid in a channel with an applied pressure gradient. (b) A typical velocity proﬁle.
+<p>For a Newtonian ﬂuid with constant viscosity <span class="math notranslate nohighlight">\(\mu\)</span>, the shear stress <span class="math notranslate nohighlight">\(\tau\)</span> at any location in the channel is given by</p>
+<p>\begin{equation}
+\tau =\mu \frac{d u}{dy}
+\label{eq1}
+\end{equation}</p>
+<p>It is not hard to prove that</p>
+<p>\begin{equation}
+\frac{d \tau}{d y} = \frac{dp}{dx} = -\frac{p_1-p_0}{l}
+\label{eq2}
+\end{equation}</p>
+<p>Combining the equations \ref{eq1} and \ref{eq2}, and integrating the result we have the velocity <span class="math notranslate nohighlight">\(u\)</span> profile as a function of <span class="math notranslate nohighlight">\(y\)</span>:</p>
+<p>\begin{equation}
+u=\frac{1}{2\mu}\frac{dp}{dx}y^2+c_1y+c_2
+\label{eq3}
+\end{equation}</p>
+<p>To evaluate the constants, we must satisfy the boundary conditions. For example, for a no-slip boundary conditions as shown in figure 6.1, a viscous ﬂuid in contact with a solid boundary must have the same velocity as the boundary, so that <span class="math notranslate nohighlight">\(u=0\)</span> at <span class="math notranslate nohighlight">\(y=h\)</span> and <span class="math notranslate nohighlight">\(u=u_0\)</span> at <span class="math notranslate nohighlight">\(y =0\)</span>. Hence, the equation becomes</p>
+<p>\begin{equation}
+u=\frac{1}{2\mu}\frac{dp}{dx}(y^2-hy)-\frac{u_0y}{h}+u_0
+\label{eq4}
+\end{equation}</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="n">N</span>  <span class="o">=</span> <span class="mi">10000</span>    <span class="c1"># number of points to plot (ignore)</span>
+<span class="n">mu</span> <span class="o">=</span> <span class="mi">4</span><span class="o">*</span><span class="p">(</span><span class="mi">10</span><span class="o">**</span><span class="mi">19</span><span class="p">)</span>    <span class="c1"># viscosity</span>
+<span class="n">dpdx</span> <span class="o">=</span> <span class="mi">0</span>    <span class="c1"># when pressure difference = 0, known as Couette ﬂow</span>
+<span class="n">h</span> <span class="o">=</span> <span class="mi">200000</span>    <span class="c1"># thickness of channel (m)</span>
+<span class="n">u0</span> <span class="o">=</span> <span class="mf">1.5844</span>   <span class="c1"># boundary (max) velocity (m/s)</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+    
+    <span class="n">u</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">mu</span><span class="p">))</span> <span class="o">*</span> <span class="n">dpdx</span> <span class="o">*</span> <span class="p">(</span><span class="n">y</span><span class="o">*</span><span class="n">y</span> <span class="o">-</span> <span class="n">h</span><span class="o">*</span><span class="n">y</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">u0</span><span class="o">*</span><span class="n">y</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">h</span><span class="p">)</span> <span class="o">+</span> <span class="n">u0</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;$y (m)$&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;$u (m/s)$&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Velocity Profile&#39;</span><span class="p">)</span>
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/Lecture 5 -- 1-D Pipe Flow_12_0.png" src="../../_images/Lecture 5 -- 1-D Pipe Flow_12_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="problem-6-1">
+<h2>Problem 6.1<a class="headerlink" href="#problem-6-1" title="Permalink to this headline">¶</a></h2>
+<p>Show that the mean velocity in the channel is given by
+\begin{equation}
+\bar{u}=-\frac{h^2}{12\mu}\frac{dp}{dx}+\frac{u_0}{2}
+\label{eq5}
+\end{equation}</p>
+<p>This can be easily proved by integrating velocity equation \ref{eq4} wrt. <span class="math notranslate nohighlight">\(y\)</span> from <span class="math notranslate nohighlight">\(0\)</span> to <span class="math notranslate nohighlight">\(h\)</span>, and then divided by the thickness of channel <span class="math notranslate nohighlight">\(h\)</span></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">matplotlib.patches</span> <span class="kn">import</span> <span class="n">Polygon</span>
+
+
+<span class="k">def</span> <span class="nf">velocity_u</span><span class="p">(</span><span class="n">y</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">mu</span><span class="p">))</span> <span class="o">*</span> <span class="n">dpdx</span> <span class="o">*</span> <span class="p">(</span><span class="n">y</span><span class="o">*</span><span class="n">y</span> <span class="o">-</span> <span class="n">h</span><span class="o">*</span><span class="n">y</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">u0</span><span class="o">*</span><span class="n">y</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">h</span><span class="p">)</span> <span class="o">+</span> <span class="n">u0</span>
+
+
+<span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">h</span>  <span class="c1"># integral limits</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="n">u</span> <span class="o">=</span> <span class="n">velocity_u</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">bottom</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">mean_u</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
+    <span class="n">bin_size</span> <span class="o">=</span> <span class="p">(</span><span class="n">b</span><span class="o">-</span><span class="n">a</span><span class="p">)</span><span class="o">/</span><span class="n">N</span>
+    <span class="n">area</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">iy</span> <span class="ow">in</span> <span class="n">y</span><span class="p">:</span>
+        <span class="n">u</span> <span class="o">=</span> <span class="n">velocity_u</span><span class="p">(</span><span class="n">iy</span><span class="p">)</span>
+        <span class="n">area</span> <span class="o">+=</span> <span class="n">u</span> <span class="o">*</span> <span class="n">bin_size</span>
+    <span class="k">return</span> <span class="n">area</span><span class="o">/</span><span class="p">(</span><span class="n">b</span><span class="o">-</span><span class="n">a</span><span class="p">)</span>
+
+<span class="n">x_coordinates</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">]</span>
+<span class="n">y_coordinates</span> <span class="o">=</span> <span class="p">[</span><span class="n">mean_u</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">y</span><span class="p">),</span> <span class="n">mean_u</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">y</span><span class="p">)]</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_coordinates</span><span class="p">,</span> <span class="n">y_coordinates</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Mean Velocity u&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+
+<span class="c1"># Make the shaded region</span>
+<span class="n">ix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<span class="n">iy</span> <span class="o">=</span> <span class="n">velocity_u</span><span class="p">(</span><span class="n">ix</span><span class="p">)</span>
+<span class="n">verts</span> <span class="o">=</span> <span class="p">[(</span><span class="n">a</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="o">*</span><span class="nb">zip</span><span class="p">(</span><span class="n">ix</span><span class="p">,</span> <span class="n">iy</span><span class="p">),</span> <span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="mi">0</span><span class="p">)]</span>
+<span class="n">poly</span> <span class="o">=</span> <span class="n">Polygon</span><span class="p">(</span><span class="n">verts</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;0.9&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;0.5&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">poly</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">),</span> <span class="mf">0.5</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;$\int_0^h u(y)\mathrm</span><span class="si">{d}</span><span class="s2">y$&quot;</span><span class="p">,</span>
+        <span class="n">horizontalalignment</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="s1">&#39;$y$&#39;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="s1">&#39;$u$&#39;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s1">&#39;right&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s1">&#39;top&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_ticks_position</span><span class="p">(</span><span class="s1">&#39;bottom&#39;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">((</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">((</span><span class="s1">&#39;$0$&#39;</span><span class="p">,</span> <span class="s1">&#39;$h$&#39;</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
+
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>[0.00000000e+00 2.00020002e+01 4.00040004e+01 ... 1.99959996e+05
+ 1.99979998e+05 2.00000000e+05]
+</pre></div>
+</div>
+<img alt="../../_images/Lecture 5 -- 1-D Pipe Flow_16_1.png" src="../../_images/Lecture 5 -- 1-D Pipe Flow_16_1.png" />
+</div>
+</div>
+</div>
+<div class="section" id="problem-6-2">
+<h2>Problem 6.2<a class="headerlink" href="#problem-6-2" title="Permalink to this headline">¶</a></h2>
+<p>Derive a general expression for the shear stress <span class="math notranslate nohighlight">\(\tau\)</span> at any location <span class="math notranslate nohighlight">\(y\)</span> in the channel.</p>
+<p>This can be easily derived by using equation \ref{eq1}, in which the velocity <span class="math notranslate nohighlight">\(u\)</span> is expressed by equation \ref{eq4}. Hence the result is</p>
+<p>\begin{equation}
+\tau(y)=\frac{1}{2}\frac{dp}{dx}(2y-h) - \mu\frac{u_0}{h}
+\label{eq6}
+\end{equation}</p>
+<p>What are the simpliﬁed forms of <span class="math notranslate nohighlight">\(\tau\)</span> for Couette ﬂow and for the case <span class="math notranslate nohighlight">\(u_0 = 0\)</span>?</p>
+<p>Since we know that the pressure difference <span class="math notranslate nohighlight">\(\frac{dp}{dx}=0\)</span> for Couette flow, then we can obtain</p>
+<p>\begin{equation}
+\tau=-\mu\frac{u_0}{h}
+\label{eq7}
+\end{equation}</p>
+<p>Also, if the boundary velocity <span class="math notranslate nohighlight">\(u_0=0\)</span>, then</p>
+<p>\begin{equation}
+\tau=\frac{1}{2}\frac{dp}{dx}(2y-h)
+\label{eq8}
+\end{equation}</p>
+</div>
+<div class="section" id="problem-6-3">
+<h2>Problem 6.3<a class="headerlink" href="#problem-6-3" title="Permalink to this headline">¶</a></h2>
+<p>Find the point in the channel <span class="math notranslate nohighlight">\(y\)</span> at which the velocity is a maximum.</p>
+<p>At this point <span class="math notranslate nohighlight">\(y\)</span>, the derivative of the velocity (equation \ref{eq4}) must be zero and the second derivative of it must be negative. Using this relationship, we can rearrange the equation and obtain</p>
+<p>\begin{equation}
+y=\frac{h}{2}+\frac{u_0\mu_0}{h(dp/dx)}
+\label{eq9}
+\end{equation}</p>
+</div>
+<div class="section" id="problem-6-4">
+<h2>Problem 6.4<a class="headerlink" href="#problem-6-4" title="Permalink to this headline">¶</a></h2>
+<img src="img/F62.PNG" width="500">
+<center> Figure 6.3: Unidirectional ﬂow of a constant thickness layer of viscous ﬂuid down an inclined plane.<p>Consider the steady, unidirectional ﬂow of a viscous ﬂuid down the upper face of an inclined plane. Assume that the ﬂow occurs in a layer of constant thickness h, as shown in figure 6.3. Show that the velocity proﬁle is given by</p>
+<p>\begin{equation}
+u(y)=\frac{\rho g sin\alpha}{2\mu}(h^2-y^2)
+\label{eq10}
+\end{equation}</p>
+<p>where <span class="math notranslate nohighlight">\(y\)</span> is the coordinate measured perpendicular to the inclined plane (<span class="math notranslate nohighlight">\(y = h\)</span> is the surface of the plane), <span class="math notranslate nohighlight">\(\alpha\)</span> is the inclination of the plane to the horizontal, and <span class="math notranslate nohighlight">\(g\)</span> is the acceleration of gravity.</p>
+<p>Imagine we have a tiny rectangle in the liquid as shown in figure 6.3, there would be three forces acting on this body: the dragging force <span class="math notranslate nohighlight">\(F_{\tau(y)}\)</span> to the downhill direction caused by shear stress <span class="math notranslate nohighlight">\(\tau(y)\)</span>, the gravitational force <span class="math notranslate nohighlight">\(F_g sin\alpha\)</span> pulling it to the downhill direction and the resisting drag force acting uphill <span class="math notranslate nohighlight">\(-F_{\tau(y+\delta y)}\)</span> that is due to the shear stress <span class="math notranslate nohighlight">\(\tau(y+\delta y)\)</span>:</p>
+<p>\begin{equation}
+F_{\tau(y)}=l*\tau(y)
+\label{eq11}
+\end{equation}</p>
+<p>\begin{equation}
+-F_{\tau(y+\delta y)}=-l*\tau(y+\delta y)=-l*(\tau(y)+\frac{d\tau}{dy}*\delta y)
+\label{eq12}
+\end{equation}</p>
+<p>\begin{equation}
+F_g sin \alpha = mg<em>sin\alpha =v\rho</em>g*sin\alpha= \delta y * l * \rho * g * sin\alpha
+\label{eq13}
+\end{equation}</p>
+<p>If we assume that the fluid flows in a constant velocity, that is, there is zero acceleration, then the net forces in the x-direction would be 0, which means the sum of the equations \ref{eq11}, \ref{eq12} and \ref{eq13} would be zero.</p>
+<p>\begin{equation}
+\sum F_x = F_{\tau(y)} - F{\tau(y+\delta y)} + F_g*sin\alpha = 0
+\label{eq14}
+\end{equation}</p>
+<p>Rearrange equation \ref{eq14}, we can obtain</p>
+<p>\begin{equation}
+\frac{d\tau}{dy}=-\rho g sin\alpha
+\label{eq15}
+\end{equation}</p>
+<p>Applying the shear stress from equation \ref{eq1} into equation \ref{eq15}, we have</p>
+<p>\begin{equation}
+\mu \frac{d^2 u}{d y^2} = -\rho g sin\alpha
+\label{eq16}
+\end{equation}</p>
+<p>Integrate equation \ref{eq16} and we have</p>
+<p>\begin{equation}
+\frac{du}{dy}=-\frac{\rho g sin\alpha}{\mu}y+C_1
+\label{eq17}
+\end{equation}</p>
+<p>Recall equation \ref{eq1}, <span class="math notranslate nohighlight">\(\frac{du}{dy}\)</span> is related to shear stress <span class="math notranslate nohighlight">\(\tau\)</span>. So we can apply the free surface condition (<span class="math notranslate nohighlight">\(\tau=0\)</span> at <span class="math notranslate nohighlight">\(y=0\)</span>), and obtain the constant <span class="math notranslate nohighlight">\(C_1 = 0\)</span>.</p>
+<p>Integrate equation \ref{eq16} again, we have</p>
+<p>\begin{equation}
+u(y) = -\frac{\rho g sin\alpha}{2\mu}y^2+C_1 y+C_2
+\label{eq18}
+\end{equation}
+where <span class="math notranslate nohighlight">\(C_1=0\)</span> from the free surface condition.</p>
+<p>Then, we apply no-slip condition (<span class="math notranslate nohighlight">\(u=0\)</span>) at <span class="math notranslate nohighlight">\(y=h\)</span>, and obtain <span class="math notranslate nohighlight">\(C_2\)</span>.</p>
+<p>\begin{equation}
+0 =  -\frac{\rho g sin\alpha}{2\mu}h^2+C_2
+\label{eq19}
+\end{equation}</p>
+<p>Finally, we plug in <span class="math notranslate nohighlight">\(C_1\)</span> and <span class="math notranslate nohighlight">\(C_2\)</span> into equation \ref{eq18}, we can show that:</p>
+<p>\begin{equation}
+u (y) = \frac{\rho g sin\alpha}{2\mu}(h^2-y^2)
+\label{eq20}
+\end{equation}</p>
+<p>It is not hard to obtain the mean veolocity in the layer by integrating the equation \ref{eq20} from <span class="math notranslate nohighlight">\(0\)</span> to <span class="math notranslate nohighlight">\(h\)</span> and then divide it by <span class="math notranslate nohighlight">\(h\)</span>:</p>
+<p>\begin{equation}
+\bar{u} = \frac{\rho g h^2 sin\alpha}{3\mu}
+\label{eq21}
+\end{equation}</p>
+<p>What is the thickness of the layer whose rate of flow down the incline is <span class="math notranslate nohighlight">\(Q\)</span> (per unit width in the direction perpendicular to the figure plane)?</p>
+<p>\begin{equation}
+Q = \bar{u} h
+\label{eq22}
+\end{equation}</p>
+<p>Rearrange we get</p>
+<p>\begin{equation}
+h = (\frac{3\mu Q}{\rho g sin\alpha})^{1/3}
+\label{eq23}
+\end{equation}</p>
+</div>
+<div class="section" id="pipe-flow">
+<h2>Pipe Flow<a class="headerlink" href="#pipe-flow" title="Permalink to this headline">¶</a></h2>
+<p>With subsequent applications to ﬂows in aquifers and volcanic conduits in mind, we next consider viscous ﬂow through a circular pipe.</p>
+<img src="img/F66.PNG" width="600">
+<center> Figure 6.6: Poiseuille ﬂow through a circular pipe.<p>If we assume the fluid flows in constant velocity, then the driving force and resisting force should be balanced like this</p>
+<p>\begin{equation}
+(p_1-p_0)\pi r^2 = -\tau * 2\pi r l
+\label{eq24}
+\end{equation}</p>
+<p>If we rearrange the equation, we have the shear stress</p>
+<p>\begin{equation}
+-\tau = \frac{(p_1-p_0)\pi r^2}{2\pi r l} = \frac{r}{2}\frac{p_1-p_0}{l} = \frac{r}{2}\frac{dp}{dx}
+\label{eq25}
+\end{equation}
+where dp/dx is the pressure gradient along the pipe.</p>
+<p>In the cylindrical geometry in Figure 6.6, the shear stress <span class="math notranslate nohighlight">\(\tau\)</span> is directly proportional to the radial gradient of the velocity <span class="math notranslate nohighlight">\(u\)</span></p>
+<p>\begin{equation}
+\tau=\mu\frac{du}{dr}
+\label{eq26}
+\end{equation}</p>
+<p>Combining equations \ref{eq25} and \ref{eq26}, we have</p>
+<p>\begin{equation}
+\frac{du}{dr}=\frac{r}{2\mu}\frac{dp}{dx}
+\label{eq27}
+\end{equation}</p>
+<p>which can be integrated to give</p>
+<p>\begin{equation}
+u(r)=-\frac{1}{4\mu}\frac{dp}{dx}(R^2-r^2)
+\label{eq28}
+\end{equation}</p>
+<p>We used the condition <span class="math notranslate nohighlight">\(u = 0\)</span> at <span class="math notranslate nohighlight">\(r = R\)</span>. The velocity proﬁle in the pipe is a parabaloid of revolution; it is known as Poiseuille ﬂow.</p>
+<p>It is not hard to get the following quantities:</p>
+<p>\begin{equation}
+Q=\int^R_0 2\pi r u dr = - \frac{\pi R^4}{8\mu}\frac{dp}{dx} = \pi R^2 \bar{\mu}
+\label{eq29}
+\end{equation}</p>
+<p>where <span class="math notranslate nohighlight">\(\mu\)</span> is the mean velocity:</p>
+<p>\begin{equation}
+\bar{\mu}=-\frac{R^2}{8\mu}\frac{dp}{dx}=\frac{1}{2}u_{max}
+\label{eq30}
+\end{equation}
+and <span class="math notranslate nohighlight">\(u_{max}\)</span> is the maximum velocity.</p>
+<p>\begin{equation}
+u_{max}=-\frac{R^2}{4\mu}\frac{dp}{dx}
+\label{eq31}
+\end{equation}</p>
+<p>It is often convenient in ﬂuid mechanics to work in terms of dimensionless variables. The relation between the mean velocity in the pipe and the pressure gradient \ref{eq30} can be put into standard dimensionless form by introducing two quantities: a dimensionless pressure gradient or friction factor f and the Reynolds number Re. The friction factor is deﬁned as</p>
+<p>\begin{equation}
+f=\frac{-4R}{\rho\bar{\mu}^2}\frac{dp}{dx}
+\label{eq32}
+\end{equation}</p>
+<p>and the Reynolds number is given by</p>
+<p>\begin{equation}
+Re = \frac{\rho \bar{u}D}{\mu}
+\label{eq33}
+\end{equation}
+where <span class="math notranslate nohighlight">\(D=2R\)</span> is the pipe diameter.</p>
+<p>Critical <span class="math notranslate nohighlight">\(Re\)</span> is around <span class="math notranslate nohighlight">\(2200\)</span> for pipe flow, above which the flow is turbulent and below which laminar. Although this number depends on the geometry of the pipe. Theoretically, for laminar flow, the relationship between <span class="math notranslate nohighlight">\(f\)</span> and <span class="math notranslate nohighlight">\(Re\)</span> is</p>
+<p>\begin{equation}
+f = \frac{64}{Re}
+\label{eq34}
+\end{equation}</p>
+<p>Empirically, for turbulent flow, the relationship between <span class="math notranslate nohighlight">\(f\)</span> and <span class="math notranslate nohighlight">\(Re\)</span> is</p>
+<p>\begin{equation}
+f=0.3164Re^{-1/4}
+\label{eq35}
+\end{equation}</p>
+</div>
+<div class="section" id="problem-6-7">
+<h2>Problem 6.7<a class="headerlink" href="#problem-6-7" title="Permalink to this headline">¶</a></h2>
+<p>Determine <span class="math notranslate nohighlight">\(Re\)</span> for asthenoshpheric type channel flow, assuming: <span class="math notranslate nohighlight">\(\mu=4*10^{19}Pa*s, \rho=3200 kg/m^3\)</span>, channel thickness is <span class="math notranslate nohighlight">\(200 km\)</span> and the flow is driven solely by <span class="math notranslate nohighlight">\(50 mm/yr\)</span> of motion of the overlying plate.</p>
+<p>\begin{equation}
+Re= \frac{3200*\bar{u}<em>200000}{4</em>10^{19}}
+\label{eq36}
+\end{equation}</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dpdx</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">mu</span> <span class="o">=</span> <span class="mi">4</span><span class="o">*</span> <span class="mi">10</span><span class="o">**</span><span class="mi">19</span>
+<span class="n">h</span> <span class="o">=</span> <span class="mi">200000</span>
+<span class="n">u0</span> <span class="o">=</span> <span class="mf">1.5844</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="mi">9</span><span class="p">)</span>
+<span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">h</span>
+<span class="n">u_bar</span> <span class="o">=</span> <span class="n">mean_u</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">u_bar</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>7.922000000000002e-10
+</pre></div>
+</div>
+</div>
+</div>
+<p>\begin{equation}
+Re= \frac{3200<em>7.92</em>10^{-10}<em>200000}{4</em>10^{19}}= 1.27*10^{-20}
+\label{eq37}
+\end{equation}</p>
+<p>This problem illustrates that the viscosity of mantle rock is so high that the Reynolds number is generally small.</p>
+</div>
+<div class="section" id="problem-6-8">
+<h2>Problem 6.8<a class="headerlink" href="#problem-6-8" title="Permalink to this headline">¶</a></h2>
+<img src="img/F69.PNG" width="400">
+<center> Figure 6.9: A semicircular aquifer with a circular cross section (a toroid). A hydrostatic head b is available to drive the ﬂow.
+<p>With the parameters provided below, what is the radius of the channel <span class="math notranslate nohighlight">\(R\)</span>, the average velocity <span class="math notranslate nohighlight">\(\bar{u}\)</span> and is the flow laminar or turbulent?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">b</span><span class="o">=</span><span class="mi">50</span>    <span class="c1"># m, because the entrance of spring is 50 m above it</span>
+<span class="n">Q</span> <span class="o">=</span> <span class="mf">1.667</span><span class="o">*</span><span class="mi">10</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">)</span>    <span class="c1"># Spring outputs: 100 L/min i.e.1.667*10**(-3) m3/s </span>
+<span class="n">R_prime</span> <span class="o">=</span> <span class="mi">1000</span>    <span class="c1"># m, because entrance of spring 2km from outlet</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now, we do not know if the flow is laminar or turbulent, but we can start with assuming the flow is laminar. Hence, the laminar flux is</p>
+<p>\begin{equation}
+Q = - \frac{\pi R^4}{8\mu}*\frac{dp}{ds} = \frac{\rho g b R^4}{8\mu R^{‘}}
+\label{eq38}
+\end{equation}</p>
+<p>Rearrange the equation we have the radius of the channel <span class="math notranslate nohighlight">\(R\)</span> (under the laminar flow assumption)</p>
+<p>\begin{equation}
+R = \sqrt[4]{\frac{8Q\mu R^{‘}}{\rho g b}} = 0.0133 m
+\label{eq39}
+\end{equation}</p>
+<p>The average velocity is therefore</p>
+<p>\begin{equation}
+\bar{u} = \frac{Q}{A} = \frac{\rho g b R^4}{8\mu R^{‘} \pi R^2} = 3.01 m/s
+\label{eq40}
+\end{equation}</p>
+<p>Now, we can verify that if the flow is laminar or turbulent by calculating the <span class="math notranslate nohighlight">\(Re\)</span>, which is <span class="math notranslate nohighlight">\(1.49*10^7\)</span>. This is obviously larger than the threshold 2200, so the flow is actually turbulent. Thus, we need to recalculate the channel radius and mean velocity under the assumption that the flow is turbulent using the equation \ref{eq35}.</p>
+<p>Plugging in the <span class="math notranslate nohighlight">\(f\)</span> (equation \ref{eq32}) and <span class="math notranslate nohighlight">\(Re\)</span> (equation \ref{eq33}) we defined earlier into the relationship in \ref{eq35}, we have the mean velocity <span class="math notranslate nohighlight">\(\bar{u}\)</span> after rearranging</p>
+<p>\begin{equation}
+\bar{u} = \frac{2^{9/7}R^{5/7}\frac{dp}{dy}^{4/7}}{0.3164^{4/7}\mu^{1/7}\rho^{3/7}} = 0.84 m/s
+\label{eq41}
+\end{equation}</p>
+<p>Using the simple relationship in the equation \ref{eq40}, we can obtain the area, and thus the radius (<span class="math notranslate nohighlight">\(R=0.025m\)</span>) of the channel.</p>
+</div>
+<div class="section" id="problem-6-9">
+<h2>Problem 6.9<a class="headerlink" href="#problem-6-9" title="Permalink to this headline">¶</a></h2>
+<img src="img/Rising_Magma1.PNG" width="500">
+<center> Figure 6.10<p>Determine the rate at which magma ﬂows up a twodimensional channel of width <span class="math notranslate nohighlight">\(d\)</span> under the buoyant pressure gradient <span class="math notranslate nohighlight">\(−(\rho_s− \rho_l)g\)</span>. Assume laminar ﬂow.</p>
+<p>Again, we can assume that the fluid is steady and solve the force balance equation</p>
+<p>\begin{equation}
+\sum F_y = F_{\tau(x)} - F{\tau(x+\delta x)} + F_p = 0
+\label{eq42}
+\end{equation}</p>
+<p>\begin{equation}
+F_{\tau(x)}=\tau(x)*l =\mu \frac{d u}{dx}*l
+\label{eq43}
+\end{equation}</p>
+<p>\begin{equation}
+F_{\tau(x+\delta x)}=\tau(x+\delta x)<em>l= (\tau(x)+\frac{d \tau}{d x}\delta x</em>l =\mu (\frac{d u}{dx}+\frac{d^2u}{dx^2})*l
+\label{eq44}
+\end{equation}</p>
+<p>\begin{equation}
+F_p = (\rho_s-\rho_l)g<em>l</em>\delta x
+\label{eq45}
+\end{equation}</p>
+<p>Put equations \ref{eq43}, \ref{eq44} and \ref{eq45} into \ref{eq42}, we can obtain</p>
+<p>\begin{equation}
+\frac{d^2u}{dx^2} = \frac{(\rho_s-\rho_l)g}{\mu}
+\label{eq46}
+\end{equation}</p>
+<p>Integrating it twice we have</p>
+<p>\begin{equation}
+u(x) = \frac{(\rho_s-\rho_l)g}{2\mu}x^2 + C_1 x + C_2
+\label{eq47}
+\end{equation}</p>
+<p>Because of the symmetry of the velocity profile, we can believe that <span class="math notranslate nohighlight">\(C_1\)</span> is zero, otherwise the equation \ref{eq47} would not be symmetric. And plugging in the no-slip boundary condition where <span class="math notranslate nohighlight">\(u=0\)</span> at <span class="math notranslate nohighlight">\(x=\pm\frac{d}{2}\)</span>, we have <span class="math notranslate nohighlight">\(C_2 = - \frac{(\rho_s-\rho_l)g}{8\mu}d^2\)</span>.</p>
+<p>As a result, the velocity profile for the channel is</p>
+<p>\begin{equation}
+u(x) = \frac{(\rho_s-\rho_l)g}{2\mu}x^2 - \frac{(\rho_s-\rho_l)g}{8\mu}d^2
+\label{eq48}
+\end{equation}</p>
+<p>\begin{equation}
+\bar{u}=\frac{1}{d}\int^{d/2}_{-d/2} u(x) dx = \frac{(\rho_s-\rho_l)g}{12\mu}d^2
+\label{eq49}
+\end{equation}</p>
+<p>\begin{equation}
+Q = \bar{u} d = \frac{(\rho_s-\rho_l)g}{12\mu}d^3
+\label{eq50}
+\end{equation}</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "primer-computational-mathematics/book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./d_geosciences/Fluid_Dynamics"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="intro.html" title="previous page">Fluid Dynamics</a>
+    <a class='right-next' id="next-link" href="../remote_sensing/intro.html" title="next page">Remote sensing</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Imperial College London<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../../_static/js/index.js"></script>
+    
+  </body>
+</html>
