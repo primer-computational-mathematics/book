@@ -1,0 +1,567 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Boundary Conditions &#8212; ESE Jupyter Material</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../../../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/sphinx-book-theme.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/language_data.js"></script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/mystnb.js"></script>
+    <script src="../../../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".cell"
+        const thebe_selector_input = ".cell_input div.highlight"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../../index.html">
+  
+  <img src="../../../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">ESE Jupyter Material</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  
+  <ul class="nav sidenav_l1">
+  <li class="">
+    <a href="../../../intro.html">Landing page</a>
+  </li>
+  <li class="">
+    <a href="../../../a_modules/intro.html">Modules</a>
+  </li>
+  <li class="">
+    <a href="../../../b_coding/intro.html">Coding</a>
+  </li>
+  <li class="">
+    <a href="../../intro.html">Mathematics</a>
+  </li>
+  <li class="">
+    <a href="../../../d_geosciences/intro.html">Geosciences</a>
+  </li>
+  <li class="">
+    <a href="../../../e_extra/intro.html">Further resources</a>
+  </li>
+  <li class="">
+    <a href="../../../genindex.html">Index</a>
+  </li>
+</ul>
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../../_sources/c_mathematics/numerical_methods/NM2/Boundary Conditions.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        
+        <a class="issues-button"
+            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2Fc_mathematics/numerical_methods/NM2/Boundary Conditions.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/c_mathematics/numerical_methods/NM2/Boundary Conditions.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#i-dirichlet-boundary-conditions" class="nav-link">I.    Dirichlet Boundary Conditions</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#ii-neumann-boundary-conditions" class="nav-link">II.   Neumann Boundary Conditions</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#iii-robin-boundary-conditions" class="nav-link">III.  Robin Boundary Conditions</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#id1" class="nav-link">I. Dirichlet Boundary Conditions</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#id2" class="nav-link">II. Neumann Boundary Conditions</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#ii-1-neumann-boundary-introduction" class="nav-link">II. 1 Neumann Boundary -  Introduction</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#ii-2-neumann-boundary-cases-1-2-3-4" class="nav-link">II.  2 Neumann Boundary - Cases 1, 2, 3, 4</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#ii-3-neumann-boundary-finding-the-boundary-condition-to-apply" class="nav-link">II. 3 Neumann Boundary - Finding the Boundary Condition to Apply</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#ii-4-neumann-boundary-application" class="nav-link">II. 4 Neumann Boundary - Application</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#ii-5-neumann-real-world" class="nav-link">II. 5 Neumann Real World</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#iii-robin-boundary" class="nav-link">III.  Robin Boundary</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#iii-1-introduction-to-robin-boundary" class="nav-link">III. 1   Introduction to Robin Boundary</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#iii-2-example-for-robin-boundary" class="nav-link">III.  2  Example for Robin Boundary</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#iii-robin-real-world" class="nav-link">III.   Robin Real World</a>
+        </li>
+    
+    </ul>
+</nav>
+
+
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="boundary-conditions">
+<h1>Boundary Conditions<a class="headerlink" href="#boundary-conditions" title="Permalink to this headline">¶</a></h1>
+<p>Due to the limits of our computational power, and due to being a sensible person, who cannot try to numerically solve PDEs for infinite space and infinite time, and we must confine ourselves to a limited scope when using our PDEs. Often, we would limit ourselves to solving PDEs within a certain shape or size. For example, in engineering, when studying the PDEs concerning the heat trasnfer within the component, for example from the location of combustion to the outer rims of the gear, the boundaries which confine our PDE could be the shape of the object.</p>
+<p>The conditions of the boundary is of utmost importance to the success of your PDEs, as you may have learnt in your math modules. The conditions of the boundary are also of utmost importance to schemes of numericaly solving PDEs, like the BTCS or the Crank Nicholson scheme. We have a myriad of different PDE problems in nature, and thus, there are a myriad of possible boundary conditions. We will discuss here the 3 main types of boundaries, that is, the Dirichlet boundary, the Neumann boundary and the Robin boundary.</p>
+<div class="section" id="i-dirichlet-boundary-conditions">
+<h2>I.    Dirichlet Boundary Conditions<a class="headerlink" href="#i-dirichlet-boundary-conditions" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="ii-neumann-boundary-conditions">
+<h2>II.   Neumann Boundary Conditions<a class="headerlink" href="#ii-neumann-boundary-conditions" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="iii-robin-boundary-conditions">
+<h2>III.  Robin Boundary Conditions<a class="headerlink" href="#iii-robin-boundary-conditions" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="id1">
+<h2>I. Dirichlet Boundary Conditions<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>Dirichlet Boundary Conditions are the simplest type of boundary conditions. Simply put, Dirichlet boundary is a type of boundary conditions where the value of the dependent variable is equal to some sort of function.</p>
+<p>\[ u = f \]</p>
+<p>Where \(u\) is our dependent variable and \(f\) is some arbitrary function</p>
+<p>A classical example for a Dirichlet boundary condition would be to state that the value of the independent variable at the boundary is equal to a number. For example, to state that the temperature, the dependent variable from our heat transfer equation, is equal to a certain number. Let’s say that we have a rod, and the rod has two ends, the left end, i.e. position 0 is kept at \(0\) and the right end, i.e. position L is kept at \(100\), regardless of the time elapsed.  Thus, we write our Dirichlet boundary conditions as</p>
+<p>\[u(0, t) = 0\]
+\[u(L, t) = 100\]</p>
+<p>However, Dirichlet simply states that it needs to be equal to a function, and well, does not neccesarily have to be a number. For example, I could have a cubic hot block of metal and the temperature of the metal block, whose boundaries are such that it is cool at one corner, and graduatally gets hotter till the opposite corner</p>
+<p>\[u(x, t) = x \]
+\[u(y, t) = y \]</p>
+<p>I could also have something like</p>
+<p>\[u(x, t) = x + 100 \]
+\[u(y, t) = y + 200\]</p>
+</div>
+<div class="section" id="id2">
+<h2>II. Neumann Boundary Conditions<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="ii-1-neumann-boundary-introduction">
+<h3>II. 1 Neumann Boundary -  Introduction<a class="headerlink" href="#ii-1-neumann-boundary-introduction" title="Permalink to this headline">¶</a></h3>
+<p>Neumann Boundary Conditions are Boundary Conditions where the gradient of the dependent variable is specified at the boundary to be equal to some sort of function We understand that for a boundary in 2D space, or actually any D space, the gradient that is specified in the Neumann boundary condition is the gradient of the dependent variable that is perpendicular to the surface of the boundary. Thus we have</p>
+<p>\[ \nabla u \bullet \textbf{n} = g(x,y) \]</p>
+<p>Where you may remember from your math modules that \( \nabla \) refers to the gradient, and doing dot product of the gradient with \( textbf{n} \), which is the unit normal to the boundary, will result in the gradient that is perpendicular to your boundary, since doing dot product maps the gradient to the direction of the unit normal.</p>
+<p>Thus, the directionality of your gradient is also important, since there could be the gradient could be into the domain or pointing out of the domain.</p>
+<p>Where \(g\) is just a letter I used there to denote some arbitrary function</p>
+</div>
+<div class="section" id="ii-2-neumann-boundary-cases-1-2-3-4">
+<h3>II.  2 Neumann Boundary - Cases 1, 2, 3, 4<a class="headerlink" href="#ii-2-neumann-boundary-cases-1-2-3-4" title="Permalink to this headline">¶</a></h3>
+<p>For a horizontal boundary, the unit normal to the boundary will be in the vertical direction. Since we are mapping the gradient based on the unit normal to the boundary, we understand that the gradient will also be mapped accordingly, and become the gradient in the direction normal to the boundary, so the gradient in the vertical direction.</p>
+<p>We can therefore write our boundary condition as such, assuming that y is in the vertical direction, and x is in the horizontal direction</p>
+<p>For horizontal boundary:</p>
+<p>\[ \frac{\partial u}{\partial y} = g(x) \]</p>
+<p>Where \(g\) is just a letter I used there to denote some arbitrary function</p>
+<p>It may seem strange that we are using a derivative w.r.t to \(y\) for the boundary condition for our horizontal boundary; however, you need to think about the physical meaning for the Neumann boundary. Unlike the Dirichlet boundary, which states the boundary as being a number or simply a function, Neumann boundary actually specifies the change in the values across the boundary. If you had a horizontal boundary, calculating the change in the values across the boundary would mean you would need a value on one side of the boundary, and another value on the other side of the boundary, so you need a derivative w.r.t to the direction perpendicular to the horizontal in order to include the two points on different side of the boundary for your calculations.</p>
+<p>Notice how for the horizontal boundary, compared to the general equation, the \(y\) in the arbitrary function disappeared, and well, was only left with \(x\), meaning that the boundary conditions depend not on \(y\), but only on the position of \(x\). This is reasonable as we are talking about a horizontal boundary here, and well, moving from one end of a horizontal boundary to the other, \(y\) does not change. Since \(y\) along the horizontal boundary is the same and does not change, the change in the value of \(y\) cannot affect our boundary condition because there is no change in the value of \(y\). Along our horizontal boundary, we only have change in \(x\).</p>
+<p>You can always write \( \frac{\partial u}{\partial y} = g(x, y = some;;constant) \) if it makes you more comfortable.</p>
+<p>For a vertical boundary, the unit normal to the boundary will be in the horizontal direction. Since we are mapping the gradient based on the unit normal to the boundary, we understand that the gradient will also be mapped accordingly, and become the gradient in the direction normal to the boundary, so the gradient in the horizontal direction.</p>
+<p>We can therefore write our boundary condition as such, assuming that y is in the vertical direction, and x is in the horizontal direction</p>
+<p>For vertical boundary:</p>
+<p>\[ \frac{\partial u}{\partial x} = g(y) \]</p>
+<p>Where \(g\) is just a letter I used there to denote some arbitrary function</p>
+<p>It may seem strange that we are using a derivative w.r.t to x for the boundary condition for our vertical boundary; however, you need to think about the physical meaning for the Neumann boundary. Unlike the Dirichlet boundary, which states the boundary as being a number or simply a function, Neumann boundary actually specifies the change in the values across the boundary. If you had a vertical boundary, calculating the change in the values across the boundary would mean you would need a value on one side of the boundary, and another value on the other side of the boundary, so you need a derivative w.r.t to the direction perpendicular to the vertical in order to include the two points on different side of the boundary for your calculations.</p>
+<p>Notice how for the vertical boundary, compared to the general equation, the \(x\) in the arbitrary function disappeared, and well, was only left with \(y\), meaning that the boundary conditions depend not on \(x\), but only on the position of \(y\). This is reasonable as we are talking about a vertical boundary here, and well, moving from one end of a vertical boundary to the other, \(x\) does not change. Since \(x\) along the vertical boundary is the same and does not change, the change in the value of \(x\) cannot affect our boundary condition because there is no change in the value of \(x\). Along our horizontal boundary, we only have change in \(y\).</p>
+<p>You can always write \( \frac{\partial u}{\partial x} = g(x = some;;constant, y) \) if it makes you more comfortable.</p>
+<p>For boundaries that are neither vertical nor horizontal, you might have to adopt a more complicate scheme to help calculate the unit normal to the surface. Since the boundary is neither vertical nor horizontal, the unit normal will also not be horizontal or vertical. Mapping our gradient using our unit normal that is neither horizontal or vertical will not result in sumply \( \frac{\partial u}{\partial y} = g(x,y) \) or \( \frac{\partial u}{\partial x} = h(x,y) \) but something containing both \( \frac{\partial u}{\partial y} \)  and  \(\frac{\partial u}{\partial x} \) for a single boundary!</p>
+<p>Since we are having 1st order partial derivatives in our conditions, to numerically compute it, we have to use the values at the boundary, and either forward or backward approximation.</p>
+<p>As the point being considered is, by definition, on the edge of the valid domain, the central difference can’t be used, since we are going to use a point that is out of bounds!</p>
+<p>We could either use a forward or backward approximation is used depends on which side of the domain the boundary is. For example, if we use forward approximation, if the \(j+1\) term goes outside the boundary, then we cannot use forward approximation. Likewise, if we use forward approximation, if the \(j-1\) term goes outside the boundary, then we cannot use backward approximation.</p>
+<p>We can consider the following situations, where \(\vert\) is used to represent the boundary.
+Let’s assume that our position index increases to the right, and also increases downwards. (Think about index of Python arrays!) NOTE: PROPER INDEXING IS REALLY IMPORTANT!</p>
+<p>Case 1:</p>
+<p>\[domain ;;\vert;; out;; of;;domain\]
+\[\dots j - 1;; j;; \vert ;; j +1 \ldots \]</p>
+<p>If we use forward approximation i.e. \(j\) and  \(j + 1\), then we are using an out of bound value, so we cannot use forward approximation here, and only backward approximation, which uses i.e. \(j - 1\) and  \(j \)</p>
+<p>Case 2:</p>
+<p>\[out;; of;;domain ;;\vert;; domain \]
+\[\dots j - 1;; \vert j;;  ;; j +1 \ldots \]</p>
+<p>If we use backward approximation i.e. \(j\) and  \(j - 1\), then we are using an out of bound value, so we cannot use backward approximation here, and only forward approximation, which uses i.e. \(j + 1\) and  \(j \)</p>
+<p>Case 3 (we change the index here to \(i\), to avoid confusion with \(j\)):</p>
+<p>\[domain \]
+\[————-\]
+\[out;; of;;domain\]</p>
+<p>in other words,</p>
+<p>\[i - 1 \]
+\[i \]
+\[————-\]
+\[i + 1 \]</p>
+<p>If we use forward approximation i.e. \(i\) and  \(i + 1\), then we are using an out of bound value, so we cannot use forward approximation here, and only backward approximation, which uses i.e. \(i - 1\) and  \(i \)</p>
+<p>Case 4 (we change the index here to \(i\), to avoid confusion with \(j\)):</p>
+<p>\[out;; of;;domain\]
+\[————-\]
+\[domain\]</p>
+<p>in other words,</p>
+<p>\[i - 1 \]
+\[————-\]
+\[i \]
+\[i + 1 \]</p>
+<p>If we use backward approximation i.e. \(i\) and  \(i - 1\), then we are using an out of bound value, so we cannot use backward approximation here, and only forward approximation, which uses i.e. \(i + 1\) and  \(i \)</p>
+<p>We can see all four types of boundary easily if we consider for exaple a rectangle domain, where everything inside the rectangle is the domain and everything outisde is out of domain. We see</p>
+<p>Case1 at the right hand boundary, if you put your hand on the domain, the right hand boundary is to the right of your hand.</p>
+<p>Case2 at the left hand boundary, if you put your hand on the domain, the left hand boundary is to the left of your hand.</p>
+<p>Case 3 at the bottom boundary</p>
+<p>Case 4 at the top boundary</p>
+<p>\[ |—————|  \]
+\[ |;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;|  \]
+\[ |;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;|  \]
+\[ |;;;;;;;;;;;;;;;DOMAIN;;;;;;;;;;;;;;;;|  \]
+\[ |;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;|  \]
+\[ |;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;|  \]
+\[ |;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;|  \]
+\[ |—————|  \]</p>
+</div>
+<div class="section" id="ii-3-neumann-boundary-finding-the-boundary-condition-to-apply">
+<h3>II. 3 Neumann Boundary - Finding the Boundary Condition to Apply<a class="headerlink" href="#ii-3-neumann-boundary-finding-the-boundary-condition-to-apply" title="Permalink to this headline">¶</a></h3>
+<p>Since we know the boundary conditions, let’s try to find the values corresponding to our boundary conditions, so that our values at the boundary match the boundary conditions that we have stated. We are going to discuss left hand, right hand, top and bottom boundary,</p>
+<p>Note that the Indexing we use is the same as the one used by Python for its arrays, with \(i\) increasing downwards and \(j\) increasing righwards.</p>
+<p>Let’s begin with our Case 1, i.e. the right hand boundary</p>
+<p>I know that for my right hand boundary, because it is a vertical boundary, I will use</p>
+<p>\[ \frac{\partial u}{\partial x} = g(y) \]</p>
+<p>Since it is my right hand boundary, I know that from the analysis beforehand that we must use backward approximation, since forward approximation will go out of bounds.</p>
+<p>I also remind myself that \(\Delta\) can mean both the Laplacian operator, and also a small change</p>
+<p>Therefore, using backward approximation, I obtain that</p>
+<p>\[ \frac{u_j - u_{j-1}}{\Delta x} = \frac{\partial u}{\partial x} \]</p>
+<p>Since we are setting our \(\frac{\partial u}{\partial x} = g(y) \)</p>
+<p>I can also write this as</p>
+<p>\[ u_j - u_{j-1} = g(y) \Delta x \]</p>
+<p>Let’s continue with our Case 2, i.e. the left hand boundary</p>
+<p>I know that for my left hand boundary, because it is a vertical boundary, I will use</p>
+<p>\[ \frac{\partial u}{\partial x} = g(y) \]</p>
+<p>Since it is my left hand boundary, I know that from the analysis beforehand that we must use forward approximation, since backward approximation will go out of bounds.</p>
+<p>I also remind myself that \(\Delta\) can mean both the Laplacian operator, and also a small change</p>
+<p>Therefore, using forward approximation, I obtain that</p>
+<p>\[ \frac{u_{j+1} - u_{j}}{\Delta x} = \frac{\partial u}{\partial x} \]</p>
+<p>I can also write this as</p>
+<p>\[ u_{j+1} - u_{j} = g(y) \Delta x \]</p>
+<p>Let’s continue with our Case 3, i.e. the bottom boundary</p>
+<p>I know that for my bottom boundary, because it is a horizontal boundary, I will use</p>
+<p>\[ \frac{\partial u}{\partial y} = g(x) \]</p>
+<p>Since it is my bottom boundary, I know that from the analysis beforehand that we must use backward approximation, since forward approximation will go out of bounds.</p>
+<p>I also remind myself that \(\Delta\) can mean both the Laplacian operator, and also a small change</p>
+<p>Therefore, using backward approximation, I obtain that</p>
+<p>\[ \frac{u_{i} - u_{i-1}}{\Delta y} = \frac{\partial u}{\partial y} \]</p>
+<p>I can also write this as</p>
+<p>\[ u_{i} - u_{i-1} = g(x) \Delta y \]</p>
+<p>Let’s finish with our Case 4, i.e. the top boundary</p>
+<p>I know that for my top boundary, because it is a top boundary, I will use</p>
+<p>\[ \frac{\partial u}{\partial y} = g(x) \]</p>
+<p>Since it is my top boundary, I know that from the analysis beforehand that we must use forward approximation, since backward approximation will go out of bounds.</p>
+<p>I also remind myself that \(\Delta\) can mean both the Laplacian operator, and also a small change</p>
+<p>Therefore, using forward approximation, I obtain that</p>
+<p>\[ \frac{u_{i + 1} - u_{i}}{\Delta y} = \frac{\partial u}{\partial y} \]</p>
+<p>I can also write this as</p>
+<p>\[ u_{i + 1} - u_{i} = g(x) \Delta y \]</p>
+<p>Place a fancy separating line here</p>
+<p>We can make some observations about the cases above.</p>
+<ul class="simple">
+<li><p>All of the cases used two of \( u_{i,j}, u_{i+1, j}, u_{i-1, j}, u_{i, j +1}, u_{i , j -1}  \), which are basically thw four points above, below, left and right of \( u_{i,j}\</p></li>
+<li><p>All of the cases can be rewritten to give either \(g(x)\Delta y\) or \(g(y)\Delta x\)</p></li>
+</ul>
+<p>We note that from above we understand that \(g(x\) and \(g(y)\) are both actually variations of the same general equations, i.e. \(g(x,y)\)</p>
+<p>We also note that we can set \(\Delta x = \Delta y\) to make our life easier.</p>
+<p>Thus the RHS Side of the rewritten equation can be generalized as \(g(x,y) \Delta x\) or  \(g(x,y) \Delta y\). We will use \(g(x,y) \Delta x\)  from now on.</p>
+<p>The left hand side of the equation can be generalized as</p>
+<p>\[ e u_{i,j} + a u_{i+1, j} + b u_{i-1, j} + c u_{i, j +1} + d u_{i , j -1}  \]</p>
+<p>Where \(e\) is the coefficient of \(u_{i, j}\) , \(a\) is the coefficient of \(u_{i+1, j}\) etc. etc. You get the idea</p>
+<p>And thus, we can arrive at a general form for all the cases written as</p>
+<p>\[ e u_{i,j} + a u_{i+1, j} + b u_{i-1, j} + c u_{i, j +1} + d u_{i , j -1} = g(x,y) \Delta x\ \]</p>
+<p>For each of our cases, we can set the coefficients to be of a different value</p>
+<p>For example, take the right hand boundary case</p>
+<p>\[ u_j - u_{j-1} = g(y) \Delta x \]</p>
+<p>To obtain this form from our more general form, we observe the coefficients of this form, and the coefficients of the general form, and we write</p>
+<p>\[e = 1\]
+\[a = 0\]
+\[b = 0\]
+\[c = 0\]
+\[d = -1\]</p>
+<p>RHS becomes \( g(y) \Delta x\)</p>
+<p>Thus, we say that, in the situation where the boundary is the left hand boundary, we can use the set of \(a, b, c, d, e, RHS \) we found for the left hand boundary to adapt our general form to the left hand boundary.</p>
+<p>We can do the same procedure for the other boundaries, to find sets of \(a, b, c, d, e, RHS \) we found for the specific hand boundary to adapt our general form to that specific boundary. Do this as an exercise. Hint: You are expected to find that 3 of \(a, b, c, d, e\) are actually \(0\) for any boundary, since for any boundary case we only used two of them, so the two that we used will not be \(0\) while those that we did not use in that particular boundary case (but used in other boundary cases!).</p>
+</div>
+<div class="section" id="ii-4-neumann-boundary-application">
+<h3>II. 4 Neumann Boundary - Application<a class="headerlink" href="#ii-4-neumann-boundary-application" title="Permalink to this headline">¶</a></h3>
+<p>In actual application, we will be given the \(g(x,y)\) as the boundary condition. We will also set \(\Delta x = \Delta y = stepsize\), so we will know both \(g(x,y)\) and \(\Delta x = \Delta y = stepsize\)</p>
+<ol class="simple">
+<li><p>Adapt \(g(x,y)\) to be either \(g(x)\) or \(g(y)\)</p></li>
+<li><p>From the general form, based on the case of the boundary, set the coefficients as needed.</p></li>
+</ol>
+<p>Let’s take our left hand boundary, that, after the above two steps, should arrive to</p>
+<p>\[ u_j - u_{j-1} = g(y) \Delta x \]</p>
+<p>The value at the boundary will be \( u_j\), and making it the subject yields</p>
+<p>\[ u_j = u_{j-1} + g(y) \Delta x \]</p>
+<p>We are concerned with the boundary conditions, so with the values at the boundary, and not the value one step away from the boundary. We are going to solve the equation above by substituting the values of \( u_{j-1}, g(y), \Delta x \) that we already know, to obtain a new value for \(u_j\) that we will replace our old value for \(u_j\) with.</p>
+<p>Similar procedures can be applied to any other boundary case</p>
+</div>
+<div class="section" id="ii-5-neumann-real-world">
+<h3>II. 5 Neumann Real World<a class="headerlink" href="#ii-5-neumann-real-world" title="Permalink to this headline">¶</a></h3>
+<p>This boundary condition is often found in potential flow problems</p>
+<p>E.g. If the flux, i.e.  through the boundary is specified and the potential i.e.\( P\) from below is the dependent variable</p>
+<p>\[ F_{in} = -k \nabla P \bullet \textbf{n} \]</p>
+<p>Don’t worry about \(k\), it’s just there as the constant of proportionality, it actually has differnt physical meaning depending on exactly what the equation describes, but is usually given as a constant, or rather trivial to solve.</p>
+<p>Where \(F_{in}\) is the flux in through the boundary and the unit normal points into the domain</p>
+<p>A no flux boundary condition in potential flow must be a zero gradient, which is a special case of the Neumann boundary condition</p>
+</div>
+</div>
+<div class="section" id="iii-robin-boundary">
+<h2>III.  Robin Boundary<a class="headerlink" href="#iii-robin-boundary" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="iii-1-introduction-to-robin-boundary">
+<h3>III. 1   Introduction to Robin Boundary<a class="headerlink" href="#iii-1-introduction-to-robin-boundary" title="Permalink to this headline">¶</a></h3>
+<p>Well, Robin Boundary is a linear combination of the Dirichlet Boundary and the Neumman Boundary. If you have fully understood how does the Neuamnn Boundary worked, Robin Boundary should be no problem. ;)</p>
+<p>Robin boundary has the form of</p>
+<p>\[\nabla u \bullet \textbf{n} + t(x,y) u = h(x,y) \]</p>
+<p>Where \(t\) and \(h\) are just arbitrary functions</p>
+<p>Robin boundary can similarly be written in the general form below</p>
+<p>\[ e u_{i,j} + a u_{i+1, j} + b u_{i-1, j} + c u_{i, j +1} + d u_{i , j -1} = h(x,y) \Delta x\ \]</p>
+</div>
+<div class="section" id="iii-2-example-for-robin-boundary">
+<h3>III.  2  Example for Robin Boundary<a class="headerlink" href="#iii-2-example-for-robin-boundary" title="Permalink to this headline">¶</a></h3>
+<p>Robin boundary has the form of</p>
+<p>\[\nabla u \bullet \textbf{n} + t(x,y) u = h(x,y) \]</p>
+<p>For example, take the right hand boundary case, and since we are on a vertical boundary, we ignore the \(x\) in \(t(x,y)\) and \(h(x,y)\), and we obtain</p>
+<p>\[\nabla u \bullet \textbf{n} + t(y) u = h(y) \]</p>
+<p>For our right hand boundary case, from our Neumann boundary, we know that the Neumann part of the Robin boundary i.e. \(\nabla u \bullet \textbf{n}\) will be transformed into</p>
+<p>\[\frac{\partial u}{\partial x}\]</p>
+<p>Which can then be transformed into:</p>
+<p>\[ \frac{ u_j - u_{j-1}}{\Delta x} \]</p>
+<p>Thus we can write</p>
+<p>\[\frac{ u_j - u_{j-1}}{\Delta x} + t(y) u = h(y) \]</p>
+<p>To avoid dividing by small numbers, let’s multiply everyhing by \(\Delta x\), thus we obtain</p>
+<p>\[{ u_j - u_{j-1}} + \Delta x t(y) u = \Delta x h(y) \]</p>
+<p>Since we know that the \(u\) here actually refers to \(u_{i,j}\) is the same as \(u_j\), with \(u_j\) being the equivalent \(u_{i,j}\), just with \(i\) forgotten, we can organize them to become</p>
+<p>(Yeah, I know the above is a bit confusing, but stick with me )</p>
+<p>\[{ u_j (1 + \Delta x t(y)) - u_{j-1}}  = \Delta x h(y) \]</p>
+<p>To obtain this form from our more general form, we observe the coefficients of this form, and the coefficients of the general form, and we write</p>
+<p>\[e = 1 + \Delta x t(x,y)\]
+\[a = 0\]
+\[b = 0\]
+\[c = 0\]
+\[d = -1\]</p>
+<p>RHS becomes \( \Delta x h(x,y)\)</p>
+<p>Thus, we say that, in the situation where the boundary is the left hand boundary, we can use the set of \(a, b, c, d, e, RHS \) we found for the left hand boundary to adapt our general form to the left hand boundary.</p>
+<p>We can do the same procedure for the other boundaries, to find sets of \(a, b, c, d, e, RHS \) we found for the specific hand boundary to adapt our general form to that specific boundary. Do this as an exercise. Hint: You are expected to find that 3 of \(a, b, c, d, e\) are actually \(0\) for any boundary, since for any boundary case we only used two of them, so the two that we used will not be \(0\) while those that we did not use in that particular boundary case (but used in other boundary cases!).</p>
+<p>We can use the same way we used for applying Neumann Condition to PDEs, i.e. solving for \(u_j\) by manipulating the equation and then replacing the old \(u_j\) with the newly calcualted \(u_j\), for Robin boundaries, noting that Neumann and Robin do not have the same value for the \(a,b,c,d,e, RHS\)!</p>
+</div>
+</div>
+<div class="section" id="iii-robin-real-world">
+<h2>III.   Robin Real World<a class="headerlink" href="#iii-robin-real-world" title="Permalink to this headline">¶</a></h2>
+<p>Robin boundary conditions are encountered in convective-diffusive problems. Convective-diffusive problems are ones in which a flux is proportional to the sum of a zero order (convective) term and a 1st order (diffusive) term.</p>
+<p>For example, let’s say you have a hot cup of tea, and you decide to add some sugar cubes to the tea. The teacup feels hot because there is heat transfer through diffusion between the hot tea and the teacup. The sugar cubes are cooler than the hot tea, and with energy coming from your stirring, hot steam exits from the hot tea, so you have heat transfer through convection too.</p>
+<p>Note that  when substituted into a continuity equation the convective term becomes 1st order and the diffusive 2nd order</p>
+<p>A flux with a convective and diffusive component takes the following form:</p>
+<p>\[ \textbf{F} = \textbf{v} u - D \Delta u \]</p>
+<p>Where \(F_{in}\) is the flux of \(u\) and \(v\) is the convective velocity and \(D\) is the diffusion coefficient</p>
+<p>If the flux through the boundary is \(F_{in}\) and \(n\) is the inward normal, then the flux boundary condition for a convective-diffusive problem is:</p>
+<p>\[ \textbf{F}_{in} = (\textbf{v}\textbf{n}) u - D \Delta u \textbf{n} \]</p>
+<p>This thus takes the form of a Robin boundary condition</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "primer-computational-mathematics/book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./c_mathematics/numerical_methods/NM2"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Imperial College London<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../../../_static/js/index.js"></script>
+    
+  </body>
+</html>

@@ -1,0 +1,376 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Crank Nicholson &#8212; ESE Jupyter Material</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../../../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/sphinx-book-theme.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/language_data.js"></script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/mystnb.js"></script>
+    <script src="../../../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".cell"
+        const thebe_selector_input = ".cell_input div.highlight"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../../index.html">
+  
+  <img src="../../../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">ESE Jupyter Material</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  
+  <ul class="nav sidenav_l1">
+  <li class="">
+    <a href="../../../intro.html">Landing page</a>
+  </li>
+  <li class="">
+    <a href="../../../a_modules/intro.html">Modules</a>
+  </li>
+  <li class="">
+    <a href="../../../b_coding/intro.html">Coding</a>
+  </li>
+  <li class="">
+    <a href="../../intro.html">Mathematics</a>
+  </li>
+  <li class="">
+    <a href="../../../d_geosciences/intro.html">Geosciences</a>
+  </li>
+  <li class="">
+    <a href="../../../e_extra/intro.html">Further resources</a>
+  </li>
+  <li class="">
+    <a href="../../../genindex.html">Index</a>
+  </li>
+</ul>
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../../_sources/c_mathematics/numerical_methods/NM2/Crank Nicholson.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        
+        <a class="issues-button"
+            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2Fc_mathematics/numerical_methods/NM2/Crank Nicholson.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/c_mathematics/numerical_methods/NM2/Crank Nicholson.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#contents" class="nav-link">Contents</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#i-introduction" class="nav-link">I.    Introduction</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#ii-equation" class="nav-link">II.   Equation</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#iii-example" class="nav-link">III.  Example</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#iv-comparison-between-ftcs-btcs-and-crank-nicholson" class="nav-link">IV.  Comparison between FTCS, BTCS and Crank Nicholson</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#introduction" class="nav-link">Introduction</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#equations" class="nav-link">Equations</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#example" class="nav-link">Example</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#comparison-between-ftcs-btcs-and-crank-nicholson" class="nav-link">Comparison between FTCS, BTCS and Crank Nicholson</a>
+        </li>
+    
+    </ul>
+</nav>
+
+
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="crank-nicholson">
+<h1>Crank Nicholson<a class="headerlink" href="#crank-nicholson" title="Permalink to this headline">¶</a></h1>
+<p>Ok, so by this point, I will be assuming that you have had a good grasp upon the finite difference method, and understood both the FTCS scheme and the BTCS schemes. Also, that you have had a good grasp on the heat transfer equation and understood it, so I will not go into detail explaining it.</p>
+<p>Do revise FTCS and BTCS beforehand before working on Crank Nicholson, it will help alot!</p>
+<div class="section" id="contents">
+<h2>Contents<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="i-introduction">
+<h2>I.    Introduction<a class="headerlink" href="#i-introduction" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="ii-equation">
+<h2>II.   Equation<a class="headerlink" href="#ii-equation" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="iii-example">
+<h2>III.  Example<a class="headerlink" href="#iii-example" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="iv-comparison-between-ftcs-btcs-and-crank-nicholson">
+<h2>IV.  Comparison between FTCS, BTCS and Crank Nicholson<a class="headerlink" href="#iv-comparison-between-ftcs-btcs-and-crank-nicholson" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>Well, now we have both the FTCS and BTCS. While the FTCS is faster and less computationally expensive, there is the risk of computational instability. While BTCS is slower and more computationally expensive, it has unconditional stability. Well, is there a way to combine FTCS and BTCS?</p>
+<p>Well, introduce the Crank Nicholson Method.</p>
+<p>Below the scheme used in the Crank Nicholson Method</p>
+<img src ="https://upload.wikimedia.org/wikipedia/commons/1/1e/Crank-Nicolson-stencil.svg">
+<p>Like in BTCS and FTCS, our objective is to find the point with \((j, n+1)\), and from the stencil we see that we will use the points \((j,n)\), \((j-1,n)\), \((j+1,n)\), \((j-1,n+1)\) and \((j+1,n +1)\).</p>
+<p>From our previous timestep, we already know about the points \((j,n)\), \((j-1,n)\), \((j+1,n)\). However, Crank Nicholson is not an explicit, but an implicit scheme, because we do not know immediately what are \((j-1,n+1)\) and \((j+1,n +1)\), so we have to use the boundary conditions to help us like in the BTCS scheme.</p>
+</div>
+<div class="section" id="equations">
+<h2>Equations<a class="headerlink" href="#equations" title="Permalink to this headline">¶</a></h2>
+<p>Let’s write some equations that we are going to use for the Crank Nicholson</p>
+<p>Since Crank Nicholson scheme is a combination of the FTCS scheme and the BTCS scheme then let’s see how?</p>
+<p>For FTCS, the central differencing, done for the derivatives in space, were done using the points \((j,n)\), \((j-1,n)\), \((j+1,n)\) and thus we have</p>
+<p>\[ \frac{\partial u}{\partial x} _ {FTCS} \approx \frac{u_{j+1}^{n}-u_{j-1}^{n}}{2\Delta x} \]</p>
+<p>\[ \frac{\partial^2 u}{\partial x^2} _ {FTCS} \approx \frac{u_{j+1}^{n}-2u_{j}^{n}+u_{j-1}^{n}}{\Delta x^2} \]</p>
+<p>For BTCS, the central differencing, done for the derivatives in space, were done using the points \((j,n + 1)\), \((j-1,n + 1)\), \((j+1,n + 1)\) and thus we have</p>
+<p>\[ \frac{\partial u}{\partial x} _ {BTCS} \approx \frac{u_{j+1}^{n + 1}-u_{j-1}^{n + 1}}{2\Delta x} \]</p>
+<p>\[ \frac{\partial^2 u}{\partial x^2} _ {BTCS} \approx \frac{u_{j+1}^{n + 1}-2u_{j}^{n + 1}+u_{j-1}^{n + 1}}{\Delta x^2} \]</p>
+<p>For Crank Nicholson, (so the one with subscript \(CN\) because my low dexterity stat means I will defo mistype Crank Nicholson), it takes the average of the FTCS and the BTCS so</p>
+<p>\[ \frac{\partial u}{\partial x} _ {CN} = \frac{1}{2} \left( \frac{\partial u}{\partial x} _ {FTCS} + \frac{\partial u}{\partial x} _ {BTCS} \right) \]</p>
+<p>\[ \frac{\partial^2 u}{\partial x^2} _ {CN} = \frac{1}{2} \left( \frac{\partial^2 u}{\partial x^2} _ {FTCS} + \frac{\partial^2 u}{\partial x^2} _ {BTCS} \right) \]</p>
+<p>Expanding the above will give us</p>
+<p>\[ \frac{\partial u}{\partial x} _ {CN} = \frac{1}{2} \left(  \frac{u_{j+1}^{n}-u_{j-1}^{n}}{2\Delta x}  + \frac{u_{j+1}^{n + 1}-u_{j-1}^{n + 1}}{2\Delta x} \right) \]</p>
+<p>\[ \frac{\partial^2 u}{\partial x^2} _ {CN} = \frac{1}{2} \left( \frac{u_{j+1}^{n}-2u_{j}^{n}+u_{j-1}^{n}}{\Delta x^2} + \frac{u_{j+1}^{n + 1}-2u_{j}^{n + 1}+u_{j-1}^{n + 1}}{\Delta x^2} \right) \]</p>
+<p>Expanding a bit more will give us</p>
+<p>\[ \frac{\partial u}{\partial x} _ {CN} =   \frac{u_{j+1}^{n}-u_{j-1}^{n}}{4\Delta x}  + \frac{u_{j+1}^{n + 1}-u_{j-1}^{n + 1}}{4\Delta x}  \]</p>
+<p>\[ \frac{\partial^2 u}{\partial x^2} _ {CN} = \frac{u_{j+1}^{n}-2u_{j}^{n}+u_{j-1}^{n}}{2\Delta x^2} + \frac{u_{j+1}^{n + 1}-2u_{j}^{n + 1}+u_{j-1}^{n + 1}}{2\Delta x^2}  \]</p>
+<p>We already know that FTCS and BTCS both use Forward Euler for their time derivative, and both use the points \((j,n)\) and \((j, n+1)\), and the equation for the time derivative for both FTCS and BTCS are identical, unlike the space derivative shown above. Thus, if you have two things that are the same, and you take average of these two, then the average you obtain will be the same as any of the two things that are the same. Thus, we write</p>
+<p>\[ \frac{\partial u}{\partial t}<em>{CN} \approx \frac{u</em>{j}^{n+1}-u_{j}^{n}}{\Delta t} \]</p>
+</div>
+<div class="section" id="example">
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<p>For example for our 1D heat equation, i.e.</p>
+<p>\[ \frac{\partial u}{\partial t} = \alpha \frac{\partial^2 u}{\partial x^2} \]</p>
+<p>If we apply our Crank Nicholson method to it, then we will obtain</p>
+<p>\[ \frac{u_{j}^{n+1}-u_{j}^{n}}{\Delta t} = \alpha \left( \frac{u_{j+1}^{n}-2u_{j}^{n}+u_{j-1}^{n}}{2\Delta x^2} + \frac{u_{j+1}^{n + 1}-2u_{j}^{n + 1}+u_{j-1}^{n + 1}}{2\Delta x^2} \right) \]</p>
+<p>Our Crank Nicholson method uses the points at \((j,n)\), \((j-1,n)\), \((j+1,n)\), \((j-1,n+1)\) and \((j+1,n +1)\). Amongst which, the points at \((j,n)\), \((j-1,n)\), \((j+1,n)\) are already known, since these are from the previous timestep. The points \((j-1,n+1)\) and \((j+1,n +1)\) are in the future timestep, and require the help of boundary conditions to solve.</p>
+<p>The first timestep is always the initial condition of the system, since you always begin at \(t_0\). The first timestep will be the initial condition, i.e \((j,0)\), \((j-1,0)\), \((j+1,0)\) and the next timestep for this one will be at \(t_1\), i.e. \((j,1)\), \((j-1,1)\), \((j+1,1)\). If we can solve for what is in the next timestep and find out what is \(t_1\), (remember that the current timestep will be \(t_0\) and the future timestep will be \(t_1\)) , i.e. \((j,1)\), \((j-1,1)\), \((j+1,1)\), then we can do the same (remember that the current timestep will be \(t_1\) and the future timestep will be \(t_2\) now!) and find out \(t_2\), i.e. \((j,2)\), \((j-1,2)\), \((j+1,2)\), and then do the same and find out \((j,3)\), \((j-1,3)\), \((j+1,3)\) and so on and so forth!</p>
+<p>Similar to highschool algebra, we could manipulate our equation from above, so that we leave the points that we already know to one side of the equation, and the points we do not know to the another side of the equation. Because we are going to use \(\pmb{Ax = b}\), let’s move the points that we don’t know to the LHS, and the points we do know to the RHS. We will not worry about \(\alpha\) which is usually given as a constant, or at least given in a form simple enough that is trivial to compute; neither will we worry about \(\Delta x\) or \(\Delta t\) because we are the ones controlling their size. Thus we can write,</p>
+<p>\[ \pmb{LHS};; with;; (j,n + 1), (j-1,n + 1), (j+1,n + 1) =  \pmb{RHS};; with;; (j,n), (j-1,n), (j+1,n) \]</p>
+<p>For the \(LHS\), we know that there will be coefficients in front of the  \((j,n + 1), (j-1,n + 1), (j+1,n + 1)\), therefore, let’s say that</p>
+<p>The coefficient for \( (j,n + 1)\) is  \( a_j \)</p>
+<p>The coefficient for \( (j-1,n + 1)\) is  \( c_j \)</p>
+<p>The coefficient for \( (j+1,n + 1)\) is  \( b_j \)</p>
+<p>The coefficients should be obvious once you have manipulated the equation a bit. If not sure, you could look up the BTCS scheme.</p>
+<p>For the RHS, because we already know the values for \((j,n), (j-1,n), (j+1,n) \), and since we know that their coefficients must be made from \(\alpha\), \(\Delta x\) or \(\Delta t\), whose value are either known, trivial to compute, or set up by us, and since there is nothing unknown to us in the RHS, we could just lump the entire RHS into let’s say \( f_j \). We use the index \(j\) here because our objective is to find the point at \((j, n+1)\)</p>
+<p>Thus, we can rewrite our equation into the form</p>
+<p>\[ c_j u_{j - 1}^{n + 1} + a_j u_{j }^{n + 1} + b_j u_{j + 1}^{n + 1} = f_j  \]</p>
+<p>The equation looks oddly familiar, and well, it’s almost the same as the BTCS Scheme’s equation of</p>
+<p>\[ c_j u_{j - 1}^{n + 1} + a_j u_{j }^{n + 1} + b_j u_{j + 1}^{n + 1} = d_j  \]</p>
+<p>Except that in BTCS \(d_j\) contained only \((j, n)\) while the CN \(f_j\) contained \((j,n), (j-1,n), (j+1,n) \). Also, the exact values for \(c_j, a_j, b_j\) may be different. But nonetheless, since the form is the same, you can very much just copy the same scheme we used in BTCS to solve this one too.</p>
+<p>You will transform the above equations into a matrix of the form \(\pmb{Ax = b}\), perform Gaussian elimination if you don’t care about memory, or LU factorization if you care about memory, and then solve for \(\pmb{x}\). And then rinse and repeat for the next timestep and next timestep etc.</p>
+</div>
+<div class="section" id="comparison-between-ftcs-btcs-and-crank-nicholson">
+<h2>Comparison between FTCS, BTCS and Crank Nicholson<a class="headerlink" href="#comparison-between-ftcs-btcs-and-crank-nicholson" title="Permalink to this headline">¶</a></h2>
+<p>Wikipedia actually has a nice, short, succint, concise section on this, so I will just quote it here.</p>
+<p>To summarize, usually the Crank–Nicolson scheme is the most accurate scheme for small time steps. For larger time steps, the implicit scheme works better since it is less computationally demanding. The explicit scheme is the least accurate and can be unstable, but is also the easiest to implement and the least numerically intensive.</p>
+<p>In the following image, the FTCS is compared to the Exact, the BTCS is compared to the exact, and the Crank Nicholson is compared to the exact, sequentially. What the images failed to show is process going from the initial conditions to the final timestep, and the computational expense of each method, which, well, you could do it yourself, now that you are a Master of FTCS, BTCS and Crank Nicholson, by experimenting the schemes with different problems at hand! Why not start with the 1D Heat Equation that we have previously discussed?</p>
+<img src ="https://upload.wikimedia.org/wikipedia/commons/4/43/HeatEquationExplicitApproximate.svg">
+<img src ="https://upload.wikimedia.org/wikipedia/commons/b/bc/HeatEquationImplicitApproximate.svg">
+<img src ="https://upload.wikimedia.org/wikipedia/commons/4/42/HeatEquationCNApproximate.svg"></div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "primer-computational-mathematics/book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./c_mathematics/numerical_methods/NM2"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Imperial College London<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../../../_static/js/index.js"></script>
+    
+  </body>
+</html>
