@@ -21,6 +21,7 @@ The notebooks cover all basic topics covered in year 1 programming course:
 14. {ref}`Dictionaries <dictionaries_exercises>`
 15. {ref}`Flow control statements <flow_control_statements_exercises>`
 16. {ref}`Sets <sets_exercises>`
+18. {ref}`Assert <assert_exercises>`
 ```
 
 1. {ref}`printing_intro`
@@ -56,3 +57,4 @@ The notebooks cover all basic topics covered in year 1 programming course:
     - {ref}`histogram`
     - {ref}`image_plot`
     - {ref}`3d_plots`
+18. {ref}`assert`

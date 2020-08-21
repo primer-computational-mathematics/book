@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Lists &#8212; ESE Jupyter Material</title>
+    <title>Assert &#8212; ESE Jupyter Material</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
     <link href="../../_static/css/index.css" rel="stylesheet">
     <link rel="stylesheet" href="../../_static/sphinx-book-theme.css" type="text/css" />
@@ -40,8 +40,8 @@
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="For loops" href="6_For_loops.html" />
-    <link rel="prev" title="While loops" href="4_While_loops.html" />
+    <link rel="next" title="Pandas" href="../Pandas/intro.html" />
+    <link rel="prev" title="Plotting data with Matplotlib" href="17_Matplotlib.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="docsearch:language" content="en">
@@ -103,8 +103,8 @@
       <li class="">
         <a href="4_While_loops.html">While loops</a>
       </li>
-      <li class="active">
-        <a href="">Lists</a>
+      <li class="">
+        <a href="5_Lists.html">Lists</a>
       </li>
       <li class="">
         <a href="6_For_loops.html">For loops</a>
@@ -142,8 +142,8 @@
       <li class="">
         <a href="17_Matplotlib.html">Plotting data with Matplotlib</a>
       </li>
-      <li class="">
-        <a href="18_Assert.html">Assert</a>
+      <li class="active">
+        <a href="">Assert</a>
       </li>
     </ul>
     </li>
@@ -211,7 +211,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../_sources/b_coding/Intro to Python/5_Lists.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="../../_sources/b_coding/Intro to Python/18_Assert.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
@@ -228,7 +228,7 @@
     <div class="dropdown-buttons sourcebuttons">
         
         <a class="issues-button"
-            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2Fb_coding/Intro to Python/5_Lists.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2Fb_coding/Intro to Python/18_Assert.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
         
@@ -248,7 +248,7 @@
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/b_coding/Intro to Python/5_Lists.ipynb"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/b_coding/Intro to Python/18_Assert.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="../../_static/images/logo_binder.svg"
@@ -284,140 +284,98 @@
         
               <div>
                 
-  <div class="section" id="lists">
-<span id="id1"></span><h1>Lists<a class="headerlink" href="#lists" title="Permalink to this headline">¶</a></h1>
-<p id="index-0">A list is an object that contains multiple elements in defined order (called an <strong>index</strong> number). The syntax is:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="n">element0</span><span class="p">,</span> <span class="n">element1</span><span class="p">,</span> <span class="n">element2</span><span class="p">,</span> <span class="n">element3</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
-</pre></div>
-</div>
-<p>Note that indexing in python starts at 0! To extract a specific element or part of the list, we can use slicing syntax:</p>
+  <div class="section" id="assert">
+<span id="id1"></span><h1>Assert<a class="headerlink" href="#assert" title="Permalink to this headline">¶</a></h1>
+<p>Assert statement allows us to do sanity checks in our code. It is also a very handy tool in preventing bugs that do not throw an <code class="docutils literal notranslate"><span class="pre">Error</span></code>. Consider the following factorial function:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">11</span><span class="p">]</span>
-
-<span class="c1"># Print first element (index 0!)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-
-<span class="c1"># Print elements three to six (not inclusive), returns a list</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">l</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">6</span><span class="p">])</span>
-
-<span class="c1"># Print every second element but the last two excluded</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">l</span><span class="p">[:</span><span class="o">-</span><span class="mi">3</span><span class="p">:</span><span class="mi">2</span><span class="p">])</span>
-
-<span class="c1"># Print what class l is</span>
-<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">l</span><span class="p">))</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">fact</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="n">result</span><span class="o">*=</span><span class="n">i</span>
+    <span class="k">return</span> <span class="n">result</span>
+<span class="n">fact</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>1
-[5, 9, 7, 11]
-[1, 5]
-&lt;class &#39;list&#39;&gt;
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>1
 </pre></div>
 </div>
 </div>
 </div>
-<p>The same operations can be done to lists of strings:</p>
+<p>What if \(n = 1.5\), \(n = -1\) or \(n \) is not a numeric type? Our function is defined for non-negative integers only. However, for some of those invalid inputs, the function can actually return something! <code class="docutils literal notranslate"><span class="pre">assert</span></code> is a great feature to add here:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">shopping_list</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;potatoes&quot;</span><span class="p">,</span> <span class="s2">&quot;cucumber&quot;</span><span class="p">,</span> <span class="s2">&quot;apples&quot;</span><span class="p">,</span>
-                 <span class="s2">&quot;bananas&quot;</span><span class="p">,</span> <span class="s2">&quot;milk&quot;</span><span class="p">,</span> <span class="s2">&quot;juice&quot;</span><span class="p">]</span>
-
-<span class="c1"># Print first element</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">shopping_list</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-
-<span class="c1"># Print elements three to six, returns a lis</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">shopping_list</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">6</span><span class="p">])</span>
-
-<span class="c1"># Print every other elements but the last two excluded</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">shopping_list</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">3</span><span class="p">:</span><span class="mi">2</span><span class="p">])</span>
-
-<span class="c1"># Returns class list</span>
-<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">shopping_list</span><span class="p">))</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">fact</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="n">n</span> <span class="ow">is</span> <span class="nb">int</span> <span class="ow">and</span> <span class="n">n</span> <span class="o">&gt;=</span><span class="mi">0</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="n">result</span><span class="o">*=</span><span class="n">i</span>
+    <span class="k">return</span> <span class="n">result</span>
+<span class="n">fact</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>potatoes
-[&#39;apples&#39;, &#39;bananas&#39;, &#39;milk&#39;, &#39;juice&#39;]
-[&#39;potatoes&#39;, &#39;apples&#39;]
-&lt;class &#39;list&#39;&gt;
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">AssertionError</span><span class="g g-Whitespace">                            </span>Traceback (most recent call last)
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">9</span><span class="o">-</span><span class="mi">0</span><span class="n">ca68cd43ada</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span>         <span class="n">result</span><span class="o">*=</span><span class="n">i</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span>     <span class="k">return</span> <span class="n">result</span>
+<span class="ne">----&gt; </span><span class="mi">7</span> <span class="n">fact</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="nn">&lt;ipython-input-9-0ca68cd43ada&gt;</span> in <span class="ni">fact</span><span class="nt">(n)</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="k">def</span> <span class="nf">fact</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+<span class="ne">----&gt; </span><span class="mi">2</span>     <span class="k">assert</span> <span class="n">n</span> <span class="ow">is</span> <span class="nb">int</span> <span class="ow">and</span> <span class="n">n</span> <span class="o">&gt;=</span><span class="mi">0</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span>     <span class="n">result</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span>     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span>         <span class="n">result</span><span class="o">*=</span><span class="n">i</span>
+
+<span class="ne">AssertionError</span>: 
 </pre></div>
 </div>
 </div>
 </div>
-<p>Other operations on lists:</p>
+<p>Now our program throws an <code class="docutils literal notranslate"><span class="pre">AssertionError</span></code> and we immediately know that the input is invalid. While in this simple example such precautions might seem to be an overkill, <code class="docutils literal notranslate"><span class="pre">assert</span></code> scales very well. When multiple functions exchange data, this feature might shorten the debugging time <strong>a lot</strong>.
+If you do not want your program to crash because of the <code class="docutils literal notranslate"><span class="pre">AssertionError</span></code> surround your code with the <code class="docutils literal notranslate"><span class="pre">try..except</span></code> block:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">11</span><span class="p">]</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">fact</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">n</span> <span class="ow">is</span> <span class="nb">int</span> <span class="ow">and</span> <span class="n">n</span> <span class="o">&gt;=</span><span class="mi">0</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="n">result</span><span class="o">*=</span><span class="n">i</span>
+        <span class="k">return</span> <span class="n">result</span>
+    <span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;This is an invalid input&quot;</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">l</span><span class="p">))</span>  <span class="c1"># Prints the number of elements in the list</span>
-
-<span class="n">l</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">13</span><span class="p">)</span>   <span class="c1"># Appends 13 at the end of the list</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">l</span><span class="p">))</span> <span class="c1"># Returns minimum value in the list</span>
-<span class="nb">print</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">l</span><span class="p">))</span> <span class="c1"># Returns maximum value in the list</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">l</span><span class="p">))</span> <span class="c1"># Sums up elements of the list</span>
-
-<span class="n">l</span> <span class="o">=</span> <span class="n">l</span> <span class="o">+</span> <span class="p">[</span><span class="mi">17</span><span class="p">,</span> <span class="mi">19</span><span class="p">]</span> <span class="c1"># Adds a list [17, 19] at the end of l</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
-
-<span class="n">l</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">305</span><span class="p">)</span> <span class="c1"># Insert at index 2, number 305</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
-
-<span class="k">del</span> <span class="n">l</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="c1"># Delete the element we inserted at index 2</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">l</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="mi">11</span><span class="p">))</span> <span class="c1"># Return what index value 11 has</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="mi">305</span> <span class="ow">in</span> <span class="n">l</span><span class="p">)</span> <span class="c1"># Check if 305 is in the list</span>
+<span class="n">fact</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>6
-[1, 3, 5, 9, 7, 11, 13]
-1
-13
-49
-[1, 3, 5, 9, 7, 11, 13, 17, 19]
-[1, 3, 305, 5, 9, 7, 11, 13, 17, 19]
-[1, 3, 5, 9, 7, 11, 13, 17, 19]
-5
-False
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>This is an invalid input
 </pre></div>
 </div>
 </div>
 </div>
+<p>In some coding regimes, <code class="docutils literal notranslate"><span class="pre">assert</span></code> is considered acceptable only in the development process. It is often <code class="docutils literal notranslate"><span class="pre">deactivated</span></code> in the final version of the software.</p>
 <div class="section" id="exercises">
-<span id="lists-exercises"></span><h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
-<hr class="docutils" />
-<ul>
-<li><p><strong>Multi-type lists</strong> compared to other programming languages Python is very flexible when it comes to types of objects inside them. For example, we can have the following list:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  l = [1,&quot;0&quot;,True]
-</pre></div>
-</div>
-<p>Try to transform the above list into the following one using list operations such as <code class="docutils literal notranslate"><span class="pre">del</span></code> and <code class="docutils literal notranslate"><span class="pre">append</span></code>:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  l = [1,2,3]
-</pre></div>
-</div>
-<p>Print the largest element of the list.</p>
-</li>
+<span id="assert-exercises"></span><h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Perimeter of a circle</strong> Define a function which calculates the perimeter of a circle given its radius.</p></li>
 </ul>
+<p><strong>HINT</strong>: <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">math</span></code> for the value of \(\pi\). Do not assume that <code class="docutils literal notranslate"><span class="pre">r</span></code> is of any particular type.</p>
 <div class="dropdown admonition">
 <p class="admonition-title">Answer</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="s2">&quot;0&quot;</span><span class="p">,</span><span class="kc">True</span><span class="p">]</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">pi</span>
 
-<span class="k">del</span> <span class="n">l</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-<span class="k">del</span> <span class="n">l</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-<span class="n">l</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">l</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">l</span><span class="p">))</span>
+<span class="k">def</span> <span class="nf">perimeter</span><span class="p">(</span><span class="n">r</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="n">r</span> <span class="o">&gt;=</span><span class="mi">0</span>
+    <span class="k">return</span> <span class="mi">2</span><span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">r</span>
+    
 </pre></div>
 </div>
 </div>
@@ -452,8 +410,8 @@ False
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="4_While_loops.html" title="previous page">While loops</a>
-    <a class='right-next' id="next-link" href="6_For_loops.html" title="next page">For loops</a>
+    <a class='left-prev' id="prev-link" href="17_Matplotlib.html" title="previous page">Plotting data with Matplotlib</a>
+    <a class='right-next' id="next-link" href="../Pandas/intro.html" title="next page">Pandas</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
