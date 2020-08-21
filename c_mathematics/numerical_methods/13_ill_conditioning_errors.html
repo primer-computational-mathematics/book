@@ -1,0 +1,652 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Ill-conditioning and roundoff errors &#8212; ESE Jupyter Material</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/mystnb.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".cell"
+        const thebe_selector_input = ".cell_input div.highlight"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Iterative methods to solve a matrix" href="14_iterative_methods_to_solve_matrix.html" />
+    <link rel="prev" title="LU decomposition" href="12_LU_decomposition.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../index.html">
+  
+  <img src="../../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">ESE Jupyter Material</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  
+  <ul class="nav sidenav_l1">
+  <li class="">
+    <a href="../../intro.html">Landing page</a>
+  </li>
+  <li class="">
+    <a href="../../a_modules/intro.html">Modules</a>
+  </li>
+  <li class="">
+    <a href="../../b_coding/intro.html">Coding</a>
+  </li>
+  <li class="active">
+    <a href="../intro.html">Mathematics</a>
+  <ul class="nav sidenav_l2">
+    <li class="">
+      <a href="../calculus/intro.html">Calculus</a>
+    </li>
+    <li class="">
+      <a href="../complex_analysis/intro.html">Complex analysis</a>
+    </li>
+    <li class="">
+      <a href="../differential_equations/intro.html">Differential equations</a>
+    </li>
+    <li class="">
+      <a href="../linear_algebra/intro.html">Linear algebra</a>
+    </li>
+    <li class="">
+      <a href="../mathematical_notation/intro.html">Mathematical notation</a>
+    </li>
+    <li class="active">
+      <a href="intro.html">Numerical methods</a>
+      <ul class="nav sidenav_l3">
+      <li class="">
+        <a href="1_Interpolation_curve_fitting.html">Interpolation and curve fitting</a>
+      </li>
+      <li class="">
+        <a href="2_Numerical_differentiation.html">Numerical differentiation</a>
+      </li>
+      <li class="">
+        <a href="3_Timestepping_an_ODE.html">Solving or timestepping an ODE</a>
+      </li>
+      <li class="">
+        <a href="4_Heuns_method.html">Heun’s method</a>
+      </li>
+      <li class="">
+        <a href="5_Runge_Kutta_method.html">Runge-Kutta method</a>
+      </li>
+      <li class="">
+        <a href="6_Solving_PDEs_SOR.html">Successive over-relaxation method</a>
+      </li>
+      <li class="">
+        <a href="7_Forward_time_centred_space.html">Forward Time Centred Space scheme</a>
+      </li>
+      <li class="">
+        <a href="8_Numerical_integration.html">Numerical integration</a>
+      </li>
+      <li class="">
+        <a href="9_Roots_of_equations.html">Roots of equations</a>
+      </li>
+      <li class="">
+        <a href="10_linear_algebra_intro.html">Linear algebra introduction</a>
+      </li>
+      <li class="">
+        <a href="11_Gaussian_elimination.html">Gaussian elimination</a>
+      </li>
+      <li class="">
+        <a href="12_LU_decomposition.html">LU decomposition</a>
+      </li>
+      <li class="active">
+        <a href="">Ill-conditioning and roundoff errors</a>
+      </li>
+      <li class="">
+        <a href="14_iterative_methods_to_solve_matrix.html">Iterative methods to solve a matrix</a>
+      </li>
+      <li class="">
+        <a href="BTCS.html">BTCS Scheme</a>
+      </li>
+      <li class="">
+        <a href="BTCS_20200820.html">BTCS Scheme</a>
+      </li>
+    </ul>
+    </li>
+    <li class="">
+      <a href="../series_and_sequences/intro.html">Series and sequences</a>
+    </li>
+    <li class="">
+      <a href="../sets_and_functions/intro.html">Sets and functions</a>
+    </li>
+    <li class="">
+      <a href="../statistics/intro.html">Statistics</a>
+    </li>
+  </ul>
+  </li>
+  <li class="">
+    <a href="../../d_geosciences/intro.html">Geosciences</a>
+  </li>
+  <li class="">
+    <a href="../../e_extra/intro.html">Further resources</a>
+  </li>
+  <li class="">
+    <a href="../../genindex.html">Index</a>
+  </li>
+</ul>
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/c_mathematics/numerical_methods/13_ill_conditioning_errors.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        
+        <a class="issues-button"
+            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2Fc_mathematics/numerical_methods/13_ill_conditioning_errors.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/c_mathematics/numerical_methods/13_ill_conditioning_errors.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#ill-conditioned-matrices" class="nav-link">Ill-conditioned matrices</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#vector-norms" class="nav-link">Vector norms</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#matrix-norms" class="nav-link">Matrix norms</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#norm-implementation" class="nav-link">Norm implementation</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#matrix-conditioning" class="nav-link">Matrix conditioning</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#example" class="nav-link">Example</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#roundoff-errors" class="nav-link">Roundoff errors</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#algorithm-stability" class="nav-link">Algorithm stability</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+    </ul>
+</nav>
+
+
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="ill-conditioning-and-roundoff-errors">
+<span id="nm-ill-conditioning-roundoff-errors"></span><h1>Ill-conditioning and roundoff errors<a class="headerlink" href="#ill-conditioning-and-roundoff-errors" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference internal" href="../../a_modules/intro.html#module-nm"><span class="std std-ref"><!-- module-nm badge --><span class="module module-nm">Numerical Methods</span></span></a></p>
+<div class="section" id="ill-conditioned-matrices">
+<h2>Ill-conditioned matrices<a class="headerlink" href="#ill-conditioned-matrices" title="Permalink to this headline">¶</a></h2>
+<p>The conditioning (or lack of, i.e. the ill-conditioning) of matrices we are trying to invert is incredibly important for the success of any algorithm.</p>
+<p>As long as the matrix is non-singular, i.e. \(\det(A)\ne 0\), then an inverse exists, and a linear system with that \(A\) has a unique solution. What happens when we consider a matrix that is nearly singular, i.e. \(\det(A)\) is very small?</p>
+<p id="index-0">Well smallness is a relative term and so we need to ask the question of how large or small <span class="math notranslate nohighlight">\(\det(A)\)</span> is compared to something. That something is the <strong>norm</strong> of the matrix.</p>
+<div class="margin sidebar">
+<p class="sidebar-title">Note</p>
+<p>Norms are always in absolute terms, therefore, they are always positive. We will use \(||||\) to symbolise a norm of a matrix.</p>
+</div>
+<p>Matrices come in all shape and sizes, and their determinants come in all kinds of values. We know that a ill conditioned matrix has a determinant that is small in absolute terms, but the size of determinants is a relative thing, and we need some kind of comparison to determine what is “small” and what is “large”. Thus, we can create such a reference calculating the norms of the matrix. In this notebook, we will explore how to find the norm and how does the norm relate to the ill conditioning of the matrix.</p>
+</div>
+<div class="section" id="vector-norms">
+<h2>Vector norms<a class="headerlink" href="#vector-norms" title="Permalink to this headline">¶</a></h2>
+<p id="index-1">Just as for vectors \(\pmb{v}\) (assumed as a \(n\times 1\) column vector) where we have multiple possible norms to help us decide quantify the magnitude of a vector:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+||\pmb{v}||_2  = \sqrt{v_1^2 + v_2^2 + \ldots + v_n^2} = \left(\sum_{i=1}^n v_i^2 \right)^{1/2}, \quad{\textrm{the two-norm or Euclidean norm}}\\\\\\
+||\pmb{v}||_1   = |v_1| + |v_2| + \ldots + |v_n| = \sum_{i=1}^n |v_i|, \quad{\textrm{the one-norm or taxi-cab norm}}\\\\\\
+||\pmb{v}||_{\infty}  = \max\{|v_1|,|v_2|, \ldots, |v_n| = \max_{i=1}^n |v_i|,\quad{\textrm{the max-norm or infinity norm}}
+\end{split}\]</div>
+</div>
+<div class="section" id="matrix-norms">
+<h2>Matrix norms<a class="headerlink" href="#matrix-norms" title="Permalink to this headline">¶</a></h2>
+<p id="index-2">We can define measures of the size of matrices, e.g. for \(A\) which for complete generality we will assume is of shape \(m\times n\):</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+||A||_F = \left(\sum_{i=1}^m \sum_{j=1}^n A_{ij}^2 \right)^{1/2}, \quad{\textrm{the matrix Euclidean or Frobenius norm}}\\\\\\
+||A||_{\infty} = \max_{i=1}^m \sum_{j=1}^n|A_{i,j}|, \quad{\textrm{the maximum absolute row-sum norm}}\\\\\\
+\end{split}\]</div>
+<p>Note that while these norms give different results (in both the vector and matrix cases), they are consistent or equivalent in that they are always within a constant factor of one another (a result that is true for finite-dimensional or discrete problems as here). This means we don’t really need to worry too much about which norm we’re using.</p>
+<p>Let’s evaluate some examples.</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">scipy.linalg</span> <span class="k">as</span> <span class="nn">sl</span>
+
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">10.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">],</span>
+              <span class="p">[</span><span class="mf">6.</span><span class="p">,</span> <span class="mf">5.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">],</span>
+              <span class="p">[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">,</span> <span class="mf">7.</span><span class="p">]])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;A =&quot;</span><span class="p">,</span> <span class="n">A</span><span class="p">)</span>
+
+<span class="c1"># The Frobenius norm (default)</span>
+<span class="c1"># equivalent to sl.norm(A)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;SciPy norm = &quot;</span><span class="p">,</span> <span class="n">sl</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="s1">&#39;fro&#39;</span><span class="p">))</span>
+
+<span class="c1"># The maximum absolute row-sum</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Maximum absolute row-sum = &quot;</span><span class="p">,</span> <span class="n">sl</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">))</span>
+
+<span class="c1"># The maximum absolute column-sum</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Maximum absolute column-sum&quot;</span><span class="p">,</span> <span class="n">sl</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+
+<span class="c1"># The two-norm - note not the same as the Frobenius norm</span>
+<span class="c1"># also termed the spectral norm</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;SciPy spectral norm =&quot;</span><span class="p">,</span> <span class="n">sl</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+
+<span class="c1"># Spectral norm definition</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Spectral norm by hand =&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">sl</span><span class="o">.</span><span class="n">eigvals</span><span class="p">(</span> <span class="n">A</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">A</span><span class="p">))))))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>A = [[10.  2.  1.]
+ [ 6.  5.  4.]
+ [ 1.  4.  7.]]
+SciPy norm =  15.748015748023622
+Maximum absolute row-sum =  15.0
+Maximum absolute column-sum 17.0
+SciPy spectral norm = 13.793091098640064
+Spectral norm by hand = 13.793091098640065
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="norm-implementation">
+<h2>Norm implementation<a class="headerlink" href="#norm-implementation" title="Permalink to this headline">¶</a></h2>
+<p>We will write some code to explicitly compute the two matrix norms defined mathematically above (i.e. the Frobenius and the maximum absolute row-sum norms) and compare against the values found above using in-built scipy functions.</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">frob</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+    <span class="n">m</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">squsum</span> <span class="o">=</span> <span class="mf">0.</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="n">squsum</span> <span class="o">+=</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">squsum</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">mars</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+    <span class="n">m</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">maxarsum</span> <span class="o">=</span> <span class="mf">0.</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+        <span class="n">arsum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+        <span class="n">maxarsum</span> <span class="o">=</span> <span class="n">arsum</span> <span class="k">if</span> <span class="n">arsum</span> <span class="o">&gt;</span> <span class="n">maxarsum</span> <span class="k">else</span> <span class="n">maxarsum</span>
+    <span class="k">return</span> <span class="n">maxarsum</span>
+
+
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">10.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">],</span>
+                 <span class="p">[</span><span class="mf">6.</span><span class="p">,</span> <span class="mf">5.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">],</span>
+                 <span class="p">[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">,</span> <span class="mf">7.</span><span class="p">]])</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;A =&quot;</span><span class="p">,</span> <span class="n">A</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Are our norms the same as SciPy?&quot;</span><span class="p">,</span>
+      <span class="n">frob</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">==</span> <span class="n">sl</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="s1">&#39;fro&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">mars</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">==</span> <span class="n">sl</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>A = [[10.  2.  1.]
+ [ 6.  5.  4.]
+ [ 1.  4.  7.]]
+Are our norms the same as SciPy? True
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="matrix-conditioning">
+<h2>Matrix conditioning<a class="headerlink" href="#matrix-conditioning" title="Permalink to this headline">¶</a></h2>
+<p>The (ill-)conditioning of a matrix is measured with the matrix condition number:</p>
+<p>\[\textrm{cond}(A) = |A||A^{-1}|.\]</p>
+<p>If this is close to one then \(A\) is termed well-conditioned; the value increases with the degree of ill-conditioning, reaching infinity for a singular matrix.</p>
+<p>Let’s evaluate the condition number for the matrix above.</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">10.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">],[</span><span class="mf">6.</span><span class="p">,</span> <span class="mf">5.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">],[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">,</span> <span class="mf">7.</span><span class="p">]])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;A =&quot;</span><span class="p">,</span> <span class="n">A</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;SciPy cond(A) =&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">cond</span><span class="p">(</span><span class="n">A</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Default condition number uses matrix two-norm =&quot;</span><span class="p">,</span> <span class="n">sl</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">sl</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">sl</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">A</span><span class="p">),</span><span class="mi">2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;sl.norm(A,2)*sl.norm(sl.inv(A),2) =&quot;</span><span class="p">,</span> <span class="n">sl</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">sl</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">sl</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">A</span><span class="p">),</span><span class="mi">2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;SciPy Frobenius cond(A) = &quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">cond</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="s1">&#39;fro&#39;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;sl.norm(A,&#39;fro&#39;)*sl.norm(sl.inv(A),&#39;fro&#39;) =&quot;</span><span class="p">,</span> <span class="n">sl</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="s1">&#39;fro&#39;</span><span class="p">)</span><span class="o">*</span><span class="n">sl</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">sl</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">A</span><span class="p">),</span><span class="s1">&#39;fro&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>A = [[10.  2.  1.]
+ [ 6.  5.  4.]
+ [ 1.  4.  7.]]
+SciPy cond(A) = 10.71337188134679
+Default condition number uses matrix two-norm = 10.71337188134679
+sl.norm(A,2)*sl.norm(sl.inv(A),2) = 10.71337188134679
+SciPy Frobenius cond(A) =  12.463616561943587
+sl.norm(A,&#39;fro&#39;)*sl.norm(sl.inv(A),&#39;fro&#39;) = 12.463616561943585
+</pre></div>
+</div>
+</div>
+</div>
+<p>The condition number is expensive to compute, and so in practice the relative size of the determinant of the matrix can be gauged based on the magnitude of the entries of the matrix.</p>
+<div class="section" id="example">
+<h3>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h3>
+<p>We know that a singular matrix does not result in a unique solution to its corresponding linear matrix system. But what are the consequences of near-singularity (ill-conditioning)?</p>
+<p>Consider the following example</p>
+<p>\[
+\left(
+\begin{array}{cc}
+2 &amp; 1 \\
+2 &amp; 1 + \epsilon  \\
+\end{array}
+\right)\left(
+\begin{array}{c}
+x \\
+y \\
+\end{array}
+\right) = \left(
+\begin{array}{c}
+3 \\
+0 \\
+\end{array}
+\right)
+\]</p>
+<p>When \(\epsilon=0\) the two columns/rows are not linear independent, and hence the determinant of this matrix is zero, the condition number is infinite, and the linear system does not have a solution (as the two equations would be telling us the contradictory information that \(2x+y\) is equal to 3 and is also equal to 0).</p>
+<p>Let’s consider a range of values \(\epsilon\) and calculate matrix deteterminant and condition number:</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">2.</span><span class="p">,</span><span class="mf">1.</span><span class="p">],</span>
+                 <span class="p">[</span><span class="mf">2.</span><span class="p">,</span><span class="mf">1.</span><span class="p">]])</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">3.</span><span class="p">,</span><span class="mf">0.</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Matrix is singular, det(A) = &quot;</span><span class="p">,</span> <span class="n">sl</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">A</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="n">A</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="mf">0.001</span>
+    <span class="n">epsilon</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="mf">1.0</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Epsilon = </span><span class="si">%g</span><span class="s2">, det(A) = </span><span class="si">%g</span><span class="s2">, cond(A) = </span><span class="si">%g</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">epsilon</span><span class="p">,</span> <span class="n">sl</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">A</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">cond</span><span class="p">(</span><span class="n">A</span><span class="p">)),</span>
+          <span class="s2">&quot;inv(A)*b =&quot;</span><span class="p">,</span> <span class="n">sl</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">@</span> <span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Matrix is singular, det(A) =  0.0
+Epsilon = 0.001, det(A) = 0.002, cond(A) = 5001. inv(A)*b = [ 1501.5 -3000. ]
+Epsilon = 0.002, det(A) = 0.004, cond(A) = 2501. inv(A)*b = [  751.5 -1500. ]
+Epsilon = 0.003, det(A) = 0.006, cond(A) = 1667.67. inv(A)*b = [  501.5 -1000. ]
+</pre></div>
+</div>
+</div>
+</div>
+<p>We find for \(\epsilon=0.001\) that \(\det(A)=0.002\) (i.e. quite a lot smaller than the other coefficients in the matrix) and \(\textrm{cond}(A)\approx 5000\).</p>
+<p>Change to \(\epsilon=0.002\) causes 100% change in both components of the solution. This is the consequence of the matrix being ill-conditioned - we should not trust the numerical solution to ill-conditioned problems.</p>
+<p>A way to see this is to recognise that computers do not perform arithmetic exactly - they necessarily have to <a class="reference external" href="http://www.mathwords.com/t/truncating_a_number.htm">truncate numbers</a> at a certain number of significant figures, performing multiple operations with these truncated numbers can lead to an erosion of accuracy. Often this is not a problem, but these so-called <a class="reference external" href="http://mathworld.wolfram.com/RoundoffError.html">roundoff</a> errors in algorithms generating \(A\), or operating on \(A\) as in Gaussian elimination, will lead to small inaccuracies in the coefficients of the matrix. Hence, in the case of ill-conditioned problems, will fall foul of the issue seen above where a very small error in an input to the algorithm led to a far larger error in an output.</p>
+</div>
+</div>
+<div class="section" id="roundoff-errors">
+<h2>Roundoff errors<a class="headerlink" href="#roundoff-errors" title="Permalink to this headline">¶</a></h2>
+<div class="margin sidebar" id="index-3">
+<p class="sidebar-title">Note</p>
+<p>For some examples of catastrophic failures due to round off errors see <a class="reference external" href="https://profs.info.uaic.ro/~ancai/CN/bibliografie/CN_disasters.htm">Prof. Kees Vuik</a>.</p>
+</div>
+<p>As an example, consider the mathematical formula</p>
+<p>\[f(x)=(1-x)^{10}.\]</p>
+<p>We can relatively easily expand this out by hand</p>
+<p>\[f(x)=1- 10x + 45x^2 - 120x^3 + 210x^4 - 252x^5 + 210x^6 - 120x^7 + 45x^8 - 10x^9 + x^{10}.\]</p>
+<p>Mathematically these two expressions for \(f(x)\) are identical; when evaluated by a computer different operations will be performed, which should give the same answer. For numbers \(x\) away from \(1\) these two expressions do return (pretty much) the same answer.</p>
+<p>However, for \(x\) close to 1 the second expression adds and subtracts individual terms of increasing size which should largely cancel out, but they don’t to sufficient accuracy due to round off errors; these errors accumulate with more and more operations, leading a <a class="reference external" href="https://en.wikipedia.org/wiki/Loss_of_significance">loss of significance</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="k">def</span> <span class="nf">f1</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">-</span> <span class="n">x</span><span class="p">)</span><span class="o">**</span><span class="mi">10</span>
+
+<span class="k">def</span> <span class="nf">f2</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">-</span> <span class="mf">10.</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="mf">45.</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mf">120.</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">3</span> <span class="o">+</span>
+           <span class="mf">210.</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">4</span> <span class="o">-</span> <span class="mf">252.</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">5</span> <span class="o">+</span> <span class="mf">210.</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">6</span> <span class="o">-</span>
+           <span class="mf">120.</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">7</span> <span class="o">+</span> <span class="mf">45.</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">8</span> <span class="o">-</span> <span class="mf">10.</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">9</span> <span class="o">+</span> <span class="n">x</span><span class="o">**</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">xi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">ax2</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">ax3</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span> <span class="n">f1</span><span class="p">(</span><span class="n">xi</span><span class="p">),</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;unexpanded&quot;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span> <span class="n">f2</span><span class="p">(</span><span class="n">xi</span><span class="p">),</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;expanded&quot;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;best&quot;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$f(x)$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+
+<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span> <span class="mf">1.</span><span class="o">-</span><span class="n">f1</span><span class="p">(</span><span class="n">xi</span><span class="p">)</span><span class="o">/</span><span class="n">f2</span><span class="p">(</span><span class="n">xi</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Relative</span><span class="se">\n</span><span class="s2">difference</span><span class="se">\n</span><span class="s2">in %&quot;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;best&quot;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$1-\frac</span><span class="si">{unexpanded}{expanded}</span><span class="s2">$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+
+<span class="n">ax3</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mf">0.75</span><span class="p">,</span> <span class="mf">1.25</span><span class="p">)</span>
+<span class="n">ax3</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span> <span class="mf">1.</span><span class="o">-</span><span class="n">f1</span><span class="p">(</span><span class="n">xi</span><span class="p">)</span><span class="o">/</span><span class="n">f2</span><span class="p">(</span><span class="n">xi</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Relative</span><span class="se">\n</span><span class="s2">difference</span><span class="se">\n</span><span class="s2">in %&quot;</span><span class="p">)</span>
+<span class="n">ax3</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;best&quot;</span><span class="p">)</span>
+<span class="n">ax3</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$1-\frac</span><span class="si">{unexpanded}{expanded}</span><span class="s2">$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Comparison of $(1-x)^</span><span class="si">{10}</span><span class="s2">$ expansion&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">wspace</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/13_ill_conditioning_errors_10_0.png" src="../../_images/13_ill_conditioning_errors_10_0.png" />
+</div>
+</div>
+<p>As we can see on the graph, for most of the domain, i.e. far away from 1.0, the expansion is almost the same as the unexpanded version. Near \(x=1\), the expansion creates huge errors in terms of relative difference.</p>
+<div class="section" id="algorithm-stability">
+<h3>Algorithm stability<a class="headerlink" href="#algorithm-stability" title="Permalink to this headline">¶</a></h3>
+<p>The susceptibility for a numerical algorithm to dampen (inevitable) errors, rather than to magnify them as we have seen in examples above, is termed stability. This is a concern for numerical linear algebra as considered here, as well as for the numerical solution of differential equations. In that case you don’t want small errors to grow and accumulate as you propagate the solution to an ODE or PDE forward in time say. If your algorithm is not inherently stable, or has other limitation, you need to understand and appreciate this, as it can cause catastrophic failures!</p>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "primer-computational-mathematics/book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./c_mathematics/numerical_methods"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="12_LU_decomposition.html" title="previous page">LU decomposition</a>
+    <a class='right-next' id="next-link" href="14_iterative_methods_to_solve_matrix.html" title="next page">Iterative methods to solve a matrix</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Imperial College London<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../../_static/js/index.js"></script>
+    
+  </body>
+</html>
