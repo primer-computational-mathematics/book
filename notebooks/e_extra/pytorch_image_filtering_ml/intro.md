@@ -1,4 +1,4 @@
-# Machine Learning
+# Machine learning
 
 
 Table of contents:
