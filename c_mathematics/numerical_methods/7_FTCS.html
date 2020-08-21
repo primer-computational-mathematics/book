@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Forward Time Centred Space scheme &#8212; ESE Jupyter Material</title>
+    <title>FTCS scheme &#8212; ESE Jupyter Material</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
     <link href="../../_static/css/index.css" rel="stylesheet">
     <link rel="stylesheet" href="../../_static/sphinx-book-theme.css" type="text/css" />
@@ -40,7 +40,7 @@
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Numerical integration" href="8_Numerical_integration.html" />
+    <link rel="next" title="BTCS Scheme" href="8_BTCS.html" />
     <link rel="prev" title="Successive over-relaxation method" href="6_Solving_PDEs_SOR.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -125,34 +125,31 @@
         <a href="6_Solving_PDEs_SOR.html">Successive over-relaxation method</a>
       </li>
       <li class="active">
-        <a href="">Forward Time Centred Space scheme</a>
+        <a href="">FTCS scheme</a>
       </li>
       <li class="">
-        <a href="8_Numerical_integration.html">Numerical integration</a>
+        <a href="8_BTCS.html">BTCS Scheme</a>
       </li>
       <li class="">
-        <a href="9_Roots_of_equations.html">Roots of equations</a>
+        <a href="9_Numerical_integration.html">Numerical integration</a>
       </li>
       <li class="">
-        <a href="10_linear_algebra_intro.html">Linear algebra introduction</a>
+        <a href="10_Roots_of_equations.html">Roots of equations</a>
       </li>
       <li class="">
-        <a href="11_Gaussian_elimination.html">Gaussian elimination</a>
+        <a href="11_linear_algebra_intro.html">Linear algebra introduction</a>
       </li>
       <li class="">
-        <a href="12_LU_decomposition.html">LU decomposition</a>
+        <a href="12_Gaussian_elimination.html">Gaussian elimination</a>
       </li>
       <li class="">
-        <a href="13_ill_conditioning_errors.html">Ill-conditioning and roundoff errors</a>
+        <a href="13_LU_decomposition.html">LU decomposition</a>
       </li>
       <li class="">
-        <a href="14_iterative_methods_to_solve_matrix.html">Iterative methods to solve a matrix</a>
+        <a href="14_ill_conditioning_errors.html">Ill-conditioning and roundoff errors</a>
       </li>
       <li class="">
-        <a href="BTCS.html">BTCS Scheme</a>
-      </li>
-      <li class="">
-        <a href="BTCS_20200820.html">BTCS Scheme</a>
+        <a href="15_iterative_methods_to_solve_matrix.html">Iterative methods to solve a matrix</a>
       </li>
     </ul>
     </li>
@@ -217,7 +214,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../_sources/c_mathematics/numerical_methods/7_Forward_time_centred_space.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="../../_sources/c_mathematics/numerical_methods/7_FTCS.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
@@ -234,7 +231,7 @@
     <div class="dropdown-buttons sourcebuttons">
         
         <a class="issues-button"
-            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2Fc_mathematics/numerical_methods/7_Forward_time_centred_space.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2Fc_mathematics/numerical_methods/7_FTCS.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
         
@@ -254,7 +251,7 @@
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/c_mathematics/numerical_methods/7_Forward_time_centred_space.ipynb"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/c_mathematics/numerical_methods/7_FTCS.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="../../_static/images/logo_binder.svg"
@@ -300,8 +297,8 @@
         
               <div>
                 
-  <div class="section" id="forward-time-centred-space-scheme">
-<span id="ftcs-scheme"></span><h1>Forward Time Centred Space scheme<a class="headerlink" href="#forward-time-centred-space-scheme" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="ftcs-scheme">
+<span id="id1"></span><h1>FTCS scheme<a class="headerlink" href="#ftcs-scheme" title="Permalink to this headline">¶</a></h1>
 <p id="index-0"><a class="reference external" href="https://en.wikipedia.org/wiki/FTCS_scheme">Forward Time Centred Space</a> (FTCS) scheme is a method of solving <a class="reference internal" href="../differential_equations/10_heat_eq.html#heat-separation-of-variables"><span class="std std-ref">heat equation</span></a> (or in general parabolic PDEs). In this scheme, we approximate the spatial derivatives at the current time step and the time derivative between current and new time step:</p>
 <p>\[\quad t = t_0+n\Delta t,\quad x=x_0+i\Delta x,\\
 \frac{\partial u}{\partial t}\approx \frac{u_{i}^{n+1}-u_{i}^{n}}{\Delta t},\\
@@ -434,7 +431,7 @@ Used dt = 0.0010.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/7_Forward_time_centred_space_6_0.png" src="../../_images/7_Forward_time_centred_space_6_0.png" />
+<img alt="../../_images/7_FTCS_6_0.png" src="../../_images/7_FTCS_6_0.png" />
 </div>
 </div>
 <p>The solution was obtained after 8,522 iterations.</p>
@@ -495,7 +492,7 @@ Maximum dt = 0.0050.
 Used dt = 0.0100.
 </pre></div>
 </div>
-<img alt="../../_images/7_Forward_time_centred_space_8_1.png" src="../../_images/7_Forward_time_centred_space_8_1.png" />
+<img alt="../../_images/7_FTCS_8_1.png" src="../../_images/7_FTCS_8_1.png" />
 </div>
 </div>
 <p>We can see that the solution went unstable immediately for a larger \(\Delta t\).</p>
@@ -531,7 +528,7 @@ Used dt = 0.0100.
     <div class='prev-next-bottom'>
         
     <a class='left-prev' id="prev-link" href="6_Solving_PDEs_SOR.html" title="previous page">Successive over-relaxation method</a>
-    <a class='right-next' id="next-link" href="8_Numerical_integration.html" title="next page">Numerical integration</a>
+    <a class='right-next' id="next-link" href="8_BTCS.html" title="next page">BTCS Scheme</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

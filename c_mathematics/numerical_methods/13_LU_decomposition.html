@@ -40,8 +40,8 @@
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Ill-conditioning and roundoff errors" href="13_ill_conditioning_errors.html" />
-    <link rel="prev" title="Gaussian elimination" href="11_Gaussian_elimination.html" />
+    <link rel="next" title="Ill-conditioning and roundoff errors" href="14_ill_conditioning_errors.html" />
+    <link rel="prev" title="Gaussian elimination" href="12_Gaussian_elimination.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="docsearch:language" content="en">
@@ -125,34 +125,31 @@
         <a href="6_Solving_PDEs_SOR.html">Successive over-relaxation method</a>
       </li>
       <li class="">
-        <a href="7_Forward_time_centred_space.html">Forward Time Centred Space scheme</a>
+        <a href="7_FTCS.html">FTCS scheme</a>
       </li>
       <li class="">
-        <a href="8_Numerical_integration.html">Numerical integration</a>
+        <a href="8_BTCS.html">BTCS Scheme</a>
       </li>
       <li class="">
-        <a href="9_Roots_of_equations.html">Roots of equations</a>
+        <a href="9_Numerical_integration.html">Numerical integration</a>
       </li>
       <li class="">
-        <a href="10_linear_algebra_intro.html">Linear algebra introduction</a>
+        <a href="10_Roots_of_equations.html">Roots of equations</a>
       </li>
       <li class="">
-        <a href="11_Gaussian_elimination.html">Gaussian elimination</a>
+        <a href="11_linear_algebra_intro.html">Linear algebra introduction</a>
+      </li>
+      <li class="">
+        <a href="12_Gaussian_elimination.html">Gaussian elimination</a>
       </li>
       <li class="active">
         <a href="">LU decomposition</a>
       </li>
       <li class="">
-        <a href="13_ill_conditioning_errors.html">Ill-conditioning and roundoff errors</a>
+        <a href="14_ill_conditioning_errors.html">Ill-conditioning and roundoff errors</a>
       </li>
       <li class="">
-        <a href="14_iterative_methods_to_solve_matrix.html">Iterative methods to solve a matrix</a>
-      </li>
-      <li class="">
-        <a href="BTCS.html">BTCS Scheme</a>
-      </li>
-      <li class="">
-        <a href="BTCS_20200820.html">BTCS Scheme</a>
+        <a href="15_iterative_methods_to_solve_matrix.html">Iterative methods to solve a matrix</a>
       </li>
     </ul>
     </li>
@@ -217,7 +214,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../_sources/c_mathematics/numerical_methods/12_LU_decomposition.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="../../_sources/c_mathematics/numerical_methods/13_LU_decomposition.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
@@ -234,7 +231,7 @@
     <div class="dropdown-buttons sourcebuttons">
         
         <a class="issues-button"
-            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2Fc_mathematics/numerical_methods/12_LU_decomposition.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2Fc_mathematics/numerical_methods/13_LU_decomposition.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
         
@@ -254,7 +251,7 @@
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/c_mathematics/numerical_methods/12_LU_decomposition.ipynb"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/c_mathematics/numerical_methods/13_LU_decomposition.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="../../_static/images/logo_binder.svg"
@@ -324,7 +321,7 @@
 <div class="section" id="motivation">
 <span id="index-0"></span><h2>Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline">¶</a></h2>
 <p>The Gaussian elimination solves a matrix system with one RHS vector \(\pmb{b}\). We often have to deal with problems where we have multiple RHS vectors, all with the same matrix \(A\).</p>
-<p>We could call the same code (e.g. <code class="docutils literal notranslate"><span class="pre">upper_triangle</span></code> and <code class="docutils literal notranslate"><span class="pre">back_substitution</span></code> from <a class="reference internal" href="11_Gaussian_elimination.html#nm-gaussian-elimination-code"><span class="std std-ref">Gaussian elimination</span></a> notebook) multiple times to solve all of these corresponding linear systems, but note that as the elimination algorithm is actually performing operations based upon (the same) \(A\) each time, we would actually be wasting time repeating exactly the same operations - this is therefore clearly not an efficient solution to the problem.</p>
+<p>We could call the same code (e.g. <code class="docutils literal notranslate"><span class="pre">upper_triangle</span></code> and <code class="docutils literal notranslate"><span class="pre">back_substitution</span></code> from <a class="reference internal" href="12_Gaussian_elimination.html#nm-gaussian-elimination-code"><span class="std std-ref">Gaussian elimination</span></a> notebook) multiple times to solve all of these corresponding linear systems, but note that as the elimination algorithm is actually performing operations based upon (the same) \(A\) each time, we would actually be wasting time repeating exactly the same operations - this is therefore clearly not an efficient solution to the problem.</p>
 <p>We could easily generalise our Gaussian elimination/back substitution algorithms to include multiple RHS column vectors in the augmented system, perform the same sequence of row operations (but now only once) to transform the matrix to upper-triangular form, and then perform back substitution on each of the transformed RHS vectors from the augmented system - cf. the use of Gaussian elimination to compute the inverse to a matrix by placing the identity on the right of the augmented system.</p>
 <p>However, it is often the case that each RHS vector depends on the solutions to the matrix systems obtained from some or all of the earlier RHS vectors, and so this generalisation would not work in this case. For example, our discrete system could be of the form</p>
 <p>\[A\pmb{x}^{n+1} = \pmb{b}(\pmb{x}^n, \ldots)\]</p>
@@ -585,7 +582,7 @@ True
 </div>
 <div class="section" id="implementation">
 <h2>Implementation<a class="headerlink" href="#implementation" title="Permalink to this headline">¶</a></h2>
-<p>We can build an LU code easily from <a class="reference internal" href="11_Gaussian_elimination.html#nm-gaussian-elimination"><span class="std std-ref">Gaussian elimination code</span></a>. The final \(U\) matrix we need here is as was already constructed through Gaussian elimination, the entries of \(L\) we need are simply the \({A_{ik}}/{A_{kk}}\) multipliers we computed as part of the elimination, but threw away previously.</p>
+<p>We can build an LU code easily from <a class="reference internal" href="12_Gaussian_elimination.html#nm-gaussian-elimination"><span class="std std-ref">Gaussian elimination code</span></a>. The final \(U\) matrix we need here is as was already constructed through Gaussian elimination, the entries of \(L\) we need are simply the \({A_{ik}}/{A_{kk}}\) multipliers we computed as part of the elimination, but threw away previously.</p>
 <p>For a given pivot row \(k\), for each of these multipliers (for every row below the pivot), as we compute them we know that we are going to transform the augmented matrix in order to achieve a new zero below the diagonal - we can store each multiplier in this position before moving on to the following row, we implicitly know that the diagonals of \(L\) will be unity and so don’t need to store these (and noting that we don’t actually have a space for them anyway!). We then move on to the following pivot row, replacing the zeros in the corresponding column we are zero’ing, but again using the now spare space to store the multipliers.</p>
 <p>For example, for the case above</p>
 <p>\[ A =
@@ -615,7 +612,7 @@ True
 \end{bmatrix}
 = [\color{blue}L\backslash U]
 \]</p>
-<p>Starting from <a class="reference internal" href="11_Gaussian_elimination.html#nm-gaussian-elimination"><span class="std std-ref">Gaussian elimination code</span></a> we will compute the LU decomposition of a matrix. First, we will store \(L\) and \(U\) in two different matrices:</p>
+<p>Starting from <a class="reference internal" href="12_Gaussian_elimination.html#nm-gaussian-elimination"><span class="std std-ref">Gaussian elimination code</span></a> we will compute the LU decomposition of a matrix. First, we will store \(L\) and \(U\) in two different matrices:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">LU_dec</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
@@ -835,7 +832,7 @@ A =
 \end{bmatrix}
 \]</p>
 <p>We will not encounter the problem with dividing by zero anymore, at least for this matrix.</p>
-<p>This matrix was nice and only required one swap. But if your matrix has lots of \(0\) or very small numbers, then maybe you might need more swaps. You might also want to nondimensionalize that matrix. That is, of course assuming that the equations contain enough information to actually allow you to solve the equation. You could use the determinant, or the <a class="reference internal" href="11_Gaussian_elimination.html#nm-gauss-jordan-elimination"><span class="std std-ref">Gauss-Jordan elimination</span></a> to check if there is actually a solution. You should always check the solvability of an equation before solving it, since trying to solve an equation which cannot be solved is wasted effort.</p>
+<p>This matrix was nice and only required one swap. But if your matrix has lots of \(0\) or very small numbers, then maybe you might need more swaps. You might also want to nondimensionalize that matrix. That is, of course assuming that the equations contain enough information to actually allow you to solve the equation. You could use the determinant, or the <a class="reference internal" href="12_Gaussian_elimination.html#nm-gauss-jordan-elimination"><span class="std std-ref">Gauss-Jordan elimination</span></a> to check if there is actually a solution. You should always check the solvability of an equation before solving it, since trying to solve an equation which cannot be solved is wasted effort.</p>
 <p>You could use conditionals to control the swapping or the skipping of rows. Although the example here used \(0\), it could be a very small number too, and not neccesary \(0\) that could cause the problem, so maybe it would be nice to compare the conditional to a certain threshold to decided whether to swap or not.</p>
 </div>
 <p>Example partial pivoting using <code class="docutils literal notranslate"><span class="pre">scipy.linalg</span></code>:</p>
@@ -1041,8 +1038,8 @@ Have we succeeded in creating partial pivoting? True
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="11_Gaussian_elimination.html" title="previous page">Gaussian elimination</a>
-    <a class='right-next' id="next-link" href="13_ill_conditioning_errors.html" title="next page">Ill-conditioning and roundoff errors</a>
+    <a class='left-prev' id="prev-link" href="12_Gaussian_elimination.html" title="previous page">Gaussian elimination</a>
+    <a class='right-next' id="next-link" href="14_ill_conditioning_errors.html" title="next page">Ill-conditioning and roundoff errors</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
