@@ -23,6 +23,7 @@ Table of contents:
     * {ref}`runge_kutta_method`
     * {ref}`successive_over_relaxation`
     * {ref}`ftcs_scheme`
+    * {ref}`nm_btcs_scheme`
 4. {ref}`nm_num_integration`
     * {ref}`nm_midpoint_rule`
     * {ref}`nm_trapezoid_rule`
