@@ -40,6 +40,9 @@ Table of contents:
     * {ref}`nm_gaussian_elimination`
     * {ref}`nm_gauss_jordan_elimination`
     * {ref}`nm_lu_decomposition`
+    * {ref}`nm_ill_conditioning_roundoff_errors`
+    * {ref}`nm_iterative_methods_matrix`
+    * {ref}`nm_sparse_matrices`
 
 
 ## References
