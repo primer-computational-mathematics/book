@@ -8,6 +8,11 @@ The primer is (currently) split into four sections:
 * {doc}`c_mathematics/intro`
 * {doc}`d_geosciences/intro`
 
+
+```{margin} For contributors
+If you would like to contribute to the website, you can find our guidelines {doc}`here <e_extra/jupyter_book_guide>`. 
+```
+
 If you are interested in resources related to a specific module, visit the {doc}`a_modules/intro` page.
 
 Those doing a research project may find the {doc}`e_extra/intro` section useful.
