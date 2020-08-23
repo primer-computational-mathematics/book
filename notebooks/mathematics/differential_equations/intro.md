@@ -26,7 +26,10 @@ Table of contents:
     - {ref}`2nd_ord_lin_ode`
     - {ref}`nth_ord_lin_ode`
     - {ref}`lin_const_coeffs`
-3. **{doc}`5_ode_series`
+3. **{doc}`5_ode_series`**
+    - {ref}`series_solutions`
+    - {ref}`series_solution`
+    - {ref}`frobenius`
     
 **PART II: PARTIAL DIFFERENTIAL EQUATIONS**
 
@@ -46,11 +49,14 @@ Table of contents:
     - {ref}`laplace_interpretation`
 5. **{doc}`10_heat_eq`**
     - {ref}`heat_separation_of_variables`
-        - {ref}`inhomog_bcs_2_homog`
-6. **{doc}`11_wave_eq`**
+    - {ref}`inhomog_bcs_2_homog`
+6. **{doc}`11_pde_fourier`**
+    - {ref}`diff_eq`
+    - {ref}`example_delta`
+7. **{doc}`12_wave_eq`**
     - {ref}`wave_interpretation`
     - {ref}`wave_dalembert`
-7. **{doc}`12_similarity_solutions`**
+8. **{doc}`13_similarity_solutions`**
     
 
 
@@ -59,6 +65,8 @@ Table of contents:
 - Prof Velisa Vesovic's lecture notes on Maths Methods 2 (available internally on ESESIS)
 
 - Prof Matthew Piggott's lecture notes on Mathematics for Scientists and Engineers (available internally on ESESIS)
+
+- Prof Alan Heavens's lecture notes on Differenential Equations for second year physics
 
 - Boyce, W.E., DiPrima, R.C. and Villagómez Velázquez, H., 2004. Elementary differential equations and boundary value problems.
 
