@@ -128,10 +128,13 @@
         <a href="10_heat_eq.html">Heat (diffusion) equation</a>
       </li>
       <li class="">
-        <a href="11_wave_eq.html">Wave equation</a>
+        <a href="11_pde_fourier.html">Solving PDEs with fourier methods</a>
       </li>
       <li class="">
-        <a href="12_similarity_solutions.html">Self-similar solutions</a>
+        <a href="12_wave_eq.html">Wave equation</a>
+      </li>
+      <li class="">
+        <a href="13_similarity_solutions.html">Self-similar solutions</a>
       </li>
     </ul>
     </li>
@@ -301,7 +304,7 @@
 <p>Partial differential equations (PDEs) arise everywhere in Physics</p>
 <div class="section" id="partial-differentiation">
 <span id="pde-basic-partial-differentiation"></span><h2>Partial differentiation<a class="headerlink" href="#partial-differentiation" title="Permalink to this headline">¶</a></h2>
-<p>Let us quickly recall some important … in partial differentiation.</p>
+<p>Let us quickly recall some important concepts in partial differentiation.</p>
 <p>Given a function of <span class="math notranslate nohighlight">\(n\)</span> variables <span class="math notranslate nohighlight">\(f(x_1, x_2, \dots , x_n)\)</span>, its <strong>total differential</strong> is given by</p>
 <div class="math notranslate nohighlight">
 \[ df = \frac{\partial f}{\partial x_1} dx_1 + \frac{\partial f}{\partial x_2} dx_2 + \cdots + \frac{\partial f}{\partial x_n} dx_n \]</div>
@@ -359,21 +362,21 @@
 <p>Therefore, if the equation is elliptic and <span class="math notranslate nohighlight">\(\lambda_1\)</span> and <span class="math notranslate nohighlight">\(\lambda_2\)</span> are both positive or negative, then <span class="math notranslate nohighlight">\(a_{11}a_{22} - \frac{a_{12}^2}{4} &gt; 0\)</span>. If one is positive and the other is negative, then <span class="math notranslate nohighlight">\(a_{11}a_{22} - \frac{a_{12}^2}{4} &lt; 0\)</span> and the equation is hyperbolic. And if one eigenvalue is zero, <span class="math notranslate nohighlight">\(a_{11}a_{22} - \frac{a_{12}^2}{4} = 0\)</span> and the equation is parabolic.</p>
 <p>Let us see three very important examples.</p>
 <ol class="simple">
-<li><p><strong>Laplace’s equation</strong> $ \nabla^2 u = 0 $</p></li>
+<li><p><strong>Laplace’s equation</strong> <span class="math notranslate nohighlight">\(\nabla^2 u = 0\)</span></p></li>
 </ol>
 <p>Let us write it in the above form</p>
 <div class="math notranslate nohighlight">
 \[ \frac{\partial^2 u}{\partial x^2} + \frac{\partial^2 u}{\partial y^2} + \frac{\partial^2 u}{\partial z^2} = 0 \]</div>
 <p>Here <span class="math notranslate nohighlight">\(A_{ij}\)</span> is the diagonal matrix <span class="math notranslate nohighlight">\(A\)</span> = diag<span class="math notranslate nohighlight">\((1, 1, 1)\)</span>. Recall that the eigenvalues of diagonal matrices are the diagonal entries themselves, so the eigenvalues of <span class="math notranslate nohighlight">\(A\)</span> are <span class="math notranslate nohighlight">\(1, 1, 1\)</span>. Since all 3 are positive, Laplace’s equation is elliptic.</p>
 <ol class="simple">
-<li><p><strong>Heat (diffusion) equation</strong> $ u_t - k \nabla^2 u = 0, \quad k &gt; 0 $</p></li>
+<li><p><strong>Heat (diffusion) equation</strong> <span class="math notranslate nohighlight">\(u_t - k \nabla^2 u = 0, \quad k &gt; 0\)</span></p></li>
 </ol>
 <p>Note that now <span class="math notranslate nohighlight">\(n = 4\)</span> as we have 1 + 3 dimensions (1 temporal and 3 spatial). Rewritten as</p>
 <div class="math notranslate nohighlight">
 \[ -k \frac{\partial^2 u}{\partial x^2} -k \frac{\partial^2 u}{\partial y^2} -k \frac{\partial^2 u}{\partial z^2} + u_t = 0 \]</div>
-<p>we easily see that <span class="math notranslate nohighlight">\(A_{ij} =\)</span> diag<span class="math notranslate nohighlight">\((0, -k, -k, -k)\)</span> because we have $ 0 \times u_{tt} $. The heat equation is parabolic.</p>
+<p>we easily see that <span class="math notranslate nohighlight">\(A_{ij} =\)</span> diag<span class="math notranslate nohighlight">\((0, -k, -k, -k)\)</span> because we have <span class="math notranslate nohighlight">\(0 \times u_{tt}\)</span>. The heat equation is parabolic.</p>
 <ol class="simple">
-<li><p><strong>Wave equation</strong> $ u_{tt} - c^2 \nabla^2 u = 0 $</p></li>
+<li><p><strong>Wave equation</strong> <span class="math notranslate nohighlight">\(u_{tt} - c^2 \nabla^2 u = 0\)</span></p></li>
 </ol>
 <p>Now the time derivative is second-order as well, so the coefficient matrix <span class="math notranslate nohighlight">\(A_{ij} =\)</span> diag<span class="math notranslate nohighlight">\((1, -c^2, -c^2, -c^2)\)</span>. We have 1 positive eigenvalue and all 3 other eigenvalues are negative, so the wave equation is hyperbolic.</p>
 <div class="admonition important">
@@ -386,7 +389,7 @@
 <ul class="simple">
 <li><p><strong>Elliptic</strong>. Solutions are “smooth”, i.e. they vary in a sedate manner. The level of smoothness is partly dictated by the coefficients in the PDE. Solutions may be rough at boundaries. If one of the independent variables is time, then solutions will tend to become smoother with time. If both of the independent variables are space coordinates, then the solution will tend to be increasingly smooth in the interior of the region away from the boundaries.</p></li>
 <li><p><strong>Parabolic</strong>. Parabolic equations can always be transformed into a form equivalent to the diffusion equation by a suitable change of variables. In this form, the solutions always become smoother as the transformed time variable increases.</p></li>
-<li><p><strong>Hyperbolic</strong>. Solutions do not get smoother with time. INstead discontinuities in the initial conditions tend to propagate across space and time. Hyperbolic equations are often difficult to deal with because at large times and distances their solutions are still complicated.</p></li>
+<li><p><strong>Hyperbolic</strong>. Solutions do not get smoother with time. Instead discontinuities in the initial conditions tend to propagate across space and time. Hyperbolic equations are often difficult to deal with because at large times and distances their solutions are still complicated.</p></li>
 </ul>
 </div>
 </div>

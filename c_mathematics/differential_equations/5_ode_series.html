@@ -128,10 +128,13 @@
         <a href="10_heat_eq.html">Heat (diffusion) equation</a>
       </li>
       <li class="">
-        <a href="11_wave_eq.html">Wave equation</a>
+        <a href="11_pde_fourier.html">Solving PDEs with fourier methods</a>
       </li>
       <li class="">
-        <a href="12_similarity_solutions.html">Self-similar solutions</a>
+        <a href="12_wave_eq.html">Wave equation</a>
+      </li>
+      <li class="">
+        <a href="13_similarity_solutions.html">Self-similar solutions</a>
       </li>
     </ul>
     </li>
@@ -268,10 +271,10 @@
         </li>
     
         <li class="nav-item toc-entry toc-h2">
-            <a href="#series-solutions-of-odes" class="nav-link">Series Solutions of ODEs</a><ul class="nav section-nav flex-column">
+            <a href="#series-solutions-of-odes" class="nav-link">Series solutions of ODEs</a><ul class="nav section-nav flex-column">
                 
         <li class="nav-item toc-entry toc-h3">
-            <a href="#power-series-method" class="nav-link">Power Series Method</a>
+            <a href="#power-series-method" class="nav-link">Power series Method</a>
         </li>
     
         <li class="nav-item toc-entry toc-h3">
@@ -315,11 +318,11 @@ unique solution of Eq. (1) that also satisfies the initial conditions y(x0) = y0
 <p>and we assume that the series converges in the interval $ |x - x_0| &lt; \rho, \ \rho &gt; 0 $.</p>
 </div>
 <div class="section" id="series-solutions-of-odes">
-<h1>Series Solutions of ODEs<a class="headerlink" href="#series-solutions-of-odes" title="Permalink to this headline">¶</a></h1>
+<span id="series-solution"></span><h1>Series solutions of ODEs<a class="headerlink" href="#series-solutions-of-odes" title="Permalink to this headline">¶</a></h1>
 <p><a class="reference internal" href="../../d_geosciences/Fluid_Dynamics/Lecture5_1D_Pipe_Flow.html#equation-eq2">(32)</a> A point <span class="math notranslate nohighlight">\(x = x_0\)</span> is an <strong>ordinary point</strong> if <span class="math notranslate nohighlight">\(p(x)\)</span> and <span class="math notranslate nohighlight">\(q(x)\)</span> are analytic on some interval about <span class="math notranslate nohighlight">\(x_0\)</span>, as opposed to a <strong>singular point</strong>. If <span class="math notranslate nohighlight">\(x_0\)</span> is a singularity of functions <span class="math notranslate nohighlight">\(p(x)\)</span> and <span class="math notranslate nohighlight">\(q(x)\)</span> but such that <span class="math notranslate nohighlight">\((x-x_0)p(x)\)</span> and <span class="math notranslate nohighlight">\((x-x_0)^2 q(x)\)</span> are analytic at <span class="math notranslate nohighlight">\(x_0\)</span>, then <span class="math notranslate nohighlight">\(x_0\)</span> is a <strong>regular singular point</strong>.</p>
 <p>Note that it is possible to translate the point <span class="math notranslate nohighlight">\(x_0\)</span> to the origin. We can also analyse the behaviour at infinity with the transformation <span class="math notranslate nohighlight">\(x = 1/t\)</span>.</p>
 <div class="section" id="power-series-method">
-<h2>Power Series Method<a class="headerlink" href="#power-series-method" title="Permalink to this headline">¶</a></h2>
+<span id="power-series"></span><h2>Power series Method<a class="headerlink" href="#power-series-method" title="Permalink to this headline">¶</a></h2>
 <p>A <strong>power series</strong> in powers of <span class="math notranslate nohighlight">\(x-x_0\)</span> is an infinite series</p>
 <div class="math notranslate nohighlight">
 \[ \sum_{m=0}^{\infty} a_m (x - x_0)^m \]</div>
@@ -328,26 +331,121 @@ unique solution of Eq. (1) that also satisfies the initial conditions y(x0) = y0
 \[ \sum_{m=0}^{\infty} a_m x^m \]</div>
 <p>We assume the solution of <a class="reference internal" href="../../d_geosciences/Fluid_Dynamics/Lecture5_1D_Pipe_Flow.html#equation-eq2">(32)</a> to be of the form of the power series, so that</p>
 <div class="math notranslate nohighlight">
-\[\begin{split} y' = \sum_{m=0}^{\infty} m a_m (x - x_0)^{m-1} \\
-y'' = \sum_{m=0}^{\infty} m(m-1) a_m (x - x_0)^{m-2} \end{split}\]</div>
+\[\begin{split} y' = \sum_{m=1}^{\infty} m a_m (x - x_0)^{m-1} \\
+y'' = \sum_{m=2}^{\infty} m(m-1) a_m (x - x_0)^{m-2} \end{split}\]</div>
 <p>The idea to solve <a class="reference internal" href="../../d_geosciences/Fluid_Dynamics/Lecture5_1D_Pipe_Flow.html#equation-eq2">(32)</a> is:</p>
 <ol class="simple">
 <li><p>Represent <span class="math notranslate nohighlight">\(p(x)\)</span> and <span class="math notranslate nohighlight">\(q(x)\)</span> by power series</p></li>
 <li><p>Substitute <span class="math notranslate nohighlight">\(y\)</span> and its derivatives in <a class="reference internal" href="../../d_geosciences/Fluid_Dynamics/Lecture5_1D_Pipe_Flow.html#equation-eq2">(32)</a></p></li>
 <li><p>Equate coefficients of like powers of <span class="math notranslate nohighlight">\(x\)</span> and determine them successively</p></li>
 </ol>
+<p>To demonstrate this, lets look at a simple example, the simple harmonic oscillator <span class="math notranslate nohighlight">\(y'' + y = 0\)</span>. Inserting the above power series into the ODE (assuming <span class="math notranslate nohighlight">\(x_0 = 0\)</span>) yields</p>
+<div class="math notranslate nohighlight">
+\[ \sum_{m=2}^{\infty} m(m-1) a_m x^{m-2} + \sum_{m=0}^{\infty} a_m x^m  = 0 \]</div>
+<p>We cannot solve this yet as the summands involve different powers of x and the lower limits are different. To circumvent this, we can use a shifted index <span class="math notranslate nohighlight">\(n = m-2\)</span> for <span class="math notranslate nohighlight">\(y''\)</span> and then relabel <span class="math notranslate nohighlight">\(n \rightarrow m\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[ y''(x) = \sum_{m=0}^{\infty} a_{m+2} (m+2)(m+1) x^m \]</div>
+<p>Now we can procceed</p>
+<div class="math notranslate nohighlight">
+\[  \sum_{m=0}^{\infty} a_{m+2} (m+2)(m+1) x^m + \sum_{m=0}^{\infty} a_m x^m  = 0 \]</div>
+<div class="math notranslate nohighlight">
+\[ \therefore \  \sum_{m=0}^{\infty}[a_{m+2} (m+2)(m+1) + a_m] x^m = 0 \]</div>
+<p>We require the overall coefficient of each and every power of x to vanish. This is the only way to guarantee that the LHS equals zero for any <span class="math notranslate nohighlight">\(x\)</span>. Thus, we can write</p>
+<div class="math notranslate nohighlight">
+\[ [a_{m+2} (m+2)(m+1) + a_m = 0 \]</div>
+<div class="math notranslate nohighlight">
+\[ \therefore \ a_{m+2} = - \frac{1}{(m+2)(m+1)} a_m \]</div>
+<p>which is known as a <strong>recurrence relation</strong>. It seperately links <span class="math notranslate nohighlight">\(a_m\)</span> together for even <span class="math notranslate nohighlight">\(m\)</span> and odd <span class="math notranslate nohighlight">\(m\)</span>. Using the recurrence relation, we can determine all the coefficients of the power series and thus determine the answer of the ODE. Thus, for the simple harmonic oscillator, we find for even <span class="math notranslate nohighlight">\(m = 2k\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[ a_{2(k+1)} = - \frac{1}{(2k+2)(2k+1)} a_{2k} \]</div>
+<p>and by inspection we see that</p>
+<div class="math notranslate nohighlight">
+\[ a_{2k} = \frac{(-1)^k}{(2k)!} a_0 \]</div>
+<p>Using the same procedure for odd <span class="math notranslate nohighlight">\(m = 2k+1\)</span> we find by inspection that</p>
+<div class="math notranslate nohighlight">
+\[ a_{2k + 1} = \frac{(-1)^k}{(2k + 1)!} a_1 \]</div>
+<p>Thus, relabelling <span class="math notranslate nohighlight">\(k \rightarrow m\)</span>, we can write</p>
+<div class="math notranslate nohighlight">
+\[ y(x) = a_0 \sum_{m=0}^{\infty} \frac{(-1)^m}{(2m)!} x^{2m} + a_1 \sum_{m=0}^{\infty} \frac{(-1)^m}{(2m + 1)!} x^{2m + 1} \]</div>
+<p>We can recognise the two power series as the sine and cosine functions respectively. Thus, the answer to the ODE can be written as</p>
+<div class="math notranslate nohighlight">
+\[ y(x) = a_0 cos(x) + a_1 sin(x) \]</div>
+<p>which, as expected, is the solution to the simple harmonic oscillator. Note that this is the general solution with the undetermined coefficients <span class="math notranslate nohighlight">\(a_0\)</span> and <span class="math notranslate nohighlight">\(a_1\)</span> acting as the two required arbitrary constants.</p>
 </div>
 <div class="section" id="frobenius-method">
-<h2>Frobenius method<a class="headerlink" href="#frobenius-method" title="Permalink to this headline">¶</a></h2>
+<span id="frobenius"></span><h2>Frobenius method<a class="headerlink" href="#frobenius-method" title="Permalink to this headline">¶</a></h2>
 <p>Consider a second-order linear ODE</p>
 <div class="math notranslate nohighlight">
 \[ y'' + p(x)y' + q(x)y = 0 \]</div>
 <div style="box-shadow: 0px 0px 7px 1px #9DC1BD; padding:15px;">
-<p><strong>Theorem (Fuchs)</strong> If <span class="math notranslate nohighlight">\(x = x_0\)</span> is a regular singular point, then the solutions of a differential equation:
-1. are analytic on some neighbourhood around <span class="math notranslate nohighlight">\(x_0\)</span>
-2. or they have a pole or a logarithmic term.</p>
+<p><strong>Theorem (Fuchs)</strong> If <span class="math notranslate nohighlight">\(x = x_0\)</span> is a regular singular point, then the solutions of a differential equation:</p>
+<ol class="simple">
+<li><p>are analytic on some neighbourhood around <span class="math notranslate nohighlight">\(x_0\)</span></p></li>
+<li><p>or they have a pole or a logarithmic term.</p></li>
+</ol>
 </div>
-<p>Fuchs’ theorem allows</p>
+<p>The solution to the ODE can be expressed using a generalised Frobenious series, meaning that any solution can be written as</p>
+<div class="math notranslate nohighlight">
+\[ y(x) = \sum_{m=0}^{\infty} a_m (x - x_0)^{m+r} \]</div>
+<p>where <span class="math notranslate nohighlight">\(a_m \neq 0\)</span>, since if it were zero we can absorb a factor of <span class="math notranslate nohighlight">\((x - x_0)\)</span> into <span class="math notranslate nohighlight">\((x - x_0)^r\)</span>. This condition leads to the <strong>indicinal equation</strong> for <span class="math notranslate nohighlight">\(r\)</span> (i.e. the equation for the index <span class="math notranslate nohighlight">\(r\)</span>), which is a quadratic. Usually there are two solutions and hence two series, however, if the roots for <span class="math notranslate nohighlight">\(r\)</span> differ by an integer, we have to be careful, for reasons that will be explained below. The best way to demonstrate the Frobenious method is through an example. We will solve <strong>Bessel’s equation</strong> which in standard form is</p>
+<div class="math notranslate nohighlight">
+\[ y'' + \frac{1}{x} y' +(1 - \frac{s^2}{x^2}) y = 0 \]</div>
+<p>where <span class="math notranslate nohighlight">\(s \geq 0\)</span>, <span class="math notranslate nohighlight">\(p(x) = 1/x\)</span> and <span class="math notranslate nohighlight">\(q(x) = 1 - \frac{s^2}{x^2}\)</span>. So <span class="math notranslate nohighlight">\(p\)</span> and <span class="math notranslate nohighlight">\(q\)</span> are not analytic at <span class="math notranslate nohighlight">\(x = 0\)</span>, and <span class="math notranslate nohighlight">\(x = 0\)</span> is a singular point. Also <span class="math notranslate nohighlight">\((x – x_0)p(x)\)</span> and <span class="math notranslate nohighlight">\((x – x_0)^2 q(x)\)</span> are analytic at <span class="math notranslate nohighlight">\(x_0 = 0\)</span>, thus <span class="math notranslate nohighlight">\(x_0=0\)</span> is a regular singluar point and so we can use the Frobenious method to solve the ODE. Therefore we substitue</p>
+<div class="math notranslate nohighlight">
+\[ y(x) = \sum_{m=0}^{\infty} a_m x^{m+r}, \ \ \ \ \ \ \ \ y'(x) = \sum_{m=0}^{\infty} a_m (m+r) x^{m+r-1}, \ \ \ \ \ \ \ \ y''(x) = \sum_{m=0}^{\infty} a_m (m+r) (m+r-1) x^{m+r-2} \]</div>
+<p>into Bessel’s equation, noting that the limits are all <span class="math notranslate nohighlight">\(m = 0\)</span> since the <span class="math notranslate nohighlight">\(m = 0\)</span> and <span class="math notranslate nohighlight">\(m = 1\)</span> terms do not necessarily differentiate to zero. If <span class="math notranslate nohighlight">\(r\)</span> is not an integer then the leading term does not vanish upon differentiating. Thus we get</p>
+<div class="math notranslate nohighlight">
+\[ x^2 \sum_{m=0}^{\infty} a_m (m+r) (m+r-1) x^{m+r-2} + x \sum_{m=0}^{\infty} a_m (m+r) x^{m+r-1} + (x^2 - s^2) \sum_{m=0}^{\infty} a_m x^{m+r} = 0 \]</div>
+<p>Now absorb the <span class="math notranslate nohighlight">\(x^1, x^2\)</span> pre-factors onto the sum</p>
+<div class="math notranslate nohighlight">
+\[ \sum_{m=0}^{\infty} a_m (m+r) (m+r-1) x^{m+r} + \sum_{m=0}^{\infty} a_m (m+r) x^{m+r} - s^2 \sum_{m=0}^{\infty} a_m x^{m+r} +  \sum_{m=0}^{\infty} a_m x^{m+r+2} = 0 \]</div>
+<p>Letting <span class="math notranslate nohighlight">\(n = m + 2\)</span> in the final sum:</p>
+<div class="math notranslate nohighlight">
+\[ ... \ + \ ... \ + \ ... \ + \sum_{n=2}^{\infty} a_{n-2} x^{n+r} = 0 \]</div>
+<p>Finally, relabel <span class="math notranslate nohighlight">\(n \rightarrow m\)</span>, collect in powers of <span class="math notranslate nohighlight">\(x\)</span> and split of the <span class="math notranslate nohighlight">\(m = 0\)</span> and <span class="math notranslate nohighlight">\(m = 1\)</span> terms of the first three
+sums:</p>
+<div class="math notranslate nohighlight">
+\[ a_0 \left[r(r-1) + r - s^2 \right] x^r + a_1 \left[(r+1)r + (r+1) - s^2 \right] x^{r+1} + \sum_{m=2}^{\infty} \left[a_m \left[ (m + r)^2 - s^2 \right] + a_{m-2} \right] x^{m+r} = 0 \]</div>
+<p>Similarly to the power series method, we require all coefficients infront of each power of <span class="math notranslate nohighlight">\(x\)</span> to vanish. The first two terms yield the indicial equation for determinind <span class="math notranslate nohighlight">\(r\)</span>. The general term inside the summation gives the recurrence relation that generates the coefficients of the power series solution.</p>
+<p>For <span class="math notranslate nohighlight">\(m = 0\)</span>, after simplification the indicial equation becomes:</p>
+<div class="math notranslate nohighlight">
+\[ r^2 - s^2 = 0 \ \ \ \ \Rightarrow \ \ \ \ r = \pm s \]</div>
+<p>where <span class="math notranslate nohighlight">\(s\)</span> is positive. Remember that <span class="math notranslate nohighlight">\(a_0\)</span> <strong>cannot be zero</strong>.</p>
+<p>For <span class="math notranslate nohighlight">\(m = 1\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[ a_1 \left[ (r+1)^2 - s^2 \right] = 0 \]</div>
+<p>thus either</p>
+<div class="math notranslate nohighlight">
+\[ a_1 = 0 \ \ \ \ \ \ \ \ \ \ \ \ \ \ \text{or} \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (r+1)^2 - s^2 = 0 \]</div>
+<p>For now we will only consider the <span class="math notranslate nohighlight">\(a_1 = 0\)</span> possibility.</p>
+<p>for <span class="math notranslate nohighlight">\(m \geq 2\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[ a_m = \frac{-a_{m-2}}{(r+m)^2 - s^2} = \frac{-a_{m-2}}{m^2 +2rm} \]</div>
+<p>where the last equality comes from the indicial equation, <span class="math notranslate nohighlight">\(r^2 = s^2\)</span>. Using the recursion relation to evaluate the <span class="math notranslate nohighlight">\(a_m\)</span> coefficients and inserting in the generalised power series yields the answer to the ODE</p>
+<div class="math notranslate nohighlight">
+\[ y(x) = x^r \left[ 1 - \frac{x^2}{2(2+r} + \frac{x^4}{2 \times 4(2 + 2r)(4 + 2r)} - \ ... \right]\]</div>
+<p>Remembering that <span class="math notranslate nohighlight">\(a_1 = 0\)</span>, the recurrence relation implies that all <span class="math notranslate nohighlight">\(a_{odd} = 0\)</span> and thus there is no second series. However, the two roots <span class="math notranslate nohighlight">\(r = \pm s\)</span> will usually yield the two independent solutions.</p>
+<p>Now lets go back to the second indicial equation (from <span class="math notranslate nohighlight">\(m = 1\)</span>) and consider <span class="math notranslate nohighlight">\(\left[ (r+1)^2 - s^2 \right] = 0\)</span>. Since <span class="math notranslate nohighlight">\(r^2 = s^2\)</span> (from the first indicial equation), this requires <span class="math notranslate nohighlight">\(2r + 1 = 0\)</span> or <span class="math notranslate nohighlight">\(r = -1/2\)</span> and is thus the special case for <span class="math notranslate nohighlight">\(s = 1/2\)</span>. Therefore we will look for solutions with <span class="math notranslate nohighlight">\(s = 1/2\)</span>.</p>
+<p>For the <span class="math notranslate nohighlight">\(r = 1/2\)</span> solution, the recurrence relation becomes</p>
+<div class="math notranslate nohighlight">
+\[ a_m = \frac{- a_{m-2}}{m(m+1)} \]</div>
+<p>and thus</p>
+<div class="math notranslate nohighlight">
+\[ y(x) = a_0 x^{1/2} \left[ 1 - \frac{x^2}{3!} + \frac{x^4}{5!} - \ ... \right] \]</div>
+<p>which can be written as</p>
+<div class="math notranslate nohighlight">
+\[ y(x) = \frac{a_0} {x^{1/2}} \left[ x - \frac{x^3}{3!} + \frac{x^3}{5!} - \ ... \right] = \frac{a_0 sinx} {x^{1/2}} \]</div>
+<p>There is no second series, since <span class="math notranslate nohighlight">\(a_1 = 0\)</span> for <span class="math notranslate nohighlight">\(r = 1/2\)</span>.</p>
+<p>Now lets consider the <span class="math notranslate nohighlight">\(r = - 1/2\)</span> solution. The recurrence relation becomes</p>
+<div class="math notranslate nohighlight">
+\[ a_m = \frac{- a_{m-2}}{m(m-1)} \]</div>
+<p>In this cae, <span class="math notranslate nohighlight">\(a_1\)</span> is undetermined and thus the solution is given by two series:</p>
+<div class="math notranslate nohighlight">
+\[  y(x) = a_0 x^{- 1/2} \left[ 1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \ ... \right] + a_1 x^{- 1/2} \left[ x - \frac{x^3}{3!} + \frac{x^5}{5!} - \ ... \right] \]</div>
+<p>which can be written as</p>
+<div class="math notranslate nohighlight">
+\[ y(x) = a_0 \frac{cosx} {x^{1/2}} + a_1 \frac{sinx} {x^{1/2}} = y_{GS}(x) \]</div>
+<p>The second term just duplicates the solution we found for <span class="math notranslate nohighlight">\(r = 1/2\)</span>, so that solution is already present here, which is why we identify this solution as the general solution, <span class="math notranslate nohighlight">\(y_{GS}(x)\)</span>. This occurs when the roots differ by an integer, as they do here (<span class="math notranslate nohighlight">\(r = - 1/2, + 1/2\)</span>), which is why we must be careful when roots for <span class="math notranslate nohighlight">\(r\)</span> do differ by an integer.</p>
 </div>
 </div>
 

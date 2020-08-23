@@ -128,10 +128,13 @@
         <a href="10_heat_eq.html">Heat (diffusion) equation</a>
       </li>
       <li class="">
-        <a href="11_wave_eq.html">Wave equation</a>
+        <a href="11_pde_fourier.html">Solving PDEs with fourier methods</a>
       </li>
       <li class="">
-        <a href="12_similarity_solutions.html">Self-similar solutions</a>
+        <a href="12_wave_eq.html">Wave equation</a>
+      </li>
+      <li class="">
+        <a href="13_similarity_solutions.html">Self-similar solutions</a>
       </li>
     </ul>
     </li>
@@ -277,7 +280,7 @@
             <a href="#parabolic-case" class="nav-link">Parabolic case</a><ul class="nav section-nav flex-column">
                 
         <li class="nav-item toc-entry toc-h3">
-            <a href="#example-u-xx-2u-xy-u-yy-0" class="nav-link">Example: $ u_{xx} + 2u_{xy} + u_{yy} = 0 $</a>
+            <a href="#example-u-xx-2u-xy-u-yy-0" class="nav-link">Example: u_{xx} + 2u_{xy} + u_{yy} = 0</a>
         </li>
     
         <li class="nav-item toc-entry toc-h3">
@@ -313,11 +316,11 @@
 <li><p><strong>parabolic</strong> if <span class="math notranslate nohighlight">\(b^2 - 4ac = 0\)</span></p></li>
 <li><p><strong>hyperbolic</strong> if <span class="math notranslate nohighlight">\(b^2 - 4ac &lt; 0\)</span></p></li>
 </ul>
-<p>Any elliptic, parabolic or hyperbolic PDE can be reduced to the following <strong>canonical forms</strong> with a suitable coordinate transformation $ \xi = \xi(x, y), \qquad \eta = \eta(x,y) $</p>
+<p>Any elliptic, parabolic or hyperbolic PDE can be reduced to the following <strong>canonical forms</strong> with a suitable coordinate transformation <span class="math notranslate nohighlight">\(\xi = \xi(x, y), \qquad \eta = \eta(x,y)\)</span></p>
 <ol class="simple">
-<li><p>Canonical form for hyperbolic PDEs: $ u_{\xi \eta} = \phi(\xi, \eta, u, u_{\xi}, u_{\eta}) $ or $ u_{\xi \xi} - u_{\eta \eta} = \phi(\xi, \eta, u, u_{\xi}, u_{\eta}) $</p></li>
-<li><p>Canonical form for parabolic PDEs: $ u_{\eta \eta} = \phi(\xi, \eta, u, u_{\xi}, u_{\eta}) $ or $ u_{\xi \xi} = \phi(\xi, \eta, u, u_{\xi}, u_{\eta}) $</p></li>
-<li><p>Canonical form for elliptic PDEs: $ u_{\xi \xi} + u_{\eta \eta} = \phi(\xi, \eta, u, u_{\xi}, u_{\eta}) $</p></li>
+<li><p>Canonical form for hyperbolic PDEs: $u_{\xi \eta} = \phi(\xi, \eta, u, u_{\xi}, u_{\eta}) $ or $ u_{\xi \xi} - u_{\eta \eta} = \phi(\xi, \eta, u, u_{\xi}, u_{\eta})$</p></li>
+<li><p>Canonical form for parabolic PDEs: $u_{\eta \eta} = \phi(\xi, \eta, u, u_{\xi}, u_{\eta}) $ or $ u_{\xi \xi} = \phi(\xi, \eta, u, u_{\xi}, u_{\eta})$</p></li>
+<li><p>Canonical form for elliptic PDEs: <span class="math notranslate nohighlight">\(u_{\xi \xi} + u_{\eta \eta} = \phi(\xi, \eta, u, u_{\xi}, u_{\eta})\)</span></p></li>
 </ol>
 <p>We find the coordinate transformation</p>
 <div class="math notranslate nohighlight">
@@ -348,7 +351,7 @@ a \left( \frac{\eta_x}{\eta_y} \right)^2 + b \left( \frac{\eta_x}{\eta_y} \right
 <div class="math notranslate nohighlight">
 \[ \lambda_{1,2} = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a} \]</div>
 <p>Where <span class="math notranslate nohighlight">\(\lambda_1 = \xi_x / \xi_y\)</span> and <span class="math notranslate nohighlight">\(\lambda_2 = \eta_x / \eta_y\)</span> and they need to be different for the transformation to make sense. Because <span class="math notranslate nohighlight">\(b^2 - 4ac &gt; 0\)</span> we know that they will be two distinct real numbers.</p>
-<p>But what do the quantities $ \xi_x / \xi_y $ and $ \eta_x / \eta_y $ actually represent? They are the slopes of the <strong>characteristics</strong> $ \xi(x, y) = \text{const.} $ and $\eta(x, y) = \text{const.} $ Notice that if we hadn’t divided the equations by <span class="math notranslate nohighlight">\(\xi_y\)</span> and <span class="math notranslate nohighlight">\(\eta_y\)</span> we would have</p>
+<p>But what do the quantities $\xi_x / \xi_y $ and $ \eta_x / \eta_y$ actually represent? They are the slopes of the <strong>characteristics</strong> <span class="math notranslate nohighlight">\(\xi(x, y) = \text{const.}\)</span> and <span class="math notranslate nohighlight">\(\eta(x, y) = \text{const.}\)</span> Notice that if we hadn’t divided the equations by <span class="math notranslate nohighlight">\(\xi_y\)</span> and <span class="math notranslate nohighlight">\(\eta_y\)</span> we would have</p>
 <div class="math notranslate nohighlight">
 \[ \xi_x = \lambda_1 \xi_y, \qquad \eta_x = \lambda_2 \eta_y \]</div>
 <p>whose characteristic curves satisfy the ODEs</p>
@@ -357,7 +360,7 @@ a \left( \frac{\eta_x}{\eta_y} \right)^2 + b \left( \frac{\eta_x}{\eta_y} \right
 <p>The solutions of these ODEs are</p>
 <div class="math notranslate nohighlight">
 \[ y + \lambda_1 x = c_1, \qquad y + \lambda_2 x = c_2 \]</div>
-<p>where <span class="math notranslate nohighlight">\(c_1, c_2\)</span> are integration constant, so we choose <span class="math notranslate nohighlight">\(\xi\)</span> and <span class="math notranslate nohighlight">\(\eta\)</span> to equal them</p>
+<p>where <span class="math notranslate nohighlight">\(c_1, c_2\)</span> are integration constants, so we choose <span class="math notranslate nohighlight">\(\xi\)</span> and <span class="math notranslate nohighlight">\(\eta\)</span> to equal them</p>
 <div class="math notranslate nohighlight">
 \[ \xi = y + \lambda_1 x, \qquad \eta = y + \lambda_2 x \]</div>
 <p>Finally, going back to the canonical form</p>
@@ -416,9 +419,9 @@ a \left( \frac{\eta_x}{\eta_y} \right)^2 + b \left( \frac{\eta_x}{\eta_y} \right
 \[ u(\xi, \eta) = \int \int F d \eta d \eta + \eta \phi(\xi) + \psi(\xi) \]</div>
 <p>We could have chosen <span class="math notranslate nohighlight">\(\xi\)</span> and <span class="math notranslate nohighlight">\(\eta\)</span> the other way around, of course.</p>
 <div class="section" id="example-u-xx-2u-xy-u-yy-0">
-<h3>Example: $ u_{xx} + 2u_{xy} + u_{yy} = 0 $<a class="headerlink" href="#example-u-xx-2u-xy-u-yy-0" title="Permalink to this headline">¶</a></h3>
+<h3>Example: <span class="math notranslate nohighlight">\(u_{xx} + 2u_{xy} + u_{yy} = 0\)</span><a class="headerlink" href="#example-u-xx-2u-xy-u-yy-0" title="Permalink to this headline">¶</a></h3>
 <p>Kreyszig problem set 12.4, question 11.</p>
-<p>This is a parabolic PDE because $ 2^2 - 4 = 0 $. Therefore we have a single root</p>
+<p>This is a parabolic PDE because <span class="math notranslate nohighlight">\(2^2 - 4 = 0\)</span>. Therefore we have a single root</p>
 <div class="math notranslate nohighlight">
 \[ \lambda = \frac{-b}{2a} = -1 \]</div>
 <p>Then <span class="math notranslate nohighlight">\(\xi = y - x\)</span> and we can choose <span class="math notranslate nohighlight">\(\eta = x\)</span>. So the solution is</p>
