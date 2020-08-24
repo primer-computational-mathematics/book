@@ -25,12 +25,12 @@
     <script src="../../_static/togglebutton.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
-    <script src="../../_static/mystnb.js"></script>
     <script src="../../_static/sphinx-book-theme.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
     <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
     <script >
         const thebe_selector = ".cell"
@@ -283,7 +283,7 @@
 <h1>Eigenvalues (Lecture 5)<a class="headerlink" href="#eigenvalues-lecture-5" title="Permalink to this headline">¶</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># This cell just imports relevant modules</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># This cell just imports relevant modules</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="c1"># import pylab</span>
@@ -300,7 +300,7 @@
 <p><strong>Slide 9</strong></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define the transformation matrix in Python using numpy.array</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define the transformation matrix in Python using numpy.array</span>
 <span class="n">mD</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.25</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
                <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">]])</span>
 
@@ -338,7 +338,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Transformed vCoordinates[0] = 
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Transformed vCoordinates[0] = 
  [[1.25]
  [0.  ]]
 Transformed vCoordinates[1] = 
@@ -364,7 +364,7 @@ No geological meaning
 <p>A simple way of finding eigenvalues is to use the <code class="docutils literal notranslate"><span class="pre">numpy.linalg.eigvals</span></code> function:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mA</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">],</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mA</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">],</span>
                <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]])</span> 
 
 <span class="n">sEigValues</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigvals</span><span class="p">(</span><span class="n">mA</span><span class="p">)</span>
@@ -373,7 +373,7 @@ No geological meaning
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>The eigenvalues of mA are:  [ 3. -1.]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The eigenvalues of mA are:  [ 3. -1.]
 </pre></div>
 </div>
 </div>
@@ -381,7 +381,7 @@ No geological meaning
 <p>Alternatively, we could work out the characteristic polynomial for \( \lambda \) and then find the roots. We do that using the <code class="docutils literal notranslate"><span class="pre">np.poly(A)</span></code> function which computes \( \det ( A - \lambda I ) \) and returns a list of scalar coefficients <code class="docutils literal notranslate"><span class="pre">[X,</span> <span class="pre">Y,</span> <span class="pre">Z]</span></code> for the characteristic polynomial \( X \lambda^2 + Y \lambda + Z \)</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sCharacteristicPoly</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">poly</span><span class="p">(</span><span class="n">mA</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sCharacteristicPoly</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">poly</span><span class="p">(</span><span class="n">mA</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The characteristic polynomial of mA is: (</span><span class="si">%d</span><span class="s2">*lambda**2) + (</span><span class="si">%d</span><span class="s2">*lambda) + (</span><span class="si">%d</span><span class="s2">)&quot;</span> 
       <span class="o">%</span> <span class="p">(</span><span class="n">sCharacteristicPoly</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">sCharacteristicPoly</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">sCharacteristicPoly</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
 
@@ -392,7 +392,7 @@ No geological meaning
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>The characteristic polynomial of mA is: (1*lambda**2) + (-2*lambda) + (-2)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The characteristic polynomial of mA is: (1*lambda**2) + (-2*lambda) + (-2)
 The roots of the characteristic polynomial are:  [ 3. -1.]
 </pre></div>
 </div>
@@ -405,7 +405,7 @@ The roots of the characteristic polynomial are:  [ 3. -1.]
 <p>A simple way of finding eigenvectors is to use the <code class="docutils literal notranslate"><span class="pre">numpy.linalg.eig</span></code> function. Note that this gives BOTH the eigenvalues in an array (say <code class="docutils literal notranslate"><span class="pre">sEigValues</span></code>) <strong>AND</strong> eigenvectors in a matrix data type (say <code class="docutils literal notranslate"><span class="pre">vEigVectors</span></code>).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mA</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">],</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mA</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">],</span>
                <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]])</span> 
                   
 <span class="c1"># The i-th eigenvector, stored in the column vEigVectors[:,i], </span>
@@ -418,7 +418,7 @@ The roots of the characteristic polynomial are:  [ 3. -1.]
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Eigenvalue # 1 is: 3.0000000000000004
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Eigenvalue # 1 is: 3.0000000000000004
 The corresponding eigenvector is:
  [0.89442719 0.4472136 ]
 Eigenvalue # 2 is: -0.9999999999999996
@@ -433,7 +433,7 @@ The corresponding eigenvector is:
 <p>Let us plot these eigenvectors:</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_ellipse</span><span class="p">(</span><span class="n">mM</span><span class="p">):</span>  <span class="c1">#, horizontal_scale, vertical_scale):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_ellipse</span><span class="p">(</span><span class="n">mM</span><span class="p">):</span>  <span class="c1">#, horizontal_scale, vertical_scale):</span>
     
     <span class="p">(</span><span class="n">sEigValues</span><span class="p">,</span> <span class="n">vEigVectors</span><span class="p">)</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">mM</span><span class="p">)</span> 
     
@@ -488,7 +488,7 @@ The corresponding eigenvector is:
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">M</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">M</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
               <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
 
 <span class="c1"># call the function we defined above</span>
@@ -498,7 +498,7 @@ The corresponding eigenvector is:
 </div>
 <div class="cell_output docutils container">
 <img alt="../../_images/6_Eigenvalues_12_0.png" src="../../_images/6_Eigenvalues_12_0.png" />
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>The eigenvectors are not orthogonal
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The eigenvectors are not orthogonal
 </pre></div>
 </div>
 </div>
@@ -510,7 +510,7 @@ The corresponding eigenvector is:
 <p><strong>Slide 24</strong></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#NOTE: Here we could also define mA using numpy.identity(2).</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#NOTE: Here we could also define mA using numpy.identity(2).</span>
 <span class="n">mA</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
                <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
 
@@ -524,7 +524,7 @@ The corresponding eigenvector is:
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Eigenvalue # 1  is:  1.0
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Eigenvalue # 1  is:  1.0
 The corresponding eigenvector is:
  [1. 0.]
 Eigenvalue # 2  is:  1.0
@@ -541,7 +541,7 @@ The corresponding eigenvector is:
 <p>NumPy prints out complex numbers in the form \(c = a + bj\), where \(j\) is the imaginary number. We can use <code class="docutils literal notranslate"><span class="pre">numpy.real(c)</span></code> and <code class="docutils literal notranslate"><span class="pre">numpy.imag(c)</span></code> to print the real and imaginary parts respectively.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mA</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mA</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
                <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span> 
 
 <span class="n">sEigValues</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigvals</span><span class="p">(</span><span class="n">mA</span><span class="p">)</span> 
@@ -552,7 +552,7 @@ The corresponding eigenvector is:
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>The eigenvalues of A are: [0.+1.j 0.-1.j]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The eigenvalues of A are: [0.+1.j 0.-1.j]
 The real part of the first eigenvalue is: 0.0
 The imaginary part of the first eigenvalue is: 1.0
 </pre></div>
@@ -565,7 +565,7 @@ The imaginary part of the first eigenvalue is: 1.0
 <p><strong>Slide 30</strong></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mM</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mM</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span>
                <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]])</span>
 
 <span class="p">(</span><span class="n">sEigValues</span><span class="p">,</span> <span class="n">vEigVectors</span><span class="p">)</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">mA</span><span class="p">)</span>
@@ -576,7 +576,7 @@ The imaginary part of the first eigenvalue is: 1.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Eigenvalue # 1 is: 1j
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Eigenvalue # 1 is: 1j
 The corresponding eigenvector is:
  [0.70710678+0.j         0.        +0.70710678j]
 Eigenvalue # 2 is: -1j
@@ -588,7 +588,7 @@ The corresponding eigenvector is:
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">M</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">M</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span>
               <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]])</span>
 
 <span class="c1"># call the function we defined above</span>
@@ -598,7 +598,7 @@ The corresponding eigenvector is:
 </div>
 <div class="cell_output docutils container">
 <img alt="../../_images/6_Eigenvalues_19_0.png" src="../../_images/6_Eigenvalues_19_0.png" />
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>The eigenvectors are orthogonal
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The eigenvectors are orthogonal
 </pre></div>
 </div>
 </div>
@@ -611,7 +611,7 @@ The corresponding eigenvector is:
 <p>Note: We could also use <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.vdot.html"><code class="docutils literal notranslate"><span class="pre">numpy.vdot</span></code></a> - read the documentation for more info.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mNonSymmetric</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mNonSymmetric</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
                           <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
                               
 <span class="p">(</span><span class="n">sEigValues</span><span class="p">,</span> <span class="n">vEigVectors</span><span class="p">)</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">mNonSymmetric</span><span class="p">)</span>
@@ -625,7 +625,7 @@ The corresponding eigenvector is:
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Eigenvalue # 1 is: 3.0000000000000004
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Eigenvalue # 1 is: 3.0000000000000004
 The corresponding eigenvector is:
  [0.89442719 0.4472136 ]
 Eigenvalue # 2 is: -0.9999999999999996
@@ -640,7 +640,7 @@ The dot product of the two eigenvectors is: -0.6000000000000001
 <p>Below, the dot product should be zero as the two eigenvectors are orthogonal for any symmetric matrix.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mSymmetric</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mSymmetric</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span>
                        <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]])</span>
                               
 <span class="p">(</span><span class="n">sEigValues</span><span class="p">,</span> <span class="n">vEigVectors</span><span class="p">)</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">mSymmetric</span><span class="p">)</span>
@@ -653,7 +653,7 @@ The dot product of the two eigenvectors is: -0.6000000000000001
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Eigenvalue # 1  is:  4.0
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Eigenvalue # 1  is:  4.0
 The corresponding eigenvector is:
  [ 0.70710678 -0.70710678]
 Eigenvalue # 2  is:  2.0
@@ -670,7 +670,7 @@ The dot product of the two eigenvectors is:  0.0
 <p><strong>Slide 37</strong></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mM</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mM</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
                <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
                <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span>
 
@@ -683,7 +683,7 @@ The dot product of the two eigenvectors is:  0.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Eigenvalue # 1  is:  1.0
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Eigenvalue # 1  is:  1.0
 The corresponding eigenvector is:
  [-0.90453403  0.30151134  0.30151134]
 Eigenvalue # 2  is:  4.999999999999998

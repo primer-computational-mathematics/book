@@ -25,12 +25,12 @@
     <script src="../_static/togglebutton.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
-    <script src="../_static/mystnb.js"></script>
     <script src="../_static/sphinx-book-theme.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
     <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
     <script >
         const thebe_selector = ".cell"
@@ -325,7 +325,7 @@
 <p>Before we jump to the exercise, let’s load all necessary libraries:</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
@@ -353,7 +353,7 @@
 <p>The dataset is free to download at ftp://ftp.earthbyte.org/earthbyte/agegrid/2008/Grids/. We downloaded ‘age.3.6.nc.bz2’ file and plotted using this code:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load seaflor age downloaded from</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load seaflor age downloaded from</span>
 <span class="c1"># https://www.earthbyte.org/Resources/agegrid2008.html</span>
 <span class="n">fname</span> <span class="o">=</span> <span class="s2">&quot;data/seafloor_ages.nc&quot;</span>
 
@@ -402,7 +402,7 @@
 <p>To compare seafloor ages calculated from magnetic anomalies, we downloaded ETOPO1 bathymetry data <a class="reference external" href="https://maps.ngdc.noaa.gov/viewers/grid-extract/index.html">NGDC</a>. This dataset is of higher resolution, therefore we will only look at North Atlantic:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load ETOPO1 bathymetry data downloaded from</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load ETOPO1 bathymetry data downloaded from</span>
 <span class="c1"># https://maps.ngdc.noaa.gov/viewers/grid-extract/index.html</span>
 <span class="n">fname</span> <span class="o">=</span> <span class="s2">&quot;data/etopo1_atlantic.nc&quot;</span>
 
@@ -420,7 +420,7 @@
 <p>Now we can create a plot of elevation in North Atlantic using Cartopy:</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">subplot_kw</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">()),</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">subplot_kw</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">()),</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
 
 <span class="n">ax</span><span class="o">.</span><span class="n">set_extent</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">lons_etopo</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">lons_etopo</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">lats_etopo</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">lats_etopo</span><span class="p">)</span><span class="o">-</span><span class="mi">10</span><span class="p">])</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">coastlines</span><span class="p">(</span><span class="n">resolution</span><span class="o">=</span><span class="s1">&#39;10m&#39;</span><span class="p">)</span>
@@ -475,7 +475,7 @@
 <p>The bathymetry and age data were extracted for both raster files along the yellow profile seen in the previous picture and were saved as a csv file in a geospatial software. We can read the files with pandas:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ages</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data/atlantic_seafloor_ages.csv&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ages</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data/atlantic_seafloor_ages.csv&quot;</span><span class="p">)</span>
 <span class="n">ages</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -547,7 +547,7 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">bathymetry</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data/atlantic_bathymetry.csv&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bathymetry</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data/atlantic_bathymetry.csv&quot;</span><span class="p">)</span>
 <span class="n">bathymetry</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -624,7 +624,7 @@
 <p>We want to calculate depth of seafloor based on age according to the Parsons &amp; Sclater (1977) relationship:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Minus sign to make depth negative to match</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Minus sign to make depth negative to match</span>
 <span class="c1"># bathymetry dataset</span>
 <span class="n">ages</span><span class="p">[</span><span class="s2">&quot;depth_m&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="mi">2500</span><span class="o">+</span><span class="mi">350</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">ages</span><span class="o">.</span><span class="n">age_ma</span><span class="p">))</span>
 </pre></div>
@@ -634,7 +634,7 @@
 <p>Let’s plot the real data and predicted data based on the equation along the profile:</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
 
 <span class="c1"># Set colourbar boundaries</span>
 <span class="n">vmin</span> <span class="o">=</span> <span class="o">-</span><span class="mi">7000</span>
@@ -672,13 +672,12 @@
 </div>
 </div>
 <p>As we can see on the graph, curve for ages below 70 Ma fits the ETOPO1 data reasonably well, as equation predicts. However, let’s quantify the root mean square error for the dataset:</p>
-<div class="math notranslate nohighlight">
-\[ RMS\ Error = \sqrt{\frac{\sum_{i=1}^{n} (\text{predicted value}- \text{observed value})^2}{n}} \]</div>
+<p>$<span class="math notranslate nohighlight">\( RMS\ Error = \sqrt{\frac{\sum_{i=1}^{n} (\text{predicted value}- \text{observed value})^2}{n}} \)</span>$,</p>
 <p>where n is the number of samples.</p>
 <p>Since the age and depth measurements in the two datasets are not done at exactly the same distances, we need to interpolate one dataset and compare the overlapping positions.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Use scipy to interpolate real bathymetry dataset</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Use scipy to interpolate real bathymetry dataset</span>
 <span class="n">f</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">interp1d</span><span class="p">(</span><span class="n">bathymetry</span><span class="o">.</span><span class="n">dist</span><span class="p">,</span> <span class="n">bathymetry</span><span class="o">.</span><span class="n">depth_m</span><span class="p">)</span>
 
 <span class="c1"># Obtain real bathymetry for distances along the line</span>
@@ -691,7 +690,7 @@
 <p>Now let’s define a function that will calculate RMS error based on predicted and observed samples:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">rmsError</span><span class="p">(</span><span class="n">predicted</span><span class="p">,</span> <span class="n">observed</span><span class="p">):</span> 
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">rmsError</span><span class="p">(</span><span class="n">predicted</span><span class="p">,</span> <span class="n">observed</span><span class="p">):</span> 
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">predicted</span><span class="o">-</span><span class="n">observed</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">predicted</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -699,7 +698,7 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># baths_interp is the real bathymetry interpolated</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># baths_interp is the real bathymetry interpolated</span>
 <span class="c1"># at ages.dist data points</span>
 <span class="c1"># ages.depth_m is bathymetry obtained from empirical</span>
 <span class="c1"># data</span>
@@ -710,7 +709,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>RMS error in bathymetry is 481.44 m.
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>RMS error in bathymetry is 481.44 m.
 </pre></div>
 </div>
 </div>
@@ -718,7 +717,7 @@
 <p>Now that we have our RMS error, we can calculate how many samples are within one and two RMS errors. The expected values should be around 68% and 95%:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># compare bathymetry from the equation and real bathymetry</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># compare bathymetry from the equation and real bathymetry</span>
         
 <span class="n">diff</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">baths_interp</span> <span class="o">-</span> <span class="n">ages</span><span class="o">.</span><span class="n">depth_m</span><span class="p">)</span>
 <span class="n">count</span> <span class="o">=</span> <span class="p">(</span><span class="n">diff</span> <span class="o">&lt;=</span> <span class="n">RMS</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
@@ -732,7 +731,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Number of points within 1*RMS = 63.56 %.
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of points within 1*RMS = 63.56 %.
 Number of points within 2*RMS = 97.10 %.
 </pre></div>
 </div>
@@ -747,12 +746,12 @@ Number of points within 2*RMS = 97.10 %.
 <p>This time we will apply the equation to the entire bathymetry data from ETOPO1. We can use the <em>shape</em> function to see how the data is structured:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">elev</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">elev</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>(3011, 4752)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(3011, 4752)
 </pre></div>
 </div>
 </div>
@@ -760,7 +759,7 @@ Number of points within 2*RMS = 97.10 %.
 <p>The data is a 2D array with 3011 rows and 4752 columns. It is also a numpy array. We can apply the equation on the whole array to create a new array. However, we should only use the parts where elevation is below 0 m. In order to do that, we need to mask <em>elev</em> array:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Mask elev array where anything above zero</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Mask elev array where anything above zero</span>
 <span class="c1"># is set to NaN which is not displayed in graphs</span>
 <span class="n">elev_seafloor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">elev</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">elev</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
 </pre></div>
@@ -770,7 +769,7 @@ Number of points within 2*RMS = 97.10 %.
 <p>Now we can calculate ages of the seafloor from ETOPO1 bathymetry. Note that elevation on seafloor is negative in our dataset, while in the equation it is positive, so we can change the sign:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ages_seafloor</span> <span class="o">=</span> <span class="p">((</span><span class="o">-</span><span class="n">elev_seafloor</span><span class="o">-</span><span class="mf">2500.</span><span class="p">)</span><span class="o">/</span><span class="mf">350.</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ages_seafloor</span> <span class="o">=</span> <span class="p">((</span><span class="o">-</span><span class="n">elev_seafloor</span><span class="o">-</span><span class="mf">2500.</span><span class="p">)</span><span class="o">/</span><span class="mf">350.</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
 </pre></div>
 </div>
 </div>
@@ -778,7 +777,7 @@ Number of points within 2*RMS = 97.10 %.
 <p>Since the original dataset is large, we can provide the code and the end result for side by side comparison of the ages calculated based on bathymetry and real age based on magnetic anomalies:</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;font.size&#39;</span><span class="p">:</span> <span class="mi">12</span><span class="p">})</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;font.size&#39;</span><span class="p">:</span> <span class="mi">12</span><span class="p">})</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
 

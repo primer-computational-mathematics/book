@@ -25,12 +25,12 @@
     <script src="../../_static/togglebutton.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
-    <script src="../../_static/mystnb.js"></script>
     <script src="../../_static/sphinx-book-theme.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
     <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
     <script >
         const thebe_selector = ".cell"
@@ -588,7 +588,7 @@ u(t_0)=u_0.\]</p>
 <p>Let’s write a function <code class="docutils literal notranslate"><span class="pre">diff(f,</span> <span class="pre">x,</span> <span class="pre">dx</span> <span class="pre">=</span> <span class="pre">1.0e-6)</span></code> that returns the approximation of the derivative of a mathematical function represented by a Python function <code class="docutils literal notranslate"><span class="pre">f(x)</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
 <span class="k">def</span> <span class="nf">diff</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">dx</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">):</span>
@@ -603,7 +603,7 @@ u(t_0)=u_0.\]</p>
 <p>In each case, using \(\Delta x = 0.01\), let’s write out the error, i.e. the difference between the exact derivative and the result of the formula above.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dx</span> <span class="o">=</span> <span class="mf">0.01</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dx</span> <span class="o">=</span> <span class="mf">0.01</span>
 <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="n">f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span>
 <span class="n">derivative</span> <span class="o">=</span> <span class="n">diff</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">dx</span><span class="p">)</span>
@@ -633,7 +633,7 @@ u(t_0)=u_0.\]</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>The approximate derivative of exp(x) at x = 0 is: 1.000017. The error is 0.000017.
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The approximate derivative of exp(x) at x = 0 is: 1.000017. The error is 0.000017.
 The approximate derivative of exp(-2*x) at x = 0 is: -2.00013.  The error is 0.00013.
 The approximate derivative of cos(x) at x = 2*pi is: 0.00000.  The error is 0.00000.
 The approximate derivative of ln(x) at x = 0 is: 1.00003.  The error is 0.00003.
@@ -650,7 +650,7 @@ The approximate derivative of ln(x) at x = 0 is: 1.00003.  The error is 0.00003.
 <p>At first let’s define <code class="docutils literal notranslate"><span class="pre">forward_diff</span></code> and <code class="docutils literal notranslate"><span class="pre">central_diff</span></code> functions:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">forward_diff</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">dx</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">forward_diff</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">dx</span><span class="p">):</span>
     <span class="n">fx</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
     <span class="n">fxph</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">dx</span><span class="p">)</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">fxph</span> <span class="o">-</span> <span class="n">fx</span><span class="p">)</span> <span class="o">/</span> <span class="n">dx</span>
@@ -667,13 +667,13 @@ The approximate derivative of ln(x) at x = 0 is: 1.00003.  The error is 0.00003.
 <p>We know that the exact solution is \(\frac{d \sin(x){dx}=\cos{x}\), we can evaluate that and store to compare later with the numerical solution:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">exact</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mf">0.8</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">exact</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mf">0.8</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Exact derivative at sin(0.8) = </span><span class="si">%.5f</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="n">exact</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Exact derivative at sin(0.8) = 0.69671.
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Exact derivative at sin(0.8) = 0.69671.
 </pre></div>
 </div>
 </div>
@@ -681,7 +681,7 @@ The approximate derivative of ln(x) at x = 0 is: 1.00003.  The error is 0.00003.
 <p>Now, we can compute solution with two schemes and compare with the exact solution:</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># headers for the following errors outputs</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># headers for the following errors outputs</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%20s%40s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="s1">&#39;Forward differencing&#39;</span><span class="p">,</span> <span class="s1">&#39;Central differencing&#39;</span><span class="p">))</span>
 
 <span class="c1"># We&#39;re going to store all the values for plotting,</span>
@@ -705,7 +705,7 @@ The approximate derivative of ln(x) at x = 0 is: 1.00003.  The error is 0.00003.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Forward differencing                    Central differencing
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Forward differencing                    Central differencing
   0.256492 (error=      0.44)           0.586258 (error=      0.11)
   0.492404 (error=       0.2)           0.668038 (error=     0.029)
   0.600269 (error=     0.096)           0.689472 (error=    0.0072)
@@ -723,7 +723,7 @@ The approximate derivative of ln(x) at x = 0 is: 1.00003.  The error is 0.00003.
 <p>Let’s plot the errors in a log-log plot so that we can see the relationship between the error and the increment:</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set up figure</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set up figure</span>
 <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
 <span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
 

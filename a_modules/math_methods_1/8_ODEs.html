@@ -25,12 +25,12 @@
     <script src="../../_static/togglebutton.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
-    <script src="../../_static/mystnb.js"></script>
     <script src="../../_static/sphinx-book-theme.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
     <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
     <script >
         const thebe_selector = ".cell"
@@ -283,7 +283,7 @@
 <h1>ODEs (Lecture 7)<a class="headerlink" href="#odes-lecture-7" title="Permalink to this headline">¶</a></h1>
 <div class="cell tag_hide_input docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># This cell just imports the relevant modules</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># This cell just imports the relevant modules</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">pi</span><span class="p">,</span> <span class="n">exp</span>
@@ -303,7 +303,7 @@
 <p>Use <code class="docutils literal notranslate"><span class="pre">sympy</span></code> to define dependent and independent variables, constants, ODE, and to find the order of ODEs.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">t</span> <span class="o">=</span> <span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;t&#39;</span><span class="p">)</span>  <span class="c1"># Independent variable</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t</span> <span class="o">=</span> <span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;t&#39;</span><span class="p">)</span>  <span class="c1"># Independent variable</span>
 <span class="n">eta</span> <span class="o">=</span> <span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;eta&#39;</span><span class="p">)</span>  <span class="c1"># Constant</span>
 <span class="n">v</span> <span class="o">=</span> <span class="n">Function</span><span class="p">(</span><span class="s1">&#39;v&#39;</span><span class="p">)(</span><span class="n">t</span><span class="p">)</span>  <span class="c1"># Dependent variable v(t)</span>
 <span class="n">ode</span> <span class="o">=</span> <span class="n">diff</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="n">t</span><span class="p">)</span> <span class="o">+</span> <span class="n">eta</span><span class="o">*</span><span class="n">v</span> <span class="c1"># The ODE we wish to solve. Make sure the RHS is equal to zero.</span>
@@ -328,7 +328,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>ODE #1:
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ODE #1:
          d       
 η⋅v(t) + ──(v(t))
          dt      
@@ -359,7 +359,7 @@ The order of ODE #3 is 4
 <p>Solving ODEs analytically using <code class="docutils literal notranslate"><span class="pre">sympy.dsolve</span></code></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>  <span class="c1"># Independent variable</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>  <span class="c1"># Independent variable</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">Function</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># Dependent variable y(x)</span>
 
 <span class="c1"># The ODE we wish to solve. Make sure the RHS is equal to zero.</span>
@@ -372,7 +372,7 @@ The order of ODE #3 is 4
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>ODE #4:
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ODE #4:
                   d       
 -2⋅x⋅(1 - y(x)) + ──(y(x))
                   dx      
@@ -383,7 +383,7 @@ The solution to ODE #4 is:  Eq(y(x), C1*exp(-x**2) + 1)
 </div>
 <div class="cell tag_hide_input docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">x_3d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x_3d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
 <span class="n">y_3d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
 <span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x_3d</span><span class="p">,</span> <span class="n">y_3d</span><span class="p">)</span>
 
@@ -424,7 +424,7 @@ The solution to ODE #4 is:  Eq(y(x), C1*exp(-x**2) + 1)
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Checking solution using checkodesol...&quot;</span><span class="p">)</span> 
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Checking solution using checkodesol...&quot;</span><span class="p">)</span> 
 <span class="n">check</span> <span class="o">=</span> <span class="n">checkodesol</span><span class="p">(</span><span class="n">ode</span><span class="p">,</span> <span class="n">solution</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Output from checkodesol:&quot;</span><span class="p">,</span> <span class="n">check</span><span class="p">)</span>
@@ -437,7 +437,7 @@ The solution to ODE #4 is:  Eq(y(x), C1*exp(-x**2) + 1)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Checking solution using checkodesol...
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Checking solution using checkodesol...
 Output from checkodesol: (True, 0)
 y(x) is indeed a solution to ODE #4
 </pre></div>
@@ -451,7 +451,7 @@ odefun function. However, this will not give you an analytical solution to the O
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="n">mpmath</span><span class="o">.</span><span class="n">odefun</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">y</span><span class="p">),</span> <span class="n">x0</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y0</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="n">mpmath</span><span class="o">.</span><span class="n">odefun</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">y</span><span class="p">),</span> <span class="n">x0</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y0</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
 <span class="c1"># compares the numerical solution f(x) with the values of the (already known) analytical solution </span>
 <span class="c1"># between x=0 and x=10</span>
@@ -461,7 +461,7 @@ odefun function. However, this will not give you an analytical solution to the O
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>x=0.0 , 2.0 , 2.0
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>x=0.0 , 2.0 , 2.0
 x=0.1 , 1.99004983374917 , 1.990049833749168
 x=0.2 , 1.96078943915232 , 1.960789439152323
 x=0.3 , 1.91393118527123 , 1.9139311852712282
@@ -573,7 +573,7 @@ x=10.0 , 1.0 , 1.0
 <p>We can solve ODEs via separation of variables in Python using <code class="docutils literal notranslate"><span class="pre">sympy.dsolve</span></code> by passing the <code class="docutils literal notranslate"><span class="pre">hint</span></code> argument. Note that the optional <code class="docutils literal notranslate"><span class="pre">hint</span></code> argument here has been used to tell SymPy how to solve the ODE. However, it is usually smart enough to work it out for itself.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>  <span class="c1"># Independent variable</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>  <span class="c1"># Independent variable</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">Function</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># Dependent variable y(x)</span>
 
 <span class="c1"># The ODE we wish to solve.</span>
@@ -589,7 +589,7 @@ x=10.0 , 1.0 , 1.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>ODE #5:
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ODE #5:
               d       
           1.0⋅──(y(x))
               dx      
@@ -604,7 +604,7 @@ y(x) = C₁⋅ℯ
 </div>
 <div class="cell tag_hide_input docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">x_3d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x_3d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
 <span class="n">y_3d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
 <span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x_3d</span><span class="p">,</span> <span class="n">y_3d</span><span class="p">)</span>
 
@@ -645,7 +645,7 @@ y(x) = C₁⋅ℯ
 <p><strong>Slide 23</strong></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>  <span class="c1"># Independent variable</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>  <span class="c1"># Independent variable</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">Function</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># Dependent variable y(x)</span>
 <span class="c1"># The ODE we wish to solve.</span>
 <span class="n">ode</span> <span class="o">=</span> <span class="n">diff</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="o">*</span><span class="n">y</span>
@@ -659,7 +659,7 @@ y(x) = C₁⋅ℯ
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>ODE #6:
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ODE #6:
                  d       
 2⋅x⋅y(x) - 2⋅x + ──(y(x))
                  dx      
@@ -675,7 +675,7 @@ The solution to ODE #6 is: Eq(y(x), C1*exp(-x**2) + 1)
 <p><strong>Slide 26</strong></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">t</span> <span class="o">=</span> <span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;t&#39;</span><span class="p">)</span>  <span class="c1"># Independent variable</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t</span> <span class="o">=</span> <span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;t&#39;</span><span class="p">)</span>  <span class="c1"># Independent variable</span>
 <span class="n">N</span> <span class="o">=</span> <span class="n">Function</span><span class="p">(</span><span class="s1">&#39;N&#39;</span><span class="p">)(</span><span class="n">t</span><span class="p">)</span>  <span class="c1"># Dependent variable N(t)</span>
 <span class="n">l</span> <span class="o">=</span> <span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;l&#39;</span><span class="p">)</span>  <span class="c1"># Constant</span>
 <span class="c1"># The ODE we wish to solve:</span>
@@ -690,7 +690,7 @@ The solution to ODE #6 is: Eq(y(x), C1*exp(-x**2) + 1)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>ODE #7:
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ODE #7:
          d       
 l⋅N(t) + ──(N(t))
          dt      
@@ -704,7 +704,7 @@ N(t) = C₁⋅ℯ
 <p><strong>Example:</strong> 1 mole of carbon-14 at t=0</p>
 <div class="cell tag_hide_input docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">l</span> <span class="o">=</span> <span class="mf">3.8394e-12</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">l</span> <span class="o">=</span> <span class="mf">3.8394e-12</span>
 <span class="n">C</span> <span class="o">=</span> <span class="mf">6.02e23</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
 
 <span class="n">t_3d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1e12</span><span class="p">,</span> <span class="mf">1e9</span><span class="p">)</span>
@@ -754,7 +754,7 @@ N(t) = C₁⋅ℯ
 <p><strong>Slide 31</strong></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">t</span> <span class="o">=</span> <span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;t&#39;</span><span class="p">)</span>  <span class="c1"># Independent variable - time</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t</span> <span class="o">=</span> <span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;t&#39;</span><span class="p">)</span>  <span class="c1"># Independent variable - time</span>
 <span class="n">v</span> <span class="o">=</span> <span class="n">Function</span><span class="p">(</span><span class="s1">&#39;v&#39;</span><span class="p">)(</span><span class="n">t</span><span class="p">)</span>  <span class="c1"># Dependent variable v(t) - the particle velocity</span>
 <span class="c1"># Physical constants</span>
 <span class="n">rho_f</span> <span class="o">=</span> <span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;rho_f&#39;</span><span class="p">)</span>  <span class="c1"># Fluid density</span>
@@ -775,7 +775,7 @@ N(t) = C₁⋅ℯ
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>ODE #8:
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ODE #8:
   g⋅(-ρ_f + ρₚ)   d          9⋅η⋅v(t)
 - ───────────── + ──(v(t)) + ────────
         ρₚ        dt            2    
@@ -796,7 +796,7 @@ v(t) = ────────────────────────�
 <p>Initial conditions: v=0 when t=0</p>
 <div class="cell tag_hide_input docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rho_f</span> <span class="o">=</span> <span class="mi">1000</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rho_f</span> <span class="o">=</span> <span class="mi">1000</span>
 <span class="n">rho_p</span> <span class="o">=</span> <span class="mi">2650</span>
 <span class="n">eta</span> <span class="o">=</span> <span class="mf">0.89</span>
 <span class="n">g</span> <span class="o">=</span> <span class="mf">9.81</span>

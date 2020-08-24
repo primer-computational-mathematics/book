@@ -25,12 +25,12 @@
     <script src="../../../_static/togglebutton.js"></script>
     <script src="../../../_static/clipboard.min.js"></script>
     <script src="../../../_static/copybutton.js"></script>
-    <script src="../../../_static/mystnb.js"></script>
     <script src="../../../_static/sphinx-book-theme.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
     <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
     <script >
         const thebe_selector = ".cell"
@@ -345,13 +345,13 @@
 <h2>VIII. Heun Method<a class="headerlink" href="#viii-heun-method" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">## Ok, so let&#39;s start with importing our libraries</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Ok, so let&#39;s start with importing our libraries</span>
 <span class="c1">## This is neccesary to do at the beginning of every notebook</span>
 <span class="c1">## This cell must be run to import the libraries</span>
 <span class="c1">## If you ever later encounter Nameerror: {library_name} not found</span>
 <span class="c1">## Run this cell</span>
 
-<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 </pre></div>
@@ -390,7 +390,7 @@
 <p>You can see this yourself by varying the value of <span class="math notranslate nohighlight">\(\Delta x\)</span> in the code below.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
 <span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
 <span class="n">ax1</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">)</span>
 <span class="n">ax1</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">)</span>
@@ -442,7 +442,7 @@
 <p>As previously discussed, there are many different methods that are possible to use for Numerical Differentiation. However, how do we know if a method is a good method, or it is a bad method. Also, what is exactly a good method, and what is exactly a bad method.</p>
 <p>Ultimately, all methods of numerical differentiation will move closer to the derivative of the function at the point <span class="math notranslate nohighlight">\(x_0\)</span> as the <span class="math notranslate nohighlight">\(\Delta x\)</span> used becomes smaller and smaller. What <span class="pun">differentiates</span> a good method from a bad  method is how accurate the estimate for the derivative is, given that all methods have the same <span class="math notranslate nohighlight">\(\Delta x\)</span> in their equation, for the sake of fair comparison. For the same <span class="math notranslate nohighlight">\(\Delta x\)</span>, a good method will result in a more accurate derivative of the function at point <span class="math notranslate nohighlight">\(x_0\)</span>, while a bad method will result in a less accurate derivative of the function at point <span class="math notranslate nohighlight">\(x_0\)</span>. Thus, what makes a method good/bad is the accuracy of the method.</p>
 <p>We can use a <a class="reference external" href="http://mathworld.wolfram.com/TaylorSeries.html">Taylor series expansion</a>, or <em>Taylor series analysis</em>, to estimate the accuracy of the method.</p>
-<p>Recall that Taylor series in one dimension tells us that we can approximate the value of the function at a location in terms of the value of the function at a nearby point, so <span class="math notranslate nohighlight">\(f(x_0)\)</span>, and value of its derivatives $ hf’(x_0) + \frac{h^2}{2!}f’’(x_0) + \frac{h^3}{3!}f’’’(x_0) + \ldots $, at a nearby point:</p>
+<p>Recall that Taylor series in one dimension tells us that we can approximate the value of the function at a location in terms of the value of the function at a nearby point, so <span class="math notranslate nohighlight">\(f(x_0)\)</span>, and value of its derivatives <span class="math notranslate nohighlight">\( hf'(x_0) + \frac{h^2}{2!}f''(x_0) + \frac{h^3}{3!}f'''(x_0) + \ldots \)</span>, at a nearby point:</p>
 <p>\begin{align*}
 f(x_0+h) &amp; = f(x_0) + hf’(x_0) + \frac{h^2}{2!}f’’(x_0) + \frac{h^3}{3!}f’’’(x_0) + \ldots\[5pt]
 &amp; = f(x_0)+hf’(x_0) + \frac{h^2}{2!}f’’(x_0) + \mathcal{O}(h^3),
@@ -465,26 +465,26 @@ f(x_0+h) &amp; = f(x_0) + hf’(x_0) + \frac{h^2}{2!}f’’(x_0) + \frac{h^3}{3
 <p>To find the accuracy of a Numerical differentiation method, we need a comparison between the Numerical differentiation method and something exact; thus, we will compare the Forward Difference Method which is an estimate to the Taylor series which is exact, to understand how much does the estimate, i.e. the Forward Difference Method, differe from the exact, i.e. the Taylor series.</p>
 <p>Making a comparison means finding both similarities and differences.</p>
 <p>Forward Difference Method
-<span class="math notranslate nohighlight">\($ f'(x_0)\approx \frac{f(x_0+\Delta x)-f(x_0)}{\Delta x},\;\;\;\; \Delta x&gt;0. $\)</span></p>
+$<span class="math notranslate nohighlight">\( f'(x_0)\approx \frac{f(x_0+\Delta x)-f(x_0)}{\Delta x},\;\;\;\; \Delta x&gt;0. \)</span>$</p>
 <p>Taylor Series
-<span class="math notranslate nohighlight">\($ f(x_0+h) = f(x_0) + hf'(x_0) + \frac{h^2}{2!}f''(x_0) + \frac{h^3}{3!}f'''(x_0) + \ldots $\)</span></p>
+$<span class="math notranslate nohighlight">\( f(x_0+h) = f(x_0) + hf'(x_0) + \frac{h^2}{2!}f''(x_0) + \frac{h^3}{3!}f'''(x_0) + \ldots \)</span>$</p>
 <p>Since both <span class="math notranslate nohighlight">\(h\)</span> and <span class="math notranslate nohighlight">\(\Delta x\)</span> refer to very small numbers, by assuming that <span class="math notranslate nohighlight">\(h &gt; 0\)</span> we could say that <span class="math notranslate nohighlight">\(h \approx \Delta x\)</span>, and thus rewrtite as:</p>
 <p>Note: You will see later that the assumption here is okay.</p>
 <p>Forward Difference Method
-<span class="math notranslate nohighlight">\($ f'(x_0)\approx \frac{f(x_0+h)-f(x_0)}{h},\;\;\;\; h&gt;0. $\)</span></p>
+$<span class="math notranslate nohighlight">\( f'(x_0)\approx \frac{f(x_0+h)-f(x_0)}{h},\;\;\;\; h&gt;0. \)</span>$</p>
 <p>Taylor Series
-<span class="math notranslate nohighlight">\($ f(x_0+h) = f(x_0) + hf'(x_0) + \frac{h^2}{2!}f''(x_0) + \frac{h^3}{3!}f'''(x_0) + \ldots $\)</span></p>
+$<span class="math notranslate nohighlight">\( f(x_0+h) = f(x_0) + hf'(x_0) + \frac{h^2}{2!}f''(x_0) + \frac{h^3}{3!}f'''(x_0) + \ldots \)</span>$</p>
 <p>To make comparisons, we take the common parts out, and find the parts that are different
 Knowing that the equality relation in the Taylor series does not change when moving terms around…</p>
 <p>Forward Difference Method
-<span class="math notranslate nohighlight">\($ f'(x_0)\approx \frac{f(x_0+h)-f(x_0)}{h},\;\;\;\; h&gt;0. $\)</span></p>
+$<span class="math notranslate nohighlight">\( f'(x_0)\approx \frac{f(x_0+h)-f(x_0)}{h},\;\;\;\; h&gt;0. \)</span>$</p>
 <p>Taylor Series
-<span class="math notranslate nohighlight">\($\frac {f(x_0+h) - f(x_0)}{h}= f'(x_0) + \frac{h^1}{2!}f''(x_0) + \frac{h^2}{3!}f'''(x_0) + \ldots $\)</span></p>
+$<span class="math notranslate nohighlight">\(\frac {f(x_0+h) - f(x_0)}{h}= f'(x_0) + \frac{h^1}{2!}f''(x_0) + \frac{h^2}{3!}f'''(x_0) + \ldots \)</span>$</p>
 <p>Making the same thing appear on the LFH of both the Forward Difference Method and the Taylor Series</p>
 <p>Forward Difference Method
-<span class="math notranslate nohighlight">\($ f'(x_0)\approx \frac{f(x_0+h)-f(x_0)}{h},\;\;\;\; h&gt;0. $\)</span></p>
+$<span class="math notranslate nohighlight">\( f'(x_0)\approx \frac{f(x_0+h)-f(x_0)}{h},\;\;\;\; h&gt;0. \)</span>$</p>
 <p>Taylor Series
-<span class="math notranslate nohighlight">\($  f'(x_0) =  \frac {f(x_0+h) - f(x_0)}{h}   - \frac{h^1}{2!}f''(x_0) - \frac{h^2}{3!}f'''(x_0) + \ldots\)</span>$</p>
+$<span class="math notranslate nohighlight">\(  f'(x_0) =  \frac {f(x_0+h) - f(x_0)}{h}   - \frac{h^1}{2!}f''(x_0) - \frac{h^2}{3!}f'''(x_0) + \ldots\)</span>$</p>
 <p>We see that there are differences between the Forward Difference Method and the Taylor series for how the derivative of the function at the point <span class="math notranslate nohighlight">\(x_0\)</span>, i.e. <span class="math notranslate nohighlight">\(f'(x_0)\)</span> is defined. The Taylor series have several extra terms <span class="math notranslate nohighlight">\(- \frac{h^1}{2!}f''(x_0) - \frac{h^2}{3!}f'''(x_0) + \ldots\)</span> compared to the Forward Difference Method. We can see that the Forward Difference method is the same as a Taylor series if the rest of the terms from the Taylor series <span class="math notranslate nohighlight">\(- \frac{h^1}{2!}f''(x_0) - \frac{h^2}{3!}f'''(x_0) + \ldots\)</span> are removed.</p>
 <p>Thus, understanding that the Taylor series is exact, while the Forward Difference Method is but an approximation for the derivative of the function, you note that the extra terms in the Taylor series represent the difference between the approximation of the Forward Difference Method and the exactness of the Taylor series.</p>
 <p>The extra terms of the Taylor series, i.e. <span class="math notranslate nohighlight">\(- \frac{h^1}{2!}f''(x_0) - \frac{h^2}{3!}f'''(x_0) + \ldots\)</span>, start from the term that includes 2nd derivative of the function <span class="math notranslate nohighlight">\(- \frac{h^1}{2!}f''(x_0)\)</span> and continue onwards to terms that include higher derivatives, like the 3rd, 4th, etc. i.e.  <span class="math notranslate nohighlight">\(- \frac{h^2}{3!}f'''(x_0) + \ldots\)</span>. These extra terms are the difference between the Taylor series and the Forward Difference Method.</p>
@@ -510,13 +510,13 @@ Knowing that the equality relation in the Taylor series does not change when mov
 \[- \frac{h^1}{2!}f''(x_0) - \frac{h^2}{3!}f'''(x_0) + \ldots = -\frac{\mathcal{O}(h^2)}{h} \]</div>
 <p>I could also express the Taylor series and the FDM as:</p>
 <p>Forward Difference Method
-<span class="math notranslate nohighlight">\($ f'(x_0)\approx \frac{f(x_0+h)-f(x_0)}{h},\;\;\;\; h&gt;0. $\)</span></p>
+$<span class="math notranslate nohighlight">\( f'(x_0)\approx \frac{f(x_0+h)-f(x_0)}{h},\;\;\;\; h&gt;0. \)</span>$</p>
 <p>Taylor Series
-<span class="math notranslate nohighlight">\($  f'(x_0) =  \frac {f(x_0+h) - f(x_0)}{h}   - \frac{h^1}{2!}f''(x_0) - \frac{h^2}{3!}f'''(x_0) + \ldots\)</span>$</p>
+$<span class="math notranslate nohighlight">\(  f'(x_0) =  \frac {f(x_0+h) - f(x_0)}{h}   - \frac{h^1}{2!}f''(x_0) - \frac{h^2}{3!}f'''(x_0) + \ldots\)</span>$</p>
 <p>Forward Difference Method
-<span class="math notranslate nohighlight">\($ f'(x_0)\approx \frac{f(x_0+h)-f(x_0)}{h},\;\;\;\; h&gt;0. $\)</span></p>
+$<span class="math notranslate nohighlight">\( f'(x_0)\approx \frac{f(x_0+h)-f(x_0)}{h},\;\;\;\; h&gt;0. \)</span>$</p>
 <p>Taylor Series
-<span class="math notranslate nohighlight">\($  f'(x_0) =  \frac {f(x_0+h) - f(x_0)}{h}   - \mathcal{O}(h)\)</span>$</p>
+$<span class="math notranslate nohighlight">\(  f'(x_0) =  \frac {f(x_0+h) - f(x_0)}{h}   - \mathcal{O}(h)\)</span>$</p>
 <p>Immediately, I could see that the the difference in FDM and the Taylor Series is \mathcal{O}(h), and that the FDM does not include 2nd order terms, so FDM can only be 1st order accurate.</p>
 <p>In the future(heh, NM2), when I see that the difference between the numerical differentiation method and Taylor series is \mathcalc{O}{h^n}, I will know that the order of accuracy of the numerical differentiation method is <span class="math notranslate nohighlight">\(n\)</span></p>
 </div>
@@ -566,7 +566,7 @@ f(x_0-\Delta x) &amp;= f(x_0)-\Delta xf’(x_0)+\frac{\Delta x^2}{2}f’’(x_0)
 <p>The analysis of the two methods does tell us that as we halve <span class="math notranslate nohighlight">\(h\)</span> the error should drop by a factor 4 rather than the 2 we get for the first-order forward or backward differencing.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
 <span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
 <span class="n">ax1</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">)</span>
 <span class="n">ax1</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">)</span>
@@ -638,7 +638,7 @@ f(x_0-\Delta x) &amp;= f(x_0)-\Delta xf’(x_0)+\frac{\Delta x^2}{2}f’’(x_0)
 <p>In each case, using <span class="math notranslate nohighlight">\(\,\Delta x = 0.01\)</span>, let’s write out the error, i.e. the difference between the exact derivative and the result of the formula above.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">diff</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">dx</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">diff</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">dx</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">):</span>
     <span class="n">numerator</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">dx</span><span class="p">)</span> <span class="o">-</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">dx</span><span class="p">)</span>
     <span class="n">derivative</span> <span class="o">=</span> <span class="n">numerator</span> <span class="o">/</span> <span class="p">(</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">dx</span> <span class="p">)</span>
     <span class="k">return</span> <span class="n">derivative</span>
@@ -673,7 +673,7 @@ f(x_0-\Delta x) &amp;= f(x_0)-\Delta xf’(x_0)+\frac{\Delta x^2}{2}f’’(x_0)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>The approximate derivative of exp(x) at x = 0 is: 1.000017. The error is 0.000017.
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The approximate derivative of exp(x) at x = 0 is: 1.000017. The error is 0.000017.
 The approximate derivative of exp(-2*x) at x = 0 is: -2.00013.  The error is 0.00013.
 The approximate derivative of cos(x) at x = 2*pi is: 0.00000.  The error is 0.00000.
 The approximate derivative of ln(x) at x = 0 is: 1.00003.  The error is 0.00003.
@@ -841,8 +841,7 @@ an initial value for <span class="math notranslate nohighlight">\(u\)</span>, th
 <p>and plot the results. A template to get you started is below.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
-<span class="k">def</span> <span class="nf">euler</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="n">u0</span><span class="p">,</span><span class="n">t0</span><span class="p">,</span><span class="n">t_max</span><span class="p">,</span><span class="n">dt</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">euler</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="n">u0</span><span class="p">,</span><span class="n">t0</span><span class="p">,</span><span class="n">t_max</span><span class="p">,</span><span class="n">dt</span><span class="p">):</span>
     <span class="n">u</span><span class="o">=</span><span class="n">u0</span><span class="p">;</span> <span class="n">t</span><span class="o">=</span><span class="n">t0</span>
     <span class="c1"># these lists will store all solution values </span>
     <span class="c1"># and associated time levels for later plotting</span>

@@ -10,7 +10,7 @@ The primer is (currently) split into four sections:
 
 
 ```{margin} For contributors
-If you would like to contribute to the website, you can find our guidelines {doc}`here <e_extra/jupyter_book_guide>`. 
+If you would like to contribute to the website, you can find our guidelines {doc}`here <e_extra/contributors_guide>`. 
 ```
 
 If you are interested in resources related to a specific module, visit the {doc}`a_modules/intro` page.

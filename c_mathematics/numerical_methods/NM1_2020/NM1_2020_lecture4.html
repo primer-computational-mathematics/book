@@ -25,12 +25,12 @@
     <script src="../../../_static/togglebutton.js"></script>
     <script src="../../../_static/clipboard.min.js"></script>
     <script src="../../../_static/copybutton.js"></script>
-    <script src="../../../_static/mystnb.js"></script>
     <script src="../../../_static/sphinx-book-theme.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
     <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
     <script >
         const thebe_selector = ".cell"
@@ -430,10 +430,10 @@
 <h2>X.     Potential Convergence Issues<a class="headerlink" href="#x-potential-convergence-issues" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># some imports we will make at the start of every notebook</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># some imports we will make at the start of every notebook</span>
 <span class="c1"># later notebooks may add to this with specific SciPy modules</span>
 
-<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
@@ -464,9 +464,9 @@
 <p>[Note also that discretisations of nonlinear ODEs or PDEs (e.g. being nonlinear in order to accurately represent the nonlinear real world) results in nonlinear discrete systems for which we need to make use of techniques such as those introduced in this lecture. Discretization is the process of transferring continuous functions, models, variables, and equations into discrete counterparts. Discretizing ODEs or PDEs often mean we concenrn ourselves with a limited range for the ODEs and the PDEs, where we are actually interested. For example, ODEs and PDEs can be used to describe fluid motion, and a key parameter in the motion of material in Earth’s mantle (Earth’s mantle can be considered, on the geological time scale of things, to be a fluid with no strength - Dr. Rebecca Bell) is temperature (Geodynamics 2nd edition - Turcotte &amp; Schubert). However, we know that the Earth’s mantle could only possibly be within a certain temperature range, i.e. we are not expecting the mantle to be close to absolute zero, or to be hotter than the Sun, so we limit ourselves to analyzing a limited range of temperatures for our PDEs and ODEs. So if your solution to ODE or PDE somehow ends up telling you that the interior of the Earth is hotter than the Sun in your simulations, you might want to double check why Earth is not undergoing nuclear fusion.]</p>
 <p>They are then called nonlinear systems, and equations representing them contain terms like:</p>
 <ul class="simple">
-<li><p>$ x^2,; x^3,\ldots;;;$ e.g. higher (<span class="math notranslate nohighlight">\(&gt;1\)</span>) order powers that would appear in polynomials.</p></li>
-<li><p>$ \sqrt{x},; x^{1/3}, x^{\pi},\ldots ;;; $ e.g. roots, radicals and other non-integer polynomials.</p></li>
-<li><p>$\tan(x),; \sin(x), ; \log(x),; \text{erf}(x), \ldots ;;; $ e.g. trigonometric and other <a class="reference external" href="https://en.wikipedia.org/wiki/Special_functions"><em>special functions</em></a>.</p></li>
+<li><p><span class="math notranslate nohighlight">\( x^2,\; x^3,\ldots\;\;\;\)</span> e.g. higher (<span class="math notranslate nohighlight">\(&gt;1\)</span>) order powers that would appear in polynomials.</p></li>
+<li><p><span class="math notranslate nohighlight">\( \sqrt{x},\; x^{1/3}, x^{\pi},\ldots \;\;\; \)</span> e.g. roots, radicals and other non-integer polynomials.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\tan(x),\; \sin(x), \; \log(x),\; \text{erf}(x), \ldots \;\;\; \)</span> e.g. trigonometric and other <a class="reference external" href="https://en.wikipedia.org/wiki/Special_functions"><em>special functions</em></a>.</p></li>
 </ul>
 <p>You should be familiar, for example, with quadratic equations <span class="math notranslate nohighlight">\(f(x) := a x^2 + bx + c = 0\)</span>, for which there exist the well known analytic solutions:</p>
 <div class="math notranslate nohighlight">
@@ -520,7 +520,7 @@ x^*_{1,2} := \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}\,.
 <p>Let’s see some examples.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">,</span> <span class="n">ax3</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">,</span> <span class="n">ax3</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
 <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">(</span><span class="n">w_pad</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
 
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
@@ -561,7 +561,7 @@ x^*_{1,2} := \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}\,.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x134344f0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x134344f0&gt;
 </pre></div>
 </div>
 <img alt="../../../_images/NM1_2020_lecture4_8_1.png" src="../../../_images/NM1_2020_lecture4_8_1.png" />
@@ -649,10 +649,7 @@ You will use the result you have obtained from <span class="math notranslate noh
 <p>The step previous to step 2 is step 1.</p>
 <p>The <span class="math notranslate nohighlight">\(g(x)\)</span> that you have found in the previous step, so step 1, is</p>
 <div class="math notranslate nohighlight">
-\[g(x)^0 = 0.36788\]</div>
-<p>Picard Iteration basically tells you to take the <span class="math notranslate nohighlight">\(g(x)\)</span> that you have found in the previous step and replace <span class="math notranslate nohighlight">\(x\)</span> in the new step with this value. The <span class="math notranslate nohighlight">\(x\)</span> in the new step, so step 2, is <span class="math notranslate nohighlight">\(x^1\)</span>. The value of <span class="math notranslate nohighlight">\(g(x)\)</span> in the previous step is <span class="math notranslate nohighlight">\(g(x)^0 = 0.36788\)</span>, thus I will write that</p>
-<div class="math notranslate nohighlight">
-\[x^1 = 0.36788\]</div>
+\[ \begin{align}\begin{aligned}g(x)^0 = 0.36788$$.\\Picard Iteration basically tells you to take the $g(x)$ that you have found in the previous step and replace $x$ in the new step with this value. The $x$ in the new step, so step 2, is $x^1$. The value of $g(x)$ in the previous step is $g(x)^0 = 0.36788$, thus I will write that \\$$x^1 = 0.36788\end{aligned}\end{align} \]</div>
 <p>Picard iteration then tell me to find a new <span class="math notranslate nohighlight">\(g(x)\)</span> using <span class="math notranslate nohighlight">\(x\)</span> in the new step. The new step is step 2, and the <span class="math notranslate nohighlight">\(x\)</span> in step 2 is <span class="math notranslate nohighlight">\(x^1 = 0.36788\)</span></p>
 <p>Thus I obtain the new <span class="math notranslate nohighlight">\(g(x)\)</span> called <span class="math notranslate nohighlight">\(g(x)^1\)</span> as</p>
 <div class="math notranslate nohighlight">
@@ -713,7 +710,7 @@ You will use the result you have obtained from <span class="math notranslate noh
 <p>Complete the implementation of the method of successive approximations below to solve <span class="math notranslate nohighlight">\(x=\mathrm{e}^{-x}\)</span></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">picard</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1.0e-6</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">picard</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1.0e-6</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Function implementing Picard&#39;s method.</span>
 <span class="sd">    </span>
 <span class="sd">    f here is the function g(.) described in the lecture and we are solving x = g(x).</span>
@@ -759,7 +756,7 @@ You will use the result you have obtained from <span class="math notranslate noh
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Current iteration solution:  0.9
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Current iteration solution:  0.9
 
 Picard used 1 function evaluations
 
@@ -774,7 +771,7 @@ Check this against the solution from SciPy: sop.newton(f, 0.9)= 0.56714329040978
 <p>NB. I include the plotting code here for completeness, but you can ignore the details if you’re not interested.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_picard_convergence</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">max_labels</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1.0e-4</span><span class="p">,</span> <span class="n">flabel</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_picard_convergence</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">max_labels</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1.0e-4</span><span class="p">,</span> <span class="n">flabel</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Function to demonstrate/plot the Picard algorithm and its convergence</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># variables to store solution iterations for plotting purposes</span>
@@ -845,7 +842,7 @@ Check this against the solution from SciPy: sop.newton(f, 0.9)= 0.56714329040978
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>x_00 = 1.00000.   g(x_00) = 0.36788.   |x_00 - g(x_00)| = 0.63212
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>x_00 = 1.00000.   g(x_00) = 0.36788.   |x_00 - g(x_00)| = 0.63212
 x_01 = 0.36788.   g(x_01) = 0.69220.   |x_01 - g(x_01)| = 0.32432
 x_02 = 0.69220.   g(x_02) = 0.50047.   |x_02 - g(x_02)| = 0.19173
 x_03 = 0.50047.   g(x_03) = 0.60624.   |x_03 - g(x_03)| = 0.10577
@@ -864,7 +861,7 @@ x_15 = 0.56707.   g(x_15) = 0.56719.   |x_15 - g(x_15)| = 0.00012
 x_16 = 0.56719.   g(x_16) = 0.56712.   |x_16 - g(x_16)| = 0.00007
 </pre></div>
 </div>
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x124a9b80&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x124a9b80&gt;]
 </pre></div>
 </div>
 <img alt="../../../_images/NM1_2020_lecture4_17_2.png" src="../../../_images/NM1_2020_lecture4_17_2.png" />
@@ -886,7 +883,7 @@ x_16 = 0.56719.   g(x_16) = 0.56712.   |x_16 - g(x_16)| = 0.00007
 <p>As we said at the start of this lecture, another way to visualise this is to plot the functions <span class="math notranslate nohighlight">\(y = x\)</span> and <span class="math notranslate nohighlight">\(y = \mathrm{e}^{-x}\)</span> in <span class="math notranslate nohighlight">\((x,y)\)</span> space and find the intersection.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
 <span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
 
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
@@ -903,7 +900,7 @@ x_16 = 0.56719.   g(x_16) = 0.56712.   |x_16 - g(x_16)| = 0.00007
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Fixed point as the intersection of two curves&#39;)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Fixed point as the intersection of two curves&#39;)
 </pre></div>
 </div>
 <img alt="../../../_images/NM1_2020_lecture4_21_1.png" src="../../../_images/NM1_2020_lecture4_21_1.png" />
@@ -923,7 +920,7 @@ x_16 = 0.56719.   g(x_16) = 0.56712.   |x_16 - g(x_16)| = 0.00007
 <p>We can of course plot a similar intersection figure for this modified problem.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
 <span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
 
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
@@ -964,7 +961,7 @@ x_16 = 0.56719.   g(x_16) = 0.56712.   |x_16 - g(x_16)| = 0.00007
 <p>Where we define <span class="math notranslate nohighlight">\(f\)</span> such that the solution to the above equation is a root - i.e. move all the terms on to one side and set equal to zero. Below we make the choice to define <span class="math notranslate nohighlight">\(f\)</span> as <span class="math notranslate nohighlight">\(f(x) = 2\,x + x \, \sin(x-3) - 5\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># for this problem we can define f as 5 - (2*x + x*np.sin(x-3)), or (2*x + x*np.sin(x-3)) - 5.</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># for this problem we can define f as 5 - (2*x + x*np.sin(x-3)), or (2*x + x*np.sin(x-3)) - 5.</span>
 <span class="c1"># it makes no difference to the root-finding, just the plots</span>
 <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="o">..............</span>
@@ -1008,7 +1005,7 @@ x_16 = 0.56719.   g(x_16) = 0.56712.   |x_16 - g(x_16)| = 0.00007
 <p>The approach can be visualised as follows:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_root_bracketing</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">dx</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">xbounds</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">1.4</span><span class="p">),</span> <span class="n">ybounds</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">flabel</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_root_bracketing</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">dx</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">xbounds</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">1.4</span><span class="p">),</span> <span class="n">ybounds</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">flabel</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="nb">int</span><span class="p">((</span><span class="n">b</span><span class="o">-</span><span class="n">a</span><span class="p">)</span><span class="o">/</span><span class="n">dx</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">y</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
     <span class="c1"># plot the sub-intervals in blue</span>
@@ -1051,7 +1048,7 @@ x_16 = 0.56719.   g(x_16) = 0.56712.   |x_16 - g(x_16)| = 0.00007
 <p>For <span class="math notranslate nohighlight">\(2x + x \mathrm{sin}(x-3) = 5\)</span>, use the subinterval <span class="math notranslate nohighlight">\(x \in(a,b)\)</span> you found in Exercise 4.2 and complete the code below to implement a function for the root bracketing algorithm. Derive the concept from the Figure above</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">x</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="mi">3</span><span class="p">)</span> <span class="o">-</span> <span class="mi">5</span>
 
 
@@ -1125,7 +1122,7 @@ x_16 = 0.56719.   g(x_16) = 0.56712.   |x_16 - g(x_16)| = 0.00007
 <p>Thus, we narrow down the space where the root could be, and eventually we will be able to find the location of the root.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">scipy</span> <span class="k">as</span> <span class="nn">sp</span>
 
@@ -1155,7 +1152,6 @@ x_16 = 0.56719.   g(x_16) = 0.56712.   |x_16 - g(x_16)| = 0.00007
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">5</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span><span class="s1">&#39;ro&#39;</span><span class="p">,</span>  <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Solution Location&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-
 </pre></div>
 </div>
 </div>
@@ -1168,7 +1164,7 @@ x_16 = 0.56719.   g(x_16) = 0.56712.   |x_16 - g(x_16)| = 0.00007
 <p>A visualisation of the method illustrates the narrowing in of an ever-smaller bracket:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mpl_toolkits.axes_grid1.inset_locator</span> <span class="kn">import</span> <span class="n">zoomed_inset_axes</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mpl_toolkits.axes_grid1.inset_locator</span> <span class="kn">import</span> <span class="n">zoomed_inset_axes</span>
 <span class="kn">from</span> <span class="nn">mpl_toolkits.axes_grid1.inset_locator</span> <span class="kn">import</span> <span class="n">mark_inset</span>
 
 <span class="k">def</span> <span class="nf">plot_bisection</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1.0e-2</span><span class="p">,</span> <span class="n">inset</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ixmin</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">ixmax</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">iymin</span><span class="o">=-</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">iymax</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">zoom</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">loc0</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">loc1</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">loc2</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">flabel</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
@@ -1258,7 +1254,7 @@ x_16 = 0.56719.   g(x_16) = 0.56712.   |x_16 - g(x_16)| = 0.00007
 <p>This algorithm has been <a href="http://docs.scipy.org/doc/scipy-0.14.0/reference/generated/scipy.optimize.bisect.html#scipy.optimize.bisect">implemented</a> in the <code class="docutils literal notranslate"><span class="pre">scipy.optimize</span></code> module:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">x</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="p">)</span>
 
 <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span>
@@ -1267,7 +1263,7 @@ x_16 = 0.56719.   g(x_16) = 0.56712.   |x_16 - g(x_16)| = 0.00007
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>0.5671432904109679
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.5671432904109679
 </pre></div>
 </div>
 </div>
@@ -1277,7 +1273,7 @@ x_16 = 0.56719.   g(x_16) = 0.56712.   |x_16 - g(x_16)| = 0.00007
 <p>For <span class="math notranslate nohighlight">\(2x + x \mathrm{sin}(x-3) = 5\)</span>, use the subinterval <span class="math notranslate nohighlight">\(x \in(a,b)\)</span> you found in Exercise 4.2 and complete the code below to implement a bisection algorithm. Derive the concept from a <a href="https://en.wikipedia.org/wiki/Bisection_method#Algorithm">pseudo-code description</a> and compare the result to <code class="docutils literal notranslate"><span class="pre">scipy.optimize.bisect</span></code></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">bisection</span><span class="p">(</span><span class="n">fct</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1.0E-6</span><span class="p">,</span> <span class="n">nmax</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">bisection</span><span class="p">(</span><span class="n">fct</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1.0E-6</span><span class="p">,</span> <span class="n">nmax</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
     <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">while</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="n">nmax</span><span class="p">:</span>
         
@@ -1308,7 +1304,7 @@ x_16 = 0.56719.   g(x_16) = 0.56712.   |x_16 - g(x_16)| = 0.00007
 </div>
 <div class="section" id="id5">
 <h1>VII.    Newton Method<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h1>
-<p>While the previously introduced bisection method is nice, there are other methods which take less steps to arrive at the solution, and one such method is the Newton Method. To arrive more quickly at the solution, unlike the previous bisection method that only used <span class="math notranslate nohighlight">\(f(x)\)</span>, i.e. $f(x_1), f(x_2), f(x_3), f(x_4) etc. $ depending on the number of iterative steps, Newton Method also uses derivatives of <span class="math notranslate nohighlight">\(f(x)\)</span>, such as <span class="math notranslate nohighlight">\(f'(x) and f''(x)\)</span> to infer the trend of the function in the vicinity of <span class="math notranslate nohighlight">\(x\)</span>. This slope, together with the function value <span class="math notranslate nohighlight">\(f(x)\)</span>, is used to find the intersection of the tangent at <span class="math notranslate nohighlight">\(x\)</span> with zero to get an improved iteration method for the root.</p>
+<p>While the previously introduced bisection method is nice, there are other methods which take less steps to arrive at the solution, and one such method is the Newton Method. To arrive more quickly at the solution, unlike the previous bisection method that only used <span class="math notranslate nohighlight">\(f(x)\)</span>, i.e. <span class="math notranslate nohighlight">\(f(x_1), f(x_2), f(x_3), f(x_4) etc. \)</span> depending on the number of iterative steps, Newton Method also uses derivatives of <span class="math notranslate nohighlight">\(f(x)\)</span>, such as <span class="math notranslate nohighlight">\(f'(x) and f''(x)\)</span> to infer the trend of the function in the vicinity of <span class="math notranslate nohighlight">\(x\)</span>. This slope, together with the function value <span class="math notranslate nohighlight">\(f(x)\)</span>, is used to find the intersection of the tangent at <span class="math notranslate nohighlight">\(x\)</span> with zero to get an improved iteration method for the root.</p>
 <p><span class="math notranslate nohighlight">\(x_{i+1}\)</span> is our updated or new or the closer to the solution value for <span class="math notranslate nohighlight">\(x\)</span>, and <span class="math notranslate nohighlight">\(x_i\)</span> is our previous value for <span class="math notranslate nohighlight">\(x\)</span>. We understand that our updated value <span class="math notranslate nohighlight">\(x_{i+1}\)</span> will not be in the same place as our previous value, and could be some distance away from our previous value. We remind ourselves that the Taylor expansion of function <span class="math notranslate nohighlight">\(f(x)\)</span> around a value, say <span class="math notranslate nohighlight">\(c\)</span> is written in the form of:</p>
 <div class="math notranslate nohighlight">
 \[ f(x) = f(c) + f'(c)(x-c) + \frac{1}{2!}f''(c)(x-c)^2 + \ldots   \]</div>
@@ -1383,7 +1379,7 @@ x_{i+1} = x_i - \frac{f(x_i)}{f’(x_i)}
 <p>And we keep on doing this, and so on and so forth!</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_newton</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">dx</span><span class="p">,</span> <span class="n">x_0</span><span class="p">,</span> <span class="n">atol</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">inset</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ixmin</span><span class="o">=</span><span class="mf">3.0</span><span class="p">,</span> <span class="n">ixmax</span><span class="o">=</span><span class="mf">3.2</span><span class="p">,</span> 
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_newton</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">dx</span><span class="p">,</span> <span class="n">x_0</span><span class="p">,</span> <span class="n">atol</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">inset</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ixmin</span><span class="o">=</span><span class="mf">3.0</span><span class="p">,</span> <span class="n">ixmax</span><span class="o">=</span><span class="mf">3.2</span><span class="p">,</span> 
                 <span class="n">iymin</span><span class="o">=-</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">iymax</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">zoom</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">loc0</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">loc1</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">loc2</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">resfct</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">flabel</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
     <span class="n">x_n</span> <span class="o">=</span> <span class="p">[</span><span class="n">x_0</span><span class="p">]</span>
     <span class="n">y_n</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span><span class="p">(</span><span class="n">x_0</span><span class="p">)]</span>    
@@ -1474,7 +1470,7 @@ x_{i+1} = x_i - \frac{f(x_i)}{f’(x_i)}
 <p>This algorithm has been <a href="http://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.newton.html">implemented</a> in the <code class="docutils literal notranslate"><span class="pre">scipy.optimize</span></code> module:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">x</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="p">)</span>
 
 <span class="k">def</span> <span class="nf">dfdx</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
@@ -1486,7 +1482,7 @@ x_{i+1} = x_i - \frac{f(x_i)}{f’(x_i)}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>0.567143290409784
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.567143290409784
 </pre></div>
 </div>
 </div>
@@ -1496,7 +1492,7 @@ x_{i+1} = x_i - \frac{f(x_i)}{f’(x_i)}
 <p>For <span class="math notranslate nohighlight">\(2x + x \mathrm{sin}(x-3) = 5\)</span>, use <span class="math notranslate nohighlight">\(a\)</span> from the subinterval <span class="math notranslate nohighlight">\(x \in(a,b)\)</span> you found in Exercise 4.2 as initial guess <span class="math notranslate nohighlight">\(x_0\)</span> and complete the code below to implement a Newton algorithm. Compare the result to <a class="reference external" href="http://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.newton.html">scipy.optimize.newton</a></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">newton</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">dfdx</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1.0e-6</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">newton</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">dfdx</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1.0e-6</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Function to implement the Newton-Raphson method</span>
 <span class="sd">    </span>
 <span class="sd">    f is the function we are trying to find a root of</span>
@@ -1555,7 +1551,7 @@ x_{i+1} = x_i - \frac{f(x_i)}{f’(x_i)}
 <p>Extend the Newton algorithm to compute <span class="math notranslate nohighlight">\(f^\prime(x)\)</span> using a finite difference approximation. Compare the result to <code class="docutils literal notranslate"><span class="pre">scipy.optimize.newton</span></code></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">quasi_newton</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">dx</span><span class="o">=</span><span class="mf">1.0E-7</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1.0E-6</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">quasi_newton</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">dx</span><span class="o">=</span><span class="mf">1.0E-7</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1.0E-6</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Function to implement quasi-newton</span>
 <span class="sd">    </span>
 <span class="sd">    f is the function we are trying to find a root of</span>
@@ -1602,7 +1598,7 @@ x_{n+1} = x_n - f(x_n) \left ( \frac{x_n - x_{n-1}}{f(x_n) - f(x_{n-1})} \right 
 <p>The algorithm can be visualized as follows:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_secant</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">x_0</span><span class="p">,</span> <span class="n">x_1</span><span class="p">,</span> <span class="n">atol</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">max_labels0</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inset</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ixmin</span><span class="o">=</span><span class="mf">3.0</span><span class="p">,</span> <span class="n">ixmax</span><span class="o">=</span><span class="mf">3.2</span><span class="p">,</span> 
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_secant</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">x_0</span><span class="p">,</span> <span class="n">x_1</span><span class="p">,</span> <span class="n">atol</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">max_labels0</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inset</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ixmin</span><span class="o">=</span><span class="mf">3.0</span><span class="p">,</span> <span class="n">ixmax</span><span class="o">=</span><span class="mf">3.2</span><span class="p">,</span> 
                 <span class="n">iymin</span><span class="o">=-</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">iymax</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">zoom</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">loc0</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">loc1</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">loc2</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">resfct</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">flabel</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
     <span class="c1"># variables to store to convergence pattern, initialise with two initial guess values</span>
     <span class="n">x_n</span> <span class="o">=</span> <span class="p">[</span><span class="n">x_0</span><span class="p">,</span> <span class="n">x_1</span><span class="p">]</span> 
@@ -1698,7 +1694,7 @@ x_{n+1} = x_n - f(x_n) \left ( \frac{x_n - x_{n-1}}{f(x_n) - f(x_{n-1})} \right 
 <p>For <span class="math notranslate nohighlight">\(2x + x \mathrm{sin}(x-3) = 5\)</span>, use <span class="math notranslate nohighlight">\(a\)</span> from the subinterval <span class="math notranslate nohighlight">\(x \in(a,b)\)</span> you found in Exercise 4.2 to find <span class="math notranslate nohighlight">\(x_0 = a\)</span> and <span class="math notranslate nohighlight">\(x_1 = a+0.1\)</span> and complete the code below to implement a Secant algorithm. Compare the result to <code class="docutils literal notranslate"><span class="pre">scipy.optimize.newton</span></code></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">secant</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1.0E-6</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">secant</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1.0E-6</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Function to implement the secant method</span>
 <span class="sd">    </span>
 <span class="sd">    x0 and x1 are the two required guesses</span>
@@ -1745,7 +1741,7 @@ f(x) = x^4 - 5
 \end{equation}</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">x</span><span class="o">**</span><span class="mi">4</span> <span class="o">-</span> <span class="mi">5</span>
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
@@ -1779,7 +1775,7 @@ f(x) = x^4 - 5
 <p>Let’s see an example where we choose two initial guesses (0.0 and 0.1) and visualise how this relatively small difference leads to convergence to different roots.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">x</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">x</span><span class="p">)</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="p">)</span>
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
@@ -1794,7 +1790,7 @@ f(x) = x^4 - 5
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">x</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">x</span><span class="p">)</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="p">)</span>
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
@@ -1812,7 +1808,7 @@ f(x) = x^4 - 5
 <p>We confirm this behaviour is not a product of an issue with our implementation, and print the two actual root values, using calls to the SciPy function below.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">x</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">x</span><span class="p">)</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="p">)</span>
 
 <span class="n">x0</span> <span class="o">=</span> <span class="mf">0.0</span>
@@ -1823,7 +1819,7 @@ f(x) = x^4 - 5
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>0.8191177934425945
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.8191177934425945
 0.578262577864515
 </pre></div>
 </div>
@@ -1845,7 +1841,7 @@ x_{i+1} = x_i - \frac{f(x_i)}{f’(x_i)}
 <p>A method to deal with this problem is to use the Quasi Newton Method or the Secant Method, or even the Bisection method instead. However, note that these methods also have situations where they fail, so it is important to note the capabilities of each method. There may be nothing wrong with your code, it may simply be the method at fault.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">x</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">x</span><span class="p">)</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="p">)</span>
 
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
@@ -1874,7 +1870,7 @@ x_{i+1} = x_i - \frac{f(x_i)}{f’(x_i)}
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">x</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">x</span><span class="p">)</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="p">)</span>
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
@@ -1890,7 +1886,7 @@ x_{i+1} = x_i - \frac{f(x_i)}{f’(x_i)}
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">x</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">x</span><span class="p">)</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="p">)</span>
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
@@ -1906,7 +1902,7 @@ x_{i+1} = x_i - \frac{f(x_i)}{f’(x_i)}
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">x</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">x</span><span class="p">)</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="p">)</span>
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
@@ -1922,7 +1918,7 @@ x_{i+1} = x_i - \frac{f(x_i)}{f’(x_i)}
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">x</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">x</span><span class="p">)</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="p">)</span>
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
@@ -1934,18 +1930,19 @@ x_{i+1} = x_i - \frac{f(x_i)}{f’(x_i)}
 </div>
 <div class="cell_output docutils container">
 <div class="stderr docutils container">
-<pre class="stderr literal-block">&lt;ipython-input-36-5921017847f3&gt;:2: RuntimeWarning: overflow encountered in exp
+<div class="stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;ipython-input-36-5921017847f3&gt;:2: RuntimeWarning: overflow encountered in exp
   return x*np.sin(np.pi*x)-np.exp(-x)
 &lt;ipython-input-22-2a95dd3ffbb6&gt;:11: RuntimeWarning: invalid value encountered in double_scalars
   dfdx = (f(x_n[-1]+dx) - f(x_n[-1])) / dx
-</pre>
+</pre></div>
+</div>
 </div>
 <img alt="../../../_images/NM1_2020_lecture4_79_1.png" src="../../../_images/NM1_2020_lecture4_79_1.png" />
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">x</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">x</span><span class="p">)</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="p">)</span>
 
 <span class="c1"># do we converge for a slightly larger initial guess?</span>
@@ -1970,16 +1967,17 @@ x_{i+1} = x_i - \frac{f(x_i)}{f’(x_i)}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>4.999570827870424
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4.999570827870424
 24017.65375762087
 0.578262577864515
 0.8191177934426115
 </pre></div>
 </div>
 <div class="stderr docutils container">
-<pre class="stderr literal-block">&lt;ipython-input-37-920b2c53e186&gt;:2: RuntimeWarning: overflow encountered in exp
+<div class="stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;ipython-input-37-920b2c53e186&gt;:2: RuntimeWarning: overflow encountered in exp
   return x*np.sin(np.pi*x)-np.exp(-x)
-</pre>
+</pre></div>
+</div>
 </div>
 </div>
 </div>
@@ -1991,7 +1989,7 @@ x_{i+1} = x_i - \frac{f(x_i)}{f’(x_i)}
 <p>Oscillation problems could also happen when the iterations are trapped in a region where gradients to either side have equal magnitude but oppisite direction, sorta something like symmetry.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">x</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="mi">3</span><span class="p">)</span> <span class="o">-</span> <span class="mi">5</span>
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
@@ -2009,7 +2007,7 @@ x_{i+1} = x_i - \frac{f(x_i)}{f’(x_i)}
 <p>Another similar example:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>

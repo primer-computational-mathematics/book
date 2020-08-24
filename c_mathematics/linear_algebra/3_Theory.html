@@ -25,12 +25,12 @@
     <script src="../../_static/togglebutton.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
-    <script src="../../_static/mystnb.js"></script>
     <script src="../../_static/sphinx-book-theme.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
     <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
     <script >
         const thebe_selector = ".cell"
@@ -549,13 +549,10 @@ x_6 - 2x_7 = 0 \\
 x_8 = 0\end{split}\]</div>
 <p><span class="math notranslate nohighlight">\(x_2, x_4, x_5, x_7\)</span> are free variables (notice that their indices match the index of their non-pivotal column, sometimes called free column), so we can parameterise above equations such that <span class="math notranslate nohighlight">\(x_2 = \alpha\)</span>, <span class="math notranslate nohighlight">\(x_4 = \beta\)</span>, <span class="math notranslate nohighlight">\(x_5 = \gamma\)</span>, <span class="math notranslate nohighlight">\(x_7 = \delta\)</span>, where <span class="math notranslate nohighlight">\(\alpha, \beta, \gamma, \delta \in \mathbb{R}\)</span>. We get:</p>
 <div class="math notranslate nohighlight">
-\[\begin{split} x_1 = -2\alpha - \beta + \gamma - 3\delta \\
+\[ \begin{align}\begin{aligned}\begin{split} x_1 = -2\alpha - \beta + \gamma - 3\delta \\
 x_3 = -\beta -3\gamma -\delta \\
-x_6 = 2\delta\end{split}\]</div>
-<p>The solution <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> is therefore:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split} \mathbf{x} = \begin{bmatrix}
-x_1 \\ x_2 \\ x_3 \\ x_4 \\ x_5 \\ x_6 \\ x_7 \\ x_8 \end{bmatrix} = \begin{bmatrix} -2\alpha - \beta + \gamma - 3\delta \\ \alpha \\ -\beta -3\gamma -\delta \\ \beta \\ \gamma \\ 2\delta \\ \delta \\ 0 \end{bmatrix}.\end{split}\]</div>
+x_6 = 2\delta$$.\end{split}\\The solution $\mathbf{x}$ is therefore:\\\begin{split}$$ \mathbf{x} = \begin{bmatrix}
+x_1 \\ x_2 \\ x_3 \\ x_4 \\ x_5 \\ x_6 \\ x_7 \\ x_8 \end{bmatrix} = \begin{bmatrix} -2\alpha - \beta + \gamma - 3\delta \\ \alpha \\ -\beta -3\gamma -\delta \\ \beta \\ \gamma \\ 2\delta \\ \delta \\ 0 \end{bmatrix}.\end{split}\end{aligned}\end{align} \]</div>
 <p>We can rewrite this as a linear combination of four vectors which form a basis of <span class="math notranslate nohighlight">\(\text{null}(A)\)</span>:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\mathbf{x} = \alpha \begin{bmatrix} -2 \\ 1 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \end{bmatrix} + \beta \begin{bmatrix} -1 \\ 0 \\ -1 \\ 1 \\ 0 \\ 0 \\ 0 \\ 0 \end{bmatrix} + \gamma \begin{bmatrix} 1 \\ 0 \\ -3 \\ 0 \\ 1 \\ 0 \\ 0 \\ 0 \end{bmatrix} + \delta \begin{bmatrix} -3 \\ 0 \\ -1 \\ 0 \\ 0 \\ 2 \\ 1 \\ 0 \end{bmatrix}, \quad \alpha, \beta, \gamma, \delta \in \mathbb{R}. \end{split}\]</div>
@@ -597,7 +594,7 @@ x_1 \\ x_2 \\ x_3 \\ x_4 \\ x_5 \\ x_6 \\ x_7 \\ x_8 \end{bmatrix} = \begin{bmat
 <p>Let us think geometrically and try to find the inverse of this matrix. When multiplying a vector <span class="math notranslate nohighlight">\(\mathbf{u}\)</span>, the product <span class="math notranslate nohighlight">\(R\mathbf{u} = \tilde{\mathbf{u}}\)</span> is a vector rotated counterclockwise in the <span class="math notranslate nohighlight">\(xy\)</span>-plane by an angle <span class="math notranslate nohighlight">\(\varphi\)</span>, measured from the positive <span class="math notranslate nohighlight">\(x\)</span> axis. An inverse of <span class="math notranslate nohighlight">\(R\)</span>, <span class="math notranslate nohighlight">\(R^{-1}\)</span>, has to be such that \( R^{-1}\tilde{\mathbf{u}} = \mathbf{u}\), i.e. it will act to rotate by exactly the same angle, but in the opposite direction. Therefore, we simply need to change the sign of <span class="math notranslate nohighlight">\(\varphi\)</span>:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split} R^{-1} = \begin{pmatrix} \cos (-\varphi) &amp; -\sin (-\varphi) \\ \sin (-\varphi) &amp; \cos (-\varphi) \end{pmatrix}. \end{split}\]</div>
-<p>Recall that sine is an odd function (\( \sin(-\varphi) = -\sin \varphi\)), while cosine is even ($ \cos (-\varphi) = \cos \varphi $):</p>
+<p>Recall that sine is an odd function (\( \sin(-\varphi) = -\sin \varphi\)), while cosine is even (<span class="math notranslate nohighlight">\( \cos (-\varphi) = \cos \varphi \)</span>):</p>
 <div class="math notranslate nohighlight">
 \[\begin{split} R^{-1} = \begin{pmatrix} \cos \varphi &amp; \sin \varphi \\ -\sin \varphi &amp; \cos \varphi \end{pmatrix} = R^T. \end{split}\]</div>
 <p>We see that the inverse <span class="math notranslate nohighlight">\(R^{-1}\)</span> coincides with the transpose <span class="math notranslate nohighlight">\(R^T\)</span>.</p>

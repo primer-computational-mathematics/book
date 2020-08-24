@@ -25,12 +25,12 @@
     <script src="../../_static/togglebutton.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
-    <script src="../../_static/mystnb.js"></script>
     <script src="../../_static/sphinx-book-theme.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
     <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
     <script >
         const thebe_selector = ".cell"
@@ -277,7 +277,7 @@
 <p id="index-0">Let’s look at New Zealand earthquake data:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="n">nz_eqs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../../geosciences/data/nz_largest_eq_since_1970.csv&quot;</span><span class="p">)</span>
@@ -381,7 +381,7 @@
 <p>Let’s create a second DataFrame that has latitude, longitude and depth (km) columns. And add an extra column with square root of depth:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nz_eqs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../../geosciences/data/nz_largest_eq_since_1970.csv&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nz_eqs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../../geosciences/data/nz_largest_eq_since_1970.csv&quot;</span><span class="p">)</span>
 <span class="n">nz_eqs</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -481,7 +481,7 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nz_eqs2</span> <span class="o">=</span> <span class="n">nz_eqs</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">5</span><span class="p">:</span><span class="mi">8</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nz_eqs2</span> <span class="o">=</span> <span class="n">nz_eqs</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">5</span><span class="p">:</span><span class="mi">8</span><span class="p">]</span>
 <span class="n">nz_eqs2</span><span class="p">[</span><span class="s2">&quot;depth_sqrt&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">nz_eqs2</span><span class="o">.</span><span class="n">depth_km</span><span class="p">)</span>
 <span class="n">nz_eqs2</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
@@ -555,7 +555,7 @@
 <p>Now, we would like to join the original ‘nz_eqs’ and ‘nz_eqs2’ DataFrames by common columns. We can use merge function that takes two DataFrames as arguments and we can decided which columns to merge with. In our case, nz_eqs and nz_eqs2 share three data columns: lat, lon, depth_km. If we choose to merge with latitude, longitude, the final DataFrame would keep depth_km columns from both DataFrames, named depth_km_x and depth_km_y. If we wanted to merge DataFrames with all three common columns, we can use:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nz_eqs_merged</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">nz_eqs</span><span class="p">,</span> <span class="n">nz_eqs2</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">,</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nz_eqs_merged</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">nz_eqs</span><span class="p">,</span> <span class="n">nz_eqs2</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">,</span>
                          <span class="n">on</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;lat&quot;</span><span class="p">,</span> <span class="s2">&quot;lon&quot;</span><span class="p">,</span> <span class="s2">&quot;depth_km&quot;</span><span class="p">])</span>
 
 <span class="n">nz_eqs_merged</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
@@ -681,7 +681,7 @@
 <p id="index-1">If we want to join the same data from two tables, we can use the concat() function. Let’s split the original data into two DataFrames and try to combine them back together:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Extract two overlapping DataFrames</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Extract two overlapping DataFrames</span>
 <span class="n">nz_eqs3</span> <span class="o">=</span> <span class="n">nz_eqs</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">15000</span><span class="p">,:]</span>
 <span class="n">nz_eqs4</span> <span class="o">=</span> <span class="n">nz_eqs</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">12000</span><span class="p">:,:]</span>
 
@@ -706,7 +706,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Shapes of two DataFrames: (15000, 11) (13000, 11)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Shapes of two DataFrames: (15000, 11) (13000, 11)
 Original DataFrame shape: (25000, 11)
 Concatenated DataFrame with duplicates shape: (28000, 11)
 Concatenated DataFrame without duplicates shape: (25000, 11)
@@ -720,12 +720,12 @@ Concatenated DataFrame without duplicates shape: (25000, 11)
 <p id="index-2">If we wanted to count how many times specific regions in New Zealand were hit by an earthquake, we can use groupby() function and count():</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nz_eqs</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;region&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">region</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nz_eqs</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;region&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">region</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>region
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>region
 CHATHAM ISLANDS, N.Z. REGION          4
 COOK STRAIT, NEW ZEALAND           1381
 EAST OF NORTH ISLAND, N.Z.         1676
@@ -748,12 +748,12 @@ Name: region, dtype: int64
 <p>This analysis is also equivalent to pandas built-in value_counts() function:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nz_eqs</span><span class="o">.</span><span class="n">region</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nz_eqs</span><span class="o">.</span><span class="n">region</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>OFF E. COAST OF N. ISLAND, N.Z.    7741
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>OFF E. COAST OF N. ISLAND, N.Z.    7741
 NORTH ISLAND, NEW ZEALAND          6790
 SOUTH ISLAND, NEW ZEALAND          3119
 SOUTH OF KERMADEC ISLANDS          2053
@@ -775,7 +775,7 @@ Name: region, dtype: int64
 <p>We can also groupby two columns, e.g. region and year based on count, maximum and minimum depth in that year and region:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nz_eqs</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;region&#39;</span><span class="p">,</span> <span class="s1">&#39;year&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">depth_km</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="nb">len</span><span class="p">,</span> <span class="nb">min</span><span class="p">,</span> <span class="nb">max</span><span class="p">])</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nz_eqs</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;region&#39;</span><span class="p">,</span> <span class="s1">&#39;year&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">depth_km</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="nb">len</span><span class="p">,</span> <span class="nb">min</span><span class="p">,</span> <span class="nb">max</span><span class="p">])</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -854,7 +854,7 @@ Name: region, dtype: int64
 <p id="index-3">Groupby() function returns the values in the index order. Suppose we would like to know count of earthquakes in each year in descending order. We can use function sort_values() for that:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nz_eqs_years</span> <span class="o">=</span> <span class="n">nz_eqs</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;year&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">depth_km</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="nb">len</span><span class="p">,</span> <span class="nb">min</span><span class="p">,</span> <span class="nb">max</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nz_eqs_years</span> <span class="o">=</span> <span class="n">nz_eqs</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;year&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">depth_km</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="nb">len</span><span class="p">,</span> <span class="nb">min</span><span class="p">,</span> <span class="nb">max</span><span class="p">])</span>
 <span class="n">nz_eqs_years_sorted</span> <span class="o">=</span> <span class="n">nz_eqs_years</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s2">&quot;len&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">nz_eqs_years_sorted</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>

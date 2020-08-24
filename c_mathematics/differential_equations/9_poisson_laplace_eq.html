@@ -25,12 +25,12 @@
     <script src="../../_static/togglebutton.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
-    <script src="../../_static/mystnb.js"></script>
     <script src="../../_static/sphinx-book-theme.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
     <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
     <script >
         const thebe_selector = ".cell"
@@ -303,7 +303,7 @@
 <p>Let us find some solutions to the Laplace’s equation, which are called <strong>harmonic functions</strong>. We see that any <span class="math notranslate nohighlight">\(u=\text{const.}\)</span> is a solution, then <span class="math notranslate nohighlight">\(x, y, x^2 - y^2, x^3 - 3xy^2\)</span> and so on. Let us plot their graphs and try to see if we can notice some interesting properties.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">from</span> <span class="nn">mpl_toolkits.mplot3d</span> <span class="kn">import</span> <span class="n">Axes3D</span>
 
@@ -337,12 +337,12 @@
 \[ u(0) = \frac{u(x) + u(-x)}{2}. \]</div>
 <p>Tristan Needham explains this in a more general case (although we could generalise this further to a sphere) very nicely in his book Visual Complex Analysis:</p>
 <blockquote>
-<div><p>The Laplacian of <span class="math notranslate nohighlight">\(u\)</span> at a point <span class="math notranslate nohighlight">\(p\)</span> measures the amount by which the average value of <span class="math notranslate nohighlight">\(u\)</span> on an infinitesimal circle centered at <span class="math notranslate nohighlight">\(p\)</span> exceeds the value of <span class="math notranslate nohighlight">\(u\)</span> at <span class="math notranslate nohighlight">\(p\)</span> itself. More precisely, if <span class="math notranslate nohighlight">\(r\)</span> is the infinitesimal radius of this circle, then <span class="math notranslate nohighlight">\($ \overline{u} - u(p) = \frac{1}{4}r^2 \Delta u $\)</span></p>
+<div><p>The Laplacian of <span class="math notranslate nohighlight">\(u\)</span> at a point <span class="math notranslate nohighlight">\(p\)</span> measures the amount by which the average value of <span class="math notranslate nohighlight">\(u\)</span> on an infinitesimal circle centered at <span class="math notranslate nohighlight">\(p\)</span> exceeds the value of <span class="math notranslate nohighlight">\(u\)</span> at <span class="math notranslate nohighlight">\(p\)</span> itself. More precisely, if <span class="math notranslate nohighlight">\(r\)</span> is the infinitesimal radius of this circle, then $<span class="math notranslate nohighlight">\( \overline{u} - u(p) = \frac{1}{4}r^2 \Delta u \)</span>$</p>
 </div></blockquote>
 <p>In our case, where <span class="math notranslate nohighlight">\(\Delta u = 0\)</span>, this means that the value of <span class="math notranslate nohighlight">\(u\)</span> at some point <span class="math notranslate nohighlight">\(p\)</span> is equal to the mean of the infinitesimal circle around <span class="math notranslate nohighlight">\(p\)</span>. Actually, if <span class="math notranslate nohighlight">\(u\)</span> is a harmonic function this is true for a circle of any radius.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f_polar</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f_polar</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">r</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
     <span class="n">y</span> <span class="o">=</span> <span class="n">r</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">x</span><span class="o">**</span><span class="mi">3</span> <span class="o">-</span> <span class="mi">3</span><span class="o">*</span><span class="n">x</span><span class="o">*</span><span class="n">y</span><span class="o">**</span><span class="mi">2</span>
@@ -369,7 +369,7 @@
 </div>
 <div class="cell_output docutils container">
 <img alt="../../_images/9_poisson_laplace_eq_5_0.png" src="../../_images/9_poisson_laplace_eq_5_0.png" />
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>mean(u) - u(0,0) =  7.013888888888634e-13
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>mean(u) - u(0,0) =  7.013888888888634e-13
 </pre></div>
 </div>
 </div>
@@ -391,7 +391,7 @@
 \[ \nabla^2 u = \frac{(1 - r^2) \sin r}{r^3} - \frac{\cos r}{r^2} \]</div>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">7.5</span><span class="p">,</span> <span class="mf">7.5</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">7.5</span><span class="p">,</span> <span class="mf">7.5</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span>
 <span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
 <span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">X</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">Y</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
 
@@ -425,7 +425,7 @@
 <p>Let us show these vectors <span class="math notranslate nohighlight">\(\nabla u\)</span> overlain on top of <span class="math notranslate nohighlight">\(\Delta u\)</span>.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">u_x</span> <span class="o">=</span> <span class="n">X</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="o">/</span> <span class="n">r</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">X</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="o">/</span> <span class="n">r</span><span class="o">**</span><span class="mi">3</span>  <span class="c1"># x-component of grad u</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">u_x</span> <span class="o">=</span> <span class="n">X</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="o">/</span> <span class="n">r</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">X</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="o">/</span> <span class="n">r</span><span class="o">**</span><span class="mi">3</span>  <span class="c1"># x-component of grad u</span>
 <span class="n">u_y</span> <span class="o">=</span> <span class="n">Y</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="o">/</span> <span class="n">r</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">Y</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="o">/</span> <span class="n">r</span><span class="o">**</span><span class="mi">3</span>  <span class="c1"># y-component of grad u</span>
 <span class="n">lapl_u</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">r</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="o">/</span> <span class="n">r</span><span class="o">**</span><span class="mi">3</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="o">/</span> <span class="n">r</span><span class="o">**</span><span class="mi">2</span>  <span class="c1"># laplacian u</span>
 

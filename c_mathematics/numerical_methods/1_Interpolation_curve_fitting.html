@@ -25,12 +25,12 @@
     <script src="../../_static/togglebutton.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
-    <script src="../../_static/mystnb.js"></script>
     <script src="../../_static/sphinx-book-theme.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
     <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
     <script >
         const thebe_selector = ".cell"
@@ -379,7 +379,7 @@
 <p>Both interpolation and curve fitting can be done in various different ways. This notebook will introduce some of these ways using NumPy and SciPy libraries:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">scipy</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 </pre></div>
@@ -440,7 +440,7 @@ c = y_1 - mx_1 \text{ or } c = y_2 - mx_2.\]</p>
 <p>We can write our own code to obtain coefficients \(m\) and \(c\) for the points given in the dataset above:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">7.0</span><span class="p">,</span> <span class="mf">9.0</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">7.0</span><span class="p">,</span> <span class="mf">9.0</span><span class="p">])</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">])</span>
 
 <span class="n">m_list</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
@@ -461,7 +461,7 @@ c = y_1 - mx_1 \text{ or } c = y_2 - mx_2.\]</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>For (0.5, 0.5) and (2.0, 0.4), m = -0.07 and c1 = 0.53, c2 = 0.53.
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>For (0.5, 0.5) and (2.0, 0.4), m = -0.07 and c1 = 0.53, c2 = 0.53.
 For (2.0, 0.4) and (4.0, 0.3), m = -0.05 and c1 = 0.50, c2 = 0.50.
 For (4.0, 0.3) and (5.0, 0.1), m = -0.20 and c1 = 1.10, c2 = 1.10.
 For (5.0, 0.1) and (7.0, 0.9), m = 0.40 and c1 = -1.90, c2 = -1.90.
@@ -473,7 +473,7 @@ For (7.0, 0.9) and (9.0, 0.8), m = -0.05 and c1 = 1.25, c2 = 1.25.
 <p>Piecewise linear interpolation can be easily done in Python. First, let’s begin with plotting the points on their own. Python will automatically join the points together with lines unless otherwise specified. The <code class="docutils literal notranslate"><span class="pre">&quot;o&quot;</span></code> was used in the <code class="docutils literal notranslate"><span class="pre">plt.plot()</span></code> to ensure that bullets were shown instead of lines.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># We will want to overlay a plot of the raw data a few times below so </span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># We will want to overlay a plot of the raw data a few times below so </span>
 <span class="c1"># let&#39;s do this via a function that we can call repeatedly</span>
 <span class="k">def</span> <span class="nf">plot_raw_data</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">ax</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;plot x vs y on axes ax, </span>
@@ -489,7 +489,7 @@ For (7.0, 0.9) and (9.0, 0.8), m = -0.05 and c1 = 1.25, c2 = 1.25.
 </div>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set up a figure</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set up a figure</span>
 <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
 <span class="n">ax1</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
 <span class="n">ax1</span><span class="o">.</span><span class="n">margins</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
@@ -514,7 +514,7 @@ For (7.0, 0.9) and (9.0, 0.8), m = -0.05 and c1 = 1.25, c2 = 1.25.
 <p>Now, let’s plot the piecewise linear function. We will use the function from above, so be sure to run the cell above so that the function is loaded.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
 <span class="n">ax1</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
 <span class="n">ax1</span><span class="o">.</span><span class="n">margins</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
 
@@ -615,7 +615,7 @@ where \(0\le i\le N\).</p>
 <p>For example, we can use <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.lagrange.html"><code class="docutils literal notranslate"><span class="pre">scipy.interpolate.lagrange</span></code></a> to generate the Lagrange polynomial for a dataset as shown in the next cell.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scipy.interpolate</span> <span class="k">as</span> <span class="nn">si</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scipy.interpolate</span> <span class="k">as</span> <span class="nn">si</span>
 
 <span class="c1">### Our raw data from earlier - you can also test on our three data point example</span>
 <span class="n">xi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">7.0</span><span class="p">,</span> <span class="mf">9.0</span><span class="p">])</span>
@@ -668,7 +668,7 @@ where \(0\le i\le N\).</p>
 <p>We will sample the function \(y(x)=x^3\) at the points \(x=(1,2,3)\) and construct Lagrange polynomials - \(L_0\) (the constant interpolant going through the \(x=2\) data point only), \(L_1\) (the linear interpolant going through the \(x=1\) and \(x=3\) points) and \(L_2\) (the quadratic interpolant going through all three points).</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># this is the function we are going to approximate with low degree polynomials</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># this is the function we are going to approximate with low degree polynomials</span>
 <span class="k">def</span> <span class="nf">func_x3</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">x</span><span class="o">**</span><span class="mi">3</span>
 
@@ -756,7 +756,7 @@ P_3(x)= a_0 +(x-x_0)[a_1 + (x-x_1)[a_2 + (x-x_2)a_3]].\]</p>
 <p>Our own code below shows how to calculate Newton polynomial coefficients.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Consider the above example data again</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Consider the above example data again</span>
 <span class="n">xi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">7.0</span><span class="p">,</span> <span class="mf">9.0</span><span class="p">])</span>
 <span class="n">yi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">])</span>
 
@@ -803,7 +803,7 @@ P_3(x)= a_0 +(x-x_0)[a_1 + (x-x_1)[a_2 + (x-x_2)a_3]].\]</p>
 <p>And now we can plot the result:</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># set up figure</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># set up figure</span>
 <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
 <span class="n">ax1</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
 
@@ -872,7 +872,7 @@ P_3(x)= a_0 +(x-x_0)[a_1 + (x-x_1)[a_2 + (x-x_2)a_3]].\]</p>
 <p><code class="docutils literal notranslate"><span class="pre">numpy.polyfit</span></code> returns the coefficients of the polynomial fit to the data. We can then use <code class="docutils literal notranslate"><span class="pre">numpy.poly1d</span></code> to turn this into a function we can easily evaluate, as seen in the next example.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Fit a polynomial of degree 1, i.e. a straight line, to our (x, y) data from above</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Fit a polynomial of degree 1, i.e. a straight line, to our (x, y) data from above</span>
 <span class="n">degree</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="n">poly_coeffs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">polyfit</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">degree</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;poly_coeffs: &#39;</span><span class="p">,</span><span class="n">poly_coeffs</span><span class="p">)</span>
@@ -883,7 +883,7 @@ P_3(x)= a_0 +(x-x_0)[a_1 + (x-x_1)[a_2 + (x-x_2)a_3]].\]</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>poly_coeffs:  [0.0508044  0.26714649]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>poly_coeffs:  [0.0508044  0.26714649]
 </pre></div>
 </div>
 </div>
@@ -891,7 +891,7 @@ P_3(x)= a_0 +(x-x_0)[a_1 + (x-x_1)[a_2 + (x-x_2)a_3]].\]</p>
 <p>We can plot the raw data and the linear fit:</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set up figure</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set up figure</span>
 <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
 <span class="n">ax1</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
 <span class="n">ax1</span><span class="o">.</span><span class="n">margins</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
@@ -923,7 +923,7 @@ P_3(x)= a_0 +(x-x_0)[a_1 + (x-x_1)[a_2 + (x-x_2)a_3]].\]</p>
 <p>A curve that goes through multiple points will have to bend and twist itself so that it goes through these points. Therefore, a curve with a higher polynominal degree, and thus a larger number of bends, will be able to bend and twist itself to better fit the points.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Consider the above example data again</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Consider the above example data again</span>
 <span class="n">xi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">2.0</span><span class="p">,</span><span class="mf">4.0</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">7.0</span><span class="p">,</span><span class="mf">9.0</span><span class="p">])</span>
 <span class="n">yi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.4</span><span class="p">,</span><span class="mf">0.3</span><span class="p">,</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">0.9</span><span class="p">,</span><span class="mf">0.8</span><span class="p">])</span>
 
@@ -982,7 +982,7 @@ P_3(x)= a_0 +(x-x_0)[a_1 + (x-x_1)[a_2 + (x-x_2)a_3]].\]</p>
 <p>Let’s write a function that evualuates the squared error and use it to evaluate error for each of the polynomials calculated above.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># We use the square of the difference to ensure each contribution</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># We use the square of the difference to ensure each contribution</span>
 <span class="c1"># to the total error is positive, otherwise errors of different signs</span>
 <span class="c1"># could/would cancel out giving a false estimate of how good our approximation is</span>
 
@@ -1003,7 +1003,7 @@ P_3(x)= a_0 +(x-x_0)[a_1 + (x-x_1)[a_2 + (x-x_2)a_3]].\]</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Constant fit error =  0.4600000000000001
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Constant fit error =  0.4600000000000001
 Linear fit error =  0.3329889923793396
 Quadratic fit error =  0.1994782421425494
 Cubic fit error =  0.1573034366232376
@@ -1019,7 +1019,7 @@ Cubic fit error =  0.1573034366232376
 <p>We can recreate the plots for different degrees of polynomial, setting x-range from -2 to 11.0 to see how extrapolation changes the result.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Xonsider the above example data again</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Xonsider the above example data again</span>
 <span class="n">xi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">7.0</span><span class="p">,</span> <span class="mf">9.0</span><span class="p">])</span>
 <span class="n">yi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">])</span>
 
