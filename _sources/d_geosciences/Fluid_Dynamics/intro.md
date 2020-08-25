@@ -6,3 +6,4 @@ The aims of this project provide a complimentary material for the second part of
 Table of contents:
 
 {ref}`One_D_Pipe_Flow`
+{ref}`Lecture6_Non_Linear_Viscosity_2D_Stokes`
