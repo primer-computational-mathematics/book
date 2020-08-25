@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Fundamentals of Computer Science &#8212; ESE Jupyter Material</title>
+    <title>Recursion &#8212; ESE Jupyter Material</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
     <link href="../../_static/css/index.css" rel="stylesheet">
     <link rel="stylesheet" href="../../_static/sphinx-book-theme.css" type="text/css" />
@@ -40,8 +40,8 @@
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Algorithmic complexity" href="1_Algorythmic_Complexity.html" />
-    <link rel="prev" title="Plotting" href="../Pandas/6_plotting.html" />
+    <link rel="next" title="Programming tools" href="../programming_tools/intro.html" />
+    <link rel="prev" title="Algorithmic complexity" href="1_Algorythmic_Complexity.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="docsearch:language" content="en">
@@ -95,13 +95,13 @@
       <a href="../Pandas/intro.html">Pandas</a>
     </li>
     <li class="active">
-      <a href="">Fundamentals of Computer Science</a>
+      <a href="intro.html">Fundamentals of Computer Science</a>
       <ul class="nav sidenav_l3">
       <li class="">
         <a href="1_Algorythmic_Complexity.html">Algorithmic complexity</a>
       </li>
-      <li class="">
-        <a href="Recursion.html">Recursion</a>
+      <li class="active">
+        <a href="">Recursion</a>
       </li>
     </ul>
     </li>
@@ -163,9 +163,9 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../_sources/b_coding/fundamentals_of_computer_science/intro.md"><button type="button"
+        <a class="dropdown-buttons" href="../../_sources/b_coding/fundamentals_of_computer_science/Recursion.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.md</button></a>
+                data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
             onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
@@ -180,7 +180,7 @@
     <div class="dropdown-buttons sourcebuttons">
         
         <a class="issues-button"
-            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2Fb_coding/fundamentals_of_computer_science/intro.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2Fb_coding/fundamentals_of_computer_science/Recursion.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
         
@@ -195,11 +195,35 @@
 
         <!-- Launch buttons -->
 
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/b_coding/fundamentals_of_computer_science/Recursion.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
     </div>
     <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
 
 <nav id="bd-toc-nav">
     <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#famous-examples" class="nav-link">Famous examples</a>
+        </li>
     
     </ul>
 </nav>
@@ -212,13 +236,72 @@
         
               <div>
                 
-  <div class="section" id="fundamentals-of-computer-science">
-<h1>Fundamentals of Computer Science<a class="headerlink" href="#fundamentals-of-computer-science" title="Permalink to this headline">¶</a></h1>
-<p>In this section, we are going to present basic concepts and methods which will make your code faster and more elegant.</p>
+  <div class="section" id="recursion">
+<span id="id1"></span><h1>Recursion<a class="headerlink" href="#recursion" title="Permalink to this headline">¶</a></h1>
+<p><em>Recursion</em> is a method of solving Computer Science problems by considering smaller instances of the same problem. Recursive solutions are usually implemented with functions that call themselves. Consider the example of the fatorial function:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">fact</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="n">n</span> <span class="o">&gt;=</span><span class="mi">0</span>
+
+    <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span>
+    <span class="k">elif</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">n</span><span class="o">*</span><span class="n">fact</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        
+  
+<span class="nb">print</span><span class="p">(</span><span class="n">fact</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">fact</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1
+120
+</pre></div>
+</div>
+</div>
+</div>
+<p>Usually, a recursively defined functions has two basic builidng blocks:</p>
 <ol class="simple">
-<li><p><a class="reference internal" href="1_Algorythmic_Complexity.html#algorythmic-complexity"><span class="std std-ref">Algorithmic complexity</span></a></p></li>
+<li><p>Base case (cases): Which are used for specific (finite) subsets of possible inputs. In the example, this will be when \(n=0\) or \(n=1\). In these cases, the function should not refer to itself.</p></li>
+<li><p>Recursive case (cases): This case builds on the <em>smaller</em> version of the same problem. In this case we are decremeting the value of \(n\) befre calling the function again.</p></li>
 </ol>
-<div class="toctree-wrapper compound">
+<p>The broad idea that recursive cases should assure that the function reaches one of the base cases.</p>
+<div class="section" id="famous-examples">
+<h2>Famous examples<a class="headerlink" href="#famous-examples" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Greatest common divisior</strong> Probably the most well known recursive algorythm developed by Euclid:</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">gcd</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">b</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">a</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">gcd</span><span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="n">a</span><span class="o">%</span><span class="k">b</span>)
+        
+<span class="nb">print</span><span class="p">(</span><span class="n">gcd</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">9</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">gcd</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">12</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1
+3
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">*</span> <span class="o">**</span> 
+</pre></div>
+</div>
+</div>
+</div>
 </div>
 </div>
 
@@ -250,8 +333,8 @@
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="../Pandas/6_plotting.html" title="previous page">Plotting</a>
-    <a class='right-next' id="next-link" href="1_Algorythmic_Complexity.html" title="next page">Algorithmic complexity</a>
+    <a class='left-prev' id="prev-link" href="1_Algorythmic_Complexity.html" title="previous page">Algorithmic complexity</a>
+    <a class='right-next' id="next-link" href="../programming_tools/intro.html" title="next page">Programming tools</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
