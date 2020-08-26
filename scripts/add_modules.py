@@ -122,13 +122,15 @@ modules_dict = {'module-mm1': ['Maths Methods 1'],
                'module-fieldgps': ['Field Geophysics'],
                'module-gmod': ['Grav., Magn. and Orbital Dynamics'],
                'module-geodyn': ['Geodynamics'],
-               'module-gfdoceans': ['Geophysical Fluid Dynamics (Oceans)']}
-
+               'module-gfdoceans': ['Geophysical Fluid Dynamics (Oceans)']
+               'module-pope': ['Physics of Planet Earth']
+               'module-toto': ['Tectonics of the Ocean']}
+            
 modules_year = {'Year 1': ['module-mm1', 'module-mm2', 'module-progr', 'module-dynep'],
                 'Year 2': ['module-mse1', 'module-mse2', 'module-nm', 'module-rs',
                            'module-seism', 'module-mech', 'module-fieldgps'],
                 'Year 3/4': ['module-geoinv', 'module-advrs', 'module-igp', 'module-gmod',
-                             'module-geodyn', 'module-gfdoceans']}
+                             'module-geodyn', 'module-gfdoceans', 'module-pope', 'module-toto']}
 
 # module badge buttons, with a {ref}-type link to its header in modules/intro.ipynb
 badge = Template("[<!-- ${module_tag} badge --><span class=\"module ${module_tag}\">${module_name}</span>](${module_tag})")
