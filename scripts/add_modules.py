@@ -122,8 +122,8 @@ modules_dict = {'module-mm1': ['Maths Methods 1'],
                'module-fieldgps': ['Field Geophysics'],
                'module-gmod': ['Grav., Magn. and Orbital Dynamics'],
                'module-geodyn': ['Geodynamics'],
-               'module-gfdoceans': ['Geophysical Fluid Dynamics (Oceans)']
-               'module-pope': ['Physics of Planet Earth']
+               'module-gfdoceans': ['Geophysical Fluid Dynamics (Oceans)'],
+               'module-pope': ['Physics of Planet Earth'],
                'module-toto': ['Tectonics of the Ocean']}
             
 modules_year = {'Year 1': ['module-mm1', 'module-mm2', 'module-progr', 'module-dynep'],
