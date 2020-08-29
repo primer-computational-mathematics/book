@@ -310,7 +310,8 @@
 </div>
 <div class="section" id="tutorial-problem-5-3">
 <h2>Tutorial Problem 5.3<a class="headerlink" href="#tutorial-problem-5-3" title="Permalink to this headline">¶</a></h2>
-<p>Helium molecules escaping from the Moon</p>
+<p>What is the probability of Helium atoms escaping from the Moon’s surface?</p>
+<p>Given that the mass and radius of the Moon are \(7.35\times10^{22}kg\) and \(1.74\times10^6m\) respectively, average surface temperature on the Moon is \(400K\), and mass of a helium atom is \(6.54\times10^{-27}kg\).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -326,12 +327,22 @@
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Escape velocity of the Moon is %.f m/s&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">ve</span><span class="p">))</span>
 
+<span class="k">def</span> <span class="nf">find_vmean</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">kB</span><span class="o">=</span><span class="mf">1.38e-23</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="mi">3</span><span class="o">*</span><span class="n">kB</span><span class="o">*</span><span class="n">T</span><span class="p">)</span><span class="o">/</span><span class="n">m</span><span class="p">)</span>
+
+<span class="n">mHe</span> <span class="o">=</span> <span class="mf">6.54e-27</span> <span class="c1"># mass of helium atom (kg)</span>
+<span class="n">TM</span> <span class="o">=</span> <span class="mi">400</span> <span class="c1"># surface temperature on the Moon (T)</span>
+
+<span class="n">vm</span> <span class="o">=</span> <span class="n">find_vmean</span><span class="p">(</span><span class="n">mHe</span><span class="p">,</span> <span class="n">TM</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mean velocity of He atoms on the Moon is %.f m/s&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">vm</span><span class="p">))</span>
+
 <span class="k">def</span> <span class="nf">maxwell_boltzmann</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">v_mean</span><span class="p">):</span> <span class="c1"># maxwell-boltzmann distribution</span>
     <span class="k">return</span> <span class="n">v</span><span class="o">/</span><span class="n">v_mean</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">1.27</span><span class="o">*</span><span class="p">(</span><span class="n">v</span><span class="o">/</span><span class="n">v_mean</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
 
 <span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5000</span><span class="p">,</span> <span class="mi">1001</span><span class="p">)</span>
 
-<span class="n">prob</span> <span class="o">=</span> <span class="n">maxwell_boltzmann</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">ve</span><span class="p">)</span> <span class="c1"># array of probabilities at different velocities</span>
+<span class="n">prob</span> <span class="o">=</span> <span class="n">maxwell_boltzmann</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">vm</span><span class="p">)</span> <span class="c1"># array of probabilities at different velocities</span>
 
 <span class="c1"># plot probability distribution</span>
 
@@ -350,6 +361,7 @@
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Escape velocity of the Moon is 2375 m/s
+Mean velocity of He atoms on the Moon is 1591 m/s
 </pre></div>
 </div>
 <img alt="../../_images/5_Gravity_3_1.png" src="../../_images/5_Gravity_3_1.png" />
