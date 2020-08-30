@@ -226,6 +226,10 @@
             <a href="#recursive-data-structures" class="nav-link">Recursive Data Structures</a>
         </li>
     
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#exercises" class="nav-link">Exercises</a>
+        </li>
+    
     </ul>
 </nav>
 
@@ -239,7 +243,7 @@
                 
   <div class="section" id="recursion">
 <span id="id1"></span><h1>Recursion<a class="headerlink" href="#recursion" title="Permalink to this headline">¶</a></h1>
-<p><em>Recursion</em> is a method of solving Computer Science problems by considering smaller instances of the same problem. Recursive solutions are usually implemented with functions that call themselves. Consider the example of the fatorial function:</p>
+<p id="index-0"><em>Recursion</em> is a method of solving Computer Science problems by considering smaller instances of the same problem. Recursive solutions are usually implemented with functions that call themselves. Consider the example of the factorial function:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">fact</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
@@ -251,8 +255,7 @@
         <span class="k">return</span> <span class="mi">1</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">n</span><span class="o">*</span><span class="n">fact</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-        
-  
+          
 <span class="nb">print</span><span class="p">(</span><span class="n">fact</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">fact</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
 </pre></div>
@@ -265,16 +268,16 @@
 </div>
 </div>
 </div>
-<p>Usually, a recursively defined functions has two basic builidng blocks:</p>
+<p>Usually, a recursively defined function has two basic building blocks:</p>
 <ol class="simple">
 <li><p>Base case (cases): Which are used for specific (finite) subsets of possible inputs. In the example, this will be when \(n=0\) or \(n=1\). In these cases, the function should not refer to itself.</p></li>
-<li><p>Recursive case (cases): This case builds on the <em>smaller</em> version of the same problem. In this case we are decremeting the value of \(n\) befre calling the function again.</p></li>
+<li><p>Recursive case (cases): This case builds on the <em>smaller</em> version of the same problem. In this case, we are decrementing the value of \(n\) before calling the function again.</p></li>
 </ol>
 <p>The broad idea that recursive cases should assure that the function reaches one of the base cases.</p>
 <div class="section" id="famous-examples">
 <h2>Famous examples<a class="headerlink" href="#famous-examples" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><p><strong>Greatest common divisior</strong> Probably the most well known recursive algorythm developed by Euclid:</p></li>
+<li><p><strong>Greatest common divisor</strong> Probably the most well known recursive algorithm developed by Euclid:</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -296,8 +299,9 @@
 </div>
 </div>
 </div>
+<hr class="docutils" />
 <ul class="simple">
-<li><p><strong>Fibonacci Sequence</strong> To computhe the \(nth\) term of the Fibonacci, we can utilise on of its definitions as in the code below:</p></li>
+<li><p><strong>Fibonacci Sequence</strong> To compute the \(nth\) term of the Fibonacci, we can utilise one of its definitions as in the code below:</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -324,9 +328,10 @@
 </div>
 </div>
 </div>
-<p><strong>REMARK</strong>: This is a very inefficient solution to the problem. As you can spot, each <code class="docutils literal notranslate"><span class="pre">fib</span></code> call leads to two <code class="docutils literal notranslate"><span class="pre">fib</span></code> calls (unless it reaches a base case). This solution is of \(O(2^n)\), which is very slow.</p>
+<p><strong>REMARK</strong>: This is a very inefficient solution. As you can spot, each <code class="docutils literal notranslate"><span class="pre">fib</span></code> call leads to two <code class="docutils literal notranslate"><span class="pre">fib</span></code> calls (unless it reaches a base case). This solution is of \(O(2^n)\), which is very slow. We can use <span class="xref myst">Dynamic Programming</span> to speed it up.</p>
+<hr class="docutils" />
 <ul class="simple">
-<li><p><strong>Towers of Hanoi</strong> In this problem we are have three rods and a number of disks of different sizes. Our aim is to move all disks from one rod to another using the third rod. The following rules apply:</p></li>
+<li><p><strong>Towers of Hanoi</strong> In this problem, we have three rods and some disks of different sizes. Our aim is to move all disks from one rod to another using the third rod. The following rules apply:</p></li>
 </ul>
 <ol class="simple">
 <li><p>Only one disk can be moved at a time.</p></li>
@@ -335,14 +340,17 @@
 </ol>
 <img src="https://upload.wikimedia.org/wikipedia/commons/8/8d/Iterative_algorithm_solving_a_6_disks_Tower_of_Hanoi.gif" width="70%">
 <p>Source: <a class="reference external" href="https://upload.wikimedia.org/wikipedia/commons/8/8d/Iterative_algorithm_solving_a_6_disks_Tower_of_Hanoi.gif">Wikimedia Commons</a></p>
-<p>The solution is likely one of the most beutiful recursive procedures:</p>
+<p>The solution is likely one of the most beautiful recursive procedures:</p>
 <p>We are starting with \(n\) disks on the <strong>source</strong> rod and want to move them to the <strong>target</strong> rod, with the help of the <strong>spare</strong> rod. The procedure is as follows:</p>
 <p>Base Case:</p>
+<ol class="simple">
+<li><p>There are zero disks, do nothing.</p></li>
+</ol>
 <p>Recursive case:</p>
 <ol class="simple">
 <li><p>Move \(n-1\) disks from the <strong>source</strong> the the <strong>spare</strong> by the <em>main solving procedure</em>. This leaves disk \(n\) on top of the <strong>source</strong> rod.</p></li>
 <li><p>Move the \(n\) disk from the <strong>source</strong> to the <strong>target</strong>.</p></li>
-<li><p>Move \(n-1\) disks from <strong>spare</strong> to the <strong>source</strong> by the <em>main sovling procedure</em>.</p></li>
+<li><p>Move \(n-1\) disks from <strong>spare</strong> to the <strong>source</strong> by the <em>main solving procedure</em>.</p></li>
 </ol>
 <p>The code is as follows:</p>
 <div class="cell docutils container">
@@ -436,9 +444,9 @@ ______________
 </div>
 <div class="section" id="recursive-data-structures">
 <h2>Recursive Data Structures<a class="headerlink" href="#recursive-data-structures" title="Permalink to this headline">¶</a></h2>
-<p>Apart from the algorytms themselves, we can structure (or interpret) our data in a recursive way. Any time we can reduce an instance of the data structure to the same but somehow smaller, we can talk about a <em>recursively defined datastructures</em>. It turns out that many structures can be defined this way:</p>
+<p>Apart from the algorithms themselves, we can structure (or interpret) our data in a recursive way. Any time we can reduce an instance of the data structure to the same but somehow smaller, we can talk about a <em>recursively defined data structures</em>. It turns out that many structures can be defined this way:</p>
 <ul class="simple">
-<li><p><strong>Lists</strong> can be thought of as a single element (<em>head</em>) followed by a tail (<em>again a list</em>). Base case is an empty listy</p></li>
+<li><p><strong>Lists</strong> can be thought of as a single element (<em>head</em>) followed by a tail (<em>again a list</em>). The base case is an empty list.</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -474,8 +482,8 @@ ______________
 </div>
 </div>
 </div>
-<p>Where the <code class="docutils literal notranslate"><span class="pre">copy.deepcopy</span></code> returns a copy of the list. When defined this way, the list constist of a leading element and a list one-smaller than the parent list.</p>
-<p>We can now use this definition to sum up the elements of an integer list (with standard Python list interpertation):</p>
+<p>Where the <code class="docutils literal notranslate"><span class="pre">copy.deepcopy</span></code> returns a copy of the list. When defined this way, the list consists of a leading element and a list one-smaller than the parent list.</p>
+<p>We can now use this definition to sum up the elements of an integer list (with standard Python list implementation):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">array_sum</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
@@ -494,9 +502,110 @@ ______________
 </div>
 </div>
 </div>
+<hr class="docutils" />
 <ul class="simple">
-<li><p><strong>Binary Trees</strong></p></li>
+<li><p><strong>Binary Trees</strong> are types of graphs that do not have cycles and each node has at most two children and exactly one parent. They are self-similar as both of the subtrees of such binary tree are also trees. This is a characteristic feature of recursive data structures.</p></li>
 </ul>
+<div class="figure align-default">
+<a class="reference internal image-reference" href="../../_images/BinaryTree.png"><img alt="../../_images/BinaryTree.png" src="../../_images/BinaryTree.png" style="width: 80%;" /></a>
+</div>
+</div>
+<div class="section" id="exercises">
+<span id="recursion-exercises"></span><h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Length of an array</strong> Based on the <code class="docutils literal notranslate"><span class="pre">array_sum</span></code> function, define a recursive function which counts the number of elements in an array.</p></li>
+</ul>
+<div class="dropdown admonition">
+<p class="admonition-title">Answer</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">array_len</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">a</span> <span class="o">==</span> <span class="p">[]:</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">array_len</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>     
+</pre></div>
+</div>
+</div>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>Babylonian Square Roots</strong> A method to find an approximation of a square root of a number \(S\) is to pick a guess \(x_0\) and iteratively improve the guess by applying the formula \(x_1 = (x_0 + S/x_0)\). In the limit, this will give a square root. Unfortunately, we do not have time for an infinite number of operations, so return \(x_1\) when the condition is satisfied:</p></li>
+</ul>
+<p>\[\frac{|x_1-x_0|}{x_1} &lt; 0.01\]</p>
+<div class="dropdown admonition">
+<p class="admonition-title">Answer</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">babSqrtHelper</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">x_0</span><span class="p">,</span> <span class="n">x_1</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">x_1</span><span class="o">-</span><span class="n">x_0</span><span class="p">)</span><span class="o">/</span><span class="n">x_1</span> <span class="o">&lt;</span> <span class="mf">0.01</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">x_1</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">babSqrtHelper</span><span class="p">(</span><span class="n">S</span><span class="p">,</span><span class="n">x_1</span><span class="p">,(</span><span class="n">x_1</span><span class="o">+</span><span class="n">S</span><span class="o">/</span><span class="n">x_1</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">babSqrt</span><span class="p">(</span><span class="n">S</span><span class="p">):</span>
+    <span class="n">x_0</span> <span class="o">=</span> <span class="n">S</span>
+    <span class="n">x_1</span> <span class="o">=</span> <span class="p">(</span><span class="n">x_0</span> <span class="o">+</span> <span class="n">S</span><span class="o">/</span><span class="n">x_0</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
+    <span class="k">return</span> <span class="n">babSqrtHelper</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">x_0</span><span class="p">,</span> <span class="n">x_1</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">babSqrt</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">babSqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">babSqrt</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">babSqrt</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>    
+</pre></div>
+</div>
+</div>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>Design</strong> a <code class="docutils literal notranslate"><span class="pre">BinaryTree</span></code> data structure. Each node should have a left and right child fields as well as a value inside the node. Define also two other methods:</p></li>
+</ul>
+<ol class="simple">
+<li><p>Insert: inserts value into the tree if the element is greater than its parent it goes to the right subtree if smaller - to the left one. Finally, if the element is already in the tree, do not add it and inform the user about it.</p></li>
+<li><p>Search: search if the element is in the list.</p></li>
+</ol>
+<div class="dropdown admonition">
+<p class="admonition-title">Answer</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">BinaryTree</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">val</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">val</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">val</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">val</span> <span class="o">=</span> <span class="n">val</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">val</span> <span class="o">==</span> <span class="n">val</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Value already in the tree!&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">val</span> <span class="o">&lt;</span> <span class="n">val</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">right</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">BinaryTree</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">right</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">left</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">BinaryTree</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">left</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">val</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">val</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">val</span> <span class="o">&lt;</span> <span class="n">val</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">right</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">right</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">val</span> <span class="o">&gt;</span> <span class="n">val</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">left</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">left</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+            
+        
+<span class="n">root</span> <span class="o">=</span> <span class="n">BinaryTree</span><span class="p">()</span>
+<span class="n">root</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">root</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>  
+<span class="n">root</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> 
+<span class="nb">print</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>  
+<span class="nb">print</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>   
+             
+</pre></div>
+</div>
+</div>
 </div>
 </div>
 
