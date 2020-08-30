@@ -512,7 +512,162 @@ Figure 7.6: Volumetric Flow Rate of One-dimensional Channel Flow (with the width
 <p>Now, we should finally understand the very confusing equation <a class="reference internal" href="#equation-equation27">(101)</a> we mentioned before, with the help of figure 7.6. The horizontal velocity <span class="math notranslate nohighlight">\(u\)</span> equals the volumetric flow rate through the thin section <span class="math notranslate nohighlight">\(dQ\)</span> divided by the vertical thickness <span class="math notranslate nohighlight">\(dy\)</span>, in this case</p>
 <div class="math notranslate nohighlight" id="equation-equation34">
 <span class="eqno">(108)<a class="headerlink" href="#equation-equation34" title="Permalink to this equation">¶</a></span>\[u=\frac{d\psi}{dy}=\frac{dQ}{dy} = \frac{d}{dy}(-\frac{1}{2}y^2+5y+C(x))= -y+5\]</div>
-<p>Sketch stream function and streamlines for the two end-member cases (Couette and P-driven). Pay attention to stream line orientation and spacing.</p>
+<p>Sketch stream function and streamlines for the two end-member cases (Couette and P-driven). Pay attention to stream line orientation and spacing (in terms of colorbars).</p>
+<p>So the streamlines represent the path of the particle in the channel flow, as we can imagine the path in this one-dimensional flow problem should be linear and horizontal. In another word, the particle should only flow in the x-direction as in there is no force acting on the y-direction.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mpl_toolkits</span> <span class="kn">import</span> <span class="n">mplot3d</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="n">N</span>  <span class="o">=</span> <span class="mi">100</span>    <span class="c1"># number of points to plot (ignore)</span>
+<span class="n">mu</span> <span class="o">=</span> <span class="mf">0.001</span>    <span class="c1"># viscosity of water</span>
+<span class="n">dpdx</span> <span class="o">=</span> <span class="mi">0</span>    <span class="c1"># when pressure difference = 0, known as Couette ﬂow</span>
+<span class="n">h</span> <span class="o">=</span> <span class="mi">5</span>    <span class="c1"># thickness of channel (m)</span>
+<span class="n">u0</span> <span class="o">=</span> <span class="mi">5</span>   <span class="c1"># boundary (max) velocity (m/s)</span>
+<span class="n">x_range</span> <span class="o">=</span> <span class="mi">10</span>    <span class="c1"># length of the channel</span>
+
+<span class="k">def</span> <span class="nf">psi</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">6</span><span class="o">*</span><span class="n">mu</span><span class="p">)</span><span class="o">*</span><span class="n">dpdx</span><span class="o">*</span><span class="n">y</span><span class="o">**</span><span class="mi">3</span> <span class="o">-</span> <span class="n">h</span><span class="o">/</span><span class="p">(</span><span class="mi">4</span><span class="o">*</span><span class="n">mu</span><span class="p">)</span><span class="o">*</span><span class="n">dpdx</span><span class="o">*</span><span class="n">y</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">u0</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">h</span><span class="p">)</span><span class="o">*</span><span class="n">y</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">u0</span><span class="o">*</span><span class="n">y</span>
+
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+
+<span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">Z</span> <span class="o">=</span> <span class="n">psi</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">axes</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">contour3D</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;binary&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s1">&#39;$\psi$&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Stream Function $\psi$ in 3D Contours (Couette)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/Lecture6_Non_Linear_Viscosity_2D_Stokes_99_0.png" src="../../_images/Lecture6_Non_Linear_Viscosity_2D_Stokes_99_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib.gridspec</span> <span class="k">as</span> <span class="nn">gridspec</span>
+
+<span class="n">N</span>  <span class="o">=</span> <span class="mi">100</span>    <span class="c1"># number of points to plot (ignore)</span>
+<span class="n">mu</span> <span class="o">=</span> <span class="mf">0.001</span>    <span class="c1"># viscosity of water</span>
+<span class="n">dpdx</span> <span class="o">=</span> <span class="mi">0</span>    <span class="c1"># when pressure difference = 0, known as Couette ﬂow</span>
+<span class="n">h</span> <span class="o">=</span> <span class="mi">5</span>    <span class="c1"># thickness of channel (m)</span>
+<span class="n">u0</span> <span class="o">=</span> <span class="mi">5</span>   <span class="c1"># boundary (max) velocity (m/s)</span>
+
+
+<span class="n">Y</span><span class="p">,</span> <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mgrid</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">h</span><span class="p">:</span><span class="mi">100</span><span class="n">j</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="n">h</span><span class="p">:</span><span class="mi">100</span><span class="n">j</span><span class="p">]</span>
+<span class="n">U</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">mu</span><span class="p">))</span> <span class="o">*</span> <span class="n">dpdx</span> <span class="o">*</span> <span class="p">(</span><span class="n">Y</span><span class="o">*</span><span class="n">Y</span> <span class="o">-</span> <span class="n">h</span><span class="o">*</span><span class="n">Y</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">u0</span><span class="o">*</span><span class="n">Y</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">h</span><span class="p">)</span> <span class="o">+</span> <span class="n">u0</span>
+<span class="n">V</span> <span class="o">=</span> <span class="n">Y</span><span class="o">*</span><span class="mi">0</span>
+<span class="n">speed</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">U</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">V</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">18</span><span class="p">))</span>
+<span class="n">gs</span> <span class="o">=</span> <span class="n">gridspec</span><span class="o">.</span><span class="n">GridSpec</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">height_ratios</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+
+
+<span class="c1"># Varying color along a streamline</span>
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">strm</span> <span class="o">=</span> <span class="n">ax1</span><span class="o">.</span><span class="n">streamplot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">U</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">U</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;autumn&#39;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">strm</span><span class="o">.</span><span class="n">lines</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Streamlines (Couette)&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/Lecture6_Non_Linear_Viscosity_2D_Stokes_100_0.png" src="../../_images/Lecture6_Non_Linear_Viscosity_2D_Stokes_100_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mpl_toolkits</span> <span class="kn">import</span> <span class="n">mplot3d</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="n">N</span>  <span class="o">=</span> <span class="mi">100</span>    <span class="c1"># number of points to plot (ignore)</span>
+<span class="n">mu</span> <span class="o">=</span> <span class="mf">0.001</span>    <span class="c1"># viscosity of water</span>
+<span class="n">dpdx</span> <span class="o">=</span> <span class="o">-</span><span class="mi">10</span>    <span class="c1"># when pressure difference = 0, known as Couette ﬂow</span>
+<span class="n">h</span> <span class="o">=</span> <span class="mi">5</span>    <span class="c1"># thickness of channel (m)</span>
+<span class="n">u0</span> <span class="o">=</span> <span class="mi">5</span>   <span class="c1"># boundary (max) velocity (m/s)</span>
+<span class="n">x_range</span> <span class="o">=</span> <span class="mi">10</span>    <span class="c1"># length of the channel</span>
+
+<span class="k">def</span> <span class="nf">psi</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">6</span><span class="o">*</span><span class="n">mu</span><span class="p">)</span><span class="o">*</span><span class="n">dpdx</span><span class="o">*</span><span class="n">y</span><span class="o">**</span><span class="mi">3</span> <span class="o">-</span> <span class="n">h</span><span class="o">/</span><span class="p">(</span><span class="mi">4</span><span class="o">*</span><span class="n">mu</span><span class="p">)</span><span class="o">*</span><span class="n">dpdx</span><span class="o">*</span><span class="n">y</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">u0</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">h</span><span class="p">)</span><span class="o">*</span><span class="n">y</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">u0</span><span class="o">*</span><span class="n">y</span>
+
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+
+<span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">Z</span> <span class="o">=</span> <span class="n">psi</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">axes</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">contour3D</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;binary&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s1">&#39;$\psi$&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Stream Function $\psi$ in 3D Contours (P-driven)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/Lecture6_Non_Linear_Viscosity_2D_Stokes_101_0.png" src="../../_images/Lecture6_Non_Linear_Viscosity_2D_Stokes_101_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib.gridspec</span> <span class="k">as</span> <span class="nn">gridspec</span>
+
+<span class="n">N</span>  <span class="o">=</span> <span class="mi">100</span>    <span class="c1"># number of points to plot (ignore)</span>
+<span class="n">mu</span> <span class="o">=</span> <span class="mf">0.001</span>    <span class="c1"># viscosity of water</span>
+<span class="n">dpdx</span> <span class="o">=</span> <span class="o">-</span><span class="mi">10</span>    <span class="c1"># pressure driven flow</span>
+<span class="n">h</span> <span class="o">=</span> <span class="mi">5</span>    <span class="c1"># thickness of channel (m)</span>
+<span class="n">u0</span> <span class="o">=</span> <span class="mi">5</span>   <span class="c1"># boundary (max) velocity (m/s)</span>
+
+
+<span class="n">Y</span><span class="p">,</span> <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mgrid</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">h</span><span class="p">:</span><span class="mi">100</span><span class="n">j</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="n">h</span><span class="p">:</span><span class="mi">100</span><span class="n">j</span><span class="p">]</span>
+<span class="n">U</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">mu</span><span class="p">))</span> <span class="o">*</span> <span class="n">dpdx</span> <span class="o">*</span> <span class="p">(</span><span class="n">Y</span><span class="o">*</span><span class="n">Y</span> <span class="o">-</span> <span class="n">h</span><span class="o">*</span><span class="n">Y</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">u0</span><span class="o">*</span><span class="n">Y</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">h</span><span class="p">)</span> <span class="o">+</span> <span class="n">u0</span>
+<span class="n">V</span> <span class="o">=</span> <span class="n">Y</span><span class="o">*</span><span class="mi">0</span>
+<span class="n">speed</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">U</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">V</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">18</span><span class="p">))</span>
+<span class="n">gs</span> <span class="o">=</span> <span class="n">gridspec</span><span class="o">.</span><span class="n">GridSpec</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">height_ratios</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+
+
+<span class="c1"># Varying color along a streamline</span>
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">strm</span> <span class="o">=</span> <span class="n">ax1</span><span class="o">.</span><span class="n">streamplot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">U</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">U</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;autumn&#39;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">strm</span><span class="o">.</span><span class="n">lines</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Streamlines (P-driven)&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/Lecture6_Non_Linear_Viscosity_2D_Stokes_102_0.png" src="../../_images/Lecture6_Non_Linear_Viscosity_2D_Stokes_102_0.png" />
+</div>
+</div>
 </div>
 </div>
 
