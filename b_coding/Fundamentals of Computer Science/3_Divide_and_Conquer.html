@@ -296,6 +296,7 @@ False
 </div>
 </div>
 <p>This leads to the algorithm with \(O(log(n))\) complexity. On each iteration, we decrease the size of the seach space by a factor of 2.</p>
+<hr class="docutils" />
 <ul class="simple">
 <li><p><strong>Merge Sort</strong> Is a vary famous and ingenious example of Divide and Conquer approach. The aim is to sort an array. This could be done using using the <a class="reference external" href="https://primer-computational-mathematics.github.io/book/b_coding/Fundamentals%20of%20Computer%20Science/1_Algorythmic_Complexity.html#algorythmic-complexity">Selection Sort</a> which is \(O(n^2)\). Now, consider the following approach:</p></li>
 </ul>
@@ -350,9 +351,115 @@ False
 <p>Now, let us consider the time complexity of this solution. On the merge of the two halves of the initial list we are performing roughly \(n\) operations. Then, merge of the halves was a result of \(2*n/2\) operations. The pattern is as follows:</p>
 <p>\[n+\frac{n}{2}\times2 + \frac{n}{4}\times4 + \frac{n}{8}\times8 +… = nlog(n)\]</p>
 <p>So this algorithm is \(O(nlog(n)\). This is a considerable improvement compared to the Selection Sort.</p>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>Closest two points on a plane</strong> We are given a list of coordinates of points on a 2d Cartesian plane, find the minimum distance between any two points. The brute force solution is to check every pair or points in a list and find the minimum distance. This leads to \(O(n^2)\). However, there is a divide and conquer method which leads to a more efficient algorythm:
+Base Case:</p></li>
+</ul>
+<ol class="simple">
+<li><p>There are three points in a list - find their distance using brute force.</p></li>
+</ol>
+<p>Recursive case:</p>
+<ol class="simple">
+<li><p>Sort the points by the \(x\)-coordinate (can be done in \(O(nlog(n)\).</p></li>
+<li><p>Split the points into two groups (first and second half of the list).</p></li>
+<li><p>Find the minimum distance of those two sublists <em>by the same general procedure</em>.</p></li>
+<li><p>Let \(d_L\) and \(d_R\) denote the minimum distances from the left and right half. Now take the points that are at maximum \(min(d_L,d_R)\) from the middle point. This can be done in \(O(log(n)\) as the points are sorted. We build an array <code class="docutils literal notranslate"><span class="pre">strip</span></code> from those points.</p></li>
+<li><p>Now sort the array <code class="docutils literal notranslate"><span class="pre">strip</span></code> by the \(y\) coordinate.</p></li>
+<li><p>Now the tricky part. The intuition says that finding the minimum distance in the strip requires \(O(n^2)\) computation. However, let us notice the fact that each pair of points in one half is at minimum \(min(d_L,d_R)\) distance from each other. The only candidates for the new minimum distances are in the different halves. So we need to consider only the points in the <code class="docutils literal notranslate"><span class="pre">strip</span></code> which have a difference of \(y &lt; d\)! It can be proven geometrically that for each point, we need to check at most 6 other points. Therefore this operation in \(O(n)\). Please have a look at the following diagram for digesting this step.</p></li>
+<li><p>Find the minimum distance in the strip and return it.</p></li>
+</ol>
+<img src="https://upload.wikimedia.org/wikipedia/commons/6/65/Closest_pair.jpg" width="20%">
+<p>Consider the code below:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">sqrt</span>
+<span class="kn">import</span> <span class="nn">random</span>
+
+<span class="c1"># for easier understanding of the code</span>
+<span class="k">class</span> <span class="nc">Point</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+
+<span class="c1"># sqrt is uncessary computation, we will use it only in returning</span>
+<span class="c1"># the final result</span>
+<span class="k">def</span> <span class="nf">dist</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">):</span> 
+    <span class="k">return</span> <span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">x</span><span class="o">-</span><span class="n">b</span><span class="o">.</span><span class="n">x</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">y</span><span class="o">-</span><span class="n">b</span><span class="o">.</span><span class="n">y</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+
+
+<span class="c1"># This will be used for shorter lists</span>
+<span class="k">def</span> <span class="nf">bruteForce</span><span class="p">(</span><span class="n">P</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">P</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span>
+    <span class="n">min_val</span> <span class="o">=</span> <span class="n">dist</span><span class="p">(</span><span class="n">P</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">P</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">P</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">P</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">dist</span><span class="p">(</span><span class="n">P</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">P</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="o">&lt;</span> <span class="n">min_val</span><span class="p">:</span>
+                <span class="n">min_val</span> <span class="o">=</span> <span class="n">dist</span><span class="p">(</span><span class="n">P</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">P</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>            
+    <span class="k">return</span> <span class="n">min_val</span>
+
+<span class="k">def</span> <span class="nf">closestStrip</span><span class="p">(</span><span class="n">strip</span><span class="p">,</span><span class="n">d</span><span class="p">):</span>
+    <span class="c1"># sort according to the y coordinate</span>
+    <span class="n">strip</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">point</span><span class="p">:</span> <span class="n">point</span><span class="o">.</span><span class="n">y</span><span class="p">)</span> 
+    <span class="n">min_val</span> <span class="o">=</span> <span class="n">d</span>
+    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">strip</span><span class="p">)):</span>
+        <span class="n">j</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="c1"># this loop is executed at most 6 times for each point</span>
+        <span class="k">while</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">strip</span><span class="p">)</span> <span class="ow">and</span> <span class="n">strip</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="n">strip</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">y</span> <span class="o">&lt;</span> <span class="n">d</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">dist</span><span class="p">(</span><span class="n">strip</span><span class="p">[</span><span class="n">j</span><span class="p">],</span><span class="n">strip</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">&lt;</span> <span class="n">min_val</span><span class="p">:</span>
+                <span class="n">min_val</span> <span class="o">=</span> <span class="n">dist</span><span class="p">(</span><span class="n">strip</span><span class="p">[</span><span class="n">j</span><span class="p">],</span><span class="n">strip</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">j</span><span class="o">+=</span><span class="mi">1</span>
+                
+    <span class="k">return</span> <span class="n">min_val</span>
+
+<span class="k">def</span> <span class="nf">helper</span><span class="p">(</span><span class="n">P</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">P</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">bruteForce</span><span class="p">(</span><span class="n">P</span><span class="p">)</span>
+    <span class="n">mid</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">P</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+    <span class="n">d_L</span> <span class="o">=</span> <span class="n">helper</span><span class="p">(</span><span class="n">P</span><span class="p">[:</span><span class="n">mid</span><span class="p">])</span>
+    <span class="n">d_R</span> <span class="o">=</span> <span class="n">helper</span><span class="p">(</span><span class="n">P</span><span class="p">[</span><span class="n">mid</span><span class="p">:])</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">d_L</span><span class="p">,</span><span class="n">d_R</span><span class="p">)</span>
+    <span class="c1">#creating the strip</span>
+    <span class="n">strip</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">P</span> <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">P</span><span class="p">[</span><span class="n">mid</span><span class="p">]</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="n">a</span><span class="o">.</span><span class="n">x</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">d</span><span class="p">]</span>
+    
+    <span class="k">return</span> <span class="nb">min</span><span class="p">(</span><span class="n">d</span><span class="p">,</span><span class="n">closestStrip</span><span class="p">(</span><span class="n">strip</span><span class="p">,</span><span class="n">d</span><span class="p">))</span>
+    
+<span class="k">def</span> <span class="nf">closestPoints</span><span class="p">(</span><span class="n">P</span><span class="p">):</span>
+    <span class="n">points</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">P</span><span class="p">:</span>
+        <span class="n">points</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Point</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+        
+    <span class="c1">#sort according to the x coord.</span>
+    <span class="n">points</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">point</span><span class="p">:</span> <span class="n">point</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">helper</span><span class="p">(</span><span class="n">points</span><span class="p">))</span>
+
+
+<span class="c1">#testing the solution with bruteforce</span>
+<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">test</span> <span class="o">=</span> <span class="p">[]</span>    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+        <span class="n">test</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Point</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="o">-</span><span class="mi">100</span><span class="p">,</span><span class="mi">100</span><span class="p">),</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="o">-</span><span class="mi">100</span><span class="p">,</span><span class="mi">100</span><span class="p">)))</span>   
+    <span class="n">test</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">point</span><span class="p">:</span> <span class="n">point</span><span class="o">.</span><span class="n">x</span><span class="p">)</span> 
+    <span class="k">assert</span> <span class="n">helper</span><span class="p">(</span><span class="n">test</span><span class="p">)</span> <span class="o">==</span> <span class="n">bruteForce</span><span class="p">(</span><span class="n">test</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
+</div>
+<p>Complexity analysis:
+Time complexity can be expressed as:</p>
+<p>\[T(n) = 2 \times T(n/2) + O(log(n)) + O(nlog(n)) + O(n)\]</p>
+<p>Where the \(O\) terms coresspond to: creating the <code class="docutils literal notranslate"><span class="pre">stip</span></code> list, sorting the <code class="docutils literal notranslate"><span class="pre">strip</span></code> by \(y\) coordinates and finding the minimum distance in the strip. This can be simplified by considering only the most contributing term.</p>
+<p>\[T(n) = 2 \times T(n/2) + O(nlog(n))\]</p>
+<p>This recurrence relation can be solved in various ways (e.g using the <a class="reference external" href="https://en.wikipedia.org/wiki/Master_theorem_(analysis_of_algorithms)">Master Theorem</a>) and leads to \(O(n(log(n))^2)\).</p>
 </div>
 <div class="section" id="exercises">
 <span id="divide-and-conquer-exercises"></span><h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>Quick Sort</strong></p></li>
+</ul>
 </div>
 </div>
 
