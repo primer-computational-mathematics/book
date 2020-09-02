@@ -456,10 +456,95 @@ Time complexity can be expressed as:</p>
 </div>
 <div class="section" id="exercises">
 <span id="divide-and-conquer-exercises"></span><h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Rotated Binary Search</strong> You are given a sorted list <code class="docutils literal notranslate"><span class="pre">arr</span></code> which was rotated, which means that the elements were moved from index <code class="docutils literal notranslate"><span class="pre">i</span></code> to index <code class="docutils literal notranslate"><span class="pre">(i+n)%len(arr)</span></code> where <code class="docutils literal notranslate"><span class="pre">n</span></code> is the amount of rotation. The example is:</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">[1,2,3,4,5,6]</span> <span class="pre">-&gt;</span> <span class="pre">[5,6,1,2,3,4]</span></code> is a rotation by 2.</p>
+<p>Design an algorithm which finds the smallest element in \(O(log(n))\).</p>
+<p><strong>HINT</strong>: The elements on the sides of the smallest element are both greater than it.</p>
+<div class="dropdown admonition">
+<p class="admonition-title">Answer</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># arr is sorted and rotated</span>
+<span class="k">def</span> <span class="nf">binaryRotated</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">):</span>
+    <span class="c1">#base case</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">[</span><span class="n">low</span><span class="p">:</span><span class="n">high</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="o">&lt;=</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="n">min_val</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[</span><span class="n">low</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">arr</span><span class="p">[</span><span class="n">low</span><span class="p">:</span><span class="n">high</span><span class="o">+</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">min_val</span><span class="p">:</span>
+                <span class="n">min_val</span> <span class="o">=</span> <span class="n">i</span>  
+        <span class="k">return</span> <span class="n">min_val</span>
+    
+    <span class="n">mid</span> <span class="o">=</span> <span class="p">(</span><span class="n">low</span> <span class="o">+</span> <span class="n">high</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+    
+    <span class="c1">#minimum found</span>
+    <span class="k">if</span> <span class="n">arr</span><span class="p">[</span><span class="n">mid</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">arr</span><span class="p">[</span><span class="n">mid</span><span class="p">]</span> <span class="ow">and</span> <span class="n">arr</span><span class="p">[</span><span class="n">mid</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">arr</span><span class="p">[</span><span class="n">mid</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="n">arr</span><span class="p">[</span><span class="n">mid</span><span class="p">]</span>
+    <span class="c1">#recursive cases</span>
+    <span class="k">elif</span> <span class="n">arr</span><span class="p">[</span><span class="n">mid</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">and</span> <span class="n">arr</span><span class="p">[</span><span class="n">mid</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">arr</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="n">binaryRotated</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">mid</span><span class="p">,</span><span class="n">high</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">binaryRotated</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span><span class="n">low</span><span class="p">,</span><span class="n">mid</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+
+<span class="c1"># test the function</span>
+<span class="n">arr</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">]</span>    
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)):</span>
+    <span class="n">test</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)):</span>
+        <span class="n">test</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">arr</span><span class="p">[(</span><span class="n">j</span><span class="o">+</span><span class="n">i</span><span class="p">)</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)])</span>
+    <span class="c1">#print(binaryRotated(test,0,len(arr)), test)</span>
+    <span class="k">assert</span> <span class="nb">min</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span> <span class="o">==</span> <span class="n">binaryRotated</span><span class="p">(</span><span class="n">test</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
 <hr class="docutils" />
 <ul class="simple">
-<li><p><strong>Quick Sort</strong></p></li>
+<li><p><strong>Quick Sort</strong> is probably the most widely used sorting algorithm in the world. In the worst case it runs in \(O(n^2)\), but on average it is \(O(nlogn)\) with smaller constants than Merge Sort. The idea is as following:</p></li>
 </ul>
+<p>Base case:</p>
+<ol class="simple">
+<li><p>List of length 1 is sorted, return</p></li>
+</ol>
+<p>Recursive case:</p>
+<ol class="simple">
+<li><p>Pick an element in the array (a pivot) and put the elemens greater than the pivot in the left part of the array (or its copy for an easier implementation) and greater elements in the right side of the array. Finally insert the pivot in between. It is now in the place it should be <strong>in the sorted array</strong>.</p></li>
+<li><p>Call <code class="docutils literal notranslate"><span class="pre">QuickSort</span></code> on the subarray in the right of the pivot and on the subarray on the right of the pivot. The returned arrays will be sorted</p></li>
+</ol>
+<p>Based on the above description, define a function <code class="docutils literal notranslate"><span class="pre">QuickSort</span></code>.</p>
+<div class="dropdown admonition">
+<p class="admonition-title">Answer</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">QuickSort</span><span class="p">(</span><span class="n">arr</span><span class="p">):</span>
+    <span class="c1">#base case</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">arr</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># setting the variables</span>
+        <span class="n">mid</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+        <span class="n">pivot</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[</span><span class="n">mid</span><span class="p">]</span>
+        <span class="n">left_border</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">right_border</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="n">copy</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
+        
+        <span class="c1">#partitioning the array</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="n">mid</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">pivot</span><span class="p">:</span>
+                    <span class="n">copy</span><span class="p">[</span><span class="n">left_border</span><span class="p">]</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                    <span class="n">left_border</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">copy</span><span class="p">[</span><span class="n">right_border</span><span class="p">]</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                    <span class="n">right_border</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="n">copy</span><span class="p">[</span><span class="n">left_border</span><span class="p">]</span> <span class="o">=</span> <span class="n">pivot</span>
+        
+        <span class="c1">#recursive calls</span>
+        <span class="k">if</span> <span class="n">left_border</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">copy</span><span class="p">[:</span><span class="n">left_border</span><span class="p">]</span> <span class="o">=</span> <span class="n">QuickSort</span><span class="p">(</span><span class="n">copy</span><span class="p">[:</span><span class="n">left_border</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">right_border</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">copy</span><span class="p">[</span><span class="n">right_border</span><span class="p">:]</span> <span class="o">=</span> <span class="n">QuickSort</span><span class="p">(</span><span class="n">copy</span><span class="p">[</span><span class="n">right_border</span><span class="p">:])</span>
+        <span class="k">return</span> <span class="n">copy</span>
+</pre></div>
+</div>
+</div>
 </div>
 </div>
 
