@@ -222,11 +222,21 @@
     <ul class="nav section-nav flex-column">
     
         <li class="nav-item toc-entry toc-h2">
+            <a href="#" class="nav-link">Divide and Conquer</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
             <a href="#examples" class="nav-link">Examples</a>
         </li>
     
-        <li class="nav-item toc-entry toc-h2">
+        <li class="nav-item toc-entry toc-h3">
             <a href="#exercises" class="nav-link">Exercises</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#references" class="nav-link">References</a>
         </li>
     
     </ul>
@@ -242,16 +252,16 @@
                 
   <div class="section" id="divide-and-conquer">
 <span id="id1"></span><h1>Divide and Conquer<a class="headerlink" href="#divide-and-conquer" title="Permalink to this headline">¶</a></h1>
-<p id="index-0"><em>Divide and Conquer</em> algorithms are one of the major groups in the computer problem solving. The main idea is to split the more complicated tasks into independent subproblems that can be composed  in the solution. The term is closely related to <a class="reference external" href="https://primer-computational-mathematics.github.io/book/b_coding/Fundamentals%20of%20Computer%20Science/3_Recursion.html#recursion">recursion</a>, but the approach does not always lead to recursive solutions.</p>
+<p id="index-0"><em>Divide and Conquer</em> algorithms are one of the major groups in computer problem-solving. The main idea is to split the more complicated tasks into independent subproblems that can be composed in the solution. The term is closely related to <a class="reference external" href="https://primer-computational-mathematics.github.io/book/b_coding/Fundamentals%20of%20Computer%20Science/3_Recursion.html#recursion">recursion</a>, but the approach does not always lead to recursive solutions.</p>
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><p><strong>Binary Search</strong> is a method of efficiently finding membership in a <em>sorted</em> list. Le us say we want to find if the element <code class="docutils literal notranslate"><span class="pre">x</span></code> is in <code class="docutils literal notranslate"><span class="pre">l</span></code>:</p></li>
+<li><p><strong>Binary Search</strong> is a method of efficiently finding membership in a <em>sorted</em> list. Let us say we want to find if the element <code class="docutils literal notranslate"><span class="pre">x</span></code> is in <code class="docutils literal notranslate"><span class="pre">l</span></code>:</p></li>
 </ul>
 <ol class="simple">
-<li><p>Check the middle element of <code class="docutils literal notranslate"><span class="pre">l</span></code> is equal to x, if yes, return <code class="docutils literal notranslate"><span class="pre">True</span></code>, otherwise:</p></li>
+<li><p>Check the middle element of <code class="docutils literal notranslate"><span class="pre">l</span></code> is equal to <code class="docutils literal notranslate"><span class="pre">x</span></code>, if yes, return <code class="docutils literal notranslate"><span class="pre">True</span></code>, otherwise:</p></li>
 </ol>
-<p>  a) If the element is greater, search the right half of the array with the same procedure.</p>
+<p>  a) If the element is greater, search the right half of the array   with the same procedure.</p>
 <p>  b) Otherwise, search the left half</p>
 <p>Have a look at the iterative solution:</p>
 <div class="cell docutils container">
@@ -295,16 +305,16 @@ False
 </div>
 </div>
 </div>
-<p>This leads to the algorithm with \(O(log(n))\) complexity. On each iteration, we decrease the size of the seach space by a factor of 2.</p>
+<p>This leads to the algorithm with \(O(log(n))\) complexity. On each iteration, we decrease the size of the search space by a factor of 2.</p>
 <hr class="docutils" />
 <ul class="simple">
-<li><p><strong>Merge Sort</strong> Is a vary famous and ingenious example of Divide and Conquer approach. The aim is to sort an array. This could be done using using the <a class="reference external" href="https://primer-computational-mathematics.github.io/book/b_coding/Fundamentals%20of%20Computer%20Science/1_Algorythmic_Complexity.html#algorythmic-complexity">Selection Sort</a> which is \(O(n^2)\). Now, consider the following approach:</p></li>
+<li><p><strong>Merge Sort</strong> Is a very famous and ingenious example of Divide and Conquer approach. The aim is to sort an array. This could be done using the <a class="reference external" href="https://primer-computational-mathematics.github.io/book/b_coding/Fundamentals%20of%20Computer%20Science/1_Algorythmic_Complexity.html#algorythmic-complexity">Selection Sort</a> which is \(O(n^2)\). Now, consider the following approach:</p></li>
 </ul>
 <ol class="simple">
-<li><p>List is of length 0 or 1: it is already sorted.</p></li>
-<li><p>List is longer: divide it into two lists of equal (almost equal) length and sort them using the general method. After those are returned, merge the two lists, so the resulting one is sorted.</p></li>
+<li><p>The list is of length 0 or 1: it is already sorted.</p></li>
+<li><p>The list is longer: divide it into two lists of equal (almost equal) length and sort them <em>using the general method</em>. After those are returned, merge the two lists, so the resulting one is sorted.</p></li>
 </ol>
-<p>Merging of the lists is executed by taking the minimum elements of the two lists and putting them in the resulting list untill the both lists are empty. This time we implement the algorithm recursively:</p>
+<p>Merging of the lists is executed by taking the minimum elements of the two lists and putting them in the resulting list until both lists are empty. This time we implement the algorithm recursively:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">merge</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
@@ -350,26 +360,27 @@ False
 </div>
 <p>Now, let us consider the time complexity of this solution. On the merge of the two halves of the initial list we are performing roughly \(n\) operations. Then, merge of the halves was a result of \(2*n/2\) operations. The pattern is as follows:</p>
 <p>\[n+\frac{n}{2}\times2 + \frac{n}{4}\times4 + \frac{n}{8}\times8 +… = nlog(n)\]</p>
-<p>So this algorithm is \(O(nlog(n)\). This is a considerable improvement compared to the Selection Sort.</p>
+<p>So this algorithm is \(O(nlog(n))\). This is a considerable improvement compared to the Selection Sort.</p>
 <hr class="docutils" />
 <ul class="simple">
-<li><p><strong>Closest two points on a plane</strong> We are given a list of coordinates of points on a 2d Cartesian plane, find the minimum distance between any two points. The brute force solution is to check every pair or points in a list and find the minimum distance. This leads to \(O(n^2)\). However, there is a divide and conquer method which leads to a more efficient algorythm:
-Base Case:</p></li>
+<li><p><strong>Closest two points on a plane</strong> We are given a list of coordinates of points on a 2D Cartesian plane, find the minimum distance between any two points. The brute force solution is to check every pair of points in a list and find the minimum distance. This leads to \(O(n^2)\). However, there is a divide and conquer method which leads to a more efficient algorithm:</p></li>
 </ul>
+<p>Base Case:</p>
 <ol class="simple">
 <li><p>There are three points in a list - find their distance using brute force.</p></li>
 </ol>
 <p>Recursive case:</p>
 <ol class="simple">
-<li><p>Sort the points by the \(x\)-coordinate (can be done in \(O(nlog(n)\).</p></li>
+<li><p>Sort the points by the \(x\)-coordinate (can be done in \(O(nlog(n)\)).</p></li>
 <li><p>Split the points into two groups (first and second half of the list).</p></li>
 <li><p>Find the minimum distance of those two sublists <em>by the same general procedure</em>.</p></li>
-<li><p>Let \(d_L\) and \(d_R\) denote the minimum distances from the left and right half. Now take the points that are at maximum \(min(d_L,d_R)\) from the middle point. This can be done in \(O(log(n)\) as the points are sorted. We build an array <code class="docutils literal notranslate"><span class="pre">strip</span></code> from those points.</p></li>
+<li><p>Let \(d_L\) and \(d_R\) denote the minimum distances from the left and right half. Now take the points that are at maximum \(min(d_L,d_R)\) from the middle point. This can be done in \(O(log(n))\) as the points are sorted. We build an array <code class="docutils literal notranslate"><span class="pre">strip</span></code> from those points.</p></li>
 <li><p>Now sort the array <code class="docutils literal notranslate"><span class="pre">strip</span></code> by the \(y\) coordinate.</p></li>
-<li><p>Now the tricky part. The intuition says that finding the minimum distance in the strip requires \(O(n^2)\) computation. However, let us notice the fact that each pair of points in one half is at minimum \(min(d_L,d_R)\) distance from each other. The only candidates for the new minimum distances are in the different halves. So we need to consider only the points in the <code class="docutils literal notranslate"><span class="pre">strip</span></code> which have a difference of \(y &lt; d\)! It can be proven geometrically that for each point, we need to check at most 6 other points. Therefore this operation in \(O(n)\). Please have a look at the following diagram for digesting this step.</p></li>
+<li><p>The tricky part: Intuition says that finding the minimum distance in the strip requires \(O(n^2)\) computation. However, let us notice the fact that each pair of points in one half is at minimum \(min(d_L,d_R)\) distance from each other. The only candidates for the new minimum distances are in the different halves. So we need to consider only the points in the <code class="docutils literal notranslate"><span class="pre">strip</span></code> which have a difference of \(y\) coordinate that is less than \(min(d_L,d_R)\)! It can be proven geometrically that for each point, we need to check at most 6 other points. Therefore this operation is \(O(n)\). Please have a look at the following diagram for digesting this step.</p></li>
 <li><p>Find the minimum distance in the strip and return it.</p></li>
 </ol>
-<img src="https://upload.wikimedia.org/wikipedia/commons/6/65/Closest_pair.jpg" width="20%">
+<p style="text-align:center;">
+<img src="https://upload.wikimedia.org/wikipedia/commons/6/65/Closest_pair.jpg" width="40%"></p>
 <p>Consider the code below:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -450,7 +461,7 @@ Base Case:</p></li>
 <p>Complexity analysis:
 Time complexity can be expressed as:</p>
 <p>\[T(n) = 2 \times T(n/2) + O(log(n)) + O(nlog(n)) + O(n)\]</p>
-<p>Where the \(O\) terms coresspond to: creating the <code class="docutils literal notranslate"><span class="pre">stip</span></code> list, sorting the <code class="docutils literal notranslate"><span class="pre">strip</span></code> by \(y\) coordinates and finding the minimum distance in the strip. This can be simplified by considering only the most contributing term.</p>
+<p>Where the \(O\) terms correspond to creating the <code class="docutils literal notranslate"><span class="pre">stip</span></code> list, sorting the <code class="docutils literal notranslate"><span class="pre">strip</span></code> by \(y\) coordinates and finding the minimum distance in the strip. This can be simplified by considering only the most contributing term.</p>
 <p>\[T(n) = 2 \times T(n/2) + O(nlog(n))\]</p>
 <p>This recurrence relation can be solved in various ways (e.g using the <a class="reference external" href="https://en.wikipedia.org/wiki/Master_theorem_(analysis_of_algorithms)">Master Theorem</a>) and leads to \(O(n(log(n))^2)\).</p>
 </div>
@@ -499,7 +510,7 @@ Time complexity can be expressed as:</p>
 </div>
 <hr class="docutils" />
 <ul class="simple">
-<li><p><strong>Quick Sort</strong> is probably the most widely used sorting algorithm in the world. In the worst case it runs in \(O(n^2)\), but on average it is \(O(nlogn)\) with smaller constants than Merge Sort. The idea is as following:</p></li>
+<li><p><strong>Quick Sort</strong> is probably the most widely used sorting algorithm in the world. In the worst case, it runs in \(O(n^2)\), but on average it is \(O(nlogn)\) with smaller constants than Merge Sort. The idea is as follows:</p></li>
 </ul>
 <p>Base case:</p>
 <ol class="simple">
@@ -507,7 +518,7 @@ Time complexity can be expressed as:</p>
 </ol>
 <p>Recursive case:</p>
 <ol class="simple">
-<li><p>Pick an element in the array (a pivot) and put the elemens greater than the pivot in the left part of the array (or its copy for an easier implementation) and greater elements in the right side of the array. Finally insert the pivot in between. It is now in the place it should be <strong>in the sorted array</strong>.</p></li>
+<li><p>Pick an element in the array (a pivot) and put the elements greater than the pivot in the left part of the array (or its copy for easier implementation) and greater elements in the right side of the array. Finally, insert the pivot in between. It is now in the place it should be <strong>in the sorted array</strong>.</p></li>
 <li><p>Call <code class="docutils literal notranslate"><span class="pre">QuickSort</span></code> on the subarray in the right of the pivot and on the subarray on the right of the pivot. The returned arrays will be sorted</p></li>
 </ol>
 <p>Based on the above description, define a function <code class="docutils literal notranslate"><span class="pre">QuickSort</span></code>.</p>
@@ -546,6 +557,14 @@ Time complexity can be expressed as:</p>
 </div>
 </div>
 </div>
+</div>
+<div class="section" id="references">
+<h1>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p>Sebastian Raschka, GitHub, <a class="reference external" href="https://github.com/rasbt/algorithms_in_ipython_notebooks">Algorithms in IPython Notebooks</a></p></li>
+<li><p>Cormen, Leiserson, Rivest, Stein, “Introduction to Algorithms”, Third Edition, MIT Press, 2009</p></li>
+<li><p>GeeksforGeeks, <a class="reference external" href="https://www.geeksforgeeks.org/closest-pair-of-points-using-divide-and-conquer-algorithm/">Closest Pair of Points using Divide and Conquer algorithm</a></p></li>
+</ul>
 </div>
 
     <script type="text/x-thebe-config">

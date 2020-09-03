@@ -4,3 +4,4 @@ In this section, we are going to present basic concepts and methods which will m
 
 1. {ref}`algorythmic_complexity`
 2. {ref}`recursion`
+3. {ref}`divide_and_conquer`
