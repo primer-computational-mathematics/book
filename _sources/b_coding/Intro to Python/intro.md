@@ -58,5 +58,6 @@ The notebooks cover all basic topics covered in year 1 programming course:
     - {ref}`histogram`
     - {ref}`image_plot`
     - {ref}`3d_plots`
+    - {ref}`animations`
 18. {ref}`assert`
 19. {ref}`classes`
