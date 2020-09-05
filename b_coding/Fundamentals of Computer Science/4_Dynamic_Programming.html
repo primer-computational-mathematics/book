@@ -220,9 +220,16 @@
 
     </div>
     <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
 
 <nav id="bd-toc-nav">
     <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#simple-examples" class="nav-link">Simple Examples</a>
+        </li>
     
     </ul>
 </nav>
@@ -237,7 +244,71 @@
                 
   <div class="section" id="dynamic-programming">
 <span id="id1"></span><h1>Dynamic Programming<a class="headerlink" href="#dynamic-programming" title="Permalink to this headline">¶</a></h1>
-<span class="target" id="index-0"></span></div>
+<p id="index-0">Dynamic algorithms are a family of programs which (broadly speaking) share the the feature of utilising solutions to subproblems is coming up with optimal solutions. We will discuss the conditions which problems need to satisfy in order  to be solved dinamically but let us first have a look at some basic examples.</p>
+<div class="section" id="simple-examples">
+<h2>Simple Examples<a class="headerlink" href="#simple-examples" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Dynamic Fibonnacci</strong> If you have read the section about <a class="reference external" href="https://primer-computational-mathematics.github.io/book/b_coding/Fundamentals%20of%20Computer%20Science/2_Recursion.html#recursion">recursion</a> you probably know that the basic inplementation for generating Fibonacci numbers is very inefficient (\(O(2^n)\)!). Now, as we generate next numbers in the Fibonacci sequence, we will memoize them for further use. This <em>trade-of between memory and time</em> is dramatic in this case. Compare the two versions of the function:</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># For comparing the running times</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="c1"># Inefficient</span>
+<span class="k">def</span> <span class="nf">fib</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="n">n</span> <span class="o">&gt;=</span> <span class="mi">0</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">fib</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">fib</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+    
+<span class="c1"># Dynamic version</span>
+<span class="k">def</span> <span class="nf">dynamicFib</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="n">n</span> <span class="o">&gt;=</span> <span class="mi">0</span>
+    <span class="c1">#prepare a table for memoizing</span>
+    <span class="n">prevFib</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">prevPrevFib</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">temp</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="c1">#build up on your previous results</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="n">prevFib</span> <span class="o">+</span> <span class="n">prevPrevFib</span>
+        <span class="n">prevPrevFib</span> <span class="o">=</span> <span class="n">prevFib</span>
+        <span class="n">prevFib</span> <span class="o">=</span> <span class="n">temp</span>
+    <span class="k">return</span> <span class="n">prevFib</span>
+    
+<span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">fib</span><span class="p">(</span><span class="mi">32</span><span class="p">))</span>
+<span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">)</span>
+
+<span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">dynamicFib</span><span class="p">(</span><span class="mi">32</span><span class="p">))</span>
+<span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3524578
+0.8298194408416748
+3524578
+0.0
+</pre></div>
+</div>
+</div>
+</div>
+<p>The time difference is dramatic! As you can probably spot, <code class="docutils literal notranslate"><span class="pre">dynamicFib</span></code> is \(O(n)\)! With a use of three integer variables (<code class="docutils literal notranslate"><span class="pre">prevFib</span></code>, <code class="docutils literal notranslate"><span class="pre">prevPrevFib</span></code> and <code class="docutils literal notranslate"><span class="pre">temp</span></code>) we brought exponential time complexity down to linear. How did it happen? Let us now depict the work done by <code class="docutils literal notranslate"><span class="pre">fib(5)</span></code> on a graph:</p>
+<div class="figure align-default">
+<a class="reference internal image-reference" href="../../_images/FibTree.png"><img alt="../../_images/FibTree.png" src="../../_images/FibTree.png" style="width: 80%;" /></a>
+</div>
+<p>Wow! This is quite a tree! However, the worst feature is that many of the nodes are repeated (e.g. node \(2\) appears 3 times). These repeated results which are constantly recomputed bring us to the exponential complexity. Consider the the dynamic solution graph:</p>
+<div class="figure align-default">
+<a class="reference internal image-reference" href="../../_images/FibDyn.png"><img alt="../../_images/FibDyn.png" src="../../_images/FibDyn.png" style="width: 10%;" /></a>
+</div>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {
