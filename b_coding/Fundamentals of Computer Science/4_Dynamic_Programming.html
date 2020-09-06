@@ -228,7 +228,21 @@
     <ul class="nav section-nav flex-column">
     
         <li class="nav-item toc-entry toc-h2">
-            <a href="#simple-examples" class="nav-link">Simple Examples</a>
+            <a href="#simple-examples" class="nav-link">Simple Examples</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#space-complexity" class="nav-link">Space Complexity</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#characteristic-features-of-dynamic-problems" class="nav-link">Characteristic features of dynamic problems</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#common-approaches-to-dp" class="nav-link">Common approaches to DP</a>
         </li>
     
     </ul>
@@ -244,7 +258,7 @@
                 
   <div class="section" id="dynamic-programming">
 <span id="id1"></span><h1>Dynamic Programming<a class="headerlink" href="#dynamic-programming" title="Permalink to this headline">¶</a></h1>
-<p id="index-0">Dynamic algorithms are a family of programs which (broadly speaking) share the the feature of utilising solutions to subproblems is coming up with optimal solutions. We will discuss the conditions which problems need to satisfy in order  to be solved dinamically but let us first have a look at some basic examples.</p>
+<p id="index-0">Dynamic algorithms are a family of programs which (broadly speaking) share the feature of utilising solutions to subproblems is coming up with optimal solutions. We will discuss the conditions which problems need to satisfy in order to be solved dinamically but let us first have a look at some basic examples. The contcept is quite challenging to digest, so there are many examples in this section.</p>
 <div class="section" id="simple-examples">
 <h2>Simple Examples<a class="headerlink" href="#simple-examples" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
@@ -281,32 +295,191 @@
 <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">fib</span><span class="p">(</span><span class="mi">32</span><span class="p">))</span>
 <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Time for brute:&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">))</span>
 
 <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">dynamicFib</span><span class="p">(</span><span class="mi">32</span><span class="p">))</span>
 <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Time for dynamic:&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3524578
-0.8298194408416748
+Time for brute:0.815772533416748
 3524578
-0.0
+Time for dynamic:0.0
 </pre></div>
 </div>
 </div>
 </div>
 <p>The time difference is dramatic! As you can probably spot, <code class="docutils literal notranslate"><span class="pre">dynamicFib</span></code> is \(O(n)\)! With a use of three integer variables (<code class="docutils literal notranslate"><span class="pre">prevFib</span></code>, <code class="docutils literal notranslate"><span class="pre">prevPrevFib</span></code> and <code class="docutils literal notranslate"><span class="pre">temp</span></code>) we brought exponential time complexity down to linear. How did it happen? Let us now depict the work done by <code class="docutils literal notranslate"><span class="pre">fib(5)</span></code> on a graph:</p>
 <div class="figure align-default">
-<a class="reference internal image-reference" href="../../_images/FibTree.png"><img alt="../../_images/FibTree.png" src="../../_images/FibTree.png" style="width: 80%;" /></a>
+<a class="reference internal image-reference" href="../../_images/FibTree.png"><img alt="../../_images/FibTree.png" src="../../_images/FibTree.png" style="width: 60%;" /></a>
 </div>
 <p>Wow! This is quite a tree! However, the worst feature is that many of the nodes are repeated (e.g. node \(2\) appears 3 times). These repeated results which are constantly recomputed bring us to the exponential complexity. Consider the the dynamic solution graph:</p>
 <div class="figure align-default">
 <a class="reference internal image-reference" href="../../_images/FibDyn.png"><img alt="../../_images/FibDyn.png" src="../../_images/FibDyn.png" style="width: 10%;" /></a>
 </div>
+<p>Now, the number of nodes grows linearly with \(n\). We have <code class="docutils literal notranslate"><span class="pre">merged</span></code> the subproblems to avoid redundancy.</p>
+<ul class="simple">
+<li><p><strong>Shortest Path on a Grid</strong> Dynamic programming is often used for optimisation problems. Consider a square grid with numbers from 0 to 9 in each square. An example would be:</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">+-+-+-+-+</span>
+<span class="o">|</span><span class="mi">1</span><span class="o">|</span><span class="mi">0</span><span class="o">|</span><span class="mi">8</span><span class="o">|</span><span class="mi">4</span><span class="o">|</span> 
+<span class="o">+-+-+-+-+</span>
+<span class="o">|</span><span class="mi">3</span><span class="o">|</span><span class="mi">5</span><span class="o">|</span><span class="mi">1</span><span class="o">|</span><span class="mi">0</span><span class="o">|</span>
+<span class="o">+-+-+-+-+</span>
+<span class="o">|</span><span class="mi">6</span><span class="o">|</span><span class="mi">8</span><span class="o">|</span><span class="mi">9</span><span class="o">|</span><span class="mi">3</span><span class="o">|</span>
+<span class="o">+-+-+-+-+</span>
+<span class="o">|</span><span class="mi">1</span><span class="o">|</span><span class="mi">2</span><span class="o">|</span><span class="mi">4</span><span class="o">|</span><span class="mi">5</span><span class="o">|</span>
+<span class="o">+-+-+-+-+</span>
+</pre></div>
+</div>
+<p>It is allowed to move only <strong>down or right</strong>. What is the value of the minimum path from the upper-left corner to the lower-right corner?</p>
+<p>The initial approach to the problem might be to check all the possible paths and return the minimal one. This is clearly exponetial and too slow. To come up with a faster approach we need to find <em>overlapping</em> subproblems (this feature is often called <em><strong>optimal substructure</strong></em>).</p>
+<p>Let us imagine that we have reached the lower-right corner (hurray!). We could get there from the tile above it and left of it. This might at first seem like a <em>Divide and Conquer</em> problem, but let us keep on looking for an overlap:</p>
+<div class="figure align-default">
+<a class="reference internal image-reference" href="../../_images/DownRightGrid.png"><img alt="../../_images/DownRightGrid.png" src="../../_images/DownRightGrid.png" style="width: 60%;" /></a>
+</div>
+<p>In the simplest case of four tiles, we can already see that the upper-left tile is considered twice. We should then levrage this repetition. This overlapping generalises for larger grids. In our alorithm, we will remember (<em><strong>memoize</strong></em>) the optimal path to the tiles already visited and build on this knowledge:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># grid is a square matrix</span>
+<span class="k">def</span> <span class="nf">shortestPathDownRight</span><span class="p">(</span><span class="n">grid</span><span class="p">):</span>
+    <span class="c1">#dictionary that will keep the optimal paths to the already visited tiles</span>
+    <span class="n">memo</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="c1"># n - length of the side of the square</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="n">n</span>
+    <span class="n">memo</span><span class="p">[(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)]</span> <span class="o">=</span> <span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="c1"># top and most left column have trival optimal paths</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+        <span class="n">memo</span><span class="p">[(</span><span class="mi">0</span><span class="p">,</span><span class="n">i</span><span class="p">)]</span> <span class="o">=</span> <span class="n">memo</span><span class="p">[(</span><span class="mi">0</span><span class="p">,</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">)]</span> <span class="o">+</span> <span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">memo</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">)]</span> <span class="o">=</span> <span class="n">memo</span><span class="p">[(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)]</span> <span class="o">+</span> <span class="n">grid</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="c1"># the dynamic magic    </span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">):</span>
+            <span class="n">memo</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">)]</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">memo</span><span class="p">[(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">j</span><span class="p">)],</span><span class="n">memo</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">)])</span> <span class="o">+</span> <span class="n">grid</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span>
+            
+    <span class="k">return</span> <span class="n">memo</span><span class="p">[(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)]</span>
+
+<span class="n">grid</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">4</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">shortestPathDownRight</span><span class="p">(</span><span class="n">grid</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>15
+</pre></div>
+</div>
+</div>
+</div>
+<p>What is the time complexity of this algorithm? Based on the nested loop we can deduce that it is \(O(n^2)\). Quite an inprovement!</p>
+<div class="section" id="space-complexity">
+<h3>Space Complexity<a class="headerlink" href="#space-complexity" title="Permalink to this headline">¶</a></h3>
+<p>We usually do not concern ourselves with the amount of memory a program utilises. Dynamic programs are an exception to this rule. The amount of memory they use can be a limiting factor for some machines, so we need to take it into account. In case of <code class="docutils literal notranslate"><span class="pre">dynamicFib</span></code> this was \(O(1)\) as we only needed to keep track of the last two Fibonacci numbers. In case of <code class="docutils literal notranslate"><span class="pre">shortestPathDownRight</span></code> we need do create a grid of size \(n \times n\), so \(O(n^2)\). The notion of space complexity is very similai to time complexity, so we will not discuss it in depth.</p>
+<ul class="simple">
+<li><p><strong>Cutting Rods</strong> We are given a rod of integer length \(n\) and a list of lenght <code class="docutils literal notranslate"><span class="pre">prices</span></code> \(n\). The \(i\)th entry in the list correspods to the profit we can get from selling the rod of length \(i\). How should we cut the rod so we maximise our profit?
+The key to our dynamic algorithm will be the observation that:</p></li>
+</ul>
+<p>We cut the rod at position \(k\). Now we have a rod of lenght \(k\) and \(n-k\). Let us assume we know the maximum price for these two rods. Now we need to consider all the \(0 \leq k \leq \lfloor \frac{n}{2} \rfloor + 1\) (the problem is symmetric so computing for \(\frac{n}{2} \leq k\) would be redundant. For \(k=0\) we just take <code class="docutils literal notranslate"><span class="pre">prices[n]</span></code>. The cutting introduces subproblems which are smaller than the initial problem and they are overlapping! Let us put this into code:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># For comparing the running times</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="c1"># For testing</span>
+<span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">randint</span>
+
+<span class="k">def</span> <span class="nf">dynamicCutRod</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">prices</span><span class="p">):</span>
+    <span class="c1">#setting the initial values of variables</span>
+    <span class="k">assert</span> <span class="n">n</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">n</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">prices</span><span class="p">)</span>
+    <span class="c1"># trival cases</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">prices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    
+    <span class="c1"># setting up needed variables</span>
+    <span class="n">memo</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">currLen</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">memo</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">memo</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">prices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">while</span> <span class="n">currLen</span> <span class="o">&lt;</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="c1"># no cuts for a given len</span>
+        <span class="n">memo</span><span class="p">[</span><span class="n">currLen</span><span class="p">]</span> <span class="o">=</span> <span class="n">prices</span><span class="p">[</span><span class="n">currLen</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="c1"># considering all possible cuts for a give len</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">currLen</span><span class="o">//</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="c1"># take the maximal one</span>
+            <span class="k">if</span> <span class="n">memo</span><span class="p">[</span><span class="n">currLen</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">memo</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">+</span> <span class="n">memo</span><span class="p">[</span><span class="n">currLen</span> <span class="o">-</span> <span class="n">k</span><span class="p">]:</span>
+                <span class="n">memo</span><span class="p">[</span><span class="n">currLen</span><span class="p">]</span> <span class="o">=</span> <span class="n">memo</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">+</span> <span class="n">memo</span><span class="p">[</span><span class="n">currLen</span> <span class="o">-</span> <span class="n">k</span><span class="p">]</span>     
+        <span class="n">currLen</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">memo</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>
+        
+<span class="c1"># for testing purposes</span>
+<span class="k">def</span> <span class="nf">bruteForceRecursive</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">prices</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="n">n</span> <span class="o">&gt;=</span><span class="mi">0</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">prices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">currLen</span> <span class="o">=</span> <span class="n">n</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">prices</span><span class="p">[</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="o">//</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">bruteForceRecursive</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">prices</span><span class="p">)</span> <span class="o">+</span> <span class="n">bruteForceRecursive</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="n">k</span><span class="p">,</span><span class="n">prices</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">res</span>
+
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">):</span>
+    <span class="n">prices</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+        <span class="n">prices</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+        
+    <span class="k">assert</span> <span class="n">bruteForceRecursive</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">prices</span><span class="p">),</span><span class="n">prices</span><span class="p">)</span> <span class="o">==</span> <span class="n">dynamicCutRod</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">prices</span><span class="p">),</span><span class="n">prices</span><span class="p">)</span>
+
+<span class="n">prices</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">):</span>
+    <span class="n">prices</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+    
+<span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">bruteForceRecursive</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">prices</span><span class="p">),</span><span class="n">prices</span><span class="p">))</span>
+<span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Time for brute:&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">))</span>
+
+<span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">dynamicCutRod</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">prices</span><span class="p">),</span><span class="n">prices</span><span class="p">))</span>
+<span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Time for dynamic:&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>200
+Time for brute:0.2918405532836914
+200
+Time for dynamic:0.0
+</pre></div>
+</div>
+</div>
+</div>
+<p>Time complexity? For each \(0\leq i \leq n \) we need to consider \(i\) different cuts. This is the sum of arithmetic series so \(O(n^2)\). We memoize only the optimal solutions to subproblems, therefore \(O(n)\).</p>
+</div>
+</div>
+<div class="section" id="characteristic-features-of-dynamic-problems">
+<h2>Characteristic features of dynamic problems<a class="headerlink" href="#characteristic-features-of-dynamic-problems" title="Permalink to this headline">¶</a></h2>
+<p>All problems which can be tackled with the use of Dynamic Programming (DP) have two main features:</p>
+<ol class="simple">
+<li><p>Optimal substructure: In broad terms, that solution to the problem can be formulated in terms of independent subproblems. Then you choose solution/combination of optimal solutions to subproblems and show that this choice leads to an optimal global solution. For example, for the <code class="docutils literal notranslate"><span class="pre">shortestPath</span></code> problem we choose between the optimal solution to the tile above and tile to the left. For the rod problem, we choose between all possible \(n\) cuts of a rod and assume we have solutions to the shorter rods.</p></li>
+<li><p>Overlapping subproblems: The subproblems which we split the main question into should repeat. Eliminating the need to recompute the subproblems (by memoising them) should speed up out algorythm. For example, <code class="docutils literal notranslate"><span class="pre">dynamicFib</span></code> used two variables to keep the results of computing previous Fibonacci numbers.</p></li>
+</ol>
+</div>
+<div class="section" id="common-approaches-to-dp">
+<h2>Common approaches to DP<a class="headerlink" href="#common-approaches-to-dp" title="Permalink to this headline">¶</a></h2>
+<p>There are two main schools of thought when it comes to solving DP algorithms:</p>
+<ol class="simple">
+<li><p><em><strong>Memoization</strong></em> is using the <em>memory-time trade-off</em>. It remembers the results to the subproblems in a dictionary <code class="docutils literal notranslate"><span class="pre">memo</span></code> and recalls them when needed. If we have the result in memory, we take if from there, otherwise compute it.</p></li>
+<li><p><em><strong>Bottom-up</strong></em> approach starts with the trivial cases of the problem and builds on them. I relies on the the fact that subproblems can be sorted. So we first compute the optimal cutting for a rod of length 1 and then length 2 and so on…</p></li>
+</ol>
 </div>
 </div>
 
