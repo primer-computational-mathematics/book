@@ -245,6 +245,18 @@
             <a href="#common-approaches-to-dp" class="nav-link">Common approaches to DP</a>
         </li>
     
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#advanced-examples" class="nav-link">Advanced Examples</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#exercises" class="nav-link">Exercises</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#references" class="nav-link">References</a>
+        </li>
+    
     </ul>
 </nav>
 
@@ -258,11 +270,11 @@
                 
   <div class="section" id="dynamic-programming">
 <span id="id1"></span><h1>Dynamic Programming<a class="headerlink" href="#dynamic-programming" title="Permalink to this headline">¶</a></h1>
-<p id="index-0">Dynamic algorithms are a family of programs which (broadly speaking) share the feature of utilising solutions to subproblems is coming up with optimal solutions. We will discuss the conditions which problems need to satisfy in order to be solved dinamically but let us first have a look at some basic examples. The contcept is quite challenging to digest, so there are many examples in this section.</p>
+<p id="index-0">Dynamic algorithms are a family of programs which (broadly speaking) share the feature of utilising solutions to subproblems in coming up with an optimal solution. We will discuss the conditions which problems need to satisfy to be solved dynamically but let us first have a look at some basic examples. The concept is quite challenging to digest, so there are many examples in this section.</p>
 <div class="section" id="simple-examples">
 <h2>Simple Examples<a class="headerlink" href="#simple-examples" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><p><strong>Dynamic Fibonnacci</strong> If you have read the section about <a class="reference external" href="https://primer-computational-mathematics.github.io/book/b_coding/Fundamentals%20of%20Computer%20Science/2_Recursion.html#recursion">recursion</a> you probably know that the basic inplementation for generating Fibonacci numbers is very inefficient (\(O(2^n)\)!). Now, as we generate next numbers in the Fibonacci sequence, we will memoize them for further use. This <em>trade-of between memory and time</em> is dramatic in this case. Compare the two versions of the function:</p></li>
+<li><p><strong>Dynamic Fibonacci</strong> If you have read the section about <a class="reference external" href="https://primer-computational-mathematics.github.io/book/b_coding/Fundamentals%20of%20Computer%20Science/2_Recursion.html#recursion">recursion</a> you probably know that the basic implementation for generating Fibonacci numbers is very inefficient (\(O(2^n)\)!). Now, as we generate the next numbers in the Fibonacci sequence, we will remember them for further use. The <em>trade-off between memory and time</em> is dramatic in this case. Compare the two versions of the function:</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -306,22 +318,23 @@
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3524578
-Time for brute:0.815772533416748
+Time for brute:0.8238296508789062
 3524578
 Time for dynamic:0.0
 </pre></div>
 </div>
 </div>
 </div>
-<p>The time difference is dramatic! As you can probably spot, <code class="docutils literal notranslate"><span class="pre">dynamicFib</span></code> is \(O(n)\)! With a use of three integer variables (<code class="docutils literal notranslate"><span class="pre">prevFib</span></code>, <code class="docutils literal notranslate"><span class="pre">prevPrevFib</span></code> and <code class="docutils literal notranslate"><span class="pre">temp</span></code>) we brought exponential time complexity down to linear. How did it happen? Let us now depict the work done by <code class="docutils literal notranslate"><span class="pre">fib(5)</span></code> on a graph:</p>
+<p>The time difference is enormous! As you can probably spot, <code class="docutils literal notranslate"><span class="pre">dynamicFib</span></code> is \(O(n)\)! With the use of three integer variables (<code class="docutils literal notranslate"><span class="pre">prevFib</span></code>, <code class="docutils literal notranslate"><span class="pre">prevPrevFib</span></code> and <code class="docutils literal notranslate"><span class="pre">temp</span></code>) we brought exponential time complexity down to linear. How did it happen? Let us now depict the work done by <code class="docutils literal notranslate"><span class="pre">fib(5)</span></code> on a graph:</p>
 <div class="figure align-default">
 <a class="reference internal image-reference" href="../../_images/FibTree.png"><img alt="../../_images/FibTree.png" src="../../_images/FibTree.png" style="width: 60%;" /></a>
 </div>
-<p>Wow! This is quite a tree! However, the worst feature is that many of the nodes are repeated (e.g. node \(2\) appears 3 times). These repeated results which are constantly recomputed bring us to the exponential complexity. Consider the the dynamic solution graph:</p>
+<p>Wow! This is quite a tree! However, the worst feature is that many of the nodes are repeated (e.g. node \(2\) appears 3 times). These repeated results which are constantly recomputed bring us to the exponential complexity. Consider the dynamic solution graph:</p>
 <div class="figure align-default">
 <a class="reference internal image-reference" href="../../_images/FibDyn.png"><img alt="../../_images/FibDyn.png" src="../../_images/FibDyn.png" style="width: 10%;" /></a>
 </div>
 <p>Now, the number of nodes grows linearly with \(n\). We have <code class="docutils literal notranslate"><span class="pre">merged</span></code> the subproblems to avoid redundancy.</p>
+<hr class="docutils" />
 <ul class="simple">
 <li><p><strong>Shortest Path on a Grid</strong> Dynamic programming is often used for optimisation problems. Consider a square grid with numbers from 0 to 9 in each square. An example would be:</p></li>
 </ul>
@@ -337,32 +350,33 @@ Time for dynamic:0.0
 </pre></div>
 </div>
 <p>It is allowed to move only <strong>down or right</strong>. What is the value of the minimum path from the upper-left corner to the lower-right corner?</p>
-<p>The initial approach to the problem might be to check all the possible paths and return the minimal one. This is clearly exponetial and too slow. To come up with a faster approach we need to find <em>overlapping</em> subproblems (this feature is often called <em><strong>optimal substructure</strong></em>).</p>
+<p>The initial approach to the problem might be to check all the possible paths and return the minimal one. This is exponential and too slow. To come up with a faster approach we need to find subproblems.</p>
 <p>Let us imagine that we have reached the lower-right corner (hurray!). We could get there from the tile above it and left of it. This might at first seem like a <em>Divide and Conquer</em> problem, but let us keep on looking for an overlap:</p>
 <div class="figure align-default">
-<a class="reference internal image-reference" href="../../_images/DownRightGrid.png"><img alt="../../_images/DownRightGrid.png" src="../../_images/DownRightGrid.png" style="width: 60%;" /></a>
+<a class="reference internal image-reference" href="../../_images/DownRightGrid.png"><img alt="../../_images/DownRightGrid.png" src="../../_images/DownRightGrid.png" style="width: 30%;" /></a>
 </div>
-<p>In the simplest case of four tiles, we can already see that the upper-left tile is considered twice. We should then levrage this repetition. This overlapping generalises for larger grids. In our alorithm, we will remember (<em><strong>memoize</strong></em>) the optimal path to the tiles already visited and build on this knowledge:</p>
+<p>In the simplest case of four tiles, we can already see that the upper-left tile is considered twice. We should then leverage this repetition. This overlapping generalises for larger grids. In our algorithm, we will remember the optimal path to the tiles already visited and build on this knowledge:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># grid is a square matrix</span>
 <span class="k">def</span> <span class="nf">shortestPathDownRight</span><span class="p">(</span><span class="n">grid</span><span class="p">):</span>
-    <span class="c1">#dictionary that will keep the optimal paths to the already visited tiles</span>
-    <span class="n">memo</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="c1"># dictionary that will keep the optimal paths </span>
+    <span class="c1"># to the already visited tiles</span>
+    <span class="n">table</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="c1"># n - length of the side of the square</span>
     <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
     <span class="k">assert</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="n">n</span>
-    <span class="n">memo</span><span class="p">[(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)]</span> <span class="o">=</span> <span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">table</span><span class="p">[(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)]</span> <span class="o">=</span> <span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
     <span class="c1"># top and most left column have trival optimal paths</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
-        <span class="n">memo</span><span class="p">[(</span><span class="mi">0</span><span class="p">,</span><span class="n">i</span><span class="p">)]</span> <span class="o">=</span> <span class="n">memo</span><span class="p">[(</span><span class="mi">0</span><span class="p">,</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">)]</span> <span class="o">+</span> <span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
-        <span class="n">memo</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">)]</span> <span class="o">=</span> <span class="n">memo</span><span class="p">[(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)]</span> <span class="o">+</span> <span class="n">grid</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">table</span><span class="p">[(</span><span class="mi">0</span><span class="p">,</span><span class="n">i</span><span class="p">)]</span> <span class="o">=</span> <span class="n">table</span><span class="p">[(</span><span class="mi">0</span><span class="p">,</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">)]</span> <span class="o">+</span> <span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">table</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">)]</span> <span class="o">=</span> <span class="n">table</span><span class="p">[(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)]</span> <span class="o">+</span> <span class="n">grid</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
     <span class="c1"># the dynamic magic    </span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">):</span>
-            <span class="n">memo</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">)]</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">memo</span><span class="p">[(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">j</span><span class="p">)],</span><span class="n">memo</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">)])</span> <span class="o">+</span> <span class="n">grid</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span>
+            <span class="n">table</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">)]</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">table</span><span class="p">[(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">j</span><span class="p">)],</span><span class="n">table</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">)])</span> <span class="o">+</span> <span class="n">grid</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span>
             
-    <span class="k">return</span> <span class="n">memo</span><span class="p">[(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)]</span>
+    <span class="k">return</span> <span class="n">table</span><span class="p">[(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)]</span>
 
 <span class="n">grid</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">4</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]]</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">shortestPathDownRight</span><span class="p">(</span><span class="n">grid</span><span class="p">))</span>
@@ -375,12 +389,14 @@ Time for dynamic:0.0
 </div>
 </div>
 </div>
-<p>What is the time complexity of this algorithm? Based on the nested loop we can deduce that it is \(O(n^2)\). Quite an inprovement!</p>
+<p>What is the time complexity of this algorithm? Based on the nested loop we can deduce that it is \(O(n^2)\). Quite an improvement!</p>
+<hr class="docutils" />
 <div class="section" id="space-complexity">
 <h3>Space Complexity<a class="headerlink" href="#space-complexity" title="Permalink to this headline">¶</a></h3>
-<p>We usually do not concern ourselves with the amount of memory a program utilises. Dynamic programs are an exception to this rule. The amount of memory they use can be a limiting factor for some machines, so we need to take it into account. In case of <code class="docutils literal notranslate"><span class="pre">dynamicFib</span></code> this was \(O(1)\) as we only needed to keep track of the last two Fibonacci numbers. In case of <code class="docutils literal notranslate"><span class="pre">shortestPathDownRight</span></code> we need do create a grid of size \(n \times n\), so \(O(n^2)\). The notion of space complexity is very similai to time complexity, so we will not discuss it in depth.</p>
+<p>We usually do not concern ourselves with the amount of memory a program utilises. Dynamic programs are an exception to this rule. The amount of memory they use can be a limiting factor for some machines, so we need to take it into account. In the case of <code class="docutils literal notranslate"><span class="pre">dynamicFib</span></code> this was \(O(1)\) as we only needed to keep track of the last two Fibonacci numbers. In case of <code class="docutils literal notranslate"><span class="pre">shortestPathDownRight</span></code> we need to create a grid of size \(n \times n\), so \(O(n^2)\). The notion of space complexity is very similar to time complexity, so we will not discuss it in depth.</p>
+<hr class="docutils" />
 <ul class="simple">
-<li><p><strong>Cutting Rods</strong> We are given a rod of integer length \(n\) and a list of lenght <code class="docutils literal notranslate"><span class="pre">prices</span></code> \(n\). The \(i\)th entry in the list correspods to the profit we can get from selling the rod of length \(i\). How should we cut the rod so we maximise our profit?
+<li><p><strong>Cutting Rods</strong> We are given a rod of integer length \(n\) and a list of length <code class="docutils literal notranslate"><span class="pre">prices</span></code> \(n\). The \(i\)th entry in the list corresponds to the profit we can get from selling the rod of length \(i\). How should we cut the rod so we maximise our profit?
 The key to our dynamic algorithm will be the observation that:</p></li>
 </ul>
 <p>We cut the rod at position \(k\). Now we have a rod of lenght \(k\) and \(n-k\). Let us assume we know the maximum price for these two rods. Now we need to consider all the \(0 \leq k \leq \lfloor \frac{n}{2} \rfloor + 1\) (the problem is symmetric so computing for \(\frac{n}{2} \leq k\) would be redundant. For \(k=0\) we just take <code class="docutils literal notranslate"><span class="pre">prices[n]</span></code>. The cutting introduces subproblems which are smaller than the initial problem and they are overlapping! Let us put this into code:</p>
@@ -392,7 +408,7 @@ The key to our dynamic algorithm will be the observation that:</p></li>
 <span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">randint</span>
 
 <span class="k">def</span> <span class="nf">dynamicCutRod</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">prices</span><span class="p">):</span>
-    <span class="c1">#setting the initial values of variables</span>
+    <span class="c1"># setting the initial values of variables</span>
     <span class="k">assert</span> <span class="n">n</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">n</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">prices</span><span class="p">)</span>
     <span class="c1"># trival cases</span>
     <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
@@ -401,20 +417,20 @@ The key to our dynamic algorithm will be the observation that:</p></li>
         <span class="k">return</span> <span class="n">prices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     
     <span class="c1"># setting up needed variables</span>
-    <span class="n">memo</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">table</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="n">currLen</span> <span class="o">=</span> <span class="mi">2</span>
-    <span class="n">memo</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">memo</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">prices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">table</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">table</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">prices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="k">while</span> <span class="n">currLen</span> <span class="o">&lt;</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span>
         <span class="c1"># no cuts for a given len</span>
-        <span class="n">memo</span><span class="p">[</span><span class="n">currLen</span><span class="p">]</span> <span class="o">=</span> <span class="n">prices</span><span class="p">[</span><span class="n">currLen</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">table</span><span class="p">[</span><span class="n">currLen</span><span class="p">]</span> <span class="o">=</span> <span class="n">prices</span><span class="p">[</span><span class="n">currLen</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
         <span class="c1"># considering all possible cuts for a give len</span>
         <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">currLen</span><span class="o">//</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
             <span class="c1"># take the maximal one</span>
-            <span class="k">if</span> <span class="n">memo</span><span class="p">[</span><span class="n">currLen</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">memo</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">+</span> <span class="n">memo</span><span class="p">[</span><span class="n">currLen</span> <span class="o">-</span> <span class="n">k</span><span class="p">]:</span>
-                <span class="n">memo</span><span class="p">[</span><span class="n">currLen</span><span class="p">]</span> <span class="o">=</span> <span class="n">memo</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">+</span> <span class="n">memo</span><span class="p">[</span><span class="n">currLen</span> <span class="o">-</span> <span class="n">k</span><span class="p">]</span>     
+            <span class="k">if</span> <span class="n">table</span><span class="p">[</span><span class="n">currLen</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">table</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">+</span> <span class="n">table</span><span class="p">[</span><span class="n">currLen</span> <span class="o">-</span> <span class="n">k</span><span class="p">]:</span>
+                <span class="n">table</span><span class="p">[</span><span class="n">currLen</span><span class="p">]</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">+</span> <span class="n">table</span><span class="p">[</span><span class="n">currLen</span> <span class="o">-</span> <span class="n">k</span><span class="p">]</span>     
         <span class="n">currLen</span> <span class="o">+=</span> <span class="mi">1</span>
-    <span class="k">return</span> <span class="n">memo</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">table</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>
         
 <span class="c1"># for testing purposes</span>
 <span class="k">def</span> <span class="nf">bruteForceRecursive</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">prices</span><span class="p">):</span>
@@ -429,14 +445,15 @@ The key to our dynamic algorithm will be the observation that:</p></li>
         <span class="n">res</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">bruteForceRecursive</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">prices</span><span class="p">)</span> <span class="o">+</span> <span class="n">bruteForceRecursive</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="n">k</span><span class="p">,</span><span class="n">prices</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">res</span>
 
-
+<span class="c1"># testing</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">):</span>
     <span class="n">prices</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
         <span class="n">prices</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
         
     <span class="k">assert</span> <span class="n">bruteForceRecursive</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">prices</span><span class="p">),</span><span class="n">prices</span><span class="p">)</span> <span class="o">==</span> <span class="n">dynamicCutRod</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">prices</span><span class="p">),</span><span class="n">prices</span><span class="p">)</span>
-
+    
+<span class="c1"># comparing times</span>
 <span class="n">prices</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">):</span>
     <span class="n">prices</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
@@ -454,23 +471,23 @@ The key to our dynamic algorithm will be the observation that:</p></li>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>200
-Time for brute:0.2918405532836914
-200
-Time for dynamic:0.0
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>66
+Time for brute:1.457252025604248
+66
+Time for dynamic:0.0029768943786621094
 </pre></div>
 </div>
 </div>
 </div>
-<p>Time complexity? For each \(0\leq i \leq n \) we need to consider \(i\) different cuts. This is the sum of arithmetic series so \(O(n^2)\). We memoize only the optimal solutions to subproblems, therefore \(O(n)\).</p>
+<p>Time complexity? For each \(0\leq i \leq n \) we need to consider \(i\) different cuts. This is the sum of arithmetic series so \(O(n^2)\). We memoize only the optimal solutions to subproblems, therefore space complexity is \(O(n)\).</p>
 </div>
 </div>
 <div class="section" id="characteristic-features-of-dynamic-problems">
 <h2>Characteristic features of dynamic problems<a class="headerlink" href="#characteristic-features-of-dynamic-problems" title="Permalink to this headline">¶</a></h2>
 <p>All problems which can be tackled with the use of Dynamic Programming (DP) have two main features:</p>
 <ol class="simple">
-<li><p>Optimal substructure: In broad terms, that solution to the problem can be formulated in terms of independent subproblems. Then you choose solution/combination of optimal solutions to subproblems and show that this choice leads to an optimal global solution. For example, for the <code class="docutils literal notranslate"><span class="pre">shortestPath</span></code> problem we choose between the optimal solution to the tile above and tile to the left. For the rod problem, we choose between all possible \(n\) cuts of a rod and assume we have solutions to the shorter rods.</p></li>
-<li><p>Overlapping subproblems: The subproblems which we split the main question into should repeat. Eliminating the need to recompute the subproblems (by memoising them) should speed up out algorythm. For example, <code class="docutils literal notranslate"><span class="pre">dynamicFib</span></code> used two variables to keep the results of computing previous Fibonacci numbers.</p></li>
+<li><p><strong>Optimal substructure</strong>: In broad terms, that solution to the problem can be formulated in terms of independent subproblems. Then you choose a solution/combination of optimal solutions to subproblems and show that this choice leads to an optimal global solution. For example, for the <code class="docutils literal notranslate"><span class="pre">shortestPath</span></code> problem we choose between the optimal solution to the tile above and tile to the left. For the rod problem, we choose between all possible \(n\) cuts of a rod and assume we have solutions to the shorter rods.</p></li>
+<li><p><strong>Overlapping subproblems</strong>: The subproblems which we split the main question into should repeat. Eliminating the need to recompute the subproblems (by memoising them) should speed up our algorithm. For example, <code class="docutils literal notranslate"><span class="pre">dynamicFib</span></code> used two variables to keep the results of computing previous Fibonacci numbers.</p></li>
 </ol>
 </div>
 <div class="section" id="common-approaches-to-dp">
@@ -480,6 +497,307 @@ Time for dynamic:0.0
 <li><p><em><strong>Memoization</strong></em> is using the <em>memory-time trade-off</em>. It remembers the results to the subproblems in a dictionary <code class="docutils literal notranslate"><span class="pre">memo</span></code> and recalls them when needed. If we have the result in memory, we take if from there, otherwise compute it.</p></li>
 <li><p><em><strong>Bottom-up</strong></em> approach starts with the trivial cases of the problem and builds on them. I relies on the the fact that subproblems can be sorted. So we first compute the optimal cutting for a rod of length 1 and then length 2 and so on…</p></li>
 </ol>
+<p>Both usually lead to the same time complexities.</p>
+</div>
+<div class="section" id="advanced-examples">
+<h2>Advanced Examples<a class="headerlink" href="#advanced-examples" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><strong>0-1 Knapsack</strong> The problem is about a backpack (knapsack) of an integer volume \(S\), we are given lists <code class="docutils literal notranslate"><span class="pre">spaces</span></code> and <code class="docutils literal notranslate"><span class="pre">vals</span></code> which correspond to the size and value of the objects we might want to pack. The trick is to pack the objects of the highest accumulate value which fit into the backpack. We will consider prefixes of the <code class="docutils literal notranslate"><span class="pre">sizes</span></code> list in order of length and put the intermediate results in a table. Compare the bottom-up and memoized approaches:</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># For comparing the running times</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="c1"># For testing</span>
+<span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">randint</span>
+
+<span class="c1"># bottom up approach</span>
+<span class="k">def</span> <span class="nf">knapSack</span><span class="p">(</span><span class="n">wt</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span> 
+    <span class="n">K</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">W</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span> 
+  
+    <span class="c1"># Build table K[][] in bottom up manner </span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span> 
+        <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">W</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span> 
+            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">w</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> 
+                <span class="n">K</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">w</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">elif</span> <span class="n">wt</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">w</span><span class="p">:</span> 
+                <span class="n">K</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">w</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">val</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">K</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">w</span><span class="o">-</span><span class="n">wt</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]],</span>  <span class="n">K</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">w</span><span class="p">])</span> 
+            <span class="k">else</span><span class="p">:</span> 
+                <span class="n">K</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">w</span><span class="p">]</span> <span class="o">=</span> <span class="n">K</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">w</span><span class="p">]</span> 
+  
+    <span class="k">return</span> <span class="n">K</span><span class="p">[</span><span class="n">n</span><span class="p">][</span><span class="n">W</span><span class="p">]</span> 
+
+<span class="c1"># memoized</span>
+<span class="n">memo</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">def</span> <span class="nf">knapSackMemo</span><span class="p">(</span><span class="n">wt</span><span class="p">,</span><span class="n">val</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="c1"># base case</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">W</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">memo</span><span class="p">[(</span><span class="n">n</span><span class="p">,</span><span class="n">W</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="c1"># check if memoized</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">W</span><span class="p">)</span> <span class="ow">in</span> <span class="n">memo</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">memo</span><span class="p">[(</span><span class="n">n</span><span class="p">,</span><span class="n">W</span><span class="p">)]</span>
+    <span class="c1"># if not, calcuate</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">wt</span><span class="p">[</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">W</span><span class="p">:</span>
+            <span class="n">memo</span><span class="p">[(</span><span class="n">n</span><span class="p">,</span><span class="n">W</span><span class="p">)]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">knapSackMemo</span><span class="p">(</span><span class="n">wt</span><span class="p">,</span><span class="n">val</span><span class="p">,</span><span class="n">W</span><span class="o">-</span><span class="n">wt</span><span class="p">[</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="n">val</span><span class="p">[</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                              <span class="n">knapSackMemo</span><span class="p">(</span><span class="n">wt</span><span class="p">,</span><span class="n">val</span><span class="p">,</span><span class="n">W</span><span class="p">,</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">memo</span><span class="p">[(</span><span class="n">n</span><span class="p">,</span><span class="n">W</span><span class="p">)]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">memo</span><span class="p">[(</span><span class="n">n</span><span class="p">,</span><span class="n">W</span><span class="p">)]</span> <span class="o">=</span> <span class="n">knapSackMemo</span><span class="p">(</span><span class="n">wt</span><span class="p">,</span><span class="n">val</span><span class="p">,</span><span class="n">W</span><span class="p">,</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">memo</span><span class="p">[(</span><span class="n">n</span><span class="p">,</span><span class="n">W</span><span class="p">)]</span>
+        
+<span class="c1"># brute force for testing</span>
+<span class="k">def</span> <span class="nf">bruteForce</span><span class="p">(</span><span class="n">wt</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">W</span><span class="p">):</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="c1"># all combinations of the elements</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="nb">len</span><span class="p">(</span><span class="n">wt</span><span class="p">)):</span>
+        <span class="n">sumSize</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">sumVal</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">wt</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&gt;&gt;</span> <span class="n">j</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">sumSize</span> <span class="o">+=</span> <span class="n">wt</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+                <span class="n">sumVal</span> <span class="o">+=</span> <span class="n">val</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">sumSize</span> <span class="o">&gt;</span> <span class="n">W</span><span class="p">:</span>
+                <span class="n">sumVal</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="k">break</span>    
+        <span class="n">res</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">sumVal</span><span class="p">,</span> <span class="n">res</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">res</span>
+
+<span class="c1"># testing</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">sizes</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">vals</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">S</span> <span class="o">=</span> <span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">200</span><span class="p">)</span>
+    <span class="n">memo</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">13</span><span class="p">):</span>
+        <span class="n">sizes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+        <span class="n">vals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">20</span><span class="p">))</span>
+    
+    <span class="n">br</span> <span class="o">=</span> <span class="n">bruteForce</span><span class="p">(</span><span class="n">sizes</span><span class="p">,</span><span class="n">vals</span><span class="p">,</span> <span class="n">S</span><span class="p">)</span>
+    <span class="n">btup</span>  <span class="o">=</span> <span class="n">knapSack</span><span class="p">(</span><span class="n">sizes</span><span class="p">,</span><span class="n">vals</span><span class="p">,</span><span class="n">S</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">sizes</span><span class="p">))</span>
+    <span class="n">mem</span> <span class="o">=</span> <span class="n">knapSackMemo</span><span class="p">(</span><span class="n">sizes</span><span class="p">,</span><span class="n">vals</span><span class="p">,</span><span class="n">S</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">sizes</span><span class="p">))</span>
+    
+    <span class="k">assert</span> <span class="n">btup</span> <span class="o">==</span> <span class="n">br</span> <span class="ow">and</span> <span class="n">mem</span> <span class="o">==</span> <span class="n">br</span>
+    
+<span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">bruteForce</span><span class="p">(</span><span class="n">sizes</span><span class="p">,</span><span class="n">vals</span><span class="p">,</span> <span class="n">S</span><span class="p">))</span>
+<span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Time for brute:&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">))</span>
+
+<span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">knapSack</span><span class="p">(</span><span class="n">sizes</span><span class="p">,</span><span class="n">vals</span><span class="p">,</span><span class="n">S</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">sizes</span><span class="p">)))</span>
+<span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Time for bottom-up:&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">))</span>
+
+<span class="n">memo</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">knapSackMemo</span><span class="p">(</span><span class="n">sizes</span><span class="p">,</span><span class="n">vals</span><span class="p">,</span><span class="n">S</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">sizes</span><span class="p">)))</span>
+<span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Time for memoized:&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>135
+Time for brute:0.019960880279541016
+135
+Time for bottom-up:0.00098419189453125
+135
+Time for memoized:0.0009658336639404297
+</pre></div>
+</div>
+</div>
+</div>
+<p>In this case, the memoized approach is the fastest as it does not usually require to consider all <code class="docutils literal notranslate"><span class="pre">(n,W)</span></code> pairs. However, both bottom-up and memoized approach have space (and time) complexity of \(O(nS)\). The brute force has time complexity of \(O(2^n)\), where \(n\) is the length of the <code class="docutils literal notranslate"><span class="pre">sizes</span></code> list.</p>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>Scheduling</strong> With all the chaos that COVID caused universities are going fully remote. The head of your department asked the lecturers to send the timeslots in which they can do lectures. This is a list <code class="docutils literal notranslate"><span class="pre">timeslots</span></code> which consist of pairs of integers -  the start and end of the timeslot. If timeslots overlap, then we choose only one of them. Lectures can start at the same time the previous lecture finished. You aim to pick the subset of <code class="docutils literal notranslate"><span class="pre">timeslots</span></code> which assures that the sum of teaching hours is maximum. Return the maximum number of hours.</p></li>
+</ul>
+<p>The question is similar to the previous one. We are given a list of items (<code class="docutils literal notranslate"><span class="pre">timeslots</span></code>) and need to come up with an optimisation. The value of each subset is the sum of hours of its elements. To speed things up in later stages, we will sort the timeslots by the ending time. This is done in \(O(nlog(n))\). We will then consider the prefixes of the sorted array and memoize optimal results. <code class="docutils literal notranslate"><span class="pre">memo[n]</span></code> will store the maximum number of hours from the prefix of <code class="docutils literal notranslate"><span class="pre">n</span></code> length.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># For comparing the running times</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="c1"># For testing</span>
+<span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">randint</span>
+
+<span class="c1"># utility function to speed up the search</span>
+<span class="k">def</span> <span class="nf">binarySearch</span><span class="p">(</span><span class="n">timeslots</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">low</span><span class="p">,</span><span class="n">high</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">low</span> <span class="o">&gt;=</span> <span class="n">high</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">low</span>
+    <span class="n">mid</span>  <span class="o">=</span> <span class="p">(</span><span class="n">low</span> <span class="o">+</span> <span class="n">high</span><span class="p">)</span> <span class="o">//</span><span class="mi">2</span>
+    <span class="k">if</span> <span class="n">timeslots</span><span class="p">[</span><span class="n">mid</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">s</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">binarySearch</span><span class="p">(</span><span class="n">timeslots</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">mid</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">high</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+         <span class="k">return</span> <span class="n">binarySearch</span><span class="p">(</span><span class="n">timeslots</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">low</span><span class="p">,</span> <span class="n">mid</span><span class="p">)</span>
+
+<span class="c1"># init memo</span>
+<span class="n">memo</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="c1"># assumes that timeslots array is sorted by ending time</span>
+<span class="k">def</span> <span class="nf">schedule</span><span class="p">(</span><span class="n">timeslots</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="c1"># base case</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">memo</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="c1"># memoized case</span>
+    <span class="k">elif</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">memo</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">memo</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>
+    <span class="c1"># else calculate</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">s</span><span class="p">,</span><span class="n">e</span> <span class="o">=</span> <span class="n">timeslots</span><span class="p">[</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="c1"># in log time</span>
+        <span class="n">ind</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">binarySearch</span><span class="p">(</span><span class="n">timeslots</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">timeslots</span><span class="p">)),</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">memo</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">schedule</span><span class="p">(</span><span class="n">timeslots</span><span class="p">,</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">schedule</span><span class="p">(</span><span class="n">timeslots</span><span class="p">,</span><span class="n">ind</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">e</span> <span class="o">-</span> <span class="n">s</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">memo</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>
+    
+<span class="c1"># brute force for testing</span>
+<span class="k">def</span> <span class="nf">bruteForce</span><span class="p">(</span><span class="n">timeslots</span><span class="p">):</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="c1"># all combinations of the elements</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="nb">len</span><span class="p">(</span><span class="n">timeslots</span><span class="p">)):</span>
+        <span class="n">sumHours</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">already_chosen</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">timeslots</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&gt;&gt;</span> <span class="n">j</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">s</span><span class="p">,</span> <span class="n">e</span> <span class="o">=</span> <span class="n">timeslots</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+                <span class="n">sumHours</span> <span class="o">+=</span> <span class="n">e</span> <span class="o">-</span> <span class="n">s</span>
+                <span class="n">already_chosen</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">timeslots</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+            <span class="c1"># checking if a valid combination of timeslots                 </span>
+            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">already_chosen</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">s</span> <span class="o">&gt;=</span> <span class="n">already_chosen</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="ow">or</span> <span class="n">e</span> <span class="o">&lt;=</span> <span class="n">already_chosen</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="mi">0</span><span class="p">]):</span>
+                    <span class="n">sumHours</span> <span class="o">=</span> <span class="mi">0</span>
+                    <span class="k">break</span>                 
+        <span class="n">res</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">sumHours</span><span class="p">,</span> <span class="n">res</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">res</span>    
+    
+<span class="c1"># testing</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">memo</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">timeslots</span> <span class="o">=</span> <span class="p">[]</span>    
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">12</span><span class="p">):</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+        <span class="n">e</span> <span class="o">=</span> <span class="n">randint</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+        <span class="n">timeslots</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">s</span><span class="p">,</span><span class="n">e</span><span class="p">))</span>
+    <span class="n">timeslots</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">slot</span><span class="p">:</span> <span class="p">(</span><span class="n">slot</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">slot</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+    
+    <span class="n">br</span> <span class="o">=</span> <span class="n">bruteForce</span><span class="p">(</span><span class="n">timeslots</span><span class="p">)</span>
+    <span class="n">mem</span> <span class="o">=</span> <span class="n">schedule</span><span class="p">(</span><span class="n">timeslots</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">timeslots</span><span class="p">))</span>  
+    <span class="k">assert</span> <span class="n">br</span> <span class="o">==</span> <span class="n">mem</span>
+    
+<span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">bruteForce</span><span class="p">(</span><span class="n">timeslots</span><span class="p">))</span>
+<span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Time for brute:&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">))</span>
+
+<span class="n">memo</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">schedule</span><span class="p">(</span><span class="n">timeslots</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">timeslots</span><span class="p">)))</span>
+<span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Time for memo:&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>82
+Time for brute:0.14516472816467285
+82
+Time for memo:0.0010349750518798828
+</pre></div>
+</div>
+</div>
+</div>
+<p>Time complexity of this solution is \(O(nlog(n))\). Why?</p>
+</div>
+<div class="section" id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Tiling problem</strong> You are given a \(2 \times n\) board and \(2 \times 1\) tiles. Count the number of ways the tiles can be arranged (horizontally and vertically) on the board.</p></li>
+</ul>
+<p><strong>HINT</strong>: You have seen this algorithm before.</p>
+<div class="dropdown admonition">
+<p class="admonition-title">Answer</p>
+<p>Consider the end of the board. There are two cases, we can either have to fill in a \(2 \times 2\) subboard or \(1 \times 2\) subboard. We assume that the rest of the board is already covered and this is the same problem but smaller. There are two ways of arranging tiles on the \(2 \times 2\) board and one way to do this on \(1 \times 2\) board. Watch out though! The case in which we place tiles vertically on the \(2 \times 2\) board covers some of the cases when we fill \(1 \times 2\). Therefore we should ignore it. The final formula is as follow:</p>
+<p>\[ count[n] = count[n-1] + count[n-2] \]</p>
+<p>That is Fibonacci numbers.</p>
+</div>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>Maximum sum subarray</strong> You are given an array with \(1\) and \(-1\) elements only. Find the array of the maximum sum in \(O(n)\). Return this maximal sum. E.g. [-1,1,1,-1,1,1,1,-1] -&gt; 4.</p></li>
+</ul>
+<p><strong>HINT</strong>: Consider the sums of prefixes of the array.</p>
+<div class="dropdown admonition">
+<p class="admonition-title">Answer</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">maxSubarray</span><span class="p">(</span><span class="n">arr</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+    <span class="n">sumPref</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">minSum</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">maxSum</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)):</span>
+        <span class="c1"># current prefix sum</span>
+        <span class="n">sumPref</span> <span class="o">=</span> <span class="n">sumPref</span> <span class="o">+</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="c1"># keep track of the minimal sum (can be negative)</span>
+        <span class="n">minSum</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">minSum</span><span class="p">,</span> <span class="n">sumPref</span><span class="p">)</span>
+        <span class="c1"># take away the minSum, this will give max</span>
+        <span class="n">maxSum</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">maxSum</span><span class="p">,</span> <span class="n">sumPref</span><span class="o">-</span><span class="n">minSum</span><span class="p">)</span>   
+    <span class="k">return</span> <span class="n">maxSum</span>
+    
+<span class="nb">print</span><span class="p">(</span><span class="n">maxSubarray</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+
+</pre></div>
+</div>
+</div>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>Longest snake sequence</strong> You are given a grid of natural numbers. A snake is a sequence of numbers which goes down or to the right. The adjacent numbers in a snake differ by a maximum 1. Define a dynamic function which will return the length of the longest snake. E.g.</p></li>
+</ul>
+<p><strong>9</strong>, 6, 5, 2</p>
+<p><strong>8</strong>, <strong>7</strong>, <strong>6</strong>, <strong>5</strong></p>
+<p>7, 3, 1, <strong>6</strong></p>
+<p>1, 1, 1, <strong>7</strong></p>
+<p>-&gt; 7</p>
+<div class="dropdown admonition">
+<p class="admonition-title">Answer</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
+<span class="k">def</span> <span class="nf">longestSnake</span><span class="p">(</span><span class="n">grid</span><span class="p">):</span>
+    <span class="c1">#dictionary that will keep the optimal paths to the already visited tiles</span>
+    <span class="n">table</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="c1"># n - length of the side of the square</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="n">n</span>
+    <span class="n">table</span><span class="p">[(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="c1"># top and most left column have trival optimal paths</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+        <span class="n">table</span><span class="p">[(</span><span class="mi">0</span><span class="p">,</span><span class="n">i</span><span class="p">)]</span> <span class="o">=</span> <span class="n">table</span><span class="p">[(</span><span class="mi">0</span><span class="p">,</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">)]</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="k">else</span> <span class="mi">1</span>
+        <span class="n">table</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">)]</span> <span class="o">=</span> <span class="n">table</span><span class="p">[(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)]</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">grid</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="k">else</span> <span class="mi">1</span>
+    <span class="c1"># the dynamic magic    </span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">):</span>
+            <span class="n">table</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">)]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span> 
+                <span class="n">table</span><span class="p">[(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">j</span><span class="p">)]</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">-</span> <span class="n">grid</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="k">else</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="n">table</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">)]</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">-</span> <span class="n">grid</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="k">else</span> <span class="mi">1</span><span class="p">)</span>
+                
+    <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+<span class="n">mat</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> 
+       <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> 
+       <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> 
+       <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">]]</span> 
+
+<span class="nb">print</span><span class="p">(</span><span class="n">longestSnake</span><span class="p">(</span><span class="n">mat</span><span class="p">))</span>
+
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Cormen, Leiserson, Rivest, Stein, “Introduction to Algorithms”, Third Edition, MIT Press, 2009</p></li>
+<li><p>Prof. Erik Demaine, Prof. Srini Devadas, MIT OCW 6.006 <a class="reference external" href="https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-006-introduction-to-algorithms-fall-2011/">“Introduction to Algorithms”</a>, Fall 2011</p></li>
+<li><p>GeeksforGeeks, <a class="reference external" href="https://www.geeksforgeeks.org/find-maximum-length-snake-sequence/">Find maximum length Snake sequence</a></p></li>
+<li><p>Polish Informatics Olimpiad, “Advetures of Bajtazar, 25 Years of Informatics Olympiad”, PWN 2018</p></li>
+</ul>
 </div>
 </div>
 
