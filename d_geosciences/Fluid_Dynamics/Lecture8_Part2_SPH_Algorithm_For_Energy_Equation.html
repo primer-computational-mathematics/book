@@ -258,6 +258,348 @@
                 
   <div class="section" id="lecture8-part2-sph-algorithm-for-energy-equation">
 <span id="id1"></span><h1>Lecture8_Part2_SPH_Algorithm_For_Energy_Equation<a class="headerlink" href="#lecture8-part2-sph-algorithm-for-energy-equation" title="Permalink to this headline">¶</a></h1>
+<p>Open Anaconda Prompt (anaconda 3), then type</p>
+<p>pip install ipyvolume</p>
+<p>pip install bqplot</p>
+<p>jupyter nbextension enable –py bqplot</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">ipyvolume</span> <span class="k">as</span> <span class="nn">ipv</span>
+<span class="kn">import</span> <span class="nn">bqplot.scales</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">random</span>
+<span class="kn">import</span> <span class="nn">ipywidgets</span> <span class="k">as</span> <span class="nn">widgets</span>    <span class="c1"># https://www.youtube.com/watch?v=hOKa8klJPyo</span>
+<span class="kn">import</span> <span class="nn">matplotlib.cm</span> <span class="k">as</span> <span class="nn">cm</span>    <span class="c1"># for coloring temperature</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">G</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span><span class="o">-</span><span class="mf">9.8</span><span class="p">,</span><span class="mf">0.0</span><span class="p">]);</span> <span class="c1"># external (gravitational) forces</span>
+<span class="n">REST_DENS</span> <span class="o">=</span> <span class="mf">1000.0</span><span class="p">;</span> <span class="c1"># rest density of liquid</span>
+<span class="n">GAS_CONST</span> <span class="o">=</span> <span class="mf">2000.0</span><span class="p">;</span> <span class="c1"># const for equation of state</span>
+<span class="n">H</span> <span class="o">=</span> <span class="mf">16.0</span><span class="p">;</span> <span class="c1"># kernel radius</span>
+<span class="n">HSQ</span> <span class="o">=</span> <span class="n">H</span><span class="o">*</span><span class="n">H</span><span class="p">;</span> <span class="c1"># radius^2 for optimization</span>
+<span class="n">T0</span> <span class="o">=</span> <span class="mf">1.0</span>    <span class="c1"># initial temperature of the fluid</span>
+<span class="n">T_bottom</span> <span class="o">=</span> <span class="mf">1.5</span>    <span class="c1"># bottom heating temperature</span>
+<span class="n">T_ceiling</span> <span class="o">=</span> <span class="mf">0.5</span>    <span class="c1"># upper cooling temperature</span>
+<span class="n">alpha_v</span> <span class="o">=</span> <span class="mf">0.0002</span>    <span class="c1"># thermal expansion coefficient</span>
+<span class="n">k</span> <span class="o">=</span> <span class="mf">0.0003</span>    <span class="c1"># thermal conductivity of the particle</span>
+<span class="n">k_wall</span> <span class="o">=</span> <span class="mf">100.0</span>    <span class="c1"># thermal conductivity of the wall</span>
+<span class="n">MASS</span> <span class="o">=</span> <span class="mf">65.0</span><span class="p">;</span> <span class="c1"># assume all particles have the same mass</span>
+<span class="n">VISC</span> <span class="o">=</span> <span class="mf">250.0</span><span class="p">;</span> <span class="c1"># viscosity constant</span>
+<span class="n">dt</span> <span class="o">=</span> <span class="mf">0.0008</span><span class="p">;</span> <span class="c1"># integration timestep</span>
+
+<span class="c1"># smoothing kernels defined in Müller and their gradients</span>
+<span class="n">POLY6</span> <span class="o">=</span> <span class="mf">315.0</span><span class="o">/</span><span class="p">(</span><span class="mf">65.0</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">H</span><span class="o">**</span><span class="mi">9</span><span class="p">);</span>
+<span class="n">SPIKY_GRAD</span> <span class="o">=</span> <span class="o">-</span><span class="mf">45.0</span><span class="o">/</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">H</span><span class="o">**</span><span class="mi">6</span><span class="p">);</span>
+<span class="n">VISC_LAP</span> <span class="o">=</span> <span class="mf">45.0</span><span class="o">/</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">H</span><span class="o">**</span><span class="mi">6</span><span class="p">);</span>
+
+<span class="c1"># simulation parameters</span>
+<span class="n">EPS</span> <span class="o">=</span> <span class="n">H</span><span class="p">;</span> <span class="c1"># boundary epsilon</span>
+<span class="n">BOUND_DAMPING_NORMAL</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.0</span><span class="p">;</span>    <span class="c1"># particle does not bounce back vertically</span>
+<span class="n">BOUND_DAMPING_HORIZONTAL</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>    <span class="c1"># no slip-boundary</span>
+
+<span class="c1"># solver data</span>
+<span class="n">Fluid_Particles_list</span> <span class="o">=</span> <span class="p">[];</span>
+<span class="n">X</span> <span class="o">=</span> <span class="p">[[],[],[]]</span>    <span class="c1"># positions for all particles</span>
+<span class="n">Ts</span> <span class="o">=</span> <span class="p">[]</span>    <span class="c1"># temperature of all particles</span>
+
+<span class="c1"># interaction</span>
+<span class="n">MAX_PARTICLES</span> <span class="o">=</span> <span class="mi">3000</span><span class="p">;</span>
+
+<span class="c1"># rendering projection parameters</span>
+<span class="n">WINDOW_WIDTH</span> <span class="o">=</span> <span class="mi">425</span><span class="p">;</span>
+<span class="n">WINDOW_HEIGHT</span> <span class="o">=</span> <span class="mi">150</span><span class="p">;</span>
+<span class="n">WINDOW_DEPTH</span> <span class="o">=</span> <span class="mi">300</span>
+
+<span class="n">VIEW_WIDTH</span> <span class="o">=</span> <span class="mf">1.5</span><span class="o">*</span><span class="n">WINDOW_WIDTH</span><span class="p">;</span>
+<span class="n">VIEW_HEIGHT</span> <span class="o">=</span> <span class="mf">1.5</span><span class="o">*</span><span class="n">WINDOW_HEIGHT</span><span class="p">;</span>
+<span class="n">VIEW_DEPTH</span> <span class="o">=</span> <span class="mf">1.5</span><span class="o">*</span><span class="n">WINDOW_DEPTH</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># particle data structure</span>
+<span class="c1"># stores position, velocity, and force for integration</span>
+<span class="c1"># stores density (rho) and pressure values for SPH</span>
+<span class="k">class</span> <span class="nc">Particle</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">F</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">T</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">X</span> <span class="o">=</span> <span class="n">X</span>   <span class="c1"># x position vector</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">V</span> <span class="o">=</span> <span class="n">V</span>    <span class="c1"># velocity vector</span>
+      
+        <span class="bp">self</span><span class="o">.</span><span class="n">F</span> <span class="o">=</span> <span class="n">F</span>    <span class="c1"># force vector</span>
+       
+        <span class="bp">self</span><span class="o">.</span><span class="n">rho</span> <span class="o">=</span> <span class="mf">0.0</span>    <span class="c1"># density of the fluid at the position of the particle</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">p</span> <span class="o">=</span> <span class="n">p</span>    <span class="c1"># pressure of the fluid at the position of the particle</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">T</span> <span class="o">=</span> <span class="n">T0</span>    <span class="c1"># temperature of the fluid at the position of the particle</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">InitSPH</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">X</span>
+    <span class="k">global</span> <span class="n">fig</span>
+    <span class="k">global</span> <span class="n">scatter</span>
+    <span class="k">global</span> <span class="n">ipv</span>
+    <span class="k">global</span> <span class="n">Ts</span>
+    
+    <span class="c1">#for zi in range(int(2*EPS),int(WINDOW_DEPTH-EPS*2.0),int(H)):</span>
+        <span class="c1">#zi += H</span>
+    <span class="k">for</span> <span class="n">yi</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="mi">1</span><span class="o">*</span><span class="n">EPS</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">WINDOW_HEIGHT</span><span class="o">-</span><span class="n">EPS</span><span class="o">*</span><span class="mf">1.0</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">H</span><span class="o">*</span><span class="mi">1</span><span class="o">/</span><span class="mi">16</span><span class="p">)):</span>
+        <span class="n">yi</span> <span class="o">+=</span> <span class="n">H</span> <span class="c1">#+random.rand()*H/1000</span>
+        <span class="k">for</span> <span class="n">xi</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">WINDOW_WIDTH</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">H</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">Fluid_Particles_list</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">MAX_PARTICLES</span><span class="p">:</span>
+                <span class="n">xi</span> <span class="o">+=</span> <span class="n">H</span> <span class="c1">#+random.rand()*H/1000</span>
+
+                <span class="n">Vx</span> <span class="o">=</span> <span class="mf">0.0</span>    <span class="c1"># gives the particle a random tiny initial velocity in the x-direction</span>
+                <span class="n">Vy</span> <span class="o">=</span> <span class="mf">0.0</span>    <span class="c1"># gives the particle a random tiny initial velocity in the y-direction</span>
+                <span class="n">Vz</span> <span class="o">=</span> <span class="mf">0.0</span>
+                <span class="n">V</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">Vx</span><span class="p">,</span><span class="n">Vy</span><span class="p">,</span><span class="n">Vz</span><span class="p">])</span>
+                
+                <span class="n">Fx</span> <span class="o">=</span> <span class="mf">0.0</span>    <span class="c1"># gives the particle a random tiny initial force in the x-direction</span>
+                <span class="n">Fy</span> <span class="o">=</span> <span class="mf">0.0</span>    <span class="c1"># gives the particle a random tiny initial force in the y-direction</span>
+                <span class="n">Fz</span> <span class="o">=</span> <span class="mf">0.0</span>
+                <span class="n">F</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">Fx</span><span class="p">,</span><span class="n">Fy</span><span class="p">,</span><span class="n">Fz</span><span class="p">])</span>
+                
+                <span class="n">rho</span> <span class="o">=</span> <span class="mf">0.0</span>
+                <span class="n">p</span> <span class="o">=</span> <span class="mf">0.0</span>
+                <span class="n">T</span> <span class="o">=</span> <span class="n">T0</span>
+
+                <span class="n">zi</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">EPS</span>
+                
+                <span class="n">Xi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">xi</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random_sample</span><span class="p">(),</span><span class="n">yi</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random_sample</span><span class="p">(),</span><span class="n">zi</span><span class="p">])</span><span class="c1"># + np.random.random_sample()</span>
+                
+                <span class="n">Fluid_Particles_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Particle</span><span class="p">(</span><span class="n">Xi</span><span class="p">,</span><span class="n">V</span><span class="p">,</span><span class="n">F</span><span class="p">,</span><span class="n">rho</span><span class="p">,</span><span class="n">p</span><span class="p">,</span><span class="n">T</span><span class="p">))</span>
+
+    <span class="k">for</span> <span class="n">pi</span> <span class="ow">in</span> <span class="n">Fluid_Particles_list</span><span class="p">:</span>
+          
+        <span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pi</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">X</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pi</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">X</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pi</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+        <span class="n">Ts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">pi</span><span class="o">.</span><span class="n">T</span><span class="p">,</span><span class="n">pi</span><span class="o">.</span><span class="n">T</span><span class="p">,</span><span class="n">pi</span><span class="o">.</span><span class="n">T</span><span class="p">]))</span> 
+        
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+    
+    <span class="c1"># the scale does not seem to work...</span>
+    <span class="n">scales</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="n">bqplot</span><span class="o">.</span><span class="n">scales</span><span class="o">.</span><span class="n">LinearScale</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="n">VIEW_WIDTH</span><span class="p">),</span>
+    <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="n">bqplot</span><span class="o">.</span><span class="n">scales</span><span class="o">.</span><span class="n">LinearScale</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="n">VIEW_HEIGHT</span><span class="p">),</span>
+    <span class="s1">&#39;z&#39;</span><span class="p">:</span> <span class="n">bqplot</span><span class="o">.</span><span class="n">scales</span><span class="o">.</span><span class="n">LinearScale</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="n">VIEW_DEPTH</span><span class="p">),</span>
+<span class="p">}</span>
+    
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">ipv</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">scales</span><span class="o">=</span><span class="n">scales</span><span class="p">)</span>
+    <span class="n">Ts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">Ts</span><span class="p">)</span>
+    <span class="n">Ts</span> <span class="o">-=</span> <span class="n">Ts</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+    <span class="n">Ts</span> <span class="o">/=</span> <span class="n">Ts</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+    <span class="n">colors</span> <span class="o">=</span> <span class="n">Ts</span>
+    <span class="n">scatter</span> <span class="o">=</span> <span class="n">ipv</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="p">,</span><span class="n">marker</span><span class="o">=</span><span class="s1">&#39;sphere&#39;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">)</span>
+    
+    <span class="n">scatter</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="mi">3</span>
+    
+    <span class="n">ipv</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;initializing dam break with &quot;</span> <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;particles&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">ComputeDensityPressureTemperature</span><span class="p">():</span>
+    
+    <span class="k">for</span> <span class="n">pi</span> <span class="ow">in</span> <span class="n">Fluid_Particles_list</span><span class="p">:</span>
+        <span class="n">pi</span><span class="o">.</span><span class="n">rho</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="n">dT</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="k">for</span> <span class="n">pj</span> <span class="ow">in</span> <span class="n">Fluid_Particles_list</span><span class="p">:</span>
+            <span class="n">h</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">pi</span><span class="o">.</span><span class="n">X</span> <span class="o">-</span> <span class="n">pj</span><span class="o">.</span><span class="n">X</span><span class="p">)</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">h</span><span class="o">&lt;</span><span class="n">H</span><span class="p">):</span>
+                <span class="n">pi</span><span class="o">.</span><span class="n">T</span> <span class="o">+=</span> <span class="p">(</span><span class="n">pj</span><span class="o">.</span><span class="n">T</span> <span class="o">-</span> <span class="n">pi</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="o">*</span> <span class="n">k</span> <span class="o">*</span> <span class="n">dt</span> <span class="o">*</span><span class="n">POLY6</span><span class="o">*</span><span class="p">(</span><span class="n">HSQ</span><span class="o">-</span><span class="n">h</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mi">3</span><span class="p">;</span>
+                <span class="n">pi</span><span class="o">.</span><span class="n">rho</span> <span class="o">+=</span> <span class="n">MASS</span><span class="o">*</span><span class="n">POLY6</span><span class="o">*</span><span class="p">(</span><span class="n">HSQ</span><span class="o">-</span><span class="n">h</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mi">3</span><span class="p">;</span>
+        
+        <span class="n">pi</span><span class="o">.</span><span class="n">rho</span> <span class="o">-=</span> <span class="n">pi</span><span class="o">.</span><span class="n">rho</span> <span class="o">*</span> <span class="n">alpha_v</span> <span class="o">*</span><span class="p">(</span><span class="n">pi</span><span class="o">.</span><span class="n">T</span> <span class="o">-</span> <span class="n">T0</span><span class="p">)</span>
+        <span class="n">pi</span><span class="o">.</span><span class="n">p</span> <span class="o">=</span> <span class="n">GAS_CONST</span><span class="o">*</span><span class="p">(</span><span class="n">pi</span><span class="o">.</span><span class="n">rho</span> <span class="o">-</span> <span class="n">REST_DENS</span><span class="p">)</span> <span class="o">*</span> <span class="n">pi</span><span class="o">.</span><span class="n">T</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">ComputeForces</span><span class="p">():</span>
+    
+    <span class="k">for</span> <span class="n">pi</span> <span class="ow">in</span> <span class="n">Fluid_Particles_list</span><span class="p">:</span>
+        
+        <span class="n">fpress</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="n">fvisc</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+        <span class="k">for</span> <span class="n">pj</span> <span class="ow">in</span> <span class="n">Fluid_Particles_list</span><span class="p">:</span>
+            
+            <span class="n">d</span> <span class="o">=</span> <span class="n">pj</span><span class="o">.</span><span class="n">X</span> <span class="o">-</span> <span class="n">pi</span><span class="o">.</span><span class="n">X</span>
+            <span class="n">h</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="n">d</span><span class="o">/</span><span class="n">h</span>
+
+            
+            <span class="k">if</span> <span class="p">(</span><span class="n">pi</span><span class="o">==</span><span class="n">pj</span><span class="p">):</span>
+                <span class="k">continue</span><span class="p">;</span>
+            
+            <span class="k">if</span> <span class="p">(</span><span class="n">h</span><span class="o">&lt;</span><span class="n">H</span><span class="p">):</span>
+                
+                <span class="c1"># compute pressure force contribution</span>
+                <span class="n">fpress</span> <span class="o">+=</span> <span class="o">-</span> <span class="n">r</span> <span class="o">*</span> <span class="n">MASS</span> <span class="o">*</span> <span class="p">(</span><span class="n">pi</span><span class="o">.</span><span class="n">p</span> <span class="o">+</span> <span class="n">pj</span><span class="o">.</span><span class="n">p</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">pj</span><span class="o">.</span><span class="n">rho</span><span class="p">)</span>  <span class="o">*</span> <span class="n">SPIKY_GRAD</span> <span class="o">*</span> <span class="p">(</span><span class="n">H</span><span class="o">-</span><span class="n">h</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+              
+                <span class="c1"># compute viscosity force contribution</span>
+                <span class="n">fvisc</span> <span class="o">+=</span> <span class="n">VISC</span> <span class="o">*</span> <span class="n">MASS</span> <span class="o">*</span> <span class="p">(</span><span class="n">pj</span><span class="o">.</span><span class="n">V</span> <span class="o">-</span> <span class="n">pi</span><span class="o">.</span><span class="n">V</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">pj</span><span class="o">.</span><span class="n">rho</span><span class="p">)</span>  <span class="o">*</span> <span class="n">VISC_LAP</span> <span class="o">*</span> <span class="p">(</span><span class="n">H</span><span class="o">-</span><span class="n">h</span><span class="p">);</span>
+            
+
+        <span class="n">fgrav</span> <span class="o">=</span> <span class="n">G</span><span class="o">*</span><span class="n">pi</span><span class="o">.</span><span class="n">rho</span>
+        <span class="n">pi</span><span class="o">.</span><span class="n">F</span> <span class="o">=</span> <span class="n">fpress</span> <span class="o">+</span> <span class="n">fvisc</span> <span class="o">+</span> <span class="n">fgrav</span>    
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">Integrate</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">Fluid_Particles_list</span><span class="p">:</span>
+        <span class="c1"># forward Euler integration</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">V</span> <span class="o">+=</span> <span class="n">dt</span><span class="o">*</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">F</span><span class="p">)</span><span class="o">/</span><span class="n">p</span><span class="o">.</span><span class="n">rho</span><span class="p">;</span>
+        
+        <span class="n">p</span><span class="o">.</span><span class="n">V</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+        
+        <span class="n">p</span><span class="o">.</span><span class="n">X</span> <span class="o">+=</span> <span class="n">dt</span><span class="o">*</span><span class="n">p</span><span class="o">.</span><span class="n">V</span><span class="p">;</span>
+  
+        <span class="k">if</span> <span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">EPS</span> <span class="o">&lt;</span> <span class="mf">0.0</span><span class="p">):</span>    <span class="c1"># left boundary condition</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">V</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*=</span> <span class="mf">1.0</span> <span class="c1">#BOUND_DAMPING_NORMAL</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">WINDOW_WIDTH</span> <span class="o">-</span> <span class="n">EPS</span>    <span class="c1"># coming out from the right boundary</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">V</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*=</span> <span class="n">BOUND_DAMPING_HORIZONTAL</span>
+            <span class="c1">#p.Vz *= BOUND_DAMPING_HORIZONTAL</span>
+        
+        <span class="k">if</span> <span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">EPS</span> <span class="o">&gt;</span> <span class="n">WINDOW_WIDTH</span><span class="p">):</span>    <span class="c1"># right boundary condition</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">V</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*=</span> <span class="mf">1.0</span> <span class="c1">#BOUND_DAMPING_NORMAL</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">EPS</span>    <span class="c1"># coming out from the left boundary</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">V</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*=</span> <span class="n">BOUND_DAMPING_HORIZONTAL</span>
+            <span class="c1">#p.Vz *= BOUND_DAMPING_HORIZONTAL</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">EPS</span> <span class="o">&lt;</span> <span class="mf">0.0</span><span class="p">):</span>    <span class="c1"># bottom boundary condition</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">V</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*=</span> <span class="n">BOUND_DAMPING_NORMAL</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">EPS</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">V</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*=</span> <span class="n">BOUND_DAMPING_HORIZONTAL</span>
+            
+            <span class="n">p</span><span class="o">.</span><span class="n">T</span> <span class="o">+=</span> <span class="p">(</span><span class="n">T_bottom</span> <span class="o">-</span> <span class="n">p</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="o">*</span> <span class="n">k_wall</span> <span class="o">*</span> <span class="n">dt</span>    <span class="c1"># heating from the bottom</span>
+            <span class="c1">#p.Vz *= BOUND_DAMPING_HORIZONTAL</span>
+            
+        <span class="k">if</span> <span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">EPS</span> <span class="o">&gt;</span> <span class="n">WINDOW_HEIGHT</span><span class="p">):</span>    <span class="c1"># upper boundary condition</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">V</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*=</span> <span class="n">BOUND_DAMPING_NORMAL</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">WINDOW_HEIGHT</span> <span class="o">-</span> <span class="n">EPS</span> 
+            <span class="n">p</span><span class="o">.</span><span class="n">V</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*=</span> <span class="n">BOUND_DAMPING_HORIZONTAL</span>
+            
+            <span class="n">p</span><span class="o">.</span><span class="n">T</span> <span class="o">+=</span> <span class="p">(</span><span class="n">T_ceiling</span> <span class="o">-</span> <span class="n">p</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="o">*</span> <span class="n">k_wall</span> <span class="o">*</span> <span class="n">dt</span>    <span class="c1"># cooling from the ceiling</span>
+            <span class="c1">#p.Vz *= BOUND_DAMPING_HORIZONTAL</span>
+         
+        <span class="c1"># only for 3D boundary condition (in the z-direction)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">EPS</span> <span class="o">&lt;</span> <span class="mf">0.0</span><span class="p">):</span>    <span class="c1"># front boundary condition</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">V</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*=</span> <span class="n">BOUND_DAMPING_NORMAL</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">EPS</span>
+            <span class="c1">#p.Vx *= BOUND_DAMPING_HORIZONTAL</span>
+            <span class="c1">#p.Vy *= BOUND_DAMPING_HORIZONTAL</span>
+            
+        <span class="k">if</span> <span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">EPS</span> <span class="o">&gt;</span> <span class="n">WINDOW_DEPTH</span><span class="p">):</span>    <span class="c1"># back boundary condition</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">V</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*=</span> <span class="n">BOUND_DAMPING_NORMAL</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">WINDOW_DEPTH</span> <span class="o">-</span> <span class="n">EPS</span> 
+            <span class="c1">#p.Vx *= BOUND_DAMPING_HORIZONTAL</span>
+            <span class="c1">#p.Vy *= BOUND_DAMPING_HORIZONTAL</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">Update</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;start updating&quot;</span><span class="p">)</span>
+    <span class="n">ComputeDensityPressureTemperature</span><span class="p">()</span>
+    <span class="n">ComputeForces</span><span class="p">()</span>
+    <span class="n">Integrate</span><span class="p">()</span>    
+    <span class="n">x</span> <span class="o">=</span><span class="p">[]</span>
+    <span class="n">y</span> <span class="o">=</span><span class="p">[]</span>
+    <span class="n">z</span> <span class="o">=</span><span class="p">[]</span>
+    <span class="n">Ts</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">pi</span> <span class="ow">in</span> <span class="n">Fluid_Particles_list</span><span class="p">:</span>
+        <span class="n">x</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pi</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">y</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pi</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">z</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pi</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+        <span class="n">Ts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">pi</span><span class="o">.</span><span class="n">T</span><span class="p">,</span><span class="n">pi</span><span class="o">.</span><span class="n">T</span><span class="p">,</span><span class="n">pi</span><span class="o">.</span><span class="n">T</span><span class="p">]))</span> 
+    
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">Ts</span><span class="p">:</span>
+        <span class="n">max_</span> <span class="o">=</span> <span class="mf">1.5</span>
+        <span class="n">min_</span> <span class="o">=</span> <span class="mf">1.5</span>
+        <span class="n">temperature</span> <span class="o">=</span> <span class="n">n</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">temperature</span> <span class="o">&gt;</span> <span class="n">max_</span><span class="p">):</span>
+            <span class="n">max_</span> <span class="o">=</span> <span class="n">temperature</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">temperature</span> <span class="o">&lt;</span> <span class="n">min_</span><span class="p">):</span>
+            <span class="n">min_</span> <span class="o">=</span> <span class="n">temperature</span>
+
+            
+    <span class="n">Ts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">Ts</span><span class="p">)</span>
+    <span class="n">Ts</span> <span class="o">-=</span> <span class="n">Ts</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+    <span class="n">Ts</span> <span class="o">/=</span> <span class="n">Ts</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+    <span class="n">colors</span> <span class="o">=</span> <span class="n">Ts</span>
+    <span class="n">scatter</span><span class="o">.</span><span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">scatter</span><span class="o">.</span><span class="n">y</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">scatter</span><span class="o">.</span><span class="n">z</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+    <span class="n">scatter</span><span class="o">.</span><span class="n">color</span><span class="o">=</span><span class="n">colors</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">InitSPH</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\JianouJiang\anaconda3\lib\site-packages\ipykernel_launcher.py:57: RuntimeWarning: invalid value encountered in true_divide
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "fcffd637ef50431ea9a5eba9303e3450", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>initializing dam break with 
+3000
+particles
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">TotalTime</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">iterations</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">TotalTime</span><span class="o">/</span><span class="n">dt</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;start iterating&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">time</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">iterations</span><span class="p">):</span>
+    <span class="n">Update</span><span class="p">()</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;iterations&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">time</span><span class="p">)</span>
+        
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>start iterating
+start updating
+</pre></div>
+</div>
+</div>
+</div>
 </div>
 
     <script type="text/x-thebe-config">
