@@ -37,7 +37,7 @@
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Lecture8_2D_Energy_Equation" href="Lecture8_2D_Energy_Equation.html" />
+    <link rel="next" title="Lecture8_Part1_Navier_Stoke_Equation" href="Lecture8_Part1_Navier_Stoke_Equation.html" />
     <link rel="prev" title="Lecture6_Non_Linear_Viscosity_2D_Stokes" href="Lecture6_Non_Linear_Viscosity_2D_Stokes.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -131,7 +131,10 @@
         <a href="">Lecture7_Pipe_Flow_with_Heat</a>
       </li>
       <li class="">
-        <a href="Lecture8_2D_Energy_Equation.html">Lecture8_2D_Energy_Equation</a>
+        <a href="Lecture8_Part1_Navier_Stoke_Equation.html">Lecture8_Part1_Navier_Stoke_Equation</a>
+      </li>
+      <li class="">
+        <a href="Lecture8_Part2_SPH_Algorithm_For_Energy_Equation.html">Lecture8_Part2_SPH_Algorithm_For_Energy_Equation</a>
       </li>
     </ul>
     </li>
@@ -294,9 +297,9 @@ Figure 8.2<p>As shown in the figure 8.2, the net heat advection rate (in the tin
 <p>We have the net rate of heat due to advection</p>
 <div class="math notranslate nohighlight" id="equation-equation7">
 <span class="eqno">(113)<a class="headerlink" href="#equation-equation7" title="Permalink to this equation">¶</a></span>\[\sum d\dot{Q}_{adv} = -dyu\rho c \frac{\delta T}{\delta x}dx\]</div>
-<p>We can write the equation <a class="reference internal" href="Lecture8_2D_Energy_Equation.html#equation-equation7">(130)</a> in another form by replacing velocity <span class="math notranslate nohighlight">\(u\)</span> with <span class="math notranslate nohighlight">\(\frac{dx}{dt}\)</span> to understand the physical unit (since we are all familiar with the famous equation <span class="math notranslate nohighlight">\(Q=cm\Delta T\)</span>).</p>
+<p>We can write the equation <a class="reference internal" href="Lecture8_Part1_Navier_Stoke_Equation.html#equation-equation7">(130)</a> in another form by replacing velocity <span class="math notranslate nohighlight">\(u\)</span> with <span class="math notranslate nohighlight">\(\frac{dx}{dt}\)</span> to understand the physical unit (since we are all familiar with the famous equation <span class="math notranslate nohighlight">\(Q=cm\Delta T\)</span>).</p>
 <p>$<span class="math notranslate nohighlight">\(\sum d\dot{Q}_{adv} = -dy \frac{dx}{dt}\rho c \frac{dT}{dx}dx = \frac{c \cdot dm \cdot \Delta T}{t}\)</span><span class="math notranslate nohighlight">\( (equation8) where tiny mass of red rectangle \)</span>dm = dx dy \rho$</p>
-<p>Since we know that the derivative of temperature <span class="math notranslate nohighlight">\(T(x,y)\)</span> in <a class="reference internal" href="Lecture8_2D_Energy_Equation.html#equation-equation7">(130)</a> wrt. <span class="math notranslate nohighlight">\(x\)</span> is <span class="math notranslate nohighlight">\(C_1\)</span>, and the velocity <span class="math notranslate nohighlight">\(u(y)\)</span> from <a class="reference internal" href="Lecture8_2D_Energy_Equation.html#equation-equation3">(128)</a>, we can rewrite <a class="reference internal" href="Lecture8_2D_Energy_Equation.html#equation-equation7">(130)</a> as</p>
+<p>Since we know that the derivative of temperature <span class="math notranslate nohighlight">\(T(x,y)\)</span> in <a class="reference internal" href="Lecture8_Part1_Navier_Stoke_Equation.html#equation-equation7">(130)</a> wrt. <span class="math notranslate nohighlight">\(x\)</span> is <span class="math notranslate nohighlight">\(C_1\)</span>, and the velocity <span class="math notranslate nohighlight">\(u(y)\)</span> from <a class="reference internal" href="Lecture8_Part1_Navier_Stoke_Equation.html#equation-equation3">(128)</a>, we can rewrite <a class="reference internal" href="Lecture8_Part1_Navier_Stoke_Equation.html#equation-equation7">(130)</a> as</p>
 <div class="math notranslate nohighlight" id="equation-equation9">
 <span class="eqno">(114)<a class="headerlink" href="#equation-equation9" title="Permalink to this equation">¶</a></span>\[\sum d\dot{Q}_{adv} = -dy \cdot  3\bar{u}(\frac{1}{2}-\frac{2}{h^2}y^2) \cdot \rho c \cdot C_1dx\]</div>
 <p>Next, we study the net heat conduction rate in the y-direction due to wall heating.</p>
@@ -308,15 +311,15 @@ Figure 8.3: Thickness of the channel $h$ is also represented by $d$ since $h$ is
 <p>So equation <a class="reference internal" href="Lecture6_Non_Linear_Viscosity_2D_Stokes.html#equation-equation10">(87)</a> becomes</p>
 <div class="math notranslate nohighlight" id="equation-equation12">
 <span class="eqno">(116)<a class="headerlink" href="#equation-equation12" title="Permalink to this equation">¶</a></span>\[\sum d\dot{Q}_{con} = dx \frac{dq_x}{dy}dy = - dx \cdot k \frac{\delta^2 T}{\delta y^2}dy\]</div>
-<p>Finally, as we said before, the net heat rate of the system should be balanced by the conduction and convection. So we combine <a class="reference internal" href="Lecture8_2D_Energy_Equation.html#equation-equation9">(131)</a> and <a class="reference internal" href="Lecture8_2D_Energy_Equation.html#equation-equation12">(133)</a>, and have</p>
+<p>Finally, as we said before, the net heat rate of the system should be balanced by the conduction and convection. So we combine <a class="reference internal" href="Lecture8_Part1_Navier_Stoke_Equation.html#equation-equation9">(131)</a> and <a class="reference internal" href="Lecture8_Part1_Navier_Stoke_Equation.html#equation-equation12">(133)</a>, and have</p>
 <p>$<span class="math notranslate nohighlight">\(\sum d\dot{Q}_{con} + d\dot{Q}_{adv} = - dx \cdot k \frac{\delta^2 T}{\delta y^2}dy  -dy \cdot  3\bar{u}(\frac{1}{2}-\frac{2}{h^2}y^2) \cdot \rho c \cdot C_1dx = 0 \)</span><span class="math notranslate nohighlight">\( (equation13) where \)</span>\frac{\delta^2 T}{\delta y^2}=\frac{\delta^2 \theta}{\delta y^2}$ from <a class="reference internal" href="Lecture6_Non_Linear_Viscosity_2D_Stokes.html#equation-equation2">(79)</a>.</p>
-<p>Rearrange <a class="reference internal" href="Lecture8_2D_Energy_Equation.html#equation-equation13">(134)</a>, we have an equation of <span class="math notranslate nohighlight">\(\frac{\delta^2 \theta}{\delta y^2}\)</span></p>
+<p>Rearrange <a class="reference internal" href="Lecture8_Part1_Navier_Stoke_Equation.html#equation-equation13">(134)</a>, we have an equation of <span class="math notranslate nohighlight">\(\frac{\delta^2 \theta}{\delta y^2}\)</span></p>
 <div class="math notranslate nohighlight" id="equation-equation14">
 <span class="eqno">(117)<a class="headerlink" href="#equation-equation14" title="Permalink to this equation">¶</a></span>\[\frac{\delta^2 \theta}{\delta y^2} = \frac{6 \bar{u}}{k h^2}\rho c C_1 y^2 - \frac{3\bar{u}}{2k}\rho c C_1\]</div>
 <p>Integrate it twice, and apply two boundary conditions (<span class="math notranslate nohighlight">\(\frac{\delta \theta}{\delta y}=0\)</span> at <span class="math notranslate nohighlight">\(y=0\)</span> and <span class="math notranslate nohighlight">\(\theta = 0\)</span> at <span class="math notranslate nohighlight">\(y = \pm h/2\)</span>), we will arrive at</p>
 <div class="math notranslate nohighlight" id="equation-equation15">
 <span class="eqno">(118)<a class="headerlink" href="#equation-equation15" title="Permalink to this equation">¶</a></span>\[\theta(y)=\frac{ \rho cC_1}{4k\mu}\frac{dp}{dx}(\frac{1}{6}y^4-\frac{1}{4}h^2y^2+\frac{5}{96}h^4)\]</div>
-<p>Using <span class="math notranslate nohighlight">\(\frac{1}{\kappa} = \frac{\rho c}{\mu}\)</span>, <span class="math notranslate nohighlight">\(\frac{dp}{dx}=1\)</span> and <span class="math notranslate nohighlight">\(d=h\)</span> to rewrite equation <a class="reference internal" href="Lecture8_2D_Energy_Equation.html#equation-equation15">(135)</a>, we will have the same answer as the book</p>
+<p>Using <span class="math notranslate nohighlight">\(\frac{1}{\kappa} = \frac{\rho c}{\mu}\)</span>, <span class="math notranslate nohighlight">\(\frac{dp}{dx}=1\)</span> and <span class="math notranslate nohighlight">\(d=h\)</span> to rewrite equation <a class="reference internal" href="Lecture8_Part1_Navier_Stoke_Equation.html#equation-equation15">(135)</a>, we will have the same answer as the book</p>
 <div class="math notranslate nohighlight" id="equation-equation16">
 <span class="eqno">(119)<a class="headerlink" href="#equation-equation16" title="Permalink to this equation">¶</a></span>\[\theta(y)=\frac{ C_1}{4\kappa\mu}(\frac{1}{6}y^4-\frac{1}{4}d^2y^2+\frac{5}{96}d^4)\]</div>
 <p>Finally, we have</p>
@@ -383,7 +386,7 @@ fluid temperature is</p>
 <p>$<span class="math notranslate nohighlight">\(\bar{\theta}=\frac{1}{d\bar{u}}\int^{d/2}_{-d/2}\theta u dy\)</span>$(equation20) where the result can be obtained from WolframAlpha.</p>
 <div class="math notranslate nohighlight" id="equation-equation21">
 <span class="eqno">(122)<a class="headerlink" href="#equation-equation21" title="Permalink to this equation">¶</a></span>\[h=\frac{q_x}{\bar{\theta}}=\frac{70k}{17d}\]</div>
-<p>Note that the <a class="reference internal" href="#equation-equation21">(122)</a> is valid only for Reynolds numbers less than about 2200. At higher values of the Reynolds number the flow is turbulent.</p>
+<p>Note that the <a class="reference internal" href="Lecture8_Part1_Navier_Stoke_Equation.html#equation-equation21">(141)</a> is valid only for Reynolds numbers less than about 2200. At higher values of the Reynolds number the flow is turbulent.</p>
 <p>The fluid mechanics literature commonly introduces a dimensionless measure of the heat transfer coefficient known as the Nusselt number <span class="math notranslate nohighlight">\(Nu\)</span>. For pipe flow with heat addition,</p>
 <div class="math notranslate nohighlight" id="equation-equation22">
 <span class="eqno">(123)<a class="headerlink" href="#equation-equation22" title="Permalink to this equation">¶</a></span>\[Nu=\frac{hd}{k}=\frac{\frac{70k}{d}d}{k}\]</div>
@@ -434,7 +437,7 @@ fluid temperature is</p>
     <div class='prev-next-bottom'>
         
     <a class='left-prev' id="prev-link" href="Lecture6_Non_Linear_Viscosity_2D_Stokes.html" title="previous page">Lecture6_Non_Linear_Viscosity_2D_Stokes</a>
-    <a class='right-next' id="next-link" href="Lecture8_2D_Energy_Equation.html" title="next page">Lecture8_2D_Energy_Equation</a>
+    <a class='right-next' id="next-link" href="Lecture8_Part1_Navier_Stoke_Equation.html" title="next page">Lecture8_Part1_Navier_Stoke_Equation</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

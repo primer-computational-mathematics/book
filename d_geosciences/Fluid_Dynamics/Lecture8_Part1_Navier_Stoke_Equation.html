@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Lecture8_2D_Energy_Equation &#8212; ESE Jupyter Material</title>
+    <title>Lecture8_Part1_Navier_Stoke_Equation &#8212; ESE Jupyter Material</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
     <link href="../../_static/css/index.css" rel="stylesheet">
     <link rel="stylesheet" href="../../_static/sphinx-book-theme.css" type="text/css" />
@@ -37,7 +37,7 @@
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Remote sensing" href="../remote_sensing/intro.html" />
+    <link rel="next" title="Lecture8_Part2_SPH_Algorithm_For_Energy_Equation" href="Lecture8_Part2_SPH_Algorithm_For_Energy_Equation.html" />
     <link rel="prev" title="Lecture7_Pipe_Flow_with_Heat" href="Lecture7_Pipe_Flow_with_Heat.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -131,7 +131,10 @@
         <a href="Lecture7_Pipe_Flow_with_Heat.html">Lecture7_Pipe_Flow_with_Heat</a>
       </li>
       <li class="active">
-        <a href="">Lecture8_2D_Energy_Equation</a>
+        <a href="">Lecture8_Part1_Navier_Stoke_Equation</a>
+      </li>
+      <li class="">
+        <a href="Lecture8_Part2_SPH_Algorithm_For_Energy_Equation.html">Lecture8_Part2_SPH_Algorithm_For_Energy_Equation</a>
       </li>
     </ul>
     </li>
@@ -187,7 +190,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../_sources/d_geosciences/Fluid_Dynamics/Lecture8_2D_Energy_Equation.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="../../_sources/d_geosciences/Fluid_Dynamics/Lecture8_Part1_Navier_Stoke_Equation.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
@@ -204,7 +207,7 @@
     <div class="dropdown-buttons sourcebuttons">
         
         <a class="issues-button"
-            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2Fd_geosciences/Fluid_Dynamics/Lecture8_2D_Energy_Equation.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2Fd_geosciences/Fluid_Dynamics/Lecture8_Part1_Navier_Stoke_Equation.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
         
@@ -224,7 +227,7 @@
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/d_geosciences/Fluid_Dynamics/Lecture8_2D_Energy_Equation.ipynb"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/d_geosciences/Fluid_Dynamics/Lecture8_Part1_Navier_Stoke_Equation.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="../../_static/images/logo_binder.svg"
@@ -246,7 +249,7 @@
     <ul class="nav section-nav flex-column">
     
         <li class="nav-item toc-entry toc-h2">
-            <a href="#" class="nav-link">Lecture8_2D_Energy_Equation</a>
+            <a href="#" class="nav-link">Lecture8_Part1_Navier_Stoke_Equation</a>
         </li>
     
         <li class="nav-item toc-entry toc-h2">
@@ -254,7 +257,23 @@
         </li>
     
         <li class="nav-item toc-entry toc-h2">
-            <a href="#stress-tensor" class="nav-link">Stress Tensor</a>
+            <a href="#viscosity-forces" class="nav-link">Viscosity Forces</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#d-stress" class="nav-link">2D Stress</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#id1" class="nav-link">3D Stress</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#pressure-forces" class="nav-link">Pressure Forces</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#navier-stoke-equation-final-form" class="nav-link">Navier-Stoke Equation Final Form</a>
         </li>
     
     </ul>
@@ -268,9 +287,9 @@
         
               <div>
                 
-  <p>(Lecture8_2D_Energy_Equation) =</p>
-<div class="section" id="lecture8-2d-energy-equation">
-<h1>Lecture8_2D_Energy_Equation<a class="headerlink" href="#lecture8-2d-energy-equation" title="Permalink to this headline">¶</a></h1>
+  <p>(Lecture8_Part1_Navier_Stoke_Equation) =</p>
+<div class="section" id="lecture8-part1-navier-stoke-equation">
+<h1>Lecture8_Part1_Navier_Stoke_Equation<a class="headerlink" href="#lecture8-part1-navier-stoke-equation" title="Permalink to this headline">¶</a></h1>
 </div>
 <div class="section" id="navier-stoke-equation">
 <h1>Navier-Stoke Equation<a class="headerlink" href="#navier-stoke-equation" title="Permalink to this headline">¶</a></h1>
@@ -287,7 +306,10 @@
 <span class="eqno">(129)<a class="headerlink" href="#equation-equation4" title="Permalink to this equation">¶</a></span>\[\dot{m}_{in} = \dot{m}_{out}\]</div>
 <p>The mass continuity equation is easy to obtain by equating all the mass flow rates into and out of the differential control volume. Hence, the following derivation is focused solely on the governing equation (<a class="reference internal" href="#equation-equation1">(127)</a>). We can start from the Newton’s second law of motion:</p>
 <p>$<span class="math notranslate nohighlight">\(\sum \vec{F}= \vec{F_{p}}+\vec{F_{v}}+\vec{F_{g}} =m\vec{a}\)</span><span class="math notranslate nohighlight">\((equation5) where \)</span>\vec{F_{p}}<span class="math notranslate nohighlight">\( is force due to pressure and \)</span>\vec{F_{v}}<span class="math notranslate nohighlight">\( is force due to viscosity; they are known as the internal forces. There are many external forces due to gravity, electromagnetism and etc. However, we consider the gravity \)</span>\vec{F_{g}}$  as the only external force for simplicity.</p>
-<p>The equation is developed by summing up the forces of an infinitesimal control volume V (<span class="math notranslate nohighlight">\(V=d_{x}d_{y}d_{z}\)</span>) in Cartesian coordinate system, and setting the result equal to <span class="math notranslate nohighlight">\(m\vec{a}\)</span>. This is demonstrated in the figure below.</p>
+<p>The equation is developed by summing up the forces of an infinitesimal control volume V (<span class="math notranslate nohighlight">\(V=d_{x}d_{y}d_{z}\)</span>) in Cartesian coordinate system, and setting the result equal to <span class="math notranslate nohighlight">\(m\vec{a}\)</span>. This is demonstrated in the figure below for viscosity forces.</p>
+</div>
+<div class="section" id="viscosity-forces">
+<h1>Viscosity Forces<a class="headerlink" href="#viscosity-forces" title="Permalink to this headline">¶</a></h1>
 <img src='img/controlVolume3.PNG' width = 500>
 Figure 1:Infinitesimal control volume V (left) and Cartesian coordinate system (right). Examples of stresses acting on different planes and directions are also shown. <p>We define x-planes are the planes that are perpendicular to x-axis; As shown above, we can see that
 longitudinal stress <span class="math notranslate nohighlight">\(\sigma_{xx}\)</span> represents the stress that acts on <span class="math notranslate nohighlight">\(x-plane\)</span> in the direction of <span class="math notranslate nohighlight">\(x-axis\)</span>;
@@ -301,13 +323,13 @@ Figure 2: Longitudinal stresses ($\sigma_{xx}$) in (a) and shear stresses ($\tau
 <span class="eqno">(130)<a class="headerlink" href="#equation-equation7" title="Permalink to this equation">¶</a></span>\[F_i^x = A(-\sigma_{xx}(x)+\langle\sigma_{xx} \rangle(x+dx)-\tau_{yx}(y)+\langle\tau_{yx} \rangle(y+dy)-\tau_{zx}(z)+\langle\tau_{zx} \rangle(z+dz))\]</div>
 <p>Plugging in <a class="reference internal" href="Lecture7_Pipe_Flow_with_Heat.html#equation-equation6">(112)</a> into <a class="reference internal" href="#equation-equation7">(130)</a> to replace <span class="math notranslate nohighlight">\(\langle\sigma_{xx} \rangle(x+dx)\)</span>, we have</p>
 <p>$<span class="math notranslate nohighlight">\(F_i^x = A(\frac{\partial \sigma_{xx}(x) }{\partial x}\cdot dx+\frac{\partial \tau_{yx}(y) }{\partial y}\cdot dy+\frac{\partial \tau_{zx}(z) }{\partial z}\cdot dz) = V(\frac{\partial \sigma_{xx}(x) }{\partial x} +\frac{\partial \tau_{yx}(y) }{\partial y}+\frac{\partial \tau_{zx}(z) }{\partial z})=ma\)</span><span class="math notranslate nohighlight">\( (equation8) since \)</span>V=dxdydz$</p>
-<p>Dividing <span class="math notranslate nohighlight">\(V\)</span> at the both sides, we have</p>
+<p>Dividing <span class="math notranslate nohighlight">\(V\)</span> at the both sides, we have the viscosity forces per unit volume in the x-direction as follow</p>
 <div class="math notranslate nohighlight" id="equation-equation9">
 <span class="eqno">(131)<a class="headerlink" href="#equation-equation9" title="Permalink to this equation">¶</a></span>\[\frac{\partial \sigma_{xx}(x) }{\partial x} +\frac{\partial \tau_{yx}(y) }{\partial y}+\frac{\partial \tau_{zx}(z) }{\partial z} = \frac{m}{V}a = \rho \cdot \frac{Du}{Dt}\]</div>
 <p>Now, the question becomes how to express normal stress <span class="math notranslate nohighlight">\(\sigma_{xx}\)</span> and shear stress <span class="math notranslate nohighlight">\(\tau_{yx}\)</span> and <span class="math notranslate nohighlight">\(\tau_{zx}\)</span>?</p>
 </div>
-<div class="section" id="stress-tensor">
-<h1>Stress Tensor<a class="headerlink" href="#stress-tensor" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="d-stress">
+<h1>2D Stress<a class="headerlink" href="#d-stress" title="Permalink to this headline">¶</a></h1>
 <p>Let’s consider the shear stress <span class="math notranslate nohighlight">\(\tau\)</span> in a 2d problem</p>
 <img src='img/shear_stress.PNG' width=700>
 Figure 3: If rotational equilibrium, then net torque equals zero. In another word, $\tau_{xy}$ is a reaction stress of $\tau_{yx}$, and they are the same. <p>If we assume the change of angle <span class="math notranslate nohighlight">\(\delta \alpha\)</span> (strain) is tiny, then we can say that</p>
@@ -329,6 +351,61 @@ Figure 5<div class="math notranslate nohighlight" id="equation-equation15">
 <span class="eqno">(135)<a class="headerlink" href="#equation-equation15" title="Permalink to this equation">¶</a></span>\[\sigma_{xx}=2\mu\dot{e}=2\mu\frac{\delta x}{dx}\div t = 2\mu\frac{(u_0 + \delta u - u_0)dt}{dx}\div dt=2\mu\frac{du}{dx}\]</div>
 <div class="math notranslate nohighlight" id="equation-equation16">
 <span class="eqno">(136)<a class="headerlink" href="#equation-equation16" title="Permalink to this equation">¶</a></span>\[\sigma_{yy}=2\mu\frac{dv}{dy}\]</div>
+</div>
+<div class="section" id="id1">
+<h1>3D Stress<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<p>If we apply the same logic, we can have the normal and shear stresses in 3d problem due to viscosity alone</p>
+<div class="math notranslate nohighlight" id="equation-equation17">
+<span class="eqno">(137)<a class="headerlink" href="#equation-equation17" title="Permalink to this equation">¶</a></span>\[\sigma_{xx}=2\mu\frac{du}{dx}\]</div>
+<div class="math notranslate nohighlight" id="equation-equation18">
+<span class="eqno">(138)<a class="headerlink" href="#equation-equation18" title="Permalink to this equation">¶</a></span>\[\sigma_{yy}=2\mu\frac{dv}{dy}\]</div>
+<div class="math notranslate nohighlight" id="equation-equation19">
+<span class="eqno">(139)<a class="headerlink" href="#equation-equation19" title="Permalink to this equation">¶</a></span>\[\sigma_{zz}=2\mu\frac{dw}{dz}\]</div>
+<div class="math notranslate nohighlight" id="equation-equation20">
+<span class="eqno">(140)<a class="headerlink" href="#equation-equation20" title="Permalink to this equation">¶</a></span>\[\tau_{xy}=\tau_{yx}=\mu(\frac{du}{dy}+\frac{dv}{dx})\]</div>
+<div class="math notranslate nohighlight" id="equation-equation21">
+<span class="eqno">(141)<a class="headerlink" href="#equation-equation21" title="Permalink to this equation">¶</a></span>\[\tau_{yz}=\tau_{zy}=\mu(\frac{dw}{dy}+\frac{dv}{dz})\]</div>
+<p>$<span class="math notranslate nohighlight">\(\tau_{xz}=\tau_{zx}=\mu(\frac{dw}{dx}+\frac{du}{dz})\)</span><span class="math notranslate nohighlight">\((equation22) where \)</span>w$ is the z-direction velocity.</p>
+<p>Finally, if we plug in equations <a class="reference internal" href="#equation-equation17">(137)</a>, <a class="reference internal" href="#equation-equation20">(140)</a> and <a class="reference internal" href="Lecture7_Pipe_Flow_with_Heat.html#equation-equation22">(123)</a> into the equation <a class="reference internal" href="#equation-equation9">(131)</a>, we find that the viscous forces in the x-directions per unit volume of the element is, for constant viscosity,</p>
+<div class="math notranslate nohighlight" id="equation-equation23">
+<span class="eqno">(142)<a class="headerlink" href="#equation-equation23" title="Permalink to this equation">¶</a></span>\[2\mu\frac{\delta^2u}{\delta x^2}+\mu(\frac{\delta^2 u}{\delta y^2}+\frac{\delta^2v}{\delta x \delta y}+\frac{\delta^2 w}{\delta x \delta z}+\frac{\delta^2 u}{\delta z^2})\]</div>
+<p>All of these expressions can be further simplified by substituting the continuity equation <a class="reference internal" href="#equation-equation20">(140)</a> differentiated wrt. <span class="math notranslate nohighlight">\(x\)</span>.</p>
+<div class="math notranslate nohighlight" id="equation-equation24">
+<span class="eqno">(143)<a class="headerlink" href="#equation-equation24" title="Permalink to this equation">¶</a></span>\[\frac{du}{dx}+\frac{dv}{dy}+\frac{dw}{dz}=0\]</div>
+<div class="math notranslate nohighlight" id="equation-equation25">
+<span class="eqno">(144)<a class="headerlink" href="#equation-equation25" title="Permalink to this equation">¶</a></span>\[\frac{d^2u}{dx^2}=-\frac{d^2v}{dydx}-\frac{d^2 w}{dz dx}\]</div>
+<p>Plugging in equation <a class="reference internal" href="#equation-equation25">(144)</a> into <a class="reference internal" href="#equation-equation23">(142)</a>, we arrive at</p>
+<div class="math notranslate nohighlight" id="equation-equation26">
+<span class="eqno">(145)<a class="headerlink" href="#equation-equation26" title="Permalink to this equation">¶</a></span>\[\mu(\frac{\delta^2u}{\delta x^2}+\frac{\delta^2u}{\delta y^2}+\frac{\delta^2u}{\delta z^2})\]</div>
+<p>and same logic applies to the y and z direction</p>
+<div class="math notranslate nohighlight" id="equation-equation27">
+<span class="eqno">(146)<a class="headerlink" href="#equation-equation27" title="Permalink to this equation">¶</a></span>\[\mu(\frac{\delta^2v}{\delta x^2}+\frac{\delta^2v}{\delta y^2}+\frac{\delta^2v}{\delta z^2})\]</div>
+<p>and</p>
+<div class="math notranslate nohighlight" id="equation-equation28">
+<span class="eqno">(147)<a class="headerlink" href="#equation-equation28" title="Permalink to this equation">¶</a></span>\[\mu(\frac{\delta^2w}{\delta x^2}+\frac{\delta^2w}{\delta y^2}+\frac{\delta^2w}{\delta z^2})\]</div>
+<p>as the expressions for the net viscous forces per unit volume in the y and z directions, respectively.</p>
+</div>
+<div class="section" id="pressure-forces">
+<h1>Pressure Forces<a class="headerlink" href="#pressure-forces" title="Permalink to this headline">¶</a></h1>
+<p>It is not hard to find that the net pressure force on the element in the x-direction per unit area/volume of the fluid element is</p>
+<div class="math notranslate nohighlight" id="equation-equation29">
+<span class="eqno">(148)<a class="headerlink" href="#equation-equation29" title="Permalink to this equation">¶</a></span>\[\frac{p(x)\delta y - p(x+\delta x)\delta y}{\delta x \delta y}=-\frac{[p(x+\delta x)-p(x)]}{\delta x}\]</div>
+<p>which by virtue of a simple Taylor series expansion is</p>
+<div class="math notranslate nohighlight" id="equation-equation30">
+<span class="eqno">(149)<a class="headerlink" href="#equation-equation30" title="Permalink to this equation">¶</a></span>\[-\frac{\delta p}{\delta x}\]</div>
+<p>Same logic applies to the y and z-directions</p>
+<div class="math notranslate nohighlight" id="equation-equation31">
+<span class="eqno">(150)<a class="headerlink" href="#equation-equation31" title="Permalink to this equation">¶</a></span>\[-\frac{\delta p}{\delta y}\]</div>
+<div class="math notranslate nohighlight" id="equation-equation32">
+<span class="eqno">(151)<a class="headerlink" href="#equation-equation32" title="Permalink to this equation">¶</a></span>\[-\frac{\delta p}{\delta z}\]</div>
+</div>
+<div class="section" id="navier-stoke-equation-final-form">
+<h1>Navier-Stoke Equation Final Form<a class="headerlink" href="#navier-stoke-equation-final-form" title="Permalink to this headline">¶</a></h1>
+<p>With the easy-to-proof gravity force, we can put the three forces together to obtain the final Navier-Stoke equation we stated in the equation <a class="reference internal" href="#equation-equation1">(127)</a>. However, let me further explain the acceleration <span class="math notranslate nohighlight">\(a\)</span> term on the left-hand-side of the equation. The acceleration measures the change of velocity. In a vector field for velocity, even if a particle stays at the same position, the velocity may change from time to time. For example, you can feel the water velocity changes through time when you stay in the same spot of a river. On the other hand, the velocity may also change from place to place. For example, you might find that the velocity of the water is faster at the entrence of a river than, say, at the centre of the river.</p>
+<p>Applying the chain rule we can derive the temporal and convective acceleration in x-direction</p>
+<div class="math notranslate nohighlight" id="equation-equation33">
+<span class="eqno">(152)<a class="headerlink" href="#equation-equation33" title="Permalink to this equation">¶</a></span>\[a_x =\frac{\text{d}u}{\text{d}t}=\frac{\partial u}{\partial t}+\frac{\partial u}{\partial x}\frac{\partial x}{\partial t}+\frac{\partial u}{\partial y}\frac{\partial y}{\partial t}+\frac{\partial u}{\partial z}\frac{\partial z}{\partial t}\]</div>
+<p>So put all together, we should have understood the Navier-Stoke equation in 3D vector form.</p>
 <p>Open Anaconda Prompt (anaconda 3), then type</p>
 <p>pip install ipyvolume</p>
 <p>pip install bqplot</p>
@@ -2273,7 +2350,7 @@ start updating
     <div class='prev-next-bottom'>
         
     <a class='left-prev' id="prev-link" href="Lecture7_Pipe_Flow_with_Heat.html" title="previous page">Lecture7_Pipe_Flow_with_Heat</a>
-    <a class='right-next' id="next-link" href="../remote_sensing/intro.html" title="next page">Remote sensing</a>
+    <a class='right-next' id="next-link" href="Lecture8_Part2_SPH_Algorithm_For_Energy_Equation.html" title="next page">Lecture8_Part2_SPH_Algorithm_For_Energy_Equation</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
