@@ -241,9 +241,20 @@
 
     </div>
     <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
 
 <nav id="bd-toc-nav">
     <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#mathematics-for-sph" class="nav-link">Mathematics for SPH</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#from-navier-stoke-to-sph" class="nav-link">From Navier-Stoke to SPH</a>
+        </li>
     
     </ul>
 </nav>
@@ -258,13 +269,61 @@
                 
   <div class="section" id="lecture8-part2-sph-algorithm-for-energy-equation">
 <span id="id1"></span><h1>Lecture8_Part2_SPH_Algorithm_For_Energy_Equation<a class="headerlink" href="#lecture8-part2-sph-algorithm-for-energy-equation" title="Permalink to this headline">¶</a></h1>
-<p>Open Anaconda Prompt (anaconda 3), then type</p>
-<p>pip install ipyvolume</p>
-<p>pip install bqplot</p>
-<p>jupyter nbextension enable –py bqplot</p>
+<p>Since we have the Navier-Stoke equation for simulating fluid, we can break it down to simulate the movement of individual fluid particles, for a particle <span class="math notranslate nohighlight">\(i\)</span>, we have</p>
+<div class="math notranslate nohighlight" id="equation-equation1">
+<span class="eqno">(153)<a class="headerlink" href="#equation-equation1" title="Permalink to this equation">¶</a></span>\[\frac{\text{d}\vec{v_i}}{\text{d}t}=\vec{g} - \frac{1}{\rho_i}\nabla p + \frac{\mu}{\rho_i} \nabla^{2}\vec{v}\]</div>
+<div class="section" id="mathematics-for-sph">
+<h2>Mathematics for SPH<a class="headerlink" href="#mathematics-for-sph" title="Permalink to this headline">¶</a></h2>
+<p>Smoothed-particle hydrodynamics (SPH) is a computational method used for simulating the mechanics of continuum media, such as solid mechanics and fluid flows. It can be used to solve the equation <a class="reference internal" href="#equation-equation1">(153)</a> for any quantity <span class="math notranslate nohighlight">\(Q\)</span> of one particle. It is a meshfree Lagrangian method(where the co-ordinates move with the fluid), and the resolution of the method can easilybe adjusted with respect to variables such as density.</p>
+<p>The key assumption of the SPH method is that calculations are based on a weighted average (by <span class="math notranslate nohighlight">\(W(r_i-r_j,h)\)</span>) of field values. <span class="math notranslate nohighlight">\(W\)</span> will give more strength to points that are closer and make points that are further away have a weaker influence. At points that are more than a certain distance away, <span class="math notranslate nohighlight">\(W\)</span> will become zero, which means those points would not have any influence at all.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">ipyvolume</span> <span class="k">as</span> <span class="nn">ipv</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="n">N</span>  <span class="o">=</span> <span class="mi">1000</span>    <span class="c1"># number of points to plot (ignore)</span>
+<span class="n">h</span> <span class="o">=</span> <span class="mf">16.0</span>
+<span class="n">ri_minus_rj</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="n">h</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">W</span><span class="p">(</span><span class="n">ri_minus_rj</span><span class="p">,</span> <span class="n">h</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mi">315</span><span class="o">/</span><span class="p">(</span><span class="mi">64</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">h</span><span class="o">**</span><span class="mi">9</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">h</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">ri_minus_rj</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mi">3</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ri_minus_rj</span><span class="p">,</span> <span class="n">W</span><span class="p">(</span><span class="n">ri_minus_rj</span><span class="p">,</span><span class="n">h</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;$r_i$ - $r_j$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;W($r_i$-$r_j$,h)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Smoothing Kernel&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/Lecture8_Part2_SPH_Algorithm_For_Energy_Equation_6_0.png" src="../../_images/Lecture8_Part2_SPH_Algorithm_For_Energy_Equation_6_0.png" />
+</div>
+</div>
+<p>The general expression for any quantity <span class="math notranslate nohighlight">\(A_{i}\)</span> is given below:</p>
+<p>$<span class="math notranslate nohighlight">\(A_{i}(r_{i})=\int_{}^{} A(r_{j})W(r_{i}-r_{j},h)dr_{j}\approx\sum_{j}A(r_{i})W(r_{i}-r_{j},h)\)</span><span class="math notranslate nohighlight">\((equation2) where \)</span>r_{j}<span class="math notranslate nohighlight">\( is the location of a neighboring point and \)</span>r_{i}<span class="math notranslate nohighlight">\( is the location of our point; \)</span>h<span class="math notranslate nohighlight">\( is the interaction radius, the points that are more than \)</span>h$ away will stop interacting with our point.</p>
+<p>So for density, the discrete sum of approximation is</p>
+<div class="math notranslate nohighlight" id="equation-equation3">
+<span class="eqno">(154)<a class="headerlink" href="#equation-equation3" title="Permalink to this equation">¶</a></span>\[A_{i}(r_{i})=\rho(r_i)\approx\sum_{j}\frac{\rho(r_{j})}{\rho(r_j)}W(r_{i}-r_{j},h)m_j\approx\sum_{j}W(r_{i}-r_{j},h)m_j\]</div>
+<p>Then we can find the pressure gradient <span class="math notranslate nohighlight">\(\nabla p\)</span></p>
+<div class="math notranslate nohighlight" id="equation-equation4">
+<span class="eqno">(155)<a class="headerlink" href="#equation-equation4" title="Permalink to this equation">¶</a></span>\[\nabla p (r_i)=\sum \frac{m_j p_j}{\rho_j} \nabla_i W(r_i-r_j,h)\]</div>
+<p>But this equation does not obey the conservation of momentum because it does not have the right symmetry (force derived from this equation felt by particle A from B does not equal to the force felt by B from A). To conserve quantities, we can apply Lagrangian, then the equation becomes:</p>
+<p>$<span class="math notranslate nohighlight">\(\frac{\nabla p} {\rho}=\nabla( \frac{p}{\rho})+\frac{p}{\rho^2} \nabla \rho\)</span><span class="math notranslate nohighlight">\( (equation5) where \)</span>\nabla(\frac{p}{\rho})=\frac{\nabla p}{\rho}+p \nabla(\frac{1}{\rho})<span class="math notranslate nohighlight">\(, and \)</span>p\nabla(\frac{1}{\rho})=-\frac{p}{\rho^2}\nabla \rho$.</p>
+<p>So instead of the approximation from equation <a class="reference internal" href="#equation-equation4">(155)</a>, we could have the following expression by plugging the <span class="math notranslate nohighlight">\(\rho, p, \nabla p \&amp;\nabla \rho\)</span> into equation <a class="reference internal" href="Lecture7_Pipe_Flow_with_Heat.html#equation-equation5">(111)</a>, keeping the momentum a constant:</p>
+<p>$<span class="math notranslate nohighlight">\(-\frac{\nabla p_i} {\rho_i}\approx-\sum_j m_j (\frac{p_i}{\rho_i^2}+\frac{p_j}{\rho_j^2})\nabla_i W(r_i-r_j,h)\)</span><span class="math notranslate nohighlight">\( (equation6) where \)</span>W(r_i-r_j,h)\propto e^{\frac{-r_{ij}^2}{h^2}}$ (Gaussian Distribution).</p>
+<p>Last but not least, we can apply the same techniques to approximate the viscosity term <span class="math notranslate nohighlight">\(\frac{\mu}{\rho_i} \nabla^{2}\vec{v_i}\)</span>.</p>
+<div class="math notranslate nohighlight" id="equation-equation7">
+<span class="eqno">(156)<a class="headerlink" href="#equation-equation7" title="Permalink to this equation">¶</a></span>\[\frac{\mu}{\rho_i} \nabla^{2}\vec{v_i}\approx\frac{\mu}{\rho_i}\sum_j m_j \left[\frac{v_j-v_i}{\rho_j}\right]\nabla^{2}W(r_i-r_j,h)\]</div>
+</div>
+<div class="section" id="from-navier-stoke-to-sph">
+<h2>From Navier-Stoke to SPH<a class="headerlink" href="#from-navier-stoke-to-sph" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Open Anaconda Prompt (anaconda 3), then type</span>
+<span class="c1">#pip install ipyvolume</span>
+<span class="c1">#pip install bqplot</span>
+<span class="c1">#jupyter nbextension enable –py bqplot</span>
+<span class="kn">import</span> <span class="nn">ipyvolume</span> <span class="k">as</span> <span class="nn">ipv</span>
 <span class="kn">import</span> <span class="nn">bqplot.scales</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">random</span>
@@ -276,7 +335,8 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">G</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span><span class="o">-</span><span class="mf">9.8</span><span class="p">,</span><span class="mf">0.0</span><span class="p">]);</span> <span class="c1"># external (gravitational) forces</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># some constants</span>
+<span class="n">G</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span><span class="o">-</span><span class="mf">9.8</span><span class="p">,</span><span class="mf">0.0</span><span class="p">]);</span> <span class="c1"># external (gravitational) forces</span>
 <span class="n">REST_DENS</span> <span class="o">=</span> <span class="mf">1000.0</span><span class="p">;</span> <span class="c1"># rest density of liquid</span>
 <span class="n">GAS_CONST</span> <span class="o">=</span> <span class="mf">2000.0</span><span class="p">;</span> <span class="c1"># const for equation of state</span>
 <span class="n">H</span> <span class="o">=</span> <span class="mf">16.0</span><span class="p">;</span> <span class="c1"># kernel radius</span>
@@ -329,9 +389,7 @@
 <span class="k">class</span> <span class="nc">Particle</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">F</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">T</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">X</span> <span class="o">=</span> <span class="n">X</span>   <span class="c1"># x position vector</span>
-
         <span class="bp">self</span><span class="o">.</span><span class="n">V</span> <span class="o">=</span> <span class="n">V</span>    <span class="c1"># velocity vector</span>
-      
         <span class="bp">self</span><span class="o">.</span><span class="n">F</span> <span class="o">=</span> <span class="n">F</span>    <span class="c1"># force vector</span>
        
         <span class="bp">self</span><span class="o">.</span><span class="n">rho</span> <span class="o">=</span> <span class="mf">0.0</span>    <span class="c1"># density of the fluid at the position of the particle</span>
@@ -349,7 +407,7 @@
     <span class="k">global</span> <span class="n">scatter</span>
     <span class="k">global</span> <span class="n">ipv</span>
     <span class="k">global</span> <span class="n">Ts</span>
-    
+    <span class="c1"># for 3d simulation, un-comment the following 2 lines and indent the codes below</span>
     <span class="c1">#for zi in range(int(2*EPS),int(WINDOW_DEPTH-EPS*2.0),int(H)):</span>
         <span class="c1">#zi += H</span>
     <span class="k">for</span> <span class="n">yi</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="mi">1</span><span class="o">*</span><span class="n">EPS</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">WINDOW_HEIGHT</span><span class="o">-</span><span class="n">EPS</span><span class="o">*</span><span class="mf">1.0</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">H</span><span class="o">*</span><span class="mi">1</span><span class="o">/</span><span class="mi">16</span><span class="p">)):</span>
@@ -371,13 +429,14 @@
                 <span class="n">rho</span> <span class="o">=</span> <span class="mf">0.0</span>
                 <span class="n">p</span> <span class="o">=</span> <span class="mf">0.0</span>
                 <span class="n">T</span> <span class="o">=</span> <span class="n">T0</span>
-
-                <span class="n">zi</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">EPS</span>
                 
-                <span class="n">Xi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">xi</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random_sample</span><span class="p">(),</span><span class="n">yi</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random_sample</span><span class="p">(),</span><span class="n">zi</span><span class="p">])</span><span class="c1"># + np.random.random_sample()</span>
+                <span class="c1"># for 3d simulation, delete the line below</span>
+                <span class="n">zi</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">EPS</span>    <span class="c1"># make position in z-direction the same because its a 2d problem</span>
+                
+                <span class="n">Xi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">xi</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random_sample</span><span class="p">(),</span><span class="n">yi</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random_sample</span><span class="p">(),</span><span class="n">zi</span><span class="p">])</span><span class="c1"># + np.random.random_sample(); for 3d simulation</span>
                 
                 <span class="n">Fluid_Particles_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Particle</span><span class="p">(</span><span class="n">Xi</span><span class="p">,</span><span class="n">V</span><span class="p">,</span><span class="n">F</span><span class="p">,</span><span class="n">rho</span><span class="p">,</span><span class="n">p</span><span class="p">,</span><span class="n">T</span><span class="p">))</span>
-
+    <span class="c1"># for 3d simulation, indent the codes above</span>
     <span class="k">for</span> <span class="n">pi</span> <span class="ow">in</span> <span class="n">Fluid_Particles_list</span><span class="p">:</span>
           
         <span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pi</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
@@ -406,20 +465,28 @@
     <span class="n">scatter</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="mi">3</span>
     
     <span class="n">ipv</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;initializing dam break with &quot;</span> <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;initializing mantle convection with &quot;</span> <span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;particles&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
+<p>In order to compute the <span class="math notranslate nohighlight">\(\frac{\text{d}\vec{v_i}}{\text{d}t}\)</span> at every point for equation <a class="reference internal" href="#equation-equation1">(153)</a>, we need to calculate the following equations respectively:</p>
+<div class="math notranslate nohighlight" id="equation-equation8">
+<span class="eqno">(157)<a class="headerlink" href="#equation-equation8" title="Permalink to this equation">¶</a></span>\[T_{i} \approx \sum_{j}(T_j-T_i) k dt \nabla W(r_i-r_j,h) \approx \sum_{j}(T_j-T_i) k dt \frac{315}{64\pi h^{9}}(h^{2}-\parallel r_i - r_j\parallel^2)^{3}\]</div>
+<div class="math notranslate nohighlight" id="equation-equation9">
+<span class="eqno">(158)<a class="headerlink" href="#equation-equation9" title="Permalink to this equation">¶</a></span>\[\rho_{i} \approx \sum_{j} m_{j}\frac{315}{64\pi h^{9}}(h^{2}-\parallel r_i - r_j\parallel^2)^{3}\]</div>
+<p>Considering the effect of temperature to the change of density we have</p>
+<p>$<span class="math notranslate nohighlight">\(\rho_{i} = \rho_{i} \cdot(1 - \alpha_v \cdot (T_i-T_0))\)</span><span class="math notranslate nohighlight">\( (equation9) where \)</span>\alpha_v<span class="math notranslate nohighlight">\( is the thermal expansion coefficient and \)</span>T_0<span class="math notranslate nohighlight">\( is the original temperature of that particle \)</span>i$.</p>
+<p>Note that <span class="math notranslate nohighlight">\(T\)</span> and <span class="math notranslate nohighlight">\(\rho_i\)</span> are obtained before calculating the pressure gradient and viscosity term.</p>
+<p>$<span class="math notranslate nohighlight">\(p_i = k(\rho_i - \rho_0)T_i\)</span><span class="math notranslate nohighlight">\( (equation9) where \)</span>k<span class="math notranslate nohighlight">\( is a constant, \)</span>\rho_0$ is the resting density (density of fluid at equilibrium)</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">ComputeDensityPressureTemperature</span><span class="p">():</span>
-    
     <span class="k">for</span> <span class="n">pi</span> <span class="ow">in</span> <span class="n">Fluid_Particles_list</span><span class="p">:</span>
         <span class="n">pi</span><span class="o">.</span><span class="n">rho</span> <span class="o">=</span> <span class="mf">0.0</span>
-        <span class="n">dT</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="n">dT</span> <span class="o">=</span> <span class="mf">0.0</span>    <span class="c1"># the change in temperature</span>
         <span class="k">for</span> <span class="n">pj</span> <span class="ow">in</span> <span class="n">Fluid_Particles_list</span><span class="p">:</span>
             <span class="n">h</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">pi</span><span class="o">.</span><span class="n">X</span> <span class="o">-</span> <span class="n">pj</span><span class="o">.</span><span class="n">X</span><span class="p">)</span>
             <span class="k">if</span> <span class="p">(</span><span class="n">h</span><span class="o">&lt;</span><span class="n">H</span><span class="p">):</span>
@@ -432,6 +499,13 @@
 </div>
 </div>
 </div>
+<p>Then we can compute the pressure and viscosity term</p>
+<div class="math notranslate nohighlight" id="equation-equation10">
+<span class="eqno">(159)<a class="headerlink" href="#equation-equation10" title="Permalink to this equation">¶</a></span>\[\frac{\nabla p_{i}}{p_{i}}\approx\sum_j m_{j}\left[\frac{p_i}{\rho_i^{2}}+\frac{p_j}{\rho_j^{2}}\right]\frac{-45}{\pi h^{6}}(h-\parallel r_i - r_j\parallel)^2\frac{r_i-r_j}{\parallel r_i - r_j\parallel}\]</div>
+<p>and</p>
+<div class="math notranslate nohighlight" id="equation-equation11">
+<span class="eqno">(160)<a class="headerlink" href="#equation-equation11" title="Permalink to this equation">¶</a></span>\[\frac{\mu}{\rho_i} \nabla^{2}\vec{v_i}\approx\frac{\mu}{\rho_i}\sum_j m_j \left[\frac{v_j-v_i}{\rho_j}\right]\frac{45}{\pi h^{6}}(h-\parallel r_i - r_j\parallel)\]</div>
+<p>After equation <a class="reference internal" href="#equation-equation8">(157)</a> to <a class="reference internal" href="#equation-equation11">(160)</a> are computed, we can put them together into N-S equation to obtain acceleration.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">ComputeForces</span><span class="p">():</span>
@@ -466,15 +540,14 @@
 </div>
 </div>
 </div>
+<p>And then we can use a simple time stepping numerical integration scheme to advance the velocity and position of particles.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">Integrate</span><span class="p">():</span>
     <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">Fluid_Particles_list</span><span class="p">:</span>
         <span class="c1"># forward Euler integration</span>
-        <span class="n">p</span><span class="o">.</span><span class="n">V</span> <span class="o">+=</span> <span class="n">dt</span><span class="o">*</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">F</span><span class="p">)</span><span class="o">/</span><span class="n">p</span><span class="o">.</span><span class="n">rho</span><span class="p">;</span>
-        
+        <span class="n">p</span><span class="o">.</span><span class="n">V</span> <span class="o">+=</span> <span class="n">dt</span><span class="o">*</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">F</span><span class="p">)</span><span class="o">/</span><span class="n">p</span><span class="o">.</span><span class="n">rho</span><span class="p">;</span>   
         <span class="n">p</span><span class="o">.</span><span class="n">V</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
-        
         <span class="n">p</span><span class="o">.</span><span class="n">X</span> <span class="o">+=</span> <span class="n">dt</span><span class="o">*</span><span class="n">p</span><span class="o">.</span><span class="n">V</span><span class="p">;</span>
   
         <span class="k">if</span> <span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">EPS</span> <span class="o">&lt;</span> <span class="mf">0.0</span><span class="p">):</span>    <span class="c1"># left boundary condition</span>
@@ -489,7 +562,7 @@
             <span class="n">p</span><span class="o">.</span><span class="n">V</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*=</span> <span class="n">BOUND_DAMPING_HORIZONTAL</span>
             <span class="c1">#p.Vz *= BOUND_DAMPING_HORIZONTAL</span>
 
-        <span class="k">if</span> <span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">EPS</span> <span class="o">&lt;</span> <span class="mf">0.0</span><span class="p">):</span>    <span class="c1"># bottom boundary condition</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">EPS</span><span class="o">/</span><span class="mi">4</span> <span class="o">&lt;</span> <span class="mf">0.0</span><span class="p">):</span>    <span class="c1"># bottom boundary condition, EPS/4 because almost all particles will stick to the bottom if EPS</span>
             <span class="n">p</span><span class="o">.</span><span class="n">V</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*=</span> <span class="n">BOUND_DAMPING_NORMAL</span>
             <span class="n">p</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">EPS</span>
             <span class="n">p</span><span class="o">.</span><span class="n">V</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*=</span> <span class="n">BOUND_DAMPING_HORIZONTAL</span>
@@ -567,12 +640,12 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\JianouJiang\anaconda3\lib\site-packages\ipykernel_launcher.py:57: RuntimeWarning: invalid value encountered in true_divide
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\JianouJiang\anaconda3\lib\site-packages\ipykernel_launcher.py:58: RuntimeWarning: invalid value encountered in true_divide
 </pre></div>
 </div>
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "fcffd637ef50431ea9a5eba9303e3450", "version_major": 2, "version_minor": 0}
-</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>initializing dam break with 
+{"model_id": "7ef858623c414557afddc37372d61873", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>initializing mantle convection with 
 3000
 particles
 </pre></div>
@@ -581,15 +654,14 @@ particles
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">TotalTime</span> <span class="o">=</span> <span class="mi">1000</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run this code to update the mantle convection</span>
+<span class="n">TotalTime</span> <span class="o">=</span> <span class="mi">1000</span>
 <span class="n">iterations</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">TotalTime</span><span class="o">/</span><span class="n">dt</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;start iterating&quot;</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">time</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">iterations</span><span class="p">):</span>
     <span class="n">Update</span><span class="p">()</span>
-
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;iterations&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">time</span><span class="p">)</span>
-        
+    <span class="nb">print</span><span class="p">(</span><span class="n">time</span><span class="p">)</span>   
 </pre></div>
 </div>
 </div>
@@ -600,6 +672,8 @@ start updating
 </div>
 </div>
 </div>
+<img src='img/mantle_convection_thermal.PNG' width=600>
+Figure 1: Two-dimensional cellular convection in a fluid layer heated from below simulation shows similar character as the figure 6.38 in the book called $Geodynamics$,[Turcotte_D.L.,_Schubert_G.].</div>
 </div>
 
     <script type="text/x-thebe-config">
