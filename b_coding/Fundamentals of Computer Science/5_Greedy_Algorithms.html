@@ -220,9 +220,24 @@
 
     </div>
     <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
 
 <nav id="bd-toc-nav">
     <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#basic-examples" class="nav-link">Basic Examples</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#conditions-needed-for-greedy-solution" class="nav-link">Conditions needed for Greedy Solution</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#advanced-examples" class="nav-link">Advanced Examples</a>
+        </li>
     
     </ul>
 </nav>
@@ -237,7 +252,115 @@
                 
   <div class="section" id="greedy-algorithms">
 <span id="id1"></span><h1>Greedy Algorithms<a class="headerlink" href="#greedy-algorithms" title="Permalink to this headline">¶</a></h1>
-<span class="target" id="index-0"></span></div>
+<p id="index-0">Greedy Algorithms is one of the paradigms of algorithmic problem solving. All greedy algorithms share the assumption that local optimal steps lead to the globally optimal solution. Quite surprisingly, this is often a valid assertion.</p>
+<p>If you want to have a good grasp on the topic, please have a look at <a class="reference external" href="https://primer-computational-mathematics.github.io/book/b_coding/Fundamentals%20of%20Computer%20Science/4_Dynamic_Programming.html#dynamic-programming">Dynamic Programming</a> section beforehand.</p>
+<div class="section" id="basic-examples">
+<h2>Basic Examples<a class="headerlink" href="#basic-examples" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Greedy Scheduling</strong> We are given a list <code class="docutils literal notranslate"><span class="pre">timeslots</span></code> wih each element being a tuple \((s,f)\) where \(s\) is the starting time of the event and \(f\) its the finish time. We need to choose a subset of non-overlapping <code class="docutils literal notranslate"><span class="pre">timeslots</span></code> that has the most elements. Return the number of elements in that subset.</p></li>
+</ul>
+<p>First, let us assume that <code class="docutils literal notranslate"><span class="pre">timeslots</span></code> is sorted by \(f\) (non-decreasing).</p>
+<p>Let us show that the problem has an optimal substructure. Let \(S_{ij}\) denote a set of events which start after event \(a_i\) and finish before the event \(a_j\) and \(A_{ij}\) be the optimal subset of \(S_{ij}\). We can see that \(A_{ij} = A_{ik} + a_k + A_{kj}\) for \(i\leq k \leq j\). Now \(A_{ik}\) is the solution for  \(A_{ik}\) and \(A_{kj}\) solves \(S_{kj}\). These are two independent subproblems, so the problem has an optimal substructure.</p>
+<p>Now, you can have a thought how, based on this information, one can implement Dynamic solution. However, let us jump straight into Greedy:</p>
+<p>Our hypothesis is to always choose the task that ends the earliest. We will show that (some optimal) \(A_{ij}\) always contains the earliest ending task \(a_m\) of \(\(S_{ij}\). Then, inductively, we know that this leads to globally optimal arrangement.</p>
+<p><strong>Proof</strong>: Let \(a_n\) be the earliest ending task in \(A_{ij}\) (does not have to be the same as \(a_m\)). If \(a_n == a_m\) then we are done. Otherwise, it is possible to swap \(a_n\) with \(a_m\) keeping \(A_{ij}\) valid. As \(A_{ij}\) was optimal, such swap still makes it optimal.</p>
+<p>Have a look at the following code:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">randint</span>
+
+<span class="k">def</span> <span class="nf">greedyScheduling</span><span class="p">(</span><span class="n">timeslots</span><span class="p">):</span>
+    <span class="n">timeslots</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="c1">#edge case</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">timeslots</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="c1"># setting up the initial vars</span>
+    <span class="n">curr</span> <span class="o">=</span> <span class="n">timeslots</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="mi">1</span> 
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">timeslots</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">curr</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">timeslots</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]:</span>
+            <span class="n">curr</span> <span class="o">=</span> <span class="n">timeslots</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">res</span> <span class="o">+=</span> <span class="mi">1</span>       
+    <span class="k">return</span> <span class="n">res</span>
+
+<span class="c1"># brute force for testing</span>
+<span class="k">def</span> <span class="nf">bruteForce</span><span class="p">(</span><span class="n">timeslots</span><span class="p">):</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="c1"># all combinations of the elements</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="nb">len</span><span class="p">(</span><span class="n">timeslots</span><span class="p">)):</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">already_chosen</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">timeslots</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&gt;&gt;</span> <span class="n">j</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">s</span><span class="p">,</span> <span class="n">e</span> <span class="o">=</span> <span class="n">timeslots</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+                <span class="n">temp</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">already_chosen</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">timeslots</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+            <span class="c1"># checking if a valid combination of timeslots                 </span>
+            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">already_chosen</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">s</span> <span class="o">&gt;=</span> <span class="n">already_chosen</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="ow">or</span> <span class="n">e</span> <span class="o">&lt;=</span> <span class="n">already_chosen</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="mi">0</span><span class="p">]):</span>
+                    <span class="n">temp</span> <span class="o">=</span> <span class="mi">0</span>
+                    <span class="k">break</span>                 
+        <span class="n">res</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span> <span class="n">res</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">res</span>    
+    
+<span class="c1"># testing</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">):</span>
+    <span class="n">timeslots</span> <span class="o">=</span> <span class="p">[]</span>    
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">12</span><span class="p">):</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">99</span><span class="p">)</span>
+        <span class="n">e</span> <span class="o">=</span> <span class="n">randint</span><span class="p">(</span><span class="n">s</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+        <span class="n">timeslots</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">s</span><span class="p">,</span><span class="n">e</span><span class="p">))</span>
+    <span class="n">br</span> <span class="o">=</span> <span class="n">bruteForce</span><span class="p">(</span><span class="n">timeslots</span><span class="p">)</span>
+    <span class="n">gr</span> <span class="o">=</span> <span class="n">greedyScheduling</span><span class="p">(</span><span class="n">timeslots</span><span class="p">)</span>  
+    <span class="k">assert</span> <span class="n">gr</span> <span class="o">==</span> <span class="n">br</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The time complexity is \(O(nlog(n))\) but this is due to sorting the events. If the events were sorted initially it would be \(O(n)\).</p>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>Cover a set of points with given length intervals</strong> You are given a list <code class="docutils literal notranslate"><span class="pre">points</span></code> of \(x\)-coordinates of points and <code class="docutils literal notranslate"><span class="pre">l</span></code> - the lenght of the invterval. How many intervals do we need to cover the points?</p></li>
+</ul>
+<p>Let \(A_{ij}\) denote the optimal set of intervals that cover the points. Take the element from this set \((s_k,e_k\) then \(A_{ij} = A_{ik} + a_k + A_{kj}\). Similair analysis as in the previous example leads to the conclusion that the problam has an optimal substructure.</p>
+<p>Now let us show that greedy choices lead to the optimal solution:</p>
+<p>Let us sort the points in the non-decreasing order. We insert an interval where the first begins (an can cover other points) and continue such insertion until we are done.</p>
+<p>Now, consider the optimal solution \(A_{ij}\) and its firt interval. If it does start where the first point, we can replace it with such interval and the solution remains optimal. Done!</p>
+<p>Here is the code implementation:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">intervals</span><span class="p">(</span><span class="n">points</span><span class="p">,</span><span class="n">l</span><span class="p">):</span>
+    <span class="c1"># sort the points</span>
+    <span class="n">points</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">points</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="c1"># set the initial vars</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">border</span> <span class="o">=</span> <span class="n">points</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">l</span>
+    <span class="c1"># go through the list</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">points</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">points</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">border</span><span class="p">:</span>
+            <span class="n">res</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">border</span> <span class="o">=</span> <span class="n">points</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">l</span>      
+    <span class="k">return</span> <span class="n">res</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Similarly depending whether the <code class="docutils literal notranslate"><span class="pre">points</span></code> are sorted we have \(O(nlog(n))\) or \(O(n)\).</p>
+</div>
+<div class="section" id="conditions-needed-for-greedy-solution">
+<h2>Conditions needed for Greedy Solution<a class="headerlink" href="#conditions-needed-for-greedy-solution" title="Permalink to this headline">¶</a></h2>
+<p>There are two conditions which need to be met for the Greedy solution to work:</p>
+<ol class="simple">
+<li><p><strong>Optimal substructure</strong>: the problem should be expressed in terms of independent subproblems, just like in [Dynamic Programming]!(https://primer-computational-mathematics.github.io/book/b_coding/Fundamentals%20of%20Computer%20Science/4_Dynamic_Programming.html#dynamic-programming).</p></li>
+<li><p><strong>Greedy choice leads to optimal solution</strong>: This is usually done by the <em>copy and paste</em> argument that shows that there exists an optimal solution that involves the proposed Greedy hypothesis. It has a inductive flavour, which means that the Greedy choice leave us with the same <em>smaller</em> problem. You can assume that the input is sorted somehow, it might be very helpful!</p></li>
+</ol>
+</div>
+<div class="section" id="advanced-examples">
+<h2>Advanced Examples<a class="headerlink" href="#advanced-examples" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {
