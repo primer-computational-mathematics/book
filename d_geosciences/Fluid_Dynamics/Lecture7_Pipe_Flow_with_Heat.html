@@ -282,49 +282,49 @@ Figure 8.1<p>Derive the temperature equation in the cartesian coordinate.</p>
 <p>First of all, let’s use the general equation for velocity we derived in lecture 5 for the same channel flow problem.</p>
 <p>With the boundary conditions of <span class="math notranslate nohighlight">\(u(y=\pm h/2)=0\)</span>, we have</p>
 <div class="math notranslate nohighlight" id="equation-equation3">
-<span class="eqno">(110)<a class="headerlink" href="#equation-equation3" title="Permalink to this equation">¶</a></span>\[u(y) = \frac{1}{2\mu}\frac{dp}{dx}(y^2-\frac{h^2}{4}) = 3\bar{u}(\frac{1}{2}-\frac{2}{h^2}y^2)\]</div>
+<span class="eqno">(112)<a class="headerlink" href="#equation-equation3" title="Permalink to this equation">¶</a></span>\[u(y) = \frac{1}{2\mu}\frac{dp}{dx}(y^2-\frac{h^2}{4}) = 3\bar{u}(\frac{1}{2}-\frac{2}{h^2}y^2)\]</div>
 <div class="math notranslate nohighlight" id="equation-equation4">
-<span class="eqno">(111)<a class="headerlink" href="#equation-equation4" title="Permalink to this equation">¶</a></span>\[\bar{u}(y)=-\frac{1}{4\mu}\frac{dp}{dx}\frac{h^2}{3}\]</div>
+<span class="eqno">(113)<a class="headerlink" href="#equation-equation4" title="Permalink to this equation">¶</a></span>\[\bar{u}(y)=-\frac{1}{4\mu}\frac{dp}{dx}\frac{h^2}{3}\]</div>
 <p>Then, we assume that the heat going into the system (i.e. any tiny red rectangle as shown in figure 8.2) equals to the heat going out of the system. This means that the net heat flowing into or out of the system due to wall heating should be the same amount of heat as the net heat flowing into or out of the system due to fluid flow. In a word, the net heat conduction in y-direction should be the same as the net heat advection in x-direction. However, we do not consider the heat being stored in the system, so the net heat rates must be balanced out.</p>
 <p>The velocity profile we derived earlier will help us find the net heat advection in x-direction.</p>
 <img src='img/P626_4.PNG' width = 700>
 Figure 8.2<p>As shown in the figure 8.2, the net heat advection rate (in the tiny red rectangle) is</p>
 <div class="math notranslate nohighlight" id="equation-equation5">
-<span class="eqno">(112)<a class="headerlink" href="#equation-equation5" title="Permalink to this equation">¶</a></span>\[\sum d\dot{Q}_{adv} = d\dot{Q}_{in} -d \dot{Q}_{out} = dy (u \rho c T(x)  - u \rho c T(x+\delta x)) \]</div>
+<span class="eqno">(114)<a class="headerlink" href="#equation-equation5" title="Permalink to this equation">¶</a></span>\[\sum d\dot{Q}_{adv} = d\dot{Q}_{in} -d \dot{Q}_{out} = dy (u \rho c T(x)  - u \rho c T(x+\delta x)) \]</div>
 <p>Using the approximation that</p>
 <div class="math notranslate nohighlight" id="equation-equation6">
-<span class="eqno">(113)<a class="headerlink" href="#equation-equation6" title="Permalink to this equation">¶</a></span>\[T(x+\delta x) = T(x)+\frac{\delta T}{\delta x}*dx\]</div>
+<span class="eqno">(115)<a class="headerlink" href="#equation-equation6" title="Permalink to this equation">¶</a></span>\[T(x+\delta x) = T(x)+\frac{\delta T}{\delta x}*dx\]</div>
 <p>We have the net rate of heat due to advection</p>
 <div class="math notranslate nohighlight" id="equation-equation7">
-<span class="eqno">(114)<a class="headerlink" href="#equation-equation7" title="Permalink to this equation">¶</a></span>\[\sum d\dot{Q}_{adv} = -dyu\rho c \frac{\delta T}{\delta x}dx\]</div>
-<p>We can write the equation <a class="reference internal" href="Lecture8_Part2_SPH_Algorithm_For_Energy_Equation.html#equation-equation7">(157)</a> in another form by replacing velocity <span class="math notranslate nohighlight">\(u\)</span> with <span class="math notranslate nohighlight">\(\frac{dx}{dt}\)</span> to understand the physical unit (since we are all familiar with the famous equation <span class="math notranslate nohighlight">\(Q=cm\Delta T\)</span>).</p>
+<span class="eqno">(116)<a class="headerlink" href="#equation-equation7" title="Permalink to this equation">¶</a></span>\[\sum d\dot{Q}_{adv} = -dyu\rho c \frac{\delta T}{\delta x}dx\]</div>
+<p>We can write the equation <a class="reference internal" href="Lecture8_Part2_SPH_Algorithm_For_Energy_Equation.html#equation-equation7">(159)</a> in another form by replacing velocity <span class="math notranslate nohighlight">\(u\)</span> with <span class="math notranslate nohighlight">\(\frac{dx}{dt}\)</span> to understand the physical unit (since we are all familiar with the famous equation <span class="math notranslate nohighlight">\(Q=cm\Delta T\)</span>).</p>
 <p>$<span class="math notranslate nohighlight">\(\sum d\dot{Q}_{adv} = -dy \frac{dx}{dt}\rho c \frac{dT}{dx}dx = \frac{c \cdot dm \cdot \Delta T}{t}\)</span><span class="math notranslate nohighlight">\( (equation8) where tiny mass of red rectangle \)</span>dm = dx dy \rho$</p>
-<p>Since we know that the derivative of temperature <span class="math notranslate nohighlight">\(T(x,y)\)</span> in <a class="reference internal" href="Lecture8_Part2_SPH_Algorithm_For_Energy_Equation.html#equation-equation7">(157)</a> wrt. <span class="math notranslate nohighlight">\(x\)</span> is <span class="math notranslate nohighlight">\(C_1\)</span>, and the velocity <span class="math notranslate nohighlight">\(u(y)\)</span> from <a class="reference internal" href="Lecture8_Part2_SPH_Algorithm_For_Energy_Equation.html#equation-equation3">(155)</a>, we can rewrite <a class="reference internal" href="Lecture8_Part2_SPH_Algorithm_For_Energy_Equation.html#equation-equation7">(157)</a> as</p>
+<p>Since we know that the derivative of temperature <span class="math notranslate nohighlight">\(T(x,y)\)</span> in <a class="reference internal" href="Lecture8_Part2_SPH_Algorithm_For_Energy_Equation.html#equation-equation7">(159)</a> wrt. <span class="math notranslate nohighlight">\(x\)</span> is <span class="math notranslate nohighlight">\(C_1\)</span>, and the velocity <span class="math notranslate nohighlight">\(u(y)\)</span> from <a class="reference internal" href="Lecture8_Part2_SPH_Algorithm_For_Energy_Equation.html#equation-equation3">(157)</a>, we can rewrite <a class="reference internal" href="Lecture8_Part2_SPH_Algorithm_For_Energy_Equation.html#equation-equation7">(159)</a> as</p>
 <div class="math notranslate nohighlight" id="equation-equation9">
-<span class="eqno">(115)<a class="headerlink" href="#equation-equation9" title="Permalink to this equation">¶</a></span>\[\sum d\dot{Q}_{adv} = -dy \cdot  3\bar{u}(\frac{1}{2}-\frac{2}{h^2}y^2) \cdot \rho c \cdot C_1dx\]</div>
+<span class="eqno">(117)<a class="headerlink" href="#equation-equation9" title="Permalink to this equation">¶</a></span>\[\sum d\dot{Q}_{adv} = -dy \cdot  3\bar{u}(\frac{1}{2}-\frac{2}{h^2}y^2) \cdot \rho c \cdot C_1dx\]</div>
 <p>Next, we study the net heat conduction rate in the y-direction due to wall heating.</p>
 <img src='img/P626_5.PNG' width = 700>
 Figure 8.3: Thickness of the channel $h$ is also represented by $d$ since $h$ is used as heat transfer coefficient later.<p>$<span class="math notranslate nohighlight">\(\sum d\dot{Q}_{con} = d\dot{Q}_{in} -d \dot{Q}_{out} = dx (q_x(y+\delta y)  - q_x(y)) \)</span><span class="math notranslate nohighlight">\( (equation10) where heat flux \)</span>q_x = - k \frac{\delta T}{\delta y}<span class="math notranslate nohighlight">\(, and \)</span>k$ is the thermal conductivity of the fluid.</p>
 <p>Again, using the first term of the Taylor expansion to approximate <span class="math notranslate nohighlight">\(q_x(y+\delta y)\)</span>, we have</p>
 <div class="math notranslate nohighlight" id="equation-equation11">
-<span class="eqno">(116)<a class="headerlink" href="#equation-equation11" title="Permalink to this equation">¶</a></span>\[q_x(y+\delta y) = q_x(y)+\frac{dq_x}{dy}*dy\]</div>
-<p>So equation <a class="reference internal" href="Lecture8_Part2_SPH_Algorithm_For_Energy_Equation.html#equation-equation10">(160)</a> becomes</p>
+<span class="eqno">(118)<a class="headerlink" href="#equation-equation11" title="Permalink to this equation">¶</a></span>\[q_x(y+\delta y) = q_x(y)+\frac{dq_x}{dy}*dy\]</div>
+<p>So equation <a class="reference internal" href="Lecture8_Part2_SPH_Algorithm_For_Energy_Equation.html#equation-equation10">(162)</a> becomes</p>
 <div class="math notranslate nohighlight" id="equation-equation12">
-<span class="eqno">(117)<a class="headerlink" href="#equation-equation12" title="Permalink to this equation">¶</a></span>\[\sum d\dot{Q}_{con} = dx \frac{dq_x}{dy}dy = - dx \cdot k \frac{\delta^2 T}{\delta y^2}dy\]</div>
-<p>Finally, as we said before, the net heat rate of the system should be balanced by the conduction and convection. So we combine <a class="reference internal" href="Lecture8_Part2_SPH_Algorithm_For_Energy_Equation.html#equation-equation9">(159)</a> and <a class="reference internal" href="Lecture8_Part1_Navier_Stoke_Equation.html#equation-equation12">(134)</a>, and have</p>
+<span class="eqno">(119)<a class="headerlink" href="#equation-equation12" title="Permalink to this equation">¶</a></span>\[\sum d\dot{Q}_{con} = dx \frac{dq_x}{dy}dy = - dx \cdot k \frac{\delta^2 T}{\delta y^2}dy\]</div>
+<p>Finally, as we said before, the net heat rate of the system should be balanced by the conduction and convection. So we combine <a class="reference internal" href="Lecture8_Part2_SPH_Algorithm_For_Energy_Equation.html#equation-equation9">(161)</a> and <a class="reference internal" href="Lecture8_Part1_Navier_Stoke_Equation.html#equation-equation12">(136)</a>, and have</p>
 <p>$<span class="math notranslate nohighlight">\(\sum d\dot{Q}_{con} + d\dot{Q}_{adv} = - dx \cdot k \frac{\delta^2 T}{\delta y^2}dy  -dy \cdot  3\bar{u}(\frac{1}{2}-\frac{2}{h^2}y^2) \cdot \rho c \cdot C_1dx = 0 \)</span><span class="math notranslate nohighlight">\( (equation13) where \)</span>\frac{\delta^2 T}{\delta y^2}=\frac{\delta^2 \theta}{\delta y^2}$ from <a class="reference internal" href="Lecture6_Non_Linear_Viscosity_2D_Stokes.html#equation-equation2">(79)</a>.</p>
-<p>Rearrange <a class="reference internal" href="Lecture8_Part1_Navier_Stoke_Equation.html#equation-equation13">(135)</a>, we have an equation of <span class="math notranslate nohighlight">\(\frac{\delta^2 \theta}{\delta y^2}\)</span></p>
+<p>Rearrange <a class="reference internal" href="Lecture8_Part1_Navier_Stoke_Equation.html#equation-equation13">(137)</a>, we have an equation of <span class="math notranslate nohighlight">\(\frac{\delta^2 \theta}{\delta y^2}\)</span></p>
 <div class="math notranslate nohighlight" id="equation-equation14">
-<span class="eqno">(118)<a class="headerlink" href="#equation-equation14" title="Permalink to this equation">¶</a></span>\[\frac{\delta^2 \theta}{\delta y^2} = \frac{6 \bar{u}}{k h^2}\rho c C_1 y^2 - \frac{3\bar{u}}{2k}\rho c C_1\]</div>
+<span class="eqno">(120)<a class="headerlink" href="#equation-equation14" title="Permalink to this equation">¶</a></span>\[\frac{\delta^2 \theta}{\delta y^2} = \frac{6 \bar{u}}{k h^2}\rho c C_1 y^2 - \frac{3\bar{u}}{2k}\rho c C_1\]</div>
 <p>Integrate it twice, and apply two boundary conditions (<span class="math notranslate nohighlight">\(\frac{\delta \theta}{\delta y}=0\)</span> at <span class="math notranslate nohighlight">\(y=0\)</span> and <span class="math notranslate nohighlight">\(\theta = 0\)</span> at <span class="math notranslate nohighlight">\(y = \pm h/2\)</span>), we will arrive at</p>
 <div class="math notranslate nohighlight" id="equation-equation15">
-<span class="eqno">(119)<a class="headerlink" href="#equation-equation15" title="Permalink to this equation">¶</a></span>\[\theta(y)=\frac{ \rho cC_1}{4k\mu}\frac{dp}{dx}(\frac{1}{6}y^4-\frac{1}{4}h^2y^2+\frac{5}{96}h^4)\]</div>
-<p>Using <span class="math notranslate nohighlight">\(\frac{1}{\kappa} = \frac{\rho c}{\mu}\)</span>, <span class="math notranslate nohighlight">\(\frac{dp}{dx}=1\)</span> and <span class="math notranslate nohighlight">\(d=h\)</span> to rewrite equation <a class="reference internal" href="Lecture8_Part1_Navier_Stoke_Equation.html#equation-equation15">(136)</a>, we will have the same answer as the book</p>
+<span class="eqno">(121)<a class="headerlink" href="#equation-equation15" title="Permalink to this equation">¶</a></span>\[\theta(y)=\frac{ \rho cC_1}{4k\mu}\frac{dp}{dx}(\frac{1}{6}y^4-\frac{1}{4}h^2y^2+\frac{5}{96}h^4)\]</div>
+<p>Using <span class="math notranslate nohighlight">\(\frac{1}{\kappa} = \frac{\rho c}{\mu}\)</span>, <span class="math notranslate nohighlight">\(\frac{dp}{dx}=1\)</span> and <span class="math notranslate nohighlight">\(d=h\)</span> to rewrite equation <a class="reference internal" href="Lecture8_Part1_Navier_Stoke_Equation.html#equation-equation15">(138)</a>, we will have the same answer as the book</p>
 <div class="math notranslate nohighlight" id="equation-equation16">
-<span class="eqno">(120)<a class="headerlink" href="#equation-equation16" title="Permalink to this equation">¶</a></span>\[\theta(y)=\frac{ C_1}{4\kappa\mu}(\frac{1}{6}y^4-\frac{1}{4}d^2y^2+\frac{5}{96}d^4)\]</div>
+<span class="eqno">(122)<a class="headerlink" href="#equation-equation16" title="Permalink to this equation">¶</a></span>\[\theta(y)=\frac{ C_1}{4\kappa\mu}(\frac{1}{6}y^4-\frac{1}{4}d^2y^2+\frac{5}{96}d^4)\]</div>
 <p>Finally, we have</p>
 <div class="math notranslate nohighlight" id="equation-equation17">
-<span class="eqno">(121)<a class="headerlink" href="#equation-equation17" title="Permalink to this equation">¶</a></span>\[T(x,y)  = T_w(x) + \theta(y) = C_1x + C_2 + \frac{ C_1}{4\kappa\mu}(\frac{1}{6}y^4-\frac{1}{4}d^2y^2+\frac{5}{96}d^4)\]</div>
+<span class="eqno">(123)<a class="headerlink" href="#equation-equation17" title="Permalink to this equation">¶</a></span>\[T(x,y)  = T_w(x) + \theta(y) = C_1x + C_2 + \frac{ C_1}{4\kappa\mu}(\frac{1}{6}y^4-\frac{1}{4}d^2y^2+\frac{5}{96}d^4)\]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mpl_toolkits</span> <span class="kn">import</span> <span class="n">mplot3d</span>
@@ -372,7 +372,7 @@ Figure 8.3: Thickness of the channel $h$ is also represented by $d$ since $h$ is
 </div>
 <p>Then, we can work out the wall heat flux (<span class="math notranslate nohighlight">\(q_x\)</span> at <span class="math notranslate nohighlight">\(y=d/2\)</span>)</p>
 <div class="math notranslate nohighlight" id="equation-equation18">
-<span class="eqno">(122)<a class="headerlink" href="#equation-equation18" title="Permalink to this equation">¶</a></span>\[q_{x}=-k\frac{\delta T}{\delta y}=\frac{C_1 k d^3}{24\kappa \mu}\]</div>
+<span class="eqno">(124)<a class="headerlink" href="#equation-equation18" title="Permalink to this equation">¶</a></span>\[q_{x}=-k\frac{\delta T}{\delta y}=\frac{C_1 k d^3}{24\kappa \mu}\]</div>
 <p>The heat flux is thus a constant, independent of <span class="math notranslate nohighlight">\(y\)</span>. If <span class="math notranslate nohighlight">\(C_1\)</span> is positive, the
 wall temperature increases in the direction of flow, and heat flows through
 the wall of the pipe into the fluid. If <span class="math notranslate nohighlight">\(C_1\)</span> is negative, the wall temperature
@@ -385,17 +385,17 @@ and the excess fluid temperature according to</p>
 fluid temperature is</p>
 <p>$<span class="math notranslate nohighlight">\(\bar{\theta}=\frac{1}{d\bar{u}}\int^{d/2}_{-d/2}\theta u dy\)</span>$(equation20) where the result can be obtained from WolframAlpha.</p>
 <div class="math notranslate nohighlight" id="equation-equation21">
-<span class="eqno">(123)<a class="headerlink" href="#equation-equation21" title="Permalink to this equation">¶</a></span>\[h=\frac{q_x}{\bar{\theta}}=\frac{70k}{17d}\]</div>
-<p>Note that the <a class="reference internal" href="Lecture8_Part1_Navier_Stoke_Equation.html#equation-equation21">(142)</a> is valid only for Reynolds numbers less than about 2200. At higher values of the Reynolds number the flow is turbulent.</p>
+<span class="eqno">(125)<a class="headerlink" href="#equation-equation21" title="Permalink to this equation">¶</a></span>\[h=\frac{q_x}{\bar{\theta}}=\frac{70k}{17d}\]</div>
+<p>Note that the <a class="reference internal" href="Lecture8_Part1_Navier_Stoke_Equation.html#equation-equation21">(144)</a> is valid only for Reynolds numbers less than about 2200. At higher values of the Reynolds number the flow is turbulent.</p>
 <p>The fluid mechanics literature commonly introduces a dimensionless measure of the heat transfer coefficient known as the Nusselt number <span class="math notranslate nohighlight">\(Nu\)</span>. For pipe flow with heat addition,</p>
 <div class="math notranslate nohighlight" id="equation-equation22">
-<span class="eqno">(124)<a class="headerlink" href="#equation-equation22" title="Permalink to this equation">¶</a></span>\[Nu=\frac{hd}{k}=\frac{\frac{70k}{d}d}{k}\]</div>
+<span class="eqno">(126)<a class="headerlink" href="#equation-equation22" title="Permalink to this equation">¶</a></span>\[Nu=\frac{hd}{k}=\frac{\frac{70k}{d}d}{k}\]</div>
 <p>The Nusselt number measures the efficiency of the heat transfer process. If the temperature difference <span class="math notranslate nohighlight">\(\bar{T} −T_w\)</span> were established across a stationary layer of fluid of thickness <span class="math notranslate nohighlight">\(D\)</span> and thermal conductivity <span class="math notranslate nohighlight">\(k\)</span>, the conductive heat flux <span class="math notranslate nohighlight">\(q_c\)</span> would be</p>
 <div class="math notranslate nohighlight" id="equation-equation23">
-<span class="eqno">(125)<a class="headerlink" href="#equation-equation23" title="Permalink to this equation">¶</a></span>\[q_{c}=\frac{k(\bar{T}-T_w)}{d}\]</div>
+<span class="eqno">(127)<a class="headerlink" href="#equation-equation23" title="Permalink to this equation">¶</a></span>\[q_{c}=\frac{k(\bar{T}-T_w)}{d}\]</div>
 <p>Thus the Nusselt number can be written as the ratio of convective to conductive heat transfer at a boundary in a fluid.</p>
 <div class="math notranslate nohighlight" id="equation-equation24">
-<span class="eqno">(126)<a class="headerlink" href="#equation-equation24" title="Permalink to this equation">¶</a></span>\[Nu=\frac{q_x}{q_c}\]</div>
+<span class="eqno">(128)<a class="headerlink" href="#equation-equation24" title="Permalink to this equation">¶</a></span>\[Nu=\frac{q_x}{q_c}\]</div>
 </div>
 <div class="section" id="problem-6-28">
 <h2>Problem 6.28<a class="headerlink" href="#problem-6-28" title="Permalink to this headline">¶</a></h2>
@@ -403,7 +403,7 @@ fluid temperature is</p>
 <span class="math notranslate nohighlight">\(Re &lt; 2200\)</span>, what limitation is placed on the Peclet number?</p>
 <p>The Peclet number is a dimensionless measure of the mean velocity of the flow through the aquifer. It is related to the dimensionless parameters <span class="math notranslate nohighlight">\(Re\)</span> and <span class="math notranslate nohighlight">\(Pr\)</span> already introduced. Since the thermal diffusivity <span class="math notranslate nohighlight">\(\kappa\)</span> is <span class="math notranslate nohighlight">\(k/\rho c\)</span>, <span class="math notranslate nohighlight">\(Pe\)</span> can be written as</p>
 <div class="math notranslate nohighlight" id="equation-equation25">
-<span class="eqno">(127)<a class="headerlink" href="#equation-equation25" title="Permalink to this equation">¶</a></span>\[Pe=\frac{\rho c \bar{u}R}{k}=\frac{\bar{u}R}{\kappa}\]</div>
+<span class="eqno">(129)<a class="headerlink" href="#equation-equation25" title="Permalink to this equation">¶</a></span>\[Pe=\frac{\rho c \bar{u}R}{k}=\frac{\bar{u}R}{\kappa}\]</div>
 <p>If the flow is turbulent, then the mean velocity of the fluid is likely to be reduced because some streams would be flowing in the opposite direction as the other streams. Therefore, the <span class="math notranslate nohighlight">\(Pe\)</span> number would be low in reality but high in calculations.</p>
 </div>
 </div>
