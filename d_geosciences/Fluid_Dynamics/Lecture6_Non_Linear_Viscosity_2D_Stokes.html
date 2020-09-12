@@ -319,36 +319,38 @@ Figure 7.2: the gradient of the figure on the left hand side represents the inve
 <p>Suppose we assume the viscosity of the fluid is only stress-dependent, then the equation <code class="xref eq docutils literal notranslate"><span class="pre">equation6_6</span></code> can be simplified to a power-law (equation <a class="reference internal" href="#equation-equation6-5">(82)</a> ) with respect to stress <span class="math notranslate nohighlight">\(\sigma\)</span>. Then, we can get the analytical solution of effective viscosity and other quantities for the fluid in channel flow. Suppose we have no-slip boundary at <span class="math notranslate nohighlight">\(y=\pm h/2\)</span> and the strain rate obeys the power law.</p>
 <img src='img/1d_ChannelFlow.PNG' width =700>
 Figure 7.3: The velocity profile is symmetric due to the boundary conditions and the geometry of the channel.<p>Balancing viscous shear and pressure forces, we have</p>
-<div class="math notranslate nohighlight" id="equation-equation7">
-<span class="eqno">(84)<a class="headerlink" href="#equation-equation7" title="Permalink to this equation">¶</a></span>\[\frac{d\tau}{dy}=\frac{dp}{dx}\]</div>
+<div class="math notranslate nohighlight" id="equation-equation6-7">
+<span class="eqno">(84)<a class="headerlink" href="#equation-equation6-7" title="Permalink to this equation">¶</a></span>\[\frac{d\tau}{dy}=\frac{dp}{dx}\]</div>
 <p>Therefore, we can obtain the equation for stress by integrating wrt. y</p>
-<div class="math notranslate nohighlight" id="equation-equation8">
-<span class="eqno">(85)<a class="headerlink" href="#equation-equation8" title="Permalink to this equation">¶</a></span>\[\tau(y)=\frac{dp}{dx}y+C\]</div>
+<div class="math notranslate nohighlight" id="equation-equation6-8">
+<span class="eqno">(85)<a class="headerlink" href="#equation-equation6-8" title="Permalink to this equation">¶</a></span>\[\tau(y)=\frac{dp}{dx}y+C\]</div>
 <p>Since we know that the stress can be expressed as</p>
 <div class="math notranslate nohighlight" id="equation-equation9">
 <span class="eqno">(86)<a class="headerlink" href="#equation-equation9" title="Permalink to this equation">¶</a></span>\[\tau = \mu \frac{du}{dy}\]</div>
 <p>and that the <span class="math notranslate nohighlight">\(\frac{du}{dy}=0\)</span> at <span class="math notranslate nohighlight">\(y=0\)</span> by inspecting the velocity profile in figure 7.3, we can obtain</p>
 <div class="math notranslate nohighlight" id="equation-equation10">
 <span class="eqno">(87)<a class="headerlink" href="#equation-equation10" title="Permalink to this equation">¶</a></span>\[\tau (y=0) = 0\]</div>
-<p>So we know that the integral constant <span class="math notranslate nohighlight">\(C\)</span> in <a class="reference internal" href="Lecture8_Part2_SPH_Algorithm_For_Energy_Equation.html#equation-equation8">(157)</a> is zero.</p>
+<p>So we know that the integral constant <span class="math notranslate nohighlight">\(C\)</span> in <a class="reference internal" href="#equation-equation6-8">(85)</a> is zero.</p>
 <p>Also, we have an non-linear relationship between the stress and strain rate for the non-Newtonian fluid as follow</p>
-<div class="math notranslate nohighlight" id="equation-equation11">
-<span class="eqno">(88)<a class="headerlink" href="#equation-equation11" title="Permalink to this equation">¶</a></span>\[\frac{du}{dy}=C_1\tau^{n}\]</div>
-<p>We can plug in the <span class="math notranslate nohighlight">\(\tau\)</span> from <a class="reference internal" href="Lecture8_Part2_SPH_Algorithm_For_Energy_Equation.html#equation-equation11">(160)</a> into <a class="reference internal" href="Lecture8_Part2_SPH_Algorithm_For_Energy_Equation.html#equation-equation7">(156)</a> and arrive at</p>
-<div class="math notranslate nohighlight" id="equation-equation12">
-<span class="eqno">(89)<a class="headerlink" href="#equation-equation12" title="Permalink to this equation">¶</a></span>\[\frac{du}{dy}=C_1(\frac{dp}{dx})^{n}y^n\]</div>
-<p>Further integrating <a class="reference internal" href="Lecture8_Part1_Navier_Stoke_Equation.html#equation-equation12">(133)</a>, and using the boundary condition <span class="math notranslate nohighlight">\(u(y=\pm h/2)=0\)</span>, we have the velocity profile</p>
+<div class="math notranslate nohighlight" id="equation-equation6-11">
+<span class="eqno">(88)<a class="headerlink" href="#equation-equation6-11" title="Permalink to this equation">¶</a></span>\[\frac{du}{dy}=C_1\tau^{n}\]</div>
+<p>We can plug in the <span class="math notranslate nohighlight">\(\tau\)</span> from <a class="reference internal" href="#equation-equation6-11">(88)</a> into <a class="reference internal" href="#equation-equation6-7">(84)</a> and arrive at</p>
+<div class="math notranslate nohighlight" id="equation-equation6-12">
+<span class="eqno">(89)<a class="headerlink" href="#equation-equation6-12" title="Permalink to this equation">¶</a></span>\[\frac{du}{dy}=C_1(\frac{dp}{dx})^{n}y^n\]</div>
+<p>Further integrating <a class="reference internal" href="#equation-equation6-12">(89)</a>, and using the boundary condition <span class="math notranslate nohighlight">\(u(y=\pm h/2)=0\)</span>, we have the velocity profile</p>
 <div class="math notranslate nohighlight" id="equation-equation13">
 <span class="eqno">(90)<a class="headerlink" href="#equation-equation13" title="Permalink to this equation">¶</a></span>\[u=-\frac{C_1}{n+1}(\frac{dp}{dx})^n [(\frac{h}{2})^{n+1}-y^{n+1}]\]</div>
 <p>We can also obtain the mean velocity across the channel</p>
 <div class="math notranslate nohighlight" id="equation-equation14">
 <span class="eqno">(91)<a class="headerlink" href="#equation-equation14" title="Permalink to this equation">¶</a></span>\[\bar{u}=\frac{C_1}{n+2}(\frac{dp}{dx})^n(\frac{h}{2})^{n+1}\]</div>
 <p>Now, using the idea that the effective viscosity is the ratio between stress and strain rate, we have</p>
-<p>$<span class="math notranslate nohighlight">\(\mu_{eff}=\frac{\tau}{\frac{du}{dy}}=\frac{\frac{dp}{dx}y}{C_1(\frac{dp}{dx})^{n}y^n} = \frac{dp}{dx}\frac{h^2}{4(n+2)\bar{u}}(\frac{2y}{h})^{1-n}\)</span><span class="math notranslate nohighlight">\( (equation15) where \)</span>\frac{dp}{dx} = \frac{p_1-p_0}{L}$</p>
+<div class="math notranslate nohighlight" id="equation-equation15">
+<span class="eqno">(92)<a class="headerlink" href="#equation-equation15" title="Permalink to this equation">¶</a></span>\[\mu_{eff}=\frac{\tau}{\frac{du}{dy}}=\frac{\frac{dp}{dx}y}{C_1(\frac{dp}{dx})^{n}y^n} = \frac{dp}{dx}\frac{h^2}{4(n+2)\bar{u}}(\frac{2y}{h})^{1-n}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\frac{dp}{dx} = \frac{p_1-p_0}{L}\)</span></p>
 <p>And using the boundary condition, we can derive the scaled effective viscosity (as a function of <span class="math notranslate nohighlight">\(y/h\)</span> or scaled <span class="math notranslate nohighlight">\(y\)</span> distance where <span class="math notranslate nohighlight">\(-h/2 &lt; y &lt; h/2\)</span>).</p>
-<div class="math notranslate nohighlight" id="equation-equation16">
-<span class="eqno">(92)<a class="headerlink" href="#equation-equation16" title="Permalink to this equation">¶</a></span>\[\frac{\mu_{eff}}{\mu_{eff,wall}}=(\frac{2y}{h})^{1-n}\]</div>
-<p>We can plot <a class="reference internal" href="Lecture8_Part1_Navier_Stoke_Equation.html#equation-equation16">(136)</a> for <span class="math notranslate nohighlight">\(n=1,3,5\)</span> and for <span class="math notranslate nohighlight">\(-0.5&lt;y/h&lt;0.5\)</span>.</p>
+<div class="math notranslate nohighlight" id="equation-equation6-16">
+<span class="eqno">(93)<a class="headerlink" href="#equation-equation6-16" title="Permalink to this equation">¶</a></span>\[\frac{\mu_{eff}}{\mu_{eff,wall}}=(\frac{2y}{h})^{1-n}\]</div>
+<p>We can plot <a class="reference internal" href="#equation-equation6-16">(93)</a> for <span class="math notranslate nohighlight">\(n=1,3,5\)</span> and for <span class="math notranslate nohighlight">\(-0.5&lt;y/h&lt;0.5\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -379,9 +381,9 @@ Figure 7.3: The velocity profile is symmetric due to the boundary conditions and
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/Lecture6_Non_Linear_Viscosity_2D_Stokes_48_0.png" src="../../_images/Lecture6_Non_Linear_Viscosity_2D_Stokes_48_0.png" />
-<img alt="../../_images/Lecture6_Non_Linear_Viscosity_2D_Stokes_48_1.png" src="../../_images/Lecture6_Non_Linear_Viscosity_2D_Stokes_48_1.png" />
-<img alt="../../_images/Lecture6_Non_Linear_Viscosity_2D_Stokes_48_2.png" src="../../_images/Lecture6_Non_Linear_Viscosity_2D_Stokes_48_2.png" />
+<img alt="../../_images/Lecture6_Non_Linear_Viscosity_2D_Stokes_49_0.png" src="../../_images/Lecture6_Non_Linear_Viscosity_2D_Stokes_49_0.png" />
+<img alt="../../_images/Lecture6_Non_Linear_Viscosity_2D_Stokes_49_1.png" src="../../_images/Lecture6_Non_Linear_Viscosity_2D_Stokes_49_1.png" />
+<img alt="../../_images/Lecture6_Non_Linear_Viscosity_2D_Stokes_49_2.png" src="../../_images/Lecture6_Non_Linear_Viscosity_2D_Stokes_49_2.png" />
 </div>
 </div>
 </div>
@@ -391,30 +393,30 @@ Figure 7.3: The velocity profile is symmetric due to the boundary conditions and
 <img src='img/P7_12.PNG' width='500'>
 Figure 7.4: Icesheet with thickness $h$ on sloping bedrock, creeping downhill under its own weight. The temperature profile is linear and $(T_1-T_0)/T_0$ is small. It is no-slip at base.<p>First, we can write out the temperature profile</p>
 <div class="math notranslate nohighlight" id="equation-equation17">
-<span class="eqno">(93)<a class="headerlink" href="#equation-equation17" title="Permalink to this equation">¶</a></span>\[T(y) = T_0+(T_1-T_0)\frac{y}{h}\]</div>
-<p>We assume the temperature dependence of the pre-exponential factor as negligible compared with the temperature dependence of the exponential factor, so the equation <a class="reference internal" href="Lecture7_Pipe_Flow_with_Heat.html#equation-equation6">(112)</a> simplifies to</p>
+<span class="eqno">(94)<a class="headerlink" href="#equation-equation17" title="Permalink to this equation">¶</a></span>\[T(y) = T_0+(T_1-T_0)\frac{y}{h}\]</div>
+<p>We assume the temperature dependence of the pre-exponential factor as negligible compared with the temperature dependence of the exponential factor, so the equation <a class="reference internal" href="Lecture7_Pipe_Flow_with_Heat.html#equation-equation6">(113)</a> simplifies to</p>
 <div class="math notranslate nohighlight" id="equation-equation18">
-<span class="eqno">(94)<a class="headerlink" href="#equation-equation18" title="Permalink to this equation">¶</a></span>\[\mu=Ce^{E^{*}/RT}\]</div>
-<p>Plugging the equation <a class="reference internal" href="Lecture8_Part1_Navier_Stoke_Equation.html#equation-equation17">(137)</a> in <a class="reference internal" href="Lecture8_Part1_Navier_Stoke_Equation.html#equation-equation18">(138)</a>, and using Taylor expansion for the exponential term, we have</p>
+<span class="eqno">(95)<a class="headerlink" href="#equation-equation18" title="Permalink to this equation">¶</a></span>\[\mu=Ce^{E^{*}/RT}\]</div>
+<p>Plugging the equation <a class="reference internal" href="Lecture8_Part1_Navier_Stoke_Equation.html#equation-equation17">(138)</a> in <a class="reference internal" href="Lecture8_Part1_Navier_Stoke_Equation.html#equation-equation18">(139)</a>, and using Taylor expansion for the exponential term, we have</p>
 <div class="math notranslate nohighlight" id="equation-equation19">
-<span class="eqno">(95)<a class="headerlink" href="#equation-equation19" title="Permalink to this equation">¶</a></span>\[\mu=Cexp[\frac{E^{*}}{RT_0}(1-\frac{T_1-T_0}{T_0}\frac{y}{h})]\]</div>
+<span class="eqno">(96)<a class="headerlink" href="#equation-equation19" title="Permalink to this equation">¶</a></span>\[\mu=Cexp[\frac{E^{*}}{RT_0}(1-\frac{T_1-T_0}{T_0}\frac{y}{h})]\]</div>
 <p>Also, from the forces analysis shown by figure 6.3 in lecture 5, we have</p>
 <div class="math notranslate nohighlight" id="equation-equation20">
-<span class="eqno">(96)<a class="headerlink" href="#equation-equation20" title="Permalink to this equation">¶</a></span>\[\frac{d\tau}{dy}=sin\alpha \rho g\]</div>
+<span class="eqno">(97)<a class="headerlink" href="#equation-equation20" title="Permalink to this equation">¶</a></span>\[\frac{d\tau}{dy}=sin\alpha \rho g\]</div>
 <p>Integrating it with the boundary condition <span class="math notranslate nohighlight">\(\tau = 0\)</span> at <span class="math notranslate nohighlight">\(y=0\)</span>, we have</p>
 <div class="math notranslate nohighlight" id="equation-equation21">
-<span class="eqno">(97)<a class="headerlink" href="#equation-equation21" title="Permalink to this equation">¶</a></span>\[\tau(y)=sin\alpha \rho g y\]</div>
-<p>Since effective viscosity is the ratio between stress <span class="math notranslate nohighlight">\(\tau\)</span> and strain rate <span class="math notranslate nohighlight">\(du/dy\)</span>, we can combine equations <a class="reference internal" href="Lecture8_Part1_Navier_Stoke_Equation.html#equation-equation19">(139)</a> and <a class="reference internal" href="Lecture8_Part1_Navier_Stoke_Equation.html#equation-equation21">(141)</a> and have</p>
+<span class="eqno">(98)<a class="headerlink" href="#equation-equation21" title="Permalink to this equation">¶</a></span>\[\tau(y)=sin\alpha \rho g y\]</div>
+<p>Since effective viscosity is the ratio between stress <span class="math notranslate nohighlight">\(\tau\)</span> and strain rate <span class="math notranslate nohighlight">\(du/dy\)</span>, we can combine equations <a class="reference internal" href="Lecture8_Part1_Navier_Stoke_Equation.html#equation-equation19">(140)</a> and <a class="reference internal" href="Lecture8_Part1_Navier_Stoke_Equation.html#equation-equation21">(142)</a> and have</p>
 <p>$<span class="math notranslate nohighlight">\(\frac{du}{dy}=\frac{sin\alpha \rho g y}{Ce^{\frac{E^{*}}{RT_0}}e^{-\frac{E^{*}(T_1-T_0)y}{RT_0^2h}}}=G\frac{y}{e^{-By}}=Gye^{By}\)</span><span class="math notranslate nohighlight">\( (equation22) where we defined constant \)</span>G<span class="math notranslate nohighlight">\( and \)</span>B$ for simplicity.</p>
 <p>After integration, we have</p>
 <div class="math notranslate nohighlight" id="equation-equation23">
-<span class="eqno">(98)<a class="headerlink" href="#equation-equation23" title="Permalink to this equation">¶</a></span>\[u(y)=-\frac{Ge^{By}}{B^2}+\frac{Gye^{By}}{B}+C_1\]</div>
+<span class="eqno">(99)<a class="headerlink" href="#equation-equation23" title="Permalink to this equation">¶</a></span>\[u(y)=-\frac{Ge^{By}}{B^2}+\frac{Gye^{By}}{B}+C_1\]</div>
 <p>Since it is no-slip base, we have the boundary condition <span class="math notranslate nohighlight">\(u=0\)</span> at <span class="math notranslate nohighlight">\(y=h\)</span>. Apply this boundary condition we can solve the constant</p>
 <div class="math notranslate nohighlight" id="equation-equation24">
-<span class="eqno">(99)<a class="headerlink" href="#equation-equation24" title="Permalink to this equation">¶</a></span>\[C_1=\frac{Ge^{Bh}}{B^2}-\frac{Ghe^{Bh}}{B}\]</div>
+<span class="eqno">(100)<a class="headerlink" href="#equation-equation24" title="Permalink to this equation">¶</a></span>\[C_1=\frac{Ge^{Bh}}{B^2}-\frac{Ghe^{Bh}}{B}\]</div>
 <p>Hence, the equation of the velocity profile can be obtained</p>
 <div class="math notranslate nohighlight" id="equation-equation25">
-<span class="eqno">(100)<a class="headerlink" href="#equation-equation25" title="Permalink to this equation">¶</a></span>\[u(y)=-\frac{Ge^{By}}{B^2}+\frac{Gye^{By}}{B}+\frac{Ge^{Bh}}{B^2}-\frac{Ghe^{Bh}}{B}\]</div>
+<span class="eqno">(101)<a class="headerlink" href="#equation-equation25" title="Permalink to this equation">¶</a></span>\[u(y)=-\frac{Ge^{By}}{B^2}+\frac{Gye^{By}}{B}+\frac{Ge^{Bh}}{B^2}-\frac{Ghe^{Bh}}{B}\]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -454,7 +456,7 @@ Figure 7.4: Icesheet with thickness $h$ on sloping bedrock, creeping downhill un
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/Lecture6_Non_Linear_Viscosity_2D_Stokes_70_0.png" src="../../_images/Lecture6_Non_Linear_Viscosity_2D_Stokes_70_0.png" />
+<img alt="../../_images/Lecture6_Non_Linear_Viscosity_2D_Stokes_71_0.png" src="../../_images/Lecture6_Non_Linear_Viscosity_2D_Stokes_71_0.png" />
 </div>
 </div>
 </div>
@@ -497,30 +499,30 @@ Figure 7.5: One-dimensional Channel Flow.<p>The stream function is a function in
 <p>This is very confusing as in how the differentiation wiht <span class="math notranslate nohighlight">\(y\)</span> gives the velocity in <span class="math notranslate nohighlight">\(x\)</span> direction? It would certainly make more sense if it gives the velocity in <span class="math notranslate nohighlight">\(y\)</span> direction…Do not worry, let’s try to understand the stream function by looking at it in a one-dimensional channel flow before we move in to the two-dimensional case.</p>
 <p>But let’s take a look at the definition of stream function <span class="math notranslate nohighlight">\(\psi(x,y)\)</span> in a two-demensional case</p>
 <div class="math notranslate nohighlight" id="equation-equation27">
-<span class="eqno">(101)<a class="headerlink" href="#equation-equation27" title="Permalink to this equation">¶</a></span>\[u=\frac{d\psi}{dy}\]</div>
+<span class="eqno">(102)<a class="headerlink" href="#equation-equation27" title="Permalink to this equation">¶</a></span>\[u=\frac{d\psi}{dy}\]</div>
 <div class="math notranslate nohighlight" id="equation-equation28">
-<span class="eqno">(102)<a class="headerlink" href="#equation-equation28" title="Permalink to this equation">¶</a></span>\[v=-\frac{d\psi}{dx}\]</div>
+<span class="eqno">(103)<a class="headerlink" href="#equation-equation28" title="Permalink to this equation">¶</a></span>\[v=-\frac{d\psi}{dx}\]</div>
 <p>For the one-dimensional channel flow problem I have shown above, there is no velocity in the vertical direction, and so we only consider the velocity in the x-direction.</p>
 <div class="math notranslate nohighlight" id="equation-equation29">
-<span class="eqno">(103)<a class="headerlink" href="#equation-equation29" title="Permalink to this equation">¶</a></span>\[u=\frac{d\psi}{dy}=-y+5\]</div>
+<span class="eqno">(104)<a class="headerlink" href="#equation-equation29" title="Permalink to this equation">¶</a></span>\[u=\frac{d\psi}{dy}=-y+5\]</div>
 <p>If we integrate it wrt. <span class="math notranslate nohighlight">\(y\)</span>, then we can obtain the equation for the stream function</p>
 <div class="math notranslate nohighlight" id="equation-equation30">
-<span class="eqno">(104)<a class="headerlink" href="#equation-equation30" title="Permalink to this equation">¶</a></span>\[\psi=-\frac{1}{2}y^2+5y+C(x)\]</div>
+<span class="eqno">(105)<a class="headerlink" href="#equation-equation30" title="Permalink to this equation">¶</a></span>\[\psi=-\frac{1}{2}y^2+5y+C(x)\]</div>
 <p>Discuss the physical meaning of <span class="math notranslate nohighlight">\(\psi\)</span> for this case.</p>
 <p>So what does that <span class="math notranslate nohighlight">\(\psi\)</span> function mean?</p>
 <img src='img/1d_ChannelFlow5.PNG' width=500>
 Figure 7.6: Volumetric Flow Rate of One-dimensional Channel Flow (with the width of z-direction equals 1).<p>Let’s look at the tiny volumetric flow rate <span class="math notranslate nohighlight">\(dQ\)</span> through the tiny slice of thickness <span class="math notranslate nohighlight">\(dy\)</span> as shown above.</p>
 <div class="math notranslate nohighlight" id="equation-equation31">
-<span class="eqno">(105)<a class="headerlink" href="#equation-equation31" title="Permalink to this equation">¶</a></span>\[dQ=u dy*1 = udy\]</div>
+<span class="eqno">(106)<a class="headerlink" href="#equation-equation31" title="Permalink to this equation">¶</a></span>\[dQ=u dy*1 = udy\]</div>
 <p>Then the overall volumetric flow rate through the whole section (from <span class="math notranslate nohighlight">\(y=1\)</span> to <span class="math notranslate nohighlight">\(y=2\)</span>) as shown in between the blue lines is</p>
 <div class="math notranslate nohighlight" id="equation-equation32">
-<span class="eqno">(106)<a class="headerlink" href="#equation-equation32" title="Permalink to this equation">¶</a></span>\[Q=\int^2_1 udy=\int^2_1 (-y+5)dy=-\frac{1}{2}y^2+5y+C(x)|^2_1\]</div>
-<p>Compare the final part of equation <a class="reference internal" href="Lecture8_Part1_Navier_Stoke_Equation.html#equation-equation32">(151)</a> with <a class="reference internal" href="Lecture8_Part1_Navier_Stoke_Equation.html#equation-equation30">(149)</a>, we realise that the stream function represents volumetric flow rate in a sense</p>
+<span class="eqno">(107)<a class="headerlink" href="#equation-equation32" title="Permalink to this equation">¶</a></span>\[Q=\int^2_1 udy=\int^2_1 (-y+5)dy=-\frac{1}{2}y^2+5y+C(x)|^2_1\]</div>
+<p>Compare the final part of equation <a class="reference internal" href="Lecture8_Part1_Navier_Stoke_Equation.html#equation-equation32">(152)</a> with <a class="reference internal" href="Lecture8_Part1_Navier_Stoke_Equation.html#equation-equation30">(150)</a>, we realise that the stream function represents volumetric flow rate in a sense</p>
 <div class="math notranslate nohighlight" id="equation-equation33">
-<span class="eqno">(107)<a class="headerlink" href="#equation-equation33" title="Permalink to this equation">¶</a></span>\[Q = \psi_2 - \psi_1\]</div>
-<p>Now, we should finally understand the very confusing equation <a class="reference internal" href="Lecture8_Part1_Navier_Stoke_Equation.html#equation-equation27">(146)</a> we mentioned before, with the help of figure 7.6. The horizontal velocity <span class="math notranslate nohighlight">\(u\)</span> equals the volumetric flow rate through the thin section <span class="math notranslate nohighlight">\(dQ\)</span> divided by the vertical thickness <span class="math notranslate nohighlight">\(dy\)</span>, in this case</p>
+<span class="eqno">(108)<a class="headerlink" href="#equation-equation33" title="Permalink to this equation">¶</a></span>\[Q = \psi_2 - \psi_1\]</div>
+<p>Now, we should finally understand the very confusing equation <a class="reference internal" href="Lecture8_Part1_Navier_Stoke_Equation.html#equation-equation27">(147)</a> we mentioned before, with the help of figure 7.6. The horizontal velocity <span class="math notranslate nohighlight">\(u\)</span> equals the volumetric flow rate through the thin section <span class="math notranslate nohighlight">\(dQ\)</span> divided by the vertical thickness <span class="math notranslate nohighlight">\(dy\)</span>, in this case</p>
 <div class="math notranslate nohighlight" id="equation-equation34">
-<span class="eqno">(108)<a class="headerlink" href="#equation-equation34" title="Permalink to this equation">¶</a></span>\[u=\frac{d\psi}{dy}=\frac{dQ}{dy} = \frac{d}{dy}(-\frac{1}{2}y^2+5y+C(x))= -y+5\]</div>
+<span class="eqno">(109)<a class="headerlink" href="#equation-equation34" title="Permalink to this equation">¶</a></span>\[u=\frac{d\psi}{dy}=\frac{dQ}{dy} = \frac{d}{dy}(-\frac{1}{2}y^2+5y+C(x))= -y+5\]</div>
 <p>Sketch stream function and streamlines for the two end-member cases (Couette and P-driven). Pay attention to stream line orientation and spacing (in terms of colorbars).</p>
 <p>So the streamlines represent the path of the particle in the channel flow, as we can imagine the path in this one-dimensional flow problem should be linear and horizontal. In another word, the particle should only flow in the x-direction as in there is no force acting on the y-direction.</p>
 <div class="cell docutils container">
@@ -557,7 +559,7 @@ Figure 7.6: Volumetric Flow Rate of One-dimensional Channel Flow (with the width
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/Lecture6_Non_Linear_Viscosity_2D_Stokes_99_0.png" src="../../_images/Lecture6_Non_Linear_Viscosity_2D_Stokes_99_0.png" />
+<img alt="../../_images/Lecture6_Non_Linear_Viscosity_2D_Stokes_100_0.png" src="../../_images/Lecture6_Non_Linear_Viscosity_2D_Stokes_100_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -597,7 +599,7 @@ Figure 7.6: Volumetric Flow Rate of One-dimensional Channel Flow (with the width
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/Lecture6_Non_Linear_Viscosity_2D_Stokes_100_0.png" src="../../_images/Lecture6_Non_Linear_Viscosity_2D_Stokes_100_0.png" />
+<img alt="../../_images/Lecture6_Non_Linear_Viscosity_2D_Stokes_101_0.png" src="../../_images/Lecture6_Non_Linear_Viscosity_2D_Stokes_101_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -634,7 +636,7 @@ Figure 7.6: Volumetric Flow Rate of One-dimensional Channel Flow (with the width
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/Lecture6_Non_Linear_Viscosity_2D_Stokes_101_0.png" src="../../_images/Lecture6_Non_Linear_Viscosity_2D_Stokes_101_0.png" />
+<img alt="../../_images/Lecture6_Non_Linear_Viscosity_2D_Stokes_102_0.png" src="../../_images/Lecture6_Non_Linear_Viscosity_2D_Stokes_102_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -674,7 +676,7 @@ Figure 7.6: Volumetric Flow Rate of One-dimensional Channel Flow (with the width
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/Lecture6_Non_Linear_Viscosity_2D_Stokes_102_0.png" src="../../_images/Lecture6_Non_Linear_Viscosity_2D_Stokes_102_0.png" />
+<img alt="../../_images/Lecture6_Non_Linear_Viscosity_2D_Stokes_103_0.png" src="../../_images/Lecture6_Non_Linear_Viscosity_2D_Stokes_103_0.png" />
 </div>
 </div>
 </div>
