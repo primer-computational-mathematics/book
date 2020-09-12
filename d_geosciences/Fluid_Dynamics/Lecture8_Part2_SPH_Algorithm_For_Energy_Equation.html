@@ -271,10 +271,10 @@
 <span id="id1"></span><h1>Lecture8_Part2_SPH_Algorithm_For_Energy_Equation<a class="headerlink" href="#lecture8-part2-sph-algorithm-for-energy-equation" title="Permalink to this headline">¶</a></h1>
 <p>Since we have the Navier-Stoke equation for simulating fluid, we can break it down to simulate the movement of individual fluid particles, for a particle <span class="math notranslate nohighlight">\(i\)</span>, we have</p>
 <div class="math notranslate nohighlight" id="equation-equation1">
-<span class="eqno">(160)<a class="headerlink" href="#equation-equation1" title="Permalink to this equation">¶</a></span>\[\frac{\text{d}\vec{v_i}}{\text{d}t}=\vec{g} - \frac{1}{\rho_i}\nabla p + \frac{\mu}{\rho_i} \nabla^{2}\vec{v}\]</div>
+<span class="eqno">(162)<a class="headerlink" href="#equation-equation1" title="Permalink to this equation">¶</a></span>\[\frac{\text{d}\vec{v_i}}{\text{d}t}=\vec{g} - \frac{1}{\rho_i}\nabla p + \frac{\mu}{\rho_i} \nabla^{2}\vec{v}\]</div>
 <div class="section" id="mathematics-for-sph">
 <h2>Mathematics for SPH<a class="headerlink" href="#mathematics-for-sph" title="Permalink to this headline">¶</a></h2>
-<p>Smoothed-particle hydrodynamics (SPH) is a computational method used for simulating the mechanics of continuum media, such as solid mechanics and fluid flows. It can be used to solve the equation <a class="reference internal" href="#equation-equation1">(160)</a> for any quantity <span class="math notranslate nohighlight">\(Q\)</span> of one particle. It is a meshfree Lagrangian method(where the co-ordinates move with the fluid), and the resolution of the method can easilybe adjusted with respect to variables such as density.</p>
+<p>Smoothed-particle hydrodynamics (SPH) is a computational method used for simulating the mechanics of continuum media, such as solid mechanics and fluid flows. It can be used to solve the equation <a class="reference internal" href="#equation-equation1">(162)</a> for any quantity <span class="math notranslate nohighlight">\(Q\)</span> of one particle. It is a meshfree Lagrangian method(where the co-ordinates move with the fluid), and the resolution of the method can easilybe adjusted with respect to variables such as density.</p>
 <p>The key assumption of the SPH method is that calculations are based on a weighted average (by <span class="math notranslate nohighlight">\(W(r_i-r_j,h)\)</span>) of field values. <span class="math notranslate nohighlight">\(W\)</span> will give more strength to points that are closer and make points that are further away have a weaker influence. At points that are more than a certain distance away, <span class="math notranslate nohighlight">\(W\)</span> will become zero, which means those points would not have any influence at all.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -303,17 +303,17 @@
 <p>$<span class="math notranslate nohighlight">\(A_{i}(r_{i})=\int_{}^{} A(r_{j})W(r_{i}-r_{j},h)dr_{j}\approx\sum_{j}A(r_{i})W(r_{i}-r_{j},h)\)</span><span class="math notranslate nohighlight">\((equation2) where \)</span>r_{j}<span class="math notranslate nohighlight">\( is the location of a neighboring point and \)</span>r_{i}<span class="math notranslate nohighlight">\( is the location of our point; \)</span>h<span class="math notranslate nohighlight">\( is the interaction radius, the points that are more than \)</span>h$ away will stop interacting with our point.</p>
 <p>So for density, the discrete sum of approximation is</p>
 <div class="math notranslate nohighlight" id="equation-equation3">
-<span class="eqno">(161)<a class="headerlink" href="#equation-equation3" title="Permalink to this equation">¶</a></span>\[A_{i}(r_{i})=\rho(r_i)\approx\sum_{j}\frac{\rho(r_{j})}{\rho(r_j)}W(r_{i}-r_{j},h)m_j\approx\sum_{j}W(r_{i}-r_{j},h)m_j\]</div>
+<span class="eqno">(163)<a class="headerlink" href="#equation-equation3" title="Permalink to this equation">¶</a></span>\[A_{i}(r_{i})=\rho(r_i)\approx\sum_{j}\frac{\rho(r_{j})}{\rho(r_j)}W(r_{i}-r_{j},h)m_j\approx\sum_{j}W(r_{i}-r_{j},h)m_j\]</div>
 <p>Then we can find the pressure gradient <span class="math notranslate nohighlight">\(\nabla p\)</span></p>
 <div class="math notranslate nohighlight" id="equation-equation4">
-<span class="eqno">(162)<a class="headerlink" href="#equation-equation4" title="Permalink to this equation">¶</a></span>\[\nabla p (r_i)=\sum \frac{m_j p_j}{\rho_j} \nabla_i W(r_i-r_j,h)\]</div>
+<span class="eqno">(164)<a class="headerlink" href="#equation-equation4" title="Permalink to this equation">¶</a></span>\[\nabla p (r_i)=\sum \frac{m_j p_j}{\rho_j} \nabla_i W(r_i-r_j,h)\]</div>
 <p>But this equation does not obey the conservation of momentum because it does not have the right symmetry (force derived from this equation felt by particle A from B does not equal to the force felt by B from A). To conserve quantities, we can apply Lagrangian, then the equation becomes:</p>
 <p>$<span class="math notranslate nohighlight">\(\frac{\nabla p} {\rho}=\nabla( \frac{p}{\rho})+\frac{p}{\rho^2} \nabla \rho\)</span><span class="math notranslate nohighlight">\( (equation5) where \)</span>\nabla(\frac{p}{\rho})=\frac{\nabla p}{\rho}+p \nabla(\frac{1}{\rho})<span class="math notranslate nohighlight">\(, and \)</span>p\nabla(\frac{1}{\rho})=-\frac{p}{\rho^2}\nabla \rho$.</p>
-<p>So instead of the approximation from equation <a class="reference internal" href="#equation-equation4">(162)</a>, we could have the following expression by plugging the <span class="math notranslate nohighlight">\(\rho, p, \nabla p \&amp;\nabla \rho\)</span> into equation <a class="reference internal" href="Lecture7_Pipe_Flow_with_Heat.html#equation-equation5">(116)</a>, keeping the momentum a constant:</p>
+<p>So instead of the approximation from equation <a class="reference internal" href="#equation-equation4">(164)</a>, we could have the following expression by plugging the <span class="math notranslate nohighlight">\(\rho, p, \nabla p \&amp;\nabla \rho\)</span> into equation <a class="reference internal" href="Lecture7_Pipe_Flow_with_Heat.html#equation-equation5">(117)</a>, keeping the momentum a constant:</p>
 <p>$<span class="math notranslate nohighlight">\(-\frac{\nabla p_i} {\rho_i}\approx-\sum_j m_j (\frac{p_i}{\rho_i^2}+\frac{p_j}{\rho_j^2})\nabla_i W(r_i-r_j,h)\)</span><span class="math notranslate nohighlight">\( (equation6) where \)</span>W(r_i-r_j,h)\propto e^{\frac{-r_{ij}^2}{h^2}}$ (Gaussian Distribution).</p>
 <p>Last but not least, we can apply the same techniques to approximate the viscosity term <span class="math notranslate nohighlight">\(\frac{\mu}{\rho_i} \nabla^{2}\vec{v_i}\)</span>.</p>
 <div class="math notranslate nohighlight" id="equation-equation7">
-<span class="eqno">(163)<a class="headerlink" href="#equation-equation7" title="Permalink to this equation">¶</a></span>\[\frac{\mu}{\rho_i} \nabla^{2}\vec{v_i}\approx\frac{\mu}{\rho_i}\sum_j m_j \left[\frac{v_j-v_i}{\rho_j}\right]\nabla^{2}W(r_i-r_j,h)\]</div>
+<span class="eqno">(165)<a class="headerlink" href="#equation-equation7" title="Permalink to this equation">¶</a></span>\[\frac{\mu}{\rho_i} \nabla^{2}\vec{v_i}\approx\frac{\mu}{\rho_i}\sum_j m_j \left[\frac{v_j-v_i}{\rho_j}\right]\nabla^{2}W(r_i-r_j,h)\]</div>
 </div>
 <div class="section" id="from-navier-stoke-to-sph">
 <h2>From Navier-Stoke to SPH<a class="headerlink" href="#from-navier-stoke-to-sph" title="Permalink to this headline">¶</a></h2>
@@ -472,11 +472,11 @@
 </div>
 </div>
 </div>
-<p>In order to compute the <span class="math notranslate nohighlight">\(\frac{\text{d}\vec{v_i}}{\text{d}t}\)</span> at every point for equation <a class="reference internal" href="#equation-equation1">(160)</a>, we need to calculate the following equations respectively:</p>
+<p>In order to compute the <span class="math notranslate nohighlight">\(\frac{\text{d}\vec{v_i}}{\text{d}t}\)</span> at every point for equation <a class="reference internal" href="#equation-equation1">(162)</a>, we need to calculate the following equations respectively:</p>
 <div class="math notranslate nohighlight" id="equation-equation8">
-<span class="eqno">(164)<a class="headerlink" href="#equation-equation8" title="Permalink to this equation">¶</a></span>\[T_{i} \approx \sum_{j}(T_j-T_i) k dt \nabla W(r_i-r_j,h) \approx \sum_{j}(T_j-T_i) k dt \frac{315}{64\pi h^{9}}(h^{2}-\parallel r_i - r_j\parallel^2)^{3}\]</div>
+<span class="eqno">(166)<a class="headerlink" href="#equation-equation8" title="Permalink to this equation">¶</a></span>\[T_{i} \approx \sum_{j}(T_j-T_i) k dt \nabla W(r_i-r_j,h) \approx \sum_{j}(T_j-T_i) k dt \frac{315}{64\pi h^{9}}(h^{2}-\parallel r_i - r_j\parallel^2)^{3}\]</div>
 <div class="math notranslate nohighlight" id="equation-equation9">
-<span class="eqno">(165)<a class="headerlink" href="#equation-equation9" title="Permalink to this equation">¶</a></span>\[\rho_{i} \approx \sum_{j} m_{j}\frac{315}{64\pi h^{9}}(h^{2}-\parallel r_i - r_j\parallel^2)^{3}\]</div>
+<span class="eqno">(167)<a class="headerlink" href="#equation-equation9" title="Permalink to this equation">¶</a></span>\[\rho_{i} \approx \sum_{j} m_{j}\frac{315}{64\pi h^{9}}(h^{2}-\parallel r_i - r_j\parallel^2)^{3}\]</div>
 <p>Considering the effect of temperature to the change of density we have</p>
 <p>$<span class="math notranslate nohighlight">\(\rho_{i} = \rho_{i} \cdot(1 - \alpha_v \cdot (T_i-T_0))\)</span><span class="math notranslate nohighlight">\( (equation9) where \)</span>\alpha_v<span class="math notranslate nohighlight">\( is the thermal expansion coefficient and \)</span>T_0<span class="math notranslate nohighlight">\( is the original temperature of that particle \)</span>i$.</p>
 <p>Note that <span class="math notranslate nohighlight">\(T\)</span> and <span class="math notranslate nohighlight">\(\rho_i\)</span> are obtained before calculating the pressure gradient and viscosity term.</p>
@@ -501,11 +501,11 @@
 </div>
 <p>Then we can compute the pressure and viscosity term</p>
 <div class="math notranslate nohighlight" id="equation-equation10">
-<span class="eqno">(166)<a class="headerlink" href="#equation-equation10" title="Permalink to this equation">¶</a></span>\[\frac{\nabla p_{i}}{p_{i}}\approx\sum_j m_{j}\left[\frac{p_i}{\rho_i^{2}}+\frac{p_j}{\rho_j^{2}}\right]\frac{-45}{\pi h^{6}}(h-\parallel r_i - r_j\parallel)^2\frac{r_i-r_j}{\parallel r_i - r_j\parallel}\]</div>
+<span class="eqno">(168)<a class="headerlink" href="#equation-equation10" title="Permalink to this equation">¶</a></span>\[\frac{\nabla p_{i}}{p_{i}}\approx\sum_j m_{j}\left[\frac{p_i}{\rho_i^{2}}+\frac{p_j}{\rho_j^{2}}\right]\frac{-45}{\pi h^{6}}(h-\parallel r_i - r_j\parallel)^2\frac{r_i-r_j}{\parallel r_i - r_j\parallel}\]</div>
 <p>and</p>
 <div class="math notranslate nohighlight" id="equation-equation11">
-<span class="eqno">(167)<a class="headerlink" href="#equation-equation11" title="Permalink to this equation">¶</a></span>\[\frac{\mu}{\rho_i} \nabla^{2}\vec{v_i}\approx\frac{\mu}{\rho_i}\sum_j m_j \left[\frac{v_j-v_i}{\rho_j}\right]\frac{45}{\pi h^{6}}(h-\parallel r_i - r_j\parallel)\]</div>
-<p>After equation <a class="reference internal" href="#equation-equation8">(164)</a> to <a class="reference internal" href="#equation-equation11">(167)</a> are computed, we can put them together into N-S equation to obtain acceleration.</p>
+<span class="eqno">(169)<a class="headerlink" href="#equation-equation11" title="Permalink to this equation">¶</a></span>\[\frac{\mu}{\rho_i} \nabla^{2}\vec{v_i}\approx\frac{\mu}{\rho_i}\sum_j m_j \left[\frac{v_j-v_i}{\rho_j}\right]\frac{45}{\pi h^{6}}(h-\parallel r_i - r_j\parallel)\]</div>
+<p>After equation <a class="reference internal" href="#equation-equation8">(166)</a> to <a class="reference internal" href="#equation-equation11">(169)</a> are computed, we can put them together into N-S equation to obtain acceleration.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">ComputeForces</span><span class="p">():</span>
