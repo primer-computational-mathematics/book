@@ -278,7 +278,7 @@
 <p>The key assumption of the SPH method is that calculations are based on a weighted average (by <span class="math notranslate nohighlight">\(W(r_i-r_j,h)\)</span>) of field values. <span class="math notranslate nohighlight">\(W\)</span> will give more strength to points that are closer and make points that are further away have a weaker influence. At points that are more than a certain distance away, <span class="math notranslate nohighlight">\(W\)</span> will become zero, which means those points would not have any influence at all.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="n">N</span>  <span class="o">=</span> <span class="mi">1000</span>    <span class="c1"># number of points to plot (ignore)</span>
 <span class="n">h</span> <span class="o">=</span> <span class="mf">16.0</span>
@@ -325,7 +325,7 @@
 <h2>From Navier-Stoke to SPH<a class="headerlink" href="#from-navier-stoke-to-sph" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Open Anaconda Prompt (anaconda 3), then type</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Open Anaconda Prompt (anaconda 3), then type</span>
 <span class="c1">#pip install ipyvolume</span>
 <span class="c1">#pip install bqplot</span>
 <span class="c1">#jupyter nbextension enable –py bqplot</span>
@@ -341,7 +341,7 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># some constants</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># some constants</span>
 <span class="n">G</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span><span class="o">-</span><span class="mf">9.8</span><span class="p">,</span><span class="mf">0.0</span><span class="p">]);</span> <span class="c1"># external (gravitational) forces</span>
 <span class="n">REST_DENS</span> <span class="o">=</span> <span class="mf">1000.0</span><span class="p">;</span> <span class="c1"># rest density of liquid</span>
 <span class="n">GAS_CONST</span> <span class="o">=</span> <span class="mf">2000.0</span><span class="p">;</span> <span class="c1"># const for equation of state</span>
@@ -389,7 +389,7 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># particle data structure</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># particle data structure</span>
 <span class="c1"># stores position, velocity, and force for integration</span>
 <span class="c1"># stores density (rho) and pressure values for SPH</span>
 <span class="k">class</span> <span class="nc">Particle</span><span class="p">:</span>
@@ -407,7 +407,7 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">InitSPH</span><span class="p">():</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">InitSPH</span><span class="p">():</span>
     <span class="k">global</span> <span class="n">X</span>
     <span class="k">global</span> <span class="n">fig</span>
     <span class="k">global</span> <span class="n">scatter</span>
@@ -493,7 +493,7 @@
 <p>where <span class="math notranslate nohighlight">\(k\)</span> is a constant, <span class="math notranslate nohighlight">\(\rho_0\)</span> is the resting density (density of fluid at equilibrium).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">ComputeDensityPressureTemperature</span><span class="p">():</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">ComputeDensityPressureTemperature</span><span class="p">():</span>
     <span class="k">for</span> <span class="n">pi</span> <span class="ow">in</span> <span class="n">Fluid_Particles_list</span><span class="p">:</span>
         <span class="n">pi</span><span class="o">.</span><span class="n">rho</span> <span class="o">=</span> <span class="mf">0.0</span>
         <span class="n">dT</span> <span class="o">=</span> <span class="mf">0.0</span>    <span class="c1"># the change in temperature</span>
@@ -518,7 +518,7 @@
 <p>After equation <a class="reference internal" href="#equation-equation8-2-10">(180)</a> to <a class="reference internal" href="#equation-equation8-2-13">(183)</a> are computed, we can put them together into N-S equation to obtain acceleration.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">ComputeForces</span><span class="p">():</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">ComputeForces</span><span class="p">():</span>
     
     <span class="k">for</span> <span class="n">pi</span> <span class="ow">in</span> <span class="n">Fluid_Particles_list</span><span class="p">:</span>
         
@@ -553,7 +553,7 @@
 <p>And then we can use a simple time stepping numerical integration scheme to advance the velocity and position of particles.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">Integrate</span><span class="p">():</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">Integrate</span><span class="p">():</span>
     <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">Fluid_Particles_list</span><span class="p">:</span>
         <span class="c1"># forward Euler integration</span>
         <span class="n">p</span><span class="o">.</span><span class="n">V</span> <span class="o">+=</span> <span class="n">dt</span><span class="o">*</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">F</span><span class="p">)</span><span class="o">/</span><span class="n">p</span><span class="o">.</span><span class="n">rho</span><span class="p">;</span>   
@@ -606,7 +606,7 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">Update</span><span class="p">():</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">Update</span><span class="p">():</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;start updating&quot;</span><span class="p">)</span>
     <span class="n">ComputeDensityPressureTemperature</span><span class="p">()</span>
     <span class="n">ComputeForces</span><span class="p">()</span>
@@ -645,7 +645,7 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">InitSPH</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">InitSPH</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -664,7 +664,7 @@ particles
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run this code to update the mantle convection</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run this code to update the mantle convection</span>
 <span class="n">TotalTime</span> <span class="o">=</span> <span class="mi">1000</span>
 <span class="n">iterations</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">TotalTime</span><span class="o">/</span><span class="n">dt</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;start iterating&quot;</span><span class="p">)</span>
