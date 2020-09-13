@@ -300,91 +300,111 @@
 <h1>Chapter 9 – Back Propagation<a class="headerlink" href="#chapter-9-back-propagation" title="Permalink to this headline">¶</a></h1>
 <p>The ultimate goal of neural network, don’t forget, is to find the best weight and bias. So when we obtain the predicted <span class="math notranslate nohighlight">\(\hat{y}\)</span>, we need to use it to compare with the actual result set <span class="math notranslate nohighlight">\(y\)</span>, and adjust weight and bias matrix <span class="math notranslate nohighlight">\(W\)</span> in accordance.</p>
 <p>The thought process is identical to the previous two layers neural network as we introduced before. However, we have three layers in this case, and potentially much more layers. We need to adjust and update the weight in each layer, instead of just one layer in the two layer example.</p>
-<p>So we need to obtain the gradient of the cost function in order to update weights. Let’s take the example of the first weight in the input layer in figure 1.13 in chapter 8. We need a longer chain rule to obtain the gradient because we have one more layer:</p>
-<p>\begin{equation}
-\frac{\delta C}{\delta w^{(1)}<em>{11}} = \frac{\delta C}{\delta\hat{y}}\frac{\delta\hat{y}}{\delta h_2} \frac{\delta h_2}{\delta h_1} \frac{\delta h_1}{\delta w^{(1)}</em>{11}}
-\label{real chain rule}
-\end{equation}</p>
+<p>So we need to obtain the gradient of the cost function in order to update weights. Let’s take the example of the first weight in the input layer in figure 8.1 in chapter 8. We need a longer chain rule to obtain the gradient because we have one more layer:</p>
+<div class="math notranslate nohighlight" id="equation-eq9-1">
+<span class="eqno">(238)<a class="headerlink" href="#equation-eq9-1" title="Permalink to this equation">¶</a></span>\[
+    \frac{\delta C}{\delta w^{(1)}_{11}} = \frac{\delta C}{\delta\hat{y}}\frac{\delta\hat{y}}{\delta h_2} \frac{\delta h_2}{\delta h_1} \frac{\delta h_1}{\delta w^{(1)}_{11}}
+    \label{real chain rule}
+\]</div>
 <p>Note that the gradient of a weight is evaluated by the sum of all data/student (<span class="math notranslate nohighlight">\(y_i\)</span>), as explained in the previous example.</p>
-<p>\begin{equation}
--\frac{\delta C}{w^{(1)}<em>{11}} = \frac{1}{m} \frac{\delta}{\delta w^{(1)}</em>{11}} [\sum_{i=1}^m [y_i*ln(\sigma(h_2)]+(1-y_i)*ln(1-\sigma(h_2))]
-\end{equation}</p>
+<div class="math notranslate nohighlight" id="equation-eq9-2">
+<span class="eqno">(239)<a class="headerlink" href="#equation-eq9-2" title="Permalink to this equation">¶</a></span>\[
+-\frac{\delta C}{w^{(1)}_{11}} = \frac{1}{m} \frac{\delta}{\delta w^{(1)}_{11}} [\sum_{i=1}^m [y_i*ln(\sigma(h_2)]+(1-y_i)*ln(1-\sigma(h_2))]
+\]</div>
 <p>For simplicity, we just derive the gradient for weight <span class="math notranslate nohighlight">\(w^{(1)}_{11}\)</span> for a single <span class="math notranslate nohighlight">\(y\)</span>, and use for loop to sum up them up and divide by <span class="math notranslate nohighlight">\(m\)</span>.</p>
-<p>\begin{equation}
--\frac{\delta C}{w^{(1)}<em>{11}} = \frac{\delta}{\delta w^{(1)}</em>{11}} [y*ln(\sigma(h_2)]+(1-y)*ln(1-\sigma(h_2))]
-\end{equation}</p>
+<div class="math notranslate nohighlight" id="equation-eq9-3">
+<span class="eqno">(240)<a class="headerlink" href="#equation-eq9-3" title="Permalink to this equation">¶</a></span>\[
+-\frac{\delta C}{w^{(1)}_{11}} = \frac{\delta}{\delta w^{(1)}_{11}} [y*ln(\sigma(h_2)]+(1-y)*ln(1-\sigma(h_2))]
+\]</div>
 <p>Again, the <span class="math notranslate nohighlight">\(y\)</span> is just a constant, so we put it outside of the differential equation.</p>
-<p>\begin{equation}
--\frac{\delta C}{w^{(1)}<em>{11}} = y*\frac{\delta}{\delta w^{(1)}</em>{11}} ln(\sigma(h_2)]+ (1-y)*\frac{\delta}{\delta w^{(1)}_{11}}ln(1-\sigma(h_2))
-\end{equation}
-where <span class="math notranslate nohighlight">\(\sigma(h_2) = \hat{y}\)</span>.</p>
+<div class="math notranslate nohighlight" id="equation-eq9-4">
+<span class="eqno">(241)<a class="headerlink" href="#equation-eq9-4" title="Permalink to this equation">¶</a></span>\[
+-\frac{\delta C}{w^{(1)}_{11}} = y*\frac{\delta}{\delta w^{(1)}_{11}} ln(\sigma(h_2)]+ (1-y)*\frac{\delta}{\delta w^{(1)}_{11}}ln(1-\sigma(h_2))
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\sigma(h_2) = \hat{y}\)</span>.</p>
 <p>We also know that</p>
-<p>\begin{equation}
-h_2 = \sigma(h_1)<em>w^{(2)}<em>{11} + \sigma(h_2)*w^{(2)}</em>{21} + 1</em>w^{(2)}_{31}
-\end{equation}</p>
+<div class="math notranslate nohighlight" id="equation-eq9-5">
+<span class="eqno">(242)<a class="headerlink" href="#equation-eq9-5" title="Permalink to this equation">¶</a></span>\[
+h_2 = \sigma(h_1)*w^{(2)}_{11} + \sigma(h_2)*w^{(2)}_{21} + 1*w^{(2)}_{31} 
+\]</div>
 <p>and</p>
-<p>\begin{equation}
-h_1 = w^{(1)}<em>{11}*x_1 + w^{(1)}</em>{21}*x_2 + w^{(1)}<em>{31}*x_3 + w^{(1)}</em>{41}*1
-\end{equation}</p>
+<div class="math notranslate nohighlight" id="equation-eq9-6">
+<span class="eqno">(243)<a class="headerlink" href="#equation-eq9-6" title="Permalink to this equation">¶</a></span>\[
+h_1 = w^{(1)}_{11}*x_1 + w^{(1)}_{21}*x_2 + w^{(1)}_{31}*x_3 + w^{(1)}_{41}*1
+\]</div>
 <p>So, for the parts that can be combined into the chain rule:</p>
-<p>\begin{equation}
+<div class="math notranslate nohighlight" id="equation-eq9-7">
+<span class="eqno">(244)<a class="headerlink" href="#equation-eq9-7" title="Permalink to this equation">¶</a></span>\[
 \frac{\delta C}{\delta \hat{y}} = \frac{1-y}{1-\hat{y}} - \frac{y}{\hat{y}}
-\end{equation}</p>
-<p>\begin{equation}
-\frac{\delta \hat{y}}{\delta h_2} = \sigma^{‘}(h_2)= \sigma(h_2)[1-\sigma(h_2)]
-\end{equation}</p>
-<p>\begin{equation}
-\frac{\delta h_2}{\delta h_1} = w^{(2)}_{11}\sigma^{‘}(h_1)
-\end{equation}</p>
-<p>\begin{equation}
+\]</div>
+<div class="math notranslate nohighlight" id="equation-eq9-8">
+<span class="eqno">(245)<a class="headerlink" href="#equation-eq9-8" title="Permalink to this equation">¶</a></span>\[
+\frac{\delta \hat{y}}{\delta h_2} = \sigma^{'}(h_2)= \sigma(h_2)[1-\sigma(h_2)]
+\]</div>
+<div class="math notranslate nohighlight" id="equation-eq9-9">
+<span class="eqno">(246)<a class="headerlink" href="#equation-eq9-9" title="Permalink to this equation">¶</a></span>\[
+\frac{\delta h_2}{\delta h_1} = w^{(2)}_{11}\sigma^{'}(h_1)
+\]</div>
+<div class="math notranslate nohighlight" id="equation-eq9-10">
+<span class="eqno">(247)<a class="headerlink" href="#equation-eq9-10" title="Permalink to this equation">¶</a></span>\[
 \frac{\delta h_1}{\delta w^{(1)}_{11}} = x_1
-\end{equation}</p>
+\]</div>
 <p>As a result, we have the gradient of <span class="math notranslate nohighlight">\(w_{11}^{(1)}\)</span> from the input layer to the hidden layer as follow</p>
-<p>\begin{equation}
--\frac{\delta C}{w^{(1)}<em>{11}} = (\frac{1-y}{1-\hat{y}} - \frac{y}{\hat{y}})*\sigma^{‘}(h_2)*w^{(2)}</em>{11}*\sigma^{‘}(h_1)*x_1
-\label{inputToHidden}
-\end{equation}</p>
+<div class="math notranslate nohighlight" id="equation-eq9-11">
+<span class="eqno">(248)<a class="headerlink" href="#equation-eq9-11" title="Permalink to this equation">¶</a></span>\[
+    -\frac{\delta C}{w^{(1)}_{11}} = (\frac{1-y}{1-\hat{y}} - \frac{y}{\hat{y}})*\sigma^{'}(h_2)*w^{(2)}_{11}*\sigma^{'}(h_1)*x_1
+    \label{inputToHidden}
+\]</div>
 <p>On the other hand, we also want to get the gradient of weight (e.g. <span class="math notranslate nohighlight">\(w_{11}^{(2)}\)</span>) from the hidden layer to the output layer:</p>
-<p>\begin{equation}
-\frac{\delta C}{\delta w^{(2)}<em>{11}} = \frac{\delta C}{\delta\hat{y}}\frac{\delta\hat{y}}{\delta h_2} \frac{\delta h_2}{\delta  w^{(2)}</em>{11}}
-\end{equation}</p>
-<p>\begin{equation}
-\frac{\delta C}{\delta w^{(2)}_{11}} = (\frac{1-y}{1-\hat{y}} - \frac{y}{\hat{y}})*\sigma^{‘}(h_2) * \sigma(h_1)
-\label{hiddenToOutput}
-\end{equation}</p>
-<p>We realise that the first two terms are the same in equation \ref{inputToHidden} and \ref{hiddenToOutput}, so we define an `Error Term’ <span class="math notranslate nohighlight">\(\delta^{n-1}\)</span> for simplicity (<span class="math notranslate nohighlight">\(n\)</span> is the number of layers in the network, i.e. <span class="math notranslate nohighlight">\(n=3\)</span>):</p>
-<p>\begin{equation}
-\delta^{n-1} = \frac{\delta C}{\delta \hat{y}}\frac{\delta \hat{y}}{\delta h_2} =  (\frac{1-y}{1-\hat{y}} - \frac{y}{\hat{y}})*\sigma^{‘}(h_2)
-\end{equation}</p>
-<p>So the weight <span class="math notranslate nohighlight">\(w_{11}^{(2)}\)</span> from the hidden to output (<span class="math notranslate nohighlight">\(2nd\)</span>) layer in equation \ref{hiddenToOutput} can be expressed by the <span class="math notranslate nohighlight">\(\delta^2\)</span> for the <span class="math notranslate nohighlight">\(2nd\)</span> layer as</p>
-<p>\begin{equation}
-\frac{\delta C}{\delta w^{(2)}_{11}} = \delta^{3-1} *\sigma(h_1)
-\end{equation}</p>
-<p>And the weight <span class="math notranslate nohighlight">\(w_{11}^{(1)}\)</span> from the input to hidden layer in equation \ref{inputToHidden} can be written as</p>
-<p>\begin{equation}
-\frac{\delta C}{\delta w^{(1)}<em>{11}} = \delta^{3-1} * w^{(2)}</em>{11} * \sigma^{‘}(h_1)*x_1
-\label{inputToHidden1}
-\end{equation}</p>
+<div class="math notranslate nohighlight" id="equation-eq9-12">
+<span class="eqno">(249)<a class="headerlink" href="#equation-eq9-12" title="Permalink to this equation">¶</a></span>\[
+     \frac{\delta C}{\delta w^{(2)}_{11}} = \frac{\delta C}{\delta\hat{y}}\frac{\delta\hat{y}}{\delta h_2} \frac{\delta h_2}{\delta  w^{(2)}_{11}}
+\]</div>
+<div class="math notranslate nohighlight" id="equation-eq9-13">
+<span class="eqno">(250)<a class="headerlink" href="#equation-eq9-13" title="Permalink to this equation">¶</a></span>\[
+     \frac{\delta C}{\delta w^{(2)}_{11}} = (\frac{1-y}{1-\hat{y}} - \frac{y}{\hat{y}})*\sigma^{'}(h_2) * \sigma(h_1)
+     \label{hiddenToOutput}
+\]</div>
+<p>We realise that the first two terms are the same in equation <a class="reference internal" href="#equation-eq9-11">(248)</a> and <a class="reference internal" href="#equation-eq9-13">(250)</a>, so we define an `Error Term’ <span class="math notranslate nohighlight">\(\delta^{n-1}\)</span> for simplicity (<span class="math notranslate nohighlight">\(n\)</span> is the number of layers in the network, i.e. <span class="math notranslate nohighlight">\(n=3\)</span>):</p>
+<div class="math notranslate nohighlight" id="equation-eq9-14">
+<span class="eqno">(251)<a class="headerlink" href="#equation-eq9-14" title="Permalink to this equation">¶</a></span>\[
+     \delta^{n-1} = \frac{\delta C}{\delta \hat{y}}\frac{\delta \hat{y}}{\delta h_2} =  (\frac{1-y}{1-\hat{y}} - \frac{y}{\hat{y}})*\sigma^{'}(h_2)
+\]</div>
+<p>So the weight <span class="math notranslate nohighlight">\(w_{11}^{(2)}\)</span> from the hidden to output (<span class="math notranslate nohighlight">\(2nd\)</span>) layer in equation <a class="reference internal" href="#equation-eq9-13">(250)</a> can be expressed by the <span class="math notranslate nohighlight">\(\delta^2\)</span> for the <span class="math notranslate nohighlight">\(2nd\)</span> layer as</p>
+<div class="math notranslate nohighlight" id="equation-eq9-15">
+<span class="eqno">(252)<a class="headerlink" href="#equation-eq9-15" title="Permalink to this equation">¶</a></span>\[
+     \frac{\delta C}{\delta w^{(2)}_{11}} = \delta^{3-1} *\sigma(h_1)
+\]</div>
+<p>And the weight <span class="math notranslate nohighlight">\(w_{11}^{(1)}\)</span> from the input to hidden layer in equation <a class="reference internal" href="#equation-eq9-11">(248)</a> can be written as</p>
+<div class="math notranslate nohighlight" id="equation-eq9-16">
+<span class="eqno">(253)<a class="headerlink" href="#equation-eq9-16" title="Permalink to this equation">¶</a></span>\[
+     \frac{\delta C}{\delta w^{(1)}_{11}} = \delta^{3-1} * w^{(2)}_{11} * \sigma^{'}(h_1)*x_1
+     \label{inputToHidden1}
+\]</div>
 <p>To further simplify, we have another `Error Term’ <span class="math notranslate nohighlight">\(\delta^{n-2}\)</span> (i.e. <span class="math notranslate nohighlight">\(\delta^{3-2}\)</span> for the <span class="math notranslate nohighlight">\(1st\)</span> layer)</p>
-<p>\begin{equation}
-\delta^{n-2} = \delta^{n-1} * w^{(2)}_{11} * \sigma^{‘}(h_1)
-\end{equation}</p>
+<div class="math notranslate nohighlight" id="equation-eq9-17">
+<span class="eqno">(254)<a class="headerlink" href="#equation-eq9-17" title="Permalink to this equation">¶</a></span>\[
+     \delta^{n-2} = \delta^{n-1} * w^{(2)}_{11} * \sigma^{'}(h_1)
+\]</div>
 <p>where <span class="math notranslate nohighlight">\(\delta^1\)</span> is for the next layer to the left, in this 3 layer neural network example, it is for the weight between input and hidden layer. <span class="math notranslate nohighlight">\(\delta^1\)</span> is updated by multiplying the corresponding weight <span class="math notranslate nohighlight">\(w^{(2)}_{11}\)</span> in the current layer and the derivative of sigma of the next layer to the left <span class="math notranslate nohighlight">\(\sigma^{'}(h_1)\)</span>.</p>
-<p>So the equation \ref{inputToHidden1} for weights in the <span class="math notranslate nohighlight">\(1st\)</span> layer can be written as</p>
-<p>\begin{equation}
-\frac{\delta C}{\delta w^{(1)}_{11}} = \delta^1 *x_1
-\label{inputToHidden2}
-\end{equation}</p>
+<p>So the equation <a class="reference internal" href="#equation-eq9-16">(253)</a> for weights in the <span class="math notranslate nohighlight">\(1st\)</span> layer can be written as</p>
+<div class="math notranslate nohighlight" id="equation-eq9-18">
+<span class="eqno">(255)<a class="headerlink" href="#equation-eq9-18" title="Permalink to this equation">¶</a></span>\[
+     \frac{\delta C}{\delta w^{(1)}_{11}} = \delta^1 *x_1
+     \label{inputToHidden2}
+\]</div>
 <p>So in a sense, in the back propagation, we update the weights in layers closer to the output layer first and then update towards the input layer. Every time we go back to one layer, we update the <span class="math notranslate nohighlight">\(\delta^1\)</span> based on the <span class="math notranslate nohighlight">\(\delta^0\)</span> in the previous layer.</p>
 <p>For updating the weight from the hidden to the output (<span class="math notranslate nohighlight">\(2nd\)</span>) layer, we have</p>
-<p>\begin{equation}
-w_i^{(2)’} = w_i^{(2)} - \eta \nabla C =  w_i^{(2)} - \eta \frac{\delta C}{\delta w_i} =   w_i^{(2)} - \eta \sum_{i=1}^m \delta^2\sigma(h_1)
-\end{equation}</p>
+<div class="math notranslate nohighlight" id="equation-eq9-19">
+<span class="eqno">(256)<a class="headerlink" href="#equation-eq9-19" title="Permalink to this equation">¶</a></span>\[
+w_i^{(2)'} = w_i^{(2)} - \eta \nabla C =  w_i^{(2)} - \eta \frac{\delta C}{\delta w_i} =   w_i^{(2)} - \eta \sum_{i=1}^m \delta^2\sigma(h_1)
+\]</div>
 <p>Remember that the <span class="math notranslate nohighlight">\(\delta^0\)</span> is a function of <span class="math notranslate nohighlight">\(y\)</span>, where we need to sum up all <span class="math notranslate nohighlight">\(y_i\)</span> in the dataset.</p>
 <p>For updating the weight from the input to the hidden (<span class="math notranslate nohighlight">\(1st\)</span>) layer, we have</p>
-<p>\begin{equation}
-w_i^{(1)’} = w_i^{(1)} - \eta \nabla C =  w_i^{(1)} - \eta \frac{\delta C}{\delta w_i} =   w_i^{(1)} - \eta \sum_{i=1}^m \delta^1 x_1
-\end{equation}</p>
+<div class="math notranslate nohighlight" id="equation-9-20">
+<span class="eqno">(257)<a class="headerlink" href="#equation-9-20" title="Permalink to this equation">¶</a></span>\[
+w_i^{(1)'} = w_i^{(1)} - \eta \nabla C =  w_i^{(1)} - \eta \frac{\delta C}{\delta w_i} =   w_i^{(1)} - \eta \sum_{i=1}^m \delta^1 x_1
+\]</div>
 </div>
 
     <script type="text/x-thebe-config">
