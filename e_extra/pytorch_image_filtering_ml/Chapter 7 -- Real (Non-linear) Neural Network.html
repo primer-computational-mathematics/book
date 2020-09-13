@@ -297,45 +297,48 @@
                 
   <div class="section" id="chapter-7-real-non-linear-neural-network">
 <span id="real-non-linear-neural-network"></span><h1>Chapter 7 – Real (Non-linear) Neural Network<a class="headerlink" href="#chapter-7-real-non-linear-neural-network" title="Permalink to this headline">¶</a></h1>
-<p>So in the previous example, we derived the gradients for a two layers neural network. This is to find the straight line that bisects the two groups in figure 1.1 in the introduction. However, in reality, we often have the following groups:</p>
+<p>So in the previous example, we derived the gradients for a two layers neural network. This is to find the straight line that bisects the two groups in figure 7.1 in the introduction. However, in reality, we often have the following groups:</p>
 <img src="images/groups.PNG" width="400">
-<center>Figure 1.8<p>For data like this, a linear separator cannot satisfy our needs. The solution is to add another linear separator on top of the original linear separator.</p>
+Figure 7.1<p>For data like this, a linear separator cannot satisfy our needs. The solution is to add another linear separator on top of the original linear separator.</p>
 <img src="images/groups1.PNG" width="500">
-<center>Figure 1.9<p>This is a classic three layers neural network. The layer at the left hand side is called the input layer; the layer at the right hand side is known as the output layer; the layer in between is called the hidden layer. The hidden layer is like a black-box that we cannot usually interpret by our instinct. We will dig in more details later.</p>
+Figure 7.2<p>This is a classic three layers neural network. The layer at the left hand side is called the input layer; the layer at the right hand side is known as the output layer; the layer in between is called the hidden layer. The hidden layer is like a black-box that we cannot usually interpret by our instinct. We will dig in more details later.</p>
 <img src="images/threeLayers.PNG" width="500">
-<center>Figure 1.10<img src="images/threeLayers1.PNG" width="400">
-<center>Figure 1.11<p>This is becoming something like a network finally. But the way we express the weights get more complicated. Here is how we define it by tradition:</p>
-<p>\begin{equation}
+Figure 7.3<img src="images/threeLayers1.PNG" width="400">
+Figure 7.4<p>This is becoming something like a network finally. But the way we express the weights get more complicated. Here is how we define it by tradition:</p>
+<div class="math notranslate nohighlight" id="equation-eq7-1">
+<span class="eqno">(225)<a class="headerlink" href="#equation-eq7-1" title="Permalink to this equation">¶</a></span>\[
 w_{ab}^{(n)}
-\end{equation}</p>
+\]</div>
 <p>where <span class="math notranslate nohighlight">\(n\)</span> means the <span class="math notranslate nohighlight">\(n^{th}\)</span> layer in the neural net; <span class="math notranslate nohighlight">\(n\)</span> = <span class="math notranslate nohighlight">\(1\)</span> at the input layer. Suppose <span class="math notranslate nohighlight">\(n=1\)</span> at the input layer, then <span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(b\)</span> means that the weight is pointing from the <span class="math notranslate nohighlight">\(a^{th}\)</span> neural in the second (hidden) layer to the <span class="math notranslate nohighlight">\(b^{th}\)</span> neural in the input layer. This is going backwards (to the left).</p>
 <img src="images/bpg.PNG" width="400">
-<center>Figure 1.12<p>For example, the weights in the input layer in the figure 1.11 can be defined as follow</p>
-<p>\begin{equation}
+Figure 7.5<p>For example, the weights in the input layer in the figure 7.4 can be defined as follow</p>
+<div class="math notranslate nohighlight" id="equation-eq7-2">
+<span class="eqno">(226)<a class="headerlink" href="#equation-eq7-2" title="Permalink to this equation">¶</a></span>\[\begin{split}
 W^{(1)}= \begin{bmatrix}
-w^{(1)}<em>{11} &amp; w^{(1)}</em>{21} \
-w^{(1)}<em>{12} &amp; w^{(1)}</em>{22} \
-w^{(1)}<em>{13} &amp; w^{(1)}</em>{23}
-\end{bmatrix} =
+w^{(1)}_{11} &amp; w^{(1)}_{21} \\
+w^{(1)}_{12} &amp; w^{(1)}_{22} \\
+w^{(1)}_{13} &amp; w^{(1)}_{23}
+\end{bmatrix} = 
 \begin{bmatrix}
-5 &amp; 7 \
--2 &amp; -3 \
+5 &amp; 7 \\
+-2 &amp; -3 \\
 -8 &amp; 1
-\end{bmatrix}
-\end{equation}</p>
+\end{bmatrix} 
+\end{split}\]</div>
 <p>And the weights in the hidden layer can be defined as</p>
-<p>\begin{equation}
+<div class="math notranslate nohighlight" id="equation-eq7-3">
+<span class="eqno">(227)<a class="headerlink" href="#equation-eq7-3" title="Permalink to this equation">¶</a></span>\[\begin{split}
 W^{(2)}= \begin{bmatrix}
-w^{(2)}<em>{11}  \
-w^{(2)}</em>{12}  \
-w^{(2)}_{13}
-\end{bmatrix} =
+w^{(2)}_{11}  \\
+w^{(2)}_{12}  \\
+w^{(2)}_{13} 
+\end{bmatrix} = 
 \begin{bmatrix}
-7 \
-5 \
+ 7 \\
+5 \\
 -6
-\end{bmatrix}
-\end{equation}</p>
+\end{bmatrix} 
+\end{split}\]</div>
 <p>In python, we can describe the core features of such network by defining a Network clas. Here’s the code we use to initialize a Network object:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -363,9 +366,10 @@ w^{(2)}_{13}
 </div>
 <p>The biases and weights in the Network object are all initialized randomly, using the Numpy np.random.randn function to generate Gaussian distributions with mean 0 and standard deviation 1. This random initialization gives our stochastic gradient descent algorithm a place to start from. In later chapters we’ll find better ways of initializing the weights and biases, but this will do for now. Note that the Network initialization code assumes that the first layer of neurons is an input layer, and omits to set any biases for those neurons, since biases are only ever used in computing the outputs from later layers.</p>
 <p>Note also that the biases and weights are stored as lists of Numpy matrices. So, for example net.weights[1] is a Numpy matrix storing the weights connecting the second and third layers of neurons. (It’s not the first and second layers, since Python’s list indexing starts at 0.) Since net.weights[1] is rather verbose, let’s just denote that matrix <span class="math notranslate nohighlight">\(w\)</span>. It’s a matrix such that <span class="math notranslate nohighlight">\(w_{jk}\)</span> is the weight for the connection between the <span class="math notranslate nohighlight">\(k_{th}\)</span> neuron in the second layer, and the <span class="math notranslate nohighlight">\(j_{th}\)</span> neuron in the third layer. This ordering of the j and k indices may seem strange - surely it’d make more sense to swap the j and k indices around? The big advantage of using this ordering is that it means that the vector of activations of the third layer of neurons is:</p>
-<p>\begin{equation}
-a^{‘}=\sigma(wa+b)
-\end{equation}</p>
+<div class="math notranslate nohighlight" id="equation-eq7-4">
+<span class="eqno">(228)<a class="headerlink" href="#equation-eq7-4" title="Permalink to this equation">¶</a></span>\[
+a^{'}=\sigma(wa+b)
+\]</div>
 <p>There’s quite a bit going on in this equation, so let’s unpack it piece by piece. <span class="math notranslate nohighlight">\(a\)</span> is the vector of activations of the second layer of neurons. To obtain <span class="math notranslate nohighlight">\(a^{'}\)</span> we multiply a by the weight matrix <span class="math notranslate nohighlight">\(w\)</span>, and add the vector b of biases. We then apply the function <span class="math notranslate nohighlight">\(\sigma\)</span> elementwise to every entry in the vector wa+b. (This is called vectorizing the function <span class="math notranslate nohighlight">\(\sigma\)</span>.)</p>
 </div>
 
