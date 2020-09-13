@@ -298,10 +298,11 @@
   <div class="section" id="chapter-16-other-activation-functions">
 <span id="other-activation-functions"></span><h1>Chapter 16 – Other Activation Functions<a class="headerlink" href="#chapter-16-other-activation-functions" title="Permalink to this headline">¶</a></h1>
 <p>The other solution for the vanishing gradient is to use other activation functions. We like the old activation function sigmoid <span class="math notranslate nohighlight">\(\sigma(h)\)</span> because first, it returns <span class="math notranslate nohighlight">\(0.5\)</span> when <span class="math notranslate nohighlight">\(h=0\)</span> (i.e. <span class="math notranslate nohighlight">\(\sigma(0)\)</span>) and second, it gives a higher probability when the input value is positive and vice versa. This makes it the perfect activation function for predicting the probability. However, the vanishing gradient is a major problem we cannot ignore. In DNN (Deep Neural Network), fortunately, we can use the sigmoid function for only the output layer, and use other activation functions for hidden layers. Here are some alternatives for the activation function that do not share the same vanishing gradient problem.</p>
-<p>\begin{equation}
+<div class="math notranslate nohighlight" id="equation-eq16-1">
+<span class="eqno">(288)<a class="headerlink" href="#equation-eq16-1" title="Permalink to this equation">¶</a></span>\[
 tanh(x)=\frac{e^h-e^{-h}}{e^h+e^{-h}}
-\end{equation}
-where <span class="math notranslate nohighlight">\(h=w*x+b\)</span>.</p>
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(h=w*x+b\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># make the figure be plotted at the centre</span>
@@ -353,7 +354,7 @@ where <span class="math notranslate nohighlight">\(h=w*x+b\)</span>.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/Chapter 16 -- Other Activation Functions_4_0.png" src="../../_images/Chapter 16 -- Other Activation Functions_4_0.png" />
+<img alt="../../_images/Chapter 16 -- Other Activation Functions_5_0.png" src="../../_images/Chapter 16 -- Other Activation Functions_5_0.png" />
 </div>
 </div>
 <p><span class="math notranslate nohighlight">\(tanh(x)\)</span> is centred at <span class="math notranslate nohighlight">\(0\)</span>, which means the probability would be negative if the input value is negative and vice versa. The possibility of having a negative value allows the weight to update better than sigmoid. For sigmoid function that only produces positive values, all weights to the same neuron must either increase together or decrease together. That’s a problem, since some of the weights may need to increase while others need to decrease. That can only happen if some of the input activations have different signs. That suggests replacing the sigmoid by an activation function, such as tanh, which allows both positive and negative activations. Of course, the tanh has slightly steeper gradient than the sigmoid but it still faces the vanishing gradient problem.</p>
@@ -386,13 +387,13 @@ ReLU(h)=max(0,h)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/Chapter 16 -- Other Activation Functions_7_0.png" src="../../_images/Chapter 16 -- Other Activation Functions_7_0.png" />
+<img alt="../../_images/Chapter 16 -- Other Activation Functions_8_0.png" src="../../_images/Chapter 16 -- Other Activation Functions_8_0.png" />
 </div>
 </div>
 <p>This activation function is wildly used in CNN (Convolutional Neural Network) because of the two characters: it is easy to compute and it does not have a vanishing gradient problem at all. Nevertheless, it has the biggest problem, which is there is no derivative at the point (<span class="math notranslate nohighlight">\(x=0\)</span>). We can avoid this by keep our learning rate low. On the other hand, when the weighted input to a rectified linear unit is negative, the gradient vanishes, and so the neuron stops learning entirely. Some recent work on image recognition has found considerable benefit in using rectified linear units through much of the network. However, as with tanh neurons, we do not yet have a really deep understanding of when, exactly, rectified linear units are preferable, nor why.</p>
-<p>The following figure 1.31 is a MLP/DNN model with modified activation functions. In this model, the activation functions are changed to ReLU from sigmoid for all hidden layers but the output layer (in order to predict the probability).</p>
+<p>The following figure 16.1 is a MLP/DNN model with modified activation functions. In this model, the activation functions are changed to ReLU from sigmoid for all hidden layers but the output layer (in order to predict the probability).</p>
 <img src="images/ReLUDNN.PNG" width="500">
-<center> Figure 1.31</div>
+<center> Figure 16.1</div>
 
     <script type="text/x-thebe-config">
     {
