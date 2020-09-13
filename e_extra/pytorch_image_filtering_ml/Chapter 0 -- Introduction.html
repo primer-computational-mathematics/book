@@ -449,12 +449,13 @@ MathJax.Hub.Queue(
 </table>
 <p>This decision making process is achieved via neural network. To get started, we need to explain a type of artificial neuron called a perceptron. A perceptron takes several binary inputs <span class="math notranslate nohighlight">\(x_1\)</span>, <span class="math notranslate nohighlight">\(x_2\)</span>, … and produces a single binary output:</p>
 <img src="images/perceptron.PNG" /><p>In the example shown the perceptron has three inputs, <span class="math notranslate nohighlight">\(x_1\)</span>, <span class="math notranslate nohighlight">\(x_2\)</span> and <span class="math notranslate nohighlight">\(x_3\)</span>. In general it could have more or fewer inputs. There is a simple rule to compute the output. Here we introduce weights, <span class="math notranslate nohighlight">\(w_1\)</span>, <span class="math notranslate nohighlight">\(w_2\)</span>, …, real numbers expressing the importance of the respective inputs to the output. The neuron’s output, <span class="math notranslate nohighlight">\(0\)</span> or <span class="math notranslate nohighlight">\(1\)</span>, is determined by whether the weighted sum <span class="math notranslate nohighlight">\(\sum_i w_i x_i\)</span> is less than or greater than some threshold value. Just like the weights, the threshold is a real number which is a parameter of the neuron. To put it in more precise algebraic terms:</p>
-<p>\begin{equation}  output = \begin{cases}
-0 &amp; if ; \sum_i w_i x_i \leq threshold \
-1 &amp; if ; \sum_i w_i x_i &gt; threshold
-\label{segment_eq}
-\end{cases}
-\end{equation}</p>
+<div class="math notranslate nohighlight" id="equation-eq0-1">
+<span class="eqno">(184)<a class="headerlink" href="#equation-eq0-1" title="Permalink to this equation">¶</a></span>\[\begin{split}  output = \begin{cases} 
+      0 &amp; if \; \sum_i w_i x_i \leq threshold \\
+      1 &amp; if \; \sum_i w_i x_i &gt; threshold
+      \label{segment_eq}
+   \end{cases}
+\end{split}\]</div>
 <p>That’s the basic mathematical model. A way to think about the perceptron is that it’s a device that makes decisions by weighing up evidence. For instance, we’d have <span class="math notranslate nohighlight">\(x_1=1\)</span> if the weather is good, and <span class="math notranslate nohighlight">\(x_1=0\)</span> if the weather is bad. Similarly, <span class="math notranslate nohighlight">\(x_2=1\)</span> if I want to accompany my partner, and <span class="math notranslate nohighlight">\(x_2=0\)</span> if not. And similarly again for <span class="math notranslate nohighlight">\(x_3\)</span> and stay home policy.</p>
 <p>Now, suppose my partner absolutely adores Imperial, so much so that she/he is happy to go to the open day even if I was uninterested and the Boris said “Please stay at home and save lives” many many times. Or perhaps she/he really loathes bad weather, and there’s no way she’d go to the open day if the weather is bad. We can use perceptrons to model this kind of decision-making. One way to do this is to choose a weight <span class="math notranslate nohighlight">\(w_1=6\)</span> for the weather, and <span class="math notranslate nohighlight">\(w_2=2\)</span> and <span class="math notranslate nohighlight">\(w_3=2\)</span> for the other conditions. The larger value of <span class="math notranslate nohighlight">\(w_1\)</span> indicates that the weather matters a lot to my partner, much more than whether I join or the stay home policy. Finally, suppose we choose a threshold of 5 for the perceptron. With these choices, the perceptron implements the desired decision-making model, outputting 1 whenever the weather is good, and 0 whenever the weather is bad. It makes no difference to the output whether I want to join my partner, or whether Boris’ spank those who do not stay at homes.</p>
 <p>By varying the weights and the threshold, we can get different models of decision-making. For example, suppose we instead chose a threshold of 3. Then the perceptron would decide that my partner should go to the festival whenever the weather was good or when both the stay home policy is lifted and I want to join her/him. In other words, it’d be a different model of decision-making. Dropping the threshold means she/he is more willing to go to the festival under the same 3 circumstances.</p>
@@ -550,29 +551,34 @@ MathJax.Hub.Queue(
 </table>
 <img src="images/SAT_GPA.PNG"/>
 <center>Figure 1.1:  Visualisation of SAT and GPA; the red dot representsyvalue being Y and bluetriangle meansyvalue being N.<p>We realise that the students with higher GPA and higher SAT grades are more likely to be accepted, or the group of red dots in the upper right corner. In contrast, the students in the lower left are all rejected. There seems to be a line that separates the two groups. We can express the equation of such line as</p>
-<p>\begin{equation}
+<div class="math notranslate nohighlight" id="equation-eq0-2">
+<span class="eqno">(185)<a class="headerlink" href="#equation-eq0-2" title="Permalink to this equation">¶</a></span>\[
 w_1 x_1 + w_2 x_2 + b = 0
-\end{equation}</p>
+\]</div>
 <p>where <span class="math notranslate nohighlight">\(w_1\)</span> and <span class="math notranslate nohighlight">\(w_2\)</span> are weights, meaning how important their corresponding <span class="math notranslate nohighlight">\(x\)</span>s are; the bigger the <span class="math notranslate nohighlight">\(w_1\)</span> the more important SAT in the admission process and vice versa.</p>
 <p>The trick is to find the <span class="math notranslate nohighlight">\(w_1\)</span> and <span class="math notranslate nohighlight">\(w_2\)</span> that best separates the two groups.</p>
 <p>Based on Figure 1.1, we know that Barron Trump will receive an offer if</p>
-<p>\begin{equation}
+<div class="math notranslate nohighlight" id="equation-eq0-3">
+<span class="eqno">(186)<a class="headerlink" href="#equation-eq0-3" title="Permalink to this equation">¶</a></span>\[
 w_1 x_1 + w_2 x_2 + b &lt; 0
-\end{equation}</p>
+\]</div>
 <p>and will not receive an offer if</p>
-<p>\begin{equation}
+<div class="math notranslate nohighlight" id="equation-eq0-4">
+<span class="eqno">(187)<a class="headerlink" href="#equation-eq0-4" title="Permalink to this equation">¶</a></span>\[
 w_1 x_1 + w_2 x_2 + b &lt; 0
-\end{equation}</p>
+\]</div>
 <p>This is such a common used equation, so we can give it a general form</p>
-<p>\begin{equation}
-h(\vec{x}) = w_1 x_1 + w_2 x_2 + … + b
-\end{equation}</p>
-<p>To summarize his admission result, we can have the following equation (which is the same as equation \ref{segment_eq}).</p>
-<p>\begin{equation}  \hat{y} = \begin{cases}
-0 &amp; if ; h(\vec{x}) \leq 0 \
-1 &amp; if ; h(\vec{x})  &gt; 0
-\end{cases}
-\end{equation}</p>
+<div class="math notranslate nohighlight" id="equation-eq0-5">
+<span class="eqno">(188)<a class="headerlink" href="#equation-eq0-5" title="Permalink to this equation">¶</a></span>\[
+h(\vec{x}) = w_1 x_1 + w_2 x_2 + ... + b
+\]</div>
+<p>To summarize his admission result, we can have the following equation (which is the same as equation <a class="reference internal" href="#equation-eq0-1">(184)</a>).</p>
+<div class="math notranslate nohighlight" id="equation-eq0-6">
+<span class="eqno">(189)<a class="headerlink" href="#equation-eq0-6" title="Permalink to this equation">¶</a></span>\[\begin{split}  \hat{y} = \begin{cases} 
+      0 &amp; if \; h(\vec{x}) \leq 0 \\
+      1 &amp; if \; h(\vec{x})  &gt; 0
+   \end{cases}
+\end{split}\]</div>
 </div>
 </div>
 
