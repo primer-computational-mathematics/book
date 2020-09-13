@@ -299,65 +299,74 @@
 <span id="feedforward"></span><h1>Chapter 8 – Feedforward<a class="headerlink" href="#chapter-8-feedforward" title="Permalink to this headline">¶</a></h1>
 <p>Let’s take a look at how feedforward is processed in a three layers neural net.</p>
 <img src="images/feedForward.PNG" width="500">
-<center> Figure 1.13<p>From the figure 1.13 above, we know that the two input values for the first and the second neuron in the hidden layer are</p>
-<p>\begin{equation}
+<center> Figure 8.1<p>From the figure 8.1 above, we know that the two input values for the first and the second neuron in the hidden layer are</p>
+<div class="math notranslate nohighlight" id="equation-eq8-1">
+<span class="eqno">(229)<a class="headerlink" href="#equation-eq8-1" title="Permalink to this equation">¶</a></span>\[
 h_1^{(1)} = w_{11}^{(1)}*x_1 + w_{21}^{(1)}*x_2 + w_{31}^{(1)}*x_3+ w_{41}^{(1)}*1
-\end{equation}</p>
-<p>\begin{equation}
+\]</div>
+<div class="math notranslate nohighlight" id="equation-eq8-2">
+<span class="eqno">(230)<a class="headerlink" href="#equation-eq8-2" title="Permalink to this equation">¶</a></span>\[
 h_2^{(1)} = w_{12}^{(2)}*x_1 + w_{22}^{(2)}*x_2 + w_{32}^{(2)}*x_3+ w_{42}^{(2)}*1
-\end{equation}</p>
+\]</div>
 <p>where the <span class="math notranslate nohighlight">\(w^{(n)}_{4m}\)</span> term is the bias term in the form of weight.</p>
 <p>To simplify the two equations above, we can use matrix</p>
-<p>\begin{equation}
-H^{(1)} = [h_1^{(1)} ;; h_2^{(1)}] = [x_1 ;; x_2 ;; x_3 ;; 1]
+<div class="math notranslate nohighlight" id="equation-eq8-3">
+<span class="eqno">(231)<a class="headerlink" href="#equation-eq8-3" title="Permalink to this equation">¶</a></span>\[\begin{split}
+H^{(1)} = [h_1^{(1)} \;\; h_2^{(1)}] = [x_1 \;\; x_2 \;\; x_3 \;\; 1]
 \begin{bmatrix}
-w^{(1)}<em>{11} &amp; w^{(1)}</em>{12} \
-w^{(1)}<em>{21} &amp; w^{(1)}</em>{22} \
-w^{(1)}<em>{31} &amp; w^{(1)}</em>{32} \
-w^{(1)}<em>{41} &amp; w^{(1)}</em>{4
+w^{(1)}_{11} &amp; w^{(1)}_{12} \\
+w^{(1)}_{21} &amp; w^{(1)}_{22} \\
+w^{(1)}_{31} &amp; w^{(1)}_{32} \\
+w^{(1)}_{41} &amp; w^{(1)}_{4
 2}
 \end{bmatrix}
-\end{equation}</p>
+\end{split}\]</div>
 <p>Similarly, the two outputs from the input layer can be the inputs for the hidden layer</p>
-<p>\begin{equation}
-\sigma(H^{(1)}) = [\sigma(h_1^{(1)}) ;; \sigma( h_2^{(1)})]
-\end{equation}</p>
+<div class="math notranslate nohighlight" id="equation-eq8-4">
+<span class="eqno">(232)<a class="headerlink" href="#equation-eq8-4" title="Permalink to this equation">¶</a></span>\[
+\sigma(H^{(1)}) = [\sigma(h_1^{(1)}) \;\; \sigma( h_2^{(1)})]
+\]</div>
 <p>This in turns can be the input values for the next layer (output layer)</p>
-<p>\begin{equation}
-h^{(2)} = w^{(2)}_{11}* \sigma(h^{(1)}<em>1)+w^{(2)}</em>{21} *\sigma(h^{(1)}<em>2)+w^{(2)}</em>{31}*1
-\end{equation}</p>
+<div class="math notranslate nohighlight" id="equation-eq8-5">
+<span class="eqno">(233)<a class="headerlink" href="#equation-eq8-5" title="Permalink to this equation">¶</a></span>\[
+h^{(2)} = w^{(2)}_{11}* \sigma(h^{(1)}_1)+w^{(2)}_{21} *\sigma(h^{(1)}_2)+w^{(2)}_{31}*1 
+\]</div>
 <p>Again, we can simplify this equation by using matrix</p>
-<p>\begin{equation}
-H^{(2)} = [\sigma(h_1^{(1)}) ;;\sigma(h_2^{(1)}) ; ; 1]
+<div class="math notranslate nohighlight" id="equation-eq8-6">
+<span class="eqno">(234)<a class="headerlink" href="#equation-eq8-6" title="Permalink to this equation">¶</a></span>\[\begin{split}
+H^{(2)} = [\sigma(h_1^{(1)}) \;\;\sigma(h_2^{(1)}) \; \; 1]
 \begin{bmatrix}
-w^{(2)}<em>{11} \
-w^{(2)}</em>{21} \
-w^{(2)}_{31}
+w^{(2)}_{11} \\
+w^{(2)}_{21} \\
+w^{(2)}_{31} 
 \end{bmatrix}
-\end{equation}</p>
+\end{split}\]</div>
 <p>Then we send this value <span class="math notranslate nohighlight">\(h^{(2)}\)</span> into the sigma function in the final output layer to obtain the prediction</p>
-<p>\begin{equation}
-\hat{y} = \sigma(h^{(2)})
-\end{equation}</p>
+<div class="math notranslate nohighlight" id="equation-eq8-7">
+<span class="eqno">(235)<a class="headerlink" href="#equation-eq8-7" title="Permalink to this equation">¶</a></span>\[
+    \hat{y} = \sigma(h^{(2)})
+\]</div>
 <p>To put all the equation of three layers together, we can have</p>
-<p>\begin{equation}
-\hat{y} = \sigma(\sigma([x_1 ;; x_2 ;; x_3 ;; 1]
+<div class="math notranslate nohighlight" id="equation-eq8-8">
+<span class="eqno">(236)<a class="headerlink" href="#equation-eq8-8" title="Permalink to this equation">¶</a></span>\[\begin{split}
+\hat{y} = \sigma(\sigma([x_1 \;\; x_2 \;\; x_3 \;\; 1]
 \begin{bmatrix}
-w^{(1)}<em>{11} &amp; w^{(1)}</em>{12} \
-w^{(1)}<em>{21} &amp; w^{(1)}</em>{22} \
-w^{(1)}<em>{31} &amp; w^{(1)}</em>{32} \
-w^{(1)}<em>{41} &amp; w^{(1)}</em>{42}
-\end{bmatrix})
+w^{(1)}_{11} &amp; w^{(1)}_{12} \\
+w^{(1)}_{21} &amp; w^{(1)}_{22} \\
+w^{(1)}_{31} &amp; w^{(1)}_{32} \\
+w^{(1)}_{41} &amp; w^{(1)}_{42}
+\end{bmatrix}) 
 \begin{bmatrix}
-w^{(2)}<em>{11} \
-w^{(2)}</em>{21} \
-w^{(2)}_{31}
+w^{(2)}_{11} \\
+w^{(2)}_{21} \\
+w^{(2)}_{31} 
 \end{bmatrix})
-\end{equation}</p>
+\end{split}\]</div>
 <p>Or we can simplify it to be</p>
-<p>\begin{equation}
-\hat{y} = \sigma(\sigma(xW^{(1)})W^{(2)})
-\end{equation}</p>
+<div class="math notranslate nohighlight" id="equation-eq8-9">
+<span class="eqno">(237)<a class="headerlink" href="#equation-eq8-9" title="Permalink to this equation">¶</a></span>\[
+    \hat{y} = \sigma(\sigma(xW^{(1)})W^{(2)})
+\]</div>
 <p>This is the feedforward process: based on the known weights <span class="math notranslate nohighlight">\(W\)</span> and input <span class="math notranslate nohighlight">\(x\)</span> to calculate the prediction <span class="math notranslate nohighlight">\(\hat{y}\)</span>.</p>
 <p>Finally, it’s easy to write code computing the output from a Network instance. We begin by defining the sigmoid function:</p>
 <div class="cell docutils container">
