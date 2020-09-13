@@ -299,60 +299,73 @@
 <span id="gradient-descent-2"></span><h1>Chapter 6 – Gradient Descent 2<a class="headerlink" href="#chapter-6-gradient-descent-2" title="Permalink to this headline">¶</a></h1>
 <p>Okay, it sounds good in theory so far. But how do we calculate the <span class="math notranslate nohighlight">\(\nabla C\)</span>? Let’s compute the <span class="math notranslate nohighlight">\(\frac{\delta C(\vec{w},b)}{\delta w_1}\)</span> in this 2 layers (input layer and output layer) neural network example.</p>
 <img src = "images/neural1.PNG" width="400">
-<center>Figure 1.7:  Two layer neural network.<p>\begin{equation}
--\frac{\delta C(\vec{w},b)}{w_1} = \frac{1}{m} \frac{\delta}{\delta w_1} [\sum_{i=1}^m [y_i<em>ln(\sigma(\vec{w}</em>\vec{x}+b))]+(1-y_i)*ln(1-\sigma(\vec{w}+b))]
-\end{equation}</p>
+Figure 1.7:  Two layer neural network.<div class="math notranslate nohighlight" id="equation-eq6-1">
+<span class="eqno">(212)<a class="headerlink" href="#equation-eq6-1" title="Permalink to this equation">¶</a></span>\[
+-\frac{\delta C(\vec{w},b)}{w_1} = \frac{1}{m} \frac{\delta}{\delta w_1} [\sum_{i=1}^m [y_i*ln(\sigma(\vec{w}*\vec{x}+b))]+(1-y_i)*ln(1-\sigma(\vec{w}+b))]
+\]</div>
 <p>It is very easy to write a for loop to compute the sum: from <span class="math notranslate nohighlight">\(y_1\)</span> to <span class="math notranslate nohighlight">\(y_m\)</span>, which is summing up the performance of each single individual prediction. So, let’s compute just <span class="math notranslate nohighlight">\(y_i\)</span> for the sake of simplicity. What’s more, the <span class="math notranslate nohighlight">\(y_i\)</span> is just a constant, which we can put it outside of the differential equation, so we have</p>
-<p>\begin{equation}
-y_i * \frac{\delta}{\delta w_1} ln[\sigma(\vec{w}*\vec{x}+b)] + (1-y_i) <em>\frac{\delta}{\delta w_1} ln[1-\sigma(\vec{w}</em>\vec{x}+b)]
+<div class="math notranslate nohighlight" id="equation-eq6-2">
+<span class="eqno">(213)<a class="headerlink" href="#equation-eq6-2" title="Permalink to this equation">¶</a></span>\[
+y_i * \frac{\delta}{\delta w_1} ln[\sigma(\vec{w}*\vec{x}+b)] + (1-y_i) *\frac{\delta}{\delta w_1} ln[1-\sigma(\vec{w}*\vec{x}+b)]
 \label{differential equation}
-\end{equation}</p>
-<p>Let’s look at the first term in the equation \ref{differential equation}:</p>
-<p>\begin{equation}
-y_i <em>\frac{\delta}{\delta w_1} ln[\sigma(\vec{w}</em>\vec{x}+b)]
+\]</div>
+<p>Let’s look at the first term in the equation <a class="reference internal" href="#equation-eq6-2">(213)</a>:</p>
+<div class="math notranslate nohighlight" id="equation-eq6-3">
+<span class="eqno">(214)<a class="headerlink" href="#equation-eq6-3" title="Permalink to this equation">¶</a></span>\[
+y_i *\frac{\delta}{\delta w_1} ln[\sigma(\vec{w}*\vec{x}+b)]
 \label{first term}
-\end{equation}</p>
+\]</div>
 <p>We can break it down so that we can use the chain rule.</p>
-<p>\begin{equation}
-ln(u) ; ; ; u = \sigma(h) ; ; ; h = \vec{w}*\vec{x}+b
-\end{equation}</p>
+<div class="math notranslate nohighlight" id="equation-eq6-4">
+<span class="eqno">(215)<a class="headerlink" href="#equation-eq6-4" title="Permalink to this equation">¶</a></span>\[
+ln(u) \; \; \; u = \sigma(h) \; \; \; h = \vec{w}*\vec{x}+b
+\]</div>
 <p>According to the chain rule, we have</p>
-<p>\begin{equation}
+<div class="math notranslate nohighlight" id="equation-eq6-5">
+<span class="eqno">(216)<a class="headerlink" href="#equation-eq6-5" title="Permalink to this equation">¶</a></span>\[
 \frac{\delta ln(u)}{\delta w_1} = \frac{\delta ln(u)}{\delta u} \frac{\delta u}{\delta h} \frac{\delta h}{\delta w_1}
 \label{chain rule}
-\end{equation}</p>
-<p>\begin{equation}
+\]</div>
+<div class="math notranslate nohighlight" id="equation-eq6-6">
+<span class="eqno">(217)<a class="headerlink" href="#equation-eq6-6" title="Permalink to this equation">¶</a></span>\[
 \frac{\delta h}{\delta w_1} = \frac{\delta}{\delta w_1}(w_1x_1 + w_2x_2 +b) = x_1
-\end{equation}</p>
-<p>\begin{equation}
-\frac{\delta u}{\delta h} = \frac{\delta}{\delta h}(\frac{1}{1+e^{-h}}) = \frac{1}{1+e^{-h}}<em>\frac{e^{-h}}{1+e^{-h}} = \sigma(h)</em>(1-\sigma(h))
-\end{equation}</p>
-<p>\begin{equation}
+\]</div>
+<div class="math notranslate nohighlight" id="equation-eq6-7">
+<span class="eqno">(218)<a class="headerlink" href="#equation-eq6-7" title="Permalink to this equation">¶</a></span>\[
+\frac{\delta u}{\delta h} = \frac{\delta}{\delta h}(\frac{1}{1+e^{-h}}) = \frac{1}{1+e^{-h}}*\frac{e^{-h}}{1+e^{-h}} = \sigma(h)*(1-\sigma(h))
+\]</div>
+<div class="math notranslate nohighlight" id="equation-eq6-8">
+<span class="eqno">(219)<a class="headerlink" href="#equation-eq6-8" title="Permalink to this equation">¶</a></span>\[
 \frac{\delta ln(u)}{\delta u} = \frac{1}{u}
-\end{equation}</p>
-<p>So the equation \ref{first term} becomes</p>
-<p>\begin{equation}
-y_i * \frac{\delta}{\delta w_1} ln[\sigma(\vec{w}<em>\vec{x}+b)] =y_i</em> \frac{1}{\hat{y}} *\hat{y}(1-\hat{y})<em>x_1 = y_i</em>(1-\hat{y})*x_1
-\end{equation}</p>
+\]</div>
+<p>So the equation <a class="reference internal" href="#equation-eq6-3">(214)</a> becomes</p>
+<div class="math notranslate nohighlight" id="equation-eq6-9">
+<span class="eqno">(220)<a class="headerlink" href="#equation-eq6-9" title="Permalink to this equation">¶</a></span>\[
+y_i * \frac{\delta}{\delta w_1} ln[\sigma(\vec{w}*\vec{x}+b)] =y_i* \frac{1}{\hat{y}} *\hat{y}(1-\hat{y})*x_1 = y_i*(1-\hat{y})*x_1
+\]</div>
 <p>where <span class="math notranslate nohighlight">\(y_i\)</span> is the actual result and <span class="math notranslate nohighlight">\(\hat{y}\)</span> is the predicted result by the AI.</p>
-<p>Similarly, we can do the same for the second term in equation \ref{differential equation} and have the combined result as follow</p>
-<p>\begin{equation}
+<p>Similarly, we can do the same for the second term in equation <a class="reference internal" href="#equation-eq6-2">(213)</a> and have the combined result as follow</p>
+<div class="math notranslate nohighlight" id="equation-eq6-10">
+<span class="eqno">(221)<a class="headerlink" href="#equation-eq6-10" title="Permalink to this equation">¶</a></span>\[
 \frac{\delta C}{\delta w_1} =  y_i*(1-\hat{y_i})*x_1 + (1-y_i) \hat{y_i}*x_1 = (y_i - \hat{y_i})*x_1
-\end{equation}</p>
+\]</div>
 <p>Again, do not forget that we ignored the summation symbol <span class="math notranslate nohighlight">\(\sum\)</span> for simplicity before. So the actual result of the gradient of the loss/cost function is</p>
-<p>\begin{equation}
+<div class="math notranslate nohighlight" id="equation-eq6-11">
+<span class="eqno">(222)<a class="headerlink" href="#equation-eq6-11" title="Permalink to this equation">¶</a></span>\[
 \frac{\delta C}{\delta w_1} = \frac{1}{m}\sum_{i=1}^m y_i*(1-\hat{y_i})*x_1 + (1-y_i) \hat{y_i}*x_1 =\frac{1}{m}\sum_{i=1}^m (y_i - \hat{y_i})*x_1
 \label{gradient of cost function}
-\end{equation}</p>
+\]</div>
 <p>This is actually a very neat result. How do we interpret it? Well, the gradient of the cost function of any single neuron, which has weight <span class="math notranslate nohighlight">\(w_i\)</span>, is evaluated by the difference between the predicted and actual <span class="math notranslate nohighlight">\(y\)</span> values for all students or data (i.e. the error). The larger the error, the faster the neuron will learn. This is just what we’d intuitively expect. It is also related to the input <span class="math notranslate nohighlight">\(x\)</span> values of that particular neuron.</p>
-<p>Anyway, in order to update the weight <span class="math notranslate nohighlight">\(w_i\)</span> as derived earlier in the previous chapter in equation 6, we just need to plug in <span class="math notranslate nohighlight">\(\frac{\delta C}{\delta w_i}\)</span>, which we just obtained.</p>
-<p>\begin{equation}
-w_i^{‘} = w_i - \eta \nabla C = w_i - \eta \frac{\delta C}{\delta w_i} =  w_i - \eta \frac{1}{m}\sum_{i=1}^m (y_i - \hat{y_i})*x_1
-\end{equation}`</p>
+<p>Anyway, in order to update the weight <span class="math notranslate nohighlight">\(w_i\)</span> as derived earlier in the previous chapter in equation <a class="reference internal" href="Chapter 5 -- Gradient Descent 1.html#equation-eq5-5">(210)</a>, we just need to plug in <span class="math notranslate nohighlight">\(\frac{\delta C}{\delta w_i}\)</span>, which we just obtained.</p>
+<div class="math notranslate nohighlight" id="equation-eq6-12">
+<span class="eqno">(223)<a class="headerlink" href="#equation-eq6-12" title="Permalink to this equation">¶</a></span>\[
+w_i^{'} = w_i - \eta \nabla C = w_i - \eta \frac{\delta C}{\delta w_i} =  w_i - \eta \frac{1}{m}\sum_{i=1}^m (y_i - \hat{y_i})*x_1
+\]</div>
 <p>It is the same mathematical process for updating the bias term <span class="math notranslate nohighlight">\(b\)</span>, we will just write down the result here</p>
-<p>\begin{equation}
-b_i^{‘} = b_i -\eta \frac{1}{m}\sum_{i=1}^m(y_i-\hat{y_i})
-\end{equation}</p>
+<div class="math notranslate nohighlight" id="equation-eq6-13">
+<span class="eqno">(224)<a class="headerlink" href="#equation-eq6-13" title="Permalink to this equation">¶</a></span>\[
+b_i^{'} = b_i -\eta \frac{1}{m}\sum_{i=1}^m(y_i-\hat{y_i})
+\]</div>
 </div>
 
     <script type="text/x-thebe-config">
