@@ -295,19 +295,20 @@
         
               <div>
                 
-  <p>(softmax) =</p>
-<div class="section" id="chapter-18-softmax">
-<h1>Chapter 18 – Softmax<a class="headerlink" href="#chapter-18-softmax" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="chapter-18-softmax">
+<span id="softmax"></span><h1>Chapter 18 – Softmax<a class="headerlink" href="#chapter-18-softmax" title="Permalink to this headline">¶</a></h1>
 <p>The cross-entropy cost can be used to address the problem of learning slowdown. However, I want to briefly describe another approach to the problem, based on what are called softmax layers of neurons. Softmax is still worth understanding, in part because it’s intrinsically interesting, and in part because we’ll use softmax layers in our discussion of deep neural networks.</p>
 <p>The idea of softmax is to define a new type of output layer for our neural networks. It begins in the same way as with a sigmoid layer, by forming the weighted inputs</p>
-<p>\begin{equation}
-h=w_1x_1 + w_2x_2 + … + b
-\end{equation}</p>
+<div class="math notranslate nohighlight" id="equation-eq18-1">
+<span class="eqno">(290)<a class="headerlink" href="#equation-eq18-1" title="Permalink to this equation">¶</a></span>\[
+h=w_1x_1 + w_2x_2 + ... + b
+\]</div>
 <p>However, we don’t apply the sigmoid function to get the output. Instead, in a softmax layer we apply the so-called softmax function</p>
-<p>\begin{equation}
-softmax(h)^{(l)}<em>a = \frac{e^{h^{(n)}</em>{a}}}{\sum_b e^{h^{(n)}_b}}
-\end{equation}
-where <span class="math notranslate nohighlight">\(softmax(h)^{(l)}_a\)</span> is a prediction probability between 0 and 1 in the output layer.</p>
+<div class="math notranslate nohighlight" id="equation-eq18-2">
+<span class="eqno">(291)<a class="headerlink" href="#equation-eq18-2" title="Permalink to this equation">¶</a></span>\[
+softmax(h)^{(l)}_a = \frac{e^{h^{(n)}_{a}}}{\sum_b e^{h^{(n)}_b}}
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(softmax(h)^{(l)}_a\)</span> is a prediction probability between 0 and 1 in the output layer.</p>
 <p>The sum of the <span class="math notranslate nohighlight">\(softmax(h)^{(l)}_a\)</span> is always 1. In other words, the output from the softmax layer can be thought of as a probability distribution. The fact that a softmax layer outputs a probability distribution is rather pleasing. In many problems it’s convenient to be able to interpret the output activation <span class="math notranslate nohighlight">\(a^{(n)}_a\)</span> as the network’s estimate of the probability that the correct output is <span class="math notranslate nohighlight">\(a^{th}\)</span> neuron in the output layer. So, for instance, in the MNIST classification problem, we can interpret <span class="math notranslate nohighlight">\(a^{(n)}_a\)</span> as the network’s estimated probability that the correct digit classification is the <span class="math notranslate nohighlight">\(a^{th}\)</span> neuron.</p>
 <p>By contrast, if the output layer was a sigmoid layer, then we certainly couldn’t assume that the activations formed a probability distribution. I won’t explicitly prove it, but it should be plausible that the activations from a sigmoid layer won’t in general form a probability distribution. And so with a sigmoid output layer we don’t have such a simple interpretation of the output activations.</p>
 </div>
