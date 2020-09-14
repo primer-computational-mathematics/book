@@ -354,11 +354,58 @@
 <p>There are two conditions which need to be met for the Greedy solution to work:</p>
 <ol class="simple">
 <li><p><strong>Optimal substructure</strong>: the problem should be expressed in terms of independent subproblems, just like in [Dynamic Programming]!(https://primer-computational-mathematics.github.io/book/b_coding/Fundamentals%20of%20Computer%20Science/4_Dynamic_Programming.html#dynamic-programming).</p></li>
-<li><p><strong>Greedy choice leads to optimal solution</strong>: This is usually done by the <em>copy and paste</em> argument that shows that there exists an optimal solution that involves the proposed Greedy hypothesis. It has a inductive flavour, which means that the Greedy choice leave us with the same <em>smaller</em> problem. You can assume that the input is sorted somehow, it might be very helpful!</p></li>
+<li><p><strong>Greedy choices lead to optimal solution</strong>: This is usually done by the <em>copy and paste</em> argument that shows that there exists an optimal solution that involves the proposed Greedy hypothesis. It has a inductive flavour, which means that the Greedy choice leave us with the same <em>smaller</em> problem. You can assume that the input is sorted somehow, it might be very helpful!</p></li>
 </ol>
 </div>
 <div class="section" id="advanced-examples">
 <h2>Advanced Examples<a class="headerlink" href="#advanced-examples" title="Permalink to this headline">¶</a></h2>
+<p>Here are several examples which might be a little more involving:</p>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>Fractional Knapsack</strong> You are two lists <code class="docutils literal notranslate"><span class="pre">vals</span></code> and <code class="docutils literal notranslate"><span class="pre">weights</span></code> as well as an integer <code class="docutils literal notranslate"><span class="pre">W</span></code> - the total weight of a backpack. You are allowed to take any fraction of any item in the list so that the sum of their weights is no bigger than <code class="docutils literal notranslate"><span class="pre">W</span></code>. All numbers in the input are positive. Return the maximum possible value:</p></li>
+</ul>
+<p><strong>Optimal substructure</strong> Let \(val(i, w_j,w)\) denote the <em>maixmum</em> value we can get by taking \(w_j \leq w_i \) of item  \(i\) (\(w_i\) is the weight of the object), considering the object up to the \(i\)th. \(w\) is the weight left in the Knapsack. The solution uses the following recursion:</p>
+<p>\[val(i, w_j,W) = max(val(i+1, w_j,w - w_j) + w_j \times \frac{v_i}{w_i}, val(i+1, w_j,w))\]</p>
+<p><strong>Greedy choices lead to optimal solution</strong> We will be taking the aveliable items of the greatest <em>density</em> \(\frac{v_i}{w_i}\).</p>
+<p>Imagine a sequence of the optimal \(w_j\)s. Let us take such item \(k\) that \(\frac{v_k}{w_k}\) is no smaller than any such ratio in the sequence. If the such item is already in the sequence, we check if the weight taken is maximum possible, if not we can improve or keep the result equal. Since the solution is optimal we cannot improve. If the item is not, we can replace with other items and improve or stay the same, again solution is optimal so the result can only stay the same. Therefore such replacement will result in a optimal solution:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># vals and weights have positive values only </span>
+<span class="c1"># W is positive as well</span>
+<span class="k">def</span> <span class="nf">fractionalKnapsack</span><span class="p">(</span><span class="n">vals</span><span class="p">,</span><span class="n">weights</span><span class="p">,</span> <span class="n">W</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">vals</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">weights</span><span class="p">)</span> <span class="ow">and</span> <span class="n">W</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">vals</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">weights</span><span class="p">)</span>
+    <span class="n">wDensity</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">weights</span><span class="p">,</span><span class="n">vals</span><span class="p">))</span>
+    <span class="c1"># sort according to density</span>
+    <span class="n">wDensity</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span> <span class="o">=</span>  <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    
+    <span class="c1">#set up the inital values</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">W</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">wDensity</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">W</span> <span class="o">&gt;=</span> <span class="n">wDensity</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]:</span>
+            <span class="n">res</span> <span class="o">+=</span> <span class="n">wDensity</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">W</span> <span class="o">-=</span> <span class="n">wDensity</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">res</span> <span class="o">+=</span> <span class="n">W</span> <span class="o">*</span> <span class="n">wDensity</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="n">wDensity</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">W</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">i</span><span class="o">+=</span><span class="mi">1</span>  
+    <span class="k">return</span> <span class="n">res</span>
+    
+    
+<span class="nb">print</span><span class="p">(</span><span class="n">fractionalKnapsack</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">],</span><span class="mi">12</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4.5
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>Coin Changing</strong>:</p></li>
+</ul>
 </div>
 </div>
 
