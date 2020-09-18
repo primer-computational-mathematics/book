@@ -243,6 +243,10 @@
             <a href="#exercises" class="nav-link">Exercises</a>
         </li>
     
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#references" class="nav-link">References</a>
+        </li>
+    
     </ul>
 </nav>
 
@@ -256,17 +260,17 @@
                 
   <div class="section" id="greedy-algorithms">
 <span id="id1"></span><h1>Greedy Algorithms<a class="headerlink" href="#greedy-algorithms" title="Permalink to this headline">¶</a></h1>
-<p id="index-0">Greedy Algorithms is one of the paradigms of algorithmic problem solving. All greedy algorithms share the assumption that local optimal steps lead to the globally optimal solution. Quite surprisingly, this is often a valid assertion.</p>
+<p id="index-0">Greedy Algorithms are one of the paradigms of algorithmic problem-solving. All greedy algorithms share the assumption that local optimal steps lead to the globally optimal solution. Quite surprisingly, this is often a valid assertion.</p>
 <p>If you want to have a good grasp on the topic, please have a look at <a class="reference external" href="https://primer-computational-mathematics.github.io/book/b_coding/Fundamentals%20of%20Computer%20Science/4_Dynamic_Programming.html#dynamic-programming">Dynamic Programming</a> section beforehand.</p>
 <div class="section" id="basic-examples">
 <h2>Basic Examples<a class="headerlink" href="#basic-examples" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><p><strong>Greedy Scheduling</strong> We are given a list <code class="docutils literal notranslate"><span class="pre">timeslots</span></code> wih each element being a tuple \((s,f)\) where \(s\) is the starting time of the event and \(f\) its the finish time. We need to choose a subset of non-overlapping <code class="docutils literal notranslate"><span class="pre">timeslots</span></code> that has the most elements. Return the number of elements in that subset.</p></li>
+<li><p><strong>Greedy Scheduling</strong> We are given a list <code class="docutils literal notranslate"><span class="pre">timeslots</span></code> with each element being a tuple \((s,f)\) where \(s\) is the starting time of the event and \(f\) its the finish time. We need to choose a subset of non-overlapping <code class="docutils literal notranslate"><span class="pre">timeslots</span></code> that has the most elements. Return the number of elements in that subset.</p></li>
 </ul>
 <p>First, let us assume that <code class="docutils literal notranslate"><span class="pre">timeslots</span></code> is sorted by \(f\) (non-decreasing).</p>
-<p>Let us show that the problem has an optimal substructure. Let \(S_{ij}\) denote a set of events which start after event \(a_i\) and finish before the event \(a_j\) and \(A_{ij}\) be the optimal subset of \(S_{ij}\). We can see that \(A_{ij} = A_{ik} + a_k + A_{kj}\) for \(i\leq k \leq j\). Now \(A_{ik}\) is the solution for  \(A_{ik}\) and \(A_{kj}\) solves \(S_{kj}\). These are two independent subproblems, so the problem has an optimal substructure.</p>
-<p>Now, you can have a thought how, based on this information, one can implement Dynamic solution. However, let us jump straight into greedy:</p>
-<p>Our hypothesis is to always choose the task that ends the earliest. We will show that (some optimal) \(A_{ij}\) always contains the earliest ending task \(a_m\) of \(S_{ij}\). Then, inductively, we know that this leads to globally optimal arrangement.</p>
+<p>Let us show that the problem has an optimal substructure. Let \(S_{ij}\) denote a set of events which start after event \(a_i\) and finish before the event \(a_j\) and \(A_{ij}\) be the optimal subset of \(S_{ij}\). We can see that \(A_{ij} = A_{ik} + a_k + A_{kj}\) for \(i\leq k \leq j\). Now \(A_{ik}\) is the solution for  \(S_{ik}\) and \(A_{kj}\) solves \(S_{kj}\). These are two independent subproblems, so the problem has an optimal substructure.</p>
+<p>Now, you can have a thought about how, based on this information, one can implement Dynamic solution. However, let us jump straight into greedy:</p>
+<p>Our hypothesis is to always choose the task that ends the earliest. We will show that (some optimal) \(A_{ij}\) always contains the earliest ending task \(a_m\) of \(S_{ij}\). Then, inductively, we know that this leads to a globally optimal arrangement.</p>
 <p><strong>Proof</strong>: Let \(a_n\) be the earliest ending task in \(A_{ij}\) (does not have to be the same as \(a_m\)). If \(a_n = a_m\) then we are done. Otherwise, it is possible to swap \(a_n\) with \(a_m\) keeping \(A_{ij}\) valid. As \(A_{ij}\) was optimal, such swap still makes it optimal.</p>
 <p>Have a look at the following code:</p>
 <div class="cell docutils container">
@@ -324,12 +328,12 @@
 <p>The time complexity is \(O(nlog(n))\) but this is due to sorting the events. If the events were sorted initially it would be \(O(n)\).</p>
 <hr class="docutils" />
 <ul class="simple">
-<li><p><strong>Cover a set of points with given length intervals</strong> You are given a list <code class="docutils literal notranslate"><span class="pre">points</span></code> of \(x\)-coordinates of points and <code class="docutils literal notranslate"><span class="pre">l</span></code> - the lenght of the invterval. How many intervals do we need to cover the points?</p></li>
+<li><p><strong>Cover a set of points with given length intervals</strong> You are given a list <code class="docutils literal notranslate"><span class="pre">points</span></code> of \(x\)-coordinates of points and <code class="docutils literal notranslate"><span class="pre">l</span></code> - the length of the interval. How many intervals do we need to cover the points?</p></li>
 </ul>
-<p>Let \(A_{ij}\) denote the optimal set of intervals that cover the points. Take the element from this set \((s_k,e_k)\) then \(A_{ij} = A_{ik} + a_k + A_{kj}\). Similair analysis as in the previous example leads to the conclusion that the problam has an optimal substructure.</p>
+<p>Let \(A_{ij}\) denote the optimal set of intervals that cover the points. Take the element from this set \((s_k,e_k)\) then \(A_{ij} = A_{ik} + a_k + A_{kj}\). Similair analysis as in the previous example leads to the conclusion that the problem has an optimal substructure.</p>
 <p>Now let us show that greedy choices lead to the optimal solution:</p>
 <p>Let us sort the points in the non-decreasing order. We insert an interval where the first begins (an can cover other points) and continue such insertion until we are done.</p>
-<p>Now, consider the optimal solution \(A_{ij}\) and its firt interval. If it does start where the first point, we can replace it with such interval and the solution remains optimal. Done!</p>
+<p>Now, consider the optimal solution \(A_{ij}\) and its first interval. If it does start where the first point, we can replace it with such interval and the solution remains optimal. Done!</p>
 <p>Here is the code implementation:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -358,7 +362,7 @@
 <p>There are two conditions which need to be met for the greedy solution to work:</p>
 <ol class="simple">
 <li><p><strong>Optimal substructure</strong>: the problem should be expressed in terms of independent subproblems, just like in <a class="reference external" href="https://primer-computational-mathematics.github.io/book/b_coding/Fundamentals%20of%20Computer%20Science/4_Dynamic_Programming.html#dynamic-programming">Dynamic Programming</a>!</p></li>
-<li><p><strong>Greedy choices lead to optimal solution</strong>: This is usually done by the <em>copy and paste</em> argument that shows that there exists an optimal solution that involves the proposed Greedy hypothesis. It has a inductive flavour, which means that the Greedy choice leave us with the same <em>smaller</em> problem. You can assume that the input is sorted somehow, it might be very helpful!</p></li>
+<li><p><strong>Greedy choices lead to optimal solution</strong>: This is usually done by the <em>copy and paste</em> argument that shows that there exists an optimal solution that involves the proposed Greedy hypothesis. It has an inductive flavour, which means that the Greedy choice leaves us with the same <em>smaller</em> problem. You can assume that the input is sorted somehow, it might be very helpful!</p></li>
 </ol>
 </div>
 <div class="section" id="advanced-examples">
@@ -366,12 +370,12 @@
 <p>Here are several examples which might be a little more involving:</p>
 <hr class="docutils" />
 <ul class="simple">
-<li><p><strong>Fractional Knapsack</strong> You are two lists <code class="docutils literal notranslate"><span class="pre">vals</span></code> and <code class="docutils literal notranslate"><span class="pre">weights</span></code> as well as an integer <code class="docutils literal notranslate"><span class="pre">W</span></code> - the total weight of a backpack. You are allowed to take any fraction of any item in the list so that the sum of their weights is no bigger than <code class="docutils literal notranslate"><span class="pre">W</span></code>. All numbers in the input are positive. Return the maximum possible value:</p></li>
+<li><p><strong>Fractional Knapsack</strong> You are given two lists <code class="docutils literal notranslate"><span class="pre">vals</span></code> and <code class="docutils literal notranslate"><span class="pre">weights</span></code> as well as an integer <code class="docutils literal notranslate"><span class="pre">W</span></code> - the total weight of a backpack. You are allowed to take any fraction of any item in the list so that the sum of their weights is no bigger than <code class="docutils literal notranslate"><span class="pre">W</span></code>. All numbers in the input are positive. Return the maximum possible value:</p></li>
 </ul>
 <p><strong>Optimal substructure</strong> Let \(val(i, w_j,w)\) denote the <em>maixmum</em> value we can get by taking \(w_j \leq w_i \) of item  \(i\) (\(w_i\) is the weight of the object), considering the object up to the \(i\)th. \(w\) is the weight left in the Knapsack. The solution uses the following recursion:</p>
 <p>\[val(i, w_j,W) = max(val(i+1, w_j,w - w_j) + w_j \times \frac{v_i}{w_i}, val(i+1, w_j,w))\]</p>
 <p><strong>Greedy choices lead to optimal solution</strong> We will be taking the aveliable items of the greatest <em>density</em> \(\frac{v_i}{w_i}\).</p>
-<p>Imagine a sequence of the optimal \(w_j\)s. Let us take such item \(k\) that \(\frac{v_k}{w_k}\) is no smaller than any such ratio in the sequence. If the such item is already in the sequence, we check if the weight taken is maximum possible, if not we can improve or keep the result equal. Since the solution is optimal we cannot improve. If the item is not, we can replace with other items and improve or stay the same, again solution is optimal so the result can only stay the same. Therefore such replacement will result in a optimal solution:</p>
+<p>Imagine a sequence of the optimal \(w_j\)s. Let us take such item \(k\) that \(\frac{v_k}{w_k}\) is no smaller than any such ratio in the sequence. If such item is already in the sequence, we check if the weight taken is maximum possible, if not we can improve or keep the result equal. Since the solution is optimal we cannot improve. If the item is not, we can replace with other items and improve or stay the same, again the solution is optimal so the result can only stay the same. Therefore such replacement will result in an optimal solution:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># vals and weights have positive values only </span>
@@ -410,11 +414,11 @@
 <ul class="simple">
 <li><p><strong>Coin Changing</strong>: We are given an integer list of coin denominations <code class="docutils literal notranslate"><span class="pre">m</span></code> with each entry in cents/pence. For the British system it would be <code class="docutils literal notranslate"><span class="pre">[1,2,5,10,20,50,100,200]</span></code>. We are also given <code class="docutils literal notranslate"><span class="pre">W</span></code> - the sum we would like to receive having an infinite supply of all the coins. Return the minimum amount of coins we need to return such amount.</p></li>
 </ul>
-<p>This problem can be solved using Dynamic Programming, but for many cases (called <a class="reference external" href="https://graal.ens-lyon.fr/~abenoit/algo09/coins2.pdf">canonical coin systems</a> greedy aproach works as well. Many modern coin systems, such as EUR, GBP or USD are canonical.</p>
+<p>This problem can be solved using Dynamic Programming, but for many cases (called <a class="reference external" href="https://graal.ens-lyon.fr/~abenoit/algo09/coins2.pdf">canonical coin systems</a> greedy approach works as well. Many modern coin systems, such as EUR, GBP or USD are canonical.</p>
 <p><strong>Optimal substructure</strong> Try to imagine the following: each solution to the problem for given amount of money \(W\) can be represented as a sorted (non-increasing) seqence of coin denominations which sums up to \(W\). Now let \(coins(n,w)\) denote the <em>minimum</em> number of coins needed to return \(W\), using the first \(n\) coin denominations. Optimal substructure is exhibited in the following equation:</p>
 <p>\[coins(n,w) = min(1 + coins(n, W-c_n),coins(n-1, W))\]</p>
 <p>Where \(c_n\) is the vaule of the \(n\)th coin.</p>
-<p><strong>Greedy approach</strong> We will we supplying the coin of the greatest denomination untill it is possible (the amount left remains non-negative) and then we will continue to smaller denominations untill completion. The proof that this is optimal is beyond the scope of this course. However, you might thing of a simplified case when coin denominations are consecutive powers of a positive integer \(c\) greater than \(1\) so \(c^0,c^1,c^2,c^3…\). The proof should not pose much challenge in this case. Feel free to give it a go!</p>
+<p><strong>Greedy approach</strong> We will we be supplying the coin of the greatest denomination until it is possible (the amount left remains non-negative) and then we will continue to smaller denominations until completion. The proof that this is optimal is beyond the scope of this course. However, you might think of a simplified case when coin denominations are consecutive powers of a positive integer \(c\) greater than \(1\) so \(c^0,c^1,c^2,c^3…\). The proof should be challenging in this case. Feel free to give it a go!</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># we assume that1 is in m, so the algorithm can always terminate</span>
@@ -450,7 +454,62 @@
 <div class="section" id="exercises">
 <h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li></li>
+<li><p><strong>Mice to Holes</strong> There are <code class="docutils literal notranslate"><span class="pre">N</span></code> mice and <code class="docutils literal notranslate"><span class="pre">N</span></code> holes on a straight line. You are given a list <code class="docutils literal notranslate"><span class="pre">mice</span></code> with mice coordinates and <code class="docutils literal notranslate"><span class="pre">holes</span></code> with holes’ coordinates. A mouse can move 1 unit to the left or right per time step. Calculate the minimum number of timesteps for all mice to reach the hole.</p></li>
+</ul>
+<p><strong>HINT</strong>: You want to sort both lists.</p>
+<div class="dropdown admonition">
+<p class="admonition-title">Answer</p>
+<p>The greedy approach pairs the holes with mice by their order in the sorted arrays. Let \(m_1 &lt; m_2\) and \(h1 &lt; h2 \). We will look for the longest mouse-hole distance as this will be our anwser. Clearly:</p>
+<p>\[ max(|m_1 - h_1|, |m_2 - h_2|) &lt; max(|m_1 - h_2|, |m_2 - h_1|) \]</p>
+<p>as \(|m_1 - h_2|\) is the longest of all four. We can therefore make any mice-holes assignment better by a series of swaps until it is sorted. This leads to an optimal solution.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">miceToHoles</span><span class="p">(</span><span class="n">mice</span><span class="p">,</span> <span class="n">holes</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">mice</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">mice</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">holes</span><span class="p">)</span>
+    <span class="n">mice</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+    <span class="n">holes</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+    <span class="c1"># you can read about the python zip function</span>
+    <span class="c1"># very useful functional  untility</span>
+    <span class="k">return</span> <span class="nb">max</span><span class="p">([</span><span class="nb">abs</span><span class="p">(</span><span class="n">m</span> <span class="o">-</span> <span class="n">h</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">h</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">mice</span><span class="p">,</span> <span class="n">holes</span><span class="p">)])</span>
+    
+<span class="c1"># test on some cases!</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">miceToHoles</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">],[</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">9</span><span class="p">]))</span>
+
+</pre></div>
+</div>
+</div>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>Hotel booking</strong> You are given a list of <code class="docutils literal notranslate"><span class="pre">arrivals</span></code> and <code class="docutils literal notranslate"><span class="pre">departures</span></code> of guests in a hotel. The hotel has <code class="docutils literal notranslate"><span class="pre">K</span></code> rooms. Decide if the hotel can accommodate all bookings.</p></li>
+</ul>
+<div class="dropdown admonition">
+<p class="admonition-title">Answer</p>
+<p>We will mark the arrivals and departures and keep the counter of how many rooms are occupied. Then we will merge the two lists and sort them. We will increase this counter when an arrival happens and decrease it upon departure. If the counter exceeds <code class="docutils literal notranslate"><span class="pre">K</span></code> we will return <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">hotelBooking</span><span class="p">(</span><span class="n">arrivals</span><span class="p">,</span> <span class="n">departures</span><span class="p">,</span><span class="n">K</span><span class="p">):</span>
+    <span class="c1"># marking the lists</span>
+    <span class="n">arrivals</span> <span class="o">=</span> <span class="p">[(</span><span class="n">x</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">arrivals</span><span class="p">]</span>
+    <span class="n">departures</span> <span class="o">=</span> <span class="p">[(</span><span class="n">x</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">departures</span><span class="p">]</span>
+    
+    <span class="n">moves</span> <span class="o">=</span> <span class="n">arrivals</span> <span class="o">+</span> <span class="n">departures</span>
+    <span class="n">moves</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+    <span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">moves</span><span class="p">:</span>
+        <span class="n">counter</span> <span class="o">+=</span> <span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">counter</span> <span class="o">&gt;</span> <span class="n">K</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        
+    <span class="k">return</span> <span class="kc">True</span>
+    
+<span class="nb">print</span><span class="p">(</span><span class="n">hotelBooking</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">],[</span><span class="mi">2</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">],</span><span class="mi">1</span><span class="p">))</span>
+
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Cormen, Leiserson, Rivest, Stein, “Introduction to Algorithms”, Third Edition, MIT Press, 2009</p></li>
+<li><p>GeeksforGeeks, <a class="reference external" href="https://www.geeksforgeeks.org/assign-mice-holes/">Assign Mice to Holes</a></p></li>
+<li><p>Sebastian Raschka, Github, <a class="reference external" href="https://nbviewer.jupyter.org/github/rasbt/algorithms_in_ipython_notebooks/blob/master/ipython_nbs/essentials/greedy-algorithm-intro.ipynb">Introduction to Greedy Algorithms</a></p></li>
 </ul>
 </div>
 </div>
