@@ -23,6 +23,7 @@ The notebooks cover all basic topics covered in year 1 programming course:
 16. {ref}`Sets <sets_exercises>`
 18. {ref}`Assert <assert_exercises>`
 19. {ref}`Classes <classes_exercises>`
+20. {ref}`Lambdas <lambdas_exercises>`
 ```
 
 1. {ref}`printing_intro`
@@ -61,3 +62,4 @@ The notebooks cover all basic topics covered in year 1 programming course:
     - {ref}`animations`
 18. {ref}`assert`
 19. {ref}`classes`
+20. {ref}`lambdas`
