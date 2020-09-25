@@ -234,11 +234,11 @@
     <ul class="nav section-nav flex-column">
     
         <li class="nav-item toc-entry toc-h2">
-            <a href="#stack" class="nav-link">Stack</a>
+            <a href="#array" class="nav-link">Array</a>
         </li>
     
         <li class="nav-item toc-entry toc-h2">
-            <a href="#queue-and-deque" class="nav-link">Queue and deque</a>
+            <a href="#stack" class="nav-link">Stack</a>
         </li>
     
         <li class="nav-item toc-entry toc-h2">
@@ -246,7 +246,15 @@
         </li>
     
         <li class="nav-item toc-entry toc-h2">
-            <a href="#binary-search-tree" class="nav-link">Binary search tree</a>
+            <a href="#queue" class="nav-link">Queue</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#binary-search-tree-bst" class="nav-link">Binary search tree (BST)</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#heap" class="nav-link">Heap</a>
         </li>
     
         <li class="nav-item toc-entry toc-h2">
@@ -254,15 +262,7 @@
         </li>
     
         <li class="nav-item toc-entry toc-h2">
-            <a href="#heaps" class="nav-link">Heaps</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
             <a href="#tries" class="nav-link">Tries</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#graphs" class="nav-link">Graphs</a>
         </li>
     
         <li class="nav-item toc-entry toc-h2">
@@ -282,33 +282,551 @@
                 
   <div class="section" id="data-structures">
 <span id="id1"></span><h1>Data Structures<a class="headerlink" href="#data-structures" title="Permalink to this headline">¶</a></h1>
-<p id="index-0">Intro</p>
+<p id="index-0"><em>Data structures</em> allow us to speed our algorithms up often by many orders of magnitude. They arrange the data that is suitable for the problem being solved and usually simplify the workings of the algorithm. In this notebook we will implement some of the most popular data structures in computer science:</p>
+<div class="section" id="array">
+<h2>Array<a class="headerlink" href="#array" title="Permalink to this headline">¶</a></h2>
+<p>Arrays are lists of objects. In older programming languages arrays were objects of fixed length and type (e.g. list of 10 integers). In Python, arrays can be implemented using <code class="docutils literal notranslate"><span class="pre">list</span></code>s, which provide a litte more flexibility by hosting multiple types and variable lenght. Arrays/lists support the following operation in complexity:</p>
+<ul class="simple">
+<li><p>Set item (at index i smaller than the length): \(O(1)\)</p></li>
+<li><p>Get item: \(O(1)\)</p></li>
+<li><p>Deletion is no really supported as we assume that the array is of fixed lenght, for Python lists it is \(O(n)\).</p></li>
+</ul>
+<p>Arrays are used in many programming problems where collections of data are used.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">arr</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+<span class="c1"># constant</span>
+<span class="n">arr</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="c1"># constant</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">arr</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2
+</pre></div>
+</div>
+</div>
+</div>
+</div>
 <div class="section" id="stack">
 <h2>Stack<a class="headerlink" href="#stack" title="Permalink to this headline">¶</a></h2>
+<p>Stack is a structure that follows that <strong>LIFO</strong> (last in, first out) rule. Elements can be <code class="docutils literal notranslate"><span class="pre">push</span></code>ed on top of the stack or <code class="docutils literal notranslate"><span class="pre">pop</span></code>ped of it. Those are the only two operations that this structure supports:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Stack</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">contents</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">def</span> <span class="nf">pop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">contents</span><span class="p">):</span>
+            <span class="n">temp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">contents</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">contents</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">contents</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">temp</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ERROR: Stack is empty&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">push</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">elem</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">contents</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">elem</span><span class="p">)</span>
+
+<span class="n">st</span> <span class="o">=</span> <span class="n">Stack</span><span class="p">()</span>
+<span class="n">st</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">st</span><span class="o">.</span><span class="n">pop</span><span class="p">())</span>
+<span class="n">st</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+
+<span class="c1"># Python lists also support these operations, push is called append!</span>
+
+<span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">l</span><span class="o">.</span><span class="n">pop</span><span class="p">())</span>
+<span class="n">l</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+</pre></div>
 </div>
-<div class="section" id="queue-and-deque">
-<h2>Queue and deque<a class="headerlink" href="#queue-and-deque" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1
+ERROR: Stack is empty
+2
+[1, 3]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Operations/complexity:</p>
+<ul class="simple">
+<li><p>push: \(O(1)\)</p></li>
+<li><p>pop: \(O(1)\)</p></li>
+</ul>
+<p>One of the popular problems utilizing stacks is checking whether an expression has balanced brackets. Let us limit ourselves to expressions consisting of <code class="docutils literal notranslate"><span class="pre">[{,},(,)]</span></code>. We will push the opening brackets on the stack and pop them when closing bracket is approached. Of course, the types of brackets must match:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">checkIfValidBracketing</span><span class="p">(</span><span class="n">expr</span><span class="p">):</span>
+    <span class="c1"># our stack :)</span>
+    <span class="n">st</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">expr</span><span class="p">:</span>
+        <span class="c1"># not a bracket</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;{&quot;</span><span class="p">,</span><span class="s2">&quot;}&quot;</span><span class="p">,</span><span class="s2">&quot;(&quot;</span><span class="p">,</span><span class="s2">&quot;)&quot;</span><span class="p">]:</span>
+            <span class="k">continue</span>
+        <span class="c1"># push the opening bracket on the stack</span>
+        <span class="k">elif</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;{&quot;</span><span class="p">,</span><span class="s2">&quot;(&quot;</span><span class="p">]:</span>
+            <span class="n">st</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="c1"># check when closing bracket approached    </span>
+        <span class="k">elif</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;}&quot;</span><span class="p">,</span><span class="s2">&quot;)&quot;</span><span class="p">]:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">temp</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="s2">&quot;}&quot;</span> <span class="ow">and</span> <span class="n">temp</span> <span class="o">==</span> <span class="s2">&quot;{&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="s2">&quot;)&quot;</span> <span class="ow">and</span> <span class="n">temp</span> <span class="o">==</span> <span class="s2">&quot;(&quot;</span><span class="p">):</span>
+                    <span class="k">continue</span>
+                <span class="c1"># invalid bracketing    </span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="kc">False</span>
+            <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">st</span><span class="p">)</span>
+
+<span class="c1"># Basic testing</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">checkIfValidBracketing</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">()&quot;</span><span class="p">))</span>    
+<span class="nb">print</span><span class="p">(</span><span class="n">checkIfValidBracketing</span><span class="p">(</span><span class="s2">&quot;{(&quot;</span><span class="p">))</span> 
+<span class="nb">print</span><span class="p">(</span><span class="n">checkIfValidBracketing</span><span class="p">(</span><span class="s2">&quot;({()})&quot;</span><span class="p">))</span> 
+<span class="nb">print</span><span class="p">(</span><span class="n">checkIfValidBracketing</span><span class="p">(</span><span class="s2">&quot;)&quot;</span><span class="p">))</span> 
+<span class="nb">print</span><span class="p">(</span><span class="n">checkIfValidBracketing</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">))</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+False
+True
+False
+True
+</pre></div>
+</div>
+</div>
+</div>
+<p>The following algorithm has \(O(n)\) time and space complexity.</p>
 </div>
 <div class="section" id="linked-list">
 <h2>Linked list<a class="headerlink" href="#linked-list" title="Permalink to this headline">¶</a></h2>
+<p>Linked lists are the simplest node-based structures. They are inherently recursive in nature. A linked list consist of a <code class="docutils literal notranslate"><span class="pre">head</span></code> pointing to the <code class="docutils literal notranslate"><span class="pre">next</span></code> which itself is a linked list. Base case is an empty list:</p>
+<div class="figure align-default">
+<a class="reference internal image-reference" href="../../_images/LinkedList.png"><img alt="../../_images/LinkedList.png" src="../../_images/LinkedList.png" style="width: 60%;" /></a>
 </div>
-<div class="section" id="binary-search-tree">
-<h2>Binary search tree<a class="headerlink" href="#binary-search-tree" title="Permalink to this headline">¶</a></h2>
+<p>A simple implementation would be:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Node</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">val</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">val</span> <span class="o">=</span> <span class="n">val</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="kc">None</span>
+        
+<span class="k">class</span> <span class="nc">LinkedList</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">head</span> <span class="o">=</span> <span class="kc">None</span>
+        
+    <span class="c1"># insert at a position index  </span>
+    <span class="c1"># false is index out of range, true otherwise</span>
+    <span class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">x</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">index</span> <span class="o">&gt;=</span> <span class="mi">0</span>
+        <span class="n">newNode</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">index</span><span class="p">:</span>
+            <span class="n">newNode</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">head</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">head</span> <span class="o">=</span> <span class="n">newNode</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">curr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">head</span> 
+            <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">index</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">curr</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="kc">False</span>
+                <span class="n">curr</span> <span class="o">=</span> <span class="n">curr</span><span class="o">.</span><span class="n">next</span>
+            <span class="k">if</span> <span class="n">curr</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+            <span class="n">newNode</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">curr</span><span class="o">.</span><span class="n">next</span>
+            <span class="n">curr</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">newNode</span>
+            <span class="k">return</span> <span class="kc">True</span>
+            
+    <span class="c1"># remove item at index position  </span>
+    <span class="c1"># return true if the element was actually removed, </span>
+    <span class="c1"># false otherwise</span>
+    <span class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">index</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">index</span> <span class="o">&gt;=</span> <span class="mi">0</span>
+        <span class="c1"># Removing head</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">index</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">head</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">head</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">next</span>
+                <span class="k">return</span> <span class="kc">True</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+        <span class="c1"># index &gt; 0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">curr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">head</span>
+            <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">index</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">curr</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="kc">False</span>
+                <span class="n">curr</span> <span class="o">=</span> <span class="n">curr</span><span class="o">.</span><span class="n">next</span>
+            <span class="k">if</span> <span class="n">curr</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">curr</span><span class="o">.</span><span class="n">next</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="kc">False</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">curr</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">curr</span><span class="o">.</span><span class="n">next</span><span class="o">.</span><span class="n">next</span>
+                    <span class="k">return</span> <span class="kc">True</span>
+                
+    <span class="c1"># returns true if x in the list, false otherwise            </span>
+    <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">x</span><span class="p">):</span>
+        <span class="n">curr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">head</span>
+        <span class="k">while</span> <span class="n">curr</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">curr</span><span class="o">.</span><span class="n">val</span> <span class="o">==</span> <span class="n">x</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">True</span>
+            <span class="n">curr</span> <span class="o">=</span> <span class="n">curr</span><span class="o">.</span><span class="n">next</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    
+    <span class="c1"># for testing and nice representation</span>
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="n">curr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">head</span>
+        <span class="k">while</span> <span class="n">curr</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">res</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">curr</span><span class="o">.</span><span class="n">val</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;-&gt;&quot;</span>
+            <span class="n">curr</span> <span class="o">=</span> <span class="n">curr</span><span class="o">.</span><span class="n">next</span>
+        <span class="k">return</span> <span class="n">res</span>
+        
+    
+<span class="n">ll</span> <span class="o">=</span> <span class="n">LinkedList</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ll</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ll</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ll</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ll</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ll</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ll</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ll</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ll</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ll</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ll</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ll</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ll</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ll</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ll</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ll</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+0-&gt;
+True
+0-&gt;1-&gt;
+True
+0-&gt;2-&gt;1-&gt;
+True
+0-&gt;2-&gt;
+True
+True
+2-&gt;
+False
+True
+False
+</pre></div>
+</div>
+</div>
+</div>
+<p>All of these operations (<code class="docutils literal notranslate"><span class="pre">insert</span></code>,<code class="docutils literal notranslate"><span class="pre">remove</span></code>,<code class="docutils literal notranslate"><span class="pre">search</span></code>) take \(O(n)\) which is usually not optimal. There are numerous versions of linked lists e.g. doubly linked list which has nodes that point both to the previous and next nodes. Linked lists are often used to implement other data structures such as queues.</p>
+</div>
+<div class="section" id="queue">
+<h2>Queue<a class="headerlink" href="#queue" title="Permalink to this headline">¶</a></h2>
+<p>Ques are similair to stacks but utilize the <strong>FIFO</strong> (first in, first out) rule. Basic ques support <code class="docutils literal notranslate"><span class="pre">enque</span></code> and <code class="docutils literal notranslate"><span class="pre">deque</span></code> operations. A linked list implementation would be:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Node</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">item</span> <span class="o">=</span> <span class="n">item</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">previous</span> <span class="o">=</span> <span class="kc">None</span>
+
+
+<span class="k">class</span> <span class="nc">Queue</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">head</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tail</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">enqueue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="n">newNode</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">head</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">head</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tail</span> <span class="o">=</span> <span class="n">newNode</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tail</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">newNode</span>
+            <span class="n">newNode</span><span class="o">.</span><span class="n">previous</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tail</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tail</span> <span class="o">=</span> <span class="n">newNode</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">+=</span> <span class="mi">1</span>
+
+
+    <span class="k">def</span> <span class="nf">dequeue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">item</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">head</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">next</span> 
+        <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tail</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">item</span>
+    
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="n">curr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">head</span>
+        <span class="k">while</span> <span class="n">curr</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">res</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">curr</span><span class="o">.</span><span class="n">item</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;-&gt;&quot;</span>
+            <span class="n">curr</span> <span class="o">=</span> <span class="n">curr</span><span class="o">.</span><span class="n">next</span>
+        <span class="k">return</span> <span class="n">res</span>
+
+<span class="n">queue</span> <span class="o">=</span> <span class="n">Queue</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">queue</span><span class="p">)</span>
+<span class="n">queue</span><span class="o">.</span><span class="n">enqueue</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">queue</span><span class="o">.</span><span class="n">enqueue</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">queue</span><span class="o">.</span><span class="n">enqueue</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">queue</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">queue</span><span class="o">.</span><span class="n">dequeue</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">queue</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">queue</span><span class="o">.</span><span class="n">dequeue</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">queue</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">queue</span><span class="o">.</span><span class="n">dequeue</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">queue</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">queue</span><span class="o">.</span><span class="n">dequeue</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1-&gt;2-&gt;3-&gt;
+1
+2-&gt;3-&gt;
+2
+3-&gt;
+3
+
+None
+</pre></div>
+</div>
+</div>
+</div>
+<p>With this implementation <code class="docutils literal notranslate"><span class="pre">enuqueue</span></code> and <code class="docutils literal notranslate"><span class="pre">dequeue</span></code> are \(O(1)\). Queues are used in numerous problems, such as graph traversals (BFS).</p>
+</div>
+<div class="section" id="binary-search-tree-bst">
+<h2>Binary search tree (BST)<a class="headerlink" href="#binary-search-tree-bst" title="Permalink to this headline">¶</a></h2>
+<p><em>Binary tree</em> is another node-based structure also recursive in nature. The tree consists of a <em>root</em> which points to at most two children which are also binary trees. <em>Binary search trees</em> are a type of binary trees which have the property that the key of the left child is no greater than the root key. Right child’s key is greater than the root key. An example binary search tree is as follows:</p>
+<div class="figure align-default">
+<a class="reference internal image-reference" href="../../_images/BST.png"><img alt="../../_images/BST.png" src="../../_images/BST.png" style="width: 80%;" /></a>
+</div>
+<p>An example implementation for BST with integers is as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># implemented as a set, will not containg duplicates</span>
+<span class="k">def</span> <span class="nf">BST</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">val</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">val</span> <span class="o">=</span> <span class="n">val</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="kc">None</span>
+        
+    <span class="c1"># true if the insert changes the BST    </span>
+    <span class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">x</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">val</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">val</span> <span class="o">=</span> <span class="n">x</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="c1"># already in the set</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">val</span> <span class="o">==</span> <span class="n">x</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">val</span> <span class="o">&gt;</span> <span class="n">x</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">left</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">BST</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">True</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">left</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">right</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">BST</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">True</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">right</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+            
+    <span class="c1"># seach for x in BST</span>
+    <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">x</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">val</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">val</span> <span class="o">==</span> <span class="n">x</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">val</span> <span class="o">&gt;</span> <span class="n">x</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">left</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">left</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">right</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">right</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>            
+</pre></div>
+</div>
+</div>
+</div>
+<p>Node removal is a bit more involved and will be a subject of an exercise. All basic operations can be done in \(O(log(n))\). BST can be used to speed up many problems that require repetitive searching of the data. Consider the following problem:</p>
+<p><strong>Numbers smaller than the given number in an array</strong> You are given an array of integers. You should provide a data structure which should return the number of elements smaller than any chosen element in the array.</p>
+<p>We will solve the question by constructing a BST out of the array that will store the the number of nodes to the left of the node (its rank):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">newNode</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span> 
+        <span class="bp">self</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">leftSize</span> <span class="o">=</span> <span class="mi">0</span>
+        
+<span class="c1"># Inserting a new Node. </span>
+<span class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">root</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> 
+        <span class="k">return</span> <span class="n">newNode</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> 
+ 
+    <span class="c1"># Updating size of left subtree. </span>
+    <span class="k">if</span> <span class="n">data</span> <span class="o">&lt;=</span> <span class="n">root</span><span class="o">.</span><span class="n">data</span><span class="p">:</span> 
+        <span class="n">root</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">insert</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">left</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span> 
+        <span class="n">root</span><span class="o">.</span><span class="n">leftSize</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">root</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">insert</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">right</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">root</span>
+ 
+<span class="c1"># Function to get Rank of a Node x. </span>
+<span class="k">def</span> <span class="nf">getRank</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+     
+   
+    <span class="k">if</span> <span class="n">root</span><span class="o">.</span><span class="n">data</span> <span class="o">==</span> <span class="n">x</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">root</span><span class="o">.</span><span class="n">leftSize</span> 
+ 
+
+    <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">root</span><span class="o">.</span><span class="n">data</span><span class="p">:</span> 
+        <span class="k">if</span> <span class="n">root</span><span class="o">.</span><span class="n">left</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> 
+            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">getRank</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">left</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+ 
+
+    <span class="k">else</span><span class="p">:</span> 
+        <span class="k">if</span> <span class="n">root</span><span class="o">.</span><span class="n">right</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> 
+            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span> 
+            <span class="n">rightSize</span> <span class="o">=</span> <span class="n">getRank</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">right</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">rightSize</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                <span class="c1"># x not found in right sub tree, i.e. not found in stream</span>
+                <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">root</span><span class="o">.</span><span class="n">leftSize</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">rightSize</span>
+ 
+<span class="n">arr</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> 
+<span class="n">root</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)):</span>
+    <span class="n">root</span> <span class="o">=</span> <span class="n">insert</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    
+<span class="nb">print</span><span class="p">(</span><span class="n">getRank</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">getRank</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="mi">13</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">getRank</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3
+8
+-1
+</pre></div>
+</div>
+</div>
+</div>
+<p>This algorith will work in \(O(log(n))\) time on average. However, of the array was initially sorted the formed tree will be degenerate (it will basically form a linked list). We will learn how to solve such cases in AVL trees.</p>
+</div>
+<div class="section" id="heap">
+<h2>Heap<a class="headerlink" href="#heap" title="Permalink to this headline">¶</a></h2>
+<p><em>Heaps</em> (especially <em>binary heaps</em>) are tree like structures that have two properties:</p>
+<ol class="simple">
+<li><p>They are a complete tree (all levels of the tree are completly filled except possibly the last level).</p></li>
+<li><p>It is either a min heap or a max heap. In the first case root is smaller or equal to its children. The oppositie is true for the max heap.</p></li>
+</ol>
+<p>Let us implement a min heap storing integers. It will support taking the top element (which is the minimum) as well as inserting new elements. Interestingly, we will implement it using a Python list. It is an important fact to spot that a parent of an element at index <code class="docutils literal notranslate"><span class="pre">i</span></code> is at index <code class="docutils literal notranslate"><span class="pre">i//2</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># utility functions</span>
+<span class="k">def</span> <span class="nf">swap</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="n">temp</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[</span><span class="n">x</span><span class="p">]</span>
+    <span class="n">arr</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[</span><span class="n">y</span><span class="p">]</span>
+    <span class="n">arr</span><span class="p">[</span><span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp</span>
+    
+<span class="k">class</span> <span class="nc">MinHeap</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">contents</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="mi">0</span>
+        
+    <span class="c1"># utility function    </span>
+    <span class="k">def</span> <span class="nf">heapifyUp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+        <span class="k">while</span> <span class="n">i</span> <span class="o">//</span> <span class="mi">2</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">contents</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">contents</span><span class="p">[</span><span class="n">i</span> <span class="o">//</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]:</span>
+                <span class="n">swap</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">contents</span><span class="p">,</span>  <span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">i</span> <span class="o">//</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">i</span> <span class="o">//=</span> <span class="mi">2</span>
+    
+    <span class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">val</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">contents</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">heapifyUp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+        
+    <span class="k">def</span> <span class="nf">heapifyDown</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">i</span><span class="p">):</span>
+        <span class="k">while</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
+            <span class="n">mc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">minChild</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">contents</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">contents</span><span class="p">[</span><span class="n">mc</span><span class="p">]:</span>
+                <span class="n">swap</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">contents</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">mc</span><span class="p">)</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="n">mc</span>
+            
+    <span class="k">def</span> <span class="nf">minChild</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+        <span class="k">if</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">contents</span><span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">contents</span><span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">2</span>
+        
+    <span class="k">def</span> <span class="nf">getMin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">&gt;</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">contents</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">swap</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">contents</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">contents</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">heapifyDown</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">res</span>
+        
+<span class="c1">#Heapsort -  a O(nlog(n)) sorting algorithm.</span>
+
+<span class="n">arr</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">8</span><span class="p">]</span>
+<span class="n">heap</span> <span class="o">=</span> <span class="n">MinHeap</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)):</span>
+    <span class="n">heap</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">arr</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">heap</span><span class="o">.</span><span class="n">contents</span><span class="p">)</span>   
+<span class="n">arr</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">while</span> <span class="n">heap</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
+    <span class="n">arr</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">heap</span><span class="o">.</span><span class="n">getMin</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>    
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1, 2, 2, 5, 3, 3, 4, 6, 6, 8, 7, 3, 8]
+[1, 2, 2, 3, 3, 3, 4, 5, 6, 6, 7, 8, 8]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Heaps have many, many uses. One of such is HeapSort - a \(O(nlog(n))\) sorting algorithm (see above). Heaps are also used in <em>priority queues</em> - queues which have the elements sorted by some <em>priority</em> such as objects sorted by their value.</p>
 </div>
 <div class="section" id="avl-trees">
 <h2>AVL Trees<a class="headerlink" href="#avl-trees" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="heaps">
-<h2>Heaps<a class="headerlink" href="#heaps" title="Permalink to this headline">¶</a></h2>
-</div>
 <div class="section" id="tries">
 <h2>Tries<a class="headerlink" href="#tries" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="graphs">
-<h2>Graphs<a class="headerlink" href="#graphs" title="Permalink to this headline">¶</a></h2>
-</div>
 <div class="section" id="hash-tables">
 <h2>Hash Tables<a class="headerlink" href="#hash-tables" title="Permalink to this headline">¶</a></h2>
+<p>https://www.geeksforgeeks.org/rank-element-stream/
+https://runestone.academy/runestone/books/published/pythonds/Trees/BinaryHeapImplementation.html</p>
 </div>
 </div>
 
