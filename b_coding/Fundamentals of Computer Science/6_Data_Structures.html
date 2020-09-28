@@ -258,15 +258,35 @@
         </li>
     
         <li class="nav-item toc-entry toc-h2">
-            <a href="#avl-trees" class="nav-link">AVL Trees</a>
+            <a href="#avl-tree" class="nav-link">AVL Tree</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#avl-insertion" class="nav-link">AVL insertion</a>
+        </li>
+    
+            </ul>
         </li>
     
         <li class="nav-item toc-entry toc-h2">
-            <a href="#tries" class="nav-link">Tries</a>
+            <a href="#hash-table" class="nav-link">Hash Table</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#hash-function" class="nav-link">Hash function</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#overlaps" class="nav-link">Overlaps</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#doubling" class="nav-link">Doubling</a>
+        </li>
+    
+            </ul>
         </li>
     
         <li class="nav-item toc-entry toc-h2">
-            <a href="#hash-tables" class="nav-link">Hash Tables</a>
+            <a href="#references" class="nav-link">References</a>
         </li>
     
     </ul>
@@ -282,16 +302,16 @@
                 
   <div class="section" id="data-structures">
 <span id="id1"></span><h1>Data Structures<a class="headerlink" href="#data-structures" title="Permalink to this headline">¶</a></h1>
-<p id="index-0"><em>Data structures</em> allow us to speed our algorithms up often by many orders of magnitude. They arrange the data that is suitable for the problem being solved and usually simplify the workings of the algorithm. In this notebook we will implement some of the most popular data structures in computer science:</p>
+<p id="index-0"><em>Data structures</em> allow us to speed up our algorithms often by many orders of magnitude. They arrange the data in a way that is suitable for the problem and usually simplify the workings of the algorithm. In this notebook, we will implement some of the most popular data structures in computer science:</p>
 <div class="section" id="array">
 <h2>Array<a class="headerlink" href="#array" title="Permalink to this headline">¶</a></h2>
-<p>Arrays are lists of objects. In older programming languages arrays were objects of fixed length and type (e.g. list of 10 integers). In Python, arrays can be implemented using <code class="docutils literal notranslate"><span class="pre">list</span></code>s, which provide a litte more flexibility by hosting multiple types and variable lenght. Arrays/lists support the following operation in complexity:</p>
+<p>Arrays are lists of objects. In some programming languages, arrays are objects of fixed length and have a type (e.g. list of 10 integers). In Python, are implemented using <code class="docutils literal notranslate"><span class="pre">list</span></code>s, which provide a little more flexibility by hosting multiple types and variable length. Arrays/lists support the following operation in complexity:</p>
 <ul class="simple">
 <li><p>Set item (at index i smaller than the length): \(O(1)\)</p></li>
 <li><p>Get item: \(O(1)\)</p></li>
-<li><p>Deletion is no really supported as we assume that the array is of fixed lenght, for Python lists it is \(O(n)\).</p></li>
+<li><p>Deletion is no really supported as we assume that the array is of fixed length, for Python lists it is \(O(n)\).</p></li>
 </ul>
-<p>Arrays are used in many programming problems where collections of data are used.</p>
+<p>Arrays are used in many programming problems where collections of data show up.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">arr</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
@@ -311,7 +331,7 @@
 </div>
 <div class="section" id="stack">
 <h2>Stack<a class="headerlink" href="#stack" title="Permalink to this headline">¶</a></h2>
-<p>Stack is a structure that follows that <strong>LIFO</strong> (last in, first out) rule. Elements can be <code class="docutils literal notranslate"><span class="pre">push</span></code>ed on top of the stack or <code class="docutils literal notranslate"><span class="pre">pop</span></code>ped of it. Those are the only two operations that this structure supports:</p>
+<p>A stack is a structure that follows that <strong>LIFO</strong> (last in, first out) rule. Elements can be <code class="docutils literal notranslate"><span class="pre">push</span></code>ed on top of the stack or <code class="docutils literal notranslate"><span class="pre">pop</span></code>ped of it. Those are the only two operations that this structure supports:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Stack</span><span class="p">:</span>
@@ -333,7 +353,6 @@
 <span class="n">st</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
 
 <span class="c1"># Python lists also support these operations, push is called append!</span>
-
 <span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">l</span><span class="o">.</span><span class="n">pop</span><span class="p">())</span>
 <span class="n">l</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
@@ -355,7 +374,7 @@ ERROR: Stack is empty
 <li><p>push: \(O(1)\)</p></li>
 <li><p>pop: \(O(1)\)</p></li>
 </ul>
-<p>One of the popular problems utilizing stacks is checking whether an expression has balanced brackets. Let us limit ourselves to expressions consisting of <code class="docutils literal notranslate"><span class="pre">[{,},(,)]</span></code>. We will push the opening brackets on the stack and pop them when closing bracket is approached. Of course, the types of brackets must match:</p>
+<p>One of popular problems utilizing stacks is checking whether an expression has balanced brackets. Let us limit ourselves to expressions consisting of <code class="docutils literal notranslate"><span class="pre">[{,},(,)]</span></code>. We will push the opening brackets on the stack and pop them when the closing bracket is approached. Of course, the types of brackets must match:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">checkIfValidBracketing</span><span class="p">(</span><span class="n">expr</span><span class="p">):</span>
@@ -382,20 +401,20 @@ ERROR: Stack is empty
     <span class="k">return</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">st</span><span class="p">)</span>
 
 <span class="c1"># Basic testing</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">checkIfValidBracketing</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">()&quot;</span><span class="p">))</span>    
-<span class="nb">print</span><span class="p">(</span><span class="n">checkIfValidBracketing</span><span class="p">(</span><span class="s2">&quot;{(&quot;</span><span class="p">))</span> 
-<span class="nb">print</span><span class="p">(</span><span class="n">checkIfValidBracketing</span><span class="p">(</span><span class="s2">&quot;({()})&quot;</span><span class="p">))</span> 
-<span class="nb">print</span><span class="p">(</span><span class="n">checkIfValidBracketing</span><span class="p">(</span><span class="s2">&quot;)&quot;</span><span class="p">))</span> 
-<span class="nb">print</span><span class="p">(</span><span class="n">checkIfValidBracketing</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">))</span> 
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">()&quot;</span><span class="p">,</span><span class="n">checkIfValidBracketing</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">()&quot;</span><span class="p">))</span>    
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;{(&quot;</span><span class="p">,</span><span class="n">checkIfValidBracketing</span><span class="p">(</span><span class="s2">&quot;{(&quot;</span><span class="p">))</span> 
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;({()})&quot;</span><span class="p">,</span><span class="n">checkIfValidBracketing</span><span class="p">(</span><span class="s2">&quot;({()})&quot;</span><span class="p">))</span> 
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;)&quot;</span><span class="p">,</span><span class="n">checkIfValidBracketing</span><span class="p">(</span><span class="s2">&quot;)&quot;</span><span class="p">))</span> 
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="n">checkIfValidBracketing</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">))</span> 
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
-False
-True
-False
-True
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{}() True
+{( False
+({()}) True
+) False
+ True
 </pre></div>
 </div>
 </div>
@@ -404,7 +423,7 @@ True
 </div>
 <div class="section" id="linked-list">
 <h2>Linked list<a class="headerlink" href="#linked-list" title="Permalink to this headline">¶</a></h2>
-<p>Linked lists are the simplest node-based structures. They are inherently recursive in nature. A linked list consist of a <code class="docutils literal notranslate"><span class="pre">head</span></code> pointing to the <code class="docutils literal notranslate"><span class="pre">next</span></code> which itself is a linked list. Base case is an empty list:</p>
+<p>Linked lists are the simplest node-based structures. They are inherently recursive. A linked list consists of a <code class="docutils literal notranslate"><span class="pre">head</span></code> pointing to the <code class="docutils literal notranslate"><span class="pre">next</span></code> which itself is a linked list. The base case is an empty list:</p>
 <div class="figure align-default">
 <a class="reference internal image-reference" href="../../_images/LinkedList.png"><img alt="../../_images/LinkedList.png" src="../../_images/LinkedList.png" style="width: 60%;" /></a>
 </div>
@@ -418,8 +437,7 @@ True
         
 <span class="k">class</span> <span class="nc">LinkedList</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">head</span> <span class="o">=</span> <span class="kc">None</span>
-        
+        <span class="bp">self</span><span class="o">.</span><span class="n">head</span> <span class="o">=</span> <span class="kc">None</span>  
     <span class="c1"># insert at a position index  </span>
     <span class="c1"># false is index out of range, true otherwise</span>
     <span class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">x</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
@@ -530,7 +548,7 @@ False
 </div>
 <div class="section" id="queue">
 <h2>Queue<a class="headerlink" href="#queue" title="Permalink to this headline">¶</a></h2>
-<p>Ques are similair to stacks but utilize the <strong>FIFO</strong> (first in, first out) rule. Basic ques support <code class="docutils literal notranslate"><span class="pre">enque</span></code> and <code class="docutils literal notranslate"><span class="pre">deque</span></code> operations. A linked list implementation would be:</p>
+<p>Ques are similar to stacks but utilize the <strong>FIFO</strong> (first in, first out) rule. Basic ques support <code class="docutils literal notranslate"><span class="pre">enqueue</span></code> and <code class="docutils literal notranslate"><span class="pre">dequeue</span></code> operations. A linked list implementation would be:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Node</span><span class="p">:</span>
@@ -538,7 +556,6 @@ False
         <span class="bp">self</span><span class="o">.</span><span class="n">item</span> <span class="o">=</span> <span class="n">item</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">previous</span> <span class="o">=</span> <span class="kc">None</span>
-
 
 <span class="k">class</span> <span class="nc">Queue</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -555,7 +572,6 @@ False
             <span class="n">newNode</span><span class="o">.</span><span class="n">previous</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tail</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">tail</span> <span class="o">=</span> <span class="n">newNode</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">+=</span> <span class="mi">1</span>
-
 
     <span class="k">def</span> <span class="nf">dequeue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">:</span>
@@ -604,7 +620,7 @@ None
 </div>
 </div>
 </div>
-<p>With this implementation <code class="docutils literal notranslate"><span class="pre">enuqueue</span></code> and <code class="docutils literal notranslate"><span class="pre">dequeue</span></code> are \(O(1)\). Queues are used in numerous problems, such as graph traversals (BFS).</p>
+<p>With this implementation <code class="docutils literal notranslate"><span class="pre">enqueue</span></code> and <code class="docutils literal notranslate"><span class="pre">dequeue</span></code> are \(O(1)\). Queues are used in numerous problems, such as graph traversals (BFS).</p>
 </div>
 <div class="section" id="binary-search-tree-bst">
 <h2>Binary search tree (BST)<a class="headerlink" href="#binary-search-tree-bst" title="Permalink to this headline">¶</a></h2>
@@ -615,8 +631,8 @@ None
 <p>An example implementation for BST with integers is as follows:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># implemented as a set, will not containg duplicates</span>
-<span class="k">def</span> <span class="nf">BST</span><span class="p">:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># implemented as a set, will not contain duplicates</span>
+<span class="k">class</span> <span class="nc">BST</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">val</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">val</span> <span class="o">=</span> <span class="n">val</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="kc">None</span>
@@ -663,7 +679,7 @@ None
 </div>
 </div>
 </div>
-<p>Node removal is a bit more involved and will be a subject of an exercise. All basic operations can be done in \(O(log(n))\). BST can be used to speed up many problems that require repetitive searching of the data. Consider the following problem:</p>
+<p>Node removal is a bit more involved and will not be covered. All basic operations can be done in \(O(log(n))\). BST can be used to speed up many problems that require repetitive searching of the data. Consider the following problem:</p>
 <p><strong>Numbers smaller than the given number in an array</strong> You are given an array of integers. You should provide a data structure which should return the number of elements smaller than any chosen element in the array.</p>
 <p>We will solve the question by constructing a BST out of the array that will store the the number of nodes to the left of the node (its rank):</p>
 <div class="cell docutils container">
@@ -689,19 +705,13 @@ None
  
 <span class="c1"># Function to get Rank of a Node x. </span>
 <span class="k">def</span> <span class="nf">getRank</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
-     
-   
     <span class="k">if</span> <span class="n">root</span><span class="o">.</span><span class="n">data</span> <span class="o">==</span> <span class="n">x</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">root</span><span class="o">.</span><span class="n">leftSize</span> 
- 
-
     <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">root</span><span class="o">.</span><span class="n">data</span><span class="p">:</span> 
         <span class="k">if</span> <span class="n">root</span><span class="o">.</span><span class="n">left</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> 
             <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">getRank</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">left</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
- 
-
     <span class="k">else</span><span class="p">:</span> 
         <span class="k">if</span> <span class="n">root</span><span class="o">.</span><span class="n">right</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> 
             <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
@@ -712,12 +722,10 @@ None
                 <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">root</span><span class="o">.</span><span class="n">leftSize</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">rightSize</span>
- 
 <span class="n">arr</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> 
 <span class="n">root</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)):</span>
-    <span class="n">root</span> <span class="o">=</span> <span class="n">insert</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-    
+    <span class="n">root</span> <span class="o">=</span> <span class="n">insert</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> 
 <span class="nb">print</span><span class="p">(</span><span class="n">getRank</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">getRank</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="mi">13</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">getRank</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
@@ -732,16 +740,16 @@ None
 </div>
 </div>
 </div>
-<p>This algorith will work in \(O(log(n))\) time on average. However, of the array was initially sorted the formed tree will be degenerate (it will basically form a linked list). We will learn how to solve such cases in AVL trees.</p>
+<p>This algorithm will work in \(O(log(n))\) time on average. However, of the array was initially sorted the formed tree will be degenerate (it will form a linked list). We will learn how to solve such cases in AVL trees.</p>
 </div>
 <div class="section" id="heap">
 <h2>Heap<a class="headerlink" href="#heap" title="Permalink to this headline">¶</a></h2>
-<p><em>Heaps</em> (especially <em>binary heaps</em>) are tree like structures that have two properties:</p>
+<p><em>Heaps</em> (especially <em>binary heaps</em>) are tree-like structures that have two properties:</p>
 <ol class="simple">
-<li><p>They are a complete tree (all levels of the tree are completly filled except possibly the last level).</p></li>
-<li><p>It is either a min heap or a max heap. In the first case root is smaller or equal to its children. The oppositie is true for the max heap.</p></li>
+<li><p>They are a complete tree (all levels of the tree are filled except possibly the last level).</p></li>
+<li><p>It is either a min-heap or a max-heap. In the first case, the root is smaller or equal to its children. The opposite is true for the max heap.</p></li>
 </ol>
-<p>Let us implement a min heap storing integers. It will support taking the top element (which is the minimum) as well as inserting new elements. Interestingly, we will implement it using a Python list. It is an important fact to spot that a parent of an element at index <code class="docutils literal notranslate"><span class="pre">i</span></code> is at index <code class="docutils literal notranslate"><span class="pre">i//2</span></code>.</p>
+<p>Let us implement a min-heap storing integers. It will support taking the top element (which is the minimum) as well as inserting new elements. Interestingly, we will implement it using a Python list. It is an important fact to spot that a parent of an element at index <code class="docutils literal notranslate"><span class="pre">i</span></code> is at index <code class="docutils literal notranslate"><span class="pre">i//2</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># utility functions</span>
@@ -817,16 +825,328 @@ None
 </div>
 <p>Heaps have many, many uses. One of such is HeapSort - a \(O(nlog(n))\) sorting algorithm (see above). Heaps are also used in <em>priority queues</em> - queues which have the elements sorted by some <em>priority</em> such as objects sorted by their value.</p>
 </div>
-<div class="section" id="avl-trees">
-<h2>AVL Trees<a class="headerlink" href="#avl-trees" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="avl-tree">
+<h2>AVL Tree<a class="headerlink" href="#avl-tree" title="Permalink to this headline">¶</a></h2>
+<p>Consider the case we insert a sorted list into a regular BST. We would end up with the following structure:</p>
+<div class="figure align-default">
+<a class="reference internal image-reference" href="../../_images/DegenerateTree.png"><img alt="../../_images/DegenerateTree.png" src="../../_images/DegenerateTree.png" style="width: 40%;" /></a>
 </div>
-<div class="section" id="tries">
-<h2>Tries<a class="headerlink" href="#tries" title="Permalink to this headline">¶</a></h2>
+<p>This tree is <em>degenerate</em>. Search operations are \(O(n)\) which is too slow for many implementations. To counter the degeneration we can utilize <em>self-balancing binary trees</em> such as the AVL tree (named after  Adelson-Velsky and Landis). This type of tree holds the invariant that for each node the difference in heights between left and right subtree is at most 1. Let us see how it is achieved.</p>
+<div class="section" id="avl-insertion">
+<h3>AVL insertion<a class="headerlink" href="#avl-insertion" title="Permalink to this headline">¶</a></h3>
+<ol class="simple">
+<li><p>The first stage of insertion is the same as in BST, we recurse down the tree until we find an appropriate spot for the new value.</p></li>
+<li><p>Each node in the AVL tree has a <em>height</em> (the distance between the node and the farthest leaf node in the children). We check if the difference in heights of children exceeds 1 in absolute value. If so, the tree is imbalanced. Such violation can occur in four possible ways (see the diagram below). We will use node <em>rotations</em> to solve the problem:</p></li>
+</ol>
+<div class="figure align-default">
+<a class="reference internal image-reference" href="../../_images/AVL.png"><img alt="../../_images/AVL.png" src="../../_images/AVL.png" style="width: 80%;" /></a>
 </div>
-<div class="section" id="hash-tables">
-<h2>Hash Tables<a class="headerlink" href="#hash-tables" title="Permalink to this headline">¶</a></h2>
-<p>https://www.geeksforgeeks.org/rank-element-stream/
-https://runestone.academy/runestone/books/published/pythonds/Trees/BinaryHeapImplementation.html</p>
+<p>The implementation of the AVL tree is presented below, please take a while to digest it. The topic is not trivial. Also, have a look at the comparison between the BST and AVL in the degenerate case:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
+<span class="c1"># we will support only insertions and deletions</span>
+<span class="k">class</span> <span class="nc">AVLNode</span><span class="p">:</span>
+    <span class="c1"># has to be initialised with a root value</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">val</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">val</span> <span class="o">=</span> <span class="n">val</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="c1"># searching is the same as in regural BST    </span>
+    <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">val</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">val</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">val</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">elif</span> <span class="n">val</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">val</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">left</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">left</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">right</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">right</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+            
+    <span class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+        <span class="c1"># Normal BST insert</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">root</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">AVLNode</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">root</span><span class="o">.</span><span class="n">val</span>  <span class="o">==</span> <span class="n">val</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">root</span>
+        <span class="k">elif</span> <span class="n">val</span> <span class="o">&lt;</span> <span class="n">root</span><span class="o">.</span><span class="n">val</span><span class="p">:</span>
+            <span class="n">root</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">left</span><span class="p">,</span><span class="n">val</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">root</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">right</span><span class="p">,</span><span class="n">val</span><span class="p">)</span>
+           
+        <span class="c1"># update the height of the root</span>
+        <span class="n">root</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="nb">max</span><span class="p">(</span><span class="n">getHeight</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">left</span><span class="p">),</span> <span class="n">getHeight</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">right</span><span class="p">))</span>
+        <span class="c1"># get the balance factor</span>
+        <span class="n">balance</span> <span class="o">=</span> <span class="n">getBalance</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+        <span class="c1"># consider 4 cases</span>
+        <span class="c1"># LL</span>
+        <span class="k">if</span> <span class="n">balance</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">val</span> <span class="o">&lt;</span> <span class="n">root</span><span class="o">.</span><span class="n">left</span><span class="o">.</span><span class="n">val</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">rotateRight</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+        <span class="c1"># RR</span>
+        <span class="k">if</span> <span class="n">balance</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">val</span> <span class="o">&gt;</span> <span class="n">root</span><span class="o">.</span><span class="n">right</span><span class="o">.</span><span class="n">val</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">rotateLeft</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+        <span class="c1"># LR</span>
+        <span class="k">if</span> <span class="n">balance</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">val</span> <span class="o">&gt;</span> <span class="n">root</span><span class="o">.</span><span class="n">left</span><span class="o">.</span><span class="n">val</span><span class="p">:</span>
+            <span class="n">root</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">rotateLeft</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">left</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">rotateRight</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+        <span class="c1"># RL</span>
+        <span class="k">if</span> <span class="n">balance</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">val</span> <span class="o">&lt;</span> <span class="n">root</span><span class="o">.</span><span class="n">right</span><span class="p">:</span>
+            <span class="n">root</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">rotateRight</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">right</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">rotateLeft</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">root</span>
+        
+<span class="c1"># UTILITY FUNCTIONS</span>
+<span class="c1">#_____________________________________________        </span>
+<span class="c1"># how is the tree unbalanced?</span>
+<span class="k">def</span> <span class="nf">getBalance</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">node</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">getHeight</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">left</span><span class="p">)</span> <span class="o">-</span> <span class="n">getHeight</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">right</span><span class="p">)</span>
+    
+<span class="c1"># get height of a node</span>
+<span class="k">def</span> <span class="nf">getHeight</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">node</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">node</span><span class="o">.</span><span class="n">height</span>
+    
+<span class="k">def</span> <span class="nf">rotateRight</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
+    <span class="c1"># do the rewiring </span>
+    <span class="n">z</span> <span class="o">=</span> <span class="n">node</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">z</span><span class="o">.</span><span class="n">left</span>
+    <span class="n">T3</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">right</span>
+    
+    <span class="n">y</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">z</span>
+    <span class="n">z</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">T3</span>
+    
+    <span class="c1"># update heights</span>
+    <span class="n">z</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="nb">max</span><span class="p">(</span><span class="n">getHeight</span><span class="p">(</span><span class="n">z</span><span class="o">.</span><span class="n">left</span><span class="p">),</span> 
+                       <span class="n">getHeight</span><span class="p">(</span><span class="n">z</span><span class="o">.</span><span class="n">right</span><span class="p">))</span> 
+    <span class="n">y</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="nb">max</span><span class="p">(</span><span class="n">getHeight</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">left</span><span class="p">),</span> 
+                       <span class="n">getHeight</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">right</span><span class="p">))</span> 
+    <span class="k">return</span> <span class="n">y</span>
+
+<span class="k">def</span> <span class="nf">rotateLeft</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
+    <span class="c1"># do the rewiring </span>
+    <span class="n">z</span> <span class="o">=</span> <span class="n">node</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">z</span><span class="o">.</span><span class="n">right</span>
+    <span class="n">T2</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">left</span>
+    
+    <span class="n">y</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">z</span>
+    <span class="n">z</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">T2</span>
+    
+    <span class="c1"># update heights</span>
+    <span class="n">z</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="nb">max</span><span class="p">(</span><span class="n">getHeight</span><span class="p">(</span><span class="n">z</span><span class="o">.</span><span class="n">left</span><span class="p">),</span> 
+                       <span class="n">getHeight</span><span class="p">(</span><span class="n">z</span><span class="o">.</span><span class="n">right</span><span class="p">))</span> 
+    <span class="n">y</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="nb">max</span><span class="p">(</span><span class="n">getHeight</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">left</span><span class="p">),</span> 
+                       <span class="n">getHeight</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">right</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">y</span>
+<span class="c1">#_____________________________________________  </span>
+
+<span class="c1"># Change the code below according to your preference </span>
+<span class="n">arr</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">))</span>   
+
+<span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">bst</span> <span class="o">=</span> <span class="n">BST</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">avl</span> <span class="o">=</span> <span class="n">AVLNode</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">arr</span><span class="p">:</span>
+    <span class="n">bst</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="n">bst</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;BST time:&quot;</span><span class="p">,</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t</span><span class="p">)</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">arr</span><span class="p">:</span>
+    <span class="n">avl</span> <span class="o">=</span> <span class="n">avl</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">avl</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+    <span class="n">avl</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;AVL time:&quot;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Height of the AVL Tree: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">avl</span><span class="o">.</span><span class="n">height</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>BST time: 0.538590669631958
+AVL time: 0.014953136444091797
+Height of the AVL Tree: 10
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="hash-table">
+<h2>Hash Table<a class="headerlink" href="#hash-table" title="Permalink to this headline">¶</a></h2>
+<p>In simple terms, a hash table is identical to Python <code class="docutils literal notranslate"><span class="pre">dict</span></code> dictionaries. They allow us to retrieve objects (given their key) in \(O(1)\) time <em>on average</em>. They also allow for constant time insertion and deletion. Wait, what? Does it mean that they are ultimately the fastest data structures? - as you can probably guess it is not that simple. It will become clear as we will implement a simple hash table:</p>
+<p>A hash table is similar to an array. It has some fixed capacity which can be changed (not in constant time). The elements are indexed by the key values. For the hash table to work, the elements need to be indexed by integer values. A special function, called the <em>hash function</em> transforms the key values to integers. The basic utilities needed by a hash table are shown in the class below:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">HashTable</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">size</span> <span class="o">=</span> <span class="mi">8</span><span class="p">):</span>
+        <span class="k">pass</span>
+    
+    <span class="c1">#Insert a new key-value pair or overwrite an existing one</span>
+    <span class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">pass</span>
+    
+    <span class="c1"># Overload the [] index access </span>
+    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">key</span><span class="p">,</span><span class="n">value</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="n">value</span><span class="p">)</span>
+    
+    <span class="c1"># Retreive the value given the key</span>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="k">pass</span>
+    
+   <span class="c1"># Overload the [] index access </span>
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">key</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+    
+    <span class="c1"># Computes the hash position</span>
+    <span class="k">def</span> <span class="nf">_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">key</span><span class="p">):</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="hash-function">
+<h3>Hash function<a class="headerlink" href="#hash-function" title="Permalink to this headline">¶</a></h3>
+<p>First, we will choose a hash function which will map keys to particular positions in the array. There are multiple ways of approaching this problem. Two simple ones include:</p>
+<ul class="simple">
+<li><p><strong>The mod method</strong> In this case, we take the remainder of dividing the key by the table-size:</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">h(key)</span> <span class="pre">=</span> <span class="pre">key</span> <span class="pre">%</span> <span class="pre">table_size</span></code></p>
+<p>This is a very fast hash function. However, many keys can have the same hash which results in <em>collisions</em> (e.g. 64 % 8 and 8 % 8 are both 0). We discuss those below.</p>
+<ul class="simple">
+<li><p><strong>The multiplication method</strong> First we multiply the key by <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">&lt;</span> <span class="pre">c</span> <span class="pre">&lt;</span> <span class="pre">1</span></code> and take the <em>fractional part</em> of <code class="docutils literal notranslate"><span class="pre">k</span> <span class="pre">*</span> <span class="pre">c</span></code> which is <code class="docutils literal notranslate"><span class="pre">k</span> <span class="pre">*</span> <span class="pre">c</span> <span class="pre">-</span> <span class="pre">floor(k</span> <span class="pre">*</span> <span class="pre">c)</span></code>. This method leads to fewer overlaps and therefore we will use it in our implementation. Some values of <code class="docutils literal notranslate"><span class="pre">c</span></code> work better statistically. <code class="docutils literal notranslate"><span class="pre">c</span> <span class="pre">~</span> <span class="pre">(sqrt</span> <span class="pre">(5)</span> <span class="pre">–</span> <span class="pre">1)</span> <span class="pre">/</span> <span class="pre">2</span> </code> is likely to work well.</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">h(key)</span> <span class="pre">=</span> <span class="pre">floor(table_size</span> <span class="pre">*</span> <span class="pre">(key</span> <span class="pre">*</span> <span class="pre">c</span> <span class="pre">-</span> <span class="pre">floor(key</span> <span class="pre">*</span> <span class="pre">c)))</span></code></p>
+<p>Both of these functions can lead to inefficient hash tables with operations with \(O(n)\) worst-case time. There are more advanced methods which solve this problem, which you are free to research <a class="reference external" href="https://en.wikipedia.org/wiki/List_of_hash_functions">here</a>.</p>
+</div>
+<div class="section" id="overlaps">
+<h3>Overlaps<a class="headerlink" href="#overlaps" title="Permalink to this headline">¶</a></h3>
+<p>When two different keys are mapped to the same hash value we are dealing with an overlap. The way our implementation will tackle this problem is by <em>chaining</em>. Each entry in the table will be a linked list-like object. In case of an overlap, we will append at the end of such a list. Of course, in the case when all elements <em>collide</em> we will one big linked-list object. The role of our hash function is to minimise the probability of this happening.</p>
+</div>
+<div class="section" id="doubling">
+<h3>Doubling<a class="headerlink" href="#doubling" title="Permalink to this headline">¶</a></h3>
+<p>Let <code class="docutils literal notranslate"><span class="pre">n</span></code> denote the number of elements in the hash table. The <em>load factor</em> is defined as <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">/</span> <span class="pre">table_size</span></code>. As our table becomes more filled more cells (on average) become linked lists. To counter this effect we will double the size of the table when the load factor reaches a certain value (in our case \(1\)). We will not support deletion therefore shrinking is not essential.</p>
+<p>With all this knowledge let us provide an implementation:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span><span class="o">,</span> <span class="nn">random</span>
+<span class="c1"># We will support string keys</span>
+<span class="c1"># it could be easily translated to integer keys</span>
+<span class="c1"># the table will be a 2d array of tuples (key,value)</span>
+<span class="k">class</span> <span class="nc">HashTable</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">size</span> <span class="o">=</span> <span class="mi">8</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">contents</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="n">size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">load</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">contents</span><span class="o">.</span><span class="n">append</span><span class="p">([])</span>
+       
+    <span class="c1">#Insert a new key-value pair or overwrite an existing one</span>
+    <span class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">elem</span> <span class="o">=</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="c1"># calculate the hash value</span>
+        <span class="n">hashVal</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hash</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="c1"># insert the element (chaining)</span>
+        <span class="c1"># check in elem already in</span>
+        <span class="k">if</span> <span class="n">elem</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">contents</span><span class="p">[</span><span class="n">hashVal</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">contents</span><span class="p">[</span><span class="n">hashVal</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">elem</span><span class="p">)</span>
+            <span class="c1"># increase the load</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">load</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="c1"># doubling</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">load</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="c1"># double the size</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">*=</span> <span class="mi">2</span>
+            <span class="c1"># make new contents table</span>
+            <span class="n">newContents</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">):</span>
+                <span class="n">newContents</span><span class="o">.</span><span class="n">append</span><span class="p">([])</span>
+            <span class="c1"># insert the old elements    </span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">contents</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">i</span><span class="p">:</span>
+                    <span class="n">hashVal</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hash</span><span class="p">(</span><span class="n">j</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                    <span class="c1"># insert the element (chaining)</span>
+                    <span class="n">newContents</span><span class="p">[</span><span class="n">hashVal</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">contents</span> <span class="o">=</span> <span class="n">newContents</span>   
+    
+    <span class="c1"># Overload the [] index access </span>
+    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">key</span><span class="p">,</span><span class="n">value</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="n">value</span><span class="p">)</span>
+    
+    <span class="c1"># Retreive the value given the key</span>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="n">hashVal</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hash</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">contents</span><span class="p">[</span><span class="n">hashVal</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Key has no value associated&quot;</span><span class="p">)</span>
+    
+   <span class="c1"># Overload the [] index access </span>
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">key</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+    
+    <span class="c1"># Computes the hash position</span>
+    <span class="k">def</span> <span class="nf">_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">key</span><span class="p">):</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">key</span><span class="p">)</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+        <span class="k">return</span> <span class="nb">min</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">*</span> <span class="p">(</span><span class="n">k</span> <span class="o">*</span> <span class="n">c</span> <span class="o">-</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">k</span> <span class="o">*</span> <span class="n">c</span><span class="p">))),</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    
+<span class="c1"># Testing out     </span>
+<span class="n">ht</span> <span class="o">=</span> <span class="n">HashTable</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">16</span><span class="p">):</span>
+    <span class="n">temp</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">)):</span>
+        <span class="n">temp</span> <span class="o">+=</span> <span class="nb">chr</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">),</span><span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;z&#39;</span><span class="p">)))</span>
+    <span class="n">ht</span><span class="p">[</span><span class="n">temp</span><span class="p">]</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">17</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">ht</span><span class="p">[</span><span class="n">temp</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ht</span><span class="o">.</span><span class="n">contents</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4
+7
+4
+0
+6
+4
+3
+1
+11
+8
+7
+3
+17
+8
+5
+5
+[[], [], [(&#39;lemo&#39;, 3), (&#39;emz&#39;, 5)], [], [(&#39;ps&#39;, 0)], [(&#39;sdens&#39;, 4), (&#39;jbzni&#39;, 3)], [(&#39;jcpgq&#39;, 17)], [(&#39;zjb&#39;, 7)], [(&#39;w&#39;, 4), (&#39;cbl&#39;, 8)], [], [], [], [(&#39;xsfj&#39;, 5)], [(&#39;po&#39;, 7), (&#39;sazku&#39;, 4), (&#39;udl&#39;, 1), (&#39;vv&#39;, 8)], [(&#39;i&#39;, 11)], [(&#39;n&#39;, 6)]]
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Cormen, Leiserson, Rivest, Stein, “Introduction to Algorithms”, Third Edition, MIT Press, 2009</p></li>
+<li><p>GeeksforGeeks, <a class="reference external" href="https://www.geeksforgeeks.org/rank-element-stream/">Rank Elements in an Integer Stream (BST)</a></p></li>
+<li><p>Pythonds, <a class="reference external" href="https://runestone.academy/runestone/books/published/pythonds/Trees/BinaryHeapImplementation.html">Binary Heap Implementation</a></p></li>
+<li><p>GeeksforGeeks, <a class="reference external" href="https://www.geeksforgeeks.org/avl-tree-set-1-insertion/">AVL Insertion</a></p></li>
+<li><p>Sebastian Raschka, Github, <a class="reference external" href="https://github.com/rasbt/algorithms_in_ipython_notebooks/blob/master/ipython_nbs/data-structures/hashtable-1.ipynb">Implementing a Simple Hash Table</a></p></li>
+<li><p>GeeksforGeeks, <a class="reference external" href="https://www.geeksforgeeks.org/implementation-of-hashing-with-chaining-in-python/">Implementation of Hashing with Chaining in Python</a></p></li>
+</ul>
 </div>
 </div>
 

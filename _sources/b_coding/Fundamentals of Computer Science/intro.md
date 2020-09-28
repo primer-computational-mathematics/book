@@ -7,3 +7,4 @@ In this section, we are going to present basic concepts and methods which will m
 3. {ref}`divide_and_conquer`
 4. {ref}`dynamic_programming`
 5. {ref}`greedy_algorithms`
+6. {ref}`data_structures`
