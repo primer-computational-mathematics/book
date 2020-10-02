@@ -238,11 +238,31 @@
         </li>
     
         <li class="nav-item toc-entry toc-h2">
+            <a href="#graph-traversal" class="nav-link">Graph traversal</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
             <a href="#breadth-first-search-bfs" class="nav-link">Breadth-first search (BFS)</a>
+        </li>
+    
+            </ul>
         </li>
     
         <li class="nav-item toc-entry toc-h2">
             <a href="#depth-first-search-dfs" class="nav-link">Depth-first search (DFS)</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#minimum-spanning-tree-mst" class="nav-link">Minimum spanning tree (MST)</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#kruskal-s-algorithm" class="nav-link">Kruskal’s algorithm</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#prim-s-algorithm" class="nav-link">Prim’s algorithm</a>
+        </li>
+    
+            </ul>
         </li>
     
         <li class="nav-item toc-entry toc-h2">
@@ -261,20 +281,6 @@
     
         <li class="nav-item toc-entry toc-h2">
             <a href="#floyd-cycle-detection-algorithm" class="nav-link">Floyd cycle detection algorithm</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#minimum-spanning-tree-mst" class="nav-link">Minimum spanning tree (MST)</a><ul class="nav section-nav flex-column">
-                
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#prim-s-algorithm" class="nav-link">Prim’s algorithm</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#kruskal-s-algorithm" class="nav-link">Kruskal’s algorithm</a>
-        </li>
-    
-            </ul>
         </li>
     
         <li class="nav-item toc-entry toc-h2">
@@ -304,12 +310,354 @@
 <span id="id1"></span><h1>Graph Algorithms<a class="headerlink" href="#graph-algorithms" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="graph">
 <span id="index-0"></span><h2>Graph<a class="headerlink" href="#graph" title="Permalink to this headline">¶</a></h2>
+<p>In broad tems. A graph (V,E) is an abstract structure consisting of nodes (<em>vertices</em>) and edges connecting some of them. Graphs can be directed or undirected which means that their edges can be traversed in one or both directions. Graphs can be unweighted or not, their edges can have assigned weights. There are several ways of representing graphs in computers, two of which are:</p>
+<ul class="simple">
+<li><p>Adjecency matrix \(A\): Which are matrices consisting of \(1\) and \(0\). A \(1\) at a coordinates \((i,j)\) means that there is an edge from node \(i\) to node \(j\). For undirected graphs \(A[i,j]\) = \(A[j,i]\). Adjacency matricex are a compact way of representing <em>dense</em> graphs where the number of edges is close to \(|V|^2\).</p></li>
+<li><p>Adjacency list \(L\): which is a 2D array where an entry \(L[i]\) is a list with the ids of nodes to which \(i\) is connected to. It is a space efficient representation for <em>sparse</em> graphs where not many nodes are connected.</p></li>
+</ul>
+<div class="figure align-default">
+<a class="reference internal image-reference" href="../../_images/Graphs.png"><img alt="../../_images/Graphs.png" src="../../_images/Graphs.png" style="width: 60%;" /></a>
 </div>
+<p>Depending on the algorithm we will use one of those representations.</p>
+</div>
+<div class="section" id="graph-traversal">
+<h2>Graph traversal<a class="headerlink" href="#graph-traversal" title="Permalink to this headline">¶</a></h2>
+<p><em>Traversing</em> a graph means visiting all if its nodes in some order. There are two basic algorithms to which achieve that goal.</p>
 <div class="section" id="breadth-first-search-bfs">
-<h2>Breadth-first search (BFS)<a class="headerlink" href="#breadth-first-search-bfs" title="Permalink to this headline">¶</a></h2>
+<h3>Breadth-first search (BFS)<a class="headerlink" href="#breadth-first-search-bfs" title="Permalink to this headline">¶</a></h3>
+<p>The name of this graph traversal stems from they way it visits the nodes. It starts at some arbitraliy chosen node and then visits all the nodes that are distance 1 away from it, then distance 2 etc. BFS will not visit a node that is distance \(d+1\) until it visits all nodes at a distance \(d\). When two nodes are equal distance from the first node, the choice is also arbitrary (we wil go for the numerical order).</p>
+<img src="https://upload.wikimedia.org/wikipedia/commons/4/46/Animated_BFS.gif" width="40%">
+<p>Source: <a class="reference external" href="https://upload.wikimedia.org/wikipedia/commons/4/46/Animated_BFS.gif">Wikimedia Commons</a></p>
+<p>We will divide the nodes of the graph into three kinds: white, grey and black. White are unvisited, grey are being considered and black are alredy visited. Grey nodes are a queue, first in last out.
+In words, the algorithm will work as follows:</p>
+<ol class="simple">
+<li><p>Add all nodes to the white list.</p></li>
+<li><p>Choose an arbitrary white node, put it in the grey queue.</p></li>
+<li><p>Consider all nodes connected to the node, that are white, add them to the grey queue one by one.</p></li>
+<li><p>Move the node considered to the black list.</p></li>
+<li><p>If the grey queue is not empty, take another grey node and come back to the 3rd step.</p></li>
+<li><p>If white list is not empty, come back to the 2nd step, otherwise terminate.</p></li>
+</ol>
+<p>The following implementations print the node id as they are added to the black list.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">queue</span> <span class="kn">import</span> <span class="n">Queue</span>
+<span class="c1"># adjacency matrix implementation</span>
+<span class="c1"># indexing from 0, different from the diagram</span>
+<span class="k">def</span> <span class="nf">matrixBFS</span><span class="p">(</span><span class="n">graph</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">graph</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">white</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">graph</span><span class="p">)))</span>
+    <span class="n">grey</span> <span class="o">=</span> <span class="n">Queue</span><span class="p">()</span>
+    <span class="n">black</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="c1"># initalise the queue</span>
+    <span class="n">grey</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">white</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="c1"># consider a node</span>
+        <span class="n">curr</span> <span class="o">=</span> <span class="n">grey</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="n">black</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">curr</span><span class="p">)</span>
+        <span class="c1"># consider the nodes connected to the current node</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">graph</span><span class="p">[</span><span class="n">curr</span><span class="p">])):</span>
+            <span class="c1"># add to grey if not previously seen</span>
+            <span class="k">if</span> <span class="n">graph</span><span class="p">[</span><span class="n">curr</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="ow">and</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">white</span><span class="p">:</span>
+                <span class="n">grey</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+                <span class="n">white</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">curr</span><span class="p">)</span>
+        <span class="c1"># check if all components if the graph is no connected</span>
+        <span class="c1"># if all nodes checked terminate</span>
+        <span class="k">if</span> <span class="n">grey</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">graph</span><span class="p">))):</span>
+                <span class="k">if</span> <span class="n">n</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">black</span><span class="p">:</span>
+                    <span class="n">grey</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+                    <span class="n">white</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+                    <span class="k">continue</span>
+            <span class="k">if</span> <span class="n">grey</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
+                <span class="k">break</span>
+
+<span class="k">def</span> <span class="nf">listBFS</span><span class="p">(</span><span class="n">graph</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span>
+    <span class="n">white</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">graph</span><span class="p">)))</span>
+    <span class="n">grey</span> <span class="o">=</span> <span class="n">Queue</span><span class="p">()</span>
+    <span class="n">black</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="n">grey</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">white</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">curr</span> <span class="o">=</span> <span class="n">grey</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="n">black</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">curr</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">graph</span><span class="p">[</span><span class="n">curr</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">white</span><span class="p">:</span>
+                <span class="n">grey</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+                <span class="n">white</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">curr</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">grey</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">graph</span><span class="p">))):</span>
+                <span class="k">if</span> <span class="n">n</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">black</span><span class="p">:</span>
+                    <span class="n">grey</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+                    <span class="n">white</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+                    <span class="k">continue</span>
+            <span class="k">if</span> <span class="n">grey</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
+                <span class="k">break</span>
+<span class="c1"># Undirected            </span>
+<span class="c1"># 0   1</span>
+<span class="c1"># | \</span>
+<span class="c1"># 2 - 3</span>
+<span class="n">graph</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]]</span> 
+<span class="n">matrixBFS</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+<span class="n">graph</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">],[]]</span>
+<span class="n">listBFS</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+<span class="c1"># Directed</span>
+<span class="c1"># 0    1</span>
+<span class="c1"># /\ \  /\</span>
+<span class="c1"># ||  \ |</span>
+<span class="c1"># \/  \/| </span>
+<span class="c1"># 2     3</span>
+<span class="n">graph</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]]</span> 
+<span class="n">matrixBFS</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+<span class="n">graph</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],[],[</span><span class="mi">0</span><span class="p">],[</span><span class="mi">1</span><span class="p">]]</span>
+<span class="n">listBFS</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0
+2
+3
+1
+
+0
+2
+3
+1
+
+0
+2
+3
+1
+
+0
+2
+3
+1
+</pre></div>
+</div>
+</div>
+</div>
+<p>There are many uses of the BFS algorithm, some of which are:</p>
+<ol class="simple">
+<li><p>Finding a MST (see below) in an unweighted graph.</p></li>
+<li><p>Finind a minimum path in an unweighted graph (initial node has to be at the end of the searched path).</p></li>
+<li><p>Detecting cycles in graphs (by encountering a visited node).</p></li>
+<li><p>Finding all nodes within a connected component.</p></li>
+</ol>
+</div>
 </div>
 <div class="section" id="depth-first-search-dfs">
 <h2>Depth-first search (DFS)<a class="headerlink" href="#depth-first-search-dfs" title="Permalink to this headline">¶</a></h2>
+<p>In DFS we will allways go <em>deeper</em> into the graph whenever possible. We start at an arbitrary node and then go to the first possible via an edge. This is repeated utill we reach a node which has only edges to alredy visited nodes (or no edges). We then trace back to the previous node in this procedure. We continue untill all nodes are visited.</p>
+<img src="https://upload.wikimedia.org/wikipedia/commons/7/7f/Depth-First-Search.gif" width="40%">
+<p>Source: <a class="reference external" href="https://upload.wikimedia.org/wikipedia/commons/7/7f/Depth-First-Search.gif">Wikimedia Commons</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># DFS for matrix representation</span>
+<span class="k">def</span> <span class="nf">matrixDFS</span><span class="p">(</span><span class="n">graph</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">graph</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="c1"># initalise</span>
+    <span class="n">white</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">graph</span><span class="p">)))</span>
+    <span class="n">black</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">while</span> <span class="n">white</span><span class="p">:</span>
+        <span class="n">root</span> <span class="o">=</span> <span class="n">white</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">white</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+        <span class="n">black</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+        <span class="c1"># recursive helper function</span>
+        <span class="n">DFShelper</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span><span class="n">root</span><span class="p">,</span><span class="n">black</span><span class="p">,</span><span class="n">white</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">DFShelper</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">root</span><span class="p">,</span> <span class="n">black</span><span class="p">,</span> <span class="n">white</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">graph</span><span class="p">[</span><span class="n">root</span><span class="p">])):</span>
+        <span class="k">if</span> <span class="n">graph</span><span class="p">[</span><span class="n">root</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="ow">and</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">white</span><span class="p">:</span>
+            <span class="n">white</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">black</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">DFShelper</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">black</span><span class="p">,</span> <span class="n">white</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+            
+<span class="c1"># Undirected            </span>
+<span class="c1"># 0   1</span>
+<span class="c1"># | \</span>
+<span class="c1"># 2 - 3</span>
+<span class="n">graph</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]]</span> 
+<span class="n">matrixDFS</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+<span class="c1"># Directed</span>
+<span class="c1"># 0    1</span>
+<span class="c1"># /\ \  /\</span>
+<span class="c1"># ||  \ |</span>
+<span class="c1"># \/  \/| </span>
+<span class="c1"># 2     3</span>
+<span class="n">graph</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]]</span> 
+<span class="n">matrixDFS</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3
+2
+0
+1
+
+2
+1
+3
+0
+</pre></div>
+</div>
+</div>
+</div>
+<p>Time complexity of DFS is \(O(|V|+|E|)\). It can be used in the following problems:</p>
+<ol class="simple">
+<li><p>Detecting cycles</p></li>
+<li><p>Augmented DFS can find the MST of a graph</p></li>
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Topological_sorting">Topological sorting</a></p></li>
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Strongly_connected_component">Finding strongly connected components of a graph</a></p></li>
+</ol>
+</div>
+<div class="section" id="minimum-spanning-tree-mst">
+<h2>Minimum spanning tree (MST)<a class="headerlink" href="#minimum-spanning-tree-mst" title="Permalink to this headline">¶</a></h2>
+<p>A <em>spannign tree</em> of a graph \(G\) is a subgraph of \(G\) that includes all its nodes. The concept is meaingful for connected graphs only (if the graph is not connected we are considering its <em>spannign forest</em>). The problem of MST is considered for weighted graphs \((V,E\) with \(w\) - a function that returs the weight of an edge in \(E\). A <em>minimum spanning tree</em> is one in which the sum of weights of the edges is minimal. Surprisingly, the problem can be solved by using an <em>greedy</em> approach. Here are two possible approaches:</p>
+<div class="section" id="kruskal-s-algorithm">
+<h3>Kruskal’s algorithm<a class="headerlink" href="#kruskal-s-algorithm" title="Permalink to this headline">¶</a></h3>
+<p>The Kruskal’s approach is based on the following procedure:</p>
+<ol class="simple">
+<li><p>Create a single element set for every node.</p></li>
+<li><p>Sort the edges in \(E\) by weight in non-decreasing order, put them in a priority queue.</p></li>
+<li><p>Take the edge of least weight and if it connects elements from different sets, use it. Make the connected sets one (by setting the same group leader).</p></li>
+</ol>
+<p><code class="docutils literal notranslate"><span class="pre">find(u)</span></code> method will find the leader of a group. <code class="docutils literal notranslate"><span class="pre">u,v</span></code> are in the same group if <code class="docutils literal notranslate"><span class="pre">find(u)</span> <span class="pre">==</span> <span class="pre">find(v)</span></code>.
+<code class="docutils literal notranslate"><span class="pre">union(u,v)</span></code> will join two sets. The leader will be the leader of the set of more elements, otherwise arbitrary.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># we will use a matrix representation as a list of edges [source, dest, weight]</span>
+<span class="c1"># we are also given the number of nodes</span>
+<span class="c1"># assuming undirected graph</span>
+<span class="k">def</span> <span class="nf">mst_kruskal</span><span class="p">(</span><span class="n">edges</span><span class="p">,</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">sets</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">mst</span> <span class="o">=</span><span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="c1"># [leader, number of elems]</span>
+        <span class="n">sets</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">edges</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+    
+    <span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="n">edges</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">find</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">sets</span><span class="p">)</span> <span class="o">!=</span> <span class="n">find</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">sets</span><span class="p">):</span>
+            <span class="n">mst</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">edge</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">union</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">sets</span><span class="p">)</span> <span class="o">==</span> <span class="n">n</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">mst</span>
+    
+    
+<span class="k">def</span> <span class="nf">find</span><span class="p">(</span><span class="n">u</span><span class="p">,</span><span class="n">sets</span><span class="p">):</span>
+    <span class="c1"># go up in parents</span>
+    <span class="k">while</span> <span class="n">u</span> <span class="o">!=</span> <span class="n">sets</span><span class="p">[</span><span class="n">u</span><span class="p">][</span><span class="mi">0</span><span class="p">]:</span>
+        <span class="n">u</span> <span class="o">=</span> <span class="n">sets</span><span class="p">[</span><span class="n">u</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">u</span>
+        
+<span class="k">def</span> <span class="nf">union</span><span class="p">(</span><span class="n">u</span><span class="p">,</span><span class="n">v</span><span class="p">,</span><span class="n">sets</span><span class="p">):</span>
+    <span class="n">leader_u</span> <span class="o">=</span> <span class="n">sets</span><span class="p">[</span><span class="n">find</span><span class="p">(</span><span class="n">u</span><span class="p">,</span><span class="n">sets</span><span class="p">)]</span>
+    <span class="n">leader_v</span> <span class="o">=</span> <span class="n">sets</span><span class="p">[</span><span class="n">find</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="n">sets</span><span class="p">)]</span>
+    <span class="c1">#compare which set is bigger</span>
+    <span class="k">if</span> <span class="n">leader_u</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">leader_v</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+        <span class="n">leader_v</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">leader_u</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">leader_u</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">leader_v</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">leader_u</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">leader_u</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">leader_v</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">leader_v</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">leader_u</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">leader_v</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    
+<span class="n">edges</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">6</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">6</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">7</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">10</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">]]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mst_kruskal</span><span class="p">(</span><span class="n">edges</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[0, 3, 1], [1, 5, 3], [0, 2, 4], [0, 1, 6], [0, 4, 7]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Kruskal’s algorithm runs in \(O(|E|log|E|)\) time, which is also \(O(|E|log|V|)\) as \(|E| \leq |V|^2\).</p>
+</div>
+<div class="section" id="prim-s-algorithm">
+<h3>Prim’s algorithm<a class="headerlink" href="#prim-s-algorithm" title="Permalink to this headline">¶</a></h3>
+<p>Prim’s algorithm is similair to Kruskal’s but at each step there is only one tree that grows. The idea is as follows:</p>
+<ol class="simple">
+<li><p>Start at an arbitrary node in \(G\)</p></li>
+<li><p>Take the minimum edge incident on one of the already considered nodes (that connects it to the node not previously seen). This way the tree expands.</p></li>
+<li><p>When all nodes are in the tree, terminate.</p></li>
+</ol>
+<p>Of course, the 2nd step may be a bit tricky to implement efficiently. We will use a <em>priority queue</em> from the <code class="docutils literal notranslate"><span class="pre">heapq</span></code> interface to efficiently choose the next edge to add. We also need to upgrade our adjacency list representation of the graph. Now it is a dictionary which maps to a dictionary with incident nodes as keys and their correncponding edge weights as values. So <code class="docutils literal notranslate"><span class="pre">graph[from][to]</span></code> gives the desired edge if it exists. It assumes that there is at most one edge between any two nodes (undirected graph), if this is violated, we would always choose the edge of minimum weight.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">import</span> <span class="nn">heapq</span>
+
+<span class="c1"># we will work on an adjacency list representation</span>
+<span class="k">def</span> <span class="nf">mst_prim</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">starting_vertex</span><span class="p">):</span>
+    <span class="c1"># defaultdict returns set() in case the key is not in the dict</span>
+    <span class="c1"># this is an adjacency list representation</span>
+    <span class="n">mst</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">set</span><span class="p">)</span>
+    <span class="c1"># at the beginning only the starting_node is visited</span>
+    <span class="n">visited</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="n">starting_vertex</span><span class="p">])</span>
+    <span class="c1"># get the edges incident on the starting_vertex</span>
+    <span class="n">edges</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="n">cost</span><span class="p">,</span> <span class="n">starting_vertex</span><span class="p">,</span> <span class="n">to</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">to</span><span class="p">,</span> <span class="n">cost</span> <span class="ow">in</span> <span class="n">graph</span><span class="p">[</span><span class="n">starting_vertex</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+    <span class="p">]</span>
+    <span class="c1"># create a min-heap based on the cost of the esge</span>
+    <span class="n">heapq</span><span class="o">.</span><span class="n">heapify</span><span class="p">(</span><span class="n">edges</span><span class="p">)</span>
+    
+    <span class="k">while</span> <span class="n">edges</span><span class="p">:</span>
+        <span class="c1"># take the minimum cost edge</span>
+        <span class="n">cost</span><span class="p">,</span> <span class="n">frm</span><span class="p">,</span> <span class="n">to</span> <span class="o">=</span> <span class="n">heapq</span><span class="o">.</span><span class="n">heappop</span><span class="p">(</span><span class="n">edges</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">to</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">visited</span><span class="p">:</span>
+            <span class="c1"># add the new node to the visited</span>
+            <span class="n">visited</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">to</span><span class="p">)</span>
+            <span class="c1"># expand the tree</span>
+            <span class="n">mst</span><span class="p">[</span><span class="n">frm</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">to</span><span class="p">)</span>
+            <span class="c1"># add the edges incident on the new node</span>
+            <span class="c1"># which lead to the not visited nodes</span>
+            <span class="k">for</span> <span class="n">to_next</span><span class="p">,</span> <span class="n">cost</span> <span class="ow">in</span> <span class="n">graph</span><span class="p">[</span><span class="n">to</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="c1"># add to the heap</span>
+                <span class="k">if</span> <span class="n">to_next</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">visited</span><span class="p">:</span>
+                    <span class="n">heapq</span><span class="o">.</span><span class="n">heappush</span><span class="p">(</span><span class="n">edges</span><span class="p">,</span> <span class="p">(</span><span class="n">cost</span><span class="p">,</span> <span class="n">to</span><span class="p">,</span> <span class="n">to_next</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">mst</span>
+
+<span class="n">example_graph</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;A&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;B&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">},</span>
+    <span class="s1">&#39;B&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;A&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;E&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">},</span>
+    <span class="s1">&#39;C&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;A&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;F&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">},</span>
+    <span class="s1">&#39;D&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;B&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;E&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+    <span class="s1">&#39;E&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;B&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;F&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+    <span class="s1">&#39;F&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;C&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;E&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;G&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+    <span class="s1">&#39;G&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;F&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+<span class="p">}</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">mst_prim</span><span class="p">(</span><span class="n">example_graph</span><span class="p">,</span><span class="s1">&#39;A&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>defaultdict(&lt;class &#39;set&#39;&gt;, {&#39;A&#39;: {&#39;B&#39;}, &#39;B&#39;: {&#39;D&#39;, &#39;C&#39;}, &#39;D&#39;: {&#39;E&#39;}, &#39;E&#39;: {&#39;F&#39;}, &#39;F&#39;: {&#39;G&#39;}})
+</pre></div>
+</div>
+</div>
+</div>
+<p>The algorithm runs in \(O(|E|log|V|)\) time. Why?</p>
+</div>
 </div>
 <div class="section" id="shortest-path">
 <h2>Shortest path<a class="headerlink" href="#shortest-path" title="Permalink to this headline">¶</a></h2>
@@ -323,15 +671,6 @@
 <div class="section" id="floyd-cycle-detection-algorithm">
 <h2>Floyd cycle detection algorithm<a class="headerlink" href="#floyd-cycle-detection-algorithm" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="minimum-spanning-tree-mst">
-<h2>Minimum spanning tree (MST)<a class="headerlink" href="#minimum-spanning-tree-mst" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="prim-s-algorithm">
-<h3>Prim’s algorithm<a class="headerlink" href="#prim-s-algorithm" title="Permalink to this headline">¶</a></h3>
-</div>
-<div class="section" id="kruskal-s-algorithm">
-<h3>Kruskal’s algorithm<a class="headerlink" href="#kruskal-s-algorithm" title="Permalink to this headline">¶</a></h3>
-</div>
-</div>
 <div class="section" id="graph-colouring">
 <h2>Graph colouring<a class="headerlink" href="#graph-colouring" title="Permalink to this headline">¶</a></h2>
 </div>
@@ -340,6 +679,8 @@
 </div>
 <div class="section" id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<p>https://www.geeksforgeeks.org/applications-of-breadth-first-traversal/?ref=rp
+https://bradfieldcs.com/algos/graphs/prims-spanning-tree-algorithm/</p>
 </div>
 </div>
 
