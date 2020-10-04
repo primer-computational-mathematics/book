@@ -266,32 +266,6 @@
         </li>
     
         <li class="nav-item toc-entry toc-h2">
-            <a href="#shortest-path" class="nav-link">Shortest path</a><ul class="nav section-nav flex-column">
-                
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#dijkstra-s-algorithm" class="nav-link">Dijkstra’s algorithm</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#bellman-ford-algorithm" class="nav-link">Bellman-Ford algorithm</a>
-        </li>
-    
-            </ul>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#floyd-cycle-detection-algorithm" class="nav-link">Floyd cycle detection algorithm</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#graph-colouring" class="nav-link">Graph colouring</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#maximum-flow" class="nav-link">Maximum flow</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
             <a href="#references" class="nav-link">References</a>
         </li>
     
@@ -310,10 +284,10 @@
 <span id="id1"></span><h1>Graph Algorithms<a class="headerlink" href="#graph-algorithms" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="graph">
 <span id="index-0"></span><h2>Graph<a class="headerlink" href="#graph" title="Permalink to this headline">¶</a></h2>
-<p>In broad tems. A graph (V,E) is an abstract structure consisting of nodes (<em>vertices</em>) and edges connecting some of them. Graphs can be directed or undirected which means that their edges can be traversed in one or both directions. Graphs can be unweighted or not, their edges can have assigned weights. There are several ways of representing graphs in computers, two of which are:</p>
+<p>In broad terms. A graph \((V,E)\) is an abstract structure consisting of nodes (<em>vertices</em>) and edges connecting some of them. Graphs can be directed or undirected which means that their edges can be traversed in one or both directions. Graphs can be unweighted or not, their edges can have assigned weights. There are several ways of representing graphs in computers, two of which are:</p>
 <ul class="simple">
 <li><p>Adjecency matrix \(A\): Which are matrices consisting of \(1\) and \(0\). A \(1\) at a coordinates \((i,j)\) means that there is an edge from node \(i\) to node \(j\). For undirected graphs \(A[i,j]\) = \(A[j,i]\). Adjacency matricex are a compact way of representing <em>dense</em> graphs where the number of edges is close to \(|V|^2\).</p></li>
-<li><p>Adjacency list \(L\): which is a 2D array where an entry \(L[i]\) is a list with the ids of nodes to which \(i\) is connected to. It is a space efficient representation for <em>sparse</em> graphs where not many nodes are connected.</p></li>
+<li><p>Adjacency list \(L\): which is a 2D array where an entry \(L[i]\) is a list with the ids of nodes to which \(i\) is connected to. It is a space-efficient representation for <em>sparse</em> graphs where not many nodes are connected.</p></li>
 </ul>
 <div class="figure align-default">
 <a class="reference internal image-reference" href="../../_images/Graphs.png"><img alt="../../_images/Graphs.png" src="../../_images/Graphs.png" style="width: 60%;" /></a>
@@ -325,10 +299,10 @@
 <p><em>Traversing</em> a graph means visiting all if its nodes in some order. There are two basic algorithms to which achieve that goal.</p>
 <div class="section" id="breadth-first-search-bfs">
 <h3>Breadth-first search (BFS)<a class="headerlink" href="#breadth-first-search-bfs" title="Permalink to this headline">¶</a></h3>
-<p>The name of this graph traversal stems from they way it visits the nodes. It starts at some arbitraliy chosen node and then visits all the nodes that are distance 1 away from it, then distance 2 etc. BFS will not visit a node that is distance \(d+1\) until it visits all nodes at a distance \(d\). When two nodes are equal distance from the first node, the choice is also arbitrary (we wil go for the numerical order).</p>
+<p>The name of this graph traversal stems from the way it visits the nodes. It starts at some arbitrarily chosen node and then visits all the nodes that are distance 1 away from it, then distance 2 etc. BFS will not visit a node that is distance \(d+1\) until it visits all nodes at a distance \(d\). When two nodes are equal distance from the first node, the choice is also arbitrary (we will go for the numerical order).</p>
 <img src="https://upload.wikimedia.org/wikipedia/commons/4/46/Animated_BFS.gif" width="40%">
 <p>Source: <a class="reference external" href="https://upload.wikimedia.org/wikipedia/commons/4/46/Animated_BFS.gif">Wikimedia Commons</a></p>
-<p>We will divide the nodes of the graph into three kinds: white, grey and black. White are unvisited, grey are being considered and black are alredy visited. Grey nodes are a queue, first in last out.
+<p>We will divide the nodes of the graph into three kinds: white, grey and black. White nodes are unvisited, grey are being considered and black are already visited. Grey nodes are a queue, first in last out.
 In words, the algorithm will work as follows:</p>
 <ol class="simple">
 <li><p>Add all nodes to the white list.</p></li>
@@ -336,7 +310,7 @@ In words, the algorithm will work as follows:</p>
 <li><p>Consider all nodes connected to the node, that are white, add them to the grey queue one by one.</p></li>
 <li><p>Move the node considered to the black list.</p></li>
 <li><p>If the grey queue is not empty, take another grey node and come back to the 3rd step.</p></li>
-<li><p>If white list is not empty, come back to the 2nd step, otherwise terminate.</p></li>
+<li><p>If the white list is not empty, come back to the 2nd step, otherwise terminate.</p></li>
 </ol>
 <p>The following implementations print the node id as they are added to the black list.</p>
 <div class="cell docutils container">
@@ -450,7 +424,7 @@ In words, the algorithm will work as follows:</p>
 <p>There are many uses of the BFS algorithm, some of which are:</p>
 <ol class="simple">
 <li><p>Finding a MST (see below) in an unweighted graph.</p></li>
-<li><p>Finind a minimum path in an unweighted graph (initial node has to be at the end of the searched path).</p></li>
+<li><p>Fining a minimum path in an unweighted graph (initial node has to be at the end of the searched path).</p></li>
 <li><p>Detecting cycles in graphs (by encountering a visited node).</p></li>
 <li><p>Finding all nodes within a connected component.</p></li>
 </ol>
@@ -458,7 +432,7 @@ In words, the algorithm will work as follows:</p>
 </div>
 <div class="section" id="depth-first-search-dfs">
 <h2>Depth-first search (DFS)<a class="headerlink" href="#depth-first-search-dfs" title="Permalink to this headline">¶</a></h2>
-<p>In DFS we will allways go <em>deeper</em> into the graph whenever possible. We start at an arbitrary node and then go to the first possible via an edge. This is repeated utill we reach a node which has only edges to alredy visited nodes (or no edges). We then trace back to the previous node in this procedure. We continue untill all nodes are visited.</p>
+<p>In DFS we will always go <em>deeper</em> into the graph whenever possible. We start at an arbitrary node and then go to the first possible via an edge. This is repeated until we reach a node which has only edges to already visited nodes (or no edges). We then trace back to the previous node in this procedure. We continue until all nodes are visited.</p>
 <img src="https://upload.wikimedia.org/wikipedia/commons/7/7f/Depth-First-Search.gif" width="40%">
 <p>Source: <a class="reference external" href="https://upload.wikimedia.org/wikipedia/commons/7/7f/Depth-First-Search.gif">Wikimedia Commons</a></p>
 <div class="cell docutils container">
@@ -527,10 +501,10 @@ In words, the algorithm will work as follows:</p>
 </div>
 <div class="section" id="minimum-spanning-tree-mst">
 <h2>Minimum spanning tree (MST)<a class="headerlink" href="#minimum-spanning-tree-mst" title="Permalink to this headline">¶</a></h2>
-<p>A <em>spannign tree</em> of a graph \(G\) is a subgraph of \(G\) that includes all its nodes. The concept is meaingful for connected graphs only (if the graph is not connected we are considering its <em>spannign forest</em>). The problem of MST is considered for weighted graphs \((V,E\) with \(w\) - a function that returs the weight of an edge in \(E\). A <em>minimum spanning tree</em> is one in which the sum of weights of the edges is minimal. Surprisingly, the problem can be solved by using an <em>greedy</em> approach. Here are two possible approaches:</p>
+<p>A <em>spanning tree</em> of a graph \(G\) is a subgraph of \(G\) that includes all its nodes. The concept is meaningful for connected graphs only (if the graph is not connected we are considering its <em>spanning forest</em>). The problem of MST is considered for weighted graphs \((V,E\) with \(w\) - a function that returns the weight of an edge in \(E\). A <em>minimum spanning tree</em> is one in which the sum of weights of the edges is minimal. Surprisingly, the problem can be solved by using a <em>greedy</em> approach. Here are two possible approaches:</p>
 <div class="section" id="kruskal-s-algorithm">
 <h3>Kruskal’s algorithm<a class="headerlink" href="#kruskal-s-algorithm" title="Permalink to this headline">¶</a></h3>
-<p>The Kruskal’s approach is based on the following procedure:</p>
+<p>Kruskal’s approach is based on the following procedure:</p>
 <ol class="simple">
 <li><p>Create a single element set for every node.</p></li>
 <li><p>Sort the edges in \(E\) by weight in non-decreasing order, put them in a priority queue.</p></li>
@@ -592,13 +566,13 @@ In words, the algorithm will work as follows:</p>
 </div>
 <div class="section" id="prim-s-algorithm">
 <h3>Prim’s algorithm<a class="headerlink" href="#prim-s-algorithm" title="Permalink to this headline">¶</a></h3>
-<p>Prim’s algorithm is similair to Kruskal’s but at each step there is only one tree that grows. The idea is as follows:</p>
+<p>Prim’s algorithm is similar to Kruskal’s but at each step, there is only one tree that grows. The idea is as follows:</p>
 <ol class="simple">
 <li><p>Start at an arbitrary node in \(G\)</p></li>
 <li><p>Take the minimum edge incident on one of the already considered nodes (that connects it to the node not previously seen). This way the tree expands.</p></li>
 <li><p>When all nodes are in the tree, terminate.</p></li>
 </ol>
-<p>Of course, the 2nd step may be a bit tricky to implement efficiently. We will use a <em>priority queue</em> from the <code class="docutils literal notranslate"><span class="pre">heapq</span></code> interface to efficiently choose the next edge to add. We also need to upgrade our adjacency list representation of the graph. Now it is a dictionary which maps to a dictionary with incident nodes as keys and their correncponding edge weights as values. So <code class="docutils literal notranslate"><span class="pre">graph[from][to]</span></code> gives the desired edge if it exists. It assumes that there is at most one edge between any two nodes (undirected graph), if this is violated, we would always choose the edge of minimum weight.</p>
+<p>Of course, the 2nd step may be a bit tricky to implement efficiently. We will use a <em>priority queue</em> from the <code class="docutils literal notranslate"><span class="pre">heapq</span></code> interface to efficiently choose the next edge to add. We also need to upgrade our adjacency list representation of the graph. Now it is a dictionary which maps to a dictionary with incident nodes as keys and their corresponding edge weights as values. So <code class="docutils literal notranslate"><span class="pre">graph[from][to]</span></code> gives the desired edge if it exists. It assumes that there is at most one edge between any two nodes (undirected graph), if this is violated, we would always choose the edge of minimum weight.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
@@ -659,28 +633,14 @@ In words, the algorithm will work as follows:</p>
 <p>The algorithm runs in \(O(|E|log|V|)\) time. Why?</p>
 </div>
 </div>
-<div class="section" id="shortest-path">
-<h2>Shortest path<a class="headerlink" href="#shortest-path" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="dijkstra-s-algorithm">
-<h3>Dijkstra’s algorithm<a class="headerlink" href="#dijkstra-s-algorithm" title="Permalink to this headline">¶</a></h3>
-</div>
-<div class="section" id="bellman-ford-algorithm">
-<h3>Bellman-Ford algorithm<a class="headerlink" href="#bellman-ford-algorithm" title="Permalink to this headline">¶</a></h3>
-</div>
-</div>
-<div class="section" id="floyd-cycle-detection-algorithm">
-<h2>Floyd cycle detection algorithm<a class="headerlink" href="#floyd-cycle-detection-algorithm" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="graph-colouring">
-<h2>Graph colouring<a class="headerlink" href="#graph-colouring" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="maximum-flow">
-<h2>Maximum flow<a class="headerlink" href="#maximum-flow" title="Permalink to this headline">¶</a></h2>
-</div>
 <div class="section" id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
-<p>https://www.geeksforgeeks.org/applications-of-breadth-first-traversal/?ref=rp
-https://bradfieldcs.com/algos/graphs/prims-spanning-tree-algorithm/</p>
+<ul class="simple">
+<li><p>Cormen, Leiserson, Rivest, Stein, “Introduction to Algorithms”, Third Edition, MIT Press, 2009</p></li>
+<li><p>GeeksforGeeks, <a class="reference external" href="https://www.geeksforgeeks.org/applications-of-breadth-first-traversal/?ref=rp">Applications of Breadth First Traversal</a></p></li>
+<li><p>Vijini Mallawaarachchi, Medium, Towards Data Science, <a class="reference external" href="https://towardsdatascience.com/10-graph-algorithms-visually-explained-e57faa1336f3">10 Graph Algorithms Visually Explained</a>, 2020</p></li>
+<li><p>Brad Filed, Practical Algorithms and Data Structures, <a class="reference external" href="https://bradfieldcs.com/algos/graphs/prims-spanning-tree-algorithm/">Prim’s Spanning Tree Algorithm</a>, 2020</p></li>
+</ul>
 </div>
 </div>
 

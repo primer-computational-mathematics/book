@@ -8,3 +8,4 @@ In this section, we are going to present basic concepts and methods which will m
 4. {ref}`dynamic_programming`
 5. {ref}`greedy_algorithms`
 6. {ref}`data_structures`
+7. {ref}`graph_algorithms`
