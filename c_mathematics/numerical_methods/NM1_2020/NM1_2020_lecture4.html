@@ -1,390 +1,1865 @@
 
-
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Numerical Methods I &#8212; ESE Jupyter Material</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
-    <link href="../../../_static/css/index.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../../_static/sphinx-book-theme.css" type="text/css" />
-    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/custom.css" />
-    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
-    <script src="../../../_static/sphinx-book-theme.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
     <script src="../../../_static/jquery.js"></script>
     <script src="../../../_static/underscore.js"></script>
     <script src="../../../_static/doctools.js"></script>
-    <script src="../../../_static/language_data.js"></script>
-    <script src="../../../_static/togglebutton.js"></script>
     <script src="../../../_static/clipboard.min.js"></script>
     <script src="../../../_static/copybutton.js"></script>
-    <script src="../../../_static/sphinx-book-theme.js"></script>
-    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
-    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
-    <script >
-        const thebe_selector = ".cell"
-        const thebe_selector_input = ".cell_input div.highlight"
-        const thebe_selector_output = ".output"
-    </script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".cell"
+const thebe_selector_input = ".cell_input div.highlight"
+const thebe_selector_output = ".output, .cell_output"
+</script>
     <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="docsearch:language" content="en">
-
-
-
+    <!-- Google Analytics -->
+    
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
     
 
     <div class="container-xl">
       <div class="row">
           
-<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    
-        <div class="navbar-brand-box">
-<a class="navbar-brand text-wrap" href="../../../index.html">
-  
-  <img src="../../../_static/logo.png" class="logo" alt="logo">
-  
-  
-  <h1 class="site-logo" id="site-title">ESE Jupyter Material</h1>
-  
-</a>
-</div>
-
-<form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">ESE Jupyter Material</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form>
-
-<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
-  
-  <ul class="nav sidenav_l1">
-  <li class="">
-    <a href="../../../intro.html">Landing page</a>
-  </li>
-  <li class="">
-    <a href="../../../a_modules/intro.html">Modules</a>
-  </li>
-  <li class="">
-    <a href="../../../b_coding/intro.html">Coding</a>
-  </li>
-  <li class="">
-    <a href="../../intro.html">Mathematics</a>
-  </li>
-  <li class="">
-    <a href="../../../d_geosciences/intro.html">Geosciences</a>
-  </li>
-  <li class="">
-    <a href="../../../e_extra/intro.html">Further resources</a>
-  </li>
-  <li class="">
-    <a href="../../../genindex.html">Index</a>
-  </li>
-</ul>
-</nav>
-
- <!-- To handle the deprecated key -->
-
-<div class="navbar_extra_footer">
-  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
-</div>
-
-</div>
-
-
-          
-
-
-          
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
-    
-    <div class="row topbar fixed-top container-xl">
-    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
-    </div>
-    <div class="col pl-2 topbar-main">
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
         
-        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-            <i class="fas fa-bars"></i>
-            <i class="fas fa-arrow-left"></i>
-            <i class="fas fa-arrow-up"></i>
-        </button>
-        
-        <div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
-            class="fas fa-download"></i></button>
-
-    
-    <div class="dropdown-buttons">
-        <!-- ipynb file if we had a myst markdown file -->
-        
-        <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../../_sources/c_mathematics/numerical_methods/NM1_2020/NM1_2020_lecture4.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
-        <!-- Download PDF via print -->
-        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
-    </div>
-    
-</div>
-        <!-- Source interaction buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-    <div class="dropdown-buttons sourcebuttons">
-        
-        <a class="issues-button"
-            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2Fc_mathematics/numerical_methods/NM1_2020/NM1_2020_lecture4.html&body=Your%20issue%20content%20here."><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        
-    </div>
-</div>
-
-
-        <!-- Full screen (wrap in <a> to have style consistency -->
-        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
-                    class="fas fa-expand"></i></button></a>
-
-        <!-- Launch buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/c_mathematics/numerical_methods/NM1_2020/NM1_2020_lecture4.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="../../../_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        
-        
-    </div>
-</div>
-
-    </div>
-    <div class="d-none d-md-block col-md-2 bd-toc show">
-<div class="tocsection onthispage pt-5 pb-3">
-    <i class="fas fa-list"></i> On this page
-</div>
-
-<nav id="bd-toc-nav">
-    <ul class="nav section-nav flex-column">
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#" class="nav-link">Numerical Methods I</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#lecture-4-roots-of-equations" class="nav-link">Lecture 4: Roots of Equations</a><ul class="nav section-nav flex-column">
-                
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#learning-objectives" class="nav-link">Learning objectives:</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#contents" class="nav-link">Contents</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#i-linear-equations-and-nonlinearity" class="nav-link">I.      Linear Equations and Nonlinearity</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#ii-picard-s-method-of-successive-approximations-or-fixed-point-iteration" class="nav-link">II.     Picard’s method of successive approximations (or fixed point iteration)</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#iii-roots-of-equations" class="nav-link">III.    Roots of Equations</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#iv-subintervals-and-initial-guess" class="nav-link">IV.    Subintervals and Initial Guess</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#v-root-bracketing" class="nav-link">V.     Root Bracketing</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#vi-bisection-method" class="nav-link">VI.    Bisection Method</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#vii-newton-method" class="nav-link">VII.   Newton Method</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#viii-quasi-newton-method" class="nav-link">VIII.  Quasi Newton Method</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#ix-secant-method" class="nav-link">IX.    Secant Method</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#x-potential-convergence-issues" class="nav-link">X.     Potential Convergence Issues</a>
-        </li>
-    
-            </ul>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#i-linear-equations-and-non-linearity" class="nav-link">I.   Linear Equations and Non linearity</a><ul class="nav section-nav flex-column">
-                
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#examples-of-nonlinearity" class="nav-link">Examples of nonlinearity</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#an-example-nonlinear-equation" class="nav-link">An example nonlinear equation</a>
-        </li>
-    
-            </ul>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#id1" class="nav-link">II.    Picard’s method of successive approximations (or fixed point iteration)</a><ul class="nav section-nav flex-column">
-                
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#fixed-points" class="nav-link">Fixed points</a><ul class="nav section-nav flex-column">
-                
-        <li class="nav-item toc-entry toc-h4">
-            <a href="#observations" class="nav-link">Observations</a>
-        </li>
-    
-            </ul>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#algorithm-picard-iteration" class="nav-link">Algorithm (Picard iteration)</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#span-style-color-blue-exercise-4-1-span" class="nav-link"><span style="color:blue">Exercise 4.1: </span></a>
-        </li>
-    
-            </ul>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#id2" class="nav-link">III. Roots of equations</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#iv-subintervals-and-initial-guesses" class="nav-link">IV.   Subintervals and initial guesses</a><ul class="nav section-nav flex-column">
-                
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#span-style-color-blue-exercise-4-2-span" class="nav-link"><span style="color:blue">Exercise 4.2:</span></a>
-        </li>
-    
-            </ul>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#id3" class="nav-link">V.    Root bracketing</a><ul class="nav section-nav flex-column">
-                
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#span-style-color-blue-exercise-4-3-span" class="nav-link"><span style="color:blue">Exercise 4.3: </span></a>
-        </li>
-    
-            </ul>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#id4" class="nav-link">VI.    Bisection method</a><ul class="nav section-nav flex-column">
-                
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#span-style-color-blue-exercise-4-4-span" class="nav-link"><span style="color:blue">Exercise 4.4: </span></a>
-        </li>
-    
-            </ul>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#id5" class="nav-link">VII.    Newton Method</a><ul class="nav section-nav flex-column">
-                
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#span-style-color-blue-exercise-4-5-span" class="nav-link"><span style="color:blue">Exercise 4.5: </span></a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#viii-quasi-newton-with-approximate-derivative" class="nav-link">VIII.    (Quasi-) Newton with approximate derivative</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#span-style-color-blue-exercise-4-6-span" class="nav-link"><span style="color:blue">Exercise 4.6: </span></a>
-        </li>
-    
-            </ul>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#id6" class="nav-link">IX.   Secant Method</a><ul class="nav section-nav flex-column">
-                
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#span-style-color-blue-exercise-4-7-span" class="nav-link"><span style="color:blue">Exercise 4.7:</span></a>
-        </li>
-    
-            </ul>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#id7" class="nav-link">X.  Potential convergence Issues</a><ul class="nav section-nav flex-column">
-                
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#multiple-roots" class="nav-link">Multiple roots</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#nearly-singular-numerical-overflow" class="nav-link">Nearly singular/numerical overflow</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#oscillation" class="nav-link">Oscillation</a>
-        </li>
-    
-            </ul>
-        </li>
-    
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../intro.html">
+                    Landing page
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../../a_modules/intro.html">
+   Modules
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../a_modules/math_methods_1/intro.html">
+     Mathematical methods 1
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+    <label for="toctree-checkbox-2">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../a_modules/math_methods_1/1_Coordinate_Systems.html">
+       Coordinate systems (Lecture 1)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../a_modules/math_methods_1/2_Vectors.html">
+       Vectors (Lecture 1)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../a_modules/math_methods_1/3_Multivariable_Calculus.html">
+       Multivariable calculus (Lecture 2)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../a_modules/math_methods_1/4_Vector_Calculus.html">
+       Vector calculus (Lecture 3)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../a_modules/math_methods_1/5_Matrices.html">
+       Matrices (Lecture 4)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../a_modules/math_methods_1/6_Eigenvalues.html">
+       Eigenvalues (Lecture 5)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../a_modules/math_methods_1/7_Series.html">
+       Series (Lecture 6)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../a_modules/math_methods_1/8_ODEs.html">
+       ODEs (Lecture 7)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../a_modules/math_methods_1/9_Modelling.html">
+       Modelling (Lecture 8)
+      </a>
+     </li>
     </ul>
-</nav>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../a_modules/mechanics/intro.html">
+     Mechanics
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+    <label for="toctree-checkbox-3">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../a_modules/mechanics/1_Motion_in_1D.html">
+       Motion in 1D
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../a_modules/mechanics/2_Motion_in_2D.html">
+       Motion in 2D
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../a_modules/mechanics/3_Work_and_Energy.html">
+       Work and Energy
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../a_modules/mechanics/4_Rotational_Motion.html">
+       Rotational Motion
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../a_modules/mechanics/5_Gravity.html">
+       Gravity
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../a_modules/tectonics_of_the_ocean/intro.html">
+     Techtonics of the ocean
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+    <label for="toctree-checkbox-4">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../a_modules/tectonics_of_the_ocean/1_mapping_the_ocean_floor.html">
+       Reading Maps
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../../b_coding/intro.html">
+   Coding
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../b_coding/NumPy_Arrays.html">
+     NumPy arrays
+    </a>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../b_coding/Fundamentals%20of%20Computer%20Science/intro.html">
+     Fundamentals of Computer Science
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+    <label for="toctree-checkbox-6">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Fundamentals%20of%20Computer%20Science/1_Algorythmic_Complexity.html">
+       Algorithmic complexity
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Fundamentals%20of%20Computer%20Science/2_Recursion.html">
+       Recursion
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Fundamentals%20of%20Computer%20Science/3_Divide_and_Conquer.html">
+       Divide and Conquer
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Fundamentals%20of%20Computer%20Science/4_Dynamic_Programming.html">
+       Dynamic Programming
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Fundamentals%20of%20Computer%20Science/5_Greedy_Algorithms.html">
+       Greedy Algorithms
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Fundamentals%20of%20Computer%20Science/6_Data_Structures.html">
+       Data Structures
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Fundamentals%20of%20Computer%20Science/7_Graph_Algorithms.html">
+       Graph Algorithms
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/intro.html">
+     Intro to Python
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+    <label for="toctree-checkbox-7">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/1_Printing_and_formatting_statements.html">
+       Printing and formatting statements
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/2_Variables.html">
+       Variables
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/3_If_statement.html">
+       If statement
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/4_While_loops.html">
+       While loops
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/5_Lists.html">
+       Lists
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/6_For_loops.html">
+       For loops
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/7_List_comprehensions.html">
+       List comprehensions
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/8_Nested_lists.html">
+       Nested lists
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/9_Handling_errors.html">
+       Handling errors
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/10_Importing.html">
+       Importing in Python
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/11_Functions.html">
+       Creating custom functions
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/12_Tuples.html">
+       Tuples
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/13_File_handling.html">
+       File handling
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/14_Dictionaries.html">
+       Dictionaries
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/15_Flow_control_statements.html">
+       Flow control statements
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/16_Sets.html">
+       Sets
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/17_Matplotlib.html">
+       Plotting data with Matplotlib
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/18_Assert.html">
+       Assert
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/19_Classes.html">
+       Python classes
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/20_Lambdas.html">
+       Lambdas
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../b_coding/Pandas/intro.html">
+     Pandas
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+    <label for="toctree-checkbox-8">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Pandas/1_basics.html">
+       Introduction
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Pandas/2_filter_select_assign.html">
+       Filtering, selecting and assigning
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Pandas/3_merge_combine_group_sort.html">
+       Merging, combining, grouping and sorting
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Pandas/4_summary_statistics.html">
+       Summary statistics
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Pandas/5_time_stamps.html">
+       Creating date-time stamps
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Pandas/6_plotting.html">
+       Plotting
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../b_coding/Programming%20Tools/intro.html">
+     Programming tools
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
+    <label for="toctree-checkbox-9">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Programming%20Tools/1_Version_Control_Git.html">
+       Version control Git
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../intro.html">
+   Mathematics
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/>
+  <label for="toctree-checkbox-10">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../calculus/intro.html">
+     Calculus
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/>
+    <label for="toctree-checkbox-11">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../calculus/Vector_calculus.html">
+       Vector calculus
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../complex_analysis/intro.html">
+     Complex analysis
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/>
+    <label for="toctree-checkbox-12">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../complex_analysis/1_introduction.html">
+       Introduction
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../complex_analysis/2_complex_plane.html">
+       Complex plane
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../complex_analysis/3_complex_functions.html">
+       Complex functions
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../complex_analysis/4_holomorphic_functions.html">
+       Holomorphic functions
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../complex_analysis/5_integrating.html">
+       Complex integration
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../complex_analysis/6_fractals.html">
+       Fractals
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../differential_equations/intro.html">
+     Differential equations
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/>
+    <label for="toctree-checkbox-13">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../differential_equations/1_de_introduction.html">
+       Introduction to differential equations
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../differential_equations/2_linear_des.html">
+       Linear Differential Equations
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../differential_equations/3_first-order_odes.html">
+       First-order ODEs
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../differential_equations/4_higher_ord_lin_odes.html">
+       Higher order Linear ODEs
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../differential_equations/5_ode_series.html">
+       Series ODE
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../differential_equations/6_pde_basicdefinitions.html">
+       Introductory definitions and concepts
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../differential_equations/7_pde_first_order.html">
+       First-order linear PDEs
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../differential_equations/8_pde_second_order.html">
+       Canonical form of second-order linear PDEs
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../differential_equations/9_poisson_laplace_eq.html">
+       Poisson’s and Laplace’s equation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../differential_equations/10_heat_eq.html">
+       Heat (diffusion) equation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../differential_equations/11_pde_fourier.html">
+       Solving PDEs with fourier methods
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../differential_equations/12_wave_eq.html">
+       Wave equation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../differential_equations/13_similarity_solutions.html">
+       Self-similar solutions
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../linear_algebra/intro.html">
+     Linear algebra
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/>
+    <label for="toctree-checkbox-14">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../linear_algebra/1_Basic_definitions_and_operations.html">
+       Basic definitions and operations
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../linear_algebra/2_Linear_Systems.html">
+       Systems of linear equations
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../linear_algebra/3_Theory.html">
+       Theory
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../linear_algebra/4_Eigenvalues_and_eigenvectors.html">
+       Eigenvalues and eigenvectors
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../linear_algebra/5_Linear_Algebra_in_Python.html">
+       Linear Algebra in Python
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../mathematical_notation/intro.html">
+     Mathematical notation
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" type="checkbox"/>
+    <label for="toctree-checkbox-15">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../mathematical_notation/Big_O_notation.html">
+       Big O notation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../mathematical_notation/Tensors_Review.html">
+       Review of tensors
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../intro.html">
+     Numerical methods
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
+    <label for="toctree-checkbox-16">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../1_Interpolation_curve_fitting.html">
+       Interpolation and curve fitting
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../2_Numerical_differentiation.html">
+       Numerical differentiation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../3_Timestepping_an_ODE.html">
+       Solving or timestepping an ODE
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../4_Heuns_method.html">
+       Heun’s method
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../5_Runge_Kutta_method.html">
+       Runge-Kutta method
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../6_Solving_PDEs_SOR.html">
+       Successive over-relaxation method
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../7_FTCS.html">
+       FTCS scheme
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../8_BTCS.html">
+       BTCS scheme
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../9_Numerical_integration.html">
+       Numerical integration
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../10_Roots_of_equations.html">
+       Roots of equations
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../11_linear_algebra_intro.html">
+       Linear algebra introduction
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../12_Gaussian_elimination.html">
+       Gaussian elimination
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../13_LU_decomposition.html">
+       LU decomposition
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../14_ill_conditioning_errors.html">
+       Ill-conditioning and roundoff errors
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../15_iterative_methods_to_solve_matrix.html">
+       Iterative methods to solve a matrix
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../series_and_sequences/intro.html">
+     Series and sequences
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
+    <label for="toctree-checkbox-17">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../series_and_sequences/Fourier_series.html">
+       Fourier series
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../series_and_sequences/Fourier_transforms.html">
+       Fourier transforms
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../series_and_sequences/Taylor_series.html">
+       Taylor series
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../sets_and_functions/intro.html">
+     Sets and functions
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
+    <label for="toctree-checkbox-18">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../sets_and_functions/1_logic.html">
+       Logic and proof
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../sets_and_functions/2_sets.html">
+       Sets
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../sets_and_functions/3_functions.html">
+       Functions
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../sets_and_functions/4_elementary_functions_1.html">
+       Elementary functions 1
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../sets_and_functions/5_elementary_functions_2.html">
+       Elementary functions 2
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../sets_and_functions/6_composition_and_inverse.html">
+       Composition and Inverse Functions
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../statistics/intro.html">
+     Statistics
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
+    <label for="toctree-checkbox-19">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../statistics/Linear_Regression.html">
+       Linear regression
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../statistics/Statistics_for_Geoscientists.html">
+       Introduction to statistics for Geoscientists
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../../d_geosciences/intro.html">
+   Geosciences
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
+  <label for="toctree-checkbox-20">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../d_geosciences/1D_Heat_Conduction.html">
+     1D heat conduction (layered medium)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../d_geosciences/1D_Resistivity_Forward_Modelling.html">
+     1D resistivity forward modelling
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../d_geosciences/Climate_Model.html">
+     Climate model
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../d_geosciences/Dynamic_Earth.html">
+     Seafloor ages
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../d_geosciences/Keplerian_Orbits.html">
+     Keplerian orbits
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../d_geosciences/Milankovitch_cycles.html">
+     Milankovitch cycles
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../d_geosciences/Seismology.html">
+     Downloading earthquake data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../d_geosciences/Tides.html">
+     Tides
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../d_geosciences/Wave_dispersion.html">
+     Wave dispersion
+    </a>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../d_geosciences/Electromagnetism/intro.html">
+     Electromagnetism
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
+    <label for="toctree-checkbox-21">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../d_geosciences/Electromagnetism/1_electricity_magnetism.html">
+       Electricity and magnetism
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../d_geosciences/Electromagnetism/2_maxwell_eqs.html">
+       Maxwell’s equations
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../d_geosciences/Electromagnetism/3_four_field.html">
+       The four-field formalism
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../d_geosciences/Fluid_Dynamics/intro.html">
+     Fluid dynamics
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
+    <label for="toctree-checkbox-22">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../d_geosciences/Fluid_Dynamics/Lecture5_1D_Pipe_Flow.html">
+       Lecture5_1D_Pipe_Flow
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../d_geosciences/Fluid_Dynamics/Lecture6_Non_Linear_Viscosity_2D_Stokes.html">
+       Lecture6_Non_Linear_Viscosity_2D_Stokes
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../d_geosciences/Fluid_Dynamics/Lecture7_Pipe_Flow_with_Heat.html">
+       Lecture7_Pipe_Flow_with_Heat
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../d_geosciences/Fluid_Dynamics/Lecture8_Part1_Navier_Stoke_Equation.html">
+       Lecture8_Part1_Navier_Stoke_Equation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../d_geosciences/Fluid_Dynamics/Lecture8_Part2_SPH_Algorithm_For_Energy_Equation.html">
+       Lecture8_Part2_SPH_Algorithm_For_Energy_Equation
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../d_geosciences/remote_sensing/intro.html">
+     Remote sensing
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
+    <label for="toctree-checkbox-23">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../d_geosciences/remote_sensing/Image_Filtering.html">
+       Image filtering
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../d_geosciences/remote_sensing/Image_Point_Operations.html">
+       Image point operations
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../d_geosciences/remote_sensing/Image_Transformations_and_Orthorectification.html">
+       Image transformations and orthorectification
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../../e_extra/intro.html">
+   Further resources
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" type="checkbox"/>
+  <label for="toctree-checkbox-24">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../e_extra/Camera_Calibration.html">
+     Camera calibration
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../e_extra/Cartography_Cartopy.html">
+     Cartopy (maps)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../e_extra/Dakota.html">
+     Dakota
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../e_extra/Google_Earth_Engine_Foundations.html">
+     Google Earth Engine foundations
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../e_extra/Google_Earth_Engine_Getting_Started_.html">
+     Google Earth Engine getting started
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../e_extra/Particle_Image_Velocimetry.html">
+     Particle image velocimetry (PIV)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../e_extra/contributors_guide.html">
+     Contributor’s guide
+    </a>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../e_extra/UAV_Mapping/intro.html">
+     UAV Mapping
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" type="checkbox"/>
+    <label for="toctree-checkbox-25">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/UAV_Mapping/1.Mission_Planning.html">
+       1. Mission Planning
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/intro.html">
+     Machine learning
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-26" name="toctree-checkbox-26" type="checkbox"/>
+    <label for="toctree-checkbox-26">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%200%20--%20Introduction.html">
+       Chapter 0 – Introduction
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%201%20--%20Neural%20Network.html">
+       Chapter 1 – Neural Network
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%202%20--%20Maximum%20Likelihood.html">
+       Chapter 2 – Maximum Likelihood
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%203%20--%20Cross%20Entropy.html">
+       Chapter 3 – Cross Entropy
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%204%20--%20Cost%20Function.html">
+       Chapter 4 – Cost Function
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%205%20--%20Gradient%20Descent%201.html">
+       Chapter 5 – Gradient Descent 1
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%206%20--%20Gradient%20Descent%202.html">
+       Chapter 6 – Gradient Descent 2
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%207%20--%20Real%20%28Non-linear%29%20Neural%20Network.html">
+       Chapter 7 – Real (Non-linear) Neural Network
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%208%20--%20Feedforward.html">
+       Chapter 8 – Feedforward
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%209%20--%20Back%20Propagation.html">
+       Chapter 9 – Back Propagation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%2010%20--%20General%20Back%20Propagation.html">
+       Chapter 10 – General Back Propagation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%2011%20--%20Underfitting%20and%20Overfitting.html">
+       Chapter 11 – Underfitting and Overfitting
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%2012%20--%20Early-stopping%2C%20Dropout%20%26%20Mini-batch.html">
+       Chapter 12 – Early-stopping, Dropout &amp; Mini-batch
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%2013%20--%20Vanishing%20Gradient%201.html">
+       Chapter 13 – Vanishing Gradient 1
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%2014%20--%20Vanishing%20Gradient%202.html">
+       Chapter 14 – Vanishing Gradient 2
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%2015%20--%20Regularisation.html">
+       Chapter 15 – Regularisation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%2016%20--%20Other%20Activation%20Functions.html">
+       Chapter 16 – Other Activation Functions
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%2017%20--%20Local%20Minima%20Trap.html">
+       Chapter 17 – Local Minima Trap
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%2018%20--%20Softmax.html">
+       Chapter 18 – Softmax
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%2019%20--%20Hyper-Parameters.html">
+       Chapter 19 – Hyper-Parameters
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%2020%20--%20Coding%20Example.html">
+       Chapter 20 – Coding Example
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../genindex.html">
+   Index
+  </a>
+ </li>
+</ul>
 
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/c_mathematics/numerical_methods/NM1_2020/NM1_2020_lecture4.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2Fc_mathematics/numerical_methods/NM1_2020/NM1_2020_lecture4.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+
+</a>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../../../_sources/c_mathematics/numerical_methods/NM1_2020/NM1_2020_lecture4.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
 
     </div>
 </div>
-    <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
-        
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Numerical Methods I
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#lecture-4-roots-of-equations">
+   Lecture 4: Roots of Equations
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#learning-objectives">
+     Learning objectives:
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#contents">
+     Contents
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#i-linear-equations-and-nonlinearity">
+     I.      Linear Equations and Nonlinearity
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ii-picard-s-method-of-successive-approximations-or-fixed-point-iteration">
+     II.     Picard’s method of successive approximations (or fixed point iteration)
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#iii-roots-of-equations">
+     III.    Roots of Equations
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#iv-subintervals-and-initial-guess">
+     IV.    Subintervals and Initial Guess
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#v-root-bracketing">
+     V.     Root Bracketing
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#vi-bisection-method">
+     VI.    Bisection Method
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#vii-newton-method">
+     VII.   Newton Method
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#viii-quasi-newton-method">
+     VIII.  Quasi Newton Method
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ix-secant-method">
+     IX.    Secant Method
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#x-potential-convergence-issues">
+     X.     Potential Convergence Issues
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#i-linear-equations-and-non-linearity">
+   I.   Linear Equations and Non linearity
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#examples-of-nonlinearity">
+     Examples of nonlinearity
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#an-example-nonlinear-equation">
+     An example nonlinear equation
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   II.    Picard’s method of successive approximations (or fixed point iteration)
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#fixed-points">
+     Fixed points
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#observations">
+       Observations
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#algorithm-picard-iteration">
+     Algorithm (Picard iteration)
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#span-style-color-blue-exercise-4-1-span">
+     <span style="color:blue">
+      Exercise 4.1:
+     </span>
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   III. Roots of equations
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#iv-subintervals-and-initial-guesses">
+   IV.   Subintervals and initial guesses
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#span-style-color-blue-exercise-4-2-span">
+     <span style="color:blue">
+      Exercise 4.2:
+     </span>
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   V.    Root bracketing
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#span-style-color-blue-exercise-4-3-span">
+     <span style="color:blue">
+      Exercise 4.3:
+     </span>
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id4">
+   VI.    Bisection method
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#span-style-color-blue-exercise-4-4-span">
+     <span style="color:blue">
+      Exercise 4.4:
+     </span>
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id5">
+   VII.    Newton Method
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#span-style-color-blue-exercise-4-5-span">
+     <span style="color:blue">
+      Exercise 4.5:
+     </span>
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#viii-quasi-newton-with-approximate-derivative">
+     VIII.    (Quasi-) Newton with approximate derivative
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#span-style-color-blue-exercise-4-6-span">
+     <span style="color:blue">
+      Exercise 4.6:
+     </span>
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id6">
+   IX.   Secant Method
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#span-style-color-blue-exercise-4-7-span">
+     <span style="color:blue">
+      Exercise 4.7:
+     </span>
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id7">
+   X.  Potential convergence Issues
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#multiple-roots">
+     Multiple roots
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#nearly-singular-numerical-overflow">
+     Nearly singular/numerical overflow
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#oscillation">
+     Oscillation
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Numerical Methods I</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Numerical Methods I
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#lecture-4-roots-of-equations">
+   Lecture 4: Roots of Equations
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#learning-objectives">
+     Learning objectives:
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#contents">
+     Contents
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#i-linear-equations-and-nonlinearity">
+     I.      Linear Equations and Nonlinearity
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ii-picard-s-method-of-successive-approximations-or-fixed-point-iteration">
+     II.     Picard’s method of successive approximations (or fixed point iteration)
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#iii-roots-of-equations">
+     III.    Roots of Equations
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#iv-subintervals-and-initial-guess">
+     IV.    Subintervals and Initial Guess
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#v-root-bracketing">
+     V.     Root Bracketing
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#vi-bisection-method">
+     VI.    Bisection Method
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#vii-newton-method">
+     VII.   Newton Method
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#viii-quasi-newton-method">
+     VIII.  Quasi Newton Method
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ix-secant-method">
+     IX.    Secant Method
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#x-potential-convergence-issues">
+     X.     Potential Convergence Issues
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#i-linear-equations-and-non-linearity">
+   I.   Linear Equations and Non linearity
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#examples-of-nonlinearity">
+     Examples of nonlinearity
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#an-example-nonlinear-equation">
+     An example nonlinear equation
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   II.    Picard’s method of successive approximations (or fixed point iteration)
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#fixed-points">
+     Fixed points
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#observations">
+       Observations
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#algorithm-picard-iteration">
+     Algorithm (Picard iteration)
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#span-style-color-blue-exercise-4-1-span">
+     <span style="color:blue">
+      Exercise 4.1:
+     </span>
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   III. Roots of equations
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#iv-subintervals-and-initial-guesses">
+   IV.   Subintervals and initial guesses
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#span-style-color-blue-exercise-4-2-span">
+     <span style="color:blue">
+      Exercise 4.2:
+     </span>
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   V.    Root bracketing
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#span-style-color-blue-exercise-4-3-span">
+     <span style="color:blue">
+      Exercise 4.3:
+     </span>
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id4">
+   VI.    Bisection method
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#span-style-color-blue-exercise-4-4-span">
+     <span style="color:blue">
+      Exercise 4.4:
+     </span>
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id5">
+   VII.    Newton Method
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#span-style-color-blue-exercise-4-5-span">
+     <span style="color:blue">
+      Exercise 4.5:
+     </span>
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#viii-quasi-newton-with-approximate-derivative">
+     VIII.    (Quasi-) Newton with approximate derivative
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#span-style-color-blue-exercise-4-6-span">
+     <span style="color:blue">
+      Exercise 4.6:
+     </span>
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id6">
+   IX.   Secant Method
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#span-style-color-blue-exercise-4-7-span">
+     <span style="color:blue">
+      Exercise 4.7:
+     </span>
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id7">
+   X.  Potential convergence Issues
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#multiple-roots">
+     Multiple roots
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#nearly-singular-numerical-overflow">
+     Nearly singular/numerical overflow
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#oscillation">
+     Oscillation
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
               <div>
                 
-  <div class="section" id="numerical-methods-i">
-<h1>Numerical Methods I<a class="headerlink" href="#numerical-methods-i" title="Permalink to this headline">¶</a></h1>
-</div>
-<div class="section" id="lecture-4-roots-of-equations">
-<h1>Lecture 4: Roots of Equations<a class="headerlink" href="#lecture-4-roots-of-equations" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="learning-objectives">
-<h2>Learning objectives:<a class="headerlink" href="#learning-objectives" title="Permalink to this headline">¶</a></h2>
+  <section class="tex2jax_ignore mathjax_ignore" id="numerical-methods-i">
+<h1>Numerical Methods I<a class="headerlink" href="#numerical-methods-i" title="Permalink to this headline">#</a></h1>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="lecture-4-roots-of-equations">
+<h1>Lecture 4: Roots of Equations<a class="headerlink" href="#lecture-4-roots-of-equations" title="Permalink to this headline">#</a></h1>
+<section id="learning-objectives">
+<h2>Learning objectives:<a class="headerlink" href="#learning-objectives" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
 <li><p>Identify nonlinear equations</p></li>
 <li><p>Solve these equations using the <code class="docutils literal notranslate"><span class="pre">scipy.optimize</span></code> functions <code class="docutils literal notranslate"><span class="pre">bisect</span></code> and <code class="docutils literal notranslate"><span class="pre">newton</span></code></p></li>
@@ -392,39 +1867,39 @@
 <li><p>Explain why these methods are considered <em>iterative</em> and <em>approximative</em> and how this relates to <em>tolerances</em></p></li>
 <li><p>Explain three types of <em>convergence</em> errors</p></li>
 </ul>
-</div>
-<div class="section" id="contents">
-<h2>Contents<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="i-linear-equations-and-nonlinearity">
-<h2>I.      Linear Equations and Nonlinearity<a class="headerlink" href="#i-linear-equations-and-nonlinearity" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="ii-picard-s-method-of-successive-approximations-or-fixed-point-iteration">
-<h2>II.     Picard’s method of successive approximations (or fixed point iteration)<a class="headerlink" href="#ii-picard-s-method-of-successive-approximations-or-fixed-point-iteration" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="iii-roots-of-equations">
-<h2>III.    Roots of Equations<a class="headerlink" href="#iii-roots-of-equations" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="iv-subintervals-and-initial-guess">
-<h2>IV.    Subintervals and Initial Guess<a class="headerlink" href="#iv-subintervals-and-initial-guess" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="v-root-bracketing">
-<h2>V.     Root Bracketing<a class="headerlink" href="#v-root-bracketing" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="vi-bisection-method">
-<h2>VI.    Bisection Method<a class="headerlink" href="#vi-bisection-method" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="vii-newton-method">
-<h2>VII.   Newton Method<a class="headerlink" href="#vii-newton-method" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="viii-quasi-newton-method">
-<h2>VIII.  Quasi Newton Method<a class="headerlink" href="#viii-quasi-newton-method" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="ix-secant-method">
-<h2>IX.    Secant Method<a class="headerlink" href="#ix-secant-method" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="x-potential-convergence-issues">
-<h2>X.     Potential Convergence Issues<a class="headerlink" href="#x-potential-convergence-issues" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="contents">
+<h2>Contents<a class="headerlink" href="#contents" title="Permalink to this headline">#</a></h2>
+</section>
+<section id="i-linear-equations-and-nonlinearity">
+<h2>I.      Linear Equations and Nonlinearity<a class="headerlink" href="#i-linear-equations-and-nonlinearity" title="Permalink to this headline">#</a></h2>
+</section>
+<section id="ii-picard-s-method-of-successive-approximations-or-fixed-point-iteration">
+<h2>II.     Picard’s method of successive approximations (or fixed point iteration)<a class="headerlink" href="#ii-picard-s-method-of-successive-approximations-or-fixed-point-iteration" title="Permalink to this headline">#</a></h2>
+</section>
+<section id="iii-roots-of-equations">
+<h2>III.    Roots of Equations<a class="headerlink" href="#iii-roots-of-equations" title="Permalink to this headline">#</a></h2>
+</section>
+<section id="iv-subintervals-and-initial-guess">
+<h2>IV.    Subintervals and Initial Guess<a class="headerlink" href="#iv-subintervals-and-initial-guess" title="Permalink to this headline">#</a></h2>
+</section>
+<section id="v-root-bracketing">
+<h2>V.     Root Bracketing<a class="headerlink" href="#v-root-bracketing" title="Permalink to this headline">#</a></h2>
+</section>
+<section id="vi-bisection-method">
+<h2>VI.    Bisection Method<a class="headerlink" href="#vi-bisection-method" title="Permalink to this headline">#</a></h2>
+</section>
+<section id="vii-newton-method">
+<h2>VII.   Newton Method<a class="headerlink" href="#vii-newton-method" title="Permalink to this headline">#</a></h2>
+</section>
+<section id="viii-quasi-newton-method">
+<h2>VIII.  Quasi Newton Method<a class="headerlink" href="#viii-quasi-newton-method" title="Permalink to this headline">#</a></h2>
+</section>
+<section id="ix-secant-method">
+<h2>IX.    Secant Method<a class="headerlink" href="#ix-secant-method" title="Permalink to this headline">#</a></h2>
+</section>
+<section id="x-potential-convergence-issues">
+<h2>X.     Potential Convergence Issues<a class="headerlink" href="#x-potential-convergence-issues" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># some imports we will make at the start of every notebook</span>
@@ -440,10 +1915,10 @@
 </div>
 </div>
 </div>
-</div>
-</div>
-<div class="section" id="i-linear-equations-and-non-linearity">
-<h1>I.   Linear Equations and Non linearity<a class="headerlink" href="#i-linear-equations-and-non-linearity" title="Permalink to this headline">¶</a></h1>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="i-linear-equations-and-non-linearity">
+<h1>I.   Linear Equations and Non linearity<a class="headerlink" href="#i-linear-equations-and-non-linearity" title="Permalink to this headline">#</a></h1>
 <p>A <strong>system is said to be linear</strong> if it can be represented by a <strong>linear function</strong> (<em>i.e.</em> a straight line in 1D):</p>
 <div class="math notranslate nohighlight">
 \[ f(x) := a + kx, \]</div>
@@ -455,8 +1930,8 @@
 \[ f(x) = 0 \;\;\;\; \text{where} \;\;\;\; f(x) := a + kx. \]</div>
 <p>We’ve set the <em>function</em> equal to something (here we chose zero) to obtain an <em>equation</em>.</p>
 <p>[Our aim will be to find a solution <span class="math notranslate nohighlight">\(x\)</span> to this equation. Note that for linear problems this is trivial if the problem is scalar valued, meaning that solving the above linear equation should be not be a problem for any of you. In the following lectures we will consider linear systems for vectors - i.e. matrix systems, where instead of <span class="math notranslate nohighlight">\(x\)</span> we have a matrix, and instead of <span class="math notranslate nohighlight">\(f(x)\)</span> we have another matrix. <span class="math notranslate nohighlight">\(a and b\)</span> could also be matrices too! You should have done these in your mathematics modules. In the rest of this lecture, we will stick to scalars, but we will deal with equations that are non linear, since scalar linear equation shown above should be easily solvable for all of you!]</p>
-<div class="section" id="examples-of-nonlinearity">
-<h2>Examples of nonlinearity<a class="headerlink" href="#examples-of-nonlinearity" title="Permalink to this headline">¶</a></h2>
+<section id="examples-of-nonlinearity">
+<h2>Examples of nonlinearity<a class="headerlink" href="#examples-of-nonlinearity" title="Permalink to this headline">#</a></h2>
 <p>Note that the majority of real world systems cannot be expressed in such simple (linear) terms.</p>
 <p>[Note also that discretisations of nonlinear ODEs or PDEs (e.g. being nonlinear in order to accurately represent the nonlinear real world) results in nonlinear discrete systems for which we need to make use of techniques such as those introduced in this lecture. Discretization is the process of transferring continuous functions, models, variables, and equations into discrete counterparts. Discretizing ODEs or PDEs often mean we concenrn ourselves with a limited range for the ODEs and the PDEs, where we are actually interested. For example, ODEs and PDEs can be used to describe fluid motion, and a key parameter in the motion of material in Earth’s mantle (Earth’s mantle can be considered, on the geological time scale of things, to be a fluid with no strength - Dr. Rebecca Bell) is temperature (Geodynamics 2nd edition - Turcotte &amp; Schubert). However, we know that the Earth’s mantle could only possibly be within a certain temperature range, i.e. we are not expecting the mantle to be close to absolute zero, or to be hotter than the Sun, so we limit ourselves to analyzing a limited range of temperatures for our PDEs and ODEs. So if your solution to ODE or PDE somehow ends up telling you that the interior of the Earth is hotter than the Sun in your simulations, you might want to double check why Earth is not undergoing nuclear fusion.]</p>
 <p>They are then called nonlinear systems, and equations representing them contain terms like:</p>
@@ -471,9 +1946,9 @@
 x^*_{1,2} := \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}\,.
 \]</div>
 <p>The solutions <span class="math notranslate nohighlight">\(\,x^*_{1,2}\,\)</span> are commonly referred to as the <strong>roots</strong> of the equation - this means that <span class="math notranslate nohighlight">\(\,f(x^*_{1}) = f(x^*_{2}) =0\)</span>.</p>
-</div>
-<div class="section" id="an-example-nonlinear-equation">
-<h2>An example nonlinear equation<a class="headerlink" href="#an-example-nonlinear-equation" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="an-example-nonlinear-equation">
+<h2>An example nonlinear equation<a class="headerlink" href="#an-example-nonlinear-equation" title="Permalink to this headline">#</a></h2>
 <p>An example of a nonlinear problem without trivial solution is:</p>
 <div class="math notranslate nohighlight">
 \[ x = \tan(x). \]</div>
@@ -490,12 +1965,12 @@ x^*_{1,2} := \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}\,.
 <p>Basically, moving everything to the one side, and letting the other side be 0 make you, the programmer, and maybe the computer’s life slightly easier, so we often do this when wanting to solve equations.</p>
 <p>Q. Why is this equation nonlinear ? How many roots does this equation have ?</p>
 <p>We will see a plot of this problem in a couple of cells.</p>
-</div>
-</div>
-<div class="section" id="id1">
-<h1>II.    Picard’s method of successive approximations (or fixed point iteration)<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="fixed-points">
-<h2>Fixed points<a class="headerlink" href="#fixed-points" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>II.    Picard’s method of successive approximations (or fixed point iteration)<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h1>
+<section id="fixed-points">
+<h2>Fixed points<a class="headerlink" href="#fixed-points" title="Permalink to this headline">#</a></h2>
 <p>Before moving on to problems written in the completely general form <span class="math notranslate nohighlight">\(\,f(x) = 0\,\)</span>, in this section we will consider equations that can be written as:</p>
 <div class="math notranslate nohighlight">
 \[ x = g(x), \]</div>
@@ -564,13 +2039,13 @@ x^*_{1,2} := \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}\,.
 <img alt="../../../_images/NM1_2020_lecture4_8_1.png" src="../../../_images/NM1_2020_lecture4_8_1.png" />
 </div>
 </div>
-<div class="section" id="observations">
-<h3>Observations<a class="headerlink" href="#observations" title="Permalink to this headline">¶</a></h3>
+<section id="observations">
+<h3>Observations<a class="headerlink" href="#observations" title="Permalink to this headline">#</a></h3>
 <p>The first example has a single unique fixed point, the second has no fixed point, and the third has infinitely many.</p>
-</div>
-</div>
-<div class="section" id="algorithm-picard-iteration">
-<h2>Algorithm (Picard iteration)<a class="headerlink" href="#algorithm-picard-iteration" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="algorithm-picard-iteration">
+<h2>Algorithm (Picard iteration)<a class="headerlink" href="#algorithm-picard-iteration" title="Permalink to this headline">#</a></h2>
 <p>The simplest method to find approximate fixed points/roots to this kind of equation consists in guessing <span class="math notranslate nohighlight">\(x\)</span>, plugging it into the right-hand-side <span class="math notranslate nohighlight">\(g(\cdot)\)</span> and evaluating the function.</p>
 <p>The resulting new value for <span class="math notranslate nohighlight">\(x\)</span> is then used as an updated guess.</p>
 <p>A sequence of <span class="math notranslate nohighlight">\(x^{(k)}\)</span> values are thus defined via the iteration:</p>
@@ -701,9 +2176,9 @@ You will use the result you have obtained from <span class="math notranslate noh
 <p>I observe that the difference we found at <strong>Step 3</strong> is smaller than the we found at <strong>Step 2</strong>, i.e. <span class="math notranslate nohighlight">\(d_2 &lt; d_1\)</span>, thus, I can say, at least from <strong>Step 3</strong> to <strong>Step 2</strong>, the difference is decreasing, so the iteration is <strong>converging</strong>. Converging is good.</p>
 <p>And so on and so forth. The cells below will show you the further steps of the iteration process.</p>
 <p><span style="color:red">Note that, while we did some steps here, and we found that up until these steps, our iteration was converging, this does not neccesary mean that it will keep on converging in future steps. While for our case it does keep on converging for the next steps, it is not neccesary. Indeed, the only way you could know if it would keep on converging is through rigorous mathematical proof and you could always ask your lecturers for your mathematics modules to give you an introduction into this. However, note that, there is no universal way applicable to all iterative methods to prove that they will converge as their step number continues to increase. There has been many cases in history where the iterative method converged for the first tens of hundreds of steps, thus creating the illusion that it will keep on converging till infinity, when suddently at the thousandth term it starts diverging. Some have even weirder behaviour where it converges for a while, then diverges for another while, and cycles, regularly or irregularly in between, and possibly having a general converging pattern or a general diverging pattern, or maybe you’re just seeing patterns when there are actually none. Indeed, whether something converges or diverges is still a very active area of research in mathematics, and there are sometimes some nice prizes for anyone who can provide rigorous mathematical proof that something converges or diverges. </span></p>
-</div>
-<div class="section" id="span-style-color-blue-exercise-4-1-span">
-<h2><span style="color:blue">Exercise 4.1: </span><a class="headerlink" href="#span-style-color-blue-exercise-4-1-span" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="span-style-color-blue-exercise-4-1-span">
+<h2><span style="color:blue">Exercise 4.1: </span><a class="headerlink" href="#span-style-color-blue-exercise-4-1-span" title="Permalink to this headline">#</a></h2>
 <p>Complete the implementation of the method of successive approximations below to solve <span class="math notranslate nohighlight">\(x=\mathrm{e}^{-x}\)</span></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -903,10 +2378,10 @@ x_16 = 0.56719.   g(x_16) = 0.56712.   |x_16 - g(x_16)| = 0.00007
 <img alt="../../../_images/NM1_2020_lecture4_21_1.png" src="../../../_images/NM1_2020_lecture4_21_1.png" />
 </div>
 </div>
-</div>
-</div>
-<div class="section" id="id2">
-<h1>III. Roots of equations<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h1>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id2">
+<h1>III. Roots of equations<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h1>
 <p>This graphical method shows the intersection point, <span class="math notranslate nohighlight">\(x = \mathrm{e}^{-x}\)</span>, also at ~0.57.</p>
 <p>This value is also termed a <em>root</em> of a closely related problem, as it satisfies</p>
 <div class="math notranslate nohighlight">
@@ -939,14 +2414,14 @@ x_16 = 0.56719.   g(x_16) = 0.56712.   |x_16 - g(x_16)| = 0.00007
 <img alt="../../../_images/NM1_2020_lecture4_24_0.png" src="../../../_images/NM1_2020_lecture4_24_0.png" />
 </div>
 </div>
-</div>
-<div class="section" id="iv-subintervals-and-initial-guesses">
-<h1>IV.   Subintervals and initial guesses<a class="headerlink" href="#iv-subintervals-and-initial-guesses" title="Permalink to this headline">¶</a></h1>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="iv-subintervals-and-initial-guesses">
+<h1>IV.   Subintervals and initial guesses<a class="headerlink" href="#iv-subintervals-and-initial-guesses" title="Permalink to this headline">#</a></h1>
 <p>As we have seen from the iterative method above, having a good initial guess is helpful when iterating for a solution to an equation. If you have made an initial guess that is very close to the solution, then it would take much fewer steps to get to the solution, while if you have made an initial guess that is very far from the solution, then it would take many more steps to get to the solution.</p>
 <p>We also should seek to improve upon our iterative methods. We will introduce you to some of the most common solution seeking iterative methods below. Many of these methods share many similarities and have certain differences. In particular, we are interested in the number of steps taken to reach the solution for each method of seeking the solution. If a solution is reached quickly, the computer can spend less time finding the solution. While this may seem trivial when we are doing scalar equations, it would become important when trying to solve equations involving large and complicated matrixes. The fewer number of steps also means there is a much smaller chance that the program will catastrophically fail when trying to reach the solution. You will know the frustration when you are running numerical simulations lasting several hours only for the computer to catastrophically fail in the middle of it, and having to run it again, when the sun is already rising from the horizon.</p>
 <p>The graph shows the root of <span class="math notranslate nohighlight">\(f(x)\)</span> at our solution <span class="math notranslate nohighlight">\(x^* \approx 0.57\)</span>. By visual inspection, we see that <span class="math notranslate nohighlight">\(f(x)\)</span> has a root <span class="math notranslate nohighlight">\(f(x^*) = 0\)</span> in the interval <span class="math notranslate nohighlight">\(x^* \in (-1,1)\)</span>.</p>
-<div class="section" id="span-style-color-blue-exercise-4-2-span">
-<h2><span style="color:blue">Exercise 4.2:</span><a class="headerlink" href="#span-style-color-blue-exercise-4-2-span" title="Permalink to this headline">¶</a></h2>
+<section id="span-style-color-blue-exercise-4-2-span">
+<h2><span style="color:blue">Exercise 4.2:</span><a class="headerlink" href="#span-style-color-blue-exercise-4-2-span" title="Permalink to this headline">#</a></h2>
 <p>Let’s consider an example:</p>
 <div class="math notranslate nohighlight">
 \[2\,x + x \, \sin(x-3) = 5\;\;\;\; \text{for}\;\;\;\; x \in (-10,10).\]</div>
@@ -983,10 +2458,10 @@ x_16 = 0.56719.   g(x_16) = 0.56712.   |x_16 - g(x_16)| = 0.00007
 <p>You should find that in <span class="math notranslate nohighlight">\((0,5)\)</span>, i.e. an interval with upper and lower bounds <span class="math notranslate nohighlight">\(a\)</span> = 0 and <span class="math notranslate nohighlight">\(b\)</span> = 5, there exists a root, and also the function is monotonically increasing over this interval - we have excluded any local maxima or minima that we see do occur in the function outside this restricted interval.</p>
 <p>[Note the caveat that in general we will assume the evaluation of <span class="math notranslate nohighlight">\(\,f\)</span> (or <span class="math notranslate nohighlight">\(g\)</span>) is expensive and so we want to do this as few times as possible - generating a nice high resolution plot like this is not something we will be able to do in general].</p>
 <p>We can make use of this knowledge to help us identify a good starting guess for the root.</p>
-</div>
-</div>
-<div class="section" id="id3">
-<h1>V.    Root bracketing<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h1>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id3">
+<h1>V.    Root bracketing<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h1>
 <p>Where the root lies can be important.</p>
 <p>By visual inspection we can identify if roots exist for a function, and narrow down the interval in which a root can be found.</p>
 <p>For the equation</p>
@@ -1040,8 +2515,8 @@ x_16 = 0.56719.   g(x_16) = 0.56712.   |x_16 - g(x_16)| = 0.00007
 <img alt="../../../_images/NM1_2020_lecture4_30_0.png" src="../../../_images/NM1_2020_lecture4_30_0.png" />
 </div>
 </div>
-<div class="section" id="span-style-color-blue-exercise-4-3-span">
-<h2><span style="color:blue">Exercise 4.3: </span><a class="headerlink" href="#span-style-color-blue-exercise-4-3-span" title="Permalink to this headline">¶</a></h2>
+<section id="span-style-color-blue-exercise-4-3-span">
+<h2><span style="color:blue">Exercise 4.3: </span><a class="headerlink" href="#span-style-color-blue-exercise-4-3-span" title="Permalink to this headline">#</a></h2>
 <p>For <span class="math notranslate nohighlight">\(2x + x \mathrm{sin}(x-3) = 5\)</span>, use the subinterval <span class="math notranslate nohighlight">\(x \in(a,b)\)</span> you found in Exercise 4.2 and complete the code below to implement a function for the root bracketing algorithm. Derive the concept from the Figure above</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1078,10 +2553,10 @@ x_16 = 0.56719.   g(x_16) = 0.56712.   |x_16 - g(x_16)| = 0.00007
 </div>
 </div>
 </div>
-</div>
-</div>
-<div class="section" id="id4">
-<h1>VI.    Bisection method<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h1>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id4">
+<h1>VI.    Bisection method<a class="headerlink" href="#id4" title="Permalink to this headline">#</a></h1>
 <p>Once we know that a root can be found in <span class="math notranslate nohighlight">\(x \in (a,b)\)</span>, we can close in on it with an algorithm similar to root-bracketing/incremental search described above, but with a smart switch to gradually <em>decrease</em> <span class="math notranslate nohighlight">\(\Delta x\)</span> <em>by a factor</em> of 1/2, and <em>change the marching direction</em> depending on the sign of <span class="math notranslate nohighlight">\(f(x_1)f(x_2)\)</span>, where <span class="math notranslate nohighlight">\(x_1\)</span> and <span class="math notranslate nohighlight">\(x_2\)</span>  are the local bounds considered during the marching process.</p>
 <p>The algorithm works as follows:</p>
 <ul class="simple">
@@ -1265,8 +2740,8 @@ x_16 = 0.56719.   g(x_16) = 0.56712.   |x_16 - g(x_16)| = 0.00007
 </div>
 </div>
 </div>
-<div class="section" id="span-style-color-blue-exercise-4-4-span">
-<h2><span style="color:blue">Exercise 4.4: </span><a class="headerlink" href="#span-style-color-blue-exercise-4-4-span" title="Permalink to this headline">¶</a></h2>
+<section id="span-style-color-blue-exercise-4-4-span">
+<h2><span style="color:blue">Exercise 4.4: </span><a class="headerlink" href="#span-style-color-blue-exercise-4-4-span" title="Permalink to this headline">#</a></h2>
 <p>For <span class="math notranslate nohighlight">\(2x + x \mathrm{sin}(x-3) = 5\)</span>, use the subinterval <span class="math notranslate nohighlight">\(x \in(a,b)\)</span> you found in Exercise 4.2 and complete the code below to implement a bisection algorithm. Derive the concept from a <a href="https://en.wikipedia.org/wiki/Bisection_method#Algorithm">pseudo-code description</a> and compare the result to <code class="docutils literal notranslate"><span class="pre">scipy.optimize.bisect</span></code></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1297,10 +2772,10 @@ x_16 = 0.56719.   g(x_16) = 0.56712.   |x_16 - g(x_16)| = 0.00007
 </div>
 </div>
 </div>
-</div>
-</div>
-<div class="section" id="id5">
-<h1>VII.    Newton Method<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h1>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id5">
+<h1>VII.    Newton Method<a class="headerlink" href="#id5" title="Permalink to this headline">#</a></h1>
 <p>While the previously introduced bisection method is nice, there are other methods which take less steps to arrive at the solution, and one such method is the Newton Method. To arrive more quickly at the solution, unlike the previous bisection method that only used <span class="math notranslate nohighlight">\(f(x)\)</span>, i.e. <span class="math notranslate nohighlight">\(f(x_1), f(x_2), f(x_3), f(x_4) etc. \)</span> depending on the number of iterative steps, Newton Method also uses derivatives of <span class="math notranslate nohighlight">\(f(x)\)</span>, such as <span class="math notranslate nohighlight">\(f'(x) and f''(x)\)</span> to infer the trend of the function in the vicinity of <span class="math notranslate nohighlight">\(x\)</span>. This slope, together with the function value <span class="math notranslate nohighlight">\(f(x)\)</span>, is used to find the intersection of the tangent at <span class="math notranslate nohighlight">\(x\)</span> with zero to get an improved iteration method for the root.</p>
 <p><span class="math notranslate nohighlight">\(x_{i+1}\)</span> is our updated or new or the closer to the solution value for <span class="math notranslate nohighlight">\(x\)</span>, and <span class="math notranslate nohighlight">\(x_i\)</span> is our previous value for <span class="math notranslate nohighlight">\(x\)</span>. We understand that our updated value <span class="math notranslate nohighlight">\(x_{i+1}\)</span> will not be in the same place as our previous value, and could be some distance away from our previous value. We remind ourselves that the Taylor expansion of function <span class="math notranslate nohighlight">\(f(x)\)</span> around a value, say <span class="math notranslate nohighlight">\(c\)</span> is written in the form of:</p>
 <div class="math notranslate nohighlight">
@@ -1484,8 +2959,8 @@ x_{i+1} = x_i - \frac{f(x_i)}{f’(x_i)}
 </div>
 </div>
 </div>
-<div class="section" id="span-style-color-blue-exercise-4-5-span">
-<h2><span style="color:blue">Exercise 4.5: </span><a class="headerlink" href="#span-style-color-blue-exercise-4-5-span" title="Permalink to this headline">¶</a></h2>
+<section id="span-style-color-blue-exercise-4-5-span">
+<h2><span style="color:blue">Exercise 4.5: </span><a class="headerlink" href="#span-style-color-blue-exercise-4-5-span" title="Permalink to this headline">#</a></h2>
 <p>For <span class="math notranslate nohighlight">\(2x + x \mathrm{sin}(x-3) = 5\)</span>, use <span class="math notranslate nohighlight">\(a\)</span> from the subinterval <span class="math notranslate nohighlight">\(x \in(a,b)\)</span> you found in Exercise 4.2 as initial guess <span class="math notranslate nohighlight">\(x_0\)</span> and complete the code below to implement a Newton algorithm. Compare the result to <a class="reference external" href="http://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.newton.html">scipy.optimize.newton</a></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1527,9 +3002,9 @@ x_{i+1} = x_i - \frac{f(x_i)}{f’(x_i)}
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="viii-quasi-newton-with-approximate-derivative">
-<h2>VIII.    (Quasi-) Newton with approximate derivative<a class="headerlink" href="#viii-quasi-newton-with-approximate-derivative" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="viii-quasi-newton-with-approximate-derivative">
+<h2>VIII.    (Quasi-) Newton with approximate derivative<a class="headerlink" href="#viii-quasi-newton-with-approximate-derivative" title="Permalink to this headline">#</a></h2>
 <p>Basically, this is still the Newton Method. Just this time instead of using the exact <span class="math notranslate nohighlight">\(f'(x)\)</span>, you would use an approximate for <span class="math notranslate nohighlight">\(f'(x)\)</span> in the form of</p>
 <div class="math notranslate nohighlight">
 \[ f'(x) \approx \frac{f(x+\Delta x) - f(x)}{\Delta x}. \]</div>
@@ -1542,9 +3017,9 @@ x_{i+1} = x_i - \frac{f(x_i)}{f’(x_i)}
 \[ f'(x) \approx \frac{f(x+\Delta x) - f(x)}{\Delta x}. \]</div>
 <p>Use of an approximate derivative renders the corresponding root finding algorithm a co-called <em>quasi-Newton</em> method.</p>
 <p>Note that since we only have an approximate derivative we cannot in general expect this method to converge as well as Newton when we supply it with an exact derivative. This manifests in a reduction from perfect quadratic convergence - but still generally closer to quadratic that linear!</p>
-</div>
-<div class="section" id="span-style-color-blue-exercise-4-6-span">
-<h2><span style="color:blue">Exercise 4.6: </span><a class="headerlink" href="#span-style-color-blue-exercise-4-6-span" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="span-style-color-blue-exercise-4-6-span">
+<h2><span style="color:blue">Exercise 4.6: </span><a class="headerlink" href="#span-style-color-blue-exercise-4-6-span" title="Permalink to this headline">#</a></h2>
 <p>Extend the Newton algorithm to compute <span class="math notranslate nohighlight">\(f^\prime(x)\)</span> using a finite difference approximation. Compare the result to <code class="docutils literal notranslate"><span class="pre">scipy.optimize.newton</span></code></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1579,10 +3054,10 @@ x_{i+1} = x_i - \frac{f(x_i)}{f’(x_i)}
 </div>
 </div>
 </div>
-</div>
-</div>
-<div class="section" id="id6">
-<h1>IX.   Secant Method<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h1>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id6">
+<h1>IX.   Secant Method<a class="headerlink" href="#id6" title="Permalink to this headline">#</a></h1>
 <p>Now that you have gone through the Bisection and the Newton Method, you should have a good grasp at what these methods for finding the numerical solution entail, and also how to program these methods in Python so well, this is a new method, go ahead and program it! ;)</p>
 <p>The Secant method replaces the local derivative in the Newton method by a difference approximation based on two consecutive <span class="math notranslate nohighlight">\(x_n\)</span>. It follows that</p>
 <p>\begin{equation}
@@ -1686,8 +3161,8 @@ x_{n+1} = x_n - f(x_n) \left ( \frac{x_n - x_{n-1}}{f(x_n) - f(x_{n-1})} \right 
 <img alt="../../../_images/NM1_2020_lecture4_60_1.png" src="../../../_images/NM1_2020_lecture4_60_1.png" />
 </div>
 </div>
-<div class="section" id="span-style-color-blue-exercise-4-7-span">
-<h2><span style="color:blue">Exercise 4.7:</span><a class="headerlink" href="#span-style-color-blue-exercise-4-7-span" title="Permalink to this headline">¶</a></h2>
+<section id="span-style-color-blue-exercise-4-7-span">
+<h2><span style="color:blue">Exercise 4.7:</span><a class="headerlink" href="#span-style-color-blue-exercise-4-7-span" title="Permalink to this headline">#</a></h2>
 <p>For <span class="math notranslate nohighlight">\(2x + x \mathrm{sin}(x-3) = 5\)</span>, use <span class="math notranslate nohighlight">\(a\)</span> from the subinterval <span class="math notranslate nohighlight">\(x \in(a,b)\)</span> you found in Exercise 4.2 to find <span class="math notranslate nohighlight">\(x_0 = a\)</span> and <span class="math notranslate nohighlight">\(x_1 = a+0.1\)</span> and complete the code below to implement a Secant algorithm. Compare the result to <code class="docutils literal notranslate"><span class="pre">scipy.optimize.newton</span></code></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1724,10 +3199,10 @@ x_{n+1} = x_n - f(x_n) \left ( \frac{x_n - x_{n-1}}{f(x_n) - f(x_{n-1})} \right 
 </div>
 </div>
 </div>
-</div>
-</div>
-<div class="section" id="id7">
-<h1>X.  Potential convergence Issues<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h1>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id7">
+<h1>X.  Potential convergence Issues<a class="headerlink" href="#id7" title="Permalink to this headline">#</a></h1>
 <p>It’s important to understand the ways some of the methods we’ve introduced can go wrong, and again to emphasise the value of a good starting guess.</p>
 <p>Let’s start by illustrating the basic concept of Newton root-finding methods for a well-behaved function</p>
 <div class="math notranslate nohighlight">
@@ -1766,8 +3241,8 @@ f(x) = x^4 - 5
 <li><p>Nearly singular/numerical overflow - the local gradient at guess <span class="math notranslate nohighlight">\(x^{(k)}\)</span> is near zero, so that <span class="math notranslate nohighlight">\(x^{(k+1)}\)</span>, the intersection of the local gradient approximation with the <span class="math notranslate nohighlight">\(x\)</span> axis is beyond the representable range. Even if we don’t get overflow, we can still jump to a location a long distance away from our initial guess and end up converging to the wrong root.</p></li>
 <li><p>Oscillations - the algorithm bounces back and forth between (near) identical <span class="math notranslate nohighlight">\(x^{(k)}\)</span>.</p></li>
 </ol>
-<div class="section" id="multiple-roots">
-<h2>Multiple roots<a class="headerlink" href="#multiple-roots" title="Permalink to this headline">¶</a></h2>
+<section id="multiple-roots">
+<h2>Multiple roots<a class="headerlink" href="#multiple-roots" title="Permalink to this headline">#</a></h2>
 <p>For many functions multiple roots exist, and the algorithm depends on and can be sensitive to the initial guess.</p>
 <p>Let’s see an example where we choose two initial guesses (0.0 and 0.1) and visualise how this relatively small difference leads to convergence to different roots.</p>
 <div class="cell docutils container">
@@ -1822,9 +3297,9 @@ f(x) = x^4 - 5
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="nearly-singular-numerical-overflow">
-<h2>Nearly singular/numerical overflow<a class="headerlink" href="#nearly-singular-numerical-overflow" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="nearly-singular-numerical-overflow">
+<h2>Nearly singular/numerical overflow<a class="headerlink" href="#nearly-singular-numerical-overflow" title="Permalink to this headline">#</a></h2>
 <p>In this case the gradient <span class="math notranslate nohighlight">\(\,f'(x^{(k)})\,\)</span> is close to zero, so that the new iteration value, <span class="math notranslate nohighlight">\(x^{(k+1)}\)</span>, is orders of magnitude offset, perhaps too big even to be representable on our finite computer (<a class="reference external" href="https://en.wikipedia.org/wiki/Integer_overflow"><em>overflow</em></a>).</p>
 <p>We see this with the following example.</p>
 <p>Remember how the formula for the Newton method was</p>
@@ -1974,9 +3449,9 @@ x_{i+1} = x_i - \frac{f(x_i)}{f’(x_i)}
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="oscillation">
-<h2>Oscillation<a class="headerlink" href="#oscillation" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="oscillation">
+<h2>Oscillation<a class="headerlink" href="#oscillation" title="Permalink to this headline">#</a></h2>
 <p>In this scenario the iterations are trapped in a region with gradients of approximately equal magnitude but opposite directions.</p>
 <p>Basically, our numerial solution methods here use an iterative approach to get closer and closer to the solution and narrow down the location that the solution is in. However, this is done with the assumption that within our initial guess as to the range where our solution is, there is actually a solution. If there is no solution, and you apply Newton method, then the method will just try to search for something that does not exist and get confused.</p>
 <p>Oscillation problems could also happen when the iterations are trapped in a region where gradients to either side have equal magnitude but oppisite direction, sorta something like symmetry.</p>
@@ -2014,8 +3489,8 @@ x_{i+1} = x_i - \frac{f(x_i)}{f’(x_i)}
 <img alt="../../../_images/NM1_2020_lecture4_84_0.png" src="../../../_images/NM1_2020_lecture4_84_0.png" />
 </div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -2039,31 +3514,34 @@ x_{i+1} = x_i - \frac{f(x_i)}{f’(x_i)}
 
               </div>
               
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
         </div>
     </div>
-    
-    
-    <div class='prev-next-bottom'>
-        
-
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Imperial College London<br/>
+  
+      &copy; Copyright 2020.<br/>
+</p>
+        </footer>
     </div>
-    <footer class="footer mt-5 mt-md-0">
-    <div class="container">
-      <p>
-        
-          By Imperial College London<br/>
-        
-            &copy; Copyright 2020.<br/>
-      </p>
-    </div>
-  </footer>
-</main>
+    
+</div>
 
 
       </div>
     </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
 
-    <script src="../../../_static/js/index.js"></script>
-    
+
   </body>
 </html>

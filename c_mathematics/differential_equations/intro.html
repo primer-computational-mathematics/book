@@ -1,268 +1,1383 @@
 
-
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Differential equations &#8212; ESE Jupyter Material</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
-    <link href="../../_static/css/index.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../_static/sphinx-book-theme.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
-    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/sphinx-book-theme.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/language_data.js"></script>
-    <script src="../../_static/togglebutton.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
-    <script src="../../_static/sphinx-book-theme.js"></script>
-    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
-    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
-    <script >
-        const thebe_selector = ".cell"
-        const thebe_selector_input = ".cell_input div.highlight"
-        const thebe_selector_output = ".output"
-    </script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".cell"
+const thebe_selector_input = ".cell_input div.highlight"
+const thebe_selector_output = ".output, .cell_output"
+</script>
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Introduction to differential equations" href="1_de_introduction.html" />
     <link rel="prev" title="Fractals" href="../complex_analysis/6_fractals.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="docsearch:language" content="en">
-
-
-
+    <!-- Google Analytics -->
+    
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
     
 
     <div class="container-xl">
       <div class="row">
           
-<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    
-        <div class="navbar-brand-box">
-<a class="navbar-brand text-wrap" href="../../index.html">
-  
-  <img src="../../_static/logo.png" class="logo" alt="logo">
-  
-  
-  <h1 class="site-logo" id="site-title">ESE Jupyter Material</h1>
-  
-</a>
-</div>
-
-<form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">ESE Jupyter Material</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form>
-
-<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
-  
-  <ul class="nav sidenav_l1">
-  <li class="">
-    <a href="../../intro.html">Landing page</a>
-  </li>
-  <li class="">
-    <a href="../../a_modules/intro.html">Modules</a>
-  </li>
-  <li class="">
-    <a href="../../b_coding/intro.html">Coding</a>
-  </li>
-  <li class="active">
-    <a href="../intro.html">Mathematics</a>
-  <ul class="nav sidenav_l2">
-    <li class="">
-      <a href="../calculus/intro.html">Calculus</a>
-    </li>
-    <li class="">
-      <a href="../complex_analysis/intro.html">Complex analysis</a>
-    </li>
-    <li class="active">
-      <a href="">Differential equations</a>
-      <ul class="nav sidenav_l3">
-      <li class="">
-        <a href="1_de_introduction.html">Introduction to differential equations</a>
-      </li>
-      <li class="">
-        <a href="2_linear_des.html">Linear Differential Equations</a>
-      </li>
-      <li class="">
-        <a href="3_first-order_odes.html">First-order ODEs</a>
-      </li>
-      <li class="">
-        <a href="4_higher_ord_lin_odes.html">Higher order Linear ODEs</a>
-      </li>
-      <li class="">
-        <a href="5_ode_series.html">Series ODE</a>
-      </li>
-      <li class="">
-        <a href="6_pde_basicdefinitions.html">Introductory definitions and concepts</a>
-      </li>
-      <li class="">
-        <a href="7_pde_first_order.html">First-order linear PDEs</a>
-      </li>
-      <li class="">
-        <a href="8_pde_second_order.html">Canonical form of second-order linear PDEs</a>
-      </li>
-      <li class="">
-        <a href="9_poisson_laplace_eq.html">Poisson’s and Laplace’s equation</a>
-      </li>
-      <li class="">
-        <a href="10_heat_eq.html">Heat (diffusion) equation</a>
-      </li>
-      <li class="">
-        <a href="11_pde_fourier.html">Solving PDEs with fourier methods</a>
-      </li>
-      <li class="">
-        <a href="12_wave_eq.html">Wave equation</a>
-      </li>
-      <li class="">
-        <a href="13_similarity_solutions.html">Self-similar solutions</a>
-      </li>
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Landing page
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../a_modules/intro.html">
+   Modules
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../a_modules/math_methods_1/intro.html">
+     Mathematical methods 1
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+    <label for="toctree-checkbox-2">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/math_methods_1/1_Coordinate_Systems.html">
+       Coordinate systems (Lecture 1)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/math_methods_1/2_Vectors.html">
+       Vectors (Lecture 1)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/math_methods_1/3_Multivariable_Calculus.html">
+       Multivariable calculus (Lecture 2)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/math_methods_1/4_Vector_Calculus.html">
+       Vector calculus (Lecture 3)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/math_methods_1/5_Matrices.html">
+       Matrices (Lecture 4)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/math_methods_1/6_Eigenvalues.html">
+       Eigenvalues (Lecture 5)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/math_methods_1/7_Series.html">
+       Series (Lecture 6)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/math_methods_1/8_ODEs.html">
+       ODEs (Lecture 7)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/math_methods_1/9_Modelling.html">
+       Modelling (Lecture 8)
+      </a>
+     </li>
     </ul>
-    </li>
-    <li class="">
-      <a href="../linear_algebra/intro.html">Linear algebra</a>
-    </li>
-    <li class="">
-      <a href="../mathematical_notation/intro.html">Mathematical notation</a>
-    </li>
-    <li class="">
-      <a href="../numerical_methods/intro.html">Numerical methods</a>
-    </li>
-    <li class="">
-      <a href="../series_and_sequences/intro.html">Series and sequences</a>
-    </li>
-    <li class="">
-      <a href="../sets_and_functions/intro.html">Sets and functions</a>
-    </li>
-    <li class="">
-      <a href="../statistics/intro.html">Statistics</a>
-    </li>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../a_modules/mechanics/intro.html">
+     Mechanics
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+    <label for="toctree-checkbox-3">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/mechanics/1_Motion_in_1D.html">
+       Motion in 1D
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/mechanics/2_Motion_in_2D.html">
+       Motion in 2D
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/mechanics/3_Work_and_Energy.html">
+       Work and Energy
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/mechanics/4_Rotational_Motion.html">
+       Rotational Motion
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/mechanics/5_Gravity.html">
+       Gravity
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../a_modules/tectonics_of_the_ocean/intro.html">
+     Techtonics of the ocean
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+    <label for="toctree-checkbox-4">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/tectonics_of_the_ocean/1_mapping_the_ocean_floor.html">
+       Reading Maps
+      </a>
+     </li>
+    </ul>
+   </li>
   </ul>
-  </li>
-  <li class="">
-    <a href="../../d_geosciences/intro.html">Geosciences</a>
-  </li>
-  <li class="">
-    <a href="../../e_extra/intro.html">Further resources</a>
-  </li>
-  <li class="">
-    <a href="../../genindex.html">Index</a>
-  </li>
-</ul>
-</nav>
-
- <!-- To handle the deprecated key -->
-
-<div class="navbar_extra_footer">
-  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
-</div>
-
-</div>
-
-
-          
-
-
-          
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
-    
-    <div class="row topbar fixed-top container-xl">
-    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
-    </div>
-    <div class="col pl-2 topbar-main">
-        
-        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-            <i class="fas fa-bars"></i>
-            <i class="fas fa-arrow-left"></i>
-            <i class="fas fa-arrow-up"></i>
-        </button>
-        
-        <div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
-            class="fas fa-download"></i></button>
-
-    
-    <div class="dropdown-buttons">
-        <!-- ipynb file if we had a myst markdown file -->
-        
-        <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../_sources/c_mathematics/differential_equations/intro.md"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.md</button></a>
-        <!-- Download PDF via print -->
-        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
-    </div>
-    
-</div>
-        <!-- Source interaction buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-    <div class="dropdown-buttons sourcebuttons">
-        
-        <a class="issues-button"
-            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2Fc_mathematics/differential_equations/intro.html&body=Your%20issue%20content%20here."><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        
-    </div>
-</div>
-
-
-        <!-- Full screen (wrap in <a> to have style consistency -->
-        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
-                    class="fas fa-expand"></i></button></a>
-
-        <!-- Launch buttons -->
-
-    </div>
-    <div class="d-none d-md-block col-md-2 bd-toc show">
-<div class="tocsection onthispage pt-5 pb-3">
-    <i class="fas fa-list"></i> On this page
-</div>
-
-<nav id="bd-toc-nav">
-    <ul class="nav section-nav flex-column">
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#further-reading-and-references" class="nav-link">Further reading and references</a>
-        </li>
-    
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../b_coding/intro.html">
+   Coding
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../b_coding/NumPy_Arrays.html">
+     NumPy arrays
+    </a>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../b_coding/Fundamentals%20of%20Computer%20Science/intro.html">
+     Fundamentals of Computer Science
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+    <label for="toctree-checkbox-6">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Fundamentals%20of%20Computer%20Science/1_Algorythmic_Complexity.html">
+       Algorithmic complexity
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Fundamentals%20of%20Computer%20Science/2_Recursion.html">
+       Recursion
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Fundamentals%20of%20Computer%20Science/3_Divide_and_Conquer.html">
+       Divide and Conquer
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Fundamentals%20of%20Computer%20Science/4_Dynamic_Programming.html">
+       Dynamic Programming
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Fundamentals%20of%20Computer%20Science/5_Greedy_Algorithms.html">
+       Greedy Algorithms
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Fundamentals%20of%20Computer%20Science/6_Data_Structures.html">
+       Data Structures
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Fundamentals%20of%20Computer%20Science/7_Graph_Algorithms.html">
+       Graph Algorithms
+      </a>
+     </li>
     </ul>
-</nav>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../b_coding/Intro%20to%20Python/intro.html">
+     Intro to Python
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+    <label for="toctree-checkbox-7">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/1_Printing_and_formatting_statements.html">
+       Printing and formatting statements
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/2_Variables.html">
+       Variables
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/3_If_statement.html">
+       If statement
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/4_While_loops.html">
+       While loops
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/5_Lists.html">
+       Lists
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/6_For_loops.html">
+       For loops
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/7_List_comprehensions.html">
+       List comprehensions
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/8_Nested_lists.html">
+       Nested lists
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/9_Handling_errors.html">
+       Handling errors
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/10_Importing.html">
+       Importing in Python
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/11_Functions.html">
+       Creating custom functions
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/12_Tuples.html">
+       Tuples
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/13_File_handling.html">
+       File handling
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/14_Dictionaries.html">
+       Dictionaries
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/15_Flow_control_statements.html">
+       Flow control statements
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/16_Sets.html">
+       Sets
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/17_Matplotlib.html">
+       Plotting data with Matplotlib
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/18_Assert.html">
+       Assert
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/19_Classes.html">
+       Python classes
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/20_Lambdas.html">
+       Lambdas
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../b_coding/Pandas/intro.html">
+     Pandas
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+    <label for="toctree-checkbox-8">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Pandas/1_basics.html">
+       Introduction
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Pandas/2_filter_select_assign.html">
+       Filtering, selecting and assigning
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Pandas/3_merge_combine_group_sort.html">
+       Merging, combining, grouping and sorting
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Pandas/4_summary_statistics.html">
+       Summary statistics
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Pandas/5_time_stamps.html">
+       Creating date-time stamps
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Pandas/6_plotting.html">
+       Plotting
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../b_coding/Programming%20Tools/intro.html">
+     Programming tools
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
+    <label for="toctree-checkbox-9">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Programming%20Tools/1_Version_Control_Git.html">
+       Version control Git
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="../intro.html">
+   Mathematics
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/>
+  <label for="toctree-checkbox-10">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../calculus/intro.html">
+     Calculus
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/>
+    <label for="toctree-checkbox-11">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../calculus/Vector_calculus.html">
+       Vector calculus
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../complex_analysis/intro.html">
+     Complex analysis
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/>
+    <label for="toctree-checkbox-12">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../complex_analysis/1_introduction.html">
+       Introduction
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../complex_analysis/2_complex_plane.html">
+       Complex plane
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../complex_analysis/3_complex_functions.html">
+       Complex functions
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../complex_analysis/4_holomorphic_functions.html">
+       Holomorphic functions
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../complex_analysis/5_integrating.html">
+       Complex integration
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../complex_analysis/6_fractals.html">
+       Fractals
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 current active has-children">
+    <a class="current reference internal" href="#">
+     Differential equations
+    </a>
+    <input checked="" class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/>
+    <label for="toctree-checkbox-13">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="1_de_introduction.html">
+       Introduction to differential equations
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="2_linear_des.html">
+       Linear Differential Equations
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="3_first-order_odes.html">
+       First-order ODEs
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="4_higher_ord_lin_odes.html">
+       Higher order Linear ODEs
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="5_ode_series.html">
+       Series ODE
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="6_pde_basicdefinitions.html">
+       Introductory definitions and concepts
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="7_pde_first_order.html">
+       First-order linear PDEs
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="8_pde_second_order.html">
+       Canonical form of second-order linear PDEs
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="9_poisson_laplace_eq.html">
+       Poisson’s and Laplace’s equation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="10_heat_eq.html">
+       Heat (diffusion) equation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="11_pde_fourier.html">
+       Solving PDEs with fourier methods
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="12_wave_eq.html">
+       Wave equation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="13_similarity_solutions.html">
+       Self-similar solutions
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../linear_algebra/intro.html">
+     Linear algebra
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/>
+    <label for="toctree-checkbox-14">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../linear_algebra/1_Basic_definitions_and_operations.html">
+       Basic definitions and operations
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../linear_algebra/2_Linear_Systems.html">
+       Systems of linear equations
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../linear_algebra/3_Theory.html">
+       Theory
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../linear_algebra/4_Eigenvalues_and_eigenvectors.html">
+       Eigenvalues and eigenvectors
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../linear_algebra/5_Linear_Algebra_in_Python.html">
+       Linear Algebra in Python
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../mathematical_notation/intro.html">
+     Mathematical notation
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" type="checkbox"/>
+    <label for="toctree-checkbox-15">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../mathematical_notation/Big_O_notation.html">
+       Big O notation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../mathematical_notation/Tensors_Review.html">
+       Review of tensors
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../numerical_methods/intro.html">
+     Numerical methods
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
+    <label for="toctree-checkbox-16">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../numerical_methods/1_Interpolation_curve_fitting.html">
+       Interpolation and curve fitting
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../numerical_methods/2_Numerical_differentiation.html">
+       Numerical differentiation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../numerical_methods/3_Timestepping_an_ODE.html">
+       Solving or timestepping an ODE
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../numerical_methods/4_Heuns_method.html">
+       Heun’s method
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../numerical_methods/5_Runge_Kutta_method.html">
+       Runge-Kutta method
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../numerical_methods/6_Solving_PDEs_SOR.html">
+       Successive over-relaxation method
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../numerical_methods/7_FTCS.html">
+       FTCS scheme
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../numerical_methods/8_BTCS.html">
+       BTCS scheme
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../numerical_methods/9_Numerical_integration.html">
+       Numerical integration
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../numerical_methods/10_Roots_of_equations.html">
+       Roots of equations
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../numerical_methods/11_linear_algebra_intro.html">
+       Linear algebra introduction
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../numerical_methods/12_Gaussian_elimination.html">
+       Gaussian elimination
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../numerical_methods/13_LU_decomposition.html">
+       LU decomposition
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../numerical_methods/14_ill_conditioning_errors.html">
+       Ill-conditioning and roundoff errors
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../numerical_methods/15_iterative_methods_to_solve_matrix.html">
+       Iterative methods to solve a matrix
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../series_and_sequences/intro.html">
+     Series and sequences
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
+    <label for="toctree-checkbox-17">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../series_and_sequences/Fourier_series.html">
+       Fourier series
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../series_and_sequences/Fourier_transforms.html">
+       Fourier transforms
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../series_and_sequences/Taylor_series.html">
+       Taylor series
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../sets_and_functions/intro.html">
+     Sets and functions
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
+    <label for="toctree-checkbox-18">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../sets_and_functions/1_logic.html">
+       Logic and proof
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../sets_and_functions/2_sets.html">
+       Sets
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../sets_and_functions/3_functions.html">
+       Functions
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../sets_and_functions/4_elementary_functions_1.html">
+       Elementary functions 1
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../sets_and_functions/5_elementary_functions_2.html">
+       Elementary functions 2
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../sets_and_functions/6_composition_and_inverse.html">
+       Composition and Inverse Functions
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../statistics/intro.html">
+     Statistics
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
+    <label for="toctree-checkbox-19">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../statistics/Linear_Regression.html">
+       Linear regression
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../statistics/Statistics_for_Geoscientists.html">
+       Introduction to statistics for Geoscientists
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../d_geosciences/intro.html">
+   Geosciences
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
+  <label for="toctree-checkbox-20">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../d_geosciences/1D_Heat_Conduction.html">
+     1D heat conduction (layered medium)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../d_geosciences/1D_Resistivity_Forward_Modelling.html">
+     1D resistivity forward modelling
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../d_geosciences/Climate_Model.html">
+     Climate model
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../d_geosciences/Dynamic_Earth.html">
+     Seafloor ages
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../d_geosciences/Keplerian_Orbits.html">
+     Keplerian orbits
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../d_geosciences/Milankovitch_cycles.html">
+     Milankovitch cycles
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../d_geosciences/Seismology.html">
+     Downloading earthquake data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../d_geosciences/Tides.html">
+     Tides
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../d_geosciences/Wave_dispersion.html">
+     Wave dispersion
+    </a>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../d_geosciences/Electromagnetism/intro.html">
+     Electromagnetism
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
+    <label for="toctree-checkbox-21">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../d_geosciences/Electromagnetism/1_electricity_magnetism.html">
+       Electricity and magnetism
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../d_geosciences/Electromagnetism/2_maxwell_eqs.html">
+       Maxwell’s equations
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../d_geosciences/Electromagnetism/3_four_field.html">
+       The four-field formalism
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../d_geosciences/Fluid_Dynamics/intro.html">
+     Fluid dynamics
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
+    <label for="toctree-checkbox-22">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../d_geosciences/Fluid_Dynamics/Lecture5_1D_Pipe_Flow.html">
+       Lecture5_1D_Pipe_Flow
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../d_geosciences/Fluid_Dynamics/Lecture6_Non_Linear_Viscosity_2D_Stokes.html">
+       Lecture6_Non_Linear_Viscosity_2D_Stokes
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../d_geosciences/Fluid_Dynamics/Lecture7_Pipe_Flow_with_Heat.html">
+       Lecture7_Pipe_Flow_with_Heat
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../d_geosciences/Fluid_Dynamics/Lecture8_Part1_Navier_Stoke_Equation.html">
+       Lecture8_Part1_Navier_Stoke_Equation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../d_geosciences/Fluid_Dynamics/Lecture8_Part2_SPH_Algorithm_For_Energy_Equation.html">
+       Lecture8_Part2_SPH_Algorithm_For_Energy_Equation
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../d_geosciences/remote_sensing/intro.html">
+     Remote sensing
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
+    <label for="toctree-checkbox-23">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../d_geosciences/remote_sensing/Image_Filtering.html">
+       Image filtering
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../d_geosciences/remote_sensing/Image_Point_Operations.html">
+       Image point operations
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../d_geosciences/remote_sensing/Image_Transformations_and_Orthorectification.html">
+       Image transformations and orthorectification
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../e_extra/intro.html">
+   Further resources
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" type="checkbox"/>
+  <label for="toctree-checkbox-24">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../e_extra/Camera_Calibration.html">
+     Camera calibration
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../e_extra/Cartography_Cartopy.html">
+     Cartopy (maps)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../e_extra/Dakota.html">
+     Dakota
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../e_extra/Google_Earth_Engine_Foundations.html">
+     Google Earth Engine foundations
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../e_extra/Google_Earth_Engine_Getting_Started_.html">
+     Google Earth Engine getting started
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../e_extra/Particle_Image_Velocimetry.html">
+     Particle image velocimetry (PIV)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../e_extra/contributors_guide.html">
+     Contributor’s guide
+    </a>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../e_extra/UAV_Mapping/intro.html">
+     UAV Mapping
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" type="checkbox"/>
+    <label for="toctree-checkbox-25">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/UAV_Mapping/1.Mission_Planning.html">
+       1. Mission Planning
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/intro.html">
+     Machine learning
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-26" name="toctree-checkbox-26" type="checkbox"/>
+    <label for="toctree-checkbox-26">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%200%20--%20Introduction.html">
+       Chapter 0 – Introduction
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%201%20--%20Neural%20Network.html">
+       Chapter 1 – Neural Network
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%202%20--%20Maximum%20Likelihood.html">
+       Chapter 2 – Maximum Likelihood
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%203%20--%20Cross%20Entropy.html">
+       Chapter 3 – Cross Entropy
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%204%20--%20Cost%20Function.html">
+       Chapter 4 – Cost Function
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%205%20--%20Gradient%20Descent%201.html">
+       Chapter 5 – Gradient Descent 1
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%206%20--%20Gradient%20Descent%202.html">
+       Chapter 6 – Gradient Descent 2
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%207%20--%20Real%20%28Non-linear%29%20Neural%20Network.html">
+       Chapter 7 – Real (Non-linear) Neural Network
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%208%20--%20Feedforward.html">
+       Chapter 8 – Feedforward
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%209%20--%20Back%20Propagation.html">
+       Chapter 9 – Back Propagation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%2010%20--%20General%20Back%20Propagation.html">
+       Chapter 10 – General Back Propagation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%2011%20--%20Underfitting%20and%20Overfitting.html">
+       Chapter 11 – Underfitting and Overfitting
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%2012%20--%20Early-stopping%2C%20Dropout%20%26%20Mini-batch.html">
+       Chapter 12 – Early-stopping, Dropout &amp; Mini-batch
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%2013%20--%20Vanishing%20Gradient%201.html">
+       Chapter 13 – Vanishing Gradient 1
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%2014%20--%20Vanishing%20Gradient%202.html">
+       Chapter 14 – Vanishing Gradient 2
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%2015%20--%20Regularisation.html">
+       Chapter 15 – Regularisation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%2016%20--%20Other%20Activation%20Functions.html">
+       Chapter 16 – Other Activation Functions
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%2017%20--%20Local%20Minima%20Trap.html">
+       Chapter 17 – Local Minima Trap
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%2018%20--%20Softmax.html">
+       Chapter 18 – Softmax
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%2019%20--%20Hyper-Parameters.html">
+       Chapter 19 – Hyper-Parameters
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%2020%20--%20Coding%20Example.html">
+       Chapter 20 – Coding Example
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../genindex.html">
+   Index
+  </a>
+ </li>
+</ul>
 
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2Fc_mathematics/differential_equations/intro.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+
+</a>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../../_sources/c_mathematics/differential_equations/intro.md"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.md</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
 
     </div>
 </div>
-    <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
-        
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#further-reading-and-references">
+   Further reading and references
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Differential equations</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#further-reading-and-references">
+   Further reading and references
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
               <div>
                 
-  <div class="section" id="differential-equations">
-<h1>Differential equations<a class="headerlink" href="#differential-equations" title="Permalink to this headline">¶</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="differential-equations">
+<h1>Differential equations<a class="headerlink" href="#differential-equations" title="Permalink to this headline">#</a></h1>
 <p>Table of contents:</p>
 <p><strong>INTRODUCTION</strong></p>
 <ol class="simple">
@@ -352,8 +1467,8 @@
 </li>
 <li><p><strong><a class="reference internal" href="13_similarity_solutions.html"><span class="doc">Self-similar solutions</span></a></strong></p></li>
 </ol>
-<div class="section" id="further-reading-and-references">
-<h2>Further reading and references<a class="headerlink" href="#further-reading-and-references" title="Permalink to this headline">¶</a></h2>
+<section id="further-reading-and-references">
+<h2>Further reading and references<a class="headerlink" href="#further-reading-and-references" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
 <li><p>Prof Velisa Vesovic’s lecture notes on Maths Methods 2 (available internally on ESESIS)</p></li>
 <li><p>Prof Matthew Piggott’s lecture notes on Mathematics for Scientists and Engineers (available internally on ESESIS)</p></li>
@@ -364,10 +1479,10 @@
 <li><p>Needham, T., 1998. Visual complex analysis. Oxford University Press.</p></li>
 <li><p>Farlow, S.J., 1993. Partial differential equations for scientists and engineers. Courier Corporation.</p></li>
 </ul>
+</section>
 <div class="toctree-wrapper compound">
 </div>
-</div>
-</div>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -391,33 +1506,48 @@
 
               </div>
               
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="../complex_analysis/6_fractals.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Fractals</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="1_de_introduction.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Introduction to differential equations</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
         </div>
     </div>
-    
-    
-    <div class='prev-next-bottom'>
-        
-    <a class='left-prev' id="prev-link" href="../complex_analysis/6_fractals.html" title="previous page">Fractals</a>
-    <a class='right-next' id="next-link" href="1_de_introduction.html" title="next page">Introduction to differential equations</a>
-
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Imperial College London<br/>
+  
+      &copy; Copyright 2020.<br/>
+</p>
+        </footer>
     </div>
-    <footer class="footer mt-5 mt-md-0">
-    <div class="container">
-      <p>
-        
-          By Imperial College London<br/>
-        
-            &copy; Copyright 2020.<br/>
-      </p>
-    </div>
-  </footer>
-</main>
+    
+</div>
 
 
       </div>
     </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
 
-    <script src="../../_static/js/index.js"></script>
-    
+
   </body>
 </html>

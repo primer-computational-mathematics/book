@@ -1,356 +1,1524 @@
 
-
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Lecture6_Non_Linear_Viscosity_2D_Stokes &#8212; ESE Jupyter Material</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
-    <link href="../../_static/css/index.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../_static/sphinx-book-theme.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
-    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/sphinx-book-theme.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/language_data.js"></script>
-    <script src="../../_static/togglebutton.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
-    <script src="../../_static/sphinx-book-theme.js"></script>
-    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
-    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
-    <script >
-        const thebe_selector = ".cell"
-        const thebe_selector_input = ".cell_input div.highlight"
-        const thebe_selector_output = ".output"
-    </script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".cell"
+const thebe_selector_input = ".cell_input div.highlight"
+const thebe_selector_output = ".output, .cell_output"
+</script>
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Lecture7_Pipe_Flow_with_Heat" href="Lecture7_Pipe_Flow_with_Heat.html" />
     <link rel="prev" title="Lecture5_1D_Pipe_Flow" href="Lecture5_1D_Pipe_Flow.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="docsearch:language" content="en">
-
-
-
+    <!-- Google Analytics -->
+    
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
     
 
     <div class="container-xl">
       <div class="row">
           
-<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    
-        <div class="navbar-brand-box">
-<a class="navbar-brand text-wrap" href="../../index.html">
-  
-  <img src="../../_static/logo.png" class="logo" alt="logo">
-  
-  
-  <h1 class="site-logo" id="site-title">ESE Jupyter Material</h1>
-  
-</a>
-</div>
-
-<form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">ESE Jupyter Material</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form>
-
-<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
-  
-  <ul class="nav sidenav_l1">
-  <li class="">
-    <a href="../../intro.html">Landing page</a>
-  </li>
-  <li class="">
-    <a href="../../a_modules/intro.html">Modules</a>
-  </li>
-  <li class="">
-    <a href="../../b_coding/intro.html">Coding</a>
-  </li>
-  <li class="">
-    <a href="../../c_mathematics/intro.html">Mathematics</a>
-  </li>
-  <li class="active">
-    <a href="../intro.html">Geosciences</a>
-  <ul class="nav sidenav_l2">
-    <li class="">
-      <a href="../1D_Heat_Conduction.html">1D heat conduction (layered medium)</a>
-    </li>
-    <li class="">
-      <a href="../1D_Resistivity_Forward_Modelling.html">1D resistivity forward modelling</a>
-    </li>
-    <li class="">
-      <a href="../Climate_Model.html">Climate model</a>
-    </li>
-    <li class="">
-      <a href="../Dynamic_Earth.html">Seafloor ages</a>
-    </li>
-    <li class="">
-      <a href="../Keplerian_Orbits.html">Keplerian orbits</a>
-    </li>
-    <li class="">
-      <a href="../Milankovitch_cycles.html">Milankovitch cycles</a>
-    </li>
-    <li class="">
-      <a href="../Seismology.html">Downloading earthquake data</a>
-    </li>
-    <li class="">
-      <a href="../Tides.html">Tides</a>
-    </li>
-    <li class="">
-      <a href="../Wave_dispersion.html">Wave dispersion</a>
-    </li>
-    <li class="">
-      <a href="../Electromagnetism/intro.html">Electromagnetism</a>
-    </li>
-    <li class="active">
-      <a href="intro.html">Fluid dynamics</a>
-      <ul class="nav sidenav_l3">
-      <li class="">
-        <a href="Lecture5_1D_Pipe_Flow.html">Lecture5_1D_Pipe_Flow</a>
-      </li>
-      <li class="active">
-        <a href="">Lecture6_Non_Linear_Viscosity_2D_Stokes</a>
-      </li>
-      <li class="">
-        <a href="Lecture7_Pipe_Flow_with_Heat.html">Lecture7_Pipe_Flow_with_Heat</a>
-      </li>
-      <li class="">
-        <a href="Lecture8_Part1_Navier_Stoke_Equation.html">Lecture8_Part1_Navier_Stoke_Equation</a>
-      </li>
-      <li class="">
-        <a href="Lecture8_Part2_SPH_Algorithm_For_Energy_Equation.html">Lecture8_Part2_SPH_Algorithm_For_Energy_Equation</a>
-      </li>
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Landing page
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../a_modules/intro.html">
+   Modules
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../a_modules/math_methods_1/intro.html">
+     Mathematical methods 1
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+    <label for="toctree-checkbox-2">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/math_methods_1/1_Coordinate_Systems.html">
+       Coordinate systems (Lecture 1)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/math_methods_1/2_Vectors.html">
+       Vectors (Lecture 1)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/math_methods_1/3_Multivariable_Calculus.html">
+       Multivariable calculus (Lecture 2)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/math_methods_1/4_Vector_Calculus.html">
+       Vector calculus (Lecture 3)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/math_methods_1/5_Matrices.html">
+       Matrices (Lecture 4)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/math_methods_1/6_Eigenvalues.html">
+       Eigenvalues (Lecture 5)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/math_methods_1/7_Series.html">
+       Series (Lecture 6)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/math_methods_1/8_ODEs.html">
+       ODEs (Lecture 7)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/math_methods_1/9_Modelling.html">
+       Modelling (Lecture 8)
+      </a>
+     </li>
     </ul>
-    </li>
-    <li class="">
-      <a href="../remote_sensing/intro.html">Remote sensing</a>
-    </li>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../a_modules/mechanics/intro.html">
+     Mechanics
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+    <label for="toctree-checkbox-3">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/mechanics/1_Motion_in_1D.html">
+       Motion in 1D
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/mechanics/2_Motion_in_2D.html">
+       Motion in 2D
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/mechanics/3_Work_and_Energy.html">
+       Work and Energy
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/mechanics/4_Rotational_Motion.html">
+       Rotational Motion
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/mechanics/5_Gravity.html">
+       Gravity
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../a_modules/tectonics_of_the_ocean/intro.html">
+     Techtonics of the ocean
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+    <label for="toctree-checkbox-4">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/tectonics_of_the_ocean/1_mapping_the_ocean_floor.html">
+       Reading Maps
+      </a>
+     </li>
+    </ul>
+   </li>
   </ul>
-  </li>
-  <li class="">
-    <a href="../../e_extra/intro.html">Further resources</a>
-  </li>
-  <li class="">
-    <a href="../../genindex.html">Index</a>
-  </li>
-</ul>
-</nav>
-
- <!-- To handle the deprecated key -->
-
-<div class="navbar_extra_footer">
-  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
-</div>
-
-</div>
-
-
-          
-
-
-          
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
-    
-    <div class="row topbar fixed-top container-xl">
-    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
-    </div>
-    <div class="col pl-2 topbar-main">
-        
-        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-            <i class="fas fa-bars"></i>
-            <i class="fas fa-arrow-left"></i>
-            <i class="fas fa-arrow-up"></i>
-        </button>
-        
-        <div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
-            class="fas fa-download"></i></button>
-
-    
-    <div class="dropdown-buttons">
-        <!-- ipynb file if we had a myst markdown file -->
-        
-        <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../_sources/d_geosciences/Fluid_Dynamics/Lecture6_Non_Linear_Viscosity_2D_Stokes.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
-        <!-- Download PDF via print -->
-        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
-    </div>
-    
-</div>
-        <!-- Source interaction buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-    <div class="dropdown-buttons sourcebuttons">
-        
-        <a class="issues-button"
-            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2Fd_geosciences/Fluid_Dynamics/Lecture6_Non_Linear_Viscosity_2D_Stokes.html&body=Your%20issue%20content%20here."><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        
-    </div>
-</div>
-
-
-        <!-- Full screen (wrap in <a> to have style consistency -->
-        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
-                    class="fas fa-expand"></i></button></a>
-
-        <!-- Launch buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/d_geosciences/Fluid_Dynamics/Lecture6_Non_Linear_Viscosity_2D_Stokes.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="../../_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        
-        
-    </div>
-</div>
-
-    </div>
-    <div class="d-none d-md-block col-md-2 bd-toc show">
-<div class="tocsection onthispage pt-5 pb-3">
-    <i class="fas fa-list"></i> On this page
-</div>
-
-<nav id="bd-toc-nav">
-    <ul class="nav section-nav flex-column">
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#effective-viscosity" class="nav-link">Effective Viscosity</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#problem-7-10-stress-dependent-viscosity" class="nav-link">Problem 7.10 (Stress-dependent viscosity)</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#problem-7-12-t-dependent-viscosity" class="nav-link">Problem 7.12 (T-dependent viscosity)</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#d-stokes" class="nav-link">2-D Stokes</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#problem-6-10" class="nav-link">Problem 6.10</a>
-        </li>
-    
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../b_coding/intro.html">
+   Coding
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../b_coding/NumPy_Arrays.html">
+     NumPy arrays
+    </a>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../b_coding/Fundamentals%20of%20Computer%20Science/intro.html">
+     Fundamentals of Computer Science
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+    <label for="toctree-checkbox-6">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Fundamentals%20of%20Computer%20Science/1_Algorythmic_Complexity.html">
+       Algorithmic complexity
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Fundamentals%20of%20Computer%20Science/2_Recursion.html">
+       Recursion
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Fundamentals%20of%20Computer%20Science/3_Divide_and_Conquer.html">
+       Divide and Conquer
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Fundamentals%20of%20Computer%20Science/4_Dynamic_Programming.html">
+       Dynamic Programming
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Fundamentals%20of%20Computer%20Science/5_Greedy_Algorithms.html">
+       Greedy Algorithms
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Fundamentals%20of%20Computer%20Science/6_Data_Structures.html">
+       Data Structures
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Fundamentals%20of%20Computer%20Science/7_Graph_Algorithms.html">
+       Graph Algorithms
+      </a>
+     </li>
     </ul>
-</nav>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../b_coding/Intro%20to%20Python/intro.html">
+     Intro to Python
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+    <label for="toctree-checkbox-7">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/1_Printing_and_formatting_statements.html">
+       Printing and formatting statements
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/2_Variables.html">
+       Variables
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/3_If_statement.html">
+       If statement
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/4_While_loops.html">
+       While loops
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/5_Lists.html">
+       Lists
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/6_For_loops.html">
+       For loops
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/7_List_comprehensions.html">
+       List comprehensions
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/8_Nested_lists.html">
+       Nested lists
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/9_Handling_errors.html">
+       Handling errors
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/10_Importing.html">
+       Importing in Python
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/11_Functions.html">
+       Creating custom functions
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/12_Tuples.html">
+       Tuples
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/13_File_handling.html">
+       File handling
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/14_Dictionaries.html">
+       Dictionaries
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/15_Flow_control_statements.html">
+       Flow control statements
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/16_Sets.html">
+       Sets
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/17_Matplotlib.html">
+       Plotting data with Matplotlib
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/18_Assert.html">
+       Assert
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/19_Classes.html">
+       Python classes
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/20_Lambdas.html">
+       Lambdas
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../b_coding/Pandas/intro.html">
+     Pandas
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+    <label for="toctree-checkbox-8">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Pandas/1_basics.html">
+       Introduction
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Pandas/2_filter_select_assign.html">
+       Filtering, selecting and assigning
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Pandas/3_merge_combine_group_sort.html">
+       Merging, combining, grouping and sorting
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Pandas/4_summary_statistics.html">
+       Summary statistics
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Pandas/5_time_stamps.html">
+       Creating date-time stamps
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Pandas/6_plotting.html">
+       Plotting
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../b_coding/Programming%20Tools/intro.html">
+     Programming tools
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
+    <label for="toctree-checkbox-9">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Programming%20Tools/1_Version_Control_Git.html">
+       Version control Git
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../c_mathematics/intro.html">
+   Mathematics
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/>
+  <label for="toctree-checkbox-10">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../c_mathematics/calculus/intro.html">
+     Calculus
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/>
+    <label for="toctree-checkbox-11">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/calculus/Vector_calculus.html">
+       Vector calculus
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../c_mathematics/complex_analysis/intro.html">
+     Complex analysis
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/>
+    <label for="toctree-checkbox-12">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/complex_analysis/1_introduction.html">
+       Introduction
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/complex_analysis/2_complex_plane.html">
+       Complex plane
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/complex_analysis/3_complex_functions.html">
+       Complex functions
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/complex_analysis/4_holomorphic_functions.html">
+       Holomorphic functions
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/complex_analysis/5_integrating.html">
+       Complex integration
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/complex_analysis/6_fractals.html">
+       Fractals
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../c_mathematics/differential_equations/intro.html">
+     Differential equations
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/>
+    <label for="toctree-checkbox-13">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/differential_equations/1_de_introduction.html">
+       Introduction to differential equations
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/differential_equations/2_linear_des.html">
+       Linear Differential Equations
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/differential_equations/3_first-order_odes.html">
+       First-order ODEs
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/differential_equations/4_higher_ord_lin_odes.html">
+       Higher order Linear ODEs
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/differential_equations/5_ode_series.html">
+       Series ODE
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/differential_equations/6_pde_basicdefinitions.html">
+       Introductory definitions and concepts
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/differential_equations/7_pde_first_order.html">
+       First-order linear PDEs
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/differential_equations/8_pde_second_order.html">
+       Canonical form of second-order linear PDEs
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/differential_equations/9_poisson_laplace_eq.html">
+       Poisson’s and Laplace’s equation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/differential_equations/10_heat_eq.html">
+       Heat (diffusion) equation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/differential_equations/11_pde_fourier.html">
+       Solving PDEs with fourier methods
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/differential_equations/12_wave_eq.html">
+       Wave equation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/differential_equations/13_similarity_solutions.html">
+       Self-similar solutions
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../c_mathematics/linear_algebra/intro.html">
+     Linear algebra
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/>
+    <label for="toctree-checkbox-14">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/linear_algebra/1_Basic_definitions_and_operations.html">
+       Basic definitions and operations
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/linear_algebra/2_Linear_Systems.html">
+       Systems of linear equations
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/linear_algebra/3_Theory.html">
+       Theory
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/linear_algebra/4_Eigenvalues_and_eigenvectors.html">
+       Eigenvalues and eigenvectors
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/linear_algebra/5_Linear_Algebra_in_Python.html">
+       Linear Algebra in Python
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../c_mathematics/mathematical_notation/intro.html">
+     Mathematical notation
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" type="checkbox"/>
+    <label for="toctree-checkbox-15">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/mathematical_notation/Big_O_notation.html">
+       Big O notation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/mathematical_notation/Tensors_Review.html">
+       Review of tensors
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../c_mathematics/numerical_methods/intro.html">
+     Numerical methods
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
+    <label for="toctree-checkbox-16">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/numerical_methods/1_Interpolation_curve_fitting.html">
+       Interpolation and curve fitting
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/numerical_methods/2_Numerical_differentiation.html">
+       Numerical differentiation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/numerical_methods/3_Timestepping_an_ODE.html">
+       Solving or timestepping an ODE
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/numerical_methods/4_Heuns_method.html">
+       Heun’s method
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/numerical_methods/5_Runge_Kutta_method.html">
+       Runge-Kutta method
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/numerical_methods/6_Solving_PDEs_SOR.html">
+       Successive over-relaxation method
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/numerical_methods/7_FTCS.html">
+       FTCS scheme
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/numerical_methods/8_BTCS.html">
+       BTCS scheme
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/numerical_methods/9_Numerical_integration.html">
+       Numerical integration
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/numerical_methods/10_Roots_of_equations.html">
+       Roots of equations
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/numerical_methods/11_linear_algebra_intro.html">
+       Linear algebra introduction
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/numerical_methods/12_Gaussian_elimination.html">
+       Gaussian elimination
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/numerical_methods/13_LU_decomposition.html">
+       LU decomposition
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/numerical_methods/14_ill_conditioning_errors.html">
+       Ill-conditioning and roundoff errors
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/numerical_methods/15_iterative_methods_to_solve_matrix.html">
+       Iterative methods to solve a matrix
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../c_mathematics/series_and_sequences/intro.html">
+     Series and sequences
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
+    <label for="toctree-checkbox-17">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/series_and_sequences/Fourier_series.html">
+       Fourier series
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/series_and_sequences/Fourier_transforms.html">
+       Fourier transforms
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/series_and_sequences/Taylor_series.html">
+       Taylor series
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../c_mathematics/sets_and_functions/intro.html">
+     Sets and functions
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
+    <label for="toctree-checkbox-18">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/sets_and_functions/1_logic.html">
+       Logic and proof
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/sets_and_functions/2_sets.html">
+       Sets
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/sets_and_functions/3_functions.html">
+       Functions
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/sets_and_functions/4_elementary_functions_1.html">
+       Elementary functions 1
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/sets_and_functions/5_elementary_functions_2.html">
+       Elementary functions 2
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/sets_and_functions/6_composition_and_inverse.html">
+       Composition and Inverse Functions
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../c_mathematics/statistics/intro.html">
+     Statistics
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
+    <label for="toctree-checkbox-19">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/statistics/Linear_Regression.html">
+       Linear regression
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/statistics/Statistics_for_Geoscientists.html">
+       Introduction to statistics for Geoscientists
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="../intro.html">
+   Geosciences
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
+  <label for="toctree-checkbox-20">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../1D_Heat_Conduction.html">
+     1D heat conduction (layered medium)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../1D_Resistivity_Forward_Modelling.html">
+     1D resistivity forward modelling
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Climate_Model.html">
+     Climate model
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Dynamic_Earth.html">
+     Seafloor ages
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Keplerian_Orbits.html">
+     Keplerian orbits
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Milankovitch_cycles.html">
+     Milankovitch cycles
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Seismology.html">
+     Downloading earthquake data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Tides.html">
+     Tides
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Wave_dispersion.html">
+     Wave dispersion
+    </a>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../Electromagnetism/intro.html">
+     Electromagnetism
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
+    <label for="toctree-checkbox-21">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../Electromagnetism/1_electricity_magnetism.html">
+       Electricity and magnetism
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../Electromagnetism/2_maxwell_eqs.html">
+       Maxwell’s equations
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../Electromagnetism/3_four_field.html">
+       The four-field formalism
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 current active has-children">
+    <a class="reference internal" href="intro.html">
+     Fluid dynamics
+    </a>
+    <input checked="" class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
+    <label for="toctree-checkbox-22">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul class="current">
+     <li class="toctree-l3">
+      <a class="reference internal" href="Lecture5_1D_Pipe_Flow.html">
+       Lecture5_1D_Pipe_Flow
+      </a>
+     </li>
+     <li class="toctree-l3 current active">
+      <a class="current reference internal" href="#">
+       Lecture6_Non_Linear_Viscosity_2D_Stokes
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="Lecture7_Pipe_Flow_with_Heat.html">
+       Lecture7_Pipe_Flow_with_Heat
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="Lecture8_Part1_Navier_Stoke_Equation.html">
+       Lecture8_Part1_Navier_Stoke_Equation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="Lecture8_Part2_SPH_Algorithm_For_Energy_Equation.html">
+       Lecture8_Part2_SPH_Algorithm_For_Energy_Equation
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../remote_sensing/intro.html">
+     Remote sensing
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
+    <label for="toctree-checkbox-23">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../remote_sensing/Image_Filtering.html">
+       Image filtering
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../remote_sensing/Image_Point_Operations.html">
+       Image point operations
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../remote_sensing/Image_Transformations_and_Orthorectification.html">
+       Image transformations and orthorectification
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../e_extra/intro.html">
+   Further resources
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" type="checkbox"/>
+  <label for="toctree-checkbox-24">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../e_extra/Camera_Calibration.html">
+     Camera calibration
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../e_extra/Cartography_Cartopy.html">
+     Cartopy (maps)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../e_extra/Dakota.html">
+     Dakota
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../e_extra/Google_Earth_Engine_Foundations.html">
+     Google Earth Engine foundations
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../e_extra/Google_Earth_Engine_Getting_Started_.html">
+     Google Earth Engine getting started
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../e_extra/Particle_Image_Velocimetry.html">
+     Particle image velocimetry (PIV)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../e_extra/contributors_guide.html">
+     Contributor’s guide
+    </a>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../e_extra/UAV_Mapping/intro.html">
+     UAV Mapping
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" type="checkbox"/>
+    <label for="toctree-checkbox-25">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/UAV_Mapping/1.Mission_Planning.html">
+       1. Mission Planning
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/intro.html">
+     Machine learning
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-26" name="toctree-checkbox-26" type="checkbox"/>
+    <label for="toctree-checkbox-26">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%200%20--%20Introduction.html">
+       Chapter 0 – Introduction
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%201%20--%20Neural%20Network.html">
+       Chapter 1 – Neural Network
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%202%20--%20Maximum%20Likelihood.html">
+       Chapter 2 – Maximum Likelihood
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%203%20--%20Cross%20Entropy.html">
+       Chapter 3 – Cross Entropy
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%204%20--%20Cost%20Function.html">
+       Chapter 4 – Cost Function
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%205%20--%20Gradient%20Descent%201.html">
+       Chapter 5 – Gradient Descent 1
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%206%20--%20Gradient%20Descent%202.html">
+       Chapter 6 – Gradient Descent 2
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%207%20--%20Real%20%28Non-linear%29%20Neural%20Network.html">
+       Chapter 7 – Real (Non-linear) Neural Network
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%208%20--%20Feedforward.html">
+       Chapter 8 – Feedforward
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%209%20--%20Back%20Propagation.html">
+       Chapter 9 – Back Propagation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%2010%20--%20General%20Back%20Propagation.html">
+       Chapter 10 – General Back Propagation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%2011%20--%20Underfitting%20and%20Overfitting.html">
+       Chapter 11 – Underfitting and Overfitting
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%2012%20--%20Early-stopping%2C%20Dropout%20%26%20Mini-batch.html">
+       Chapter 12 – Early-stopping, Dropout &amp; Mini-batch
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%2013%20--%20Vanishing%20Gradient%201.html">
+       Chapter 13 – Vanishing Gradient 1
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%2014%20--%20Vanishing%20Gradient%202.html">
+       Chapter 14 – Vanishing Gradient 2
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%2015%20--%20Regularisation.html">
+       Chapter 15 – Regularisation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%2016%20--%20Other%20Activation%20Functions.html">
+       Chapter 16 – Other Activation Functions
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%2017%20--%20Local%20Minima%20Trap.html">
+       Chapter 17 – Local Minima Trap
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%2018%20--%20Softmax.html">
+       Chapter 18 – Softmax
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%2019%20--%20Hyper-Parameters.html">
+       Chapter 19 – Hyper-Parameters
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%2020%20--%20Coding%20Example.html">
+       Chapter 20 – Coding Example
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../genindex.html">
+   Index
+  </a>
+ </li>
+</ul>
 
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/d_geosciences/Fluid_Dynamics/Lecture6_Non_Linear_Viscosity_2D_Stokes.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2Fd_geosciences/Fluid_Dynamics/Lecture6_Non_Linear_Viscosity_2D_Stokes.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+
+</a>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../../_sources/d_geosciences/Fluid_Dynamics/Lecture6_Non_Linear_Viscosity_2D_Stokes.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
 
     </div>
 </div>
-    <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
-        
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#effective-viscosity">
+   Effective Viscosity
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#problem-7-10-stress-dependent-viscosity">
+   Problem 7.10 (Stress-dependent viscosity)
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#problem-7-12-t-dependent-viscosity">
+   Problem 7.12 (T-dependent viscosity)
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#d-stokes">
+   2-D Stokes
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#problem-6-10">
+   Problem 6.10
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Lecture6_Non_Linear_Viscosity_2D_Stokes</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#effective-viscosity">
+   Effective Viscosity
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#problem-7-10-stress-dependent-viscosity">
+   Problem 7.10 (Stress-dependent viscosity)
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#problem-7-12-t-dependent-viscosity">
+   Problem 7.12 (T-dependent viscosity)
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#d-stokes">
+   2-D Stokes
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#problem-6-10">
+   Problem 6.10
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
               <div>
                 
-  <div class="section" id="lecture6-non-linear-viscosity-2d-stokes">
-<span id="id1"></span><h1>Lecture6_Non_Linear_Viscosity_2D_Stokes<a class="headerlink" href="#lecture6-non-linear-viscosity-2d-stokes" title="Permalink to this headline">¶</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="lecture6-non-linear-viscosity-2d-stokes">
+<span id="id1"></span><h1>Lecture6_Non_Linear_Viscosity_2D_Stokes<a class="headerlink" href="#lecture6-non-linear-viscosity-2d-stokes" title="Permalink to this headline">#</a></h1>
 <p>Although fracture is important in shallow crustal rock at low temperatures and pressures, there are many circumstances in which rock behaves as a ductile material. In determining the transition from brittle to ductile behavior, pressure, temperature, and strain rate are important.</p>
 <p>At temperatures that are a signiﬁcant fraction of the melt temperature the atoms and dislocations in a crystalline solid become suﬃciently mobile to result in creep when the solid is subjected to deviatoric stresses. At very low stresses diﬀusion processes dominate, and the crystalline solid behaves as a Newtonian ﬂuid with a viscosity that depends exponentially on pressure and the inverse absolute temperature.</p>
 <p>At higher stresses the motion of dislocations becomes the dominant creep process resulting in a non-Newtonian or nonlinear ﬂuid behavior that also has an exponential pressure and inverse absolute temperature dependence.</p>
 <img src='img/strain_fluid.PNG' width=500>
 Figure 7.1: Shear strain in the fluid is measured by the displacement $dx$ between two nearby layers with a distance of $dy$.<div class="math notranslate nohighlight" id="equation-equation1">
-<span class="eqno">(78)<a class="headerlink" href="#equation-equation1" title="Permalink to this equation">¶</a></span>\[ \epsilon = \frac{dx}{dy}\]</div>
+<span class="eqno">(78)<a class="headerlink" href="#equation-equation1" title="Permalink to this equation">#</a></span>\[ \epsilon = \frac{dx}{dy}\]</div>
 <p>The rate of strain measures the speed of deformation, and is defined by</p>
 <div class="math notranslate nohighlight" id="equation-equation2">
-<span class="eqno">(79)<a class="headerlink" href="#equation-equation2" title="Permalink to this equation">¶</a></span>\[ \dot{\epsilon} = \frac{dx}{dy} \div t = \frac{du}{dy}\]</div>
+<span class="eqno">(79)<a class="headerlink" href="#equation-equation2" title="Permalink to this equation">#</a></span>\[ \dot{\epsilon} = \frac{dx}{dy} \div t = \frac{du}{dy}\]</div>
 <p>Recall that the cause for strain or deformation is stress, which is defined by</p>
 <div class="math notranslate nohighlight" id="equation-equation3">
-<span class="eqno">(80)<a class="headerlink" href="#equation-equation3" title="Permalink to this equation">¶</a></span>\[ \tau = \sigma = \mu \frac{du}{dy}\]</div>
+<span class="eqno">(80)<a class="headerlink" href="#equation-equation3" title="Permalink to this equation">#</a></span>\[ \tau = \sigma = \mu \frac{du}{dy}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\tau\)</span> and <span class="math notranslate nohighlight">\(\sigma\)</span> are used interchangeably for stress, and <span class="math notranslate nohighlight">\(\mu\)</span> (or sometimes <span class="math notranslate nohighlight">\(\eta\)</span>) is viscosity.</p>
 <p>Therefore, we have obtained the relationship between stress and strain rate:</p>
 <div class="math notranslate nohighlight" id="equation-equation4">
-<span class="eqno">(81)<a class="headerlink" href="#equation-equation4" title="Permalink to this equation">¶</a></span>\[ \tau = \mu *\dot{\epsilon} \]</div>
+<span class="eqno">(81)<a class="headerlink" href="#equation-equation4" title="Permalink to this equation">#</a></span>\[ \tau = \mu *\dot{\epsilon} \]</div>
 <img src='img/stress_strainRate.PNG' width=500>
 Figure 7.2: the gradient of the figure on the left hand side represents the inversity of viscosity. Dash line on the figure at the right represents the effective viscosity that changes with stress.<div class="math notranslate nohighlight" id="equation-equation6-5">
-<span class="eqno">(82)<a class="headerlink" href="#equation-equation6-5" title="Permalink to this equation">¶</a></span>\[ \dot{\epsilon}=A\sigma^n\]</div>
+<span class="eqno">(82)<a class="headerlink" href="#equation-equation6-5" title="Permalink to this equation">#</a></span>\[ \dot{\epsilon}=A\sigma^n\]</div>
 <p>where <span class="math notranslate nohighlight">\(A = \frac{1}{\mu}\)</span>.</p>
 <p>If the strain rate is linearly proportional to the change of stress (n = 1), then the fluid is Newtonian (diffusion creep).</p>
 <p>If <span class="math notranslate nohighlight">\(n&gt;1\)</span>, the fluid is non-Newtonian (dislocation creep).</p>
 <p>If <span class="math notranslate nohighlight">\(n\rightarrow\infty\)</span>, the fluid is pseudo-plastic.</p>
-<div class="section" id="effective-viscosity">
-<h2>Effective Viscosity<a class="headerlink" href="#effective-viscosity" title="Permalink to this headline">¶</a></h2>
+<section id="effective-viscosity">
+<h2>Effective Viscosity<a class="headerlink" href="#effective-viscosity" title="Permalink to this headline">#</a></h2>
 <p>The viscosity of drilling mud will change with a change in the shear rate because in some degree drilling fluids are shear-thinning. Because of its nature of drilling mud, people create the new term of viscosity called “Effective Viscosity” to compensate the change in shear rate of viscosity. By definition, the effective viscosity means the viscosity of Newtonian fluid that gives the same shear stress at the same shear rate.</p>
 <p>As we can see from figure 7.2, the viscosity changes with stress in a non-Newtonian fluid. However, based on lab experiments, the variable viscosity (not constant anymore), or effective viscosity, is dependent on not only stress <span class="math notranslate nohighlight">\(\sigma\)</span> but also many factors (e.g. temperature <span class="math notranslate nohighlight">\(T\)</span>):</p>
 <div class="math notranslate nohighlight" id="equation-equationsix-6">
-<span class="eqno">(83)<a class="headerlink" href="#equation-equationsix-6" title="Permalink to this equation">¶</a></span>\[ \mu = C (\frac{\sigma}{G})^{1-n}exp[\frac{E^{*}+pV^{*}}{RT}]\]</div>
+<span class="eqno">(83)<a class="headerlink" href="#equation-equationsix-6" title="Permalink to this equation">#</a></span>\[ \mu = C (\frac{\sigma}{G})^{1-n}exp[\frac{E^{*}+pV^{*}}{RT}]\]</div>
 <p>where the details of the equation can be found online and</p>
 <div class="math notranslate nohighlight" id="equation-equation6-1">
-<span class="eqno">(84)<a class="headerlink" href="#equation-equation6-1" title="Permalink to this equation">¶</a></span>\[C=\frac{1}{2}(\frac{G}{A}\frac{d}{b})^{m}\]</div>
+<span class="eqno">(84)<a class="headerlink" href="#equation-equation6-1" title="Permalink to this equation">#</a></span>\[C=\frac{1}{2}(\frac{G}{A}\frac{d}{b})^{m}\]</div>
 <p>In this chapter, we mainly discuss the channel flow of stress-dependent viscosity and temperature-dependent viscosity.</p>
-</div>
-<div class="section" id="problem-7-10-stress-dependent-viscosity">
-<h2>Problem 7.10 (Stress-dependent viscosity)<a class="headerlink" href="#problem-7-10-stress-dependent-viscosity" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="problem-7-10-stress-dependent-viscosity">
+<h2>Problem 7.10 (Stress-dependent viscosity)<a class="headerlink" href="#problem-7-10-stress-dependent-viscosity" title="Permalink to this headline">#</a></h2>
 <p>Suppose we assume the viscosity of the fluid is only stress-dependent, then the equation <a class="reference internal" href="#equation-equationsix-6">(83)</a> can be simplified to a power-law (equation <a class="reference internal" href="#equation-equation6-5">(82)</a> ) with respect to stress <span class="math notranslate nohighlight">\(\sigma\)</span>. Then, we can get the analytical solution of effective viscosity and other quantities for the fluid in channel flow. Suppose we have no-slip boundary at <span class="math notranslate nohighlight">\(y=\pm h/2\)</span> and the strain rate obeys the power law.</p>
 <img src='img/1d_ChannelFlow.PNG' width =700>
 Figure 7.3: The velocity profile is symmetric due to the boundary conditions and the geometry of the channel.<p>Balancing viscous shear and pressure forces, we have</p>
 <div class="math notranslate nohighlight" id="equation-equation6-7">
-<span class="eqno">(85)<a class="headerlink" href="#equation-equation6-7" title="Permalink to this equation">¶</a></span>\[\frac{d\tau}{dy}=\frac{dp}{dx}\]</div>
+<span class="eqno">(85)<a class="headerlink" href="#equation-equation6-7" title="Permalink to this equation">#</a></span>\[\frac{d\tau}{dy}=\frac{dp}{dx}\]</div>
 <p>Therefore, we can obtain the equation for stress by integrating wrt. y</p>
 <div class="math notranslate nohighlight" id="equation-equation6-8">
-<span class="eqno">(86)<a class="headerlink" href="#equation-equation6-8" title="Permalink to this equation">¶</a></span>\[\tau(y)=\frac{dp}{dx}y+C\]</div>
+<span class="eqno">(86)<a class="headerlink" href="#equation-equation6-8" title="Permalink to this equation">#</a></span>\[\tau(y)=\frac{dp}{dx}y+C\]</div>
 <p>Since we know that the stress can be expressed as</p>
 <div class="math notranslate nohighlight" id="equation-equation9">
-<span class="eqno">(87)<a class="headerlink" href="#equation-equation9" title="Permalink to this equation">¶</a></span>\[\tau = \mu \frac{du}{dy}\]</div>
+<span class="eqno">(87)<a class="headerlink" href="#equation-equation9" title="Permalink to this equation">#</a></span>\[\tau = \mu \frac{du}{dy}\]</div>
 <p>and that the <span class="math notranslate nohighlight">\(\frac{du}{dy}=0\)</span> at <span class="math notranslate nohighlight">\(y=0\)</span> by inspecting the velocity profile in figure 7.3, we can obtain</p>
 <div class="math notranslate nohighlight" id="equation-equation10">
-<span class="eqno">(88)<a class="headerlink" href="#equation-equation10" title="Permalink to this equation">¶</a></span>\[\tau (y=0) = 0\]</div>
+<span class="eqno">(88)<a class="headerlink" href="#equation-equation10" title="Permalink to this equation">#</a></span>\[\tau (y=0) = 0\]</div>
 <p>So we know that the integral constant <span class="math notranslate nohighlight">\(C\)</span> in <a class="reference internal" href="#equation-equation6-8">(86)</a> is zero.</p>
 <p>Also, we have an non-linear relationship between the stress and strain rate for the non-Newtonian fluid as follow</p>
 <div class="math notranslate nohighlight" id="equation-equation6-11">
-<span class="eqno">(89)<a class="headerlink" href="#equation-equation6-11" title="Permalink to this equation">¶</a></span>\[\frac{du}{dy}=C_1\tau^{n}\]</div>
+<span class="eqno">(89)<a class="headerlink" href="#equation-equation6-11" title="Permalink to this equation">#</a></span>\[\frac{du}{dy}=C_1\tau^{n}\]</div>
 <p>We can plug in the <span class="math notranslate nohighlight">\(\tau\)</span> from <a class="reference internal" href="#equation-equation6-11">(89)</a> into <a class="reference internal" href="#equation-equation6-7">(85)</a> and arrive at</p>
 <div class="math notranslate nohighlight" id="equation-equation6-12">
-<span class="eqno">(90)<a class="headerlink" href="#equation-equation6-12" title="Permalink to this equation">¶</a></span>\[\frac{du}{dy}=C_1(\frac{dp}{dx})^{n}y^n\]</div>
+<span class="eqno">(90)<a class="headerlink" href="#equation-equation6-12" title="Permalink to this equation">#</a></span>\[\frac{du}{dy}=C_1(\frac{dp}{dx})^{n}y^n\]</div>
 <p>Further integrating <a class="reference internal" href="#equation-equation6-12">(90)</a>, and using the boundary condition <span class="math notranslate nohighlight">\(u(y=\pm h/2)=0\)</span>, we have the velocity profile</p>
 <div class="math notranslate nohighlight" id="equation-equation13">
-<span class="eqno">(91)<a class="headerlink" href="#equation-equation13" title="Permalink to this equation">¶</a></span>\[u=-\frac{C_1}{n+1}(\frac{dp}{dx})^n [(\frac{h}{2})^{n+1}-y^{n+1}]\]</div>
+<span class="eqno">(91)<a class="headerlink" href="#equation-equation13" title="Permalink to this equation">#</a></span>\[u=-\frac{C_1}{n+1}(\frac{dp}{dx})^n [(\frac{h}{2})^{n+1}-y^{n+1}]\]</div>
 <p>We can also obtain the mean velocity across the channel</p>
 <div class="math notranslate nohighlight" id="equation-equation14">
-<span class="eqno">(92)<a class="headerlink" href="#equation-equation14" title="Permalink to this equation">¶</a></span>\[\bar{u}=\frac{C_1}{n+2}(\frac{dp}{dx})^n(\frac{h}{2})^{n+1}\]</div>
+<span class="eqno">(92)<a class="headerlink" href="#equation-equation14" title="Permalink to this equation">#</a></span>\[\bar{u}=\frac{C_1}{n+2}(\frac{dp}{dx})^n(\frac{h}{2})^{n+1}\]</div>
 <p>Now, using the idea that the effective viscosity is the ratio between stress and strain rate, we have</p>
 <div class="math notranslate nohighlight" id="equation-equation15">
-<span class="eqno">(93)<a class="headerlink" href="#equation-equation15" title="Permalink to this equation">¶</a></span>\[\mu_{eff}=\frac{\tau}{\frac{du}{dy}}=\frac{\frac{dp}{dx}y}{C_1(\frac{dp}{dx})^{n}y^n} = \frac{dp}{dx}\frac{h^2}{4(n+2)\bar{u}}(\frac{2y}{h})^{1-n}\]</div>
+<span class="eqno">(93)<a class="headerlink" href="#equation-equation15" title="Permalink to this equation">#</a></span>\[\mu_{eff}=\frac{\tau}{\frac{du}{dy}}=\frac{\frac{dp}{dx}y}{C_1(\frac{dp}{dx})^{n}y^n} = \frac{dp}{dx}\frac{h^2}{4(n+2)\bar{u}}(\frac{2y}{h})^{1-n}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\frac{dp}{dx} = \frac{p_1-p_0}{L}\)</span></p>
 <p>And using the boundary condition, we can derive the scaled effective viscosity (as a function of <span class="math notranslate nohighlight">\(y/h\)</span> or scaled <span class="math notranslate nohighlight">\(y\)</span> distance where <span class="math notranslate nohighlight">\(-h/2 &lt; y &lt; h/2\)</span>).</p>
 <div class="math notranslate nohighlight" id="equation-equation6-16">
-<span class="eqno">(94)<a class="headerlink" href="#equation-equation6-16" title="Permalink to this equation">¶</a></span>\[\frac{\mu_{eff}}{\mu_{eff,wall}}=(\frac{2y}{h})^{1-n}\]</div>
+<span class="eqno">(94)<a class="headerlink" href="#equation-equation6-16" title="Permalink to this equation">#</a></span>\[\frac{\mu_{eff}}{\mu_{eff,wall}}=(\frac{2y}{h})^{1-n}\]</div>
 <p>We can plot <a class="reference internal" href="#equation-equation6-16">(94)</a> for <span class="math notranslate nohighlight">\(n=1,3,5\)</span> and for <span class="math notranslate nohighlight">\(-0.5&lt;y/h&lt;0.5\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -387,39 +1555,39 @@ Figure 7.3: The velocity profile is symmetric due to the boundary conditions and
 <img alt="../../_images/Lecture6_Non_Linear_Viscosity_2D_Stokes_50_2.png" src="../../_images/Lecture6_Non_Linear_Viscosity_2D_Stokes_50_2.png" />
 </div>
 </div>
-</div>
-<div class="section" id="problem-7-12-t-dependent-viscosity">
-<h2>Problem 7.12 (T-dependent viscosity)<a class="headerlink" href="#problem-7-12-t-dependent-viscosity" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="problem-7-12-t-dependent-viscosity">
+<h2>Problem 7.12 (T-dependent viscosity)<a class="headerlink" href="#problem-7-12-t-dependent-viscosity" title="Permalink to this headline">#</a></h2>
 <p>Now, let’s assume that the viscosity of the fluid is only temperature-dependent. We can determine the velocity profile <span class="math notranslate nohighlight">\(u(y)\)</span> for a classic model as shown below:</p>
 <img src='img/P7_12.PNG' width='500'>
 Figure 7.4: Icesheet with thickness $h$ on sloping bedrock, creeping downhill under its own weight. The temperature profile is linear and $(T_1-T_0)/T_0$ is small. It is no-slip at base.<p>First, we can write out the temperature profile</p>
 <div class="math notranslate nohighlight" id="equation-equation6-17">
-<span class="eqno">(95)<a class="headerlink" href="#equation-equation6-17" title="Permalink to this equation">¶</a></span>\[T(y) = T_0+(T_1-T_0)\frac{y}{h}\]</div>
+<span class="eqno">(95)<a class="headerlink" href="#equation-equation6-17" title="Permalink to this equation">#</a></span>\[T(y) = T_0+(T_1-T_0)\frac{y}{h}\]</div>
 <p>We assume the temperature dependence of the pre-exponential factor as negligible compared with the temperature dependence of the exponential factor, so the equation <a class="reference internal" href="#equation-equationsix-6">(83)</a> simplifies to</p>
 <div class="math notranslate nohighlight" id="equation-equation6-18">
-<span class="eqno">(96)<a class="headerlink" href="#equation-equation6-18" title="Permalink to this equation">¶</a></span>\[\mu=Ce^{E^{*}/RT}\]</div>
+<span class="eqno">(96)<a class="headerlink" href="#equation-equation6-18" title="Permalink to this equation">#</a></span>\[\mu=Ce^{E^{*}/RT}\]</div>
 <p>Plugging the equation <a class="reference internal" href="#equation-equation6-17">(95)</a> in <a class="reference internal" href="#equation-equation6-18">(96)</a>, and using Taylor expansion for the exponential term, we have</p>
 <div class="math notranslate nohighlight" id="equation-equation6-19">
-<span class="eqno">(97)<a class="headerlink" href="#equation-equation6-19" title="Permalink to this equation">¶</a></span>\[\mu=Cexp[\frac{E^{*}}{RT_0}(1-\frac{T_1-T_0}{T_0}\frac{y}{h})]\]</div>
+<span class="eqno">(97)<a class="headerlink" href="#equation-equation6-19" title="Permalink to this equation">#</a></span>\[\mu=Cexp[\frac{E^{*}}{RT_0}(1-\frac{T_1-T_0}{T_0}\frac{y}{h})]\]</div>
 <p>Also, from the forces analysis shown by figure 6.3 in lecture 5, we have</p>
 <div class="math notranslate nohighlight" id="equation-equation20">
-<span class="eqno">(98)<a class="headerlink" href="#equation-equation20" title="Permalink to this equation">¶</a></span>\[\frac{d\tau}{dy}=sin\alpha \rho g\]</div>
+<span class="eqno">(98)<a class="headerlink" href="#equation-equation20" title="Permalink to this equation">#</a></span>\[\frac{d\tau}{dy}=sin\alpha \rho g\]</div>
 <p>Integrating it with the boundary condition <span class="math notranslate nohighlight">\(\tau = 0\)</span> at <span class="math notranslate nohighlight">\(y=0\)</span>, we have</p>
 <div class="math notranslate nohighlight" id="equation-equation6-21">
-<span class="eqno">(99)<a class="headerlink" href="#equation-equation6-21" title="Permalink to this equation">¶</a></span>\[\tau(y)=sin\alpha \rho g y\]</div>
+<span class="eqno">(99)<a class="headerlink" href="#equation-equation6-21" title="Permalink to this equation">#</a></span>\[\tau(y)=sin\alpha \rho g y\]</div>
 <p>Since effective viscosity is the ratio between stress <span class="math notranslate nohighlight">\(\tau\)</span> and strain rate <span class="math notranslate nohighlight">\(du/dy\)</span>, we can combine equations <a class="reference internal" href="#equation-equation6-19">(97)</a> and <a class="reference internal" href="#equation-equation6-21">(99)</a> and have</p>
 <div class="math notranslate nohighlight" id="equation-equation22">
-<span class="eqno">(100)<a class="headerlink" href="#equation-equation22" title="Permalink to this equation">¶</a></span>\[\frac{du}{dy}=\frac{sin\alpha \rho g y}{Ce^{\frac{E^{*}}{RT_0}}e^{-\frac{E^{*}(T_1-T_0)y}{RT_0^2h}}}=G\frac{y}{e^{-By}}=Gye^{By}\]</div>
+<span class="eqno">(100)<a class="headerlink" href="#equation-equation22" title="Permalink to this equation">#</a></span>\[\frac{du}{dy}=\frac{sin\alpha \rho g y}{Ce^{\frac{E^{*}}{RT_0}}e^{-\frac{E^{*}(T_1-T_0)y}{RT_0^2h}}}=G\frac{y}{e^{-By}}=Gye^{By}\]</div>
 <p>where we defined constant <span class="math notranslate nohighlight">\(G\)</span> and <span class="math notranslate nohighlight">\(B\)</span> for simplicity.</p>
 <p>After integration, we have</p>
 <div class="math notranslate nohighlight" id="equation-equation23">
-<span class="eqno">(101)<a class="headerlink" href="#equation-equation23" title="Permalink to this equation">¶</a></span>\[u(y)=-\frac{Ge^{By}}{B^2}+\frac{Gye^{By}}{B}+C_1\]</div>
+<span class="eqno">(101)<a class="headerlink" href="#equation-equation23" title="Permalink to this equation">#</a></span>\[u(y)=-\frac{Ge^{By}}{B^2}+\frac{Gye^{By}}{B}+C_1\]</div>
 <p>Since it is no-slip base, we have the boundary condition <span class="math notranslate nohighlight">\(u=0\)</span> at <span class="math notranslate nohighlight">\(y=h\)</span>. Apply this boundary condition we can solve the constant</p>
 <div class="math notranslate nohighlight" id="equation-equation24">
-<span class="eqno">(102)<a class="headerlink" href="#equation-equation24" title="Permalink to this equation">¶</a></span>\[C_1=\frac{Ge^{Bh}}{B^2}-\frac{Ghe^{Bh}}{B}\]</div>
+<span class="eqno">(102)<a class="headerlink" href="#equation-equation24" title="Permalink to this equation">#</a></span>\[C_1=\frac{Ge^{Bh}}{B^2}-\frac{Ghe^{Bh}}{B}\]</div>
 <p>Hence, the equation of the velocity profile can be obtained</p>
 <div class="math notranslate nohighlight" id="equation-equation25">
-<span class="eqno">(103)<a class="headerlink" href="#equation-equation25" title="Permalink to this equation">¶</a></span>\[u(y)=-\frac{Ge^{By}}{B^2}+\frac{Gye^{By}}{B}+\frac{Ge^{Bh}}{B^2}-\frac{Ghe^{Bh}}{B}\]</div>
+<span class="eqno">(103)<a class="headerlink" href="#equation-equation25" title="Permalink to this equation">#</a></span>\[u(y)=-\frac{Ge^{By}}{B^2}+\frac{Gye^{By}}{B}+\frac{Ge^{Bh}}{B^2}-\frac{Ghe^{Bh}}{B}\]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -462,15 +1630,15 @@ Figure 7.4: Icesheet with thickness $h$ on sloping bedrock, creeping downhill un
 <img alt="../../_images/Lecture6_Non_Linear_Viscosity_2D_Stokes_73_0.png" src="../../_images/Lecture6_Non_Linear_Viscosity_2D_Stokes_73_0.png" />
 </div>
 </div>
-</div>
-<div class="section" id="d-stokes">
-<h2>2-D Stokes<a class="headerlink" href="#d-stokes" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="problem-6-10">
-<h2>Problem 6.10<a class="headerlink" href="#problem-6-10" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="d-stokes">
+<h2>2-D Stokes<a class="headerlink" href="#d-stokes" title="Permalink to this headline">#</a></h2>
+</section>
+<section id="problem-6-10">
+<h2>Problem 6.10<a class="headerlink" href="#problem-6-10" title="Permalink to this headline">#</a></h2>
 <p>Determine the stream function for the general one-dimensional channel flow in lecture 5.</p>
 <div class="math notranslate nohighlight" id="equation-equation26">
-<span class="eqno">(104)<a class="headerlink" href="#equation-equation26" title="Permalink to this equation">¶</a></span>\[u(y)=\frac{1}{2\mu}\frac{dp}{dx}(y^2-hy)-\frac{u_0y}{h}+u_0=-y+5\]</div>
+<span class="eqno">(104)<a class="headerlink" href="#equation-equation26" title="Permalink to this equation">#</a></span>\[u(y)=\frac{1}{2\mu}\frac{dp}{dx}(y^2-hy)-\frac{u_0y}{h}+u_0=-y+5\]</div>
 <p>where we let <span class="math notranslate nohighlight">\(\frac{1}{2\mu}\frac{dp}{dx}=0\)</span>, <span class="math notranslate nohighlight">\(h=5\)</span> and <span class="math notranslate nohighlight">\(u_0=5\)</span> for simplicity.</p>
 <table class="colwidths-auto table">
 <thead>
@@ -504,30 +1672,30 @@ Figure 7.5: One-dimensional Channel Flow.<p>The stream function is a function in
 <p>This is very confusing as in how the differentiation wiht <span class="math notranslate nohighlight">\(y\)</span> gives the velocity in <span class="math notranslate nohighlight">\(x\)</span> direction? It would certainly make more sense if it gives the velocity in <span class="math notranslate nohighlight">\(y\)</span> direction…Do not worry, let’s try to understand the stream function by looking at it in a one-dimensional channel flow before we move in to the two-dimensional case.</p>
 <p>But let’s take a look at the definition of stream function <span class="math notranslate nohighlight">\(\psi(x,y)\)</span> in a two-demensional case</p>
 <div class="math notranslate nohighlight" id="equation-equation6-27">
-<span class="eqno">(105)<a class="headerlink" href="#equation-equation6-27" title="Permalink to this equation">¶</a></span>\[u=\frac{d\psi}{dy}\]</div>
+<span class="eqno">(105)<a class="headerlink" href="#equation-equation6-27" title="Permalink to this equation">#</a></span>\[u=\frac{d\psi}{dy}\]</div>
 <div class="math notranslate nohighlight" id="equation-equation28">
-<span class="eqno">(106)<a class="headerlink" href="#equation-equation28" title="Permalink to this equation">¶</a></span>\[v=-\frac{d\psi}{dx}\]</div>
+<span class="eqno">(106)<a class="headerlink" href="#equation-equation28" title="Permalink to this equation">#</a></span>\[v=-\frac{d\psi}{dx}\]</div>
 <p>For the one-dimensional channel flow problem I have shown above, there is no velocity in the vertical direction, and so we only consider the velocity in the x-direction.</p>
 <div class="math notranslate nohighlight" id="equation-equation29">
-<span class="eqno">(107)<a class="headerlink" href="#equation-equation29" title="Permalink to this equation">¶</a></span>\[u=\frac{d\psi}{dy}=-y+5\]</div>
+<span class="eqno">(107)<a class="headerlink" href="#equation-equation29" title="Permalink to this equation">#</a></span>\[u=\frac{d\psi}{dy}=-y+5\]</div>
 <p>If we integrate it wrt. <span class="math notranslate nohighlight">\(y\)</span>, then we can obtain the equation for the stream function</p>
 <div class="math notranslate nohighlight" id="equation-equation6-30">
-<span class="eqno">(108)<a class="headerlink" href="#equation-equation6-30" title="Permalink to this equation">¶</a></span>\[\psi=-\frac{1}{2}y^2+5y+C(x)\]</div>
+<span class="eqno">(108)<a class="headerlink" href="#equation-equation6-30" title="Permalink to this equation">#</a></span>\[\psi=-\frac{1}{2}y^2+5y+C(x)\]</div>
 <p>Discuss the physical meaning of <span class="math notranslate nohighlight">\(\psi\)</span> for this case.</p>
 <p>So what does that <span class="math notranslate nohighlight">\(\psi\)</span> function mean?</p>
 <img src='img/1d_ChannelFlow5.PNG' width=500>
 Figure 7.6: Volumetric Flow Rate of One-dimensional Channel Flow (with the width of z-direction equals 1).<p>Let’s look at the tiny volumetric flow rate <span class="math notranslate nohighlight">\(dQ\)</span> through the tiny slice of thickness <span class="math notranslate nohighlight">\(dy\)</span> as shown above.</p>
 <div class="math notranslate nohighlight" id="equation-equation31">
-<span class="eqno">(109)<a class="headerlink" href="#equation-equation31" title="Permalink to this equation">¶</a></span>\[dQ=u dy*1 = udy\]</div>
+<span class="eqno">(109)<a class="headerlink" href="#equation-equation31" title="Permalink to this equation">#</a></span>\[dQ=u dy*1 = udy\]</div>
 <p>Then the overall volumetric flow rate through the whole section (from <span class="math notranslate nohighlight">\(y=1\)</span> to <span class="math notranslate nohighlight">\(y=2\)</span>) as shown in between the blue lines is</p>
 <div class="math notranslate nohighlight" id="equation-equation6-32">
-<span class="eqno">(110)<a class="headerlink" href="#equation-equation6-32" title="Permalink to this equation">¶</a></span>\[Q=\int^2_1 udy=\int^2_1 (-y+5)dy=-\frac{1}{2}y^2+5y+C(x)|^2_1\]</div>
+<span class="eqno">(110)<a class="headerlink" href="#equation-equation6-32" title="Permalink to this equation">#</a></span>\[Q=\int^2_1 udy=\int^2_1 (-y+5)dy=-\frac{1}{2}y^2+5y+C(x)|^2_1\]</div>
 <p>Compare the final part of equation <a class="reference internal" href="#equation-equation6-32">(110)</a> with <a class="reference internal" href="#equation-equation6-30">(108)</a>, we realise that the stream function represents volumetric flow rate in a sense</p>
 <div class="math notranslate nohighlight" id="equation-equation33">
-<span class="eqno">(111)<a class="headerlink" href="#equation-equation33" title="Permalink to this equation">¶</a></span>\[Q = \psi_2 - \psi_1\]</div>
+<span class="eqno">(111)<a class="headerlink" href="#equation-equation33" title="Permalink to this equation">#</a></span>\[Q = \psi_2 - \psi_1\]</div>
 <p>Now, we should finally understand the very confusing equation <a class="reference internal" href="#equation-equation6-27">(105)</a> we mentioned before, with the help of figure 7.6. The horizontal velocity <span class="math notranslate nohighlight">\(u\)</span> equals the volumetric flow rate through the thin section <span class="math notranslate nohighlight">\(dQ\)</span> divided by the vertical thickness <span class="math notranslate nohighlight">\(dy\)</span>, in this case</p>
 <div class="math notranslate nohighlight" id="equation-equation34">
-<span class="eqno">(112)<a class="headerlink" href="#equation-equation34" title="Permalink to this equation">¶</a></span>\[u=\frac{d\psi}{dy}=\frac{dQ}{dy} = \frac{d}{dy}(-\frac{1}{2}y^2+5y+C(x))= -y+5\]</div>
+<span class="eqno">(112)<a class="headerlink" href="#equation-equation34" title="Permalink to this equation">#</a></span>\[u=\frac{d\psi}{dy}=\frac{dQ}{dy} = \frac{d}{dy}(-\frac{1}{2}y^2+5y+C(x))= -y+5\]</div>
 <p>Sketch stream function and streamlines for the two end-member cases (Couette and P-driven). Pay attention to stream line orientation and spacing (in terms of colorbars).</p>
 <p>So the streamlines represent the path of the particle in the channel flow, as we can imagine the path in this one-dimensional flow problem should be linear and horizontal. In another word, the particle should only flow in the x-direction as in there is no force acting on the y-direction.</p>
 <div class="cell docutils container">
@@ -684,8 +1852,8 @@ Figure 7.6: Volumetric Flow Rate of One-dimensional Channel Flow (with the width
 <img alt="../../_images/Lecture6_Non_Linear_Viscosity_2D_Stokes_106_0.png" src="../../_images/Lecture6_Non_Linear_Viscosity_2D_Stokes_106_0.png" />
 </div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -709,33 +1877,48 @@ Figure 7.6: Volumetric Flow Rate of One-dimensional Channel Flow (with the width
 
               </div>
               
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="Lecture5_1D_Pipe_Flow.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Lecture5_1D_Pipe_Flow</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="Lecture7_Pipe_Flow_with_Heat.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Lecture7_Pipe_Flow_with_Heat</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
         </div>
     </div>
-    
-    
-    <div class='prev-next-bottom'>
-        
-    <a class='left-prev' id="prev-link" href="Lecture5_1D_Pipe_Flow.html" title="previous page">Lecture5_1D_Pipe_Flow</a>
-    <a class='right-next' id="next-link" href="Lecture7_Pipe_Flow_with_Heat.html" title="next page">Lecture7_Pipe_Flow_with_Heat</a>
-
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Imperial College London<br/>
+  
+      &copy; Copyright 2020.<br/>
+</p>
+        </footer>
     </div>
-    <footer class="footer mt-5 mt-md-0">
-    <div class="container">
-      <p>
-        
-          By Imperial College London<br/>
-        
-            &copy; Copyright 2020.<br/>
-      </p>
-    </div>
-  </footer>
-</main>
+    
+</div>
 
 
       </div>
     </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
 
-    <script src="../../_static/js/index.js"></script>
-    
+
   </body>
 </html>

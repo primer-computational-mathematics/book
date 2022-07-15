@@ -1,345 +1,1736 @@
 
-
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Numerical Methods II Numerical Differentiation &#8212; ESE Jupyter Material</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
-    <link href="../../../_static/css/index.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../../_static/sphinx-book-theme.css" type="text/css" />
-    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/custom.css" />
-    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
-    <script src="../../../_static/sphinx-book-theme.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
     <script src="../../../_static/jquery.js"></script>
     <script src="../../../_static/underscore.js"></script>
     <script src="../../../_static/doctools.js"></script>
-    <script src="../../../_static/language_data.js"></script>
-    <script src="../../../_static/togglebutton.js"></script>
     <script src="../../../_static/clipboard.min.js"></script>
     <script src="../../../_static/copybutton.js"></script>
-    <script src="../../../_static/sphinx-book-theme.js"></script>
-    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
-    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
-    <script >
-        const thebe_selector = ".cell"
-        const thebe_selector_input = ".cell_input div.highlight"
-        const thebe_selector_output = ".output"
-    </script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".cell"
+const thebe_selector_input = ".cell_input div.highlight"
+const thebe_selector_output = ".output, .cell_output"
+</script>
     <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="docsearch:language" content="en">
-
-
-
+    <!-- Google Analytics -->
+    
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
     
 
     <div class="container-xl">
       <div class="row">
           
-<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    
-        <div class="navbar-brand-box">
-<a class="navbar-brand text-wrap" href="../../../index.html">
-  
-  <img src="../../../_static/logo.png" class="logo" alt="logo">
-  
-  
-  <h1 class="site-logo" id="site-title">ESE Jupyter Material</h1>
-  
-</a>
-</div>
-
-<form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">ESE Jupyter Material</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form>
-
-<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
-  
-  <ul class="nav sidenav_l1">
-  <li class="">
-    <a href="../../../intro.html">Landing page</a>
-  </li>
-  <li class="">
-    <a href="../../../a_modules/intro.html">Modules</a>
-  </li>
-  <li class="">
-    <a href="../../../b_coding/intro.html">Coding</a>
-  </li>
-  <li class="">
-    <a href="../../intro.html">Mathematics</a>
-  </li>
-  <li class="">
-    <a href="../../../d_geosciences/intro.html">Geosciences</a>
-  </li>
-  <li class="">
-    <a href="../../../e_extra/intro.html">Further resources</a>
-  </li>
-  <li class="">
-    <a href="../../../genindex.html">Index</a>
-  </li>
-</ul>
-</nav>
-
- <!-- To handle the deprecated key -->
-
-<div class="navbar_extra_footer">
-  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
-</div>
-
-</div>
-
-
-          
-
-
-          
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
-    
-    <div class="row topbar fixed-top container-xl">
-    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
-    </div>
-    <div class="col pl-2 topbar-main">
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
         
-        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-            <i class="fas fa-bars"></i>
-            <i class="fas fa-arrow-left"></i>
-            <i class="fas fa-arrow-up"></i>
-        </button>
-        
-        <div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
-            class="fas fa-download"></i></button>
-
-    
-    <div class="dropdown-buttons">
-        <!-- ipynb file if we had a myst markdown file -->
-        
-        <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../../_sources/c_mathematics/numerical_methods/NM1_2020/NM1_2020_lecture2.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
-        <!-- Download PDF via print -->
-        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
-    </div>
-    
-</div>
-        <!-- Source interaction buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-    <div class="dropdown-buttons sourcebuttons">
-        
-        <a class="issues-button"
-            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2Fc_mathematics/numerical_methods/NM1_2020/NM1_2020_lecture2.html&body=Your%20issue%20content%20here."><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        
-    </div>
-</div>
-
-
-        <!-- Full screen (wrap in <a> to have style consistency -->
-        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
-                    class="fas fa-expand"></i></button></a>
-
-        <!-- Launch buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/c_mathematics/numerical_methods/NM1_2020/NM1_2020_lecture2.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="../../../_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        
-        
-    </div>
-</div>
-
-    </div>
-    <div class="d-none d-md-block col-md-2 bd-toc show">
-<div class="tocsection onthispage pt-5 pb-3">
-    <i class="fas fa-list"></i> On this page
-</div>
-
-<nav id="bd-toc-nav">
-    <ul class="nav section-nav flex-column">
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#contents" class="nav-link">Contents</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#i-differentiation-the-continuous-definition" class="nav-link">I.    Differentiation - the continuous definition</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#ii-forward-difference-method-fdm" class="nav-link">II.   Forward Difference Method FDM</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#iii-taylor-series-to-estimate-accuracy" class="nav-link">III.  Taylor Series to estimate Accuracy</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#iv-central-difference-method-cdm" class="nav-link">IV.  Central Difference Method   CDM</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#v-approximating-second-derivatives" class="nav-link">V.   Approximating Second Derivatives</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#vi-numerical-methods-for-odes" class="nav-link">VI.  Numerical Methods for ODEs</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#vii-euler-method" class="nav-link">VII.  Euler Method</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#viii-heun-method" class="nav-link">VIII. Heun Method</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#i-differentiation-or-taking-a-derivative-the-continuous-definition" class="nav-link">I. Differentiation (or taking a derivative) - the continuous definition</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#id1" class="nav-link">II.  Forward Difference Method FDM</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#id2" class="nav-link">III.  Taylor series to estimate accuracy</a><ul class="nav section-nav flex-column">
-                
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#taylor-series-example" class="nav-link">Taylor series example</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#what-does-order-of-accuracy-mean" class="nav-link">What does order of accuracy mean?</a>
-        </li>
-    
-            </ul>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#span-style-color-blue-exercise-2-1-compute-first-derivative-using-forward-differencing-span" class="nav-link"><span style="color:blue">Exercise 2.1: Compute first derivative using forward differencing</span></a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#id3" class="nav-link">IV. Central Difference Method CDM</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#span-style-color-blue-exercise-2-2-compute-first-derivative-using-central-differencing-span" class="nav-link"><span style="color:blue">Exercise 2.2: Compute first derivative using central differencing</span></a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#span-style-color-blue-example-write-a-function-to-perform-numerical-differentiation-span" class="nav-link"><span style="color:blue">Example: Write a function to perform numerical differentiation</span></a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#span-style-color-blue-exercise-2-3-compute-the-derivative-of-sin-x-span" class="nav-link"><span style="color:blue">Exercise 2.3: Compute the derivative of \sin(x)</span></a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#id4" class="nav-link">V.  Approximating second derivatives</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#span-style-color-blue-exercise-2-4-compute-second-derivative-span" class="nav-link"><span style="color:blue">Exercise 2.4: Compute second derivative</span></a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#aside-non-central-differencing-and-differentiation-by-polynomial-fit" class="nav-link">Aside: Non-central differencing and differentiation by polynomial fit</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#id5" class="nav-link">VI. Numerical methods for ODEs</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#id6" class="nav-link">VII. Euler Method</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#span-style-color-blue-exercise-2-5-implementing-forward-euler-s-method-span" class="nav-link"><span style="color:blue">Exercise 2.5: Implementing Forward Euler’s method</span></a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#viii-heun-s-method" class="nav-link">VIII.  Heun’s method</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#span-style-color-blue-exercise-2-6-implementing-heun-s-method-span" class="nav-link"><span style="color:blue">Exercise 2.6: Implementing Heun’s method</span></a>
-        </li>
-    
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../intro.html">
+                    Landing page
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../../a_modules/intro.html">
+   Modules
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../a_modules/math_methods_1/intro.html">
+     Mathematical methods 1
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+    <label for="toctree-checkbox-2">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../a_modules/math_methods_1/1_Coordinate_Systems.html">
+       Coordinate systems (Lecture 1)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../a_modules/math_methods_1/2_Vectors.html">
+       Vectors (Lecture 1)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../a_modules/math_methods_1/3_Multivariable_Calculus.html">
+       Multivariable calculus (Lecture 2)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../a_modules/math_methods_1/4_Vector_Calculus.html">
+       Vector calculus (Lecture 3)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../a_modules/math_methods_1/5_Matrices.html">
+       Matrices (Lecture 4)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../a_modules/math_methods_1/6_Eigenvalues.html">
+       Eigenvalues (Lecture 5)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../a_modules/math_methods_1/7_Series.html">
+       Series (Lecture 6)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../a_modules/math_methods_1/8_ODEs.html">
+       ODEs (Lecture 7)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../a_modules/math_methods_1/9_Modelling.html">
+       Modelling (Lecture 8)
+      </a>
+     </li>
     </ul>
-</nav>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../a_modules/mechanics/intro.html">
+     Mechanics
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+    <label for="toctree-checkbox-3">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../a_modules/mechanics/1_Motion_in_1D.html">
+       Motion in 1D
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../a_modules/mechanics/2_Motion_in_2D.html">
+       Motion in 2D
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../a_modules/mechanics/3_Work_and_Energy.html">
+       Work and Energy
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../a_modules/mechanics/4_Rotational_Motion.html">
+       Rotational Motion
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../a_modules/mechanics/5_Gravity.html">
+       Gravity
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../a_modules/tectonics_of_the_ocean/intro.html">
+     Techtonics of the ocean
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+    <label for="toctree-checkbox-4">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../a_modules/tectonics_of_the_ocean/1_mapping_the_ocean_floor.html">
+       Reading Maps
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../../b_coding/intro.html">
+   Coding
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../b_coding/NumPy_Arrays.html">
+     NumPy arrays
+    </a>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../b_coding/Fundamentals%20of%20Computer%20Science/intro.html">
+     Fundamentals of Computer Science
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+    <label for="toctree-checkbox-6">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Fundamentals%20of%20Computer%20Science/1_Algorythmic_Complexity.html">
+       Algorithmic complexity
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Fundamentals%20of%20Computer%20Science/2_Recursion.html">
+       Recursion
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Fundamentals%20of%20Computer%20Science/3_Divide_and_Conquer.html">
+       Divide and Conquer
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Fundamentals%20of%20Computer%20Science/4_Dynamic_Programming.html">
+       Dynamic Programming
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Fundamentals%20of%20Computer%20Science/5_Greedy_Algorithms.html">
+       Greedy Algorithms
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Fundamentals%20of%20Computer%20Science/6_Data_Structures.html">
+       Data Structures
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Fundamentals%20of%20Computer%20Science/7_Graph_Algorithms.html">
+       Graph Algorithms
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/intro.html">
+     Intro to Python
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+    <label for="toctree-checkbox-7">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/1_Printing_and_formatting_statements.html">
+       Printing and formatting statements
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/2_Variables.html">
+       Variables
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/3_If_statement.html">
+       If statement
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/4_While_loops.html">
+       While loops
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/5_Lists.html">
+       Lists
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/6_For_loops.html">
+       For loops
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/7_List_comprehensions.html">
+       List comprehensions
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/8_Nested_lists.html">
+       Nested lists
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/9_Handling_errors.html">
+       Handling errors
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/10_Importing.html">
+       Importing in Python
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/11_Functions.html">
+       Creating custom functions
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/12_Tuples.html">
+       Tuples
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/13_File_handling.html">
+       File handling
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/14_Dictionaries.html">
+       Dictionaries
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/15_Flow_control_statements.html">
+       Flow control statements
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/16_Sets.html">
+       Sets
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/17_Matplotlib.html">
+       Plotting data with Matplotlib
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/18_Assert.html">
+       Assert
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/19_Classes.html">
+       Python classes
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/20_Lambdas.html">
+       Lambdas
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../b_coding/Pandas/intro.html">
+     Pandas
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+    <label for="toctree-checkbox-8">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Pandas/1_basics.html">
+       Introduction
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Pandas/2_filter_select_assign.html">
+       Filtering, selecting and assigning
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Pandas/3_merge_combine_group_sort.html">
+       Merging, combining, grouping and sorting
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Pandas/4_summary_statistics.html">
+       Summary statistics
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Pandas/5_time_stamps.html">
+       Creating date-time stamps
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Pandas/6_plotting.html">
+       Plotting
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../b_coding/Programming%20Tools/intro.html">
+     Programming tools
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
+    <label for="toctree-checkbox-9">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Programming%20Tools/1_Version_Control_Git.html">
+       Version control Git
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../intro.html">
+   Mathematics
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/>
+  <label for="toctree-checkbox-10">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../calculus/intro.html">
+     Calculus
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/>
+    <label for="toctree-checkbox-11">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../calculus/Vector_calculus.html">
+       Vector calculus
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../complex_analysis/intro.html">
+     Complex analysis
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/>
+    <label for="toctree-checkbox-12">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../complex_analysis/1_introduction.html">
+       Introduction
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../complex_analysis/2_complex_plane.html">
+       Complex plane
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../complex_analysis/3_complex_functions.html">
+       Complex functions
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../complex_analysis/4_holomorphic_functions.html">
+       Holomorphic functions
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../complex_analysis/5_integrating.html">
+       Complex integration
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../complex_analysis/6_fractals.html">
+       Fractals
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../differential_equations/intro.html">
+     Differential equations
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/>
+    <label for="toctree-checkbox-13">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../differential_equations/1_de_introduction.html">
+       Introduction to differential equations
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../differential_equations/2_linear_des.html">
+       Linear Differential Equations
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../differential_equations/3_first-order_odes.html">
+       First-order ODEs
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../differential_equations/4_higher_ord_lin_odes.html">
+       Higher order Linear ODEs
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../differential_equations/5_ode_series.html">
+       Series ODE
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../differential_equations/6_pde_basicdefinitions.html">
+       Introductory definitions and concepts
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../differential_equations/7_pde_first_order.html">
+       First-order linear PDEs
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../differential_equations/8_pde_second_order.html">
+       Canonical form of second-order linear PDEs
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../differential_equations/9_poisson_laplace_eq.html">
+       Poisson’s and Laplace’s equation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../differential_equations/10_heat_eq.html">
+       Heat (diffusion) equation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../differential_equations/11_pde_fourier.html">
+       Solving PDEs with fourier methods
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../differential_equations/12_wave_eq.html">
+       Wave equation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../differential_equations/13_similarity_solutions.html">
+       Self-similar solutions
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../linear_algebra/intro.html">
+     Linear algebra
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/>
+    <label for="toctree-checkbox-14">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../linear_algebra/1_Basic_definitions_and_operations.html">
+       Basic definitions and operations
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../linear_algebra/2_Linear_Systems.html">
+       Systems of linear equations
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../linear_algebra/3_Theory.html">
+       Theory
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../linear_algebra/4_Eigenvalues_and_eigenvectors.html">
+       Eigenvalues and eigenvectors
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../linear_algebra/5_Linear_Algebra_in_Python.html">
+       Linear Algebra in Python
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../mathematical_notation/intro.html">
+     Mathematical notation
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" type="checkbox"/>
+    <label for="toctree-checkbox-15">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../mathematical_notation/Big_O_notation.html">
+       Big O notation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../mathematical_notation/Tensors_Review.html">
+       Review of tensors
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../intro.html">
+     Numerical methods
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
+    <label for="toctree-checkbox-16">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../1_Interpolation_curve_fitting.html">
+       Interpolation and curve fitting
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../2_Numerical_differentiation.html">
+       Numerical differentiation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../3_Timestepping_an_ODE.html">
+       Solving or timestepping an ODE
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../4_Heuns_method.html">
+       Heun’s method
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../5_Runge_Kutta_method.html">
+       Runge-Kutta method
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../6_Solving_PDEs_SOR.html">
+       Successive over-relaxation method
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../7_FTCS.html">
+       FTCS scheme
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../8_BTCS.html">
+       BTCS scheme
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../9_Numerical_integration.html">
+       Numerical integration
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../10_Roots_of_equations.html">
+       Roots of equations
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../11_linear_algebra_intro.html">
+       Linear algebra introduction
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../12_Gaussian_elimination.html">
+       Gaussian elimination
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../13_LU_decomposition.html">
+       LU decomposition
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../14_ill_conditioning_errors.html">
+       Ill-conditioning and roundoff errors
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../15_iterative_methods_to_solve_matrix.html">
+       Iterative methods to solve a matrix
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../series_and_sequences/intro.html">
+     Series and sequences
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
+    <label for="toctree-checkbox-17">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../series_and_sequences/Fourier_series.html">
+       Fourier series
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../series_and_sequences/Fourier_transforms.html">
+       Fourier transforms
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../series_and_sequences/Taylor_series.html">
+       Taylor series
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../sets_and_functions/intro.html">
+     Sets and functions
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
+    <label for="toctree-checkbox-18">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../sets_and_functions/1_logic.html">
+       Logic and proof
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../sets_and_functions/2_sets.html">
+       Sets
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../sets_and_functions/3_functions.html">
+       Functions
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../sets_and_functions/4_elementary_functions_1.html">
+       Elementary functions 1
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../sets_and_functions/5_elementary_functions_2.html">
+       Elementary functions 2
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../sets_and_functions/6_composition_and_inverse.html">
+       Composition and Inverse Functions
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../statistics/intro.html">
+     Statistics
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
+    <label for="toctree-checkbox-19">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../statistics/Linear_Regression.html">
+       Linear regression
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../statistics/Statistics_for_Geoscientists.html">
+       Introduction to statistics for Geoscientists
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../../d_geosciences/intro.html">
+   Geosciences
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
+  <label for="toctree-checkbox-20">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../d_geosciences/1D_Heat_Conduction.html">
+     1D heat conduction (layered medium)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../d_geosciences/1D_Resistivity_Forward_Modelling.html">
+     1D resistivity forward modelling
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../d_geosciences/Climate_Model.html">
+     Climate model
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../d_geosciences/Dynamic_Earth.html">
+     Seafloor ages
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../d_geosciences/Keplerian_Orbits.html">
+     Keplerian orbits
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../d_geosciences/Milankovitch_cycles.html">
+     Milankovitch cycles
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../d_geosciences/Seismology.html">
+     Downloading earthquake data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../d_geosciences/Tides.html">
+     Tides
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../d_geosciences/Wave_dispersion.html">
+     Wave dispersion
+    </a>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../d_geosciences/Electromagnetism/intro.html">
+     Electromagnetism
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
+    <label for="toctree-checkbox-21">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../d_geosciences/Electromagnetism/1_electricity_magnetism.html">
+       Electricity and magnetism
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../d_geosciences/Electromagnetism/2_maxwell_eqs.html">
+       Maxwell’s equations
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../d_geosciences/Electromagnetism/3_four_field.html">
+       The four-field formalism
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../d_geosciences/Fluid_Dynamics/intro.html">
+     Fluid dynamics
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
+    <label for="toctree-checkbox-22">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../d_geosciences/Fluid_Dynamics/Lecture5_1D_Pipe_Flow.html">
+       Lecture5_1D_Pipe_Flow
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../d_geosciences/Fluid_Dynamics/Lecture6_Non_Linear_Viscosity_2D_Stokes.html">
+       Lecture6_Non_Linear_Viscosity_2D_Stokes
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../d_geosciences/Fluid_Dynamics/Lecture7_Pipe_Flow_with_Heat.html">
+       Lecture7_Pipe_Flow_with_Heat
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../d_geosciences/Fluid_Dynamics/Lecture8_Part1_Navier_Stoke_Equation.html">
+       Lecture8_Part1_Navier_Stoke_Equation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../d_geosciences/Fluid_Dynamics/Lecture8_Part2_SPH_Algorithm_For_Energy_Equation.html">
+       Lecture8_Part2_SPH_Algorithm_For_Energy_Equation
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../d_geosciences/remote_sensing/intro.html">
+     Remote sensing
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
+    <label for="toctree-checkbox-23">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../d_geosciences/remote_sensing/Image_Filtering.html">
+       Image filtering
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../d_geosciences/remote_sensing/Image_Point_Operations.html">
+       Image point operations
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../d_geosciences/remote_sensing/Image_Transformations_and_Orthorectification.html">
+       Image transformations and orthorectification
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../../e_extra/intro.html">
+   Further resources
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" type="checkbox"/>
+  <label for="toctree-checkbox-24">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../e_extra/Camera_Calibration.html">
+     Camera calibration
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../e_extra/Cartography_Cartopy.html">
+     Cartopy (maps)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../e_extra/Dakota.html">
+     Dakota
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../e_extra/Google_Earth_Engine_Foundations.html">
+     Google Earth Engine foundations
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../e_extra/Google_Earth_Engine_Getting_Started_.html">
+     Google Earth Engine getting started
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../e_extra/Particle_Image_Velocimetry.html">
+     Particle image velocimetry (PIV)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../e_extra/contributors_guide.html">
+     Contributor’s guide
+    </a>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../e_extra/UAV_Mapping/intro.html">
+     UAV Mapping
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" type="checkbox"/>
+    <label for="toctree-checkbox-25">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/UAV_Mapping/1.Mission_Planning.html">
+       1. Mission Planning
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/intro.html">
+     Machine learning
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-26" name="toctree-checkbox-26" type="checkbox"/>
+    <label for="toctree-checkbox-26">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%200%20--%20Introduction.html">
+       Chapter 0 – Introduction
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%201%20--%20Neural%20Network.html">
+       Chapter 1 – Neural Network
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%202%20--%20Maximum%20Likelihood.html">
+       Chapter 2 – Maximum Likelihood
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%203%20--%20Cross%20Entropy.html">
+       Chapter 3 – Cross Entropy
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%204%20--%20Cost%20Function.html">
+       Chapter 4 – Cost Function
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%205%20--%20Gradient%20Descent%201.html">
+       Chapter 5 – Gradient Descent 1
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%206%20--%20Gradient%20Descent%202.html">
+       Chapter 6 – Gradient Descent 2
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%207%20--%20Real%20%28Non-linear%29%20Neural%20Network.html">
+       Chapter 7 – Real (Non-linear) Neural Network
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%208%20--%20Feedforward.html">
+       Chapter 8 – Feedforward
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%209%20--%20Back%20Propagation.html">
+       Chapter 9 – Back Propagation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%2010%20--%20General%20Back%20Propagation.html">
+       Chapter 10 – General Back Propagation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%2011%20--%20Underfitting%20and%20Overfitting.html">
+       Chapter 11 – Underfitting and Overfitting
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%2012%20--%20Early-stopping%2C%20Dropout%20%26%20Mini-batch.html">
+       Chapter 12 – Early-stopping, Dropout &amp; Mini-batch
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%2013%20--%20Vanishing%20Gradient%201.html">
+       Chapter 13 – Vanishing Gradient 1
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%2014%20--%20Vanishing%20Gradient%202.html">
+       Chapter 14 – Vanishing Gradient 2
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%2015%20--%20Regularisation.html">
+       Chapter 15 – Regularisation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%2016%20--%20Other%20Activation%20Functions.html">
+       Chapter 16 – Other Activation Functions
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%2017%20--%20Local%20Minima%20Trap.html">
+       Chapter 17 – Local Minima Trap
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%2018%20--%20Softmax.html">
+       Chapter 18 – Softmax
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%2019%20--%20Hyper-Parameters.html">
+       Chapter 19 – Hyper-Parameters
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%2020%20--%20Coding%20Example.html">
+       Chapter 20 – Coding Example
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../genindex.html">
+   Index
+  </a>
+ </li>
+</ul>
 
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/c_mathematics/numerical_methods/NM1_2020/NM1_2020_lecture2.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2Fc_mathematics/numerical_methods/NM1_2020/NM1_2020_lecture2.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+
+</a>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../../../_sources/c_mathematics/numerical_methods/NM1_2020/NM1_2020_lecture2.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
 
     </div>
 </div>
-    <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
-        
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#contents">
+   Contents
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#i-differentiation-the-continuous-definition">
+   I.    Differentiation - the continuous definition
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#ii-forward-difference-method-fdm">
+   II.   Forward Difference Method FDM
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#iii-taylor-series-to-estimate-accuracy">
+   III.  Taylor Series to estimate Accuracy
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#iv-central-difference-method-cdm">
+   IV.  Central Difference Method   CDM
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#v-approximating-second-derivatives">
+   V.   Approximating Second Derivatives
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#vi-numerical-methods-for-odes">
+   VI.  Numerical Methods for ODEs
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#vii-euler-method">
+   VII.  Euler Method
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#viii-heun-method">
+   VIII. Heun Method
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#i-differentiation-or-taking-a-derivative-the-continuous-definition">
+   I. Differentiation (or taking a derivative) - the continuous definition
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   II.  Forward Difference Method FDM
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   III.  Taylor series to estimate accuracy
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#taylor-series-example">
+     Taylor series example
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#what-does-order-of-accuracy-mean">
+     What does order of accuracy mean?
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#span-style-color-blue-exercise-2-1-compute-first-derivative-using-forward-differencing-span">
+   <span style="color:blue">
+    Exercise 2.1: Compute first derivative using forward differencing
+   </span>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   IV. Central Difference Method CDM
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#span-style-color-blue-exercise-2-2-compute-first-derivative-using-central-differencing-span">
+   <span style="color:blue">
+    Exercise 2.2: Compute first derivative using central differencing
+   </span>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#span-style-color-blue-example-write-a-function-to-perform-numerical-differentiation-span">
+   <span style="color:blue">
+    Example: Write a function to perform numerical differentiation
+   </span>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#span-style-color-blue-exercise-2-3-compute-the-derivative-of-sin-x-span">
+   <span style="color:blue">
+    Exercise 2.3: Compute the derivative of
+    <span class="math notranslate nohighlight">
+     \(\sin(x)\)
+    </span>
+   </span>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id4">
+   V.  Approximating second derivatives
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#span-style-color-blue-exercise-2-4-compute-second-derivative-span">
+   <span style="color:blue">
+    Exercise 2.4: Compute second derivative
+   </span>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#aside-non-central-differencing-and-differentiation-by-polynomial-fit">
+   Aside: Non-central differencing and differentiation by polynomial fit
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id5">
+   VI. Numerical methods for ODEs
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id6">
+   VII. Euler Method
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#span-style-color-blue-exercise-2-5-implementing-forward-euler-s-method-span">
+   <span style="color:blue">
+    Exercise 2.5: Implementing Forward Euler’s method
+   </span>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#viii-heun-s-method">
+   VIII.  Heun’s method
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#span-style-color-blue-exercise-2-6-implementing-heun-s-method-span">
+   <span style="color:blue">
+    Exercise 2.6: Implementing Heun’s method
+   </span>
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Numerical Methods II Numerical Differentiation</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#contents">
+   Contents
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#i-differentiation-the-continuous-definition">
+   I.    Differentiation - the continuous definition
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#ii-forward-difference-method-fdm">
+   II.   Forward Difference Method FDM
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#iii-taylor-series-to-estimate-accuracy">
+   III.  Taylor Series to estimate Accuracy
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#iv-central-difference-method-cdm">
+   IV.  Central Difference Method   CDM
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#v-approximating-second-derivatives">
+   V.   Approximating Second Derivatives
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#vi-numerical-methods-for-odes">
+   VI.  Numerical Methods for ODEs
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#vii-euler-method">
+   VII.  Euler Method
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#viii-heun-method">
+   VIII. Heun Method
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#i-differentiation-or-taking-a-derivative-the-continuous-definition">
+   I. Differentiation (or taking a derivative) - the continuous definition
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   II.  Forward Difference Method FDM
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   III.  Taylor series to estimate accuracy
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#taylor-series-example">
+     Taylor series example
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#what-does-order-of-accuracy-mean">
+     What does order of accuracy mean?
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#span-style-color-blue-exercise-2-1-compute-first-derivative-using-forward-differencing-span">
+   <span style="color:blue">
+    Exercise 2.1: Compute first derivative using forward differencing
+   </span>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   IV. Central Difference Method CDM
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#span-style-color-blue-exercise-2-2-compute-first-derivative-using-central-differencing-span">
+   <span style="color:blue">
+    Exercise 2.2: Compute first derivative using central differencing
+   </span>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#span-style-color-blue-example-write-a-function-to-perform-numerical-differentiation-span">
+   <span style="color:blue">
+    Example: Write a function to perform numerical differentiation
+   </span>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#span-style-color-blue-exercise-2-3-compute-the-derivative-of-sin-x-span">
+   <span style="color:blue">
+    Exercise 2.3: Compute the derivative of
+    <span class="math notranslate nohighlight">
+     \(\sin(x)\)
+    </span>
+   </span>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id4">
+   V.  Approximating second derivatives
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#span-style-color-blue-exercise-2-4-compute-second-derivative-span">
+   <span style="color:blue">
+    Exercise 2.4: Compute second derivative
+   </span>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#aside-non-central-differencing-and-differentiation-by-polynomial-fit">
+   Aside: Non-central differencing and differentiation by polynomial fit
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id5">
+   VI. Numerical methods for ODEs
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id6">
+   VII. Euler Method
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#span-style-color-blue-exercise-2-5-implementing-forward-euler-s-method-span">
+   <span style="color:blue">
+    Exercise 2.5: Implementing Forward Euler’s method
+   </span>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#viii-heun-s-method">
+   VIII.  Heun’s method
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#span-style-color-blue-exercise-2-6-implementing-heun-s-method-span">
+   <span style="color:blue">
+    Exercise 2.6: Implementing Heun’s method
+   </span>
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
               <div>
                 
-  <div class="section" id="numerical-methods-ii-numerical-differentiation">
-<h1>Numerical Methods II Numerical Differentiation<a class="headerlink" href="#numerical-methods-ii-numerical-differentiation" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="contents">
-<h2>Contents<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="i-differentiation-the-continuous-definition">
-<h2>I.    Differentiation - the continuous definition<a class="headerlink" href="#i-differentiation-the-continuous-definition" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="ii-forward-difference-method-fdm">
-<h2>II.   Forward Difference Method FDM<a class="headerlink" href="#ii-forward-difference-method-fdm" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="iii-taylor-series-to-estimate-accuracy">
-<h2>III.  Taylor Series to estimate Accuracy<a class="headerlink" href="#iii-taylor-series-to-estimate-accuracy" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="iv-central-difference-method-cdm">
-<h2>IV.  Central Difference Method   CDM<a class="headerlink" href="#iv-central-difference-method-cdm" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="v-approximating-second-derivatives">
-<h2>V.   Approximating Second Derivatives<a class="headerlink" href="#v-approximating-second-derivatives" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="vi-numerical-methods-for-odes">
-<h2>VI.  Numerical Methods for ODEs<a class="headerlink" href="#vi-numerical-methods-for-odes" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="vii-euler-method">
-<h2>VII.  Euler Method<a class="headerlink" href="#vii-euler-method" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="viii-heun-method">
-<h2>VIII. Heun Method<a class="headerlink" href="#viii-heun-method" title="Permalink to this headline">¶</a></h2>
+  <section class="tex2jax_ignore mathjax_ignore" id="numerical-methods-ii-numerical-differentiation">
+<h1>Numerical Methods II Numerical Differentiation<a class="headerlink" href="#numerical-methods-ii-numerical-differentiation" title="Permalink to this headline">#</a></h1>
+<section id="contents">
+<h2>Contents<a class="headerlink" href="#contents" title="Permalink to this headline">#</a></h2>
+</section>
+<section id="i-differentiation-the-continuous-definition">
+<h2>I.    Differentiation - the continuous definition<a class="headerlink" href="#i-differentiation-the-continuous-definition" title="Permalink to this headline">#</a></h2>
+</section>
+<section id="ii-forward-difference-method-fdm">
+<h2>II.   Forward Difference Method FDM<a class="headerlink" href="#ii-forward-difference-method-fdm" title="Permalink to this headline">#</a></h2>
+</section>
+<section id="iii-taylor-series-to-estimate-accuracy">
+<h2>III.  Taylor Series to estimate Accuracy<a class="headerlink" href="#iii-taylor-series-to-estimate-accuracy" title="Permalink to this headline">#</a></h2>
+</section>
+<section id="iv-central-difference-method-cdm">
+<h2>IV.  Central Difference Method   CDM<a class="headerlink" href="#iv-central-difference-method-cdm" title="Permalink to this headline">#</a></h2>
+</section>
+<section id="v-approximating-second-derivatives">
+<h2>V.   Approximating Second Derivatives<a class="headerlink" href="#v-approximating-second-derivatives" title="Permalink to this headline">#</a></h2>
+</section>
+<section id="vi-numerical-methods-for-odes">
+<h2>VI.  Numerical Methods for ODEs<a class="headerlink" href="#vi-numerical-methods-for-odes" title="Permalink to this headline">#</a></h2>
+</section>
+<section id="vii-euler-method">
+<h2>VII.  Euler Method<a class="headerlink" href="#vii-euler-method" title="Permalink to this headline">#</a></h2>
+</section>
+<section id="viii-heun-method">
+<h2>VIII. Heun Method<a class="headerlink" href="#viii-heun-method" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Ok, so let&#39;s start with importing our libraries</span>
@@ -355,9 +1746,9 @@
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="i-differentiation-or-taking-a-derivative-the-continuous-definition">
-<h2>I. Differentiation (or taking a derivative) - the continuous definition<a class="headerlink" href="#i-differentiation-or-taking-a-derivative-the-continuous-definition" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="i-differentiation-or-taking-a-derivative-the-continuous-definition">
+<h2>I. Differentiation (or taking a derivative) - the continuous definition<a class="headerlink" href="#i-differentiation-or-taking-a-derivative-the-continuous-definition" title="Permalink to this headline">#</a></h2>
 <p>The classical definition of the derivative of a function <span class="math notranslate nohighlight">\(f\)</span> at a point <span class="math notranslate nohighlight">\(x_0\)</span> is of course given by:</p>
 <div class="math notranslate nohighlight">
 \[f'(x_0)=\lim_{h\rightarrow 0} \frac{f(x_0+h)-f(x_0)}{h}. \]</div>
@@ -374,9 +1765,9 @@
 <p>To find the 1st derivative, you will differentiate a function once. To find the 2nd derivative, you will differentiate a function twice. While for many functions, there are analytical solutions, there are also many important functions that do not have analytical solutions. However, finding the differentiation of these function could be important for studying the change of these functions, so numerical differentiation is neccesary.</p>
 <p>There are several different ways that numerical differentiation can be done, and each with their merits and demerits. Higher order accuracy in the numerical differentiation would require more sophisticated methods of numerical differentiation.</p>
 <p>One of the popular ways to do Numerical Differentiation is through Finite Difference. To evaluate the derivative at a point termed <span class="math notranslate nohighlight">\(x_0\)</span>, the finite difference method uses point or points around the point <span class="math notranslate nohighlight">\(x_0\)</span> to find the derivative at the point <span class="math notranslate nohighlight">\(x_0\)</span>.</p>
-</div>
-<div class="section" id="id1">
-<h2>II.  Forward Difference Method FDM<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="id1">
+<h2>II.  Forward Difference Method FDM<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h2>
 <p>The forward difference is a method of finding the derivative at a point. The forward difference works by taking the gradient between a point <span class="math notranslate nohighlight">\(x_0\)</span> and a point in front of <span class="math notranslate nohighlight">\(x_0\)</span>. As the point in front of <span class="math notranslate nohighlight">\(x_0\)</span> becomes closer and closer to <span class="math notranslate nohighlight">\(x_0\)</span>, then the gradient between <span class="math notranslate nohighlight">\(x_0\)</span> and the point in front of <span class="math notranslate nohighlight">\(x_0\)</span> becomes closer and closer to the derivative of the function at <span class="math notranslate nohighlight">\(x_0\)</span>. Because this method uses a point in front of <span class="math notranslate nohighlight">\(x_0\)</span>, it has Forward in its name, and because it uses the difference between <span class="math notranslate nohighlight">\(x_0\)</span> and the point in front of <span class="math notranslate nohighlight">\(x_0\)</span>, it has Difference in its name.</p>
 <p>For example, we can turn the formal definition of a derivative given above into an approximation rule by replacing the limit as <span class="math notranslate nohighlight">\(h\)</span> approaches zero (i.e. the <span class="math notranslate nohighlight">\(\text{lim}_{h\rightarrow\infty}\)</span>) with a small but finite <span class="math notranslate nohighlight">\(\Delta x\)</span> value:</p>
 <div class="math notranslate nohighlight">
@@ -433,9 +1824,9 @@
 <img alt="../../../_images/NM1_2020_lecture2_6_0.png" src="../../../_images/NM1_2020_lecture2_6_0.png" />
 </div>
 </div>
-</div>
-<div class="section" id="id2">
-<h2>III.  Taylor series to estimate accuracy<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="id2">
+<h2>III.  Taylor series to estimate accuracy<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h2>
 <p>As previously discussed, there are many different methods that are possible to use for Numerical Differentiation. However, how do we know if a method is a good method, or it is a bad method. Also, what is exactly a good method, and what is exactly a bad method.</p>
 <p>Ultimately, all methods of numerical differentiation will move closer to the derivative of the function at the point <span class="math notranslate nohighlight">\(x_0\)</span> as the <span class="math notranslate nohighlight">\(\Delta x\)</span> used becomes smaller and smaller. What <span class="pun">differentiates</span> a good method from a bad  method is how accurate the estimate for the derivative is, given that all methods have the same <span class="math notranslate nohighlight">\(\Delta x\)</span> in their equation, for the sake of fair comparison. For the same <span class="math notranslate nohighlight">\(\Delta x\)</span>, a good method will result in a more accurate derivative of the function at point <span class="math notranslate nohighlight">\(x_0\)</span>, while a bad method will result in a less accurate derivative of the function at point <span class="math notranslate nohighlight">\(x_0\)</span>. Thus, what makes a method good/bad is the accuracy of the method.</p>
 <p>We can use a <a class="reference external" href="http://mathworld.wolfram.com/TaylorSeries.html">Taylor series expansion</a>, or <em>Taylor series analysis</em>, to estimate the accuracy of the method.</p>
@@ -449,8 +1840,8 @@ f(x_0+h) &amp; = f(x_0) + hf’(x_0) + \frac{h^2}{2!}f’’(x_0) + \frac{h^3}{3
 <p>An equivalent way of writing this expansion would of course be (The point nearby to <span class="math notranslate nohighlight">\(x_0\)</span>, so <span class="math notranslate nohighlight">\(x_0+h\)</span>, could be defined as <span class="math notranslate nohighlight">\(x\)</span>)</p>
 <div class="math notranslate nohighlight">
 \[f(x) = f(x_0) + (x - x_0) f'(x_0) + \frac{(x - x_0)^2}{2!} f''(x_0) + \frac{(x - x_0)^3}{3!} f'''(x_0) + \mathcal{O}((x - x_0)^4).\]</div>
-<div class="section" id="taylor-series-example">
-<h3>Taylor series example<a class="headerlink" href="#taylor-series-example" title="Permalink to this headline">¶</a></h3>
+<section id="taylor-series-example">
+<h3>Taylor series example<a class="headerlink" href="#taylor-series-example" title="Permalink to this headline">#</a></h3>
 <p><em>Wikipedia image: The exponential function (in blue), and the sum of the first (n + 1) terms of its Taylor series expansion around the point 0 (in red).</em></p>
 <img src="https://upload.wikimedia.org/wikipedia/commons/6/62/Exp_series.gif" width=200x>
 <p>As can be seen, more terms in the Taylor series means that the function resulting from the Taylor series better match with the actual function. It also means that the Taylow series better match with the function at greater distance away form point 0. Of course, if we are very close to the point 0, then the function obtained from Taylor series with more terms has very little difference to the function obtained from Taylor series with fewer terms; however, if we move further awaty from the point 0, then the function obtained from Taylor series with more terms remains accurate, while the numerical derivative from the Taylor series with less terms deviates significantly.</p>
@@ -516,9 +1907,9 @@ $<span class="math notranslate nohighlight">\( f'(x_0)\approx \frac{f(x_0+h)-f(x
 $<span class="math notranslate nohighlight">\(  f'(x_0) =  \frac {f(x_0+h) - f(x_0)}{h}   - \mathcal{O}(h)\)</span>$</p>
 <p>Immediately, I could see that the the difference in FDM and the Taylor Series is \mathcal{O}(h), and that the FDM does not include 2nd order terms, so FDM can only be 1st order accurate.</p>
 <p>In the future(heh, NM2), when I see that the difference between the numerical differentiation method and Taylor series is \mathcalc{O}{h^n}, I will know that the order of accuracy of the numerical differentiation method is <span class="math notranslate nohighlight">\(n\)</span></p>
-</div>
-<div class="section" id="what-does-order-of-accuracy-mean">
-<h3>What does order of accuracy mean?<a class="headerlink" href="#what-does-order-of-accuracy-mean" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="what-does-order-of-accuracy-mean">
+<h3>What does order of accuracy mean?<a class="headerlink" href="#what-does-order-of-accuracy-mean" title="Permalink to this headline">#</a></h3>
 <p>As previously discussed, there are many different methods that are possible to use for Numerical Differentiation. However, how do we know if a method is a good method, or it is a bad method. Also, what is exactly a good method, and what is exactly a bad method.</p>
 <p>Ultimately, all methods of numerical differentiation will move closer to the derivative of the function at the point <span class="math notranslate nohighlight">\(x_0\)</span> as the <span class="math notranslate nohighlight">\(\Delta x\)</span> used becomes smaller and smaller. What <span class="pun">differentiates</span> a good method from a bad  method is how accurate the estimate for the derivative is, given that all methods have the same <span class="math notranslate nohighlight">\(\Delta x\)</span> in their equation, for the sake of fair comparison. For the same <span class="math notranslate nohighlight">\(\Delta x\)</span>, a good method will result in a more accurate derivative of the function at point <span class="math notranslate nohighlight">\(x_0\)</span>, while a bad method will result in a less accurate derivative of the function at point <span class="math notranslate nohighlight">\(x_0\)</span>. Thus, what makes a method good/bad is the accuracy of the method.</p>
 <p>For the same <span class="math notranslate nohighlight">\(\Delta x\)</span>, a good method will result in a more accurate derivative of the function at point <span class="math notranslate nohighlight">\(x_0\)</span>, while a bad method will result in a less accurate derivative of the function at point <span class="math notranslate nohighlight">\(x_0\)</span>. Thus, what makes a method good/bad is the accuracy of the method. Of course, if the <span class="math notranslate nohighlight">\(\Delta x\)</span> is super small, then numerical derivative obtained from  good method has very little difference to a bad method; however, if the <span class="math notranslate nohighlight">\(\Delta x\)</span> becomes larger, then the numerical derivative from a good method remains accurate, while the numerical derivative from the bad method becomes inaccurate.</p>
@@ -526,17 +1917,17 @@ $<span class="math notranslate nohighlight">\(  f'(x_0) =  \frac {f(x_0+h) - f(x
 <p>1st order accuracy means that the error and <span class="math notranslate nohighlight">\(\Delta x\)</span> are in a linear relationship. As we make the spacing smaller we expect the error in our derivative to fall linearly, meaning that if we made the spacing 2 times smaller, the error becomes 2 times smaller.</p>
 <p>2nd order accuracy means that as we make the spacing smaller we expect the error in our derivative to fall linearly, meaning that if we made the spacing 2 times smaller, the error becomes 4 times smaller.</p>
 <p>3rd order accuracy means that as we make the spacing smaller we expect the error in our derivative to fall linearly, meaning that if we made the spacing 2 times smaller, the error becomes 8 times smaller.</p>
-</div>
-</div>
-<div class="section" id="span-style-color-blue-exercise-2-1-compute-first-derivative-using-forward-differencing-span">
-<h2><span style="color:blue">Exercise 2.1: Compute first derivative using forward differencing</span><a class="headerlink" href="#span-style-color-blue-exercise-2-1-compute-first-derivative-using-forward-differencing-span" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="span-style-color-blue-exercise-2-1-compute-first-derivative-using-forward-differencing-span">
+<h2><span style="color:blue">Exercise 2.1: Compute first derivative using forward differencing</span><a class="headerlink" href="#span-style-color-blue-exercise-2-1-compute-first-derivative-using-forward-differencing-span" title="Permalink to this headline">#</a></h2>
 <p>Use the forward difference scheme to compute an approximation to <span class="math notranslate nohighlight">\(f'(2.36)\)</span> from the following data:</p>
 <p><span class="math notranslate nohighlight">\(f(2.36) = 0.85866\)</span></p>
 <p><span class="math notranslate nohighlight">\(f(2.37) = 0.86289\)</span></p>
 <p>You should get an answer of 0.423.</p>
-</div>
-<div class="section" id="id3">
-<h2>IV. Central Difference Method CDM<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="id3">
+<h2>IV. Central Difference Method CDM<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h2>
 <p>In an attempt to derive a more accurate method we use two Taylor series expansions; one in the positive <span class="math notranslate nohighlight">\(x\)</span> direction from <span class="math notranslate nohighlight">\(x_0\)</span>, and one in the negative direction.</p>
 <p>Since we hope to achieve better than first-order accuracy, we include an extra term in the series:</p>
 <p>\begin{align*}
@@ -612,9 +2003,9 @@ f(x_0-\Delta x) &amp;= f(x_0)-\Delta xf’(x_0)+\frac{\Delta x^2}{2}f’’(x_0)
 <img alt="../../../_images/NM1_2020_lecture2_20_0.png" src="../../../_images/NM1_2020_lecture2_20_0.png" />
 </div>
 </div>
-</div>
-<div class="section" id="span-style-color-blue-exercise-2-2-compute-first-derivative-using-central-differencing-span">
-<h2><span style="color:blue">Exercise 2.2: Compute first derivative using central differencing</span><a class="headerlink" href="#span-style-color-blue-exercise-2-2-compute-first-derivative-using-central-differencing-span" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="span-style-color-blue-exercise-2-2-compute-first-derivative-using-central-differencing-span">
+<h2><span style="color:blue">Exercise 2.2: Compute first derivative using central differencing</span><a class="headerlink" href="#span-style-color-blue-exercise-2-2-compute-first-derivative-using-central-differencing-span" title="Permalink to this headline">#</a></h2>
 <p>Use the data below to compute <span class="math notranslate nohighlight">\(f'(0.2)\)</span> using central differencing:</p>
 <div class="math notranslate nohighlight">
 \[f(0.1) = 0.078348\]</div>
@@ -623,9 +2014,9 @@ f(x_0-\Delta x) &amp;= f(x_0)-\Delta xf’(x_0)+\frac{\Delta x^2}{2}f’’(x_0)
 <div class="math notranslate nohighlight">
 \[f(0.3) = 0.192916\]</div>
 <p>You should get 0.57284</p>
-</div>
-<div class="section" id="span-style-color-blue-example-write-a-function-to-perform-numerical-differentiation-span">
-<h2><span style="color:blue">Example: Write a function to perform numerical differentiation</span><a class="headerlink" href="#span-style-color-blue-example-write-a-function-to-perform-numerical-differentiation-span" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="span-style-color-blue-example-write-a-function-to-perform-numerical-differentiation-span">
+<h2><span style="color:blue">Example: Write a function to perform numerical differentiation</span><a class="headerlink" href="#span-style-color-blue-example-write-a-function-to-perform-numerical-differentiation-span" title="Permalink to this headline">#</a></h2>
 <p>As covered above, the expression</p>
 <div class="math notranslate nohighlight">
 \[\frac{f(x+\Delta x) - f(x-\Delta x)}{2\Delta x},\]</div>
@@ -678,9 +2069,9 @@ The approximate derivative of ln(x) at x = 0 is: 1.00003.  The error is 0.00003.
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="span-style-color-blue-exercise-2-3-compute-the-derivative-of-sin-x-span">
-<h2><span style="color:blue">Exercise 2.3: Compute the derivative of <span class="math notranslate nohighlight">\(\sin(x)\)</span></span><a class="headerlink" href="#span-style-color-blue-exercise-2-3-compute-the-derivative-of-sin-x-span" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="span-style-color-blue-exercise-2-3-compute-the-derivative-of-sin-x-span">
+<h2><span style="color:blue">Exercise 2.3: Compute the derivative of <span class="math notranslate nohighlight">\(\sin(x)\)</span></span><a class="headerlink" href="#span-style-color-blue-exercise-2-3-compute-the-derivative-of-sin-x-span" title="Permalink to this headline">#</a></h2>
 <p>Compute</p>
 <div class="math notranslate nohighlight">
 \[\frac{d(\sin x)}{dx}\qquad\textrm{at}\qquad x = 0.8\]</div>
@@ -690,9 +2081,9 @@ The approximate derivative of ln(x) at x = 0 is: 1.00003.  The error is 0.00003.
 <p>You should get something that looks like this</p>
 <p>Note that the plot here is logarithmic!!!</p>
 <p><img alt="&quot;Convergence plot&quot;" src="c_mathematics/numerical_methods/NM1_2020/images/fd_cd_convergence.png" /></p>
-</div>
-<div class="section" id="id4">
-<h2>V.  Approximating second derivatives<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="id4">
+<h2>V.  Approximating second derivatives<a class="headerlink" href="#id4" title="Permalink to this headline">#</a></h2>
 <p>Numerical differentiation may be extended to the second derivative by noting that the second derivative is the derivative of the first derivative.</p>
 <p>That is, if we define a new function <span class="math notranslate nohighlight">\(g\)</span> where:</p>
 <div class="math notranslate nohighlight">
@@ -724,9 +2115,9 @@ f’’(x_0)&amp;\approx\frac{f’(x_0+\frac{\Delta x}{2})-f’(x_0-\frac{\Delta
 &amp;\approx\frac{\frac{f(x_0+\Delta x)-f(x_0)}{\Delta x}-\frac{f(x_0)-f(x_0-h)}{\Delta x}}{\Delta x}\[5pt]
 &amp;\approx\frac{f(x_0+\Delta x)-2f(x_0)+f(x_0-\Delta x)}{\Delta x^2}.
 \end{align}</p>
-</div>
-<div class="section" id="span-style-color-blue-exercise-2-4-compute-second-derivative-span">
-<h2><span style="color:blue">Exercise 2.4: Compute second derivative</span><a class="headerlink" href="#span-style-color-blue-exercise-2-4-compute-second-derivative-span" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="span-style-color-blue-exercise-2-4-compute-second-derivative-span">
+<h2><span style="color:blue">Exercise 2.4: Compute second derivative</span><a class="headerlink" href="#span-style-color-blue-exercise-2-4-compute-second-derivative-span" title="Permalink to this headline">#</a></h2>
 <p>Calculate the second derivative <span class="math notranslate nohighlight">\(f''\)</span> at <span class="math notranslate nohighlight">\(x = 1\)</span> using the data below:</p>
 <p><span class="math notranslate nohighlight">\(f(0.84) = 0.431711\)</span></p>
 <p><span class="math notranslate nohighlight">\(f(0.92) = 0.398519\)</span></p>
@@ -734,9 +2125,9 @@ f’’(x_0)&amp;\approx\frac{f’(x_0+\frac{\Delta x}{2})-f’(x_0-\frac{\Delta
 <p><span class="math notranslate nohighlight">\(f(1.08) = 0.339596\)</span></p>
 <p><span class="math notranslate nohighlight">\(f(1.16) = 0.313486\)</span></p>
 <p>You should get 0.36828</p>
-</div>
-<div class="section" id="aside-non-central-differencing-and-differentiation-by-polynomial-fit">
-<h2>Aside: Non-central differencing and differentiation by polynomial fit<a class="headerlink" href="#aside-non-central-differencing-and-differentiation-by-polynomial-fit" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="aside-non-central-differencing-and-differentiation-by-polynomial-fit">
+<h2>Aside: Non-central differencing and differentiation by polynomial fit<a class="headerlink" href="#aside-non-central-differencing-and-differentiation-by-polynomial-fit" title="Permalink to this headline">#</a></h2>
 <p>In this particular case we were given more data than we actually used. An alternative approach would be to use <em>non-centred differencing</em>, e.g. the following is also a valid approximation to the second derivative</p>
 <div class="math notranslate nohighlight">
 \[
@@ -745,9 +2136,9 @@ f’’(x_0)&amp;\approx\frac{f’(x_0+\frac{\Delta x}{2})-f’(x_0-\frac{\Delta
 \end{align}\]</div>
 <p>This can come in handy if we need to approximate the value of derivatives at or near to a boundary where we don’t have data beyond that boundary.</p>
 <p>If we wanted to use all of this data, an alternative would be to fit a polynomial to this data, and then differentiate this analytical expression exactly to approximate the derivative at any point between 0.84 and 1.16 (recalling that extrapolation is dangerous).</p>
-</div>
-<div class="section" id="id5">
-<h2>VI. Numerical methods for ODEs<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="id5">
+<h2>VI. Numerical methods for ODEs<a class="headerlink" href="#id5" title="Permalink to this headline">#</a></h2>
 <p>One of the most important applications of numerical mathematics in the sciences is the numerical solution of ordinary differential equations (ODEs). While the ODEs you will encounter during your Mathematics modules are mostly solvable through analytical solutions, real world ODE are often in the form where it has been proven that no analytical solutions exists. However, many of these ODEs govern important physical processes, and thus, numerical solutions were found for these ODEs.</p>
 <p>To recap through an example</p>
 <p>Suppose we have the general first-order ODE:</p>
@@ -760,9 +2151,9 @@ u(t_0)&amp;=u_0
 <p>If we manage to solve this equation analytically, the solution will be a function <span class="math notranslate nohighlight">\(u(t)\)</span> which is defined for every <span class="math notranslate nohighlight">\(t&gt;t_0\)</span>. In common with all of the numerical methods we will encounter in this module, our objective is to find an approximate solution to the ODE at a finite set of points. In this case, we will attempt to find approximate solutions at <span class="math notranslate nohighlight">\(t=t_0,\,t_0+\Delta t,\,t_0+2\Delta t\,,t_0+3\Delta t,\,\ldots\)</span>.</p>
 <p>It is frequently useful to think of the independent variable, <span class="math notranslate nohighlight">\(t\)</span>, as representing time. A numerical method steps forward in time units of <span class="math notranslate nohighlight">\(\Delta t\)</span>, attempting to calculate <span class="math notranslate nohighlight">\(u(t+\Delta t)\)</span> in using the previously calculated value <span class="math notranslate nohighlight">\(u(t)\)</span>.</p>
 <p>Basically, what we would like to find here is what would the value of <span class="math notranslate nohighlight">\(u\)</span> be at each and every <span class="math notranslate nohighlight">\(t\)</span>?</p>
-</div>
-<div class="section" id="id6">
-<h2>VII. Euler Method<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="id6">
+<h2>VII. Euler Method<a class="headerlink" href="#id6" title="Permalink to this headline">#</a></h2>
 <p>Euler Method is one of the simplest schemes to implement to solve for ODEs.</p>
 <p>We will use Euler Method to solve the equatio stated beforehand,</p>
 <p>\begin{align}
@@ -824,9 +2215,9 @@ and hence easily find the new value for <span class="math notranslate nohighligh
 <p>The formula given is used to calculate the value of <span class="math notranslate nohighlight">\(u(t)\)</span> one time step forward from the last known value. The error is therefore the local truncation error. If we actually wish to know the value at some fixed time <span class="math notranslate nohighlight">\(T\)</span> then we will have to calculate <span class="math notranslate nohighlight">\((T-t_0)/h\)</span> steps of the method, since the distance from <span class="math notranslate nohighlight">\(T\)</span> to <span class="math notranslate nohighlight">\(t_0\)</span> is <span class="math notranslate nohighlight">\(T-t_0\)</span> and the length of each step is <span class="math notranslate nohighlight">\(h\)</span>. This sum over <span class="math notranslate nohighlight">\(O(1/\Delta t)\)</span> steps results in a global truncation error for Euler’s method of <span class="math notranslate nohighlight">\(O(\Delta t)\)</span>.</p>
 <p>In other words, Euler’s method is only first-order accurate – if we halve <span class="math notranslate nohighlight">\(\Delta t\)</span> we will need to do double the amount of work and the error should correspondingly halve; if we had a second-order method we would expect the error to reduce by a factor of 4 for every doubling in effort!</p>
 <p>Thus, can we do better?</p>
-</div>
-<div class="section" id="span-style-color-blue-exercise-2-5-implementing-forward-euler-s-method-span">
-<h2><span style="color:blue">Exercise 2.5: Implementing Forward Euler’s method</span><a class="headerlink" href="#span-style-color-blue-exercise-2-5-implementing-forward-euler-s-method-span" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="span-style-color-blue-exercise-2-5-implementing-forward-euler-s-method-span">
+<h2><span style="color:blue">Exercise 2.5: Implementing Forward Euler’s method</span><a class="headerlink" href="#span-style-color-blue-exercise-2-5-implementing-forward-euler-s-method-span" title="Permalink to this headline">#</a></h2>
 <p>Write a function <em>euler</em>( <em>f</em>, <em>u0</em>, <em>t0</em>, <em>t_max</em>, <em>h</em>) that takes as arguments the function <span class="math notranslate nohighlight">\(f(u,t)\)</span> on the RHS of our ODE,
 an initial value for <span class="math notranslate nohighlight">\(u\)</span>, the start and end time of the integration, and the time step.</p>
 <p>Use it to integrate the following ODE problems up to time <span class="math notranslate nohighlight">\(t=10\)</span></p>
@@ -864,9 +2255,9 @@ an initial value for <span class="math notranslate nohighlight">\(u\)</span>, th
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="viii-heun-s-method">
-<h2>VIII.  Heun’s method<a class="headerlink" href="#viii-heun-s-method" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="viii-heun-s-method">
+<h2>VIII.  Heun’s method<a class="headerlink" href="#viii-heun-s-method" title="Permalink to this headline">#</a></h2>
 <p>Euler’s method is first-order accurate because it calculates the derivative using only the information available at the beginning of the time step. As we observed previously, higher-order convergence can be obtained if we also employ information from other points in the interval. Basically, the more points that we employ, the more accurate we can be. Heun’s method uses 2 points compared to Euler’s one single point, increasing accuracy.</p>
 <p>Heun’s method may be derived by attempting to use derivative information at both the start and the end of the interval:</p>
 <div class="math notranslate nohighlight">
@@ -885,15 +2276,15 @@ an initial value for <span class="math notranslate nohighlight">\(u\)</span>, th
 \[ u(t+\Delta t)\approx u(t)+\frac{\Delta t}{2}\big(f(u(t),t)+f(\tilde{u}(t+\Delta t),t+\Delta t)\big)\]</div>
 <p>The generic term for schemes of this type is <strong>predictor-corrector</strong>. The initial calculation of <span class="math notranslate nohighlight">\(\tilde{u}(t+\Delta t)\)</span> is used to predict the new value of <span class="math notranslate nohighlight">\(u\)</span> and then this is used in a more accurate calculation to produce a more correct value.</p>
 <p>Note that Heun’s method is <span class="math notranslate nohighlight">\(O(\Delta t^2)\)</span>, i.e. a second-order method.</p>
-</div>
-<div class="section" id="span-style-color-blue-exercise-2-6-implementing-heun-s-method-span">
-<h2><span style="color:blue">Exercise 2.6: Implementing Heun’s method</span><a class="headerlink" href="#span-style-color-blue-exercise-2-6-implementing-heun-s-method-span" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="span-style-color-blue-exercise-2-6-implementing-heun-s-method-span">
+<h2><span style="color:blue">Exercise 2.6: Implementing Heun’s method</span><a class="headerlink" href="#span-style-color-blue-exercise-2-6-implementing-heun-s-method-span" title="Permalink to this headline">#</a></h2>
 <p>Repeat the previous exercise for this method.</p>
 <p>For some ODEs you know the exact solution to compare the errors between Euler’s and Heun’s method, and how they vary with time step.</p>
 <p>You should be able to get a plot that looks like this for the case <span class="math notranslate nohighlight">\(u'=u\)</span>.</p>
 <p><img alt="&quot;Comparison between the Euler and Heun method for the solution of a simple ODE.&quot;" src="c_mathematics/numerical_methods/NM1_2020/images/euler_vs_heun.png" /></p>
-</div>
-</div>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -917,31 +2308,34 @@ an initial value for <span class="math notranslate nohighlight">\(u\)</span>, th
 
               </div>
               
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
         </div>
     </div>
-    
-    
-    <div class='prev-next-bottom'>
-        
-
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Imperial College London<br/>
+  
+      &copy; Copyright 2020.<br/>
+</p>
+        </footer>
     </div>
-    <footer class="footer mt-5 mt-md-0">
-    <div class="container">
-      <p>
-        
-          By Imperial College London<br/>
-        
-            &copy; Copyright 2020.<br/>
-      </p>
-    </div>
-  </footer>
-</main>
+    
+</div>
 
 
       </div>
     </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
 
-    <script src="../../../_static/js/index.js"></script>
-    
+
   </body>
 </html>

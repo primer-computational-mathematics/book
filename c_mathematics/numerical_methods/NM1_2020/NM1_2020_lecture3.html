@@ -1,319 +1,1692 @@
 
-
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Lecture 3: Numerical Integration &#8212; ESE Jupyter Material</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
-    <link href="../../../_static/css/index.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../../_static/sphinx-book-theme.css" type="text/css" />
-    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/custom.css" />
-    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
-    <script src="../../../_static/sphinx-book-theme.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
     <script src="../../../_static/jquery.js"></script>
     <script src="../../../_static/underscore.js"></script>
     <script src="../../../_static/doctools.js"></script>
-    <script src="../../../_static/language_data.js"></script>
-    <script src="../../../_static/togglebutton.js"></script>
     <script src="../../../_static/clipboard.min.js"></script>
     <script src="../../../_static/copybutton.js"></script>
-    <script src="../../../_static/sphinx-book-theme.js"></script>
-    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
-    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
-    <script >
-        const thebe_selector = ".cell"
-        const thebe_selector_input = ".cell_input div.highlight"
-        const thebe_selector_output = ".output"
-    </script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".cell"
+const thebe_selector_input = ".cell_input div.highlight"
+const thebe_selector_output = ".output, .cell_output"
+</script>
     <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="docsearch:language" content="en">
-
-
-
+    <!-- Google Analytics -->
+    
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
     
 
     <div class="container-xl">
       <div class="row">
           
-<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    
-        <div class="navbar-brand-box">
-<a class="navbar-brand text-wrap" href="../../../index.html">
-  
-  <img src="../../../_static/logo.png" class="logo" alt="logo">
-  
-  
-  <h1 class="site-logo" id="site-title">ESE Jupyter Material</h1>
-  
-</a>
-</div>
-
-<form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">ESE Jupyter Material</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form>
-
-<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
-  
-  <ul class="nav sidenav_l1">
-  <li class="">
-    <a href="../../../intro.html">Landing page</a>
-  </li>
-  <li class="">
-    <a href="../../../a_modules/intro.html">Modules</a>
-  </li>
-  <li class="">
-    <a href="../../../b_coding/intro.html">Coding</a>
-  </li>
-  <li class="">
-    <a href="../../intro.html">Mathematics</a>
-  </li>
-  <li class="">
-    <a href="../../../d_geosciences/intro.html">Geosciences</a>
-  </li>
-  <li class="">
-    <a href="../../../e_extra/intro.html">Further resources</a>
-  </li>
-  <li class="">
-    <a href="../../../genindex.html">Index</a>
-  </li>
-</ul>
-</nav>
-
- <!-- To handle the deprecated key -->
-
-<div class="navbar_extra_footer">
-  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
-</div>
-
-</div>
-
-
-          
-
-
-          
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
-    
-    <div class="row topbar fixed-top container-xl">
-    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
-    </div>
-    <div class="col pl-2 topbar-main">
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
         
-        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-            <i class="fas fa-bars"></i>
-            <i class="fas fa-arrow-left"></i>
-            <i class="fas fa-arrow-up"></i>
-        </button>
-        
-        <div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
-            class="fas fa-download"></i></button>
-
-    
-    <div class="dropdown-buttons">
-        <!-- ipynb file if we had a myst markdown file -->
-        
-        <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../../_sources/c_mathematics/numerical_methods/NM1_2020/NM1_2020_lecture3.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
-        <!-- Download PDF via print -->
-        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
-    </div>
-    
-</div>
-        <!-- Source interaction buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-    <div class="dropdown-buttons sourcebuttons">
-        
-        <a class="issues-button"
-            href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2Fc_mathematics/numerical_methods/NM1_2020/NM1_2020_lecture3.html&body=Your%20issue%20content%20here."><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        
-    </div>
-</div>
-
-
-        <!-- Full screen (wrap in <a> to have style consistency -->
-        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
-                    class="fas fa-expand"></i></button></a>
-
-        <!-- Launch buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/c_mathematics/numerical_methods/NM1_2020/NM1_2020_lecture3.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="../../../_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        
-        
-    </div>
-</div>
-
-    </div>
-    <div class="d-none d-md-block col-md-2 bd-toc show">
-<div class="tocsection onthispage pt-5 pb-3">
-    <i class="fas fa-list"></i> On this page
-</div>
-
-<nav id="bd-toc-nav">
-    <ul class="nav section-nav flex-column">
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#contents" class="nav-link">Contents</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#i-introduction-to-numerical-integration" class="nav-link">I         .    Introduction to Numerical Integration</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#ii-rule-1-midpoint-rule-a-k-a-rectangle-method" class="nav-link">II        .    Rule 1: Midpoint Rule a.k.a Rectangle Method</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#iii-good-bad-numerical-integration-methods" class="nav-link">III       .    Good/Bad Numerical Integration Methods</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#iv-rule-2-trapezoid-rule" class="nav-link">IV       .    Rule 2: Trapezoid Rule</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#v-error-analysis" class="nav-link">V        .    Error Analysis</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#vi-rule-3-simpson-s-rule" class="nav-link">VI       .    Rule 3: Simpson’s Rule</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#vii-rule-4-composite-simpson-s-rule" class="nav-link">VII      .    Rule 4: Composite Simpson’s Rule</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#viii-rule-5-weddle-s-rule" class="nav-link">VIII     .    Rule 5: Weddle’s Rule</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#aside-richardson-extrapolation-romberg-integration-and-newton-cotes-formula" class="nav-link">Aside:    (Richardson) extrapolation, Romberg integration and Newton-Cotes formula</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#id1" class="nav-link">I.   Introduction to Numerical Integration</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#integration-example" class="nav-link">Integration example</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#id2" class="nav-link">II.    Rule 1: Midpoint rule a.k.a Rectangle Method</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#implementing-a-midpoint-rule-function" class="nav-link">Implementing a midpoint rule function</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#span-style-color-blue-exercise-3-1-midpoint-rule-convergence-plot-span" class="nav-link"><span style="color:blue">Exercise 3.1: Midpoint rule convergence plot</span></a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#id3" class="nav-link">III. Good/Bad Numerical Integration Methods</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#id4" class="nav-link">IV.     Rule 2: Trapezoid rule</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#span-style-color-blue-exercise-3-2-complete-the-implementation-of-the-trapezoid-rule-below-span" class="nav-link"><span style="color:blue">Exercise 3.2: Complete the implementation of the trapezoid rule below</span></a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#id5" class="nav-link">V.   Error Analysis</a><ul class="nav section-nav flex-column">
-                
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#example-concave-down-sine-wave" class="nav-link">Example: Concave Down Sine Wave</a>
-        </li>
-    
-            </ul>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#id6" class="nav-link">VI.     Rule 3: Simpson’s rule</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#span-style-color-blue-exercise-3-3-implementing-simpson-s-rule-span" class="nav-link"><span style="color:blue">Exercise 3.3: Implementing Simpson’s rule</span></a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#observations" class="nav-link">Observations</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#id7" class="nav-link">VII.     Rule 4: Composite Simpson’s Rule</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#id8" class="nav-link">VIII.      Rule 5: Weddle’s rule</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#span-style-color-blue-exercise-3-4-implementing-weddle-s-rule-span" class="nav-link"><span style="color:blue">Exercise 3.4: Implementing Weddle’s rule</span></a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#id9" class="nav-link">Aside: (Richardson) extrapolation, Romberg integration and Newton-Cotes formula</a>
-        </li>
-    
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../intro.html">
+                    Landing page
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../../a_modules/intro.html">
+   Modules
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../a_modules/math_methods_1/intro.html">
+     Mathematical methods 1
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+    <label for="toctree-checkbox-2">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../a_modules/math_methods_1/1_Coordinate_Systems.html">
+       Coordinate systems (Lecture 1)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../a_modules/math_methods_1/2_Vectors.html">
+       Vectors (Lecture 1)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../a_modules/math_methods_1/3_Multivariable_Calculus.html">
+       Multivariable calculus (Lecture 2)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../a_modules/math_methods_1/4_Vector_Calculus.html">
+       Vector calculus (Lecture 3)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../a_modules/math_methods_1/5_Matrices.html">
+       Matrices (Lecture 4)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../a_modules/math_methods_1/6_Eigenvalues.html">
+       Eigenvalues (Lecture 5)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../a_modules/math_methods_1/7_Series.html">
+       Series (Lecture 6)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../a_modules/math_methods_1/8_ODEs.html">
+       ODEs (Lecture 7)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../a_modules/math_methods_1/9_Modelling.html">
+       Modelling (Lecture 8)
+      </a>
+     </li>
     </ul>
-</nav>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../a_modules/mechanics/intro.html">
+     Mechanics
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+    <label for="toctree-checkbox-3">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../a_modules/mechanics/1_Motion_in_1D.html">
+       Motion in 1D
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../a_modules/mechanics/2_Motion_in_2D.html">
+       Motion in 2D
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../a_modules/mechanics/3_Work_and_Energy.html">
+       Work and Energy
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../a_modules/mechanics/4_Rotational_Motion.html">
+       Rotational Motion
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../a_modules/mechanics/5_Gravity.html">
+       Gravity
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../a_modules/tectonics_of_the_ocean/intro.html">
+     Techtonics of the ocean
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+    <label for="toctree-checkbox-4">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../a_modules/tectonics_of_the_ocean/1_mapping_the_ocean_floor.html">
+       Reading Maps
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../../b_coding/intro.html">
+   Coding
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../b_coding/NumPy_Arrays.html">
+     NumPy arrays
+    </a>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../b_coding/Fundamentals%20of%20Computer%20Science/intro.html">
+     Fundamentals of Computer Science
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+    <label for="toctree-checkbox-6">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Fundamentals%20of%20Computer%20Science/1_Algorythmic_Complexity.html">
+       Algorithmic complexity
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Fundamentals%20of%20Computer%20Science/2_Recursion.html">
+       Recursion
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Fundamentals%20of%20Computer%20Science/3_Divide_and_Conquer.html">
+       Divide and Conquer
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Fundamentals%20of%20Computer%20Science/4_Dynamic_Programming.html">
+       Dynamic Programming
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Fundamentals%20of%20Computer%20Science/5_Greedy_Algorithms.html">
+       Greedy Algorithms
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Fundamentals%20of%20Computer%20Science/6_Data_Structures.html">
+       Data Structures
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Fundamentals%20of%20Computer%20Science/7_Graph_Algorithms.html">
+       Graph Algorithms
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/intro.html">
+     Intro to Python
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+    <label for="toctree-checkbox-7">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/1_Printing_and_formatting_statements.html">
+       Printing and formatting statements
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/2_Variables.html">
+       Variables
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/3_If_statement.html">
+       If statement
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/4_While_loops.html">
+       While loops
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/5_Lists.html">
+       Lists
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/6_For_loops.html">
+       For loops
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/7_List_comprehensions.html">
+       List comprehensions
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/8_Nested_lists.html">
+       Nested lists
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/9_Handling_errors.html">
+       Handling errors
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/10_Importing.html">
+       Importing in Python
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/11_Functions.html">
+       Creating custom functions
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/12_Tuples.html">
+       Tuples
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/13_File_handling.html">
+       File handling
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/14_Dictionaries.html">
+       Dictionaries
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/15_Flow_control_statements.html">
+       Flow control statements
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/16_Sets.html">
+       Sets
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/17_Matplotlib.html">
+       Plotting data with Matplotlib
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/18_Assert.html">
+       Assert
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/19_Classes.html">
+       Python classes
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Intro%20to%20Python/20_Lambdas.html">
+       Lambdas
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../b_coding/Pandas/intro.html">
+     Pandas
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+    <label for="toctree-checkbox-8">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Pandas/1_basics.html">
+       Introduction
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Pandas/2_filter_select_assign.html">
+       Filtering, selecting and assigning
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Pandas/3_merge_combine_group_sort.html">
+       Merging, combining, grouping and sorting
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Pandas/4_summary_statistics.html">
+       Summary statistics
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Pandas/5_time_stamps.html">
+       Creating date-time stamps
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Pandas/6_plotting.html">
+       Plotting
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../b_coding/Programming%20Tools/intro.html">
+     Programming tools
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
+    <label for="toctree-checkbox-9">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../b_coding/Programming%20Tools/1_Version_Control_Git.html">
+       Version control Git
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../intro.html">
+   Mathematics
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/>
+  <label for="toctree-checkbox-10">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../calculus/intro.html">
+     Calculus
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/>
+    <label for="toctree-checkbox-11">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../calculus/Vector_calculus.html">
+       Vector calculus
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../complex_analysis/intro.html">
+     Complex analysis
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/>
+    <label for="toctree-checkbox-12">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../complex_analysis/1_introduction.html">
+       Introduction
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../complex_analysis/2_complex_plane.html">
+       Complex plane
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../complex_analysis/3_complex_functions.html">
+       Complex functions
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../complex_analysis/4_holomorphic_functions.html">
+       Holomorphic functions
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../complex_analysis/5_integrating.html">
+       Complex integration
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../complex_analysis/6_fractals.html">
+       Fractals
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../differential_equations/intro.html">
+     Differential equations
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/>
+    <label for="toctree-checkbox-13">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../differential_equations/1_de_introduction.html">
+       Introduction to differential equations
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../differential_equations/2_linear_des.html">
+       Linear Differential Equations
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../differential_equations/3_first-order_odes.html">
+       First-order ODEs
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../differential_equations/4_higher_ord_lin_odes.html">
+       Higher order Linear ODEs
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../differential_equations/5_ode_series.html">
+       Series ODE
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../differential_equations/6_pde_basicdefinitions.html">
+       Introductory definitions and concepts
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../differential_equations/7_pde_first_order.html">
+       First-order linear PDEs
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../differential_equations/8_pde_second_order.html">
+       Canonical form of second-order linear PDEs
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../differential_equations/9_poisson_laplace_eq.html">
+       Poisson’s and Laplace’s equation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../differential_equations/10_heat_eq.html">
+       Heat (diffusion) equation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../differential_equations/11_pde_fourier.html">
+       Solving PDEs with fourier methods
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../differential_equations/12_wave_eq.html">
+       Wave equation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../differential_equations/13_similarity_solutions.html">
+       Self-similar solutions
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../linear_algebra/intro.html">
+     Linear algebra
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/>
+    <label for="toctree-checkbox-14">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../linear_algebra/1_Basic_definitions_and_operations.html">
+       Basic definitions and operations
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../linear_algebra/2_Linear_Systems.html">
+       Systems of linear equations
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../linear_algebra/3_Theory.html">
+       Theory
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../linear_algebra/4_Eigenvalues_and_eigenvectors.html">
+       Eigenvalues and eigenvectors
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../linear_algebra/5_Linear_Algebra_in_Python.html">
+       Linear Algebra in Python
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../mathematical_notation/intro.html">
+     Mathematical notation
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" type="checkbox"/>
+    <label for="toctree-checkbox-15">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../mathematical_notation/Big_O_notation.html">
+       Big O notation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../mathematical_notation/Tensors_Review.html">
+       Review of tensors
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../intro.html">
+     Numerical methods
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
+    <label for="toctree-checkbox-16">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../1_Interpolation_curve_fitting.html">
+       Interpolation and curve fitting
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../2_Numerical_differentiation.html">
+       Numerical differentiation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../3_Timestepping_an_ODE.html">
+       Solving or timestepping an ODE
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../4_Heuns_method.html">
+       Heun’s method
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../5_Runge_Kutta_method.html">
+       Runge-Kutta method
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../6_Solving_PDEs_SOR.html">
+       Successive over-relaxation method
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../7_FTCS.html">
+       FTCS scheme
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../8_BTCS.html">
+       BTCS scheme
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../9_Numerical_integration.html">
+       Numerical integration
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../10_Roots_of_equations.html">
+       Roots of equations
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../11_linear_algebra_intro.html">
+       Linear algebra introduction
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../12_Gaussian_elimination.html">
+       Gaussian elimination
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../13_LU_decomposition.html">
+       LU decomposition
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../14_ill_conditioning_errors.html">
+       Ill-conditioning and roundoff errors
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../15_iterative_methods_to_solve_matrix.html">
+       Iterative methods to solve a matrix
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../series_and_sequences/intro.html">
+     Series and sequences
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
+    <label for="toctree-checkbox-17">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../series_and_sequences/Fourier_series.html">
+       Fourier series
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../series_and_sequences/Fourier_transforms.html">
+       Fourier transforms
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../series_and_sequences/Taylor_series.html">
+       Taylor series
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../sets_and_functions/intro.html">
+     Sets and functions
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
+    <label for="toctree-checkbox-18">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../sets_and_functions/1_logic.html">
+       Logic and proof
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../sets_and_functions/2_sets.html">
+       Sets
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../sets_and_functions/3_functions.html">
+       Functions
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../sets_and_functions/4_elementary_functions_1.html">
+       Elementary functions 1
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../sets_and_functions/5_elementary_functions_2.html">
+       Elementary functions 2
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../sets_and_functions/6_composition_and_inverse.html">
+       Composition and Inverse Functions
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../statistics/intro.html">
+     Statistics
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
+    <label for="toctree-checkbox-19">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../statistics/Linear_Regression.html">
+       Linear regression
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../statistics/Statistics_for_Geoscientists.html">
+       Introduction to statistics for Geoscientists
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../../d_geosciences/intro.html">
+   Geosciences
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
+  <label for="toctree-checkbox-20">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../d_geosciences/1D_Heat_Conduction.html">
+     1D heat conduction (layered medium)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../d_geosciences/1D_Resistivity_Forward_Modelling.html">
+     1D resistivity forward modelling
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../d_geosciences/Climate_Model.html">
+     Climate model
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../d_geosciences/Dynamic_Earth.html">
+     Seafloor ages
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../d_geosciences/Keplerian_Orbits.html">
+     Keplerian orbits
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../d_geosciences/Milankovitch_cycles.html">
+     Milankovitch cycles
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../d_geosciences/Seismology.html">
+     Downloading earthquake data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../d_geosciences/Tides.html">
+     Tides
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../d_geosciences/Wave_dispersion.html">
+     Wave dispersion
+    </a>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../d_geosciences/Electromagnetism/intro.html">
+     Electromagnetism
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
+    <label for="toctree-checkbox-21">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../d_geosciences/Electromagnetism/1_electricity_magnetism.html">
+       Electricity and magnetism
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../d_geosciences/Electromagnetism/2_maxwell_eqs.html">
+       Maxwell’s equations
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../d_geosciences/Electromagnetism/3_four_field.html">
+       The four-field formalism
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../d_geosciences/Fluid_Dynamics/intro.html">
+     Fluid dynamics
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
+    <label for="toctree-checkbox-22">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../d_geosciences/Fluid_Dynamics/Lecture5_1D_Pipe_Flow.html">
+       Lecture5_1D_Pipe_Flow
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../d_geosciences/Fluid_Dynamics/Lecture6_Non_Linear_Viscosity_2D_Stokes.html">
+       Lecture6_Non_Linear_Viscosity_2D_Stokes
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../d_geosciences/Fluid_Dynamics/Lecture7_Pipe_Flow_with_Heat.html">
+       Lecture7_Pipe_Flow_with_Heat
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../d_geosciences/Fluid_Dynamics/Lecture8_Part1_Navier_Stoke_Equation.html">
+       Lecture8_Part1_Navier_Stoke_Equation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../d_geosciences/Fluid_Dynamics/Lecture8_Part2_SPH_Algorithm_For_Energy_Equation.html">
+       Lecture8_Part2_SPH_Algorithm_For_Energy_Equation
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../d_geosciences/remote_sensing/intro.html">
+     Remote sensing
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
+    <label for="toctree-checkbox-23">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../d_geosciences/remote_sensing/Image_Filtering.html">
+       Image filtering
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../d_geosciences/remote_sensing/Image_Point_Operations.html">
+       Image point operations
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../d_geosciences/remote_sensing/Image_Transformations_and_Orthorectification.html">
+       Image transformations and orthorectification
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../../e_extra/intro.html">
+   Further resources
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" type="checkbox"/>
+  <label for="toctree-checkbox-24">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../e_extra/Camera_Calibration.html">
+     Camera calibration
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../e_extra/Cartography_Cartopy.html">
+     Cartopy (maps)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../e_extra/Dakota.html">
+     Dakota
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../e_extra/Google_Earth_Engine_Foundations.html">
+     Google Earth Engine foundations
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../e_extra/Google_Earth_Engine_Getting_Started_.html">
+     Google Earth Engine getting started
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../e_extra/Particle_Image_Velocimetry.html">
+     Particle image velocimetry (PIV)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../e_extra/contributors_guide.html">
+     Contributor’s guide
+    </a>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../e_extra/UAV_Mapping/intro.html">
+     UAV Mapping
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" type="checkbox"/>
+    <label for="toctree-checkbox-25">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/UAV_Mapping/1.Mission_Planning.html">
+       1. Mission Planning
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/intro.html">
+     Machine learning
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-26" name="toctree-checkbox-26" type="checkbox"/>
+    <label for="toctree-checkbox-26">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%200%20--%20Introduction.html">
+       Chapter 0 – Introduction
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%201%20--%20Neural%20Network.html">
+       Chapter 1 – Neural Network
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%202%20--%20Maximum%20Likelihood.html">
+       Chapter 2 – Maximum Likelihood
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%203%20--%20Cross%20Entropy.html">
+       Chapter 3 – Cross Entropy
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%204%20--%20Cost%20Function.html">
+       Chapter 4 – Cost Function
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%205%20--%20Gradient%20Descent%201.html">
+       Chapter 5 – Gradient Descent 1
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%206%20--%20Gradient%20Descent%202.html">
+       Chapter 6 – Gradient Descent 2
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%207%20--%20Real%20%28Non-linear%29%20Neural%20Network.html">
+       Chapter 7 – Real (Non-linear) Neural Network
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%208%20--%20Feedforward.html">
+       Chapter 8 – Feedforward
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%209%20--%20Back%20Propagation.html">
+       Chapter 9 – Back Propagation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%2010%20--%20General%20Back%20Propagation.html">
+       Chapter 10 – General Back Propagation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%2011%20--%20Underfitting%20and%20Overfitting.html">
+       Chapter 11 – Underfitting and Overfitting
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%2012%20--%20Early-stopping%2C%20Dropout%20%26%20Mini-batch.html">
+       Chapter 12 – Early-stopping, Dropout &amp; Mini-batch
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%2013%20--%20Vanishing%20Gradient%201.html">
+       Chapter 13 – Vanishing Gradient 1
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%2014%20--%20Vanishing%20Gradient%202.html">
+       Chapter 14 – Vanishing Gradient 2
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%2015%20--%20Regularisation.html">
+       Chapter 15 – Regularisation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%2016%20--%20Other%20Activation%20Functions.html">
+       Chapter 16 – Other Activation Functions
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%2017%20--%20Local%20Minima%20Trap.html">
+       Chapter 17 – Local Minima Trap
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%2018%20--%20Softmax.html">
+       Chapter 18 – Softmax
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%2019%20--%20Hyper-Parameters.html">
+       Chapter 19 – Hyper-Parameters
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../e_extra/pytorch_image_filtering_ml/Chapter%2020%20--%20Coding%20Example.html">
+       Chapter 20 – Coding Example
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../genindex.html">
+   Index
+  </a>
+ </li>
+</ul>
 
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/c_mathematics/numerical_methods/NM1_2020/NM1_2020_lecture3.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2Fc_mathematics/numerical_methods/NM1_2020/NM1_2020_lecture3.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+
+</a>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../../../_sources/c_mathematics/numerical_methods/NM1_2020/NM1_2020_lecture3.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
 
     </div>
 </div>
-    <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
-        
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#contents">
+   Contents
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#i-introduction-to-numerical-integration">
+   I         .    Introduction to Numerical Integration
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#ii-rule-1-midpoint-rule-a-k-a-rectangle-method">
+   II        .    Rule 1: Midpoint Rule a.k.a Rectangle Method
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#iii-good-bad-numerical-integration-methods">
+   III       .    Good/Bad Numerical Integration Methods
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#iv-rule-2-trapezoid-rule">
+   IV       .    Rule 2: Trapezoid Rule
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#v-error-analysis">
+   V        .    Error Analysis
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#vi-rule-3-simpson-s-rule">
+   VI       .    Rule 3: Simpson’s Rule
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#vii-rule-4-composite-simpson-s-rule">
+   VII      .    Rule 4: Composite Simpson’s Rule
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#viii-rule-5-weddle-s-rule">
+   VIII     .    Rule 5: Weddle’s Rule
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#aside-richardson-extrapolation-romberg-integration-and-newton-cotes-formula">
+   Aside:    (Richardson) extrapolation, Romberg integration and Newton-Cotes formula
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   I.   Introduction to Numerical Integration
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#integration-example">
+   Integration example
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   II.    Rule 1: Midpoint rule a.k.a Rectangle Method
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#implementing-a-midpoint-rule-function">
+   Implementing a midpoint rule function
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#span-style-color-blue-exercise-3-1-midpoint-rule-convergence-plot-span">
+   <span style="color:blue">
+    Exercise 3.1: Midpoint rule convergence plot
+   </span>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   III. Good/Bad Numerical Integration Methods
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id4">
+   IV.     Rule 2: Trapezoid rule
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#span-style-color-blue-exercise-3-2-complete-the-implementation-of-the-trapezoid-rule-below-span">
+   <span style="color:blue">
+    Exercise 3.2: Complete the implementation of the trapezoid rule below
+   </span>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id5">
+   V.   Error Analysis
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example-concave-down-sine-wave">
+     Example: Concave Down Sine Wave
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id6">
+   VI.     Rule 3: Simpson’s rule
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#span-style-color-blue-exercise-3-3-implementing-simpson-s-rule-span">
+   <span style="color:blue">
+    Exercise 3.3: Implementing Simpson’s rule
+   </span>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#observations">
+   Observations
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id7">
+   VII.     Rule 4: Composite Simpson’s Rule
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id8">
+   VIII.      Rule 5: Weddle’s rule
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#span-style-color-blue-exercise-3-4-implementing-weddle-s-rule-span">
+   <span style="color:blue">
+    Exercise 3.4: Implementing Weddle’s rule
+   </span>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id9">
+   Aside: (Richardson) extrapolation, Romberg integration and Newton-Cotes formula
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Lecture 3: Numerical Integration</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#contents">
+   Contents
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#i-introduction-to-numerical-integration">
+   I         .    Introduction to Numerical Integration
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#ii-rule-1-midpoint-rule-a-k-a-rectangle-method">
+   II        .    Rule 1: Midpoint Rule a.k.a Rectangle Method
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#iii-good-bad-numerical-integration-methods">
+   III       .    Good/Bad Numerical Integration Methods
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#iv-rule-2-trapezoid-rule">
+   IV       .    Rule 2: Trapezoid Rule
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#v-error-analysis">
+   V        .    Error Analysis
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#vi-rule-3-simpson-s-rule">
+   VI       .    Rule 3: Simpson’s Rule
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#vii-rule-4-composite-simpson-s-rule">
+   VII      .    Rule 4: Composite Simpson’s Rule
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#viii-rule-5-weddle-s-rule">
+   VIII     .    Rule 5: Weddle’s Rule
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#aside-richardson-extrapolation-romberg-integration-and-newton-cotes-formula">
+   Aside:    (Richardson) extrapolation, Romberg integration and Newton-Cotes formula
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   I.   Introduction to Numerical Integration
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#integration-example">
+   Integration example
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   II.    Rule 1: Midpoint rule a.k.a Rectangle Method
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#implementing-a-midpoint-rule-function">
+   Implementing a midpoint rule function
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#span-style-color-blue-exercise-3-1-midpoint-rule-convergence-plot-span">
+   <span style="color:blue">
+    Exercise 3.1: Midpoint rule convergence plot
+   </span>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   III. Good/Bad Numerical Integration Methods
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id4">
+   IV.     Rule 2: Trapezoid rule
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#span-style-color-blue-exercise-3-2-complete-the-implementation-of-the-trapezoid-rule-below-span">
+   <span style="color:blue">
+    Exercise 3.2: Complete the implementation of the trapezoid rule below
+   </span>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id5">
+   V.   Error Analysis
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example-concave-down-sine-wave">
+     Example: Concave Down Sine Wave
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id6">
+   VI.     Rule 3: Simpson’s rule
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#span-style-color-blue-exercise-3-3-implementing-simpson-s-rule-span">
+   <span style="color:blue">
+    Exercise 3.3: Implementing Simpson’s rule
+   </span>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#observations">
+   Observations
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id7">
+   VII.     Rule 4: Composite Simpson’s Rule
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id8">
+   VIII.      Rule 5: Weddle’s rule
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#span-style-color-blue-exercise-3-4-implementing-weddle-s-rule-span">
+   <span style="color:blue">
+    Exercise 3.4: Implementing Weddle’s rule
+   </span>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id9">
+   Aside: (Richardson) extrapolation, Romberg integration and Newton-Cotes formula
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
               <div>
                 
-  <div class="section" id="lecture-3-numerical-integration">
-<h1>Lecture 3: Numerical Integration<a class="headerlink" href="#lecture-3-numerical-integration" title="Permalink to this headline">¶</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="lecture-3-numerical-integration">
+<h1>Lecture 3: Numerical Integration<a class="headerlink" href="#lecture-3-numerical-integration" title="Permalink to this headline">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># some imports we will make at the start of every notebook</span>
@@ -326,44 +1699,44 @@
 </div>
 </div>
 </div>
-<div class="section" id="contents">
-<h2>Contents<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="i-introduction-to-numerical-integration">
-<h2>I         .    Introduction to Numerical Integration<a class="headerlink" href="#i-introduction-to-numerical-integration" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="ii-rule-1-midpoint-rule-a-k-a-rectangle-method">
-<h2>II        .    Rule 1: Midpoint Rule a.k.a Rectangle Method<a class="headerlink" href="#ii-rule-1-midpoint-rule-a-k-a-rectangle-method" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="iii-good-bad-numerical-integration-methods">
-<h2>III       .    Good/Bad Numerical Integration Methods<a class="headerlink" href="#iii-good-bad-numerical-integration-methods" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="iv-rule-2-trapezoid-rule">
-<h2>IV       .    Rule 2: Trapezoid Rule<a class="headerlink" href="#iv-rule-2-trapezoid-rule" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="v-error-analysis">
-<h2>V        .    Error Analysis<a class="headerlink" href="#v-error-analysis" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="vi-rule-3-simpson-s-rule">
-<h2>VI       .    Rule 3: Simpson’s Rule<a class="headerlink" href="#vi-rule-3-simpson-s-rule" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="vii-rule-4-composite-simpson-s-rule">
-<h2>VII      .    Rule 4: Composite Simpson’s Rule<a class="headerlink" href="#vii-rule-4-composite-simpson-s-rule" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="viii-rule-5-weddle-s-rule">
-<h2>VIII     .    Rule 5: Weddle’s Rule<a class="headerlink" href="#viii-rule-5-weddle-s-rule" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="aside-richardson-extrapolation-romberg-integration-and-newton-cotes-formula">
-<h2>Aside:    (Richardson) extrapolation, Romberg integration and Newton-Cotes formula<a class="headerlink" href="#aside-richardson-extrapolation-romberg-integration-and-newton-cotes-formula" title="Permalink to this headline">¶</a></h2>
+<section id="contents">
+<h2>Contents<a class="headerlink" href="#contents" title="Permalink to this headline">#</a></h2>
+</section>
+<section id="i-introduction-to-numerical-integration">
+<h2>I         .    Introduction to Numerical Integration<a class="headerlink" href="#i-introduction-to-numerical-integration" title="Permalink to this headline">#</a></h2>
+</section>
+<section id="ii-rule-1-midpoint-rule-a-k-a-rectangle-method">
+<h2>II        .    Rule 1: Midpoint Rule a.k.a Rectangle Method<a class="headerlink" href="#ii-rule-1-midpoint-rule-a-k-a-rectangle-method" title="Permalink to this headline">#</a></h2>
+</section>
+<section id="iii-good-bad-numerical-integration-methods">
+<h2>III       .    Good/Bad Numerical Integration Methods<a class="headerlink" href="#iii-good-bad-numerical-integration-methods" title="Permalink to this headline">#</a></h2>
+</section>
+<section id="iv-rule-2-trapezoid-rule">
+<h2>IV       .    Rule 2: Trapezoid Rule<a class="headerlink" href="#iv-rule-2-trapezoid-rule" title="Permalink to this headline">#</a></h2>
+</section>
+<section id="v-error-analysis">
+<h2>V        .    Error Analysis<a class="headerlink" href="#v-error-analysis" title="Permalink to this headline">#</a></h2>
+</section>
+<section id="vi-rule-3-simpson-s-rule">
+<h2>VI       .    Rule 3: Simpson’s Rule<a class="headerlink" href="#vi-rule-3-simpson-s-rule" title="Permalink to this headline">#</a></h2>
+</section>
+<section id="vii-rule-4-composite-simpson-s-rule">
+<h2>VII      .    Rule 4: Composite Simpson’s Rule<a class="headerlink" href="#vii-rule-4-composite-simpson-s-rule" title="Permalink to this headline">#</a></h2>
+</section>
+<section id="viii-rule-5-weddle-s-rule">
+<h2>VIII     .    Rule 5: Weddle’s Rule<a class="headerlink" href="#viii-rule-5-weddle-s-rule" title="Permalink to this headline">#</a></h2>
+</section>
+<section id="aside-richardson-extrapolation-romberg-integration-and-newton-cotes-formula">
+<h2>Aside:    (Richardson) extrapolation, Romberg integration and Newton-Cotes formula<a class="headerlink" href="#aside-richardson-extrapolation-romberg-integration-and-newton-cotes-formula" title="Permalink to this headline">#</a></h2>
 <p><span style="color:red"> I might end up using interval when I actually intend to say subinterval, sorry …. </span></p>
-</div>
-<div class="section" id="id1">
-<h2>I.   Introduction to Numerical Integration<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="id1">
+<h2>I.   Introduction to Numerical Integration<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h2>
 <p>Numerical Integration is involves finding the integration of a function. While Sympy can be used to do analytical integration, there are actually many functions for which finding an analytical solution to integration is very difficult, and numerical integration is used instead.</p>
 <p>To understand how to perform numerical integration, we first need to understand what exactly is the purpose of integration. For a 1D function, integration means finding the area underneath the curve. However, integration can also be extended for a 2D function and even a 3D function, and some of these will be covered in your Mathematics modules.</p>
 <p><a class="reference external" href="https://en.wikipedia.org/wiki/Numerical_integration"><em>Quadrature</em></a> is the term used for numerical evaluation of a <em>definite</em> (i.e. over a range <span class="math notranslate nohighlight">\([a,b]\)</span>) integral, or in 1D finding the area under a curve.</p>
 <img src="https://upload.wikimedia.org/wikipedia/commons/f/f2/Integral_as_region_under_curve.svg" style="width: 400px">
-<p><em>(Wikipedia: https://upload.wikimedia.org/wikipedia/commons/f/f2/Integral_as_region_under_curve.svg)</em></p>
+<p><em>(Wikipedia: <a class="reference external" href="https://upload.wikimedia.org/wikipedia/commons/f/f2/Integral_as_region_under_curve.svg">https://upload.wikimedia.org/wikipedia/commons/f/f2/Integral_as_region_under_curve.svg</a>)</em></p>
 <p>Wondered why the symbol of integration looks like that? The symbol of integration actually comes from the cursive of capital letter <span class="math notranslate nohighlight">\(S\)</span>, meaning summation. But why would it come from the idea of summation? Well, integration is very much related to summation.</p>
 <p>We know that for a 1D function, which will be our primary topic of discussion today, if we evaluate an integral, we find the area under the function, as illustrated in the figure above. If your curve was a straight line (remember, straight lines are but a subset of curves which has no curves), then it would be rather straightforward to calculate the area under the curve, since you would either have a rectangle if your line was a horizontal straight line, or a trapezoid if your line was not a horizontal straight line. Yet, what happens if your line got a bunch of bend and curves?</p>
 <p>For example, we could have an a very simple equation like</p>
@@ -385,9 +1758,9 @@
 <li><p>Composite Simpson’s rule</p></li>
 <li><p>Weddle’s rule.</p></li>
 </ul>
-</div>
-<div class="section" id="integration-example">
-<h2>Integration example<a class="headerlink" href="#integration-example" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="integration-example">
+<h2>Integration example<a class="headerlink" href="#integration-example" title="Permalink to this headline">#</a></h2>
 <p>Let’s begin with a simple function to demonstrate some of the most basic methods for performing numerical integration:</p>
 <div class="math notranslate nohighlight">
 \[f\left ( x \right ) := \sin \left ( x \right ),\]</div>
@@ -436,9 +1809,9 @@
 </div>
 </div>
 <p>Now let’s investigate the different quadrature rules, finding the area under the curve and seeing how it differs from the true area which we know is 2.</p>
-</div>
-<div class="section" id="id2">
-<h2>II.    Rule 1: Midpoint rule a.k.a Rectangle Method<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="id2">
+<h2>II.    Rule 1: Midpoint rule a.k.a Rectangle Method<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h2>
 <p>The <em>midpoint rule</em> is perhaps the simplest quadrature rule.</p>
 <p>For reasons you will see below it is sometimes also called the <em>rectangle method</em>.</p>
 <p>Consider one of the subintervals <span class="math notranslate nohighlight">\(\,[x_i, x_{i+1}].\)</span></p>
@@ -525,9 +1898,9 @@
 </div>
 </div>
 <p>A complex example looks like this, where the red line shows the original function we wish to compute the integral of, and the blue rectangles <em>approximate</em> the area under that function for a number of sub-intervals:</p>
-<img src="http://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Integration_rectangle.svg/340px-Integration_rectangle.svg.png" width="600"></div>
-<div class="section" id="implementing-a-midpoint-rule-function">
-<h2>Implementing a midpoint rule function<a class="headerlink" href="#implementing-a-midpoint-rule-function" title="Permalink to this headline">¶</a></h2>
+<img src="http://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Integration_rectangle.svg/340px-Integration_rectangle.svg.png" width="600"></section>
+<section id="implementing-a-midpoint-rule-function">
+<h2>Implementing a midpoint rule function<a class="headerlink" href="#implementing-a-midpoint-rule-function" title="Permalink to this headline">#</a></h2>
 <p>Clearly the sum of the areas of all the rectangles provides an estimate of the true integral. In the case above we observe an error of around 1.5%.</p>
 <p>[Note that the SciPy module features many different integration functions, and you can find thorough documentation for these functions (including methods not covered in this course) <a class="reference external" href="http://docs.scipy.org/doc/scipy/reference/integrate.html">here</a>. This library does not contain a function for the midpoint rule, but it is trivial to create our own.]</p>
 <p>As we are going to compare different rules below, let’s implement a midpoint rule function.</p>
@@ -599,23 +1972,23 @@ Area 1000 rectangle(s) = 2 (error=8.22467e-07)
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="span-style-color-blue-exercise-3-1-midpoint-rule-convergence-plot-span">
-<h2><span style="color:blue">Exercise 3.1: Midpoint rule convergence plot</span><a class="headerlink" href="#span-style-color-blue-exercise-3-1-midpoint-rule-convergence-plot-span" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="span-style-color-blue-exercise-3-1-midpoint-rule-convergence-plot-span">
+<h2><span style="color:blue">Exercise 3.1: Midpoint rule convergence plot</span><a class="headerlink" href="#span-style-color-blue-exercise-3-1-midpoint-rule-convergence-plot-span" title="Permalink to this headline">#</a></h2>
 <p>Plot the log-log plot mentioned below.</p>
 <p>We can observe from the slope of the log-log plot of error against number of subintervals that the error is a quadratic function of the inverse of the number of subintervals (or equivalently is quadratically dependent on the spacing between the points - the interval size).</p>
 <p>This demonstrates that (for this particular example at least), the method demonstrates second-order accuracy - if we halve the interval size the error goes down by a factor of 4!</p>
 <p>The simplicity of this method is its weakness, as rectangles (i.e. a flat top) are rarely a good approximation for the shape of a smooth function.</p>
-</div>
-<div class="section" id="id3">
-<h2>III. Good/Bad Numerical Integration Methods<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="id3">
+<h2>III. Good/Bad Numerical Integration Methods<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h2>
 <p>We observe that for the rectangle method, if the subintervals are large, then the method becomes inaccurate. We also observe that if the subintervals become smaller and smaller, then the area calculated becomes closer and closer to the exact area under the curve. We also note that to have small intervals, we need to evaluate the function at more and more points. I see that for 5 subintervals, we will need to evaluate 6 points in total.</p>
 <p>In numerical integration, given an <span class="math notranslate nohighlight">\(\infty\)</span> number of points, and thus an <span class="math notranslate nohighlight">\(\infty\)</span> Note:<span class="math notranslate nohighlight">\((\infty - 1 = \infty )\)</span> number of subintervals, any numerical integration method will result in the area summed from the subinterval becoming closer and closer to the area under the curve.</p>
 <p>However, it should be noted that computational power is not infinite. While the examples here demonstrated can easily be calculated, real world examples are often very complex, and significant computational power may be required to compute even just a single point. Yet to get an accurate calculation of the area under the curve, we need more and more points, for more and more subintervals. Thus, we reach a conflict. To have a more accurate area under the curve, we need more points, but getting more points requires more computational power, which is often limited.</p>
 <p>Thus, a good numerical integration method must be able to be both accurate in finding the area underneath even if only a few points can be calculated.</p>
-</div>
-<div class="section" id="id4">
-<h2>IV.     Rule 2: Trapezoid rule<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="id4">
+<h2>IV.     Rule 2: Trapezoid rule<a class="headerlink" href="#id4" title="Permalink to this headline">#</a></h2>
 <p>As previously stated, the slices we use do not have to be rectangles, they can also be trapezoids. Rectangle rule is very similar to the trapezoid rule except for one small difference.</p>
 <p>For the height of the rectangle, the rectangle rule, the width of the subinterval is multiplied by</p>
 <div class="math notranslate nohighlight">
@@ -712,9 +2085,9 @@ Area 1000 rectangle(s) = 2 (error=8.22467e-07)
 <img src="http://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Integration_trapezoid.svg/340px-Integration_trapezoid.svg.png" width="600">
 <p>the tops of the shapes (now trapezoids) are approximating the variation of the function with a linear function, rather than a flat (constant) function.  This looks like it should give more accurate results, but see below.</p>
 <p>Note that numpy has a function for the trapezoid rule, <a href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.trapz.html">numpy.trapz</a>, but we’ll make our own that works in a similar way to our midpoint rule function.</p>
-</div>
-<div class="section" id="span-style-color-blue-exercise-3-2-complete-the-implementation-of-the-trapezoid-rule-below-span">
-<h2><span style="color:blue">Exercise 3.2: Complete the implementation of the trapezoid rule below</span><a class="headerlink" href="#span-style-color-blue-exercise-3-2-complete-the-implementation-of-the-trapezoid-rule-below-span" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="span-style-color-blue-exercise-3-2-complete-the-implementation-of-the-trapezoid-rule-below-span">
+<h2><span style="color:blue">Exercise 3.2: Complete the implementation of the trapezoid rule below</span><a class="headerlink" href="#span-style-color-blue-exercise-3-2-complete-the-implementation-of-the-trapezoid-rule-below-span" title="Permalink to this headline">#</a></h2>
 <p>Test your function in a similar way to above,  compute another log-log plot of the error and compare with the midpoint rule.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -789,9 +2162,9 @@ Area 1000 rectangle(s) = 2 (error=8.22467e-07)
 <p><code class="docutils literal notranslate"><span class="pre">Area</span> <span class="pre">10</span> <span class="pre">trapezoid(s)</span> <span class="pre">=</span> <span class="pre">1.98352</span> <span class="pre">(error=0.0164765)</span></code></p>
 <p><code class="docutils literal notranslate"><span class="pre">Area</span> <span class="pre">100</span> <span class="pre">trapezoid(s)</span> <span class="pre">=</span> <span class="pre">1.99984</span> <span class="pre">(error=0.000164496)</span></code></p>
 <p><code class="docutils literal notranslate"><span class="pre">Area</span> <span class="pre">1000</span> <span class="pre">trapezoid(s)</span> <span class="pre">=</span> <span class="pre">2</span> <span class="pre">(error=1.64493e-06)</span></code></p>
-</div>
-<div class="section" id="id5">
-<h2>V.   Error Analysis<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="id5">
+<h2>V.   Error Analysis<a class="headerlink" href="#id5" title="Permalink to this headline">#</a></h2>
 <p>It is important to understand the errors of the numerical integration method we are using. If there are a limited number of slices, the area covered by the slices from trapezoid rule or the midpoint rule will not be slightly different from the actual area under the curve. Of course, if we increase the number of slices, the error becomes smaller; however, we also increase the computational power required.</p>
 <p>A good numerical integration method should be able to have few slices, meaning using little computational power, but still be able to have a small error only. Thus, to know if the numerical integration method we used is a good or a bad method, we need to analyse the errors, or more exactly the change in the errors with numbers of slcies, of our numerical integration method.</p>
 <p>Ah, and we could also use the error analysis we do to for the rectangle and the trapezoid rule to arrive at Simpson’s, the cooler Simpson’s (no, it’s not actually called like that) and the Weddle Rules! These are rules coming from the error analysis, whose error quickly decreases as the number of slices increase.</p>
@@ -805,8 +2178,8 @@ Area 1000 rectangle(s) = 2 (error=8.22467e-07)
 <p>Clearly both the midpoint and trapezoid rules will give the exact result for both constant and linear functions,</p>
 <p>but they are not exact for quadratics [you could test our codes yourself on the function <span class="math notranslate nohighlight">\(x^2\)</span> to demonstrate this].</p>
 <p>Therefore, they have a degree of precision of 1.</p>
-<div class="section" id="example-concave-down-sine-wave">
-<h3>Example: Concave Down Sine Wave<a class="headerlink" href="#example-concave-down-sine-wave" title="Permalink to this headline">¶</a></h3>
+<section id="example-concave-down-sine-wave">
+<h3>Example: Concave Down Sine Wave<a class="headerlink" href="#example-concave-down-sine-wave" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
@@ -934,10 +2307,10 @@ I_T = 1 \frac {0+1^{2}}{2} = \frac {1}{2}.
 <p>We notice that in this situation, the rectangle method <strong>overestimates</strong> while the trapezoid method <strong>underestimates</strong>.
 We also notice that the underestimate of the trapezoid rule is about <strong>twice</strong> the overestimate of the rectangle method.</p>
 <p>So, well, could we combine twice the <strong>overestimate</strong> from the rectangle method and once the <strong>underestimate</strong> from the trapezoid method, and then divide everything by <strong>3</strong> since it’s 2 parts rectangle and one part trapezoid rule, to obtain something more accurate?</p>
-<img src="images/SIMPSONS.png"></div>
-</div>
-<div class="section" id="id6">
-<h2>VI.     Rule 3: Simpson’s rule<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<img src="images/SIMPSONS.png"></section>
+</section>
+<section id="id6">
+<h2>VI.     Rule 3: Simpson’s rule<a class="headerlink" href="#id6" title="Permalink to this headline">#</a></h2>
 <p>Knowing the error estimates from the two rules explored so far opens up the potential for us to combine them in an appropriate manner to create a new quadrature rule, generally more accurate than either one separately.</p>
 <p>Suppose <span class="math notranslate nohighlight">\(I_S\)</span> indicates an unknown, but more accurate, estimate of the integral over an interval.</p>
 <p>Then, as seen above, as <span class="math notranslate nohighlight">\(I_T\)</span> has an error that is approximately <span class="math notranslate nohighlight">\(-2\)</span> times the error in <span class="math notranslate nohighlight">\(I_M\)</span>, the following relation must hold approximately:</p>
@@ -1026,9 +2399,9 @@ I_S &amp;:= \frac{2}{3}I_M + \frac{1}{3}I_T \[5pt]
 <p>It looks like a much closer fit to the function:</p>
 <img src="http://upload.wikimedia.org/wikipedia/commons/5/50/Integration_simpson.png" width="600">
 <p>Let’s make a function to test it out…</p>
-</div>
-<div class="section" id="span-style-color-blue-exercise-3-3-implementing-simpson-s-rule-span">
-<h2><span style="color:blue">Exercise 3.3: Implementing Simpson’s rule</span><a class="headerlink" href="#span-style-color-blue-exercise-3-3-implementing-simpson-s-rule-span" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="span-style-color-blue-exercise-3-3-implementing-simpson-s-rule-span">
+<h2><span style="color:blue">Exercise 3.3: Implementing Simpson’s rule</span><a class="headerlink" href="#span-style-color-blue-exercise-3-3-implementing-simpson-s-rule-span" title="Permalink to this headline">#</a></h2>
 <p>Complete an implementation of Simpson’s rule and test it on our sine function.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1074,9 +2447,9 @@ I_S &amp;:= \frac{2}{3}I_M + \frac{1}{3}I_T \[5pt]
 <p><code class="docutils literal notranslate"><span class="pre">Area</span> <span class="pre">200</span> <span class="pre">rectangle(s)</span> <span class="pre">=</span> <span class="pre">2</span> <span class="pre">(error=4.228e-11)</span></code></p>
 <p><code class="docutils literal notranslate"><span class="pre">Area</span> <span class="pre">2000</span> <span class="pre">rectangle(s)</span> <span class="pre">=</span> <span class="pre">2</span> <span class="pre">(error=2.22045e-15)</span></code></p>
 <p>For this simple function you should find far smaller errors, and which drop much more rapidly with smaller <span class="math notranslate nohighlight">\(h\)</span> (or more sub-intervals).</p>
-</div>
-<div class="section" id="observations">
-<h2>Observations<a class="headerlink" href="#observations" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="observations">
+<h2>Observations<a class="headerlink" href="#observations" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
 <li><p>The errors are lower than for the midpoint and trapezoidal rules, and the method converge more rapidly - i.e. the relative improvement only gets better for more subintervals.</p></li>
 <li><p>This expression now integrates up to cubics exactly (by construction), so it is of order 4 (as confirmed by the convergence plot above).</p></li>
@@ -1085,9 +2458,9 @@ I_S &amp;:= \frac{2}{3}I_M + \frac{1}{3}I_T \[5pt]
 <li><p>As was the case with our first Trapezoidal implementation, we are performing unnecessary function evaluations here; we can fix this issue through the implementation of a so-called <em>composite</em> version of the rule, which still gives the same result as your Simpson’s rule, but makes it but easier for the computer. The Composite Simpsons Rule still does many evaluations, but fewer evaluations than your Standard Simpson’s Rule.</p></li>
 <li><p>You could always try to derive the Composite Simpson’s Rule from the Simpsons Rule! I think this was covered in A Level Further Mathematics, at least when I was in high school.</p></li>
 </ul>
-</div>
-<div class="section" id="id7">
-<h2>VII.     Rule 4: Composite Simpson’s Rule<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="id7">
+<h2>VII.     Rule 4: Composite Simpson’s Rule<a class="headerlink" href="#id7" title="Permalink to this headline">#</a></h2>
 <p>If we assume that our interval <span class="math notranslate nohighlight">\([a,b]\)</span> has been split up into <span class="math notranslate nohighlight">\(n\)</span> intervals (or <span class="math notranslate nohighlight">\(n+1\)</span> data points) we can save some function evaluations by writing Simpson’s Rule in the following form (note here we do not introduce any additional midpoint function evaluations)</p>
 <p>\begin{align*}
 I_{S}
@@ -1137,9 +2510,9 @@ or more precisely the <em>composite Simpson’s 1/3 rule</em>.</p>
 </div>
 </div>
 <p>This is a slight improvement for a simple function like <span class="math notranslate nohighlight">\(\sin\)</span>, but will be much more of an improvement for functions which oscillate more, in a relative sense compared to the size of our bins.</p>
-</div>
-<div class="section" id="id8">
-<h2>VIII.      Rule 5: Weddle’s rule<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="id8">
+<h2>VIII.      Rule 5: Weddle’s rule<a class="headerlink" href="#id8" title="Permalink to this headline">#</a></h2>
 <p>We noted above that Simpson’s rule is fourth-order accurate. <span style="color:red">For the Simpsons Rule, we have the degree of accuracy or precision being <span class="math notranslate nohighlight">\(3\)</span> but the method is <span class="math notranslate nohighlight">\(4th\)</span> order accurate, since if we halve the interval size the error goes down by a factor of <span class="math notranslate nohighlight">\(2^4 =16\)</span>!</span></p>
 <p>Suppose we take an approximation to <span class="math notranslate nohighlight">\(I\)</span> using <span class="math notranslate nohighlight">\(n\)</span> subintervals with Simpson’s rule and call the result <span class="math notranslate nohighlight">\(I_S\)</span>, and then apply Simpson’s rule with double the number of intervals (<span class="math notranslate nohighlight">\(2n\)</span>) and call the result <span class="math notranslate nohighlight">\(I_{S_2}\)</span>.</p>
 <p>Then we have two estimates for the integral where we expect <span class="math notranslate nohighlight">\(I_{S_2}\)</span> to be approximately <span class="math notranslate nohighlight">\(2^4=16\)</span> times more accurate than <span class="math notranslate nohighlight">\(S\)</span>. In particular, we expect the lowest (i.e. the leading) order error term in <span class="math notranslate nohighlight">\(I_{S_2}\)</span> to be precisely one sixteenth that of <span class="math notranslate nohighlight">\(I_S\)</span>.<span style="color:red">For the Simpsons Rule, we have the degree of accuracy or precision being <span class="math notranslate nohighlight">\(3\)</span> but the method is <span class="math notranslate nohighlight">\(4th\)</span> order accurate, since if we halve the interval size the error goes down by a factor of <span class="math notranslate nohighlight">\(2^4 =16\)</span>!</span></p>
@@ -1172,21 +2545,21 @@ or more precisely the <em>composite Simpson’s 1/3 rule</em>.</p>
 \[ I_W = I_{S_2} + \frac {\left (I_{S_2} - I_S \right )}{15}.\]</div>
 <p>This is known as <em>Weddle’s rule</em>, or the <em>extrapolated Simpson’s rule</em> because it uses two different values for the interval size and <em>extrapolates</em> from these two to obtain an even more accurate result.</p>
 <p>Making a function for this rule is easy as we can just call our Simpson’s rule functions with two values for the number of intervals.</p>
-</div>
-<div class="section" id="span-style-color-blue-exercise-3-4-implementing-weddle-s-rule-span">
-<h2><span style="color:blue">Exercise 3.4: Implementing Weddle’s rule</span><a class="headerlink" href="#span-style-color-blue-exercise-3-4-implementing-weddle-s-rule-span" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="span-style-color-blue-exercise-3-4-implementing-weddle-s-rule-span">
+<h2><span style="color:blue">Exercise 3.4: Implementing Weddle’s rule</span><a class="headerlink" href="#span-style-color-blue-exercise-3-4-implementing-weddle-s-rule-span" title="Permalink to this headline">#</a></h2>
 <p>Write a function which implements Weddle’s rule using appropriate calls to the simpsons and simpsons_composite functions written above.</p>
 <p>Ultimately you should be able to generate a comparison image that looks something like this:</p>
-<img src="./images/weddle_convergence.png" width=500x></div>
-<div class="section" id="id9">
-<h2>Aside: (Richardson) extrapolation, Romberg integration and Newton-Cotes formula<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
+<img src="./images/weddle_convergence.png" width=500x></section>
+<section id="id9">
+<h2>Aside: (Richardson) extrapolation, Romberg integration and Newton-Cotes formula<a class="headerlink" href="#id9" title="Permalink to this headline">#</a></h2>
 <p>Note that the above technique of using the same rule, but with different values for the interval size, <span class="math notranslate nohighlight">\(h\)</span>, to derive a more accurate estimate of the integral is an example of what is more generally called <em>Richardson extrapolation</em>.</p>
 <p>Performing this approach using the trapezoid rule as the starting point leads to what is termed <em>Romberg integration</em>.</p>
 <p>Taking the idea behind Simpson’s rule which fit a quadratic Lagrange interpolating polynomial to <em>equally spaced</em> points in the interval, end extending to any order Lagrange polynomial leads to the <a class="reference external" href="https://en.wikipedia.org/wiki/Newton%E2%80%93Cotes_formulas"><em>Newton-Cotes</em> family of quadrature rules</a>.</p>
 <p>Note finally, that even wider families exist where the function being integrated is evaluated at non-equally-spaced points.</p>
 <p>And of course for practical application these ideas need to be extended to more than one dimension.</p>
-</div>
-</div>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -1210,31 +2583,34 @@ or more precisely the <em>composite Simpson’s 1/3 rule</em>.</p>
 
               </div>
               
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
         </div>
     </div>
-    
-    
-    <div class='prev-next-bottom'>
-        
-
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Imperial College London<br/>
+  
+      &copy; Copyright 2020.<br/>
+</p>
+        </footer>
     </div>
-    <footer class="footer mt-5 mt-md-0">
-    <div class="container">
-      <p>
-        
-          By Imperial College London<br/>
-        
-            &copy; Copyright 2020.<br/>
-      </p>
-    </div>
-  </footer>
-</main>
+    
+</div>
 
 
       </div>
     </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
 
-    <script src="../../../_static/js/index.js"></script>
-    
+
   </body>
 </html>
