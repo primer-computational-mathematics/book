@@ -1,0 +1,1605 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Stream functions and stream lines &#8212; ESE Jupyter Material</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".cell"
+const thebe_selector_input = ".cell_input div.highlight"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">ESE Jupyter Material</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Landing page
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../a_modules/intro.html">
+   Modules
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../a_modules/math_methods_1/intro.html">
+     Mathematical methods 1
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+    <label for="toctree-checkbox-2">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/math_methods_1/1_Coordinate_Systems.html">
+       Coordinate systems (Lecture 1)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/math_methods_1/2_Vectors.html">
+       Vectors (Lecture 1)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/math_methods_1/3_Multivariable_Calculus.html">
+       Multivariable calculus (Lecture 2)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/math_methods_1/4_Vector_Calculus.html">
+       Vector calculus (Lecture 3)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/math_methods_1/5_Matrices.html">
+       Matrices (Lecture 4)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/math_methods_1/6_Eigenvalues.html">
+       Eigenvalues (Lecture 5)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/math_methods_1/7_Series.html">
+       Series (Lecture 6)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/math_methods_1/8_ODEs.html">
+       ODEs (Lecture 7)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/math_methods_1/9_Modelling.html">
+       Modelling (Lecture 8)
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../a_modules/mechanics/intro.html">
+     Mechanics
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+    <label for="toctree-checkbox-3">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/mechanics/1_Motion_in_1D.html">
+       Motion in 1D
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/mechanics/2_Motion_in_2D.html">
+       Motion in 2D
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/mechanics/3_Work_and_Energy.html">
+       Work and Energy
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/mechanics/4_Rotational_Motion.html">
+       Rotational Motion
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/mechanics/5_Gravity.html">
+       Gravity
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../a_modules/seismology/intro.html">
+     Seismology
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+    <label for="toctree-checkbox-4">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/seismology/CMP_Common_Mid_Point_Gather.html">
+       Common Mid-point Gather
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/seismology/Spatial_aliasing.html">
+       Spatial Aliasing
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/seismology/Temporal_aliasing.html">
+       Temporal Aliasing
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../a_modules/tectonics_of_the_ocean/intro.html">
+     Techtonics of the ocean
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+    <label for="toctree-checkbox-5">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/tectonics_of_the_ocean/Latitude_Longitude_and_Degree_Notation.html">
+       Reading Maps
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/tectonics_of_the_ocean/Plate_Models.html">
+       Heat Flow
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../b_coding/intro.html">
+   Coding
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../b_coding/NumPy_Arrays.html">
+     NumPy arrays
+    </a>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../b_coding/Fundamentals%20of%20Computer%20Science/intro.html">
+     Fundamentals of Computer Science
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+    <label for="toctree-checkbox-7">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Fundamentals%20of%20Computer%20Science/1_Algorythmic_Complexity.html">
+       Algorithmic complexity
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Fundamentals%20of%20Computer%20Science/2_Recursion.html">
+       Recursion
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Fundamentals%20of%20Computer%20Science/3_Divide_and_Conquer.html">
+       Divide and Conquer
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Fundamentals%20of%20Computer%20Science/4_Dynamic_Programming.html">
+       Dynamic Programming
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Fundamentals%20of%20Computer%20Science/5_Greedy_Algorithms.html">
+       Greedy Algorithms
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Fundamentals%20of%20Computer%20Science/6_Data_Structures.html">
+       Data Structures
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Fundamentals%20of%20Computer%20Science/7_Graph_Algorithms.html">
+       Graph Algorithms
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../b_coding/Intro%20to%20Python/intro.html">
+     Intro to Python
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+    <label for="toctree-checkbox-8">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/1_Printing_and_formatting_statements.html">
+       Printing and formatting statements
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/2_Variables.html">
+       Variables
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/3_If_statement.html">
+       If statement
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/4_While_loops.html">
+       While loops
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/5_Lists.html">
+       Lists
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/6_For_loops.html">
+       For loops
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/7_List_comprehensions.html">
+       List comprehensions
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/8_Nested_lists.html">
+       Nested lists
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/9_Handling_errors.html">
+       Handling errors
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/10_Importing.html">
+       Importing in Python
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/11_Functions.html">
+       Creating custom functions
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/12_Tuples.html">
+       Tuples
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/13_File_handling.html">
+       File handling
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/14_Dictionaries.html">
+       Dictionaries
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/15_Flow_control_statements.html">
+       Flow control statements
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/16_Sets.html">
+       Sets
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/17_Matplotlib.html">
+       Plotting data with Matplotlib
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/18_Assert.html">
+       Assert
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/19_Classes.html">
+       Python classes
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/20_Lambdas.html">
+       Lambdas
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../b_coding/Pandas/intro.html">
+     Pandas
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
+    <label for="toctree-checkbox-9">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Pandas/1_basics.html">
+       Introduction
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Pandas/2_filter_select_assign.html">
+       Filtering, selecting and assigning
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Pandas/3_merge_combine_group_sort.html">
+       Merging, combining, grouping and sorting
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Pandas/4_summary_statistics.html">
+       Summary statistics
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Pandas/5_time_stamps.html">
+       Creating date-time stamps
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Pandas/6_plotting.html">
+       Plotting
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../b_coding/Programming%20Tools/intro.html">
+     Programming tools
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/>
+    <label for="toctree-checkbox-10">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Programming%20Tools/1_Version_Control_Git.html">
+       Version control Git
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../c_mathematics/intro.html">
+   Mathematics
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/>
+  <label for="toctree-checkbox-11">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../c_mathematics/calculus/intro.html">
+     Calculus
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/>
+    <label for="toctree-checkbox-12">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/calculus/Vector_calculus.html">
+       Vector calculus
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../c_mathematics/complex_analysis/intro.html">
+     Complex analysis
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/>
+    <label for="toctree-checkbox-13">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/complex_analysis/1_introduction.html">
+       Introduction
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/complex_analysis/2_complex_plane.html">
+       Complex plane
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/complex_analysis/3_complex_functions.html">
+       Complex functions
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/complex_analysis/4_holomorphic_functions.html">
+       Holomorphic functions
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/complex_analysis/5_integrating.html">
+       Complex integration
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/complex_analysis/6_fractals.html">
+       Fractals
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../c_mathematics/differential_equations/intro.html">
+     Differential equations
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/>
+    <label for="toctree-checkbox-14">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/differential_equations/1_de_introduction.html">
+       Introduction to differential equations
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/differential_equations/2_linear_des.html">
+       Linear Differential Equations
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/differential_equations/3_first-order_odes.html">
+       First-order ODEs
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/differential_equations/4_higher_ord_lin_odes.html">
+       Higher order Linear ODEs
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/differential_equations/5_ode_series.html">
+       Series ODE
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/differential_equations/6_pde_basicdefinitions.html">
+       Introductory definitions and concepts
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/differential_equations/7_pde_first_order.html">
+       First-order linear PDEs
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/differential_equations/8_pde_second_order.html">
+       Canonical form of second-order linear PDEs
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/differential_equations/9_poisson_laplace_eq.html">
+       Poisson’s and Laplace’s equation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/differential_equations/10_heat_eq.html">
+       Heat (diffusion) equation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/differential_equations/11_pde_fourier.html">
+       Solving PDEs with fourier methods
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/differential_equations/12_wave_eq.html">
+       Wave equation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/differential_equations/13_similarity_solutions.html">
+       Self-similar solutions
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../c_mathematics/linear_algebra/intro.html">
+     Linear algebra
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" type="checkbox"/>
+    <label for="toctree-checkbox-15">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/linear_algebra/1_Basic_definitions_and_operations.html">
+       Basic definitions and operations
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/linear_algebra/2_Linear_Systems.html">
+       Systems of linear equations
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/linear_algebra/3_Theory.html">
+       Theory
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/linear_algebra/4_Eigenvalues_and_eigenvectors.html">
+       Eigenvalues and eigenvectors
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/linear_algebra/5_Linear_Algebra_in_Python.html">
+       Linear Algebra in Python
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../c_mathematics/mathematical_notation/intro.html">
+     Mathematical notation
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
+    <label for="toctree-checkbox-16">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/mathematical_notation/Big_O_notation.html">
+       Big O notation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/mathematical_notation/Tensors_Review.html">
+       Review of tensors
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../c_mathematics/numerical_methods/intro.html">
+     Numerical methods
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
+    <label for="toctree-checkbox-17">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/numerical_methods/1_Interpolation_curve_fitting.html">
+       Interpolation and curve fitting
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/numerical_methods/2_Numerical_differentiation.html">
+       Numerical differentiation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/numerical_methods/3_Timestepping_an_ODE.html">
+       Solving or timestepping an ODE
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/numerical_methods/4_Heuns_method.html">
+       Heun’s method
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/numerical_methods/5_Runge_Kutta_method.html">
+       Runge-Kutta method
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/numerical_methods/6_Solving_PDEs_SOR.html">
+       Successive over-relaxation method
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/numerical_methods/7_FTCS.html">
+       FTCS scheme
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/numerical_methods/8_BTCS.html">
+       BTCS scheme
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/numerical_methods/9_Numerical_integration.html">
+       Numerical integration
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/numerical_methods/10_Roots_of_equations.html">
+       Roots of equations
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/numerical_methods/11_linear_algebra_intro.html">
+       Linear algebra introduction
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/numerical_methods/12_Gaussian_elimination.html">
+       Gaussian elimination
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/numerical_methods/13_LU_decomposition.html">
+       LU decomposition
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/numerical_methods/14_ill_conditioning_errors.html">
+       Ill-conditioning and roundoff errors
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/numerical_methods/15_iterative_methods_to_solve_matrix.html">
+       Iterative methods to solve a matrix
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../c_mathematics/series_and_sequences/intro.html">
+     Series and sequences
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
+    <label for="toctree-checkbox-18">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/series_and_sequences/Fourier_series.html">
+       Fourier series
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/series_and_sequences/Fourier_transforms.html">
+       Fourier transforms
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/series_and_sequences/Taylor_series.html">
+       Taylor series
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../c_mathematics/sets_and_functions/intro.html">
+     Sets and functions
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
+    <label for="toctree-checkbox-19">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/sets_and_functions/1_logic.html">
+       Logic and proof
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/sets_and_functions/2_sets.html">
+       Sets
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/sets_and_functions/3_functions.html">
+       Functions
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/sets_and_functions/4_elementary_functions_1.html">
+       Elementary functions 1
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/sets_and_functions/5_elementary_functions_2.html">
+       Elementary functions 2
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/sets_and_functions/6_composition_and_inverse.html">
+       Composition and Inverse Functions
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../c_mathematics/statistics/intro.html">
+     Statistics
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
+    <label for="toctree-checkbox-20">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/statistics/Linear_Regression.html">
+       Linear regression
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/statistics/Statistics_for_Geoscientists.html">
+       Introduction to statistics for Geoscientists
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../intro.html">
+   Geosciences
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
+  <label for="toctree-checkbox-21">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../1D_Heat_Conduction.html">
+     1D heat conduction (layered medium)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../1D_Resistivity_Forward_Modelling.html">
+     1D resistivity forward modelling
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../3D_Earthquake_Focus_Plot.html">
+     Plotting Earthquake Focus
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Climate_Model.html">
+     Climate model
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Dynamic_Earth.html">
+     Seafloor ages
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Keplerian_Orbits.html">
+     Keplerian orbits
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Longitude_Latitude_Degree_Convertion.html">
+     Reading Maps
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Milankovitch_cycles.html">
+     Milankovitch cycles
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Seismology.html">
+     Downloading earthquake data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Tides.html">
+     Tides
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Wave_dispersion.html">
+     Wave dispersion
+    </a>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../Electromagnetism/intro.html">
+     Electromagnetism
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
+    <label for="toctree-checkbox-22">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../Electromagnetism/1_electricity_magnetism.html">
+       Electricity and magnetism
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../Electromagnetism/2_maxwell_eqs.html">
+       Maxwell’s equations
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../Electromagnetism/3_four_field.html">
+       The four-field formalism
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../Fluid_Dynamics/intro.html">
+     Fluid dynamics
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
+    <label for="toctree-checkbox-23">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../Fluid_Dynamics/Lecture5_1D_Pipe_Flow.html">
+       Lecture5_1D_Pipe_Flow
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../Fluid_Dynamics/Lecture6_Non_Linear_Viscosity_2D_Stokes.html">
+       Lecture6_Non_Linear_Viscosity_2D_Stokes
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../Fluid_Dynamics/Lecture7_Pipe_Flow_with_Heat.html">
+       Lecture7_Pipe_Flow_with_Heat
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../Fluid_Dynamics/Lecture8_Part1_Navier_Stoke_Equation.html">
+       Lecture8_Part1_Navier_Stoke_Equation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../Fluid_Dynamics/Lecture8_Part2_SPH_Algorithm_For_Energy_Equation.html">
+       Lecture8_Part2_SPH_Algorithm_For_Energy_Equation
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../remote_sensing/intro.html">
+     Remote sensing
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" type="checkbox"/>
+    <label for="toctree-checkbox-24">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../remote_sensing/Image_Filtering.html">
+       Image filtering
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../remote_sensing/Image_Point_Operations.html">
+       Image point operations
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../remote_sensing/Image_Transformations_and_Orthorectification.html">
+       Image transformations and orthorectification
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../e_extra/intro.html">
+   Further resources
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" type="checkbox"/>
+  <label for="toctree-checkbox-25">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../e_extra/Camera_Calibration.html">
+     Camera calibration
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../e_extra/Cartography_Cartopy.html">
+     Cartopy (maps)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../e_extra/Dakota.html">
+     Dakota
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../e_extra/Google_Earth_Engine_Foundations.html">
+     Google Earth Engine foundations
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../e_extra/Google_Earth_Engine_Getting_Started_.html">
+     Google Earth Engine getting started
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../e_extra/Particle_Image_Velocimetry.html">
+     Particle image velocimetry (PIV)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../e_extra/contributors_guide.html">
+     Contributor’s guide
+    </a>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../e_extra/UAV_Mapping/intro.html">
+     UAV Mapping
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-26" name="toctree-checkbox-26" type="checkbox"/>
+    <label for="toctree-checkbox-26">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/UAV_Mapping/1.Mission_Planning.html">
+       1. Mission Planning
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/intro.html">
+     Machine learning
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-27" name="toctree-checkbox-27" type="checkbox"/>
+    <label for="toctree-checkbox-27">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%200%20--%20Introduction.html">
+       Chapter 0 – Introduction
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%201%20--%20Neural%20Network.html">
+       Chapter 1 – Neural Network
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%202%20--%20Maximum%20Likelihood.html">
+       Chapter 2 – Maximum Likelihood
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%203%20--%20Cross%20Entropy.html">
+       Chapter 3 – Cross Entropy
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%204%20--%20Cost%20Function.html">
+       Chapter 4 – Cost Function
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%205%20--%20Gradient%20Descent%201.html">
+       Chapter 5 – Gradient Descent 1
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%206%20--%20Gradient%20Descent%202.html">
+       Chapter 6 – Gradient Descent 2
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%207%20--%20Real%20%28Non-linear%29%20Neural%20Network.html">
+       Chapter 7 – Real (Non-linear) Neural Network
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%208%20--%20Feedforward.html">
+       Chapter 8 – Feedforward
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%209%20--%20Back%20Propagation.html">
+       Chapter 9 – Back Propagation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%2010%20--%20General%20Back%20Propagation.html">
+       Chapter 10 – General Back Propagation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%2011%20--%20Underfitting%20and%20Overfitting.html">
+       Chapter 11 – Underfitting and Overfitting
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%2012%20--%20Early-stopping%2C%20Dropout%20%26%20Mini-batch.html">
+       Chapter 12 – Early-stopping, Dropout &amp; Mini-batch
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%2013%20--%20Vanishing%20Gradient%201.html">
+       Chapter 13 – Vanishing Gradient 1
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%2014%20--%20Vanishing%20Gradient%202.html">
+       Chapter 14 – Vanishing Gradient 2
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%2015%20--%20Regularisation.html">
+       Chapter 15 – Regularisation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%2016%20--%20Other%20Activation%20Functions.html">
+       Chapter 16 – Other Activation Functions
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%2017%20--%20Local%20Minima%20Trap.html">
+       Chapter 17 – Local Minima Trap
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%2018%20--%20Softmax.html">
+       Chapter 18 – Softmax
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%2019%20--%20Hyper-Parameters.html">
+       Chapter 19 – Hyper-Parameters
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%2020%20--%20Coding%20Example.html">
+       Chapter 20 – Coding Example
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../genindex.html">
+   Index
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/d_geosciences/Geophysical Fluid Dynamics/Stream lines.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2Fd_geosciences/Geophysical Fluid Dynamics/Stream lines.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+
+</a>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../../_sources/d_geosciences/Geophysical Fluid Dynamics/Stream lines.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Stream functions and stream lines</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section id="stream-functions-and-stream-lines">
+<h1>Stream functions and stream lines<a class="headerlink" href="#stream-functions-and-stream-lines" title="Permalink to this headline">#</a></h1>
+<p>In this notebook, stream functions and streamlines will be explained and visualised.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">plotly.figure_factory</span> <span class="k">as</span> <span class="nn">ff</span>
+<span class="kn">import</span> <span class="nn">plotly.graph_objects</span> <span class="k">as</span> <span class="nn">go</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>A stream function, <span class="math notranslate nohighlight">\(\psi\)</span>, is a scalar function of which the derivative gives the velocity field at right angles to the streamfunction. The stream function is a function of space (x,y) and time and is defined as <span class="math notranslate nohighlight">\(\psi = f(x,y)\)</span>.
+$<span class="math notranslate nohighlight">\(\frac{\partial \psi}{\partial x} = v \)</span><span class="math notranslate nohighlight">\(
+\)</span><span class="math notranslate nohighlight">\(\frac{\partial \psi}{\partial y} = -u \)</span><span class="math notranslate nohighlight">\(
+where \)</span>u(x,y)<span class="math notranslate nohighlight">\( and \)</span>v(x,y)$ are velocity component functions.</p>
+<p><img src="https://i0.wp.com/theconstructor.org/wp-content/uploads/2020/04/Velocity-Components-Along-Stream-Line.jpg?resize=577%2C206&ssl=1" alt="image info" width="600" 
+     height="400"/></p>
+<p>The stream function satisfies the continuity equation and is therefore incompressible. This means that <span class="math notranslate nohighlight">\(\nabla (u,v) = \frac{\partial u}{\partial x} + \frac{\partial v}{\partial y} = \frac{\partial^2 \psi}{\partial x \partial y} + \frac{\partial^2 \psi}{\partial y \partial x}\)</span></p>
+<p>It can be both rotational and irrotational. It is irrotational if it satisfies Laplace’s equation of the form $<span class="math notranslate nohighlight">\(\frac{\partial^2 \psi}{\partial x^2} + \frac{\partial^2 \psi}{\partial y^2} = 0 \)</span>$</p>
+<p>Streamlines are the lines along which the stream function is constant, so along a streamline <span class="math notranslate nohighlight">\(d \psi = 0\)</span>. A few properties of streamlines are:</p>
+<ul class="simple">
+<li><p>All the streamlines are parallel to each other</p></li>
+<li><p>With a constant stream function value, infinite amounts of streamlines can be drawn</p></li>
+</ul>
+<p>In Python, streamlines can be visualised using the Streamplot within matplotlib that draws the streamlines of a vector field.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># creating a spatial grid</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="c1"># creating components of the velocity field</span>
+<span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span> <span class="c1"># x-component, zeroes</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span> <span class="c1"># y-component </span>
+ 
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+ 
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Streamlines of constant horizontal velocity field&#39;</span><span class="p">)</span>    
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+<span class="c1"># Plotting stream plot</span>
+<span class="c1"># density dictates how closely spaced the streamlines are plotted</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">streamplot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">density</span> <span class="o">=</span> <span class="mf">0.6</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.streamplot.StreamplotSet at 0x7f9091f64f10&gt;
+</pre></div>
+</div>
+<img alt="../../_images/Stream lines_3_1.png" src="../../_images/Stream lines_3_1.png" />
+</div>
+</div>
+<p>Now, a stream function plot will be made for velocity components that vary within the grid. Now, the x-component of the velocity field, u, will be of the function <span class="math notranslate nohighlight">\(u = 1-x^2\)</span> and the y-component of the field, v, will be defined as <span class="math notranslate nohighlight">\(v = x - y^2\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="n">U</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">X</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">V</span> <span class="o">=</span> <span class="n">X</span> <span class="o">-</span> <span class="n">Y</span><span class="o">**</span><span class="mi">2</span>
+ 
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Streamlines of quadratic velocity field&#39;</span><span class="p">)</span>    
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">streamplot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">U</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">density</span> <span class="o">=</span> <span class="mf">0.6</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.streamplot.StreamplotSet at 0x7f9078cb39a0&gt;
+</pre></div>
+</div>
+<img alt="../../_images/Stream lines_5_1.png" src="../../_images/Stream lines_5_1.png" />
+</div>
+</div>
+<p>A more interactive (move cursor over plot to see coordinates) and other good way to create a stream function plot, is by using figure factory from the Plotly module.</p>
+<p>Moreover, a source point can be created using Graph_objects from the Plotly module. Below is shown how this can be plotted. Here, the velocity field u and y include the source components in their function.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># create spatial meshgrid</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="c1"># define source strength and location</span>
+<span class="n">source_strength</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">x_source</span><span class="p">,</span> <span class="n">y_source</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span>
+
+<span class="c1"># define velocity field as function X and Y</span>
+<span class="n">u</span> <span class="o">=</span> <span class="p">(</span><span class="n">source_strength</span> <span class="o">*</span>
+     <span class="p">(</span><span class="n">X</span> <span class="o">-</span> <span class="n">x_source</span><span class="p">)</span><span class="o">/</span><span class="p">((</span><span class="n">X</span> <span class="o">-</span> <span class="n">x_source</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">Y</span> <span class="o">-</span> <span class="n">y_source</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">v</span> <span class="o">=</span> <span class="p">(</span><span class="n">source_strength</span><span class="o">*</span>
+     <span class="p">(</span><span class="n">Y</span> <span class="o">-</span> <span class="n">y_source</span><span class="p">)</span><span class="o">/</span><span class="p">((</span><span class="n">X</span> <span class="o">-</span> <span class="n">x_source</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">Y</span> <span class="o">-</span> <span class="n">y_source</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+
+<span class="c1"># Create streamline figure</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">ff</span><span class="o">.</span><span class="n">create_streamline</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span>
+                           <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Stream line&#39;</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="o">.</span><span class="n">add_trace</span><span class="p">(</span><span class="n">go</span><span class="o">.</span><span class="n">Scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+                          <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;markers&#39;</span><span class="p">,</span>
+                          <span class="n">marker_size</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span>
+                          <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Source&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>                            <div id="10504eb9-4387-43ba-9f7a-03f8225e9f79" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("10504eb9-4387-43ba-9f7a-03f8225e9f79")) {                    Plotly.newPlot(                        "10504eb9-4387-43ba-9f7a-03f8225e9f79",                        [{"mode":"lines","name":"Stream line","x":[1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.994754956549574,1.9947549565495732,1.9947549565495697,1.994754956549557,1.9947549565495122,1.99475495654935,1.9947549565487648,1.9947549565466507,1.9947549565390152,1.994754956511439,1.9947549564118432,1.9947549560521387,1.9947549547530148,1.9947549500610442,1.9947549331153251,1.9947548719134536,1.9947546508741878,1.9947538525593111,1.9947509693295402,1.9947405561070681,1.9947029469025501,1.9945671110858942,1.9940764588763258,1.9923036476226905,1.9858938525972625,1.9616811661379174,1.9271158317214763,1.8918145737277656,1.8563487941872128,1.820818125288287,1.785203748514033,1.749525550421483,1.7138761575237724,1.6782112582112874,1.6425255098926155,1.6068408166684915,1.5711564392309456,1.5354634659044015,1.4997618525836525,1.4640658271706284,1.4283670055688935,1.3926620976334225,1.356960210653579,1.3212585460977695,1.2855536845354032,1.2498470677773141,1.2141423374062386,1.1784362956913388,1.1427266965105491,1.1070198279516563,1.0713129071978829,1.0356041751334844,0.999895447306203,0.964187522850841,0.9284787213534366,0.89276811423322,0.8570590766492505,0.8213498611198912,0.7856394047353653,0.7499295429630343,0.7142200300325864,0.6785098377530242,0.6427989702174927,0.607088850947071,0.5713785002787294,0.5356671294376237,0.499956568403884,0.46424613458982633,0.42853513642518376,0.39282401497442154,0.3571133087112446,0.32140235086815583,0.2856905455248973,0.24997951318000844,0.214268489672327,0.1785569789018018,0.1428456366169621,0.10713452037320721,0.07142314812072506,0.03571137028932965,0.0,null,1.4094999459743995,1.3773573841280857,1.3451943108522384,1.3130401793520399,1.2808859463470974,1.2487291579049213,1.2165768731428177,1.1844197838248125,1.1522611084427365,1.1201091659016615,1.0879520204048354,1.0557946042488306,1.02363874417875,0.991478126825363,0.9593235782453842,0.9271660928227068,0.8950044935270014,0.8628476698957908,0.8306912220983916,0.7985322311982502,0.7663750439172675,0.7342156026871066,0.7020576790600287,0.669900987008011,0.6377402815716996,0.605581560823546,0.573423124771235,0.5412638896642549,0.5091057197668043,0.47694647125625167,0.4447866830602942,0.41262927008872324,0.3804699645587816,0.34831069313827934,null,1.2849772887371418,1.2460362716775608,1.2071080236335667,1.168175514484213,1.1292408100460563,1.090302154825374,1.0513649267769891,1.0124298692498586,0.9734945837871063,0.9345540954943256,0.8956156476480258,0.8566784964322253,0.8177402606745795,0.7788029920458301,0.7398612179298955,0.7009225393334834,0.6619856615137841,0.6230462014816522,0.5841047669732287,0.5451654694790297,0.5062256840276322,0.467286543904745,0.4283459945025112,0.38940457301225606,0.35046557819099033,0.31152571620528624,0.2725852942444559,0.23364396690414266,0.19470334344300785,0.15576326116374198,0.11682318532223286,0.07788128908034397,0.03894053360058928,0.0,null,1.78930998441955,1.764492490011842,1.7397017340798608,1.7149021330078995,1.6900896646019743,1.665264755092189,1.640442287648974,1.615618194922672,1.5907914800905987,1.5659677881522927,1.541147253766637,1.5163273043917227,1.4914991754418438,1.4666726374467145,1.4418429782646514,1.4170167427921025,1.3921862805246572,1.3673612186988167,1.342535164453277,1.3177104104407582,1.2928794272065178,1.2680520617957027,1.2432206577524256,1.218393103050963,1.1935614890004438,1.1687351105642274,1.1439060862333028,1.1190790016872516,1.0942468345564385,1.0694186054413442,1.0445863679541314,1.0197578269438325,0.9949255892263482,0.970098132879552,0.9452670364096739,0.9204385288417172,0.8956057196065607,0.8707767328456982,null,1.6268875329277455,1.5829604197659148,1.539007524207259,1.4950474196660026,1.451093141694034,1.4071408264089806,1.3631824502474514,1.3192217841019873,1.2752591859217903,1.2312932107649028,1.1873210922644144,1.1433492583369806,1.0993799989946893,1.0554107764064817,1.0114402682710073,0.9674688801394798,0.9234971482601186,0.8795233275237268,0.8355468312685955,0.7915716377975502,0.7475978380720073,0.7036236163116132,0.659649191785275,0.6156742451655005,0.5716992043000262,0.5277226215850295,0.4837449829494937,0.439768356094687,0.39579260564561003,0.35181630111425993,0.3078401357207711,0.26386358509439756,0.21988701679887568,0.17590921156922165,0.1319314420198653,0.08795408538125284,0.0439773331840756,0.0,null,1.5864475269230225,1.5680811972066127,1.549710323134332,1.5313467134196108,1.5129758791807284,1.4946076131975738,1.476243045782004,1.4578706467658709,1.4395036790744329,1.421136719105091,1.4027648104395098,1.3843992233988047,1.366032025414612,1.3476641874439328,1.329299360070588,1.3109301901257546,1.2925615806064867,1.2741944339736944,1.2558232714052342,1.2374552386544053,1.2190874259839777,null,0.9408351998694903,0.8937967684348915,0.8467572984407865,0.7997191580198788,0.752679168697977,0.7056387664944601,0.6585986857955715,0.6115569087623051,0.5645160073572701,0.5174749023620766,0.47043224849820875,0.4233902261348779,0.3763472156375864,0.3293031550115666,0.2822600400247519,0.23521651253159914,0.1881732655322415,0.14113043712409074,0.09408674721479467,0.04704346877641007,0.0,null,1.962133242418756,1.9515524605526107,1.940987283525557,1.930356526693508,1.9196512738128721,1.9089509954398316,1.898295999276695,1.8876452520486966,1.8769784475652616,1.8662888503155168,1.8556116105637939,1.8449485666764212,1.8342856065859177,1.8236140648960666,1.8129315352572866,1.8022609107741372,1.7915951260725282,1.7809267101240127,1.7702511328872148,1.7595717875490788,1.7488984176223523,1.738226725957935,1.727552799604816,1.7168738041743652,1.7061950718919219,1.6955202004288925,1.6848458977202505,1.6741695855685617,1.663489786091299,1.6528120922888994,1.6421366251530805,1.6314611383621058,1.6207838112112274,1.6101043018685426,1.5994273973399467,1.588751769960112,1.5780757944714012,1.5673981191222568,null,1.8253159463281712,1.7762071135587592,1.727071075512625,1.6778600180196213,1.6285617657117226,1.5792368776407382,1.5299328404768142,1.4806265307345579,1.431303055924374,1.3819555399761858,1.3326105390395724,1.2832730136211543,1.2339336349728283,1.1845856647423376,1.135226515854904,1.0858738818090357,1.0365244731696412,0.9871736122967871,0.937817439630716,0.888457924553205,0.8391026788398672,0.789748787794012,0.7403932723643513,0.6910337394570426,0.6416739713808612,0.5923169135005489,0.542960226082394,0.49360191901822914,0.44424071219359224,0.3948807448513174,0.3455222782366383,0.29616367781084973,0.24680352211689308,0.19744143869933414,0.14808105292253182,0.0987214642969254,0.04936146838674102,0.0,null,1.962485444047602,1.9603592849187503,1.9582334586410426,1.9561078265102834,1.9539822902106048,1.9518567798906694,1.949731245981379,1.9476056534999375,1.9454799780337853,1.943354202876615,1.9412283169652682,1.9391023133802399,1.9369761882472596,1.934849939927183,1.9327235684150506,1.9305970748921581,1.9284704613909078,1.9263437305433522,1.9242168853922232,1.9220899292488638,1.9199628655865308,1.9178357575067884,1.9157088122605364,null,1.1099777140366305,1.059527900344874,1.0090788431610158,0.9586301283474994,0.9081814454969636,0.8577325616171663,0.8072833020251173,0.7568335363069176,0.7063831678874032,0.6559321262051695,0.6054803607900647,0.5550278367447492,0.504574531272658,0.4541204309928233,0.40366552985128235,0.3532098274882396,0.3027533279558321,0.2522960387073358,0.2018379697977663,0.1513791332499994,0.10091954255113471,0.05045949500710822,0.0,null,2.003321082205398,2.0058190148006694,2.008160905858528,2.0104647809958913,2.012754678283164,2.0150381171170304,2.0173181056778815,2.0195960556502808,2.0218711406939978,2.024141478968543,2.026408979943442,2.028674904732561,2.0309399929592,2.0332046879786487,2.0354692590070798,2.0377338700669023,2.039998620243031,2.042263567864603,2.0445287453822614,2.046794168706457,2.0490598431672264,2.051325767369266,2.053591935711654,2.055858340046831,2.0581249707772256,2.060391817580255,2.0626588698854404,2.0649261171849673,2.0671935492317726,2.0694611561614553,2.0717288911658795,2.0739963673041397,2.076263587322534,2.0785306091401337,2.080797480577653,2.083064241194424,2.0853309237631295,2.087597555459937,2.089864158829676,null,1.9144888846427262,1.865417205664326,1.8155032203301817,1.7653133309946798,1.7150004752982646,1.664622644751335,1.6142065578692266,1.5637661902544575,1.5133166689132163,1.4628752763600636,1.4124392941923671,1.3620061902662102,1.311574345763603,1.261142712007303,1.2107106056468,1.1602775824721459,1.1098433575306041,1.0594077533663073,1.008970665807016,0.9585320409601833,0.9080918595193677,0.8576501259259339,0.8072068608077495,0.7567620956612401,0.7063158690885023,0.6558682241242221,0.6054192063336471,0.5549688624605712,0.5045172394703554,0.45406438387826875,0.40361050938701576,0.3531573780420584,0.3027050713275006,0.2522534074090803,0.20180223077253603,0.15135140818515247,0.10090082534288654,0.05045038407442791,0.0,null,2.178821483632197,2.189622341789067,2.2004183035522127,2.211216882343139,2.2220247501010877,2.232833371976937,2.2436358727348567,2.254437823047852,2.265243370212288,2.2760546793216982,2.286862829288727,2.297667897351022,2.308473359953557,2.3192819067355077,2.330093271843622,2.340901023848555,2.351707290077107,2.362514409673625,2.3733242606568257,2.384134212206058,2.394941601305869,2.405748394365281,2.4165562665843066,2.4273662630499793,2.4381748519679554,null,1.1838917616609894,1.1345707354536443,1.0852519053557643,1.0359299481143314,0.9866012076239316,0.9372714344716421,0.887946161403392,0.8386215295246408,0.7892943388705517,0.739962634613705,0.6906328698142611,0.6413052926952678,0.591977414150428,0.5426471320815729,0.4933144254172697,0.44398410949662137,0.39465476752130507,0.34532468338659544,0.29599237295839753,0.24665966751534504,0.19732863661258923,0.14799790389174905,0.09866621684532433,0.04933272487795188,0.0,null,2.361421452722115,2.3799051676220113,2.398376281783602,2.41684997739334,2.4353366292990937,2.45381330861961,2.472294917622182,2.490779560696044,2.509257272729433,2.5277409694932778,2.5462227204388954,2.5647020619085508,2.583188182791304,2.601668521891998,2.6201487729721102,2.6386323598656647,2.657110163658598,2.67559108313789,2.6940735722855664,2.712553612740823,2.7310374564965736,2.749519667272091,2.768000782184321,2.7864855451062347,null,1.0809306303328587,1.0339357337106667,0.9869407039422813,0.9399468912969886,0.8929511423942712,0.8459575659823929,0.798963097661052,0.7519673938129284,0.7049724378133577,0.6579757800053775,0.6109791405445212,0.5639830101105765,0.5169852734318362,0.46998812724621664,0.42299048251381377,0.3759913909877559,0.32899259981623524,0.28199344502011,0.23499435501845792,0.18799602845034977,0.14099707257101898,0.09399832529433771,0.04699966127952616,0.0,null,2.5366724241934544,2.561587227147418,2.5865155423732276,2.611432380985007,2.636358647436244,2.661272391464145,2.686196306831049,2.7111147796100203,2.7360407665980153,2.7609603053910963,2.785885572205239,2.810805777388736,2.8357294151750327,2.860647036568838,2.885570500382128,2.9104917070717855,2.9354159690081296,2.960337509134632,2.985261625279197,3.01018335597913,3.03510606997221,3.060026740187042,3.0849501139343687,3.1098726570588906,3.1347962382445136,null,1.0541508214795174,1.0102319144341692,0.9663136148158054,0.9223937956710203,0.8784734881512372,0.8345493874484482,0.7906269958799846,0.7467050711856325,0.702783951812043,0.6588615857405195,0.6149396076254243,0.571016723490634,0.5270932205060629,0.48316751930509316,0.4392436905367077,0.39532005965159617,0.35139662332945754,0.3074726319286249,0.26354888017639994,0.2196245070946135,0.17569949362870121,0.13177386870621566,0.08784921869845681,0.0439246490517849,0.0,null,2.207446398014614,2.239702513387784,2.2718770158285633,2.304070479632651,2.3362758381372775,2.3684603457099977,2.400673430222924,2.4328892610345982,2.4650846905095314,2.497299135872392,2.5295139525183483,2.561725850178527,2.5939528524025284,2.626160598872215,2.6583782344477282,2.690606159522302,2.72282222920322,2.7550381473546626,2.787259734288287,2.8194774611324838,2.8517004062789084,2.883920087079035,2.9161372141708695,2.9483628078742363,2.9805843900246187,3.012805399209817,3.045028419469427,3.0772492303734063,3.109472020066749,3.141696058643504,3.173915480669545,3.20613839655912,3.2383615308670888,3.2705832625734,3.302807317514188,3.335029024204395,3.3672517111309856,3.3994775796368373,3.4317000432422184,3.4639216442125167,3.496145968664184,3.5283686875590745,3.560592483696245,3.5928153851148115,3.625037801362102,3.657262277951933,null,1.7495008750684025,1.7107303237048181,1.6719047124571371,1.6330608342054957,1.5941934432867004,1.5553262320141992,1.5164682979535589,1.4776052736593799,1.43872365063264,1.399846849338435,1.3609741761200915,1.3220976220390865,1.283223677383305,1.2443348419168214,1.205455347463222,1.1665800444891794,1.1276978197462464,1.0888109039221978,1.0499285953087287,1.0110450660976469,0.9721627955206849,0.9332773648782868,0.8943899186923994,0.855507537304268,0.816623257184794,0.7777376994317264,0.7388505349653331,0.699964621351071,0.6610796089807875,0.6221946213313055,0.5833060350525566,0.544419654935895,0.5055337416929506,0.4666469573783472,0.4277604386910209,0.38887246207050113,0.3499857012278044,0.3111002634247001,0.2722129863190031,0.23332398990721523,0.19443735000630763,0.1555501449037188,0.11666314834652641,0.07777498792038995,0.038886947679847794,0.0,null,2.7182320013278893,2.753984684675625,2.789744036492724,2.8254981569111766,2.8612506932525297,2.8970147573204708,2.9327725488443708,2.968528070302931,3.0042867906745236,3.0400468353931642,3.075804055847896,3.1115598978356105,3.147322514998581,3.1830816696642037,3.218839468716451,3.254600578610593,3.290361009856319,3.3261197078636626,3.3618785915999276,3.397640359065436,3.4334001257327547,3.4691589843680144,3.5049212030395367,3.5406819005509518,3.576441445022066,3.612201910627981,3.6479635071883667,3.6837237411951853,3.7194831303637983,3.755245901664306,3.7910067926487736,3.82676687316904,3.8625282348243024,3.8982897561603704,3.934050300792805,3.9698107391233703,4.005572971090213,null,1.2837661033205416,1.2481055579183298,1.2124530395464364,1.1767957839481662,1.1411326918291689,1.105479733520406,1.0698234552926553,1.034163125996915,0.9985037915981786,0.9628469707065193,0.9271872594130894,0.8915231454318645,0.8558661195489667,0.820206944227232,0.7845450570078063,0.74888567282104,0.7132266433764074,0.6775655756601103,0.641903202051039,0.6062439090497841,0.5705831321215884,0.5349203092110439,0.4992606022231353,0.4636002804578202,0.42793839585442944,0.3922767108393118,0.35661644684174176,0.32095499544106154,0.2852915766582285,0.24963149801005238,0.21397034168890672,0.17830792164724488,0.14264648576454853,0.10698554184307227,0.07132360599326111,0.03566092864703009,0.0,null,3.0838334480777254,3.1223145442225824,3.160799810343329,3.199287621427594,3.237771013006719,3.2762558338450485,3.3147406570414635,3.353228670545199,3.391714789853099,3.4301992984547165,3.468684771254712,3.5071728959483366,3.5456584848005117,3.5841442881975514,3.6226305879685747,3.6611167790778154,3.699603940975841,3.7380902775470086,3.7765758162205745,3.8150630960656735,3.8535507321067217,3.892036846674654,3.930523662124828,3.969010556511379,4.007498482906083,4.045985643398844,4.084472149046161,4.122959122521017,4.161447652744141,4.1999344692434875,4.238421429493493,4.276908706176302,4.3153961729436086,4.3538836642284915,null,1.0791116951423838,1.0464080782401683,1.013711121903343,0.9810146618703324,0.9483131251950921,0.9156148053791658,0.8829146875448335,0.850216635340484,0.8175183730003075,0.7848169140492817,0.7521166525208542,0.719419013961993,0.6867174189902399,0.654017081572101,0.6213172158704934,0.5886151959824515,0.5559155435484092,0.5232150030482515,0.4905124366957971,0.45781268892811383,0.4251127334463816,0.3924108626079209,0.35971053238926276,0.32700957157309646,0.29430919491898433,0.2616088683348503,0.22890720260449068,0.19620608036602555,0.16350650895376007,0.13080468731000838,0.0981034858309184,0.06540263503835798,0.03270091718828283,0.0,null,3.930902754921524,3.971495823499459,4.012091032660256,4.052685079489922,4.093278823776798,4.133872822962753,4.17446634865589,4.215061476867065,4.2556557943039826,4.296249836553003,4.336844010360557,4.377437878432105,4.41803295491798,4.458627476123382,4.4992217455546255,4.539816059198418,4.580410189665201,4.62100523325951,4.661599911134537,4.702194357366771,null,0.5708641795025072,0.5408168768597612,0.510773506548979,0.48072817260850037,0.45068264569844035,0.4206376824031505,0.3905908119173277,0.3605468754656281,0.3305013341479439,0.3004557601175083,0.27041045799281604,0.24036388032675035,0.2103195088522397,0.18027380256418393,0.1502281757945633,0.12018261328075838,0.0901362362097596,0.06009152209886029,0.030045681428979565,0.0,null,1.7817057252585804,1.7565276334627853,1.7314227571059448,1.7062532841013078,1.6811382534270243,1.6559926075214828,1.6308720175116431,1.6057131107880005,1.5805788565568413,1.555421926881178,1.530284438729149,1.5051295773561197,1.4799941783196322,1.4548463269069816,1.4297062871585875,1.404552621369023,1.379409899976883,1.354257530387675,1.3291133300438929,1.3039622192095388,1.278821029515713,1.2536712600931952,1.22852585836382,1.2033742313501852,1.1782281010512023,1.15307679100473,1.1279303039693682,1.1027806422293684,1.077635931377766,1.0524857044562823,1.0273382682792973,1.0021876583920588,0.9770401455404636,0.9518895004814033,0.9267420413035431,0.9015930809784867,0.8764459503829337,0.8512956810962329,0.8261473517978409,0.8009970541180397,0.7758486019461449,0.7506984009618537,0.7255504642692056,0.7004014841585656,0.6752531500921278,0.6501029637297285,0.6249542065760891,0.599804143915922,0.57465521515042,0.5495053360493614,0.524357151167095,0.4992076675486529,0.47405869764993247,0.44890863234951717,0.4237595192122061,0.3986095034621245,0.3734603338246698,0.34831069313827934,0.32316221314097887,0.2980124795334335,null,2.3802551209223384,2.423998330472198,2.467761727473028,2.5115221999908153,2.5552990235447863,2.5990838407229613,2.6428685166118053,2.686646342295573,2.730428844120788,2.774210973712712,2.817996811142128,2.8617824813093238,2.9055741077557564,2.949366489985674,2.993157402425753,3.0369462394834312,3.0807374465454007,3.1245281434074803,3.168320039151043,3.2121123928249657,3.2559080709715738,3.2997019299340757,3.3434954402198516,3.3872882886735787,3.4310822081109977,3.4748756803354017,3.5186701282632167,3.5624652004427197,3.6062616796823432,3.650056537263217,3.693851440395789,3.7376462334519007,3.7814415658849323,3.8252365325427404,3.8690323277762406,3.9128287787939473,3.956625171894371,4.000420735939511,4.044216506906347,4.088012188367897,4.1318081426248074,4.175604023119636,4.219400625189186,4.263197559322109,4.306994053963013,4.350790136437246,4.394586495372401,4.438382764192308,4.482179162819205,4.525975656555574,4.569772789801695,4.613569657070093,4.657366309493049,4.701162787610239,4.744959456344399,4.788756035033359,4.832552775665092,4.876349703935911,4.920147084577643,4.963943985265538,null,1.2802715000688751,1.2594258760340973,1.238581812743961,1.2177382120998037,1.1968918707632847,1.176049736030898,1.155204667232731,1.1343626029069058,1.1135187887087223,1.0926733831768876,1.0718299004346765,1.0509828101371355,1.030139210110483,1.0092939635169689,0.9884487736784521,0.9676047439123624,0.9467586223400168,0.9259154966857,0.9050709831898214,0.8842268725474052,0.8633824594865539,0.8425366606300705,0.8216925029932584,0.8008465434360101,0.7800021417966702,0.7591570246452434,0.7383115827914825,0.7174673326321902,0.6966213862765587,0.6757777551791887,0.6549328101335763,null,3.588329821155785,3.6343290323475475,3.6803282734045646,3.7263274756119293,3.7723272459838415,3.8183271710763504,3.8643279924984437,3.9103288972075725,3.9563293846295755,4.0023297655979295,4.048329904226381,4.094330444026114,4.140330920952212,4.186331554593269,4.232332192943783,4.2783328441466,4.324333935537154,4.370335164896284,4.416336840334894,4.462338143753804,4.508339237507037,4.554340377304845,4.600341417134583,4.6463427337688845,4.692343982859526,4.738345227755941,4.784346569253955,4.8303479536653215,4.876349703935911,4.922351578595374,4.968353328671432,null,1.7610479659858027,1.745139442826102,1.729234932591164,1.7133135955158771,1.6974021348383341,1.6814982192583983,1.6655844484019902,1.6496739856670164,1.6337698893019026,1.6178573854953078,1.6019414872365128,1.586031918071224,1.57011836112612,1.5542000423318587,1.53828816167431,1.522375079995892,1.5064563696745108,1.4905437967774475,1.4746312241280666,1.4587133934475893,1.4427992395821028,1.4268862425175193,1.410969597838667,1.395054875738115,1.379142296265204,1.363227244136759,1.347312798237334,1.3314010598980943,1.3154869724837581,1.2995715313342173,1.2836581751800133,1.267743621563607,1.2518271568178514,1.235913003436358,1.2199985283417838,1.2040817082827973,1.188167343740542,1.1722531922864146,1.1563369804514692,1.1404220758607198,1.1245077431107307,1.1085918695660026,1.092676655837778,1.0767624721497135,1.0608472131081899,1.044932079414838,1.0290183191976006,1.0131037727543202,null,2.7196179716608437,2.767530932516126,2.8154439568156615,2.863364811025151,2.9112851286942867,2.9592046124769036,3.007129319197303,3.055055331400156,3.102978921722683,3.150904506251416,3.1988311533048215,3.246755471290208,3.2946810203213404,3.3426085451795227,3.390534228182587,3.438460598504381,3.486389433521719,3.5343166604030727,3.5822439217898228,3.6301729950463733,3.6781010198373703,3.7260287789653463,3.7739580207935015,3.8218870107426635,3.869815600623282,3.917745407641223,3.9656755154642838,4.013605072627826,4.061535083300518,4.109465377811862,4.157394815196068,4.205324542740024,4.25325492420512,4.301184560875117,4.349114351679233,4.397045062151967,4.444975110930884,4.492905141698332,4.54083584935465,4.588766131876982,4.636696234921456,4.684626919283288,4.732557501334752,4.7804878491658425,4.828418701260577,4.876349703935911,4.924280431263753,4.972211438434137,null,1.77893269852731,1.7685068264118051,1.7580799682801747,1.7476586136961132,1.737238513429576,1.7268162686685489,1.7163895138921383,1.7059635618515494,1.6955411693323912,1.6851194016556053,1.6746959485989277,1.6642693757263953,1.653844405327041,1.6434217488757639,1.6329993566602887,1.6225755595658928,1.6121494741959785,1.60172527502595,1.59130246514177,1.5808795271422456,1.5704552131779332,1.5600291561196982,1.5496049166478765,1.539181617677951,1.5287581106677568,1.5183334175559993,1.5079078511259278,1.4974837364433593,1.4870602707764142,1.4766365449635592,1.4662117723441623,1.4557867004391654,1.4453628135031373,1.4349393700730713,1.424515633083607,1.4140909590306117,1.4036663747885956,1.3932427725531173,1.3828194653082455,1.3723958437205428,null,3.048023772918302,3.0974350783976194,3.1468479385173045,3.196256907190109,3.2456650170079357,3.295074949395721,3.3444887735503324,3.393902519923838,3.4433137905975384,3.492724738746786,3.542137198034254,3.5915524276866915,3.640966815569691,3.6903796419165897,3.73979243606567,3.789206529832521,3.8386227060759683,3.8880376457975587,3.9374515334556204,3.986865508492717,4.036280585592954,4.08569713093474,4.135112364674047,4.184526913394443,4.233941663364015,4.283357410055463,4.3327739666120655,4.382189499726705,4.4316045964787225,4.481019962727912,4.530436238754914,4.579852880266214,4.629268705024678,4.678684264840244,4.728100135025163,4.777516839944825,4.8269336028009855,4.876349703935911,4.925765661442913,4.975181953157976,null,1.9811419380072721,1.9765970594734525,1.9720452132094444,1.9674929737599711,1.9629653744439908,1.9584504761639978,1.953940230984223,1.9494307615795663,1.9449201847103674,1.9404076146874383,1.9358926797134943,1.9313752763264425,1.9268554404016216,1.9223332777166235,1.917809229420987,1.9132872578907374,1.908767637951419,1.904249389564156,1.8997318093651399,1.8952143916889654,1.8906967735466467,1.886178695788093,1.8816599753657832,1.8771404853181073,1.8726201401882538,1.8680989361356404,1.8635781358975705,1.8590583059380474,1.85453911340286,1.8500202907864298,1.845501623037874,1.8409829373883266,1.8364640952796623,1.8319449859267363,1.827425521157365,1.8229056312576037,1.8183852616123217,1.8138649197363899,1.8093451045847402,1.8048256631272883,1.8003064575219883,1.7957873707402807,1.7912683034666728,1.7867491714920962,1.7822299035158762,1.7777104392870111,1.7731907280281864,1.7686707270961308,1.7641506354325907,1.7596308598665737,1.7551113335187238,1.7505919729785098,1.7460727050858929,1.7415534656913965,1.7370341985772746,1.7325148545151678,null,2.2111019568317447,2.261218029426119,2.3114474044554143,2.3617372061847233,2.4120057679021647,2.4622606344589695,2.5125116906051757,2.5627644151907982,2.6130218414381465,2.663285603325873,2.7135565163051614,2.7638349103602375,2.8141208262821213,2.8644141338748335,2.914713937043181,2.9650113701965446,3.0153050459835486,3.0655965632130906,3.115887150609567,3.1661777543556346,3.2164691032823614,3.2667617578829438,3.317056147492726,3.3673525987243984,3.417651357379593,3.4679524953973107,3.5182532930648756,3.568552373453982,3.6188503275095556,3.6691476525704143,3.719444767525491,3.7697420252981484,3.8200397231733563,3.8703381113748927,3.920637400216358,3.970937766084693,4.021239356463983,4.071541094822629,4.121841858756297,4.172141928669195,4.222441568728756,4.272741011285891,4.323040460743987,4.373340096914761,4.423640077935691,4.473940542811859,4.524241613635265,4.574543397526428,4.624845479448052,4.675146965728406,4.725447976335236,4.77574867403068,4.82604920570438,4.876349703935911,4.926650288389095,4.976951067057801,null,1.9423366809222389,1.9408575952537273,1.9393784794670794,1.9378993331190837,1.9364201560122116,1.93494094814542,1.9334617096741933,1.9319824408780237,1.930503142133911,1.929023813894737,1.927544456671611,1.9260650710194467,1.9245856575251883,1.9231062167982007,1.9216267494624408,1.9201472561500899,1.918667741694202,1.9171882573958248,1.9157088122605364,1.9142294007897493,1.9127500180721169,null,3.9676815435494204,4.018160930107861,4.0686405747226235,4.119120482597519,4.169600657357119,4.220081101300336,4.2705618156136795,4.321042800551034,4.371524055585503,4.422005579537955,4.47248737068598,4.5229694268564264,4.573451745504066,4.623934323778549,4.674417158581443,4.724900246614857,4.775383555651669,4.825866732321455,4.876349703935911,4.926832497723255,4.977315138512947,null,2.0028839517119574,2.0045999981089158,2.0062222087587607,2.007820606743919,2.009410074236523,2.0109954185624033,2.0125785887466323,2.014160499898176,2.015741628904385,2.017322244600879,2.018902508177071,2.020482478577592,2.022061448346274,2.0236393667355923,2.0252165893059355,2.026793354342293,2.0283698240806474,2.0299461103555667,2.031522290966896,2.0330984203590177,2.0346745367268677,2.0362506668267937,2.037826829283802,2.0394030368962066,2.0409792982610337,2.0425556189326017,2.044132002256102,2.0457084499722344,2.0472849626588645,2.0488615400555226,2.0504381813029777,2.052014885120743,2.053591649938929,2.055168473996283,2.056745355413074,2.0583222922451485,2.059899282523871,2.061476324285412,2.0630534155920084,2.0646305545471475,2.0662077393061598,2.067784968083333,2.0693622391564093,2.0709395478930066,2.072516823100655,2.074094029591357,2.075671178295883,2.077248278759546,2.078825339327461,2.0804023673027325,2.081979369081894,2.083556350271184,2.085133315786618,2.0867102699403275,2.0882872165152175,2.089864158829676,2.0914410997937116,2.0930180419580338,null,2.2017621862557477,2.2519917395239295,2.302319856599642,2.3527029072346592,2.403119584196266,2.453558260994466,2.5040120666805454,2.5544766877771696,2.6049492846747864,2.6554276391362466,2.7059051911539935,2.756379680528246,2.8068520926299088,2.857323134802586,2.9077933207178517,2.958263026758346,3.0087325304987256,3.059202037457185,3.1096716999996667,3.1601416308949375,3.210611913161637,3.2610826073056507,3.311553756695419,3.3620253915919482,3.4124975321957667,3.462970190968048,3.513443374410709,3.563917084439729,3.614391319450177,3.6648660751458864,3.715341345188265,3.765817121705243,3.816293395691488,3.866770157323638,3.9172473962088254,3.9677251015806094,4.018203262453301,4.068681867743257,4.119160906363886,4.1696403672996825,4.220120239663483,4.270600493691124,4.321080668710654,4.371560517878824,4.4220400900901735,4.472519429110453,4.5229985741550545,4.5734775603945685,4.623956419397684,4.674435179520089,4.724913866246706,4.775392502493485,4.825871108874074,4.876349703935911,4.92682830436963,4.9773069251951165,null,2.180930223946038,2.1855462689855094,2.1901620460730586,2.1947776981581795,2.1993933450748435,2.2040090871696347,2.2086250083241663,2.213241178481026,2.2178576557612204,2.2224744800492866,2.227091225940509,2.2317075972437688,2.236323706075292,2.2409396499731664,2.2455555137792427,2.250171371260347,2.2547872865080407,2.2594033151497497,2.2640195053988155,2.2686358989662283,2.273252520558931,null,3.9711018110880048,4.021392664743816,4.07168304802683,4.121973238250815,4.1722634770854246,4.2225539751198005,4.272844915791576,4.323136458777961,4.373428742929535,4.423721871537914,4.474014957895898,4.524307349423658,4.57459925471585,4.624890860799671,4.6751823353992625,4.725473828940053,4.775765476325918,4.826057398517467,4.876349703935911,4.926642489713779,4.976935818970589,null,2.18121464547993,2.1917218526380666,2.202227629285449,2.21273787587484,2.223256203410154,2.233773132543008,2.2442847195703166,2.2547958375866313,2.265310090237386,2.275829384938066,2.286345758726025,2.296859058505941,2.3073723883741244,2.317888165425461,2.32840739605212,2.3389231791776925,2.3494371178071156,2.3599513537064123,2.370467616471672,2.380985356723454,2.39150053613128,2.4020146367299406,2.4125293163939756,2.4230459184162303,2.4335629829584455,2.4440782551941305,2.4545930036294963,2.465108408504248,2.4756253982246426,2.486142077453044,2.4966574084703863,2.507172469136969,2.517688188936488,2.528205175109314,2.5387213656739203,2.5492366003669877,2.5597517376924435,2.57026752805944,2.580784355267762,2.5913000793762833,2.6018151273445365,2.612330198537095,2.6228459111752316,2.6333621456876237,null,2.851200962818154,2.9005848250720048,2.9499673145381955,2.9993531244973197,3.0487455844976274,3.0981377644379395,3.1475261100105443,3.196914134996276,3.246304713788536,3.2956996067324824,3.345092787068766,3.394483836588632,3.4438750454387796,3.4932683509493114,3.5426647017325217,3.5920587718009958,3.6414516297790036,3.6908448832403358,3.740239925018358,3.7896364477075895,3.839031284074151,3.8884254347139304,3.9378200635416505,3.98721620763938,4.0366128276415445,4.086008138263271,4.1354030699738376,4.184798540663346,4.234195316620244,4.283591984793614,4.332987698680326,4.382383261355166,4.431779400046117,4.481176622564583,4.530573362435053,4.5799694563377145,4.629365550285908,4.67876223451434,4.728159836055266,4.777556709684214,4.826953155398282,4.876349703935911,4.92574684383207,4.975144508788891,null,2.352720362262578,2.368711462317905,2.384711373518449,2.400703589671185,2.4166982894814613,2.432701782412524,2.448697675349208,2.4646934465534143,2.480695648306933,2.4966927623998707,2.5126881728327484,2.5286884499762623,2.5446867103200743,2.5606829422878588,2.5766828042725325,2.5926820524031493,2.6086784115345703,2.624676939874294,2.640675888049863,2.656671630480825,2.6726683454753872,2.6886672183324793,2.704663813380113,2.7206614073405437,2.736661630784568,2.752659364736062,2.768657243370138,2.784657574925018,2.8006557385653026,2.816653397921435,2.832652991114585,2.8486514830105882,2.8646493000632267,2.8806487229703555,2.896647672112528,2.9126455070093686,2.9286444401990512,2.9446433708143727,2.960640891675374,2.976638981431254,2.9926377096351406,null,3.0561105172581615,3.1040078100154433,3.151907501265512,3.1998041852182917,3.247701260577774,3.2956013359961394,3.3434990999845486,3.3913969407042326,3.439297313838693,3.487196562762497,3.5350956330584533,3.5829965199207856,3.6308968290378982,3.6787964847303347,3.7266974850617522,3.774598609528947,3.8224990404345203,3.8704005058299735,3.9183025746059448,3.966203997747891,4.01410616842385,4.062008860337396,4.109910558210088,4.157812389941486,4.2057150286072424,4.253616820017356,4.301518649230367,4.349421370800396,4.3973235044041905,4.44522559370479,4.49312841209773,4.541030878603138,4.588933092222306,4.636835861710465,4.684738562569959,4.732640977762886,4.780543872568915,4.828446938071191,4.876349703935911,4.924252842496844,4.97215623172547,null,2.5349827175128863,2.555897015791425,2.576815976630633,2.5977332022921873,2.6186460605197217,2.639564750291204,2.6604785021205264,2.6813984210821307,2.7023157841294965,2.723233295051485,2.7441530679859834,2.765069150793457,2.7859904297540115,2.8069074313714384,2.82782580930729,2.8487437216353046,2.8696590612316166,2.8905792154710808,2.9114961651364784,2.9324157406098053,2.9533342481446305,2.9742521543715936,2.995171960008564,3.016089551346834,3.0370096123925894,3.057927472937166,3.078845543282692,3.0997636471391794,3.1206809732017082,3.1416013167147865,3.1625193944168593,3.1834387228032153,3.2043575789198253,3.2252758489655142,3.246195746799001,3.267113920774098,3.2880333824505357,3.308951584813653,3.329869539563138,3.350788504656261,null,3.175586970272987,3.22154929261643,3.2675125337951902,3.3134768758259274,3.3594421367409515,3.4054085890468437,3.451373729967778,3.497338834145755,3.543303769966902,3.5892688951727556,3.635234660421027,3.6812002433043243,3.727166213773736,3.7731321522231953,3.8190986156583135,3.86506574638958,3.9110331551529147,3.9570003896535404,4.002967073352754,4.048933836249041,4.094900647140696,4.140867598728861,4.186834789609356,4.232801761926023,4.278769025158441,4.324736390734533,4.370704117447351,4.416672289607654,4.462640012784693,4.508607741450966,4.554575213502419,4.600542797835895,4.646510504952142,4.692478199932724,4.738445980599092,4.784413680935099,4.830381618454282,4.876349703935911,4.922318065274667,4.9682862920925555,null,2.875669585423088,2.9008818335129853,2.9260908765358282,2.9513034481383538,2.9765153764420713,3.0017287774725157,3.0269407600190434,3.052154295594397,3.077366177467939,3.102578327079364,3.127789558713805,3.1530028975344297,3.1782153963414306,3.203428915402352,3.2286414456247057,3.2538549824275216,3.2790670285138632,3.3042793013334206,3.3294915806043117,3.3547051959182212,3.379917916519392,3.405131484230297,3.4303443247344094,3.4555577651892597,3.4807698585856732,3.5059829028064153,3.531195709534861,3.556409394596002,3.581622327072157,3.606835991452566,3.6320489574744244,3.657262277951933,3.682474534101392,3.707687973673877,null,3.519806116114081,3.5635645147184927,3.6073244700933267,3.6510829877213715,3.6948411408402513,3.738599363069752,3.782357890917065,3.8261163121294772,3.8698752780595216,3.9136350433280374,3.9573948081736257,4.001153849066627,4.044912886555149,4.088671988316974,4.13243124032372,4.176190505373405,4.219950347569924,4.263710751211493,4.307470582113495,4.351230062543236,4.394989714645442,4.438749357002927,4.482509064819305,4.526268918756363,4.570029344875017,4.613789600804933,4.657549580549783,4.701309421889976,4.745069414133723,4.78882935372732,4.832589420354097,4.876349703935911,4.920110414727347,4.963870665444665,null,3.0523456477597146,3.0812294023811218,3.110114472872708,3.1390008938909886,3.1678849015921915,3.1967727120574847,3.22565495285167,3.254540849528194,3.2834263501937655,3.3123118365387216,3.341198259017814,3.370082107784215,3.398969001939673,3.427853882446247,3.4567402264445017,3.4856259973578054,3.514511502531311,3.5433968281579067,3.5722816621690483,3.6011691534074433,3.630054510577374,3.658940880594841,3.687826403090961,3.716711588868954,3.7455980889582805,3.774483534415459,3.803370760287033,3.832256261243807,3.861141957872786,3.8900277790742956,3.9189138125770495,3.9478004286489536,3.976686118223617,4.005572971090213,4.0344581723020045,4.063344520922548,null,3.509253099664636,3.5506798460739444,3.5921055653787715,3.633531010464001,3.674957339343989,3.716383134999952,3.7578116746834804,3.7992381450191486,3.8406645371078083,3.8820910691730175,3.9235174732058224,3.964945273325623,4.006372347521873,4.0477994233109476,4.089226160964608,4.130653133540049,4.172080414985972,4.213508497758746,4.254936146332706,4.296362885008687,4.337790246223789,4.379217422693843,4.420645195457543,4.462073294477499,4.503500603908765,4.544928219752425,4.586355402098407,4.627783138450113,4.669211300596328,4.710639151743243,4.752066768644178,4.793494244071141,4.834922022605252,4.876349703935911,4.9177781004526775,4.959205843012906,null,3.7461658584605244,3.7781501644814828,3.8101347404844423,3.8421197041052846,3.8741044966755465,3.9060908534699017,3.9380753347162147,3.9700600953458323,4.002046037960933,4.034030850426517,4.066016126472188,4.098000870976503,4.129985686353128,4.16197160913515,4.19395685750535,4.225941525904601,4.257927619834383,4.289912721249955,4.321898073856977,4.3538836642284915,4.3858682808188645,4.417853886727428,4.449839415480225,null,4.133742552721134,4.172827015291518,4.211912211734323,4.250996519543041,4.290080804080864,4.3291645565583,4.368249496580192,4.40733429490375,4.446418332047078,4.485502855529499,4.524587377340956,4.563672606774048,4.602757302118785,4.641841489229929,4.680926048625188,4.720011253032913,4.7590956746088535,4.7981803772864,4.837265014314013,4.876349703935911,4.915435026306443,4.954519626308724,4.99360422731767,null,2.178339602265671,2.2127977434640007,2.2473548844534013,2.2818859243874394,2.3163893305650016,2.35094843476098,2.385517911681021,2.420054809474058,2.4546146884354645,2.489198939549604,2.5237614576175775,2.558317264753018,2.592904110884803,2.6274754875677537,2.6620448802591095,2.6966225264917623,2.731196214582281,2.765768634172226,2.8003451250152755,2.834919904996964,2.8694943870224416,2.90407248982672,2.9386466325030827,2.9732215080963615,3.0077998528310426,3.0423790562957445,3.0769532625367546,3.1115311136496415,3.1461123737851886,3.180688762878373,3.2152661287076643,3.2498485300447735,3.284426822102607,3.3190032789841823,3.3535840603514915,3.3881632163665794,3.4227412862380624,3.4573201869975705,3.4918995748496,3.5264781713185007,3.561057407716754,3.5956367916435807,3.630215669490116,3.6647952581521572,3.699374754489739,3.7339537050008005,3.76853345738887,3.8031143454103336,3.8376928974626248,3.8722725278453813,3.906853867231659,3.9414332589754006,3.9760124387535107,4.010593243143592,4.045173121228459,4.079752125269156,4.1143324247435205,4.148912661380344,4.183492237947356,4.21807175448206,4.2526521011138545,4.2872319238241765,4.32181187126655,4.356392164288909,4.390972062324348,4.425552146610722,4.46013270597371,4.494712662376173,4.529292871918667,4.563873803548833,4.598453390299726,4.633033435266007,4.667614207308749,4.702194357366771,4.7367741147680835,4.771354633858085,4.805935015943652,null,4.121455216341623,4.158417700528653,4.195379595345662,4.232341524523308,4.269303470491299,4.306266001608883,4.343228181418832,4.380190051499834,4.417152607890178,4.454115120263247,4.491077017064326,4.528039010797631,4.5650022143271745,4.601964440433506,4.638926255251491,4.675888719503392,4.712851621791856,4.74981354611288,4.786775828421696,4.823738429516143,4.860700632452604,4.89766295146578,4.934625354247942,4.9715878840897725,null,3.255923147431989,3.29378650904268,3.33165015162941,3.36951343061045,3.4073783297087896,3.4452434688783447,3.483106931382793,3.5209706166790653,3.5588367404111527,3.596701417835652,3.6345653604959844,3.672430261498633,3.7102957855167458,3.748160811004458,3.7860257496029015,3.8238902594532607,3.8617560757795006,3.8996217829509994,3.937486336363381,3.9753513346141434,4.013217618981786,4.051082839686024,4.0889479085099545,null,2.5354926462236906,2.576188279670011,2.6168865823804275,2.657586472443158,2.6983028749034883,2.739005014202461,2.7797107394845137,2.8204163779687255,2.861123400634114,2.9018384047163237,2.942546177071985,2.9832561675080647,3.023965260250992,3.064675593725356,3.1053900619605694,3.146101791587778,3.1868140060091568,3.2275250685835126,3.2682372549673304,3.308951584813653,3.349665474283907,3.3903789871226206,null,null,1.9947549565495744,null,null,1.085915124288653,1.0557946042488306,1.1333831472928193,null,0.9022857106456708,0.8566784964322253,0.9414886035688788,null,1.4814503362575038,1.4666726374467145,1.5350587224602303,null,1.1139201207586806,1.0554107764064817,1.1441892626396768,null,1.4599649216195396,1.4578706467658709,1.5173101745852835,null,0.6791360662933462,0.6115569087623051,0.701532538867558,null,1.81140334514662,1.8236140648960666,1.8715760742751448,null,1.2607410693852203,1.1845856647423376,1.2737534746470363,null,1.9182856633034278,1.9454799780337853,1.9797947156210316,null,0.7895847230670897,0.7063831678874032,0.792176345042386,null,1.9986598630095722,2.0332046879786487,2.0601615088418277,null,1.34701080741503,1.261142712007303,1.3442489997829934,null,2.217077378717431,2.265243370212288,2.277215008479143,null,0.8784945623972198,0.7892943388705517,0.8653208951737105,null,2.4496638231291668,2.509257272729433,2.5069578644892982,null,0.7949430592502756,0.7049724378133577,0.7724159012827002,null,2.6675271126725018,2.7360407665980153,2.7210692905000653,null,0.7915299652630624,0.702783951812043,0.761143862930678,null,2.6129330785948253,2.690606159522302,2.660328238072458,null,1.2513340855295751,1.1665800444891794,1.2120431339050306,null,3.06569866909284,3.147322514998581,3.109166318338553,null,0.9373774970151909,0.8558661195489667,0.8937811268621123,null,3.4227899591895854,3.5071728959483366,3.462649322503709,null,0.7976344306502703,0.719419013961993,0.7507162979331078,null,4.128769784830577,4.215061476867065,4.165393266557635,null,0.43560064875290666,0.3605468754656281,0.3861152912452525,null,1.3476217001510777,1.278821029515713,1.2942300477741564,null,3.1672369812280112,3.2559080709715738,3.1978868014221744,null,1.1347728037493379,1.0718299004346765,1.078697224088291,null,3.958592287443693,4.048329904226381,3.984001132107513,null,1.5623264132824628,1.5064563696745108,1.5039010111902604,null,3.396425717819126,3.486389433521719,3.4158306762534285,null,1.6909956192871436,1.6434217488757639,1.6307574553526165,null,3.6012751208777583,3.6903796419165897,3.6139811677559024,null,1.9334391193648788,1.8952143916889654,1.8721223716259032,null,3.0791906368645536,3.1661777543556346,3.084698491999485,null,1.965228247043523,1.9319824408780237,1.9036910363998385,null,4.235605124829771,4.321042800551034,4.2374083795725515,null,2.0612253826550284,2.0330984203590177,1.999691755545807,null,3.0765713243794504,3.1601416308949375,3.0746496850810527,null,2.2361638887590742,2.213241178481026,2.1748579747042096,null,4.2417317312258875,4.323136458777961,4.23610457178527,null,2.35141984420336,2.3389231791776925,2.2912056869796324,null,3.5157499195076474,3.5920587718009958,3.502930586790662,null,2.579085337892941,2.5766828042725325,2.5206929832588143,null,3.6562337359218446,3.7266974850617522,3.6367295583756114,null,2.799896042108329,2.8069074313714384,2.7438613288221005,null,3.708904518346971,3.7731321522231953,3.6834056766398917,null,3.1374520127941135,3.1530028975344297,3.0841094727915963,null,3.943242744542507,4.001153849066627,3.912507529437477,null,3.375845458996869,3.398969001939673,3.325346481953467,null,3.9546062915500233,4.006372347521873,3.919393604361419,null,3.972304911122862,4.002046037960933,3.9246621295000774,null,4.400464760789537,4.446418332047078,4.361474436596011,null,3.0414891265094726,3.0769532625367546,2.9966159457324624,null,4.376232569621361,4.417152607890178,4.33428048640475,null,3.515792928778934,3.5588367404111527,3.4750577063576245,null,2.7704521279889214,2.8204163779687255,2.7340243757579703,null],"y":[1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.9947549565495744,1.994754956549574,1.9947549565495732,1.9947549565495697,1.994754956549557,1.9947549565495122,1.99475495654935,1.9947549565487648,1.9947549565466507,1.9947549565390152,1.994754956511439,1.9947549564118432,1.9947549560521387,1.9947549547530148,1.9947549500610442,1.9947549331153251,1.9947548719134536,1.9947546508741878,1.9947538525593111,1.9947509693295402,1.9947405561070681,1.9947029469025501,1.9945671110858942,1.9940764588763258,1.9923036476226905,1.9858938525972625,1.961681166137917,1.9271158317214758,1.8918145737277656,1.8563487941872128,1.820818125288287,1.785203748514033,1.749525550421483,1.7138761575237724,1.6782112582112874,1.6425255098926155,1.6068408166684915,1.5711564392309456,1.5354634659044015,1.4997618525836525,1.4640658271706284,1.4283670055688935,1.3926620976334225,1.356960210653579,1.3212585460977695,1.2855536845354032,1.2498470677773141,1.2141423374062386,1.1784362956913388,1.1427266965105491,1.1070198279516563,1.0713129071978829,1.0356041751334844,0.999895447306203,0.964187522850841,0.9284787213534366,0.89276811423322,0.8570590766492505,0.8213498611198912,0.7856394047353653,0.7499295429630343,0.7142200300325864,0.6785098377530242,0.6427989702174927,0.607088850947071,0.5713785002787294,0.5356671294376237,0.499956568403884,0.46424613458982633,0.42853513642518376,0.39282401497442154,0.3571133087112446,0.32140235086815583,0.2856905455248973,0.24997951318000844,0.214268489672327,0.1785569789018018,0.1428456366169621,0.10713452037320721,0.07142314812072506,0.03571137028932965,0.0,null,1.2849772887371418,1.2460362716775608,1.2071080236335667,1.168175514484213,1.1292408100460563,1.090302154825374,1.0513649267769891,1.0124298692498586,0.9734945837871063,0.9345540954943256,0.8956156476480258,0.8566784964322253,0.8177402606745795,0.7788029920458301,0.7398612179298955,0.7009225393334834,0.6619856615137841,0.6230462014816522,0.5841047669732287,0.5451654694790297,0.5062256840276322,0.467286543904745,0.4283459945025112,0.38940457301225606,0.35046557819099033,0.31152571620528624,0.2725852942444559,0.2336439669041427,0.19470334344300785,0.15576326116374198,0.11682318532223286,0.07788128908034397,0.03894053360058928,0.0,null,1.4094999459744,1.3773573841280862,1.3451943108522388,1.3130401793520403,1.2808859463470976,1.2487291579049216,1.2165768731428181,1.1844197838248127,1.152261108442737,1.1201091659016618,1.0879520204048359,1.0557946042488309,1.0236387441787502,0.9914781268253634,0.9593235782453845,0.9271660928227071,0.8950044935270018,0.8628476698957912,0.8306912220983919,0.7985322311982503,0.7663750439172676,0.7342156026871067,0.7020576790600288,0.6699009870080112,0.6377402815716996,0.605581560823546,0.573423124771235,0.5412638896642549,0.5091057197668043,0.47694647125625167,0.4447866830602942,0.41262927008872324,0.3804699645587816,0.34831069313827934,null,1.6268875329277455,1.5829604197659148,1.539007524207259,1.4950474196660026,1.451093141694034,1.4071408264089806,1.3631824502474514,1.3192217841019873,1.2752591859217903,1.2312932107649028,1.1873210922644144,1.1433492583369806,1.0993799989946893,1.0554107764064817,1.0114402682710073,0.9674688801394798,0.9234971482601186,0.8795233275237268,0.8355468312685955,0.7915716377975502,0.7475978380720073,0.7036236163116132,0.659649191785275,0.6156742451655005,0.5716992043000262,0.5277226215850295,0.4837449829494937,0.439768356094687,0.39579260564561003,0.35181630111425993,0.3078401357207711,0.26386358509439756,0.21988701679887568,0.17590921156922165,0.1319314420198653,0.08795408538125284,0.0439773331840756,0.0,null,1.78930998441955,1.764492490011842,1.7397017340798608,1.7149021330078995,1.6900896646019743,1.665264755092189,1.640442287648974,1.6156181949226722,1.590791480090599,1.5659677881522929,1.5411472537666373,1.5163273043917227,1.4914991754418438,1.4666726374467145,1.4418429782646516,1.4170167427921028,1.3921862805246574,1.3673612186988169,1.3425351644532773,1.3177104104407584,1.2928794272065178,1.2680520617957027,1.2432206577524256,1.218393103050963,1.1935614890004438,1.1687351105642274,1.1439060862333028,1.1190790016872518,1.0942468345564387,1.0694186054413442,1.0445863679541316,1.0197578269438325,0.9949255892263482,0.970098132879552,0.9452670364096739,0.9204385288417172,0.8956057196065607,0.8707767328456982,null,0.9408351998694903,0.8937967684348915,0.8467572984407865,0.7997191580198788,0.752679168697977,0.7056387664944601,0.6585986857955715,0.6115569087623051,0.5645160073572701,0.5174749023620766,0.47043224849820875,0.4233902261348778,0.3763472156375864,0.3293031550115666,0.2822600400247519,0.23521651253159914,0.1881732655322415,0.14113043712409074,0.09408674721479467,0.04704346877641007,0.0,null,1.5864475269230225,1.5680811972066127,1.549710323134332,1.5313467134196108,1.5129758791807284,1.4946076131975738,1.476243045782004,1.4578706467658709,1.4395036790744329,1.421136719105091,1.4027648104395098,1.3843992233988047,1.366032025414612,1.3476641874439328,1.329299360070588,1.3109301901257546,1.2925615806064867,1.2741944339736944,1.2558232714052342,1.2374552386544053,1.2190874259839777,null,1.8253159463281712,1.7762071135587592,1.727071075512625,1.6778600180196213,1.6285617657117226,1.5792368776407382,1.5299328404768142,1.4806265307345579,1.431303055924374,1.3819555399761858,1.3326105390395724,1.2832730136211543,1.2339336349728283,1.1845856647423376,1.135226515854904,1.0858738818090357,1.0365244731696412,0.9871736122967871,0.937817439630716,0.888457924553205,0.8391026788398672,0.789748787794012,0.7403932723643513,0.6910337394570426,0.6416739713808612,0.5923169135005489,0.542960226082394,0.49360191901822914,0.44424071219359224,0.3948807448513174,0.3455222782366382,0.2961636778108497,0.24680352211689302,0.19744143869933412,0.1480810529225318,0.0987214642969254,0.04936146838674102,0.0,null,1.962133242418756,1.9515524605526107,1.940987283525557,1.930356526693508,1.9196512738128721,1.9089509954398316,1.898295999276695,1.8876452520486966,1.8769784475652616,1.8662888503155168,1.8556116105637939,1.8449485666764212,1.8342856065859177,1.8236140648960666,1.8129315352572866,1.8022609107741372,1.7915951260725282,1.7809267101240127,1.7702511328872148,1.7595717875490788,1.7488984176223523,1.738226725957935,1.727552799604816,1.7168738041743652,1.7061950718919219,1.6955202004288925,1.6848458977202505,1.6741695855685617,1.663489786091299,1.6528120922888994,1.6421366251530805,1.6314611383621058,1.6207838112112274,1.6101043018685426,1.5994273973399467,1.588751769960112,1.5780757944714012,1.5673981191222568,null,1.1099777140366305,1.059527900344874,1.0090788431610158,0.9586301283474994,0.9081814454969638,0.8577325616171663,0.8072833020251173,0.7568335363069176,0.7063831678874032,0.6559321262051695,0.6054803607900647,0.5550278367447492,0.504574531272658,0.4541204309928233,0.40366552985128235,0.3532098274882396,0.3027533279558321,0.2522960387073358,0.2018379697977663,0.1513791332499994,0.10091954255113471,0.05045949500710822,0.0,null,1.962485444047602,1.9603592849187503,1.9582334586410426,1.9561078265102834,1.9539822902106048,1.9518567798906694,1.949731245981379,1.9476056534999375,1.9454799780337853,1.943354202876615,1.9412283169652682,1.9391023133802399,1.9369761882472596,1.934849939927183,1.9327235684150506,1.9305970748921581,1.9284704613909078,1.9263437305433522,1.9242168853922232,1.9220899292488638,1.9199628655865308,1.9178357575067884,1.9157088122605364,null,1.9144888846427262,1.865417205664326,1.8155032203301817,1.7653133309946798,1.7150004752982646,1.664622644751335,1.6142065578692266,1.5637661902544575,1.5133166689132163,1.4628752763600636,1.4124392941923671,1.3620061902662102,1.311574345763603,1.261142712007303,1.2107106056468,1.1602775824721459,1.1098433575306041,1.0594077533663073,1.008970665807016,0.9585320409601833,0.9080918595193677,0.8576501259259339,0.8072068608077495,0.7567620956612401,0.7063158690885023,0.6558682241242221,0.6054192063336471,0.5549688624605712,0.5045172394703554,0.45406438387826875,0.40361050938701576,0.3531573780420584,0.3027050713275006,0.2522534074090803,0.20180223077253603,0.15135140818515247,0.10090082534288654,0.05045038407442791,0.0,null,2.003321082205398,2.0058190148006694,2.008160905858528,2.0104647809958913,2.012754678283164,2.0150381171170304,2.0173181056778815,2.0195960556502808,2.0218711406939978,2.024141478968543,2.026408979943442,2.028674904732561,2.0309399929592,2.0332046879786487,2.0354692590070798,2.0377338700669023,2.039998620243031,2.042263567864603,2.0445287453822614,2.046794168706457,2.0490598431672264,2.051325767369266,2.053591935711654,2.055858340046831,2.0581249707772256,2.060391817580255,2.0626588698854404,2.0649261171849673,2.0671935492317726,2.0694611561614553,2.0717288911658795,2.0739963673041397,2.076263587322534,2.0785306091401337,2.080797480577653,2.083064241194424,2.0853309237631295,2.087597555459937,2.089864158829676,null,1.1838917616609894,1.1345707354536443,1.0852519053557645,1.0359299481143314,0.9866012076239317,0.9372714344716422,0.8879461614033922,0.838621529524641,0.7892943388705519,0.7399626346137052,0.6906328698142612,0.6413052926952678,0.591977414150428,0.5426471320815729,0.4933144254172697,0.44398410949662137,0.39465476752130507,0.34532468338659544,0.29599237295839753,0.24665966751534504,0.19732863661258923,0.14799790389174905,0.09866621684532431,0.04933272487795188,0.0,null,2.178821483632197,2.189622341789067,2.2004183035522127,2.211216882343139,2.2220247501010877,2.232833371976937,2.2436358727348567,2.254437823047852,2.265243370212288,2.2760546793216982,2.286862829288727,2.297667897351022,2.308473359953557,2.3192819067355077,2.330093271843622,2.340901023848555,2.351707290077107,2.362514409673625,2.3733242606568257,2.384134212206058,2.394941601305869,2.405748394365281,2.4165562665843066,2.4273662630499793,2.4381748519679554,null,1.0809306303328587,1.0339357337106667,0.9869407039422813,0.9399468912969886,0.8929511423942712,0.8459575659823929,0.798963097661052,0.7519673938129284,0.7049724378133577,0.6579757800053775,0.6109791405445212,0.5639830101105765,0.5169852734318362,0.46998812724621664,0.42299048251381377,0.3759913909877559,0.3289925998162352,0.28199344502011,0.23499435501845792,0.18799602845034977,0.14099707257101898,0.09399832529433771,0.04699966127952616,0.0,null,2.361421452722115,2.3799051676220113,2.398376281783602,2.41684997739334,2.4353366292990937,2.45381330861961,2.472294917622182,2.490779560696044,2.509257272729433,2.5277409694932778,2.5462227204388954,2.5647020619085508,2.583188182791304,2.601668521891998,2.6201487729721102,2.6386323598656647,2.657110163658598,2.67559108313789,2.6940735722855664,2.712553612740823,2.7310374564965736,2.749519667272091,2.768000782184321,2.7864855451062347,null,1.0541508214795177,1.0102319144341694,0.9663136148158056,0.9223937956710205,0.8784734881512372,0.8345493874484482,0.7906269958799846,0.7467050711856325,0.702783951812043,0.6588615857405195,0.6149396076254243,0.571016723490634,0.5270932205060629,0.48316751930509316,0.4392436905367077,0.39532005965159617,0.35139662332945754,0.30747263192862484,0.2635488801763999,0.21962450709461348,0.17569949362870121,0.13177386870621566,0.08784921869845681,0.0439246490517849,0.0,null,2.5366724241934544,2.561587227147418,2.5865155423732276,2.611432380985007,2.636358647436244,2.661272391464145,2.686196306831049,2.7111147796100203,2.7360407665980153,2.7609603053910963,2.785885572205239,2.810805777388736,2.8357294151750327,2.860647036568838,2.885570500382128,2.9104917070717855,2.9354159690081296,2.960337509134632,2.985261625279197,3.01018335597913,3.03510606997221,3.060026740187042,3.0849501139343687,3.1098726570588906,3.1347962382445136,null,1.7495008750684025,1.7107303237048181,1.6719047124571371,1.6330608342054957,1.5941934432867004,1.5553262320141992,1.5164682979535589,1.4776052736593799,1.43872365063264,1.399846849338435,1.3609741761200915,1.3220976220390865,1.283223677383305,1.2443348419168214,1.205455347463222,1.1665800444891794,1.1276978197462464,1.0888109039221978,1.0499285953087287,1.0110450660976469,0.9721627955206849,0.9332773648782868,0.8943899186923996,0.8555075373042681,0.8166232571847942,0.7777376994317264,0.7388505349653333,0.699964621351071,0.6610796089807875,0.6221946213313055,0.5833060350525566,0.5444196549358951,0.5055337416929507,0.46664695737834727,0.427760438691021,0.38887246207050125,0.34998570122780454,0.31110026342470015,0.27221298631900315,0.23332398990721528,0.19443735000630766,0.15555014490371882,0.11666314834652641,0.07777498792038993,0.03888694767984779,0.0,null,2.207446398014614,2.239702513387784,2.2718770158285633,2.304070479632651,2.3362758381372775,2.3684603457099977,2.400673430222924,2.4328892610345982,2.4650846905095314,2.497299135872392,2.5295139525183483,2.561725850178527,2.5939528524025284,2.626160598872215,2.6583782344477282,2.690606159522302,2.72282222920322,2.7550381473546626,2.787259734288287,2.8194774611324838,2.8517004062789084,2.883920087079035,2.9161372141708695,2.9483628078742363,2.9805843900246187,3.012805399209817,3.045028419469427,3.0772492303734063,3.109472020066749,3.141696058643504,3.173915480669545,3.20613839655912,3.2383615308670888,3.2705832625734,3.302807317514188,3.335029024204395,3.3672517111309856,3.3994775796368373,3.4317000432422184,3.4639216442125167,3.496145968664184,3.5283686875590745,3.560592483696245,3.5928153851148115,3.625037801362102,3.657262277951933,null,1.2837661033205416,1.2481055579183298,1.2124530395464364,1.1767957839481662,1.1411326918291689,1.105479733520406,1.0698234552926553,1.034163125996915,0.9985037915981786,0.9628469707065193,0.9271872594130894,0.8915231454318645,0.8558661195489667,0.820206944227232,0.7845450570078063,0.74888567282104,0.7132266433764074,0.6775655756601103,0.641903202051039,0.6062439090497841,0.5705831321215884,0.5349203092110439,0.4992606022231353,0.4636002804578202,0.42793839585442944,0.3922767108393118,0.35661644684174176,0.32095499544106154,0.2852915766582285,0.24963149801005238,0.21397034168890672,0.17830792164724488,0.14264648576454853,0.10698554184307227,0.07132360599326111,0.03566092864703009,0.0,null,2.71823200132789,2.7539846846756255,2.789744036492724,2.8254981569111766,2.8612506932525297,2.8970147573204708,2.9327725488443708,2.968528070302931,3.0042867906745236,3.0400468353931642,3.075804055847896,3.1115598978356105,3.147322514998581,3.1830816696642037,3.218839468716451,3.254600578610593,3.290361009856319,3.3261197078636626,3.3618785915999276,3.397640359065436,3.4334001257327547,3.4691589843680144,3.5049212030395367,3.5406819005509518,3.576441445022066,3.612201910627981,3.6479635071883667,3.6837237411951853,3.7194831303637983,3.755245901664306,3.7910067926487736,3.82676687316904,3.8625282348243024,3.8982897561603704,3.934050300792805,3.9698107391233703,4.005572971090213,null,1.0791116951423838,1.0464080782401683,1.013711121903343,0.9810146618703324,0.9483131251950921,0.9156148053791658,0.8829146875448335,0.850216635340484,0.8175183730003075,0.7848169140492817,0.7521166525208542,0.719419013961993,0.6867174189902399,0.654017081572101,0.6213172158704934,0.5886151959824515,0.5559155435484092,0.5232150030482515,0.4905124366957971,0.45781268892811383,0.4251127334463816,0.3924108626079209,0.35971053238926276,0.32700957157309646,0.29430919491898433,0.2616088683348503,0.22890720260449068,0.19620608036602555,0.16350650895376007,0.13080468731000838,0.09810348583091838,0.06540263503835798,0.03270091718828284,0.0,null,3.0838334480777254,3.1223145442225824,3.160799810343329,3.199287621427594,3.237771013006719,3.2762558338450485,3.3147406570414635,3.353228670545199,3.391714789853099,3.4301992984547165,3.468684771254712,3.5071728959483366,3.5456584848005117,3.5841442881975514,3.6226305879685747,3.6611167790778154,3.699603940975841,3.7380902775470086,3.7765758162205745,3.8150630960656735,3.8535507321067217,3.892036846674654,3.930523662124828,3.969010556511379,4.007498482906083,4.045985643398844,4.084472149046161,4.122959122521017,4.161447652744141,4.1999344692434875,4.238421429493493,4.276908706176302,4.3153961729436086,4.3538836642284915,null,0.5708641795025072,0.5408168768597612,0.510773506548979,0.48072817260850037,0.45068264569844035,0.4206376824031505,0.3905908119173277,0.3605468754656281,0.3305013341479439,0.3004557601175083,0.27041045799281604,0.24036388032675035,0.2103195088522397,0.18027380256418396,0.15022817579456332,0.1201826132807584,0.09013623620975961,0.0600915220988603,0.03004568142897957,0.0,null,3.930902754921523,3.971495823499459,4.012091032660256,4.052685079489922,4.093278823776798,4.133872822962753,4.17446634865589,4.215061476867065,4.2556557943039826,4.296249836553003,4.336844010360557,4.377437878432105,4.41803295491798,4.458627476123382,4.4992217455546255,4.539816059198418,4.580410189665201,4.62100523325951,4.661599911134537,4.702194357366771,null,2.3802551209223384,2.423998330472198,2.467761727473028,2.5115221999908153,2.5552990235447863,2.5990838407229613,2.6428685166118053,2.686646342295573,2.730428844120788,2.774210973712712,2.817996811142128,2.8617824813093238,2.9055741077557564,2.949366489985674,2.993157402425753,3.0369462394834312,3.0807374465454007,3.1245281434074803,3.168320039151043,3.2121123928249657,3.2559080709715738,3.2997019299340757,3.3434954402198516,3.3872882886735787,3.4310822081109977,3.4748756803354017,3.5186701282632167,3.5624652004427197,3.6062616796823432,3.650056537263217,3.693851440395789,3.7376462334519007,3.7814415658849323,3.8252365325427404,3.8690323277762406,3.9128287787939473,3.956625171894371,4.000420735939511,4.044216506906347,4.088012188367897,4.1318081426248074,4.175604023119636,4.219400625189186,4.263197559322109,4.306994053963013,4.350790136437246,4.394586495372401,4.438382764192308,4.482179162819205,4.525975656555574,4.569772789801695,4.613569657070093,4.657366309493049,4.701162787610239,4.744959456344399,4.788756035033359,4.832552775665092,4.876349703935911,4.920147084577643,4.963943985265538,null,1.7817057252585804,1.7565276334627853,1.7314227571059448,1.7062532841013078,1.6811382534270243,1.6559926075214828,1.6308720175116431,1.6057131107880005,1.5805788565568413,1.555421926881178,1.530284438729149,1.5051295773561197,1.4799941783196322,1.4548463269069816,1.4297062871585875,1.404552621369023,1.379409899976883,1.354257530387675,1.3291133300438929,1.3039622192095388,1.278821029515713,1.2536712600931952,1.22852585836382,1.2033742313501852,1.1782281010512023,1.15307679100473,1.1279303039693682,1.1027806422293684,1.077635931377766,1.0524857044562823,1.0273382682792973,1.0021876583920588,0.9770401455404636,0.9518895004814033,0.9267420413035431,0.9015930809784867,0.8764459503829337,0.8512956810962329,0.8261473517978409,0.8009970541180397,0.7758486019461449,0.7506984009618537,0.7255504642692056,0.7004014841585656,0.6752531500921278,0.6501029637297285,0.6249542065760891,0.599804143915922,0.57465521515042,0.5495053360493614,0.524357151167095,0.4992076675486529,0.47405869764993247,0.44890863234951717,0.4237595192122061,0.3986095034621245,0.3734603338246698,0.34831069313827934,0.32316221314097887,0.2980124795334335,null,3.588329821155785,3.6343290323475475,3.6803282734045646,3.7263274756119293,3.7723272459838415,3.8183271710763504,3.8643279924984437,3.9103288972075725,3.9563293846295755,4.0023297655979295,4.048329904226381,4.094330444026114,4.140330920952212,4.186331554593269,4.232332192943783,4.2783328441466,4.324333935537154,4.370335164896284,4.416336840334894,4.462338143753804,4.508339237507037,4.554340377304845,4.600341417134583,4.6463427337688845,4.692343982859526,4.738345227755941,4.784346569253955,4.8303479536653215,4.876349703935911,4.922351578595374,4.968353328671432,null,1.2802715000688751,1.2594258760340973,1.238581812743961,1.2177382120998037,1.1968918707632847,1.176049736030898,1.155204667232731,1.1343626029069058,1.1135187887087223,1.0926733831768876,1.0718299004346765,1.0509828101371355,1.030139210110483,1.0092939635169689,0.9884487736784521,0.9676047439123624,0.9467586223400168,0.9259154966857,0.9050709831898214,0.8842268725474052,0.8633824594865539,0.8425366606300705,0.8216925029932584,0.8008465434360101,0.7800021417966702,0.7591570246452434,0.7383115827914825,0.7174673326321902,0.6966213862765587,0.6757777551791887,0.6549328101335763,null,2.7196179716608437,2.767530932516126,2.8154439568156615,2.863364811025151,2.9112851286942867,2.9592046124769036,3.007129319197303,3.055055331400156,3.102978921722683,3.150904506251416,3.1988311533048215,3.246755471290208,3.2946810203213404,3.3426085451795227,3.390534228182587,3.438460598504381,3.486389433521719,3.5343166604030727,3.5822439217898228,3.6301729950463733,3.6781010198373703,3.7260287789653463,3.7739580207935015,3.8218870107426635,3.869815600623282,3.917745407641223,3.9656755154642838,4.013605072627826,4.061535083300518,4.109465377811862,4.157394815196068,4.205324542740024,4.25325492420512,4.301184560875117,4.349114351679233,4.397045062151967,4.444975110930884,4.492905141698332,4.54083584935465,4.588766131876982,4.636696234921456,4.684626919283288,4.732557501334752,4.7804878491658425,4.828418701260577,4.876349703935911,4.924280431263753,4.972211438434137,null,1.7610479659858027,1.745139442826102,1.729234932591164,1.7133135955158771,1.6974021348383341,1.6814982192583983,1.6655844484019902,1.6496739856670164,1.6337698893019026,1.6178573854953078,1.6019414872365128,1.586031918071224,1.57011836112612,1.5542000423318587,1.53828816167431,1.522375079995892,1.5064563696745108,1.4905437967774475,1.4746312241280666,1.4587133934475893,1.4427992395821028,1.4268862425175193,1.410969597838667,1.395054875738115,1.379142296265204,1.363227244136759,1.347312798237334,1.3314010598980943,1.3154869724837581,1.2995715313342173,1.2836581751800133,1.267743621563607,1.2518271568178514,1.235913003436358,1.2199985283417838,1.2040817082827973,1.188167343740542,1.1722531922864146,1.1563369804514692,1.1404220758607198,1.1245077431107307,1.1085918695660026,1.092676655837778,1.0767624721497135,1.0608472131081899,1.044932079414838,1.0290183191976006,1.0131037727543202,null,3.048023772918302,3.0974350783976194,3.1468479385173045,3.196256907190109,3.2456650170079357,3.295074949395721,3.3444887735503324,3.393902519923838,3.4433137905975384,3.492724738746786,3.542137198034254,3.5915524276866915,3.640966815569691,3.6903796419165897,3.73979243606567,3.789206529832521,3.8386227060759683,3.8880376457975587,3.9374515334556204,3.986865508492717,4.036280585592954,4.08569713093474,4.135112364674047,4.184526913394443,4.233941663364015,4.283357410055463,4.3327739666120655,4.382189499726705,4.4316045964787225,4.481019962727912,4.530436238754914,4.579852880266214,4.629268705024678,4.678684264840244,4.728100135025163,4.777516839944825,4.8269336028009855,4.876349703935911,4.925765661442913,4.975181953157976,null,1.77893269852731,1.7685068264118051,1.7580799682801747,1.7476586136961132,1.737238513429576,1.7268162686685489,1.7163895138921383,1.7059635618515494,1.6955411693323912,1.6851194016556053,1.6746959485989277,1.6642693757263953,1.653844405327041,1.6434217488757639,1.6329993566602887,1.6225755595658928,1.6121494741959785,1.60172527502595,1.59130246514177,1.5808795271422456,1.5704552131779332,1.5600291561196982,1.5496049166478765,1.539181617677951,1.5287581106677568,1.5183334175559993,1.5079078511259278,1.4974837364433593,1.4870602707764142,1.4766365449635592,1.4662117723441623,1.4557867004391654,1.4453628135031373,1.4349393700730713,1.424515633083607,1.4140909590306117,1.4036663747885956,1.3932427725531173,1.3828194653082455,1.3723958437205428,null,2.2111019568317447,2.261218029426119,2.3114474044554143,2.3617372061847233,2.4120057679021647,2.4622606344589695,2.5125116906051757,2.5627644151907982,2.6130218414381465,2.663285603325873,2.7135565163051614,2.7638349103602375,2.8141208262821213,2.8644141338748335,2.914713937043181,2.9650113701965446,3.0153050459835486,3.0655965632130906,3.115887150609567,3.1661777543556346,3.2164691032823614,3.2667617578829438,3.317056147492726,3.3673525987243984,3.417651357379593,3.4679524953973107,3.5182532930648756,3.568552373453982,3.6188503275095556,3.6691476525704143,3.719444767525491,3.7697420252981484,3.8200397231733563,3.8703381113748927,3.920637400216358,3.970937766084693,4.021239356463983,4.071541094822629,4.121841858756297,4.172141928669195,4.222441568728756,4.272741011285891,4.323040460743987,4.373340096914761,4.423640077935691,4.473940542811859,4.524241613635265,4.574543397526428,4.624845479448052,4.675146965728406,4.725447976335236,4.77574867403068,4.82604920570438,4.876349703935911,4.926650288389095,4.976951067057801,null,1.9811419380072721,1.9765970594734525,1.9720452132094444,1.9674929737599711,1.9629653744439908,1.9584504761639978,1.953940230984223,1.9494307615795663,1.9449201847103674,1.9404076146874383,1.9358926797134943,1.9313752763264425,1.9268554404016216,1.9223332777166235,1.917809229420987,1.9132872578907374,1.908767637951419,1.904249389564156,1.8997318093651399,1.8952143916889654,1.8906967735466467,1.886178695788093,1.8816599753657832,1.8771404853181073,1.8726201401882538,1.8680989361356404,1.8635781358975705,1.8590583059380474,1.85453911340286,1.8500202907864298,1.845501623037874,1.8409829373883266,1.8364640952796623,1.8319449859267363,1.827425521157365,1.8229056312576037,1.8183852616123217,1.8138649197363899,1.8093451045847402,1.8048256631272883,1.8003064575219883,1.7957873707402807,1.7912683034666728,1.7867491714920962,1.7822299035158762,1.7777104392870111,1.7731907280281864,1.7686707270961308,1.7641506354325907,1.7596308598665737,1.7551113335187238,1.7505919729785098,1.7460727050858929,1.7415534656913965,1.7370341985772746,1.7325148545151678,null,3.9676815435494204,4.018160930107861,4.0686405747226235,4.119120482597519,4.169600657357119,4.220081101300336,4.2705618156136795,4.321042800551034,4.371524055585503,4.422005579537955,4.47248737068598,4.5229694268564264,4.573451745504066,4.623934323778549,4.674417158581443,4.724900246614857,4.775383555651669,4.825866732321455,4.876349703935911,4.926832497723255,4.977315138512947,null,1.9423366809222389,1.9408575952537273,1.9393784794670794,1.9378993331190837,1.9364201560122116,1.93494094814542,1.9334617096741933,1.9319824408780237,1.930503142133911,1.929023813894737,1.927544456671611,1.9260650710194467,1.9245856575251883,1.9231062167982007,1.9216267494624408,1.9201472561500899,1.918667741694202,1.9171882573958248,1.9157088122605364,1.9142294007897493,1.9127500180721169,null,2.1022579942123545,2.1517368076976147,2.2017621862557477,2.2519917395239295,2.302319856599642,2.3527029072346592,2.403119584196266,2.453558260994466,2.5040120666805454,2.5544766877771696,2.6049492846747864,2.6554276391362466,2.7059051911539935,2.756379680528246,2.8068520926299088,2.857323134802586,2.9077933207178517,2.958263026758346,3.0087325304987256,3.059202037457185,3.1096716999996667,3.1601416308949375,3.210611913161637,3.2610826073056507,3.311553756695419,3.3620253915919482,3.4124975321957667,3.462970190968048,3.513443374410709,3.563917084439729,3.614391319450177,3.6648660751458864,3.715341345188265,3.765817121705243,3.816293395691488,3.866770157323638,3.9172473962088254,3.9677251015806094,4.018203262453301,4.068681867743257,4.119160906363886,4.1696403672996825,4.220120239663483,4.270600493691124,4.321080668710654,4.371560517878824,4.4220400900901735,4.472519429110453,4.5229985741550545,4.5734775603945685,4.623956419397684,4.674435179520089,4.724913866246706,4.775392502493485,4.825871108874074,4.876349703935911,4.92682830436963,4.9773069251951165,null,2.0062222087587607,2.007820606743919,2.009410074236523,2.0109954185624033,2.0125785887466323,2.014160499898176,2.015741628904385,2.017322244600879,2.018902508177071,2.020482478577592,2.022061448346274,2.0236393667355923,2.0252165893059355,2.026793354342293,2.0283698240806474,2.0299461103555667,2.031522290966896,2.0330984203590177,2.0346745367268677,2.0362506668267937,2.037826829283802,2.0394030368962066,2.0409792982610337,2.0425556189326017,2.044132002256102,2.0457084499722344,2.0472849626588645,2.0488615400555226,2.0504381813029777,2.052014885120743,2.053591649938929,2.055168473996283,2.056745355413074,2.0583222922451485,2.059899282523871,2.061476324285412,2.0630534155920084,2.0646305545471475,2.0662077393061598,2.067784968083333,2.0693622391564093,2.0709395478930066,2.072516823100655,2.074094029591357,2.075671178295883,2.077248278759546,2.078825339327461,2.0804023673027325,2.081979369081894,2.083556350271184,2.085133315786618,2.0867102699403275,2.0882872165152175,2.089864158829676,2.0914410997937116,2.0930180419580338,null,3.9711018110880048,4.021392664743816,4.07168304802683,4.121973238250815,4.1722634770854246,4.2225539751198005,4.272844915791576,4.323136458777961,4.373428742929535,4.423721871537914,4.474014957895898,4.524307349423658,4.57459925471585,4.624890860799671,4.6751823353992625,4.725473828940053,4.775765476325918,4.826057398517467,4.876349703935911,4.926642489713779,4.976935818970589,null,2.180930223946038,2.1855462689855094,2.1901620460730586,2.1947776981581795,2.1993933450748435,2.2040090871696347,2.2086250083241663,2.213241178481026,2.2178576557612204,2.2224744800492866,2.227091225940509,2.2317075972437688,2.236323706075292,2.2409396499731664,2.2455555137792427,2.250171371260347,2.2547872865080407,2.2594033151497497,2.2640195053988155,2.2686358989662283,2.273252520558931,null,2.851200962818155,2.900584825072005,2.9499673145381964,2.99935312449732,3.0487455844976283,3.09813776443794,3.147526110010545,3.1969141349962764,3.246304713788537,3.2956996067324833,3.3450927870687663,3.3944838365886327,3.4438750454387805,3.493268350949312,3.5426647017325226,3.5920587718009966,3.6414516297790045,3.690844883240336,3.7402399250183587,3.78963644770759,3.839031284074152,3.8884254347139313,3.937820063541651,3.98721620763938,4.0366128276415445,4.086008138263271,4.1354030699738376,4.184798540663346,4.234195316620244,4.283591984793614,4.332987698680326,4.382383261355166,4.431779400046117,4.481176622564583,4.530573362435053,4.5799694563377145,4.629365550285908,4.67876223451434,4.728159836055266,4.777556709684214,4.826953155398282,4.876349703935911,4.92574684383207,4.975144508788891,null,2.18121464547993,2.1917218526380666,2.202227629285449,2.21273787587484,2.223256203410154,2.233773132543008,2.2442847195703166,2.2547958375866313,2.265310090237386,2.275829384938066,2.286345758726025,2.296859058505941,2.3073723883741244,2.317888165425461,2.32840739605212,2.3389231791776925,2.3494371178071156,2.3599513537064123,2.370467616471672,2.380985356723454,2.39150053613128,2.4020146367299406,2.4125293163939756,2.4230459184162303,2.4335629829584455,2.4440782551941305,2.4545930036294963,2.465108408504248,2.4756253982246426,2.486142077453044,2.4966574084703863,2.507172469136969,2.517688188936488,2.528205175109314,2.5387213656739203,2.5492366003669877,2.5597517376924435,2.57026752805944,2.580784355267762,2.5913000793762833,2.6018151273445365,2.612330198537095,2.6228459111752316,2.6333621456876237,null,3.0561105172581615,3.1040078100154433,3.151907501265512,3.1998041852182917,3.247701260577774,3.2956013359961394,3.3434990999845486,3.3913969407042326,3.439297313838693,3.487196562762497,3.5350956330584533,3.5829965199207856,3.6308968290378982,3.6787964847303347,3.7266974850617522,3.774598609528947,3.8224990404345203,3.8704005058299735,3.9183025746059448,3.966203997747891,4.01410616842385,4.062008860337396,4.109910558210088,4.157812389941486,4.2057150286072424,4.253616820017356,4.301518649230367,4.349421370800396,4.3973235044041905,4.44522559370479,4.49312841209773,4.541030878603138,4.588933092222306,4.636835861710465,4.684738562569959,4.732640977762886,4.780543872568915,4.828446938071191,4.876349703935911,4.924252842496844,4.97215623172547,null,2.352720362262578,2.368711462317905,2.384711373518449,2.400703589671185,2.4166982894814613,2.432701782412524,2.448697675349208,2.4646934465534143,2.480695648306933,2.4966927623998707,2.5126881728327484,2.5286884499762623,2.5446867103200743,2.5606829422878588,2.5766828042725325,2.5926820524031493,2.6086784115345703,2.624676939874294,2.640675888049863,2.656671630480825,2.6726683454753872,2.6886672183324793,2.704663813380113,2.7206614073405437,2.736661630784568,2.752659364736062,2.768657243370138,2.784657574925018,2.8006557385653026,2.816653397921435,2.832652991114585,2.8486514830105882,2.8646493000632267,2.8806487229703555,2.896647672112528,2.9126455070093686,2.9286444401990512,2.9446433708143727,2.960640891675374,2.976638981431254,2.9926377096351406,null,3.175586970272986,3.2215492926164293,3.2675125337951894,3.313476875825927,3.3594421367409506,3.4054085890468433,3.4513737299677776,3.4973388341457547,3.543303769966901,3.5892688951727547,3.635234660421026,3.6812002433043234,3.727166213773735,3.773132152223195,3.819098615658313,3.865065746389579,3.911033155152914,3.95700038965354,4.002967073352753,4.048933836249041,4.094900647140695,4.140867598728861,4.186834789609355,4.232801761926022,4.27876902515844,4.324736390734532,4.37070411744735,4.416672289607654,4.462640012784693,4.508607741450966,4.554575213502419,4.600542797835895,4.646510504952142,4.692478199932724,4.738445980599092,4.784413680935099,4.830381618454282,4.876349703935911,4.922318065274667,4.9682862920925555,null,2.5349827175128863,2.555897015791425,2.576815976630633,2.5977332022921873,2.6186460605197217,2.639564750291204,2.6604785021205264,2.6813984210821307,2.7023157841294965,2.723233295051485,2.7441530679859834,2.765069150793457,2.7859904297540115,2.8069074313714384,2.82782580930729,2.8487437216353046,2.8696590612316166,2.8905792154710808,2.9114961651364784,2.9324157406098053,2.9533342481446305,2.9742521543715936,2.995171960008564,3.016089551346834,3.0370096123925894,3.057927472937166,3.078845543282692,3.0997636471391794,3.1206809732017082,3.1416013167147865,3.1625193944168593,3.1834387228032153,3.2043575789198253,3.2252758489655142,3.246195746799001,3.267113920774098,3.2880333824505357,3.308951584813653,3.329869539563138,3.350788504656261,null,3.519806116114081,3.5635645147184927,3.6073244700933267,3.6510829877213715,3.6948411408402513,3.738599363069752,3.782357890917065,3.8261163121294772,3.8698752780595216,3.9136350433280374,3.9573948081736257,4.001153849066627,4.044912886555149,4.088671988316974,4.13243124032372,4.176190505373405,4.219950347569924,4.263710751211493,4.307470582113495,4.351230062543236,4.394989714645442,4.438749357002927,4.482509064819305,4.526268918756363,4.570029344875017,4.613789600804933,4.657549580549783,4.701309421889976,4.745069414133723,4.78882935372732,4.832589420354097,4.876349703935911,4.920110414727347,4.963870665444665,null,2.875669585423088,2.9008818335129853,2.9260908765358282,2.9513034481383538,2.9765153764420713,3.0017287774725157,3.0269407600190434,3.052154295594397,3.077366177467939,3.102578327079364,3.127789558713805,3.1530028975344297,3.1782153963414306,3.203428915402352,3.2286414456247057,3.2538549824275216,3.2790670285138632,3.3042793013334206,3.3294915806043117,3.3547051959182212,3.379917916519392,3.405131484230297,3.4303443247344094,3.4555577651892597,3.4807698585856732,3.5059829028064153,3.531195709534861,3.556409394596002,3.581622327072157,3.606835991452566,3.6320489574744244,3.657262277951933,3.682474534101392,3.707687973673877,null,3.509253099664636,3.5506798460739444,3.5921055653787715,3.633531010464001,3.674957339343989,3.716383134999952,3.7578116746834804,3.7992381450191486,3.8406645371078083,3.8820910691730175,3.9235174732058224,3.964945273325623,4.006372347521873,4.0477994233109476,4.089226160964608,4.130653133540049,4.172080414985972,4.213508497758746,4.254936146332706,4.296362885008687,4.337790246223789,4.379217422693843,4.420645195457543,4.462073294477499,4.503500603908765,4.544928219752425,4.586355402098407,4.627783138450113,4.669211300596328,4.710639151743243,4.752066768644178,4.793494244071141,4.834922022605252,4.876349703935911,4.9177781004526775,4.959205843012906,null,3.0523456477597146,3.0812294023811218,3.110114472872708,3.1390008938909886,3.1678849015921915,3.1967727120574847,3.22565495285167,3.254540849528194,3.2834263501937655,3.3123118365387216,3.341198259017814,3.370082107784215,3.398969001939673,3.427853882446247,3.4567402264445017,3.4856259973578054,3.514511502531311,3.5433968281579067,3.5722816621690483,3.6011691534074433,3.630054510577374,3.658940880594841,3.687826403090961,3.716711588868954,3.7455980889582805,3.774483534415459,3.803370760287033,3.832256261243807,3.861141957872786,3.8900277790742956,3.9189138125770495,3.9478004286489536,3.976686118223617,4.005572971090213,4.0344581723020045,4.063344520922548,null,4.133742552721134,4.172827015291518,4.211912211734323,4.250996519543041,4.290080804080864,4.3291645565583,4.368249496580192,4.40733429490375,4.446418332047078,4.485502855529499,4.524587377340956,4.563672606774048,4.602757302118785,4.641841489229929,4.680926048625188,4.720011253032913,4.7590956746088535,4.7981803772864,4.837265014314013,4.876349703935911,4.915435026306443,4.954519626308724,4.99360422731767,null,3.7461658584605244,3.7781501644814828,3.8101347404844423,3.8421197041052846,3.8741044966755465,3.9060908534699017,3.9380753347162147,3.9700600953458323,4.002046037960933,4.034030850426517,4.066016126472188,4.098000870976503,4.129985686353128,4.16197160913515,4.19395685750535,4.225941525904601,4.257927619834383,4.289912721249955,4.321898073856977,4.3538836642284915,4.3858682808188645,4.417853886727428,4.449839415480225,null,2.1898445767082473,2.226548772402181,2.2632492351050453,2.3000088178065248,2.336807580365488,2.3735713958608406,2.410342081081031,2.4471494350973932,2.4839408653356427,2.5207176844344517,2.5575135578028103,2.5943276403670965,2.6311149495471895,2.667911261367082,2.7047138199041263,2.7415157145774747,2.778316344329058,2.815119206119013,2.851923751461693,2.888728142612259,2.9255316447354143,2.962334785685333,2.9991442305222775,3.035950120720337,3.0727539740027274,3.1095588610226192,3.1463682998981066,3.1831740457448126,3.2199781926221305,3.2567865000630736,3.293594131084816,3.330398272689605,3.3672051593740044,3.4040149600300325,3.440821004357887,3.4776276313023127,3.514435569332973,3.551244246097201,3.5880514836466197,3.624859205881287,3.6616673852025334,3.6984755245677094,3.7352834241093222,3.7720911953416922,3.808900011526025,3.845708405541285,3.8825161435844993,3.9193236340219597,3.9561332425958353,3.992941446680116,4.029748694051486,4.066557447916397,4.103366472579826,4.140174234901798,4.176982603548352,4.213792041177878,4.250600399609989,4.287408586450383,4.3242173526213605,4.361026832628537,4.397835218149767,4.434643833732878,4.471452681368913,4.50826152122745,4.54507027374762,4.581878982965545,4.618687798366422,4.655496733395471,4.6923053672215715,4.729113744646916,4.765923395042534,4.802732291560578,4.839540733212402,4.876349703935911,4.913159084217702,4.949967798920204,4.986776603677769,null,3.9753093350398543,4.009725284719298,4.044141002869361,4.07855658826042,4.112972814779773,4.147388314753458,4.181803839213795,4.216220070869328,4.250635764218186,4.285051187021453,4.319467391432683,4.3538836642284915,4.388298759285133,4.422714761077245,4.457131346436698,4.491547080968124,4.525962673519006,4.560379373062453,4.594795372237225,4.629211232234853,4.663627928663357,4.698044014128971,4.732460047504586,4.766876434869849,null,3.1084455254227805,3.141863864849295,3.175280452431758,3.2086987594888665,3.2421164738725574,3.275532763016692,3.308951584813653,3.3423705575661735,3.375786797430255,3.4092052542951756,3.4426243421846867,3.4760419933845124,3.5094602813578417,3.5428788400688216,3.5762968840923075,3.609716262168337,3.6431344887454635,3.67655232583372,3.7099719574011356,3.743390978803558,3.7768087106387185,3.810228097659199,3.8436472363472336,null,2.3930001750301795,2.4228656631281136,2.45273788338531,2.4826148950952005,2.5124701992737686,2.542355029874062,2.5722266919924475,2.602104313484233,2.6319821750600956,2.661850171596731,2.6917355213799206,2.7216104015528364,2.7514905884175427,2.7813693540542954,2.811243550576149,2.8411255683319316,2.871002342654581,2.9008838704655187,2.9307633156284223,2.960640891675374,2.99052137564679,3.0203993978078234,null,null,1.9947549565495744,null,null,0.9414886035688789,0.8566784964322253,0.902285710645671,null,1.1333831472928195,1.0557946042488309,1.0859151242886536,null,1.1441892626396768,1.0554107764064817,1.1139201207586806,null,1.5350587224602303,1.4666726374467145,1.4814503362575038,null,0.701532538867558,0.6115569087623051,0.6791360662933462,null,1.5173101745852835,1.4578706467658709,1.4599649216195396,null,1.2737534746470363,1.1845856647423376,1.2607410693852203,null,1.8715760742751448,1.8236140648960666,1.81140334514662,null,0.792176345042386,0.7063831678874032,0.7895847230670897,null,1.9797947156210316,1.9454799780337853,1.9182856633034278,null,1.3442489997829934,1.261142712007303,1.34701080741503,null,2.0601615088418277,2.0332046879786487,1.9986598630095722,null,0.8653208951737107,0.7892943388705519,0.87849456239722,null,2.277215008479143,2.265243370212288,2.217077378717431,null,0.7724159012827002,0.7049724378133577,0.7949430592502756,null,2.5069578644892982,2.509257272729433,2.4496638231291668,null,0.761143862930678,0.702783951812043,0.7915299652630624,null,2.7210692905000653,2.7360407665980153,2.6675271126725018,null,1.2120431339050306,1.1665800444891794,1.2513340855295751,null,2.660328238072458,2.690606159522302,2.6129330785948253,null,0.8937811268621123,0.8558661195489667,0.9373774970151909,null,3.109166318338553,3.147322514998581,3.06569866909284,null,0.7507162979331078,0.719419013961993,0.7976344306502703,null,3.462649322503709,3.5071728959483366,3.4227899591895854,null,0.3861152912452525,0.3605468754656281,0.43560064875290666,null,4.165393266557635,4.215061476867065,4.128769784830577,null,3.1978868014221744,3.2559080709715738,3.1672369812280112,null,1.2942300477741564,1.278821029515713,1.3476217001510777,null,3.984001132107513,4.048329904226381,3.958592287443693,null,1.078697224088291,1.0718299004346765,1.1347728037493379,null,3.4158306762534285,3.486389433521719,3.396425717819126,null,1.5039010111902604,1.5064563696745108,1.5623264132824628,null,3.6139811677559024,3.6903796419165897,3.6012751208777583,null,1.6307574553526165,1.6434217488757639,1.6909956192871436,null,3.084698491999485,3.1661777543556346,3.0791906368645536,null,1.8721223716259032,1.8952143916889654,1.9334391193648788,null,4.2374083795725515,4.321042800551034,4.235605124829771,null,1.9036910363998385,1.9319824408780237,1.965228247043523,null,2.9737100846663007,3.059202037457185,2.9756317392283416,null,2.002844022743505,2.0362506668267937,2.0643776503293982,null,4.23610457178527,4.323136458777961,4.2417317312258875,null,2.1748579747042096,2.213241178481026,2.2361638887590742,null,3.502930586790663,3.5920587718009966,3.5157499195076483,null,2.2912056869796324,2.3389231791776925,2.35141984420336,null,3.6367295583756114,3.7266974850617522,3.6562337359218446,null,2.5206929832588147,2.5766828042725325,2.579085337892941,null,3.6834056766398913,3.773132152223195,3.70890451834697,null,2.7438613288221,2.8069074313714384,2.799896042108329,null,3.912507529437477,4.001153849066627,3.943242744542507,null,3.0841094727915968,3.1530028975344297,3.1374520127941135,null,3.919393604361419,4.006372347521873,3.9546062915500233,null,3.325346481953467,3.398969001939673,3.375845458996869,null,4.361474436596011,4.446418332047078,4.400464760789537,null,3.9246621295000774,4.002046037960933,3.972304911122862,null,3.063650133478399,3.1463682998981066,3.105798415393874,null,4.170476232856791,4.250635764218186,4.215532894242862,null,3.296747375113476,3.375786797430255,3.342907115968024,null,2.527247291609491,2.602104313484233,2.57687690866295,null],"type":"scatter"},{"marker":{"size":14},"mode":"markers","name":"Source","x":[2],"y":[2],"type":"scatter"}],                        {"hovermode":"closest","template":{"data":{"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"choropleth":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"choropleth"}],"contour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"contour"}],"contourcarpet":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"contourcarpet"}],"heatmap":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"heatmap"}],"heatmapgl":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"heatmapgl"}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"histogram2d":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2d"}],"histogram2dcontour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2dcontour"}],"mesh3d":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"mesh3d"}],"parcoords":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"parcoords"}],"pie":[{"automargin":true,"type":"pie"}],"scatter":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatter"}],"scatter3d":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatter3d"}],"scattercarpet":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattercarpet"}],"scattergeo":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergeo"}],"scattergl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergl"}],"scattermapbox":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattermapbox"}],"scatterpolar":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolar"}],"scatterpolargl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolargl"}],"scatterternary":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterternary"}],"surface":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"surface"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}]},"layout":{"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"autotypenumbers":"strict","coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]],"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]},"colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"geo":{"bgcolor":"white","lakecolor":"white","landcolor":"#E5ECF6","showlakes":true,"showland":true,"subunitcolor":"white"},"hoverlabel":{"align":"left"},"hovermode":"closest","mapbox":{"style":"light"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"bgcolor":"#E5ECF6","radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","gridwidth":2,"linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white"},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","gridwidth":2,"linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white"},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","gridwidth":2,"linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white"}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"ternary":{"aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"bgcolor":"#E5ECF6","caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"title":{"x":0.05},"xaxis":{"automargin":true,"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","zerolinewidth":2},"yaxis":{"automargin":true,"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","zerolinewidth":2}}}},                        {"responsive": true}                    ).then(function(){
+
+var gd = document.getElementById('10504eb9-4387-43ba-9f7a-03f8225e9f79');
+var x = new MutationObserver(function (mutations, observer) {{
+        var display = window.getComputedStyle(gd).display;
+        if (!display || display === 'none') {{
+            console.log([gd, 'removed!']);
+            Plotly.purge(gd);
+            observer.disconnect();
+        }}
+}});
+
+// Listen for the removal of the full notebook cells
+var notebookContainer = gd.closest('#notebook-container');
+if (notebookContainer) {{
+    x.observe(notebookContainer, {childList: true});
+}}
+
+// Listen for the clearing of the current output cell
+var outputEl = gd.closest('.output');
+if (outputEl) {{
+    x.observe(outputEl, {childList: true});
+}}
+
+                        })                };                });            </script>        </div></div></div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "primer-computational-mathematics/book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./d_geosciences/Geophysical Fluid Dynamics"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Imperial College London<br/>
+  
+      &copy; Copyright 2020.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
