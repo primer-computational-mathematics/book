@@ -1,0 +1,2094 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Defining activity coefficients &#8212; ESE Jupyter Material</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".cell"
+const thebe_selector_input = ".cell_input div.highlight"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">ESE Jupyter Material</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Landing page
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../a_modules/intro.html">
+   Modules
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../a_modules/math_methods_1/intro.html">
+     Mathematical methods 1
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+    <label for="toctree-checkbox-2">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/math_methods_1/1_Coordinate_Systems.html">
+       Coordinate systems (Lecture 1)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/math_methods_1/2_Vectors.html">
+       Vectors (Lecture 1)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/math_methods_1/3_Multivariable_Calculus.html">
+       Multivariable calculus (Lecture 2)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/math_methods_1/4_Vector_Calculus.html">
+       Vector calculus (Lecture 3)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/math_methods_1/5_Matrices.html">
+       Matrices (Lecture 4)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/math_methods_1/6_Eigenvalues.html">
+       Eigenvalues (Lecture 5)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/math_methods_1/7_Series.html">
+       Series (Lecture 6)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/math_methods_1/8_ODEs.html">
+       ODEs (Lecture 7)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/math_methods_1/9_Modelling.html">
+       Modelling (Lecture 8)
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../a_modules/mechanics/intro.html">
+     Mechanics
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+    <label for="toctree-checkbox-3">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/mechanics/1_Motion_in_1D.html">
+       Motion in 1D
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/mechanics/2_Motion_in_2D.html">
+       Motion in 2D
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/mechanics/3_Work_and_Energy.html">
+       Work and Energy
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/mechanics/4_Rotational_Motion.html">
+       Rotational Motion
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/mechanics/5_Gravity.html">
+       Gravity
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../a_modules/seismology/intro.html">
+     Seismology
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+    <label for="toctree-checkbox-4">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/seismology/CMP_Common_Mid_Point_Gather.html">
+       Common Mid-point Gather
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/seismology/Ghosting.html">
+       Ghosting
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/seismology/Spatial_aliasing.html">
+       Spatial Aliasing
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/seismology/Temporal_aliasing.html">
+       Temporal Aliasing
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../a_modules/tectonics_of_the_ocean/intro.html">
+     Techtonics of the ocean
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+    <label for="toctree-checkbox-5">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/tectonics_of_the_ocean/Latitude_Longitude_and_Degree_Notation.html">
+       Reading Maps
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../a_modules/tectonics_of_the_ocean/Plate_Models.html">
+       Heat Flow
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../b_coding/intro.html">
+   Coding
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../b_coding/NumPy_Arrays.html">
+     NumPy arrays
+    </a>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../b_coding/Fundamentals%20of%20Computer%20Science/intro.html">
+     Fundamentals of Computer Science
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+    <label for="toctree-checkbox-7">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Fundamentals%20of%20Computer%20Science/1_Algorythmic_Complexity.html">
+       Algorithmic complexity
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Fundamentals%20of%20Computer%20Science/2_Recursion.html">
+       Recursion
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Fundamentals%20of%20Computer%20Science/3_Divide_and_Conquer.html">
+       Divide and Conquer
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Fundamentals%20of%20Computer%20Science/4_Dynamic_Programming.html">
+       Dynamic Programming
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Fundamentals%20of%20Computer%20Science/5_Greedy_Algorithms.html">
+       Greedy Algorithms
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Fundamentals%20of%20Computer%20Science/6_Data_Structures.html">
+       Data Structures
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Fundamentals%20of%20Computer%20Science/7_Graph_Algorithms.html">
+       Graph Algorithms
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../b_coding/Intro%20to%20Python/intro.html">
+     Intro to Python
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+    <label for="toctree-checkbox-8">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/1_Printing_and_formatting_statements.html">
+       Printing and formatting statements
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/2_Variables.html">
+       Variables
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/3_If_statement.html">
+       If statement
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/4_While_loops.html">
+       While loops
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/5_Lists.html">
+       Lists
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/6_For_loops.html">
+       For loops
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/7_List_comprehensions.html">
+       List comprehensions
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/8_Nested_lists.html">
+       Nested lists
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/9_Handling_errors.html">
+       Handling errors
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/10_Importing.html">
+       Importing in Python
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/11_Functions.html">
+       Creating custom functions
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/12_Tuples.html">
+       Tuples
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/13_File_handling.html">
+       File handling
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/14_Dictionaries.html">
+       Dictionaries
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/15_Flow_control_statements.html">
+       Flow control statements
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/16_Sets.html">
+       Sets
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/17_Matplotlib.html">
+       Plotting data with Matplotlib
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/18_Assert.html">
+       Assert
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/19_Classes.html">
+       Python classes
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Intro%20to%20Python/20_Lambdas.html">
+       Lambdas
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../b_coding/Pandas/intro.html">
+     Pandas
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
+    <label for="toctree-checkbox-9">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Pandas/1_basics.html">
+       Introduction
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Pandas/2_filter_select_assign.html">
+       Filtering, selecting and assigning
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Pandas/3_merge_combine_group_sort.html">
+       Merging, combining, grouping and sorting
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Pandas/4_summary_statistics.html">
+       Summary statistics
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Pandas/5_time_stamps.html">
+       Creating date-time stamps
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Pandas/6_plotting.html">
+       Plotting
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../b_coding/Programming%20Tools/intro.html">
+     Programming tools
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/>
+    <label for="toctree-checkbox-10">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../b_coding/Programming%20Tools/1_Version_Control_Git.html">
+       Version control Git
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../c_mathematics/intro.html">
+   Mathematics
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/>
+  <label for="toctree-checkbox-11">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../c_mathematics/calculus/intro.html">
+     Calculus
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/>
+    <label for="toctree-checkbox-12">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/calculus/Vector_calculus.html">
+       Vector calculus
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../c_mathematics/complex_analysis/intro.html">
+     Complex analysis
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/>
+    <label for="toctree-checkbox-13">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/complex_analysis/1_introduction.html">
+       Introduction
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/complex_analysis/2_complex_plane.html">
+       Complex plane
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/complex_analysis/3_complex_functions.html">
+       Complex functions
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/complex_analysis/4_holomorphic_functions.html">
+       Holomorphic functions
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/complex_analysis/5_integrating.html">
+       Complex integration
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/complex_analysis/6_fractals.html">
+       Fractals
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../c_mathematics/differential_equations/intro.html">
+     Differential equations
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/>
+    <label for="toctree-checkbox-14">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/differential_equations/1_de_introduction.html">
+       Introduction to differential equations
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/differential_equations/2_linear_des.html">
+       Linear Differential Equations
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/differential_equations/3_first-order_odes.html">
+       First-order ODEs
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/differential_equations/4_higher_ord_lin_odes.html">
+       Higher order Linear ODEs
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/differential_equations/5_ode_series.html">
+       Series ODE
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/differential_equations/6_pde_basicdefinitions.html">
+       Introductory definitions and concepts
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/differential_equations/7_pde_first_order.html">
+       First-order linear PDEs
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/differential_equations/8_pde_second_order.html">
+       Canonical form of second-order linear PDEs
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/differential_equations/9_poisson_laplace_eq.html">
+       Poisson’s and Laplace’s equation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/differential_equations/10_heat_eq.html">
+       Heat (diffusion) equation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/differential_equations/11_pde_fourier.html">
+       Solving PDEs with fourier methods
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/differential_equations/12_wave_eq.html">
+       Wave equation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/differential_equations/13_similarity_solutions.html">
+       Self-similar solutions
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../c_mathematics/linear_algebra/intro.html">
+     Linear algebra
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" type="checkbox"/>
+    <label for="toctree-checkbox-15">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/linear_algebra/1_Basic_definitions_and_operations.html">
+       Basic definitions and operations
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/linear_algebra/2_Linear_Systems.html">
+       Systems of linear equations
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/linear_algebra/3_Theory.html">
+       Theory
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/linear_algebra/4_Eigenvalues_and_eigenvectors.html">
+       Eigenvalues and eigenvectors
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/linear_algebra/5_Linear_Algebra_in_Python.html">
+       Linear Algebra in Python
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../c_mathematics/mathematical_notation/intro.html">
+     Mathematical notation
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
+    <label for="toctree-checkbox-16">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/mathematical_notation/Big_O_notation.html">
+       Big O notation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/mathematical_notation/Tensors_Review.html">
+       Review of tensors
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../c_mathematics/numerical_methods/intro.html">
+     Numerical methods
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
+    <label for="toctree-checkbox-17">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/numerical_methods/1_Interpolation_curve_fitting.html">
+       Interpolation and curve fitting
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/numerical_methods/2_Numerical_differentiation.html">
+       Numerical differentiation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/numerical_methods/3_Timestepping_an_ODE.html">
+       Solving or timestepping an ODE
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/numerical_methods/4_Heuns_method.html">
+       Heun’s method
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/numerical_methods/5_Runge_Kutta_method.html">
+       Runge-Kutta method
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/numerical_methods/6_Solving_PDEs_SOR.html">
+       Successive over-relaxation method
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/numerical_methods/7_FTCS.html">
+       FTCS scheme
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/numerical_methods/8_BTCS.html">
+       BTCS scheme
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/numerical_methods/9_Numerical_integration.html">
+       Numerical integration
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/numerical_methods/10_Roots_of_equations.html">
+       Roots of equations
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/numerical_methods/11_linear_algebra_intro.html">
+       Linear algebra introduction
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/numerical_methods/12_Gaussian_elimination.html">
+       Gaussian elimination
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/numerical_methods/13_LU_decomposition.html">
+       LU decomposition
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/numerical_methods/14_ill_conditioning_errors.html">
+       Ill-conditioning and roundoff errors
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/numerical_methods/15_iterative_methods_to_solve_matrix.html">
+       Iterative methods to solve a matrix
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../c_mathematics/series_and_sequences/intro.html">
+     Series and sequences
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
+    <label for="toctree-checkbox-18">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/series_and_sequences/Fourier_series.html">
+       Fourier series
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/series_and_sequences/Fourier_transforms.html">
+       Fourier transforms
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/series_and_sequences/Taylor_series.html">
+       Taylor series
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../c_mathematics/sets_and_functions/intro.html">
+     Sets and functions
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
+    <label for="toctree-checkbox-19">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/sets_and_functions/1_logic.html">
+       Logic and proof
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/sets_and_functions/2_sets.html">
+       Sets
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/sets_and_functions/3_functions.html">
+       Functions
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/sets_and_functions/4_elementary_functions_1.html">
+       Elementary functions 1
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/sets_and_functions/5_elementary_functions_2.html">
+       Elementary functions 2
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/sets_and_functions/6_composition_and_inverse.html">
+       Composition and Inverse Functions
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../c_mathematics/statistics/intro.html">
+     Statistics
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
+    <label for="toctree-checkbox-20">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/statistics/Linear_Regression.html">
+       Linear regression
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../c_mathematics/statistics/Statistics_for_Geoscientists.html">
+       Introduction to statistics for Geoscientists
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../intro.html">
+   Geosciences
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
+  <label for="toctree-checkbox-21">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../1D_Heat_Conduction.html">
+     1D heat conduction (layered medium)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../1D_Resistivity_Forward_Modelling.html">
+     1D resistivity forward modelling
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../3D_Earthquake_Focus_Plot.html">
+     Plotting Earthquake Focus
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Climate_Model.html">
+     Climate model
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Dynamic_Earth.html">
+     Seafloor ages
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Keplerian_Orbits.html">
+     Keplerian orbits
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Longitude_Latitude_Degree_Convertion.html">
+     Reading Maps
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Milankovitch_cycles.html">
+     Milankovitch cycles
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Seismology.html">
+     Downloading earthquake data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Tides.html">
+     Tides
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Wave_dispersion.html">
+     Wave dispersion
+    </a>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../Electromagnetism/intro.html">
+     Electromagnetism
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
+    <label for="toctree-checkbox-22">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../Electromagnetism/1_electricity_magnetism.html">
+       Electricity and magnetism
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../Electromagnetism/2_maxwell_eqs.html">
+       Maxwell’s equations
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../Electromagnetism/3_four_field.html">
+       The four-field formalism
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../Fluid_Dynamics/intro.html">
+     Fluid dynamics
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
+    <label for="toctree-checkbox-23">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../Fluid_Dynamics/Lecture5_1D_Pipe_Flow.html">
+       Lecture5_1D_Pipe_Flow
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../Fluid_Dynamics/Lecture6_Non_Linear_Viscosity_2D_Stokes.html">
+       Lecture6_Non_Linear_Viscosity_2D_Stokes
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../Fluid_Dynamics/Lecture7_Pipe_Flow_with_Heat.html">
+       Lecture7_Pipe_Flow_with_Heat
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../Fluid_Dynamics/Lecture8_Part1_Navier_Stoke_Equation.html">
+       Lecture8_Part1_Navier_Stoke_Equation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../Fluid_Dynamics/Lecture8_Part2_SPH_Algorithm_For_Energy_Equation.html">
+       Lecture8_Part2_SPH_Algorithm_For_Energy_Equation
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../remote_sensing/intro.html">
+     Remote sensing
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" type="checkbox"/>
+    <label for="toctree-checkbox-24">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../remote_sensing/Image_Filtering.html">
+       Image filtering
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../remote_sensing/Image_Point_Operations.html">
+       Image point operations
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../remote_sensing/Image_Transformations_and_Orthorectification.html">
+       Image transformations and orthorectification
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../e_extra/intro.html">
+   Further resources
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" type="checkbox"/>
+  <label for="toctree-checkbox-25">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../e_extra/Camera_Calibration.html">
+     Camera calibration
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../e_extra/Cartography_Cartopy.html">
+     Cartopy (maps)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../e_extra/Dakota.html">
+     Dakota
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../e_extra/Google_Earth_Engine_Foundations.html">
+     Google Earth Engine foundations
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../e_extra/Google_Earth_Engine_Getting_Started_.html">
+     Google Earth Engine getting started
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../e_extra/Particle_Image_Velocimetry.html">
+     Particle image velocimetry (PIV)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../e_extra/contributors_guide.html">
+     Contributor’s guide
+    </a>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../e_extra/UAV_Mapping/intro.html">
+     UAV Mapping
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-26" name="toctree-checkbox-26" type="checkbox"/>
+    <label for="toctree-checkbox-26">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/UAV_Mapping/1.Mission_Planning.html">
+       1. Mission Planning
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/intro.html">
+     Machine learning
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-27" name="toctree-checkbox-27" type="checkbox"/>
+    <label for="toctree-checkbox-27">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%200%20--%20Introduction.html">
+       Chapter 0 – Introduction
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%201%20--%20Neural%20Network.html">
+       Chapter 1 – Neural Network
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%202%20--%20Maximum%20Likelihood.html">
+       Chapter 2 – Maximum Likelihood
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%203%20--%20Cross%20Entropy.html">
+       Chapter 3 – Cross Entropy
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%204%20--%20Cost%20Function.html">
+       Chapter 4 – Cost Function
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%205%20--%20Gradient%20Descent%201.html">
+       Chapter 5 – Gradient Descent 1
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%206%20--%20Gradient%20Descent%202.html">
+       Chapter 6 – Gradient Descent 2
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%207%20--%20Real%20%28Non-linear%29%20Neural%20Network.html">
+       Chapter 7 – Real (Non-linear) Neural Network
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%208%20--%20Feedforward.html">
+       Chapter 8 – Feedforward
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%209%20--%20Back%20Propagation.html">
+       Chapter 9 – Back Propagation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%2010%20--%20General%20Back%20Propagation.html">
+       Chapter 10 – General Back Propagation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%2011%20--%20Underfitting%20and%20Overfitting.html">
+       Chapter 11 – Underfitting and Overfitting
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%2012%20--%20Early-stopping%2C%20Dropout%20%26%20Mini-batch.html">
+       Chapter 12 – Early-stopping, Dropout &amp; Mini-batch
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%2013%20--%20Vanishing%20Gradient%201.html">
+       Chapter 13 – Vanishing Gradient 1
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%2014%20--%20Vanishing%20Gradient%202.html">
+       Chapter 14 – Vanishing Gradient 2
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%2015%20--%20Regularisation.html">
+       Chapter 15 – Regularisation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%2016%20--%20Other%20Activation%20Functions.html">
+       Chapter 16 – Other Activation Functions
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%2017%20--%20Local%20Minima%20Trap.html">
+       Chapter 17 – Local Minima Trap
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%2018%20--%20Softmax.html">
+       Chapter 18 – Softmax
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%2019%20--%20Hyper-Parameters.html">
+       Chapter 19 – Hyper-Parameters
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../e_extra/pytorch_image_filtering_ml/Chapter%2020%20--%20Coding%20Example.html">
+       Chapter 20 – Coding Example
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../genindex.html">
+   Index
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/primer-computational-mathematics/book/master?urlpath=tree/notebooks/d_geosciences/Low-Temperature Geochemistry/Defining_Activity_Coefficients.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/primer-computational-mathematics/book/issues/new?title=Issue%20on%20page%20%2Fd_geosciences/Low-Temperature Geochemistry/Defining_Activity_Coefficients.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+
+</a>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../../_sources/d_geosciences/Low-Temperature Geochemistry/Defining_Activity_Coefficients.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#lesson-3-problem-3-aqueous-solutions-the-thames-river-estuary">
+   Lesson 3 - Problem 3 (Aqueous solutions: the Thames river estuary)
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Defining activity coefficients</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#lesson-3-problem-3-aqueous-solutions-the-thames-river-estuary">
+   Lesson 3 - Problem 3 (Aqueous solutions: the Thames river estuary)
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="defining-activity-coefficients">
+<h1>Defining activity coefficients<a class="headerlink" href="#defining-activity-coefficients" title="Permalink to this headline">#</a></h1>
+<p id="index-0">Activities (<span class="math notranslate nohighlight">\(a\)</span>) can be thought at as the “effective concentration” or the “availability of component for reactions”. In aqueous solutions, activity often related to something measurable, i.e. “the concentration”:</p>
+<div class="math notranslate nohighlight">
+\[a_i = \gamma_i \cdot \frac{m_i}{m_0}\]</div>
+<p>where</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\gamma_i\)</span> is the “rational activity coefficient”.</p></li>
+<li><p><span class="math notranslate nohighlight">\(m_i\)</span> is the molality (mole solute/kg solvent).</p></li>
+<li><p><span class="math notranslate nohighlight">\(m_0\)</span> is the reference state (<span class="math notranslate nohighlight">\(m_0 = 1\,molal\)</span>).</p></li>
+</ul>
+<p>In this session, we will focus on defining activity coefficients (<span class="math notranslate nohighlight">\(\gamma_i\)</span>).</p>
+<p>We can get <span class="math notranslate nohighlight">\(y_i\)</span> by:</p>
+<ol class="simple">
+<li><p>Some helpful rules</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(a_{l,s}=1\)</span> for pure liquids or solids.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\gamma_i = 1\)</span>  in ideal (or very dilute) solutions.</p></li>
+</ul>
+</li>
+<li><p>Models exist that predict the values of activity coefficients given a set of empirical, substance-specific, constants and a parameter, <strong>ionic strength (<span class="math notranslate nohighlight">\(I\)</span>)</strong>, that models the effect of other ions and the solvent. Ionic strength accounts for Coulombic interactions and other effects between ions.</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[I = \frac{1}{2} \sum_i m_j z_j^2\]</div>
+<p>where <span class="math notranslate nohighlight">\(m_j\)</span> = concentration (molarity, molality), and <span class="math notranslate nohighlight">\(z_j\)</span> = ionic charge.</p>
+<ul class="simple">
+<li><p>Since it is <strong>“(charge)<span class="math notranslate nohighlight">\(^2\)</span>”</strong>, it emphasizes the effect of higher charges from multivalent ions and excludes neutral molecules (charge=0)!</p></li>
+<li><p><span class="math notranslate nohighlight">\(H^+\)</span> and <span class="math notranslate nohighlight">\(OH^-\)</span> are generally ignored – their concentrations is typically ~<span class="math notranslate nohighlight">\(10^{-7}\)</span> unless working in very acidic or basic conditions, or very dilute situations with trace elements.</p></li>
+</ul>
+<p>In theory, to calculate <span class="math notranslate nohighlight">\(I\)</span>, one should need a full determination of the concentrations of all ions in solutions. However, <strong>in practice, about 99% of dissolved materials in streams, lakes, aquifers and oceans are accounted by 10 elements!</strong></p>
+<p><img alt="" src="../../_images/DAC1.png" /></p>
+<p><span class="math notranslate nohighlight">\(\quad\)</span>Figure 1: “Analysis and Calculated ionic strengths of some natural waters” (Misra, 2012).</p>
+<p>There are several models available for calculating activity coefficients.</p>
+<ol class="simple">
+<li><p>Debye-Huckel (limiting) model (useful when <span class="math notranslate nohighlight">\(I \leq 0.01\,m\)</span>):</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[\log \gamma_i = -A z_i^2 \sqrt{I}\]</div>
+<ol class="simple">
+<li><p>Debye-Huckel (extended) model (useful when <span class="math notranslate nohighlight">\(I \leq 0.1\,m\)</span>):</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[\log \gamma_i = \frac{-A z_i^2 \sqrt{I}}{1+å_i B \sqrt{I}}\]</div>
+<p>Some assumptions underlying the Debye-Huckel (extended) model:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>(i) Electrolytes are completely dissociated into ions.
+(ii) Positive ions are surrounded by a cloud of negative charge and vice versa.
+(iii) Size of the ions do not vary with ionic strength.
+(iv) Interactions among aqueous species are fully electrostatic, excludes repulsion for ion of the same charge.
+</pre></div>
+</div>
+<ol class="simple">
+<li><p>Davies model (useful when <span class="math notranslate nohighlight">\(I \leq 0.6\,m\)</span>):</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[\log \gamma_i = -A z_i^2 \left[ \frac{\sqrt{I}}{1+\sqrt{I}} -0.3I \right]\]</div>
+<ol class="simple">
+<li><p>Truesdell-Jones model (useful when <span class="math notranslate nohighlight">\(I \leq 2.0\,m\)</span>):</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[\log \gamma_i = \frac{-A z_i^2 \sqrt{I}}{1+å_i B \sqrt{I}} + bI\]</div>
+<p>where</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(I\)</span> is the ionic strength.</p></li>
+<li><p><span class="math notranslate nohighlight">\(A, B\)</span> are constants.</p></li>
+<li><p><span class="math notranslate nohighlight">\(å_i\)</span> is the hydrated, or effective ionic radius of the <span class="math notranslate nohighlight">\(i^{th}\)</span> ion.</p></li>
+<li><p><span class="math notranslate nohighlight">\(z_i\)</span> is the ionic charge of the <span class="math notranslate nohighlight">\(i^{th}\)</span> ion.</p></li>
+</ul>
+<p>There are a few differences between Truesdell-Jones and Davies models important to note.</p>
+<p>Truesdell-Jones is basically the same as Debye-Huckel, but</p>
+<ul class="simple">
+<li><p>with a <span class="math notranslate nohighlight">\(+bI\)</span> term at the end,</p></li>
+<li><p>to account for the increase in activity observed from measurements at high ionic strength, due to the lowering of the dielectric constant and therefore increased tendency for ion pairing.</p></li>
+<li><p>other assumptions are similar to Debye-Hueckel.</p></li>
+</ul>
+<p>Whereas the Davies equation has no <span class="math notranslate nohighlight">\(å_i\)</span>,</p>
+<ul class="simple">
+<li><p>which is convenient as there are few data for this parameter,</p></li>
+<li><p>but that also means the Davies equation is less accurate. It is OK only to <span class="math notranslate nohighlight">\(I&lt;0.6\,m\)</span>.</p></li>
+</ul>
+<p>The figure below illustrates the environmental differences in ionic strength.</p>
+<p><img alt="" src="../../_images/DAC2.png" /></p>
+<p><span class="math notranslate nohighlight">\(\quad\)</span>Figure 2: The environmental differences in ionic strength (White, 2013).</p>
+<p>Following the table of constants we need for the practical, the dependence of activity coefficients on ionic strengths of some ions will be plotted.</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import relevant modules</span>
+
+<span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># create our own functions</span>
+
+<span class="c1"># simple molar mass calculator (cannot input the formula containing parentheses e.g. Ca(OH)_2)</span>
+<span class="k">def</span> <span class="nf">molar_mass_calculator</span><span class="p">(</span><span class="n">species</span><span class="p">):</span>
+    <span class="n">atomic_mass_dict</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="c1"># first 20 elements in the periodic table</span>
+        <span class="s1">&#39;H&#39;</span><span class="p">:</span> <span class="mf">1.008</span><span class="p">,</span>
+        <span class="s1">&#39;He&#39;</span><span class="p">:</span> <span class="mf">4.0026</span><span class="p">,</span>
+        <span class="s1">&#39;Li&#39;</span><span class="p">:</span> <span class="mf">6.94</span><span class="p">,</span>
+        <span class="s1">&#39;Be&#39;</span><span class="p">:</span> <span class="mf">9.0122</span><span class="p">,</span>
+        <span class="s1">&#39;B&#39;</span><span class="p">:</span> <span class="mf">10.81</span><span class="p">,</span>
+        <span class="s1">&#39;C&#39;</span><span class="p">:</span> <span class="mf">12.011</span><span class="p">,</span>
+        <span class="s1">&#39;N&#39;</span><span class="p">:</span> <span class="mf">14.007</span><span class="p">,</span>
+        <span class="s1">&#39;O&#39;</span><span class="p">:</span> <span class="mf">15.999</span><span class="p">,</span>
+        <span class="s1">&#39;F&#39;</span><span class="p">:</span> <span class="mf">18.998</span><span class="p">,</span>
+        <span class="s1">&#39;Ne&#39;</span><span class="p">:</span> <span class="mf">20.180</span><span class="p">,</span>
+        <span class="s1">&#39;Na&#39;</span><span class="p">:</span> <span class="mf">22.99</span><span class="p">,</span>
+        <span class="s1">&#39;Mg&#39;</span><span class="p">:</span> <span class="mf">24.305</span><span class="p">,</span>
+        <span class="s1">&#39;Al&#39;</span><span class="p">:</span> <span class="mf">26.982</span><span class="p">,</span>
+        <span class="s1">&#39;Si&#39;</span><span class="p">:</span> <span class="mf">28.085</span><span class="p">,</span>
+        <span class="s1">&#39;P&#39;</span><span class="p">:</span> <span class="mf">30.974</span><span class="p">,</span>
+        <span class="s1">&#39;S&#39;</span><span class="p">:</span> <span class="mf">32.06</span><span class="p">,</span>
+        <span class="s1">&#39;Cl&#39;</span><span class="p">:</span> <span class="mf">35.45</span><span class="p">,</span>
+        <span class="s1">&#39;Ar&#39;</span><span class="p">:</span> <span class="mf">39.948</span><span class="p">,</span>
+        <span class="s1">&#39;K&#39;</span><span class="p">:</span> <span class="mf">39.0983</span><span class="p">,</span>
+        <span class="s1">&#39;Ca&#39;</span><span class="p">:</span> <span class="mf">40.078</span>
+    <span class="p">}</span>
+    
+    <span class="n">MW</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">atomic_mass_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">element_index</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="n">number_of_atom</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+                
+        <span class="k">if</span> <span class="n">element_index</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span> <span class="c1"># if element is in the species</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>  <span class="c1"># if element symbol has two characters (e.g. Ca)</span>
+                <span class="k">if</span> <span class="n">species</span><span class="p">[</span><span class="n">element_index</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;_&#39;</span><span class="p">:</span>  <span class="c1"># if the element has more than one atom in the formula</span>
+                    <span class="k">if</span> <span class="n">species</span><span class="p">[</span><span class="n">element_index</span> <span class="o">+</span> <span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;{&#39;</span><span class="p">:</span>  <span class="c1"># if the number of atoms of the element is in {}</span>
+                        <span class="n">string_after_element</span> <span class="o">=</span> <span class="n">species</span><span class="p">[</span><span class="n">element_index</span> <span class="o">+</span> <span class="mi">4</span> <span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">species</span><span class="p">)]</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">string_after_element</span> <span class="o">=</span> <span class="n">species</span><span class="p">[</span><span class="n">element_index</span> <span class="o">+</span> <span class="mi">3</span> <span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">species</span><span class="p">)]</span>
+                        
+                    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">string_after_element</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">isnumeric</span><span class="p">():</span>
+                            <span class="n">number_of_atom</span> <span class="o">+=</span> <span class="n">c</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="k">break</span>
+                                        
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">number_of_atom</span> <span class="o">=</span> <span class="s1">&#39;1&#39;</span>
+                    
+            <span class="k">else</span><span class="p">:</span>  <span class="c1"># len(key) == 1  # if element symbol has one characters (e.g. H)</span>
+                <span class="n">species_without_two_char_elements</span> <span class="o">=</span> <span class="n">species</span>
+                <span class="k">while</span> <span class="n">species_without_two_char_elements</span><span class="p">[</span><span class="n">element_index</span><span class="p">:</span><span class="n">element_index</span><span class="o">+</span><span class="mi">2</span><span class="p">]</span> <span class="ow">in</span> <span class="n">atomic_mass_dict</span><span class="p">:</span>
+                    <span class="n">species_without_two_char_elements</span> <span class="o">=</span> <span class="n">species_without_two_char_elements</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">species_without_two_char_elements</span><span class="p">[</span><span class="n">element_index</span><span class="p">:</span><span class="n">element_index</span><span class="o">+</span><span class="mi">2</span><span class="p">],</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+                    <span class="n">element_index</span> <span class="o">=</span> <span class="n">species_without_two_char_elements</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+                
+                <span class="k">if</span> <span class="n">element_index</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span> <span class="c1"># if element is in the species</span>
+                    <span class="k">if</span> <span class="n">species_without_two_char_elements</span><span class="p">[</span><span class="n">element_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;_&#39;</span><span class="p">:</span>  <span class="c1"># if the element has more than one atom in the formula</span>
+                        <span class="k">if</span> <span class="n">species_without_two_char_elements</span><span class="p">[</span><span class="n">element_index</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;{&#39;</span><span class="p">:</span>  <span class="c1"># if the number of atoms of the element is in {}</span>
+                            <span class="n">string_after_element</span> <span class="o">=</span> <span class="n">species_without_two_char_elements</span><span class="p">[</span><span class="n">element_index</span> <span class="o">+</span> <span class="mi">3</span> <span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">species_without_two_char_elements</span><span class="p">)]</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">string_after_element</span> <span class="o">=</span> <span class="n">species_without_two_char_elements</span><span class="p">[</span><span class="n">element_index</span> <span class="o">+</span> <span class="mi">2</span> <span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">species_without_two_char_elements</span><span class="p">)]</span>
+                        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">string_after_element</span><span class="p">:</span>
+                            <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">isnumeric</span><span class="p">():</span>
+                                <span class="n">number_of_atom</span> <span class="o">+=</span> <span class="n">c</span>
+                            <span class="k">else</span><span class="p">:</span>
+                                <span class="k">break</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">number_of_atom</span> <span class="o">=</span> <span class="s1">&#39;1&#39;</span>
+        
+        <span class="k">if</span> <span class="n">number_of_atom</span><span class="o">.</span><span class="n">isnumeric</span><span class="p">():</span>
+            <span class="n">number_of_atom</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">number_of_atom</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">number_of_atom</span> <span class="o">=</span> <span class="mi">0</span>
+        
+        <span class="n">MW</span> <span class="o">+=</span> <span class="n">value</span> <span class="o">*</span> <span class="n">number_of_atom</span>
+    
+    <span class="k">return</span> <span class="n">MW</span>
+
+
+<span class="c1"># simple function that can extract the charge from a formula (must be ion, not ionic compound)</span>
+<span class="k">def</span> <span class="nf">ionic_charge</span><span class="p">(</span><span class="n">ion</span><span class="p">):</span>
+    <span class="n">wedge_index</span> <span class="o">=</span> <span class="n">ion</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;^&#39;</span><span class="p">)</span>  <span class="c1"># the index of ^</span>
+    <span class="n">charge</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">if</span> <span class="n">wedge_index</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+        <span class="n">string_after_wedge</span> <span class="o">=</span> <span class="n">ion</span><span class="p">[</span><span class="n">wedge_index</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">ion</span><span class="p">)]</span>
+        <span class="n">charge_str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">string_after_wedge</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">isnumeric</span><span class="p">():</span>
+                <span class="n">charge_str</span> <span class="o">+=</span> <span class="n">c</span>
+            <span class="k">elif</span> <span class="n">c</span> <span class="ow">in</span> <span class="s1">&#39;+-&#39;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">charge_str</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+                    <span class="n">charge_str</span> <span class="o">=</span> <span class="s1">&#39;1&#39;</span>
+                <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="s1">&#39;-&#39;</span><span class="p">:</span>
+                    <span class="n">charge_str</span> <span class="o">=</span> <span class="n">c</span> <span class="o">+</span> <span class="n">charge_str</span>
+                <span class="k">break</span>
+        <span class="n">charge</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">charge_str</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">charge</span>
+
+
+<span class="k">def</span> <span class="nf">ionic_strength</span><span class="p">(</span><span class="n">ions_list</span><span class="p">,</span> <span class="n">concentrations_list</span><span class="p">):</span>
+    <span class="n">I</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">len</span><span class="p">(</span><span class="n">ions_list</span><span class="p">):</span>
+        <span class="n">I</span> <span class="o">+=</span> <span class="n">concentrations_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">ionic_charge</span><span class="p">(</span><span class="n">ions_list</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span>
+    <span class="k">return</span> <span class="n">I</span>
+
+
+<span class="k">def</span> <span class="nf">yi_Debye_Huckel_limiting_model</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">ion</span><span class="p">,</span> <span class="n">I</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mi">10</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="n">A</span><span class="o">*</span><span class="p">(</span><span class="n">ionic_charge</span><span class="p">(</span><span class="n">ion</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">I</span><span class="o">**</span><span class="mf">0.5</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">yi_Debye_Huckel_extended_model</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">ion</span><span class="p">,</span> <span class="n">I</span><span class="p">,</span> <span class="n">ao</span><span class="p">,</span> <span class="n">B</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mi">10</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="n">A</span><span class="o">*</span><span class="p">(</span><span class="n">ionic_charge</span><span class="p">(</span><span class="n">ion</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">I</span><span class="o">**</span><span class="mf">0.5</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">ao</span><span class="o">*</span><span class="n">B</span><span class="o">*</span><span class="p">(</span><span class="n">I</span><span class="o">**</span><span class="mf">0.5</span><span class="p">)))</span>
+
+
+<span class="k">def</span> <span class="nf">yi_Davies_model</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">ion</span><span class="p">,</span> <span class="n">I</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mi">10</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="n">A</span><span class="o">*</span><span class="p">(</span><span class="n">ionic_charge</span><span class="p">(</span><span class="n">ion</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="p">((</span><span class="n">I</span><span class="o">**</span><span class="mf">0.5</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">I</span><span class="o">**</span><span class="mf">0.5</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.3</span><span class="o">*</span><span class="n">I</span><span class="p">))</span>
+                
+                
+<span class="k">def</span> <span class="nf">yi_Truesdell_Jones_model</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">ion</span><span class="p">,</span> <span class="n">I</span><span class="p">,</span> <span class="n">ao</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mi">10</span><span class="o">**</span><span class="p">((</span><span class="o">-</span><span class="n">A</span><span class="o">*</span><span class="p">(</span><span class="n">ionic_charge</span><span class="p">(</span><span class="n">ion</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">I</span><span class="o">**</span><span class="mf">0.5</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">ao</span><span class="o">*</span><span class="n">B</span><span class="o">*</span><span class="p">(</span><span class="n">I</span><span class="o">**</span><span class="mf">0.5</span><span class="p">)))</span> <span class="o">+</span> <span class="n">b</span><span class="o">*</span><span class="n">I</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># creating a DataFrame for ao and b</span>
+<span class="n">ions_data</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;$Al^{3+}$&#39;</span><span class="p">,</span> <span class="s1">&#39;$Ca^{2+}$&#39;</span><span class="p">,</span> <span class="s1">&#39;$Mg^{2+}$&#39;</span><span class="p">,</span> <span class="s1">&#39;$Na^+$&#39;</span><span class="p">,</span> <span class="s1">&#39;$K^+$&#39;</span><span class="p">,</span> <span class="s1">&#39;$HCO_3^-$&#39;</span><span class="p">,</span> <span class="s1">&#39;$SO_4^{2-}$&#39;</span><span class="p">,</span> <span class="s1">&#39;$NO_3^-$&#39;</span><span class="p">]</span>
+<span class="n">Debye_Huckel_ao_data</span> <span class="o">=</span> <span class="p">[</span><span class="mf">9.0</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">,</span> <span class="mf">8.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>  <span class="c1"># not yet times by 10^-8</span>
+<span class="n">Truesdell_Jones_ao_data</span> <span class="o">=</span> <span class="p">[</span><span class="mf">6.65</span><span class="p">,</span> <span class="mf">4.86</span><span class="p">,</span> <span class="mf">5.46</span><span class="p">,</span> <span class="mf">4.32</span><span class="p">,</span> <span class="mf">3.71</span><span class="p">,</span> <span class="mf">5.4</span><span class="p">,</span> <span class="mf">5.31</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>  <span class="c1"># not yet times by 10^-8</span>
+<span class="n">Truesdell_Jones_b_data</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.10</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">,</span> <span class="mf">0.22</span><span class="p">,</span> <span class="mf">0.06</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.07</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> 
+
+<span class="n">dict1</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Species&#39;</span> <span class="p">:</span> <span class="n">ions_data</span><span class="p">,</span>
+        <span class="s1">&#39;Debye-Huckel $å × 10^{-8}$&#39;</span> <span class="p">:</span> <span class="n">Debye_Huckel_ao_data</span><span class="p">,</span>
+        <span class="s1">&#39;Truesdell-Jones $å × 10^{-8}$&#39;</span> <span class="p">:</span> <span class="n">Truesdell_Jones_ao_data</span><span class="p">,</span>
+        <span class="s1">&#39;Truesdell-Jones $b$&#39;</span> <span class="p">:</span> <span class="n">Truesdell_Jones_b_data</span><span class="p">}</span>
+<span class="n">df1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dict1</span><span class="p">)</span>
+<span class="n">df1</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;Debye-Huckel $å × 10^{-8}$&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df1</span><span class="p">[</span><span class="s1">&#39;Debye-Huckel $å × 10^{-8}$&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:.1f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">)</span>
+<span class="n">df1</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;Truesdell-Jones $å × 10^{-8}$&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df1</span><span class="p">[</span><span class="s1">&#39;Truesdell-Jones $å × 10^{-8}$&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">)</span>
+<span class="n">df1</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;Truesdell-Jones $b$&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df1</span><span class="p">[</span><span class="s1">&#39;Truesdell-Jones $b$&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Table 1: Values of parameters for the Debye-Huckel and Truesdell-Jones equations.&quot;</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">df1</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">hide_index</span><span class="p">())</span>
+
+<span class="c1"># creating a DataFrame for A and B at 1 bar</span>
+<span class="n">T_data</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">13</span><span class="p">))</span>
+<span class="n">A_data</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.4883</span><span class="p">,</span> <span class="mf">0.4921</span><span class="p">,</span> <span class="mf">0.4960</span><span class="p">,</span> <span class="mf">0.5000</span><span class="p">,</span> <span class="mf">0.5042</span><span class="p">,</span> <span class="mf">0.5085</span><span class="p">,</span> 
+     <span class="mf">0.5130</span><span class="p">,</span> <span class="mf">0.5175</span><span class="p">,</span> <span class="mf">0.5221</span><span class="p">,</span> <span class="mf">0.5271</span><span class="p">,</span> <span class="mf">0.5319</span><span class="p">,</span> <span class="mf">0.5371</span><span class="p">,</span> <span class="mf">0.5425</span><span class="p">]</span>
+<span class="n">B_data</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.3241</span><span class="p">,</span> <span class="mf">0.3249</span><span class="p">,</span> <span class="mf">0.3258</span><span class="p">,</span> <span class="mf">0.3262</span><span class="p">,</span> <span class="mf">0.3273</span><span class="p">,</span> <span class="mf">0.3281</span><span class="p">,</span>
+     <span class="mf">0.3290</span><span class="p">,</span> <span class="mf">0.3297</span><span class="p">,</span> <span class="mf">0.3305</span><span class="p">,</span> <span class="mf">0.3314</span><span class="p">,</span> <span class="mf">0.3321</span><span class="p">,</span> <span class="mf">0.3329</span><span class="p">,</span> <span class="mf">0.3338</span><span class="p">]</span>  <span class="c1"># not yet times by 10^8</span>
+
+<span class="n">dict2</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Temperature $(^\circ C)$&#39;</span> <span class="p">:</span> <span class="n">T_data</span><span class="p">,</span>
+        <span class="s1">&#39;$A$&#39;</span> <span class="p">:</span> <span class="n">A_data</span><span class="p">,</span>
+        <span class="s1">&#39;$B$ $×\,10^</span><span class="si">{8}</span><span class="s1">$&#39;</span> <span class="p">:</span> <span class="n">B_data</span><span class="p">}</span>
+<span class="n">df2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dict2</span><span class="p">)</span>
+<span class="n">df2</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;Temperature $(^\circ C)$&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df2</span><span class="p">[</span><span class="s1">&#39;Temperature $(^\circ C)$&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:.0f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">)</span>
+<span class="n">df2</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;$A$&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df2</span><span class="p">[</span><span class="s1">&#39;$A$&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:.4f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">)</span>
+<span class="n">df2</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;$B$ $×\,10^</span><span class="si">{8}</span><span class="s1">$&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df2</span><span class="p">[</span><span class="s1">&#39;$B$ $×\,10^</span><span class="si">{8}</span><span class="s1">$&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:.4f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Table 2: The values of A and B at different temperatures.&quot;</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">df2</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">hide_index</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Table 1: Values of parameters for the Debye-Huckel and Truesdell-Jones equations.
+</pre></div>
+</div>
+<div class="output text_html"><style  type="text/css" >
+</style><table id="T_db889_" ><thead>    <tr>        <th class="col_heading level0 col0" >Species</th>        <th class="col_heading level0 col1" >Debye-Huckel $å × 10^{-8}$</th>        <th class="col_heading level0 col2" >Truesdell-Jones $å × 10^{-8}$</th>        <th class="col_heading level0 col3" >Truesdell-Jones $b$</th>    </tr></thead><tbody>
+                <tr>
+                                <td id="T_db889_row0_col0" class="data row0 col0" >$Al^{3+}$</td>
+                        <td id="T_db889_row0_col1" class="data row0 col1" >9.0</td>
+                        <td id="T_db889_row0_col2" class="data row0 col2" >6.65</td>
+                        <td id="T_db889_row0_col3" class="data row0 col3" >0.10</td>
+            </tr>
+            <tr>
+                                <td id="T_db889_row1_col0" class="data row1 col0" >$Ca^{2+}$</td>
+                        <td id="T_db889_row1_col1" class="data row1 col1" >6.0</td>
+                        <td id="T_db889_row1_col2" class="data row1 col2" >4.86</td>
+                        <td id="T_db889_row1_col3" class="data row1 col3" >0.15</td>
+            </tr>
+            <tr>
+                                <td id="T_db889_row2_col0" class="data row2 col0" >$Mg^{2+}$</td>
+                        <td id="T_db889_row2_col1" class="data row2 col1" >8.0</td>
+                        <td id="T_db889_row2_col2" class="data row2 col2" >5.46</td>
+                        <td id="T_db889_row2_col3" class="data row2 col3" >0.22</td>
+            </tr>
+            <tr>
+                                <td id="T_db889_row3_col0" class="data row3 col0" >$Na^+$</td>
+                        <td id="T_db889_row3_col1" class="data row3 col1" >4.0</td>
+                        <td id="T_db889_row3_col2" class="data row3 col2" >4.32</td>
+                        <td id="T_db889_row3_col3" class="data row3 col3" >0.06</td>
+            </tr>
+            <tr>
+                                <td id="T_db889_row4_col0" class="data row4 col0" >$K^+$</td>
+                        <td id="T_db889_row4_col1" class="data row4 col1" >3.0</td>
+                        <td id="T_db889_row4_col2" class="data row4 col2" >3.71</td>
+                        <td id="T_db889_row4_col3" class="data row4 col3" >0.01</td>
+            </tr>
+            <tr>
+                                <td id="T_db889_row5_col0" class="data row5 col0" >$HCO_3^-$</td>
+                        <td id="T_db889_row5_col1" class="data row5 col1" >4.0</td>
+                        <td id="T_db889_row5_col2" class="data row5 col2" >5.40</td>
+                        <td id="T_db889_row5_col3" class="data row5 col3" >0.00</td>
+            </tr>
+            <tr>
+                                <td id="T_db889_row6_col0" class="data row6 col0" >$SO_4^{2-}$</td>
+                        <td id="T_db889_row6_col1" class="data row6 col1" >4.5</td>
+                        <td id="T_db889_row6_col2" class="data row6 col2" >5.31</td>
+                        <td id="T_db889_row6_col3" class="data row6 col3" >-0.07</td>
+            </tr>
+            <tr>
+                                <td id="T_db889_row7_col0" class="data row7 col0" >$NO_3^-$</td>
+                        <td id="T_db889_row7_col1" class="data row7 col1" >3.0</td>
+                        <td id="T_db889_row7_col2" class="data row7 col2" >nan</td>
+                        <td id="T_db889_row7_col3" class="data row7 col3" >nan</td>
+            </tr>
+    </tbody></table></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Table 2: The values of A and B at different temperatures.
+</pre></div>
+</div>
+<div class="output text_html"><style  type="text/css" >
+</style><table id="T_b6600_" ><thead>    <tr>        <th class="col_heading level0 col0" >Temperature $(^\circ C)$</th>        <th class="col_heading level0 col1" >$A$</th>        <th class="col_heading level0 col2" >$B$ $×\,10^{8}$</th>    </tr></thead><tbody>
+                <tr>
+                                <td id="T_b6600_row0_col0" class="data row0 col0" >0</td>
+                        <td id="T_b6600_row0_col1" class="data row0 col1" >0.4883</td>
+                        <td id="T_b6600_row0_col2" class="data row0 col2" >0.3241</td>
+            </tr>
+            <tr>
+                                <td id="T_b6600_row1_col0" class="data row1 col0" >5</td>
+                        <td id="T_b6600_row1_col1" class="data row1 col1" >0.4921</td>
+                        <td id="T_b6600_row1_col2" class="data row1 col2" >0.3249</td>
+            </tr>
+            <tr>
+                                <td id="T_b6600_row2_col0" class="data row2 col0" >10</td>
+                        <td id="T_b6600_row2_col1" class="data row2 col1" >0.4960</td>
+                        <td id="T_b6600_row2_col2" class="data row2 col2" >0.3258</td>
+            </tr>
+            <tr>
+                                <td id="T_b6600_row3_col0" class="data row3 col0" >15</td>
+                        <td id="T_b6600_row3_col1" class="data row3 col1" >0.5000</td>
+                        <td id="T_b6600_row3_col2" class="data row3 col2" >0.3262</td>
+            </tr>
+            <tr>
+                                <td id="T_b6600_row4_col0" class="data row4 col0" >20</td>
+                        <td id="T_b6600_row4_col1" class="data row4 col1" >0.5042</td>
+                        <td id="T_b6600_row4_col2" class="data row4 col2" >0.3273</td>
+            </tr>
+            <tr>
+                                <td id="T_b6600_row5_col0" class="data row5 col0" >25</td>
+                        <td id="T_b6600_row5_col1" class="data row5 col1" >0.5085</td>
+                        <td id="T_b6600_row5_col2" class="data row5 col2" >0.3281</td>
+            </tr>
+            <tr>
+                                <td id="T_b6600_row6_col0" class="data row6 col0" >30</td>
+                        <td id="T_b6600_row6_col1" class="data row6 col1" >0.5130</td>
+                        <td id="T_b6600_row6_col2" class="data row6 col2" >0.3290</td>
+            </tr>
+            <tr>
+                                <td id="T_b6600_row7_col0" class="data row7 col0" >35</td>
+                        <td id="T_b6600_row7_col1" class="data row7 col1" >0.5175</td>
+                        <td id="T_b6600_row7_col2" class="data row7 col2" >0.3297</td>
+            </tr>
+            <tr>
+                                <td id="T_b6600_row8_col0" class="data row8 col0" >40</td>
+                        <td id="T_b6600_row8_col1" class="data row8 col1" >0.5221</td>
+                        <td id="T_b6600_row8_col2" class="data row8 col2" >0.3305</td>
+            </tr>
+            <tr>
+                                <td id="T_b6600_row9_col0" class="data row9 col0" >45</td>
+                        <td id="T_b6600_row9_col1" class="data row9 col1" >0.5271</td>
+                        <td id="T_b6600_row9_col2" class="data row9 col2" >0.3314</td>
+            </tr>
+            <tr>
+                                <td id="T_b6600_row10_col0" class="data row10 col0" >50</td>
+                        <td id="T_b6600_row10_col1" class="data row10 col1" >0.5319</td>
+                        <td id="T_b6600_row10_col2" class="data row10 col2" >0.3321</td>
+            </tr>
+            <tr>
+                                <td id="T_b6600_row11_col0" class="data row11 col0" >55</td>
+                        <td id="T_b6600_row11_col1" class="data row11 col1" >0.5371</td>
+                        <td id="T_b6600_row11_col2" class="data row11 col2" >0.3329</td>
+            </tr>
+            <tr>
+                                <td id="T_b6600_row12_col0" class="data row12 col0" >60</td>
+                        <td id="T_b6600_row12_col1" class="data row12 col1" >0.5425</td>
+                        <td id="T_b6600_row12_col2" class="data row12 col2" >0.3338</td>
+            </tr>
+    </tbody></table></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot the dependence of yi on I of some ions at 25 C using the Truesdell-Jones model</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">I</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.001</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">ions</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;$Al^{3+}$&#39;</span><span class="p">,</span> <span class="s1">&#39;$Ca^{2+}$&#39;</span><span class="p">,</span> <span class="s1">&#39;$Mg^{2+}$&#39;</span><span class="p">,</span> <span class="s1">&#39;$SO_4^{2-}$&#39;</span><span class="p">,</span> <span class="s1">&#39;$Na^+$&#39;</span><span class="p">,</span> <span class="s1">&#39;$K^+$&#39;</span><span class="p">,</span> <span class="s1">&#39;$HCO_3^-$&#39;</span><span class="p">]</span>
+<span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;#FF9B3C&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="s1">&#39;#00F3FF&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;#FF52E5&#39;</span><span class="p">]</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">A_data</span><span class="p">[</span><span class="n">T_data</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="mi">25</span><span class="p">)]</span>
+<span class="n">B</span> <span class="o">=</span> <span class="n">B_data</span><span class="p">[</span><span class="n">T_data</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="mi">25</span><span class="p">)]</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ions</span><span class="p">)):</span>  <span class="c1"># loop to plot for each ion</span>
+    <span class="n">ao</span> <span class="o">=</span> <span class="n">Truesdell_Jones_ao_data</span><span class="p">[</span><span class="n">ions_data</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">ions</span><span class="p">[</span><span class="n">i</span><span class="p">])]</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">Truesdell_Jones_b_data</span><span class="p">[</span><span class="n">ions_data</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">ions</span><span class="p">[</span><span class="n">i</span><span class="p">])]</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">I</span><span class="p">,</span> <span class="n">yi_Truesdell_Jones_model</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">ions</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">I</span><span class="p">,</span> <span class="n">ao</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="n">colors</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="n">ions</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;$I$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Activity coefficient $(\gamma_i)$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="mf">0.001</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;The dependence of $\gamma_i$ on $I$ of some ions</span><span class="se">\n</span><span class="s1">at $25^\circ C$ using the Truesdell-Jones model&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x1c9487e1430&gt;
+</pre></div>
+</div>
+<img alt="../../_images/Defining_Activity_Coefficients_5_1.png" src="../../_images/Defining_Activity_Coefficients_5_1.png" />
+</div>
+</div>
+<p>It can be seen from the plot above that different ions have different activity coefficients, depending on their charges and ionic radii.</p>
+<p>To get a sense of the importance of the difference between activity and concentration, you can compare the values you get for <span class="math notranslate nohighlight">\(a_i = \gamma_im_i\)</span> VS <span class="math notranslate nohighlight">\(m_i\)</span>. They can be very different.</p>
+<section id="lesson-3-problem-3-aqueous-solutions-the-thames-river-estuary">
+<h2>Lesson 3 - Problem 3 (Aqueous solutions: the Thames river estuary)<a class="headerlink" href="#lesson-3-problem-3-aqueous-solutions-the-thames-river-estuary" title="Permalink to this headline">#</a></h2>
+<p>The following data were collected from samples from the Thames river.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Data collected from samples from the Thames river</span>
+<span class="n">species</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;$SiO_2$&#39;</span><span class="p">,</span> <span class="s1">&#39;$Ca^{2+}$&#39;</span><span class="p">,</span> <span class="s1">&#39;$Mg^{2+}$&#39;</span><span class="p">,</span> <span class="s1">&#39;$Na^+$&#39;</span><span class="p">,</span> <span class="s1">&#39;$K^+$&#39;</span><span class="p">,</span> <span class="s1">&#39;$HCO_3^-$&#39;</span><span class="p">,</span> <span class="s1">&#39;$SO_4^{2-}$&#39;</span><span class="p">,</span> <span class="s1">&#39;$NO_3^-$&#39;</span><span class="p">]</span>
+<span class="n">concentrations</span> <span class="o">=</span> <span class="p">[</span><span class="mi">15</span><span class="p">,</span> <span class="mi">49</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mf">5.4</span><span class="p">,</span> <span class="mf">3.1</span><span class="p">,</span> <span class="mi">168</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mf">4.3</span><span class="p">]</span>  <span class="c1"># mg/l</span>
+
+<span class="n">dict3</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Species&#39;</span> <span class="p">:</span> <span class="n">species</span><span class="p">,</span>
+        <span class="s1">&#39;Concentration $(mg/l)$&#39;</span> <span class="p">:</span> <span class="n">concentrations</span><span class="p">}</span>
+<span class="n">df3</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dict3</span><span class="p">)</span>
+<span class="n">df3</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;Concentration $(mg/l)$&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df3</span><span class="p">[</span><span class="s1">&#39;Concentration $(mg/l)$&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:.1f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">df3</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">hide_index</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style  type="text/css" >
+</style><table id="T_56596_" ><thead>    <tr>        <th class="col_heading level0 col0" >Species</th>        <th class="col_heading level0 col1" >Concentration $(mg/l)$</th>    </tr></thead><tbody>
+                <tr>
+                                <td id="T_56596_row0_col0" class="data row0 col0" >$SiO_2$</td>
+                        <td id="T_56596_row0_col1" class="data row0 col1" >15.0</td>
+            </tr>
+            <tr>
+                                <td id="T_56596_row1_col0" class="data row1 col0" >$Ca^{2+}$</td>
+                        <td id="T_56596_row1_col1" class="data row1 col1" >49.0</td>
+            </tr>
+            <tr>
+                                <td id="T_56596_row2_col0" class="data row2 col0" >$Mg^{2+}$</td>
+                        <td id="T_56596_row2_col1" class="data row2 col1" >14.0</td>
+            </tr>
+            <tr>
+                                <td id="T_56596_row3_col0" class="data row3 col0" >$Na^+$</td>
+                        <td id="T_56596_row3_col1" class="data row3 col1" >5.4</td>
+            </tr>
+            <tr>
+                                <td id="T_56596_row4_col0" class="data row4 col0" >$K^+$</td>
+                        <td id="T_56596_row4_col1" class="data row4 col1" >3.1</td>
+            </tr>
+            <tr>
+                                <td id="T_56596_row5_col0" class="data row5 col0" >$HCO_3^-$</td>
+                        <td id="T_56596_row5_col1" class="data row5 col1" >168.0</td>
+            </tr>
+            <tr>
+                                <td id="T_56596_row6_col0" class="data row6 col0" >$SO_4^{2-}$</td>
+                        <td id="T_56596_row6_col1" class="data row6 col1" >40.0</td>
+            </tr>
+            <tr>
+                                <td id="T_56596_row7_col0" class="data row7 col0" >$NO_3^-$</td>
+                        <td id="T_56596_row7_col1" class="data row7 col1" >4.3</td>
+            </tr>
+    </tbody></table></div></div>
+</div>
+<p>a) Unfortunately, the technician who performed these chemical analyses was lazy and forgot to write the charges for each ion. Which of these species are ionic and what is the charges corresponding to these ions in this river sample? Add the correct charges to the data table above.</p>
+<p>See annotations in table above.</p>
+<p>b) What is the molal ionic strength of this water sample? (beware of units, convert from <span class="math notranslate nohighlight">\(mg/l\)</span> to <span class="math notranslate nohighlight">\(mol/kg\)</span>)?</p>
+<p>Assume the density of water is <span class="math notranslate nohighlight">\(1000\,g/l\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># function for converting the unit of concentration from mg/l to mol/kg (m)</span>
+<span class="k">def</span> <span class="nf">convert_mg_per_l_to_m</span><span class="p">(</span><span class="n">ion</span><span class="p">,</span> <span class="n">conc</span><span class="p">,</span> <span class="n">show_calculation</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="n">MW</span> <span class="o">=</span> <span class="n">molar_mass_calculator</span><span class="p">(</span><span class="n">ion</span><span class="p">)</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">conc</span><span class="o">*</span><span class="p">(</span><span class="mi">10</span><span class="o">**-</span><span class="mi">3</span><span class="p">)</span><span class="o">/</span><span class="n">MW</span>
+    <span class="k">if</span> <span class="n">show_calculation</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">r</span><span class="s2">&quot;$</span><span class="si">%d</span><span class="s2">\left(\frac</span><span class="si">{mg}{l}</span><span class="s2">\right) \cdot 10^{-3}\left(\frac</span><span class="si">{g}{mg}</span><span class="s2">\right) \cdot \frac</span><span class="si">{1}</span><span class="s2">{</span><span class="si">%.2f</span><span class="s2">}\left(\frac</span><span class="si">{mol}{g}</span><span class="s2">\right)</span><span class="se">\</span>
+<span class="s2">        \cdot \frac</span><span class="si">{1}{1000}</span><span class="s2">\left(\frac</span><span class="si">{l}{g}</span><span class="s2">\right) \cdot \frac</span><span class="si">{1000}{1}</span><span class="s2">\left(\frac</span><span class="si">{g}{kg}</span><span class="s2">\right) = </span><span class="se">\</span>
+<span class="s2">        </span><span class="si">%.2f</span><span class="s2"> \cdot 10^{-3} \left(\frac</span><span class="si">{mol}{kg}</span><span class="s2">\right)$&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">conc</span><span class="p">,</span> <span class="n">MW</span><span class="p">,</span> <span class="n">m</span><span class="o">*</span><span class="mi">1000</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">m</span>
+    
+
+<span class="nb">print</span><span class="p">(</span><span class="n">convert_mg_per_l_to_m</span><span class="p">(</span><span class="s2">&quot;$Ca^2+$&quot;</span><span class="p">,</span> <span class="mi">49</span><span class="p">,</span> <span class="kc">True</span><span class="p">))</span>
+
+
+<span class="c1"># Create a table to show a detailed unit conversion</span>
+<span class="n">concentration_conversions</span> <span class="o">=</span> <span class="p">[</span><span class="n">convert_mg_per_l_to_m</span><span class="p">(</span><span class="n">species</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">concentrations</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="kc">True</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">species</span><span class="p">))]</span>
+
+<span class="n">dict4</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Species&#39;</span> <span class="p">:</span> <span class="n">species</span><span class="p">,</span>
+        <span class="s1">&#39;Concentration (m = mol/kg)&#39;</span> <span class="p">:</span> <span class="n">concentration_conversions</span><span class="p">}</span>
+<span class="n">df4</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dict4</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">df4</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">hide_index</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>$49\left(\frac{mg}{l}\right) \cdot 10^{-3}\left(\frac{g}{mg}\right) \cdot \frac{1}{40.08}\left(\frac{mol}{g}\right)\
+        \cdot \frac{1}{1000}\left(\frac{l}{g}\right) \cdot \frac{1000}{1}\left(\frac{g}{kg}\right) = \
+        1.22 \cdot 10^{-3} \left(\frac{mol}{kg}\right)$
+</pre></div>
+</div>
+<div class="output text_html"><style  type="text/css" >
+</style><table id="T_20500_" ><thead>    <tr>        <th class="col_heading level0 col0" >Species</th>        <th class="col_heading level0 col1" >Concentration (m = mol/kg)</th>    </tr></thead><tbody>
+                <tr>
+                                <td id="T_20500_row0_col0" class="data row0 col0" >$SiO_2$</td>
+                        <td id="T_20500_row0_col1" class="data row0 col1" >$15\left(\frac{mg}{l}\right) \cdot 10^{-3}\left(\frac{g}{mg}\right) \cdot \frac{1}{60.08}\left(\frac{mol}{g}\right)\
+        \cdot \frac{1}{1000}\left(\frac{l}{g}\right) \cdot \frac{1000}{1}\left(\frac{g}{kg}\right) = \
+        0.25 \cdot 10^{-3} \left(\frac{mol}{kg}\right)$</td>
+            </tr>
+            <tr>
+                                <td id="T_20500_row1_col0" class="data row1 col0" >$Ca^{2+}$</td>
+                        <td id="T_20500_row1_col1" class="data row1 col1" >$49\left(\frac{mg}{l}\right) \cdot 10^{-3}\left(\frac{g}{mg}\right) \cdot \frac{1}{40.08}\left(\frac{mol}{g}\right)\
+        \cdot \frac{1}{1000}\left(\frac{l}{g}\right) \cdot \frac{1000}{1}\left(\frac{g}{kg}\right) = \
+        1.22 \cdot 10^{-3} \left(\frac{mol}{kg}\right)$</td>
+            </tr>
+            <tr>
+                                <td id="T_20500_row2_col0" class="data row2 col0" >$Mg^{2+}$</td>
+                        <td id="T_20500_row2_col1" class="data row2 col1" >$14\left(\frac{mg}{l}\right) \cdot 10^{-3}\left(\frac{g}{mg}\right) \cdot \frac{1}{24.30}\left(\frac{mol}{g}\right)\
+        \cdot \frac{1}{1000}\left(\frac{l}{g}\right) \cdot \frac{1000}{1}\left(\frac{g}{kg}\right) = \
+        0.58 \cdot 10^{-3} \left(\frac{mol}{kg}\right)$</td>
+            </tr>
+            <tr>
+                                <td id="T_20500_row3_col0" class="data row3 col0" >$Na^+$</td>
+                        <td id="T_20500_row3_col1" class="data row3 col1" >$5\left(\frac{mg}{l}\right) \cdot 10^{-3}\left(\frac{g}{mg}\right) \cdot \frac{1}{22.99}\left(\frac{mol}{g}\right)\
+        \cdot \frac{1}{1000}\left(\frac{l}{g}\right) \cdot \frac{1000}{1}\left(\frac{g}{kg}\right) = \
+        0.23 \cdot 10^{-3} \left(\frac{mol}{kg}\right)$</td>
+            </tr>
+            <tr>
+                                <td id="T_20500_row4_col0" class="data row4 col0" >$K^+$</td>
+                        <td id="T_20500_row4_col1" class="data row4 col1" >$3\left(\frac{mg}{l}\right) \cdot 10^{-3}\left(\frac{g}{mg}\right) \cdot \frac{1}{39.10}\left(\frac{mol}{g}\right)\
+        \cdot \frac{1}{1000}\left(\frac{l}{g}\right) \cdot \frac{1000}{1}\left(\frac{g}{kg}\right) = \
+        0.08 \cdot 10^{-3} \left(\frac{mol}{kg}\right)$</td>
+            </tr>
+            <tr>
+                                <td id="T_20500_row5_col0" class="data row5 col0" >$HCO_3^-$</td>
+                        <td id="T_20500_row5_col1" class="data row5 col1" >$168\left(\frac{mg}{l}\right) \cdot 10^{-3}\left(\frac{g}{mg}\right) \cdot \frac{1}{61.02}\left(\frac{mol}{g}\right)\
+        \cdot \frac{1}{1000}\left(\frac{l}{g}\right) \cdot \frac{1000}{1}\left(\frac{g}{kg}\right) = \
+        2.75 \cdot 10^{-3} \left(\frac{mol}{kg}\right)$</td>
+            </tr>
+            <tr>
+                                <td id="T_20500_row6_col0" class="data row6 col0" >$SO_4^{2-}$</td>
+                        <td id="T_20500_row6_col1" class="data row6 col1" >$40\left(\frac{mg}{l}\right) \cdot 10^{-3}\left(\frac{g}{mg}\right) \cdot \frac{1}{96.06}\left(\frac{mol}{g}\right)\
+        \cdot \frac{1}{1000}\left(\frac{l}{g}\right) \cdot \frac{1000}{1}\left(\frac{g}{kg}\right) = \
+        0.42 \cdot 10^{-3} \left(\frac{mol}{kg}\right)$</td>
+            </tr>
+            <tr>
+                                <td id="T_20500_row7_col0" class="data row7 col0" >$NO_3^-$</td>
+                        <td id="T_20500_row7_col1" class="data row7 col1" >$4\left(\frac{mg}{l}\right) \cdot 10^{-3}\left(\frac{g}{mg}\right) \cdot \frac{1}{62.00}\left(\frac{mol}{g}\right)\
+        \cdot \frac{1}{1000}\left(\frac{l}{g}\right) \cdot \frac{1000}{1}\left(\frac{g}{kg}\right) = \
+        0.07 \cdot 10^{-3} \left(\frac{mol}{kg}\right)$</td>
+            </tr>
+    </tbody></table></div></div>
+</div>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Lecture slide and Practical for Lecture 3 of the Low-Temperature Geochemistry module</p></li>
+<li><p>Misra, K.C. (2012). Introduction to geochemistry : principles and applications. Wiley-Blackwell.</p></li>
+<li><p>White, W. (2013). Geochemistry. Wiley-Blackwell.</p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "primer-computational-mathematics/book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./d_geosciences/Low-Temperature Geochemistry"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Imperial College London<br/>
+  
+      &copy; Copyright 2020.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
