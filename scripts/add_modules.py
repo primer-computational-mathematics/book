@@ -55,6 +55,7 @@ def add_module_badges(fpath):
                     for tag in _module_tags:
                         _ref = "{doc}" + f"`{header.strip()} <{new_fpath}>`"
                         modules_dict[tag] += [_ref]
+                        modules_dict[tag].sort()
                         tags_string += modules_dict[tag][1] + ' '
                     tags_string += '\n'
 
