@@ -7,7 +7,7 @@
 2. {doc}`2_sets`
     - {ref}`sets_operations`
 3. {doc}`3_functions`
-    - {ref}`function_basic_defs`
+    - {ref}`functions_basic_defs`
     - {ref}`functions_graph`
     - {ref}`functions_restriction`
     - {ref}`functions_image`

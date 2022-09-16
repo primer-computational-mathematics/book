@@ -9,19 +9,19 @@ Source: [Pandas](https://pandas.pydata.org/about/citing.html)
 Pandas is a software library written for Python, useful for data manipulation and data analysis.
 
 Table of contents:
-1. {ref}`pandas_intro`
-    - {ref}`pandas_objects`
-    - {ref}`reading_files`
-    - {ref}`writing_files`
-2. {ref}`filtering_selecting_assigning`
-3. {ref}`merging_combining_grouping_sorting`
-    - {ref}`merging`
-    - {ref}`combining`
-    - {ref}`grouping`
-    - {ref}`sorting`
-4. {ref}`pandas_stats`
-5. {ref}`pandas_date_time`
-6. {ref}`pandas_plotting`
+1. {ref}`Pandas_intro`
+    - {ref}`Pandas_objects`
+    - {ref}`Reading_files`
+    - {ref}`Writing_files`
+2. {ref}`Filtering_selecting_assigning`
+3. {ref}`Merging_combining_grouping_sorting`
+    - {ref}`Merging`
+    - {ref}`Combining`
+    - {ref}`Grouping`
+    - {ref}`Sorting`
+4. {ref}`Pandas_statistics`
+5. {ref}`Pandas_date_time`
+6. {ref}`Pandas_plotting`
 
 ## References
 * [Pandas official Getting Started tutorials](https://pandas.pydata.org/docs/getting_started/index.html#getting-started)
