@@ -26,40 +26,40 @@ The notebooks cover all basic topics covered in year 1 programming course:
 20. {ref}`Lambdas <lambdas_exercises>`
 ```
 
-1. {ref}`printing_intro`
-    - {ref}`basic_printing`
-    - {ref}`formatted_printing`
-2. {ref}`variables`
-    - {ref}`variable_types`
-    - {ref}`variable_operations`
-3. {ref}`if_statement`
-4. {ref}`while_loops`
-5. {ref}`lists`
-6. {ref}`for_loops`
-7. {ref}`list_comprehensions`
-8. {ref}`nested_lists`
-9. {ref}`handling_errors`
-    - {ref}`error_types`
-    - {ref}`raising_errors`
-    - {ref}`try_except`
-10. {ref}`importing`
-11. {ref}`functions_python`
-12. {ref}`tuples`
-13. {ref}`file_handling`
-    - {ref}`python_file_handling`
-    - {ref}`numpy_file_handling`
-    - {ref}`pandas_file_handling`
-14. {ref}`dictionaries`
-15. {ref}`flow_control_statements`
-    - {ref}`break_continue`
-    - {ref}`pass`
-16. {ref}`sets`
-17. {ref}`matplotlib_intro`
-    - {ref}`line_scatter`
-    - {ref}`histogram`
-    - {ref}`image_plot`
+1. {ref}`Printing_and_formatting_statements`
+    - {ref}`Basic_printing`
+    - {ref}`Formatted_printing`
+2. {ref}`Variables`
+    - {ref}`Variable_types`
+    - {ref}`Variable_operations`
+3. {ref}`If_statement`
+4. {ref}`While_loops`
+5. {ref}`Lists`
+6. {ref}`For_loops`
+7. {ref}`List_comprehensions`
+8. {ref}`Nested_lists`
+9. {ref}`Handling_errors`
+    - {ref}`Error_types`
+    - {ref}`Raising_errors`
+    - {ref}`Try_except`
+10. {ref}`Importing`
+11. {ref}`Functions_python`
+12. {ref}`Tuples`
+13. {ref}`File_handling`
+    - {ref}`Python_file_handling`
+    - {ref}`Numpy_file_handling`
+    - {ref}`Pandas_file_handling`
+14. {ref}`Dictionaries`
+15. {ref}`Flow_control_statements`
+    - {ref}`Break_continue`
+    - {ref}`Pass`
+16. {ref}`Sets`
+17. {ref}`Matplotlib`
+    - {ref}`Line_scatter`
+    - {ref}`Histogram`
+    - {ref}`Image_plot`
     - {ref}`3d_plots`
-    - {ref}`animations`
-18. {ref}`assert`
-19. {ref}`classes`
-20. {ref}`lambdas`
+    - {ref}`Animations`
+18. {ref}`Assert`
+19. {ref}`Classes`
+20. {ref}`Lambdas`
