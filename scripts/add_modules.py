@@ -190,7 +190,7 @@ modules_dict = {
     'module-grt': ['Geological Reactive transport'],
     'module-palabio': ['Palaeobiology'],
     'module-palaocean': ['Palaeoceanography'],
-    'module-gagp': ['Geophysical Synthesis Group Project'],
+    'module-gagp': ['Geophysical Analysis Group Project'],
     'module-plaphy': ['Planetary Physics'],
     'module-plachem': ['Planetary Chemistry'],
     'module-meteo': ['Meteorites']
