@@ -1737,8 +1737,47 @@ title="Print to PDF"
     <a class="reference internal nav-link" href="#thermal-diffusion">
      Thermal diffusion
     </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#length-and-time-scales-for-diffusion">
+       Length and time scales for diffusion
+      </a>
+     </li>
+    </ul>
    </li>
   </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#practical-7-question-3">
+   Practical 7 - Question 3
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#heat-transport-in-fluids">
+   Heat transport in fluids
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#diffusion-of-momentum-and-heat-in-viscous-fluids">
+     Diffusion of momentum and heat in viscous fluids
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#advection-transport-by-moving-fluids">
+   Advection – transport by moving fluids
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#thermal-convection">
+   Thermal convection
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#practical-8-question-3">
+   Practical 8 - Question 3
+  </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#references">
@@ -1800,8 +1839,47 @@ title="Print to PDF"
     <a class="reference internal nav-link" href="#thermal-diffusion">
      Thermal diffusion
     </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#length-and-time-scales-for-diffusion">
+       Length and time scales for diffusion
+      </a>
+     </li>
+    </ul>
    </li>
   </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#practical-7-question-3">
+   Practical 7 - Question 3
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#heat-transport-in-fluids">
+   Heat transport in fluids
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#diffusion-of-momentum-and-heat-in-viscous-fluids">
+     Diffusion of momentum and heat in viscous fluids
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#advection-transport-by-moving-fluids">
+   Advection – transport by moving fluids
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#thermal-convection">
+   Thermal convection
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#practical-8-question-3">
+   Practical 8 - Question 3
+  </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#references">
@@ -1819,10 +1897,150 @@ title="Print to PDF"
               <div>
                 
   <section class="tex2jax_ignore mathjax_ignore" id="heat">
-<span id="id1"></span><h1>Heat<a class="headerlink" href="#heat" title="Permalink to this headline">#</a></h1>
+<h1>Heat<a class="headerlink" href="#heat" title="Permalink to this headline">#</a></h1>
 <p><a class="reference internal" href="../../a_modules/intro.html#module-phyp"><span class="std std-ref"><!-- module-phyp badge --><span class="module module-phyp">Physical Processes</span></span></a></p>
+<span class="target" id="index-0"></span><span class="target" id="index-1"></span><span class="target" id="index-2"></span><span class="target" id="index-3"></span><div class="cell tag_hide-input docutils container" id="index-4">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import relevant modules</span>
+
+<span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">log10</span><span class="p">,</span> <span class="n">floor</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># create our own functions</span>
+
+<span class="c1"># function to round a value to a certain number of significant figures</span>
+<span class="k">def</span> <span class="nf">round_to_n_sf</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">no_of_significant_figures</span><span class="p">):</span>
+    <span class="n">value_rounded</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">no_of_significant_figures</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="nb">int</span><span class="p">(</span><span class="n">floor</span><span class="p">(</span><span class="n">log10</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">value</span><span class="p">)))))</span>
+    <span class="k">return</span> <span class="n">value_rounded</span>
+
+
+<span class="c1"># function for extracting float from string</span>
+<span class="k">def</span> <span class="nf">extract_float_from_str</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
+    <span class="n">float_str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">string</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">c</span> <span class="ow">in</span> <span class="s1">&#39;1234567890.&#39;</span><span class="p">:</span>
+            <span class="n">float_str</span> <span class="o">+=</span> <span class="n">c</span>
+    <span class="k">if</span> <span class="n">float_str</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">float_str</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;no float&#39;</span>
+            
+        
+<span class="c1"># function for calculating time in seconds from string (unit must be fully expressed e.g. &#39;second&#39; not &#39;sec&#39;)</span>
+<span class="k">def</span> <span class="nf">time_s_from_str</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">extract_float_from_str</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+    <span class="c1"># dictionary of units of time coupled with conversion factors</span>
+    <span class="n">unit_and_conversion_factor_dict</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;second&#39;</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s1">&#39;minute&#39;</span> <span class="p">:</span> <span class="mi">60</span><span class="p">,</span>
+        <span class="s1">&#39;hour&#39;</span> <span class="p">:</span> <span class="mi">60</span><span class="o">*</span><span class="mi">60</span><span class="p">,</span>
+        <span class="s1">&#39;day&#39;</span> <span class="p">:</span> <span class="mi">60</span><span class="o">*</span><span class="mi">60</span><span class="o">*</span><span class="mi">24</span><span class="p">,</span>
+        <span class="s1">&#39;month&#39;</span> <span class="p">:</span> <span class="mi">60</span><span class="o">*</span><span class="mi">60</span><span class="o">*</span><span class="mi">24</span><span class="o">*</span><span class="mi">30</span><span class="p">,</span>
+        <span class="s1">&#39;million year&#39;</span> <span class="p">:</span> <span class="mi">60</span><span class="o">*</span><span class="mi">60</span><span class="o">*</span><span class="mi">24</span><span class="o">*</span><span class="mf">365.25</span><span class="o">*</span><span class="mi">10</span><span class="o">**</span><span class="mi">6</span><span class="p">,</span>
+        <span class="s1">&#39;billion year&#39;</span> <span class="p">:</span> <span class="mi">60</span><span class="o">*</span><span class="mi">60</span><span class="o">*</span><span class="mi">24</span><span class="o">*</span><span class="mf">365.25</span><span class="o">*</span><span class="mi">10</span><span class="o">**</span><span class="mi">9</span><span class="p">,</span>
+        <span class="s1">&#39;year&#39;</span> <span class="p">:</span> <span class="mi">60</span><span class="o">*</span><span class="mi">60</span><span class="o">*</span><span class="mi">24</span><span class="o">*</span><span class="mf">365.25</span>  <span class="c1"># should be after &#39;million year&#39; and &#39;billion year&#39; for purpose of breaking loop</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="n">t</span> <span class="o">!=</span> <span class="s1">&#39;no float&#39;</span><span class="p">:</span>
+        <span class="c1"># check unit (not all units are included in this function)</span>
+        <span class="k">for</span> <span class="n">unit</span> <span class="ow">in</span> <span class="n">unit_and_conversion_factor_dict</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">unit</span> <span class="ow">in</span> <span class="n">string</span><span class="p">:</span>
+                <span class="n">t</span> <span class="o">*=</span> <span class="n">unit_and_conversion_factor_dict</span><span class="p">[</span><span class="n">unit</span><span class="p">]</span>
+                <span class="k">break</span>
+        <span class="c1"># return time in seconds</span>
+        <span class="k">return</span> <span class="n">t</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;invalid&#39;</span>
+
+    
+<span class="c1"># function for returning appropriate string from time in seconds</span>
+<span class="k">def</span> <span class="nf">time_s_to_str</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+    <span class="n">string</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="n">conversion_factor_and_unit_dict</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="mi">60</span><span class="o">*</span><span class="mi">60</span><span class="o">*</span><span class="mi">24</span><span class="o">*</span><span class="mf">365.25</span><span class="o">*</span><span class="mi">10</span><span class="o">**</span><span class="mi">9</span> <span class="p">:</span> <span class="s1">&#39;billion year&#39;</span><span class="p">,</span>
+        <span class="mi">60</span><span class="o">*</span><span class="mi">60</span><span class="o">*</span><span class="mi">24</span><span class="o">*</span><span class="mf">365.25</span><span class="o">*</span><span class="mi">10</span><span class="o">**</span><span class="mi">6</span> <span class="p">:</span> <span class="s1">&#39;million year&#39;</span><span class="p">,</span>
+        <span class="mi">60</span><span class="o">*</span><span class="mi">60</span><span class="o">*</span><span class="mi">24</span><span class="o">*</span><span class="mf">365.25</span> <span class="p">:</span> <span class="s1">&#39;year&#39;</span><span class="p">,</span>
+        <span class="mi">60</span><span class="o">*</span><span class="mi">60</span><span class="o">*</span><span class="mi">24</span><span class="o">*</span><span class="mi">30</span> <span class="p">:</span> <span class="s1">&#39;month&#39;</span><span class="p">,</span>
+        <span class="mi">60</span><span class="o">*</span><span class="mi">60</span><span class="o">*</span><span class="mi">24</span> <span class="p">:</span> <span class="s1">&#39;day&#39;</span><span class="p">,</span>
+        <span class="mi">60</span><span class="o">*</span><span class="mi">60</span> <span class="p">:</span> <span class="s1">&#39;hour&#39;</span><span class="p">,</span>
+        <span class="mi">60</span> <span class="p">:</span> <span class="s1">&#39;minute&#39;</span><span class="p">,</span>
+        <span class="mi">0</span> <span class="p">:</span> <span class="s1">&#39;second&#39;</span>  <span class="c1"># exception (conversion factor should be 1, but set as 0 for looping purpose)</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">==</span> <span class="nb">int</span> <span class="ow">or</span> <span class="nb">type</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">==</span> <span class="nb">float</span><span class="p">)</span> <span class="ow">and</span> <span class="n">t</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">conv</span> <span class="ow">in</span> <span class="n">conversion_factor_and_unit_dict</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">t</span> <span class="o">&gt;=</span> <span class="n">conv</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">conv</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># second range</span>
+                    <span class="n">t</span> <span class="o">=</span> <span class="n">round_to_n_sf</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">t</span> <span class="o">=</span> <span class="n">round_to_n_sf</span><span class="p">(</span><span class="n">t</span><span class="o">/</span><span class="n">conv</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">round</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">==</span> <span class="n">t</span><span class="p">:</span>
+                    <span class="n">t</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+                <span class="n">string</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">t</span><span class="si">}</span><span class="s1"> &#39;</span> <span class="o">+</span> <span class="n">conversion_factor_and_unit_dict</span><span class="p">[</span><span class="n">conv</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">t</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span> 
+                    <span class="n">string</span> <span class="o">+=</span> <span class="s1">&#39;s&#39;</span>
+                <span class="k">break</span>
+            
+    <span class="k">else</span><span class="p">:</span> 
+        <span class="n">string</span> <span class="o">+=</span> <span class="s1">&#39;invalid&#39;</span>
+    <span class="k">return</span> <span class="n">string</span>
+
+        
+<span class="c1"># function for calculating distance in m from string (unit must be abbreviated e.g. mm, cm)</span>
+<span class="k">def</span> <span class="nf">distance_m_from_str</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">extract_float_from_str</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+    <span class="c1"># dictionary of units of time coupled with conversion factors</span>
+    <span class="n">unit_and_conversion_factor_dict</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;mm&#39;</span> <span class="p">:</span> <span class="mi">10</span><span class="o">**-</span><span class="mi">3</span><span class="p">,</span>
+        <span class="s1">&#39;cm&#39;</span> <span class="p">:</span> <span class="mi">10</span><span class="o">**-</span><span class="mi">2</span><span class="p">,</span>
+        <span class="s1">&#39;km&#39;</span> <span class="p">:</span> <span class="mi">10</span><span class="o">**</span><span class="mi">3</span><span class="p">,</span>
+        <span class="s1">&#39;m&#39;</span> <span class="p">:</span> <span class="mi">1</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="n">d</span> <span class="o">!=</span> <span class="s1">&#39;no float&#39;</span><span class="p">:</span>
+        <span class="c1"># check unit (not all units are included in this function)</span>
+        <span class="k">for</span> <span class="n">unit</span> <span class="ow">in</span> <span class="n">unit_and_conversion_factor_dict</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">unit</span> <span class="ow">in</span> <span class="n">string</span><span class="p">:</span>
+                <span class="n">d</span> <span class="o">*=</span> <span class="n">unit_and_conversion_factor_dict</span><span class="p">[</span><span class="n">unit</span><span class="p">]</span>
+                <span class="k">break</span>
+        <span class="c1"># return distance in m</span>
+        <span class="k">return</span> <span class="n">d</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;invalid&#39;</span>
+
+    
+<span class="c1"># function for returning appropriate string from distance in m</span>
+<span class="k">def</span> <span class="nf">distance_m_to_str</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+    <span class="n">string</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="n">conversion_factor_and_unit_dict</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="mi">10</span><span class="o">**</span><span class="mi">3</span> <span class="p">:</span> <span class="s1">&#39;km&#39;</span><span class="p">,</span>
+        <span class="mi">1</span> <span class="p">:</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span>
+        <span class="mi">10</span><span class="o">**-</span><span class="mi">2</span> <span class="p">:</span> <span class="s1">&#39;cm&#39;</span><span class="p">,</span>
+        <span class="mi">10</span><span class="o">**-</span><span class="mi">3</span> <span class="p">:</span> <span class="s1">&#39;mm&#39;</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="o">==</span> <span class="nb">int</span> <span class="ow">or</span> <span class="nb">type</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="o">==</span> <span class="nb">float</span><span class="p">)</span> <span class="ow">and</span> <span class="n">d</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">conv</span> <span class="ow">in</span> <span class="n">conversion_factor_and_unit_dict</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">d</span> <span class="o">&gt;=</span> <span class="n">conv</span><span class="p">:</span>
+                <span class="n">d</span> <span class="o">=</span> <span class="n">round_to_n_sf</span><span class="p">(</span><span class="n">d</span><span class="o">/</span><span class="n">conv</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">round</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="o">==</span> <span class="n">d</span><span class="p">:</span>
+                    <span class="n">d</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+                <span class="n">string</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">d</span><span class="si">}</span><span class="s1"> &#39;</span> <span class="o">+</span> <span class="n">conversion_factor_and_unit_dict</span><span class="p">[</span><span class="n">conv</span><span class="p">]</span>
+                <span class="k">break</span>
+    <span class="k">else</span><span class="p">:</span> 
+        <span class="n">string</span> <span class="o">+=</span> <span class="s1">&#39;invalid&#39;</span>
+    <span class="k">return</span> <span class="n">string</span>
+</pre></div>
+</div>
+</div>
+</div>
 <section id="temperature-and-heat">
-<span id="index-0"></span><h2>Temperature and heat<a class="headerlink" href="#temperature-and-heat" title="Permalink to this headline">#</a></h2>
+<h2>Temperature and heat<a class="headerlink" href="#temperature-and-heat" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
 <li><p><strong>Temperature</strong> is the property of a body that controls the direction of the flow of heat to or from its surroundings. Its SI units are kelvin, symbol <span class="math notranslate nohighlight">\(K\)</span> (not degrees <span class="math notranslate nohighlight">\(K\)</span> or <span class="math notranslate nohighlight">\(^\circ K\)</span>) where <span class="math notranslate nohighlight">\(273.15\,K \equiv 0^\circ C\)</span>; its dimensions are <span class="math notranslate nohighlight">\([\Theta]\)</span>. A temperature interval of <span class="math notranslate nohighlight">\(1\,K \equiv 1^\circ C\)</span>;</p></li>
 <li><p><strong>Heat</strong> is energy that is transferred to or from a body, to or from its surroundings, as a result of a difference in their temperatures. Its SI units are joules; its dimensions are <span class="math notranslate nohighlight">\([ML^{2}T^{-2}]\)</span>. It is commonly given the symbol <span class="math notranslate nohighlight">\(Q\)</span>.</p></li>
@@ -1837,11 +2055,86 @@ title="Print to PDF"
 <h3>Latent heat<a class="headerlink" href="#latent-heat" title="Permalink to this headline">#</a></h3>
 <p>Changes in phase at constant temperature, for example from solid to liquid or from gabbro to eclogite, typically involve a transfer of heat into or out of the surroundings. This happens because the phase change involves the internal rearrangement of inter-atomic and intermolecular forces, and energy is absorbed or released as a consequence. The total heat <span class="math notranslate nohighlight">\(Q\)</span> involved in the phase change depends upon both the latent heat <span class="math notranslate nohighlight">\(L\)</span> of the particular phase change and upon the total mass m of material involved, <span class="math notranslate nohighlight">\(Q = Lm\)</span>. The latent heat can be positive or negative.</p>
 <p>Latent heat associated with solid-state phase changes in the mantle appear to play a significant role in controlling the geometry of mantle convection. Latent heat associated with the evaporation and condensation of water plays a major role within the climate system.</p>
+<p>The plot below shows the thermal change at constant pressure (<span class="math notranslate nohighlight">\(1\,atm\)</span>) of <span class="math notranslate nohighlight">\(100\,g\)</span> of water over time in a kettle with a power of <span class="math notranslate nohighlight">\(700\,W\)</span>. The initial state of water is assumed to be ice at <span class="math notranslate nohighlight">\(-20^\circ C\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot a thermal change of water over time in a kettle with a power of 700 W (J/s)</span>
+
+<span class="c1"># function for calculating specific heat</span>
+<span class="k">def</span> <span class="nf">specific_heat</span><span class="p">(</span><span class="n">mass</span><span class="p">,</span> <span class="n">specific_heat_capacity</span><span class="p">,</span> <span class="n">temperature_change</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">mass</span> <span class="o">*</span> <span class="n">specific_heat_capacity</span> <span class="o">*</span> <span class="n">temperature_change</span>
+
+
+<span class="c1"># function for calculating latent heat</span>
+<span class="k">def</span> <span class="nf">latent_heat</span><span class="p">(</span><span class="n">mass</span><span class="p">,</span> <span class="n">latent_heat_of_state_change</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">mass</span> <span class="o">*</span> <span class="n">latent_heat_of_state_change</span>
+
+
+<span class="c1"># function for converting energy (W) to time (t) (by power P = W/t)</span>
+<span class="k">def</span> <span class="nf">energy_to_time</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">power</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">energy</span><span class="o">/</span><span class="n">power</span>
+
+
+<span class="c1"># value of each parameter</span>
+<span class="c1"># some constants were taken from https://www.engineeringtoolbox.com</span>
+<span class="n">mass_water</span> <span class="o">=</span> <span class="mf">0.1</span>  <span class="c1"># kg</span>
+<span class="n">Cp_water_ice</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># kJ/(kg.K)  # assumed to be constant at all temperature levels between -20 to 0 C</span>
+<span class="n">Cp_liquid_water</span> <span class="o">=</span> <span class="mi">4</span>  <span class="c1"># kJ/(kg.K)  # assumed to be constant at all temperature levels between 0 to 100 C</span>
+<span class="n">Cp_water_vapour</span> <span class="o">=</span> <span class="mf">3.7</span>  <span class="c1"># kJ/(kg.K)  # assumed to be constant at all temperature levels between 100-120 C</span>
+<span class="n">L_melting</span> <span class="o">=</span> <span class="mi">334</span>  <span class="c1"># kJ/kg</span>
+<span class="n">L_evaporation</span> <span class="o">=</span> <span class="mi">2256</span>  <span class="c1"># kJ/kg</span>
+<span class="n">power_kettle</span> <span class="o">=</span> <span class="mf">0.7</span>  <span class="c1"># kJ/s</span>
+<span class="n">T_initial</span> <span class="o">=</span> <span class="o">-</span><span class="mi">20</span>  <span class="c1"># C</span>
+<span class="n">T_final</span> <span class="o">=</span> <span class="mi">120</span>  <span class="c1"># C</span>
+<span class="n">T_melting_point</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># C</span>
+<span class="n">T_boiling_point</span> <span class="o">=</span> <span class="mi">100</span>  <span class="c1"># C</span>
+<span class="n">T</span> <span class="o">=</span> <span class="p">[</span><span class="n">T_initial</span><span class="p">,</span> <span class="n">T_melting_point</span><span class="p">,</span> <span class="n">T_melting_point</span><span class="p">,</span> <span class="n">T_boiling_point</span><span class="p">,</span> <span class="n">T_boiling_point</span><span class="p">,</span> <span class="n">T_final</span><span class="p">]</span>  <span class="c1"># list of important T</span>
+<span class="n">cumulative_heat</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># cumulative heat produced by the kettle, received by water (kJ)</span>
+<span class="n">time</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># time (s)</span>
+
+<span class="c1"># thermal change</span>
+<span class="c1"># specific heat involved in raising the temperature of water ice from -20 to 0 C</span>
+<span class="n">specific_heat_water_ice</span> <span class="o">=</span> <span class="n">specific_heat</span><span class="p">(</span><span class="n">mass_water</span><span class="p">,</span> <span class="n">Cp_water_ice</span><span class="p">,</span> <span class="n">T_melting_point</span> <span class="o">-</span> <span class="n">T_initial</span><span class="p">)</span>
+<span class="n">cumulative_heat</span> <span class="o">+=</span> <span class="n">specific_heat_water_ice</span>
+<span class="n">time</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">energy_to_time</span><span class="p">(</span><span class="n">cumulative_heat</span><span class="p">,</span> <span class="n">power_kettle</span><span class="p">))</span>
+<span class="c1"># latent heat involved in melting the ice</span>
+<span class="n">latent_heat_melting</span> <span class="o">=</span> <span class="n">latent_heat</span><span class="p">(</span><span class="n">mass_water</span><span class="p">,</span> <span class="n">L_melting</span><span class="p">)</span>
+<span class="n">cumulative_heat</span> <span class="o">+=</span> <span class="n">latent_heat_melting</span>
+<span class="n">time</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">energy_to_time</span><span class="p">(</span><span class="n">cumulative_heat</span><span class="p">,</span> <span class="n">power_kettle</span><span class="p">))</span>
+<span class="c1"># specific heat involved in raising the temperature of liquid water from 0 to 100 C</span>
+<span class="n">specific_heat_liquid_water</span> <span class="o">=</span> <span class="n">specific_heat</span><span class="p">(</span><span class="n">mass_water</span><span class="p">,</span> <span class="n">Cp_liquid_water</span><span class="p">,</span> <span class="n">T_boiling_point</span> <span class="o">-</span> <span class="n">T_melting_point</span><span class="p">)</span>
+<span class="n">cumulative_heat</span> <span class="o">+=</span> <span class="n">specific_heat_liquid_water</span>
+<span class="n">time</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">energy_to_time</span><span class="p">(</span><span class="n">cumulative_heat</span><span class="p">,</span> <span class="n">power_kettle</span><span class="p">))</span>
+<span class="c1"># latent heat involved in evaporating the water</span>
+<span class="n">latent_heat_evaporation</span> <span class="o">=</span> <span class="n">latent_heat</span><span class="p">(</span><span class="n">mass_water</span><span class="p">,</span> <span class="n">L_evaporation</span><span class="p">)</span>
+<span class="n">cumulative_heat</span> <span class="o">+=</span> <span class="n">latent_heat_evaporation</span>
+<span class="n">time</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">energy_to_time</span><span class="p">(</span><span class="n">cumulative_heat</span><span class="p">,</span> <span class="n">power_kettle</span><span class="p">))</span>
+<span class="c1"># specific heat involved in raising the temperature of water vapour from 100 to 120 C</span>
+<span class="n">specific_heat_water_vapour</span> <span class="o">=</span> <span class="n">specific_heat</span><span class="p">(</span><span class="n">mass_water</span><span class="p">,</span> <span class="n">Cp_water_vapour</span><span class="p">,</span> <span class="n">T_final</span> <span class="o">-</span> <span class="n">T_boiling_point</span><span class="p">)</span>
+<span class="n">cumulative_heat</span> <span class="o">+=</span> <span class="n">specific_heat_water_vapour</span>
+<span class="n">time</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">energy_to_time</span><span class="p">(</span><span class="n">cumulative_heat</span><span class="p">,</span> <span class="n">power_kettle</span><span class="p">))</span>
+
+<span class="c1"># plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="s1">&#39;r.-&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time ($s$)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Temperature of water ($^\circ C$)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;The thermal change at constant pressure ($1\,atm$) of $100\,g$ of water</span><span class="se">\n</span><span class="s1">over time in a kettle with a power of $700\,W$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;The thermal change at constant pressure ($1\\,atm$) of $100\\,g$ of water\nover time in a kettle with a power of $700\\,W$&#39;)
+</pre></div>
+</div>
+<img alt="../../_images/Heat_4_1.png" src="../../_images/Heat_4_1.png" />
+</div>
+</div>
 </section>
 </section>
 <section id="thermal-expansion">
 <h2>Thermal expansion<a class="headerlink" href="#thermal-expansion" title="Permalink to this headline">#</a></h2>
-<p id="index-1">The coefficient of thermal expansion <span class="math notranslate nohighlight">\(\alpha\)</span> controls the change in volume of a substance produced by a change in its temperature. Note that, for solids, we can also define a coefficient of linear thermal expansion <span class="math notranslate nohighlight">\(\approx \alpha /3\)</span>. Thermal expansion and contraction ultimately drives nearly all geological processes by its effect upon density which in turn controls isostasy and drives subduction.</p>
+<p id="index-5">The coefficient of thermal expansion <span class="math notranslate nohighlight">\(\alpha\)</span> controls the change in volume of a substance produced by a change in its temperature. Note that, for solids, we can also define a coefficient of linear thermal expansion <span class="math notranslate nohighlight">\(\approx \alpha /3\)</span>. Thermal expansion and contraction ultimately drives nearly all geological processes by its effect upon density which in turn controls isostasy and drives subduction.</p>
 <p>The change in volume <span class="math notranslate nohighlight">\(\Delta V\)</span> produced by a change in temperature of <span class="math notranslate nohighlight">\(\Delta T\)</span> is given by</p>
 <div class="math notranslate nohighlight">
 \[\Delta V = +\alpha V \Delta T\]</div>
@@ -1854,40 +2147,15 @@ title="Print to PDF"
 <div class="math notranslate nohighlight">
 \[\rho_{T} = \rho_{0}(1-\alpha \Delta T)\]</div>
 <p>Note that <span class="math notranslate nohighlight">\(\rho_{0}\)</span> is not the density at temperature <span class="math notranslate nohighlight">\(T = 0\)</span>, rather it is the density at the temperature from which the change <span class="math notranslate nohighlight">\(\Delta T\)</span> is measured.</p>
-<div class="cell tag_hide-input docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import relevant modules</span>
-
-<span class="o">%</span><span class="k">matplotlib</span> inline
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell tag_hide-input docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># create our own functions</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell tag_hide-input docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot graph of thermal expansion of water</span>
-</pre></div>
-</div>
-</div>
-</div>
 </section>
 <section id="heat-transfer">
 <h2>Heat transfer<a class="headerlink" href="#heat-transfer" title="Permalink to this headline">#</a></h2>
-<p id="index-2">In large part, the solid Earth acts as a heat engine, moving heat from its interior to its exterior, and in the process generating the tectonic cycle and driving its geological consequences. The oceans and atmosphere also act as a heat engine, transferring heat away from the tropics towards the poles, and in the process driving the climatic cycle and ocean circulation which in turn drive surface geological processes. Consequently, the physics of heat transfer is central
+<p>In large part, the solid Earth acts as a heat engine, moving heat from its interior to its exterior, and in the process generating the tectonic cycle and driving its geological consequences. The oceans and atmosphere also act as a heat engine, transferring heat away from the tropics towards the poles, and in the process driving the climatic cycle and ocean circulation which in turn drive surface geological processes. Consequently, the physics of heat transfer is central
 to understanding how the Earth works.</p>
 <p>There are three processes by which heat can be transferred – <strong>thermal conduction</strong> in which random microscopic motions cause heat to diffuse through a material, <strong>advection</strong> in which moving material carries heat within it, and <strong>thermal radiation</strong> in which electromagnetic waves transfer energy. <strong>Thermal convection</strong> is a special form of advection in which the motion of the material is produced by temperature-driven density differences.</p>
 <section id="thermal-conduction">
 <h3>Thermal conduction<a class="headerlink" href="#thermal-conduction" title="Permalink to this headline">#</a></h3>
-<p>Whenever two regions in contact have different temperatures, heat will move between them by the process of thermal conduction. The amount of heat <span class="math notranslate nohighlight">\(q\)</span> conducted through unit area in unit time depends upon the temperature difference <span class="math notranslate nohighlight">\(\Delta T\)</span>, the distance <span class="math notranslate nohighlight">\(x\)</span> that it has to travel, and the <strong>thermal conductivity</strong> <span class="math notranslate nohighlight">\(k\)</span> of the material through which it travels. This is expressed by <strong>Fourier’s law of thermal conduction</strong>:</p>
+<p id="index-6">Whenever two regions in contact have different temperatures, heat will move between them by the process of thermal conduction. The amount of heat <span class="math notranslate nohighlight">\(q\)</span> conducted through unit area in unit time depends upon the temperature difference <span class="math notranslate nohighlight">\(\Delta T\)</span>, the distance <span class="math notranslate nohighlight">\(x\)</span> that it has to travel, and the <strong>thermal conductivity</strong> <span class="math notranslate nohighlight">\(k\)</span> of the material through which it travels. This is expressed by <strong>Fourier’s law of thermal conduction</strong>:</p>
 <div class="math notranslate nohighlight">
 \[q = -k \frac{\Delta T}{x}\]</div>
 <p>where the minus sign indicates that heat flows from hot to cold. The heat flow <span class="math notranslate nohighlight">\(q\)</span> has units of <span class="math notranslate nohighlight">\(W\,m^{−2}\)</span>, and the thermal conductivity <span class="math notranslate nohighlight">\(k\)</span> has the units of <span class="math notranslate nohighlight">\(W\,m^{−1}\,K^{−1}\)</span>.</p>
@@ -1897,21 +2165,475 @@ to understanding how the Earth works.</p>
 </section>
 <section id="thermal-diffusion">
 <h3>Thermal diffusion<a class="headerlink" href="#thermal-diffusion" title="Permalink to this headline">#</a></h3>
-<p>In its simple form, Fourier’s law does not immediately let us perform calculations in which temperature varies with time. In general, we know that regions of locally high temperature will lose heat to adjacent regions, and in time irregularities in temperature will tend to be smoothed out unless they are maintained by some active process (Figure 7.1, left and middle). If, however, temperature varies linearly with distance, between two points where temperature remains fixed with time, then there is no change in temperature with time. In this latter system, heat will flow along the thermal gradient, but no temporal changes in temperature will occur (Figure 7.1, right)</p>
-<div class="cell tag_hide-input docutils container">
+<p id="index-7">In its simple form, Fourier’s law does not immediately let us perform calculations in which temperature varies with time. In general, we know that regions of locally high temperature will lose heat to adjacent regions, and in time irregularities in temperature will tend to be smoothed out unless they are maintained by some active process (Figure 1, left and middle). If, however, temperature varies linearly with distance, between two points where temperature remains fixed with time, then there is no change in temperature with time. In this latter system, heat will flow along the thermal gradient, but no temporal changes in temperature will occur (Figure 1, right).</p>
+<p><img alt="" src="../../_images/Figure_7_1.png" /></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Figure 1: left, regions of locally high temperature will cool down by conduction to their surroundings (centre). Right, if the top is maintained at a low temperature and the bottom is maintained at a higher temperature then there is constant heat flow from bottom to top and the there will be a linear temperature gradient from bottom to top.
+</pre></div>
+</div>
+<p>The process that smoothes temperature with time by thermal conduction is called thermal diffusion. A similar diffusion process (mass or molecular diffusion) acts not only to smooth out irregularities in temperature, but also many other irregularities – for example the concentration of a mobile chemical species in a substrate or local momentum within a viscous fluid.</p>
+<p>In mass diffusion problems, the parameter that controls the rate of diffusion is called the <u><em>diffusion coefficient</em></u> <span class="math notranslate nohighlight">\(D\)</span>. If it is heat that is being diffused, then the diffusion coefficient is called the <u><em>thermal diffusivity</em></u> and given the symbol <span class="math notranslate nohighlight">\(\kappa\)</span>, a Greek “kappa”. The dimensions of <span class="math notranslate nohighlight">\(D\)</span> and <span class="math notranslate nohighlight">\(\kappa\)</span> are <span class="math notranslate nohighlight">\([L^2T^{−1}]\)</span>. Their units are <span class="math notranslate nohighlight">\(m^2s^{−1}\)</span>.</p>
+<p>The larger the value of <span class="math notranslate nohighlight">\(\kappa\)</span> or <span class="math notranslate nohighlight">\(D\)</span>, then the more rapid the diffusion. Thermal diffusivity <span class="math notranslate nohighlight">\(\kappa\)</span> is related to the density <span class="math notranslate nohighlight">\(\rho\)</span>, specific heat <span class="math notranslate nohighlight">\(c_p\)</span> and thermal conductivity <span class="math notranslate nohighlight">\(k\)</span> of the material through which heat is diffusing:</p>
+<div class="math notranslate nohighlight">
+\[\kappa \equiv \frac{k}{\rho c_p}\]</div>
+<p>For the mantle, and for most crustal rocks, <span class="math notranslate nohighlight">\(\kappa \approx 10^{−6} m^2s^{−1}\)</span>.</p>
+<section id="length-and-time-scales-for-diffusion">
+<h4>Length and time scales for diffusion<a class="headerlink" href="#length-and-time-scales-for-diffusion" title="Permalink to this headline">#</a></h4>
+<p>The solution to diffusion problems depends upon the geometry and the boundary conditions, but in general, such solutions contain a characteristic time <span class="math notranslate nohighlight">\(t\)</span> and distance <span class="math notranslate nohighlight">\(x\)</span> that are related by:</p>
+<div class="math notranslate nohighlight">
+\[t \sim \frac{x^2}{\kappa} \qquad or \qquad x \sim \sqrt{\kappa t}\]</div>
+<p>These characteristic scales have a simple interpretation (see Figure 2):</p>
+<ul class="simple">
+<li><p>a sphere with a radius <span class="math notranslate nohighlight">\(x\)</span>, or a cylinder with a radius <span class="math notranslate nohighlight">\(x\)</span>, or a plane layer with a half-width <span class="math notranslate nohighlight">\(x\)</span>, can change its temperature significantly by thermal conduction within a time <span class="math notranslate nohighlight">\(t \sim {x^2}/{\kappa}\)</span>;</p></li>
+<li><p>or equivalently, if the boundary of an object is maintained for a time <span class="math notranslate nohighlight">\(t\)</span> at a temperature that is different to the temperature of its interior, then a thermal boundary layer will develop within the body that has a half-width <span class="math notranslate nohighlight">\(x \sim \sqrt{\kappa t}\)</span>.</p></li>
+</ul>
+<p><img alt="" src="d_geosciences/Physical Processes/images/Figure_7_2.png" /></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Figure 2: characteristic length scales for heat or mass diffusion for a) a sphere, b) a layer and c) a layer with one face maintained at a constant temperature.
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="practical-7-question-3">
+<h2>Practical 7 - Question 3<a class="headerlink" href="#practical-7-question-3" title="Permalink to this headline">#</a></h2>
+<p>Complete the table below for transport of heat by thermal diffusion assuming <span class="math notranslate nohighlight">\(\kappa \approx 10^{−6} m^2s^{−1}\)</span>.</p>
+<div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot graph showing a thermal diffusion</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The table for this question</span>
+<span class="n">t_column</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;12 hours&#39;</span><span class="p">,</span> <span class="s1">&#39;6 months&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;12,000 years&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;4.5 billion years&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;14 billion years&#39;</span><span class="p">]</span>
+<span class="n">x_column</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;0.5 mm&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;10 m&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;15 km&#39;</span><span class="p">,</span> <span class="s1">&#39;50 km&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;6380 km&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">]</span>
+<span class="n">contexts_column</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sand grain (diameter ~ 1 mm)&#39;</span><span class="p">,</span> <span class="s1">&#39;day to night temperature change&#39;</span><span class="p">,</span> <span class="s1">&#39;summer to winter&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;dyke or sill (thickness ~ 20 m)&#39;</span><span class="p">,</span> <span class="s1">&#39;time since ice age&#39;</span><span class="p">,</span> <span class="s1">&#39;thickness of continental crust (~ 30 km)&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;thickness of lithosphere (~ 100 km)&#39;</span><span class="p">,</span> <span class="s1">&#39;age of Earth&#39;</span><span class="p">,</span> <span class="s1">&#39;radius of Earth&#39;</span><span class="p">,</span> <span class="s1">&#39;age of the universe&#39;</span><span class="p">]</span>
+
+<span class="c1"># create a dataframe</span>
+<span class="n">dict1</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;Characteristic time $t$&#39;</span> <span class="p">:</span> <span class="n">t_column</span><span class="p">,</span>
+    <span class="s1">&#39;Characteristic length $x$ (radius or half-width)&#39;</span> <span class="p">:</span> <span class="n">x_column</span><span class="p">,</span>
+    <span class="s1">&#39;Context&#39;</span> <span class="p">:</span> <span class="n">contexts_column</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">df1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dict1</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">df1</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">hide_index</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style  type="text/css" >
+</style><table id="T_bb25e_" ><thead>    <tr>        <th class="col_heading level0 col0" >Characteristic time $t$</th>        <th class="col_heading level0 col1" >Characteristic length $x$ (radius or half-width)</th>        <th class="col_heading level0 col2" >Context</th>    </tr></thead><tbody>
+                <tr>
+                                <td id="T_bb25e_row0_col0" class="data row0 col0" ></td>
+                        <td id="T_bb25e_row0_col1" class="data row0 col1" >0.5 mm</td>
+                        <td id="T_bb25e_row0_col2" class="data row0 col2" >sand grain (diameter ~ 1 mm)</td>
+            </tr>
+            <tr>
+                                <td id="T_bb25e_row1_col0" class="data row1 col0" >12 hours</td>
+                        <td id="T_bb25e_row1_col1" class="data row1 col1" ></td>
+                        <td id="T_bb25e_row1_col2" class="data row1 col2" >day to night temperature change</td>
+            </tr>
+            <tr>
+                                <td id="T_bb25e_row2_col0" class="data row2 col0" >6 months</td>
+                        <td id="T_bb25e_row2_col1" class="data row2 col1" ></td>
+                        <td id="T_bb25e_row2_col2" class="data row2 col2" >summer to winter</td>
+            </tr>
+            <tr>
+                                <td id="T_bb25e_row3_col0" class="data row3 col0" ></td>
+                        <td id="T_bb25e_row3_col1" class="data row3 col1" >10 m</td>
+                        <td id="T_bb25e_row3_col2" class="data row3 col2" >dyke or sill (thickness ~ 20 m)</td>
+            </tr>
+            <tr>
+                                <td id="T_bb25e_row4_col0" class="data row4 col0" >12,000 years</td>
+                        <td id="T_bb25e_row4_col1" class="data row4 col1" ></td>
+                        <td id="T_bb25e_row4_col2" class="data row4 col2" >time since ice age</td>
+            </tr>
+            <tr>
+                                <td id="T_bb25e_row5_col0" class="data row5 col0" ></td>
+                        <td id="T_bb25e_row5_col1" class="data row5 col1" >15 km</td>
+                        <td id="T_bb25e_row5_col2" class="data row5 col2" >thickness of continental crust (~ 30 km)</td>
+            </tr>
+            <tr>
+                                <td id="T_bb25e_row6_col0" class="data row6 col0" ></td>
+                        <td id="T_bb25e_row6_col1" class="data row6 col1" >50 km</td>
+                        <td id="T_bb25e_row6_col2" class="data row6 col2" >thickness of lithosphere (~ 100 km)</td>
+            </tr>
+            <tr>
+                                <td id="T_bb25e_row7_col0" class="data row7 col0" >4.5 billion years</td>
+                        <td id="T_bb25e_row7_col1" class="data row7 col1" ></td>
+                        <td id="T_bb25e_row7_col2" class="data row7 col2" >age of Earth</td>
+            </tr>
+            <tr>
+                                <td id="T_bb25e_row8_col0" class="data row8 col0" ></td>
+                        <td id="T_bb25e_row8_col1" class="data row8 col1" >6380 km</td>
+                        <td id="T_bb25e_row8_col2" class="data row8 col2" >radius of Earth</td>
+            </tr>
+            <tr>
+                                <td id="T_bb25e_row9_col0" class="data row9 col0" >14 billion years</td>
+                        <td id="T_bb25e_row9_col1" class="data row9 col1" ></td>
+                        <td id="T_bb25e_row9_col2" class="data row9 col2" >age of the universe</td>
+            </tr>
+    </tbody></table></div></div>
+</div>
+<p><u>Solution</u>:</p>
+<p>Use the equations:</p>
+<div class="math notranslate nohighlight">
+\[t \sim \frac{x^2}{\kappa} \qquad or \qquad x \sim \sqrt{\kappa t}\]</div>
+<p>Be careful of units!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># function for calculating characteristic time</span>
+<span class="k">def</span> <span class="nf">characteristic_time</span><span class="p">(</span><span class="n">characteristic_length</span><span class="p">,</span> <span class="n">thermal_diffusivity</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">characteristic_length</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="n">thermal_diffusivity</span>
+
+
+<span class="c1"># function for calculating characteristic length</span>
+<span class="k">def</span> <span class="nf">characteristic_length</span><span class="p">(</span><span class="n">characteristic_time</span><span class="p">,</span> <span class="n">thermal_diffusivity</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">characteristic_time</span> <span class="o">*</span> <span class="n">thermal_diffusivity</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>…</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># create a new table including answers</span>
+<span class="n">k</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**-</span><span class="mi">6</span>  <span class="c1"># thermal diffusivity (m^2 s^-1)</span>
+<span class="n">new_t_column</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">new_x_column</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">t_column</span><span class="p">)):</span>
+    <span class="k">if</span> <span class="n">t_column</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">distance_m_from_str</span><span class="p">(</span><span class="n">x_column</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">characteristic_time</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+        <span class="n">new_t_column</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">time_s_to_str</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">new_t_column</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t_column</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+
+    <span class="k">if</span> <span class="n">x_column</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">time_s_from_str</span><span class="p">(</span><span class="n">t_column</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">characteristic_length</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+        <span class="n">new_x_column</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">distance_m_to_str</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">new_x_column</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x_column</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+
+<span class="n">double_x_column</span> <span class="o">=</span> <span class="p">[</span><span class="n">distance_m_to_str</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">distance_m_from_str</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">new_x_column</span><span class="p">]</span>
+
+<span class="n">dict2</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;Characteristic time $t$&#39;</span> <span class="p">:</span> <span class="n">new_t_column</span><span class="p">,</span>
+    <span class="s1">&#39;Characteristic length $x$ (radius or half-width)&#39;</span> <span class="p">:</span> <span class="n">new_x_column</span><span class="p">,</span>
+    <span class="s1">&#39;Diameter or width of layer&#39;</span> <span class="p">:</span> <span class="n">double_x_column</span><span class="p">,</span>
+    <span class="s1">&#39;Context&#39;</span> <span class="p">:</span> <span class="n">contexts_column</span>
+<span class="p">}</span>
+<span class="n">df2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dict2</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">df2</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">hide_index</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style  type="text/css" >
+</style><table id="T_b55dd_" ><thead>    <tr>        <th class="col_heading level0 col0" >Characteristic time $t$</th>        <th class="col_heading level0 col1" >Characteristic length $x$ (radius or half-width)</th>        <th class="col_heading level0 col2" >Diameter or width of layer</th>        <th class="col_heading level0 col3" >Context</th>    </tr></thead><tbody>
+                <tr>
+                                <td id="T_b55dd_row0_col0" class="data row0 col0" >0.25 second</td>
+                        <td id="T_b55dd_row0_col1" class="data row0 col1" >0.5 mm</td>
+                        <td id="T_b55dd_row0_col2" class="data row0 col2" >1 mm</td>
+                        <td id="T_b55dd_row0_col3" class="data row0 col3" >sand grain (diameter ~ 1 mm)</td>
+            </tr>
+            <tr>
+                                <td id="T_b55dd_row1_col0" class="data row1 col0" >12 hours</td>
+                        <td id="T_b55dd_row1_col1" class="data row1 col1" >21 cm</td>
+                        <td id="T_b55dd_row1_col2" class="data row1 col2" >42 cm</td>
+                        <td id="T_b55dd_row1_col3" class="data row1 col3" >day to night temperature change</td>
+            </tr>
+            <tr>
+                                <td id="T_b55dd_row2_col0" class="data row2 col0" >6 months</td>
+                        <td id="T_b55dd_row2_col1" class="data row2 col1" >3.9 m</td>
+                        <td id="T_b55dd_row2_col2" class="data row2 col2" >7.8 m</td>
+                        <td id="T_b55dd_row2_col3" class="data row2 col3" >summer to winter</td>
+            </tr>
+            <tr>
+                                <td id="T_b55dd_row3_col0" class="data row3 col0" >3.2 years</td>
+                        <td id="T_b55dd_row3_col1" class="data row3 col1" >10 m</td>
+                        <td id="T_b55dd_row3_col2" class="data row3 col2" >20 m</td>
+                        <td id="T_b55dd_row3_col3" class="data row3 col3" >dyke or sill (thickness ~ 20 m)</td>
+            </tr>
+            <tr>
+                                <td id="T_b55dd_row4_col0" class="data row4 col0" >12,000 years</td>
+                        <td id="T_b55dd_row4_col1" class="data row4 col1" >620 m</td>
+                        <td id="T_b55dd_row4_col2" class="data row4 col2" >1.2 km</td>
+                        <td id="T_b55dd_row4_col3" class="data row4 col3" >time since ice age</td>
+            </tr>
+            <tr>
+                                <td id="T_b55dd_row5_col0" class="data row5 col0" >7.1 million years</td>
+                        <td id="T_b55dd_row5_col1" class="data row5 col1" >15 km</td>
+                        <td id="T_b55dd_row5_col2" class="data row5 col2" >30 km</td>
+                        <td id="T_b55dd_row5_col3" class="data row5 col3" >thickness of continental crust (~ 30 km)</td>
+            </tr>
+            <tr>
+                                <td id="T_b55dd_row6_col0" class="data row6 col0" >79 million years</td>
+                        <td id="T_b55dd_row6_col1" class="data row6 col1" >50 km</td>
+                        <td id="T_b55dd_row6_col2" class="data row6 col2" >100 km</td>
+                        <td id="T_b55dd_row6_col3" class="data row6 col3" >thickness of lithosphere (~ 100 km)</td>
+            </tr>
+            <tr>
+                                <td id="T_b55dd_row7_col0" class="data row7 col0" >4.5 billion years</td>
+                        <td id="T_b55dd_row7_col1" class="data row7 col1" >380 km</td>
+                        <td id="T_b55dd_row7_col2" class="data row7 col2" >760 km</td>
+                        <td id="T_b55dd_row7_col3" class="data row7 col3" >age of Earth</td>
+            </tr>
+            <tr>
+                                <td id="T_b55dd_row8_col0" class="data row8 col0" >1300 billion years</td>
+                        <td id="T_b55dd_row8_col1" class="data row8 col1" >6380 km</td>
+                        <td id="T_b55dd_row8_col2" class="data row8 col2" >13000 km</td>
+                        <td id="T_b55dd_row8_col3" class="data row8 col3" >radius of Earth</td>
+            </tr>
+            <tr>
+                                <td id="T_b55dd_row9_col0" class="data row9 col0" >14 billion years</td>
+                        <td id="T_b55dd_row9_col1" class="data row9 col1" >660 km</td>
+                        <td id="T_b55dd_row9_col2" class="data row9 col2" >1300 km</td>
+                        <td id="T_b55dd_row9_col3" class="data row9 col3" >age of the universe</td>
+            </tr>
+    </tbody></table></div></div>
+</div>
 </section>
+<section id="heat-transport-in-fluids">
+<h2>Heat transport in fluids<a class="headerlink" href="#heat-transport-in-fluids" title="Permalink to this headline">#</a></h2>
+<p>Heat is normally transported in fluids either by advection (an external force is causing the fluid to move, for example a fan heater) or convection (when heating of the fluid results in density gradients which gravity then tries to equilibrate, e.g. when heating water in a saucepan), however the relative importance of heat transport by advection/convection to heat transport by thermal diffusion/conduction depends upon the fluid properties and the properties of the system. These can be characterised by three dimensionless numbers the Prandtl number (<span class="math notranslate nohighlight">\(Pr\)</span>), the Péclet number (<span class="math notranslate nohighlight">\(Pe\)</span>) and the Rayleigh (<span class="math notranslate nohighlight">\(Ra\)</span>) number.</p>
+<section id="diffusion-of-momentum-and-heat-in-viscous-fluids">
+<h3>Diffusion of momentum and heat in viscous fluids<a class="headerlink" href="#diffusion-of-momentum-and-heat-in-viscous-fluids" title="Permalink to this headline">#</a></h3>
+<p id="index-8"><u><em>Kinematic viscosity</em></u> <span class="math notranslate nohighlight">\(\nu \equiv \eta/\rho\)</span> has the dimensions of a diffusion coefficient. In this case it is momentum (= mass <span class="math notranslate nohighlight">\(\times\)</span> velocity) that diffuses. That is, if a fluid contains a region where the flow velocity differs from that of its surroundings, then that anomalous flow velocity will tend to spread out and reduce in magnitude with time in a way that is analogous to the way that heat and chemical species diffuse. The higher the kinematic viscosity, then the faster that momentum will dissipate – hence it is hard to swim through treacle.</p>
+<p>The Prandtl number <span class="math notranslate nohighlight">\(Pr\)</span> is a dimensionless number that measures the relative rate at which momentum and temperature diffuse in a material. It is given by:</p>
+<div class="math notranslate nohighlight">
+\[Pr = \frac{\eta}{\rho\kappa}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\eta\)</span> is the dynamic viscosity, <span class="math notranslate nohighlight">\(\rho\)</span> is the fluid density and <span class="math notranslate nohighlight">\(\kappa\)</span> is the thermal diffusivity.</p>
+<p>A fluid for which <span class="math notranslate nohighlight">\(Pr &gt;&gt; 1\)</span> will diffuse momentum faster than it diffuses temperature. If <span class="math notranslate nohighlight">\(Pr &lt;&lt; 1\)</span>, then the reverse will be true. The Prandtl number helps us understand how a moving fluid interacts with a stationary boundary with another substance of a different temperature (e.g. imagine a warm wind blowing over cold ground, see Figure 3a below or warm water moving over a colder sea-floor, see Figure 3b). The speed of that fluid and its temperature near the boundary are changed by the other substance. This is known as the boundary layer. The thickness of the zone over which speed and/or temperature change depends on the Prandtl number. For air, <span class="math notranslate nohighlight">\(Pr\sim1\)</span> so the change in temperature and speed occurs over a similar thickness (Figure 3a) whereas for water <span class="math notranslate nohighlight">\(Pr&gt;1\)</span> so the thickness of the velocity boundary layer is much less than the thickness of the temperature boundary layer (Figure 3b).</p>
+<p><img alt="" src="../../_images/Figure_8_1.png" /></p>
+<p><span class="math notranslate nohighlight">\(\qquad\)</span>Figure 3: sketch of two situations in which a fluid of one temperature moves over a stationary substance of a different temperature.</p>
+<p><span class="math notranslate nohighlight">\(\qquad\)</span>A) warm wind blowing over cold ground</p>
+<p><span class="math notranslate nohighlight">\(\qquad\)</span>B) a warm water current moving over a cold seafloor. <span class="math notranslate nohighlight">\(Pr\sim0.7\)</span> for air so the thermal and velocity boundary layers are similar in thickness whereas <span class="math notranslate nohighlight">\(Pr\sim7\)</span> for water so the thermal boundary layer is thicker than the velocity boundary layer.</p>
+</section>
+</section>
+<section id="advection-transport-by-moving-fluids">
+<h2>Advection – transport by moving fluids<a class="headerlink" href="#advection-transport-by-moving-fluids" title="Permalink to this headline">#</a></h2>
+<span class="target" id="index-9"></span><p id="index-10">Heat is transported by advection when a material (typically a fluid) moves into a region where it can exchange heat with its surroundings. When both advection and conduction occur together, a dimensionless number <span class="math notranslate nohighlight">\(Pe\)</span>, the <u><em>Péclet number</em></u>, measures the relative importance of the two processes:</p>
+<div class="math notranslate nohighlight">
+\[Pe = \frac{ud}{\kappa}\]</div>
+<p>where <span class="math notranslate nohighlight">\(u\)</span> is the velocity of flow, <span class="math notranslate nohighlight">\(d\)</span> is the distance moved, and <span class="math notranslate nohighlight">\(\kappa\)</span> is the thermal diffusivity.</p>
+<p>If <span class="math notranslate nohighlight">\(Pe &lt;&lt; 1\)</span>, then the moving material will tend to exchange heat with its surroundings, equilibrating its temperature with them. If Pe &gt;&gt; 1, then advection will dominate conduction, and a moving material will tend to carry its heat with it without significant exchange with its surroundings.</p>
+<p>Péclet numbers can also be calculated for diffusion of things other than heat, for example chemical concentration. In this case, rather than the thermal diffusivity <span class="math notranslate nohighlight">\(\kappa\)</span>, we would use the chemical diffusion coefficient <span class="math notranslate nohighlight">\(D\)</span> to calculate the Péclet number:</p>
+<div class="math notranslate nohighlight">
+\[Pe = \frac{ud}{D}\]</div>
+<p>In this case, if <span class="math notranslate nohighlight">\(Pe &gt;&gt; 1\)</span>, the moving material will tend to maintain it chemical composition with it, whereas if <span class="math notranslate nohighlight">\(Pe &lt;&lt; 1\)</span> its chemical components will tend to equilibrate with its surroundings via molecular diffusion.</p>
+</section>
+<section id="thermal-convection">
+<h2>Thermal convection<a class="headerlink" href="#thermal-convection" title="Permalink to this headline">#</a></h2>
+<span class="target" id="index-11"></span><p id="index-12">Natural convection describes the movement of fluids resulting from density changes caused by heating. This is different from advection, described above, which describes the movement of fluids by some imposed pressure gradient rather than heating.</p>
+<p>When a layer of fluid is heated it will tend to expand and become less dense. If it is cooled it will contract and become denser. If a layer of fluid is heated from below and/or cooled from above, then this will produce higher densities at the top of the fluid than at the bottom. This density structure is unstable, and gravity will tend to make the fluid convect with the hot, light material rising, and the cold denser material sinking. As the fluid begins to move, fluid viscosity will oppose its movement, as will the conduction of heat into or out of the moving region which will tend to equilibrate the temperatures (and thus the densities).</p>
+<p>Whether or not the fluid moves, and what form that movement takes depends upon the balance of the various parameters in the problem. This balance is conveniently expressed by another non-dimensional number, the <u><em>Rayleigh number</em></u> <span class="math notranslate nohighlight">\(Ra\)</span>. If <span class="math notranslate nohighlight">\(Ra\)</span> is greater than some critical value then the fluid will convect. The critical value depends in detail upon the geometry and boundary conditions of the problem but it is generally around <span class="math notranslate nohighlight">\(1000\)</span>. We can use the Rayleigh number to distinguish several types of behaviour:</p>
+<ol class="simple">
+<li><p>Low Rayleigh number, <span class="math notranslate nohighlight">\(Ra &lt; \sim10^3\)</span>; convection does not occur and heat is transported entirely by conduction.</p></li>
+<li><p>Critical Rayleigh number, <span class="math notranslate nohighlight">\(Ra \sim10^3\)</span>; convection is very weak, heat is transferred largely by conduction.</p></li>
+<li><p>Intermediate Rayleigh number, <span class="math notranslate nohighlight">\(Ra \sim 10^3-10^6\)</span>; steady convection, often cellular with regular equi-dimensional cells. As Ra increases, progressively more heat is transported by convection, from <span class="math notranslate nohighlight">\(1\)</span> - <span class="math notranslate nohighlight">\(10\)</span> times as much as by conduction alone.</p></li>
+<li><p>High Rayleigh number, <span class="math notranslate nohighlight">\(Ra &gt; \sim10^6\)</span>; convection is vigorous, time-varying and can be chaotic. Heat transport is dominated by convection.</p></li>
+</ol>
+<p>The exact definition of Ra depends upon the problem:</p>
+<ul class="simple">
+<li><p>For a layer of thickness <span class="math notranslate nohighlight">\(h\)</span> with a temperature difference across it of <span class="math notranslate nohighlight">\(\Delta T\)</span>, the appropriate Rayleigh number is:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[Ra = \frac{\rho g \alpha \Delta T h^3}{\eta \kappa}\]</div>
+<ul class="simple">
+<li><p>A layer that is heated internally and cooled from above will also potentially convect. For such a layer of thickness <span class="math notranslate nohighlight">\(h\)</span>, with a rate of heat generation per kilogram of <span class="math notranslate nohighlight">\(H\)</span>, the appropriate Rayleigh number is:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[Ra = \frac{\rho^2 g \alpha H h ^5}{\eta \kappa k}\]</div>
+<p>If thermal convection occurs then its behaviour depends upon whether heating is internal or from below, the geometry of the system and properties of the boundaries as well as whether any of the key fluid properties (density and viscosity) vary with position, composition, pressure or temperature. In particular if properties vary significantly with composition or pressure, this variation can enhance, inhibit or alter convection.</p>
+<p>When heating is from below, both hot rising and cold sinking areas will tend to form localised jets, plumes or sheets. In contrast, where heating is purely internal, cold sinking areas will still tend to form sheets, whereas upwelling will tend to take place over a broad diffuse region without localised jets.</p>
+<p>When viscosity is a strong function of temperature, as is common in many materials, the hot rising regions will have much lower viscosity than the cold sinking regions. The hot material will therefore tend to be concentrated into narrow rapidly rising jets whereas the cold material will tend to form broader more-sluggishly moving sheets.</p>
+</section>
+<section id="practical-8-question-3">
+<h2>Practical 8 - Question 3<a class="headerlink" href="#practical-8-question-3" title="Permalink to this headline">#</a></h2>
+<p>Complete the table below for the typical properties of air, water, upper mantle and outer core.
+Do not make the answers more precise than is warranted by the input data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The table for this question</span>
+<span class="c1"># data</span>
+<span class="n">materials</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;air&#39;</span><span class="p">,</span> <span class="s1">&#39;water&#39;</span><span class="p">,</span> <span class="s1">&#39;upper mantle&#39;</span><span class="p">,</span> <span class="s1">&#39;outer core&#39;</span><span class="p">]</span>
+<span class="n">mass_density</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.3</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">3500</span><span class="p">,</span> <span class="mi">10000</span><span class="p">])</span>  <span class="c1"># kg m^-3</span>
+<span class="n">specific_heat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">4200</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">1700</span><span class="p">])</span>  <span class="c1"># J kg^-1 K^-1</span>
+<span class="n">thermal_conductivity</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.025</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">30</span><span class="p">])</span>  <span class="c1"># W m^-1 K^-1</span>
+<span class="n">dynamic_viscosity</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.8</span><span class="o">*</span><span class="mi">10</span><span class="o">**-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="o">**-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">10</span><span class="o">**</span><span class="mi">21</span><span class="p">,</span> <span class="mi">5</span><span class="o">*</span><span class="mi">10</span><span class="o">**-</span><span class="mi">3</span><span class="p">])</span>  <span class="c1"># J kg^-1 K^-1</span>
+<span class="n">thermal_diffusivity</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">]</span>
+<span class="n">kinematic_viscosity</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">]</span>
+<span class="n">Prandtl_number</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">]</span>
+
+<span class="c1"># create a dataframe</span>
+<span class="n">dict3</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;&#39;</span> <span class="p">:</span> <span class="n">materials</span><span class="p">,</span>
+    <span class="s1">&#39;mass density $$ρ\,(kg\,m^{-3})$$&#39;</span> <span class="p">:</span> <span class="n">mass_density</span><span class="p">,</span>
+    <span class="s1">&#39;specific heat $$c_p\,(J\,kg^{-1}\,K^{-1})$$&#39;</span> <span class="p">:</span> <span class="n">specific_heat</span><span class="p">,</span>
+    <span class="s1">&#39;thermal conductivity $$k\,(W\,m^{-1}\,K^{-1})$$&#39;</span> <span class="p">:</span> <span class="n">thermal_conductivity</span><span class="p">,</span>
+    <span class="s1">&#39;dynamic viscosity $$\eta\,(Pa\,s)$$&#39;</span> <span class="p">:</span> <span class="n">dynamic_viscosity</span><span class="p">,</span>
+    <span class="s1">&#39;thermal diffusivity $$\kappa\,(m^2\,s^{-1})$$&#39;</span> <span class="p">:</span> <span class="n">thermal_diffusivity</span><span class="p">,</span>
+    <span class="s1">&#39;kinematic viscosity $$ν\,(m^2\,s^{-1})$$&#39;</span> <span class="p">:</span> <span class="n">kinematic_viscosity</span><span class="p">,</span>
+    <span class="s1">&#39;Prandtl number $$Pr$$&#39;</span> <span class="p">:</span> <span class="n">Prandtl_number</span>
+<span class="p">}</span>
+<span class="n">df3</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dict3</span><span class="p">)</span>
+<span class="n">df3</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;mass density $$ρ\,(kg\,m^{-3})$$&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df3</span><span class="p">[</span><span class="s1">&#39;mass density $$ρ\,(kg\,m^{-3})$$&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:.1f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">)</span>
+<span class="n">df3</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;thermal conductivity $$k\,(W\,m^{-1}\,K^{-1})$$&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df3</span><span class="p">[</span><span class="s1">&#39;thermal conductivity $$k\,(W\,m^{-1}\,K^{-1})$$&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">)</span>
+<span class="n">df3</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;dynamic viscosity $$\eta\,(Pa\,s)$$&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df3</span><span class="p">[</span><span class="s1">&#39;dynamic viscosity $$\eta\,(Pa\,s)$$&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:.1e}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">df3</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">hide_index</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style  type="text/css" >
+</style><table id="T_2d5b7_" ><thead>    <tr>        <th class="col_heading level0 col0" ></th>        <th class="col_heading level0 col1" >mass density $$ρ\,(kg\,m^{-3})$$</th>        <th class="col_heading level0 col2" >specific heat $$c_p\,(J\,kg^{-1}\,K^{-1})$$</th>        <th class="col_heading level0 col3" >thermal conductivity $$k\,(W\,m^{-1}\,K^{-1})$$</th>        <th class="col_heading level0 col4" >dynamic viscosity $$\eta\,(Pa\,s)$$</th>        <th class="col_heading level0 col5" >thermal diffusivity $$\kappa\,(m^2\,s^{-1})$$</th>        <th class="col_heading level0 col6" >kinematic viscosity $$ν\,(m^2\,s^{-1})$$</th>        <th class="col_heading level0 col7" >Prandtl number $$Pr$$</th>    </tr></thead><tbody>
+                <tr>
+                                <td id="T_2d5b7_row0_col0" class="data row0 col0" >air</td>
+                        <td id="T_2d5b7_row0_col1" class="data row0 col1" >1.3</td>
+                        <td id="T_2d5b7_row0_col2" class="data row0 col2" >1000</td>
+                        <td id="T_2d5b7_row0_col3" class="data row0 col3" >0.03</td>
+                        <td id="T_2d5b7_row0_col4" class="data row0 col4" >1.8e-05</td>
+                        <td id="T_2d5b7_row0_col5" class="data row0 col5" ></td>
+                        <td id="T_2d5b7_row0_col6" class="data row0 col6" ></td>
+                        <td id="T_2d5b7_row0_col7" class="data row0 col7" ></td>
+            </tr>
+            <tr>
+                                <td id="T_2d5b7_row1_col0" class="data row1 col0" >water</td>
+                        <td id="T_2d5b7_row1_col1" class="data row1 col1" >1000.0</td>
+                        <td id="T_2d5b7_row1_col2" class="data row1 col2" >4200</td>
+                        <td id="T_2d5b7_row1_col3" class="data row1 col3" >0.60</td>
+                        <td id="T_2d5b7_row1_col4" class="data row1 col4" >1.0e-03</td>
+                        <td id="T_2d5b7_row1_col5" class="data row1 col5" ></td>
+                        <td id="T_2d5b7_row1_col6" class="data row1 col6" ></td>
+                        <td id="T_2d5b7_row1_col7" class="data row1 col7" ></td>
+            </tr>
+            <tr>
+                                <td id="T_2d5b7_row2_col0" class="data row2 col0" >upper mantle</td>
+                        <td id="T_2d5b7_row2_col1" class="data row2 col1" >3500.0</td>
+                        <td id="T_2d5b7_row2_col2" class="data row2 col2" >1000</td>
+                        <td id="T_2d5b7_row2_col3" class="data row2 col3" >3.00</td>
+                        <td id="T_2d5b7_row2_col4" class="data row2 col4" >1.0e+21</td>
+                        <td id="T_2d5b7_row2_col5" class="data row2 col5" ></td>
+                        <td id="T_2d5b7_row2_col6" class="data row2 col6" ></td>
+                        <td id="T_2d5b7_row2_col7" class="data row2 col7" ></td>
+            </tr>
+            <tr>
+                                <td id="T_2d5b7_row3_col0" class="data row3 col0" >outer core</td>
+                        <td id="T_2d5b7_row3_col1" class="data row3 col1" >10000.0</td>
+                        <td id="T_2d5b7_row3_col2" class="data row3 col2" >1700</td>
+                        <td id="T_2d5b7_row3_col3" class="data row3 col3" >30.00</td>
+                        <td id="T_2d5b7_row3_col4" class="data row3 col4" >5.0e-03</td>
+                        <td id="T_2d5b7_row3_col5" class="data row3 col5" ></td>
+                        <td id="T_2d5b7_row3_col6" class="data row3 col6" ></td>
+                        <td id="T_2d5b7_row3_col7" class="data row3 col7" ></td>
+            </tr>
+    </tbody></table></div></div>
+</div>
+<p><u>Solution</u>:</p>
+<p>Use the equations:</p>
+<div class="math notranslate nohighlight">
+\[\kappa \equiv \frac{k}{\rho c_p}\]</div>
+<div class="math notranslate nohighlight">
+\[\nu \equiv \frac{\eta}{\rho}\]</div>
+<div class="math notranslate nohighlight">
+\[Pr = \frac{\eta}{\rho\kappa}\]</div>
+<p>Be careful of units!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># function for calculating thermal diffusivity</span>
+<span class="k">def</span> <span class="nf">thermal_diffusivity_calculator</span><span class="p">(</span><span class="n">thermal_conductivity</span><span class="p">,</span> <span class="n">mass_density</span><span class="p">,</span> <span class="n">specific_heat</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">thermal_conductivity</span> <span class="o">/</span> <span class="p">(</span><span class="n">mass_density</span> <span class="o">*</span> <span class="n">specific_heat</span><span class="p">)</span>
+
+
+<span class="c1"># function for calculating kinematic viscosity</span>
+<span class="k">def</span> <span class="nf">kinematic_viscosity_calculator</span><span class="p">(</span><span class="n">dynamic_viscosity</span><span class="p">,</span> <span class="n">mass_density</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">dynamic_viscosity</span> <span class="o">/</span> <span class="n">mass_density</span>
+
+
+<span class="c1"># function for calculating Prandtl number</span>
+<span class="k">def</span> <span class="nf">Prandtl_number_calculator</span><span class="p">(</span><span class="n">dynamic_viscosity</span><span class="p">,</span> <span class="n">mass_density</span><span class="p">,</span> <span class="n">thermal_diffusivity</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">dynamic_viscosity</span> <span class="o">/</span> <span class="p">(</span><span class="n">mass_density</span> <span class="o">*</span> <span class="n">thermal_diffusivity</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># create a new table including answers</span>
+<span class="c1"># data</span>
+<span class="n">thermal_diffusivity</span> <span class="o">=</span> <span class="n">thermal_diffusivity_calculator</span><span class="p">(</span><span class="n">thermal_conductivity</span><span class="p">,</span> <span class="n">mass_density</span><span class="p">,</span> <span class="n">specific_heat</span><span class="p">)</span>
+<span class="n">kinematic_viscosity</span> <span class="o">=</span> <span class="n">kinematic_viscosity_calculator</span><span class="p">(</span><span class="n">dynamic_viscosity</span><span class="p">,</span> <span class="n">mass_density</span><span class="p">)</span>
+<span class="n">Prandtl_number</span> <span class="o">=</span> <span class="n">Prandtl_number_calculator</span><span class="p">(</span><span class="n">dynamic_viscosity</span><span class="p">,</span> <span class="n">mass_density</span><span class="p">,</span> <span class="n">thermal_diffusivity</span><span class="p">)</span>
+
+<span class="c1"># create a dataframe</span>
+<span class="n">dict4</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;&#39;</span> <span class="p">:</span> <span class="n">materials</span><span class="p">,</span>
+    <span class="s1">&#39;mass density $$ρ\,(kg\,m^{-3})$$&#39;</span> <span class="p">:</span> <span class="n">mass_density</span><span class="p">,</span>
+    <span class="s1">&#39;specific heat $$c_p\,(J\,kg^{-1}\,K^{-1})$$&#39;</span> <span class="p">:</span> <span class="n">specific_heat</span><span class="p">,</span>
+    <span class="s1">&#39;thermal conductivity $$k\,(W\,m^{-1}\,K^{-1})$$&#39;</span> <span class="p">:</span> <span class="n">thermal_conductivity</span><span class="p">,</span>
+    <span class="s1">&#39;dynamic viscosity $$\eta\,(Pa\,s)$$&#39;</span> <span class="p">:</span> <span class="n">dynamic_viscosity</span><span class="p">,</span>
+    <span class="s1">&#39;thermal diffusivity $$\kappa\,(m^2\,s^{-1})$$&#39;</span> <span class="p">:</span> <span class="n">thermal_diffusivity</span><span class="p">,</span>
+    <span class="s1">&#39;kinematic viscosity $$ν\,(m^2\,s^{-1})$$&#39;</span> <span class="p">:</span> <span class="n">kinematic_viscosity</span><span class="p">,</span>
+    <span class="s1">&#39;Prandtl number $$Pr$$&#39;</span> <span class="p">:</span> <span class="n">Prandtl_number</span>
+<span class="p">}</span>
+<span class="n">df4</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dict4</span><span class="p">)</span>
+<span class="n">df4</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;mass density $$ρ\,(kg\,m^{-3})$$&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df4</span><span class="p">[</span><span class="s1">&#39;mass density $$ρ\,(kg\,m^{-3})$$&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:.1f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">)</span>
+<span class="n">df4</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;thermal conductivity $$k\,(W\,m^{-1}\,K^{-1})$$&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df4</span><span class="p">[</span><span class="s1">&#39;thermal conductivity $$k\,(W\,m^{-1}\,K^{-1})$$&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">)</span>
+<span class="n">df4</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;dynamic viscosity $$\eta\,(Pa\,s)$$&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df4</span><span class="p">[</span><span class="s1">&#39;dynamic viscosity $$\eta\,(Pa\,s)$$&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:.1e}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">)</span>
+<span class="n">df4</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;thermal diffusivity $$\kappa\,(m^2\,s^{-1})$$&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df4</span><span class="p">[</span><span class="s1">&#39;thermal diffusivity $$\kappa\,(m^2\,s^{-1})$$&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:.1e}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">)</span>
+<span class="n">df4</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;kinematic viscosity $$ν\,(m^2\,s^{-1})$$&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df4</span><span class="p">[</span><span class="s1">&#39;kinematic viscosity $$ν\,(m^2\,s^{-1})$$&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:.1e}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">)</span>
+<span class="n">df4</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;Prandtl number $$Pr$$&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df4</span><span class="p">[</span><span class="s1">&#39;Prandtl number $$Pr$$&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:.1e}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">df4</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">hide_index</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style  type="text/css" >
+</style><table id="T_3921d_" ><thead>    <tr>        <th class="col_heading level0 col0" ></th>        <th class="col_heading level0 col1" >mass density $$ρ\,(kg\,m^{-3})$$</th>        <th class="col_heading level0 col2" >specific heat $$c_p\,(J\,kg^{-1}\,K^{-1})$$</th>        <th class="col_heading level0 col3" >thermal conductivity $$k\,(W\,m^{-1}\,K^{-1})$$</th>        <th class="col_heading level0 col4" >dynamic viscosity $$\eta\,(Pa\,s)$$</th>        <th class="col_heading level0 col5" >thermal diffusivity $$\kappa\,(m^2\,s^{-1})$$</th>        <th class="col_heading level0 col6" >kinematic viscosity $$ν\,(m^2\,s^{-1})$$</th>        <th class="col_heading level0 col7" >Prandtl number $$Pr$$</th>    </tr></thead><tbody>
+                <tr>
+                                <td id="T_3921d_row0_col0" class="data row0 col0" >air</td>
+                        <td id="T_3921d_row0_col1" class="data row0 col1" >1.3</td>
+                        <td id="T_3921d_row0_col2" class="data row0 col2" >1000</td>
+                        <td id="T_3921d_row0_col3" class="data row0 col3" >0.03</td>
+                        <td id="T_3921d_row0_col4" class="data row0 col4" >1.8e-05</td>
+                        <td id="T_3921d_row0_col5" class="data row0 col5" >1.9e-05</td>
+                        <td id="T_3921d_row0_col6" class="data row0 col6" >1.4e-05</td>
+                        <td id="T_3921d_row0_col7" class="data row0 col7" >7.2e-01</td>
+            </tr>
+            <tr>
+                                <td id="T_3921d_row1_col0" class="data row1 col0" >water</td>
+                        <td id="T_3921d_row1_col1" class="data row1 col1" >1000.0</td>
+                        <td id="T_3921d_row1_col2" class="data row1 col2" >4200</td>
+                        <td id="T_3921d_row1_col3" class="data row1 col3" >0.60</td>
+                        <td id="T_3921d_row1_col4" class="data row1 col4" >1.0e-03</td>
+                        <td id="T_3921d_row1_col5" class="data row1 col5" >1.4e-07</td>
+                        <td id="T_3921d_row1_col6" class="data row1 col6" >1.0e-06</td>
+                        <td id="T_3921d_row1_col7" class="data row1 col7" >7.0e+00</td>
+            </tr>
+            <tr>
+                                <td id="T_3921d_row2_col0" class="data row2 col0" >upper mantle</td>
+                        <td id="T_3921d_row2_col1" class="data row2 col1" >3500.0</td>
+                        <td id="T_3921d_row2_col2" class="data row2 col2" >1000</td>
+                        <td id="T_3921d_row2_col3" class="data row2 col3" >3.00</td>
+                        <td id="T_3921d_row2_col4" class="data row2 col4" >1.0e+21</td>
+                        <td id="T_3921d_row2_col5" class="data row2 col5" >8.6e-07</td>
+                        <td id="T_3921d_row2_col6" class="data row2 col6" >2.9e+17</td>
+                        <td id="T_3921d_row2_col7" class="data row2 col7" >3.3e+23</td>
+            </tr>
+            <tr>
+                                <td id="T_3921d_row3_col0" class="data row3 col0" >outer core</td>
+                        <td id="T_3921d_row3_col1" class="data row3 col1" >10000.0</td>
+                        <td id="T_3921d_row3_col2" class="data row3 col2" >1700</td>
+                        <td id="T_3921d_row3_col3" class="data row3 col3" >30.00</td>
+                        <td id="T_3921d_row3_col4" class="data row3 col4" >5.0e-03</td>
+                        <td id="T_3921d_row3_col5" class="data row3 col5" >1.8e-06</td>
+                        <td id="T_3921d_row3_col6" class="data row3 col6" >5.0e-07</td>
+                        <td id="T_3921d_row3_col7" class="data row3 col7" >2.8e-01</td>
+            </tr>
+    </tbody></table></div></div>
+</div>
 </section>
 <section id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
-<li><p>Lecture note for Lecture 7 of the Physical Processes module</p></li>
+<li><p>Lecture note and Partical for Lecture 7 and 8 of the Physical Processes module</p></li>
 </ul>
 </section>
 </section>
