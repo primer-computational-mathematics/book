@@ -55,7 +55,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Reynolds number" href="Reynolds_number.html" />
+    <link rel="next" title="Isostasy" href="Isostasy.html" />
     <link rel="prev" title="Fluids &amp; the Bernoulli effect" href="Fluids_%26_the_Bernoulli_effect.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -1247,6 +1247,11 @@ const thebe_selector_output = ".output, .cell_output"
       </a>
      </li>
      <li class="toctree-l3">
+      <a class="reference internal" href="Isostasy.html">
+       Isostasy
+      </a>
+     </li>
+     <li class="toctree-l3">
       <a class="reference internal" href="Reynolds_number.html">
        Reynolds number
       </a>
@@ -1920,6 +1925,8 @@ title="Print to PDF"
 <span class="c1"># function to round a value to a certain number of significant figures</span>
 <span class="k">def</span> <span class="nf">round_to_n_sf</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">no_of_significant_figures</span><span class="p">):</span>
     <span class="n">value_rounded</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">no_of_significant_figures</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="nb">int</span><span class="p">(</span><span class="n">floor</span><span class="p">(</span><span class="n">log10</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">value</span><span class="p">)))))</span>
+    <span class="k">if</span> <span class="n">value_rounded</span> <span class="o">==</span> <span class="nb">int</span><span class="p">(</span><span class="n">value_rounded</span><span class="p">):</span> 
+        <span class="n">value_rounded</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">value_rounded</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">value_rounded</span>
 
 
@@ -1972,22 +1979,21 @@ title="Print to PDF"
         <span class="mi">60</span><span class="o">*</span><span class="mi">60</span><span class="o">*</span><span class="mi">24</span> <span class="p">:</span> <span class="s1">&#39;day&#39;</span><span class="p">,</span>
         <span class="mi">60</span><span class="o">*</span><span class="mi">60</span> <span class="p">:</span> <span class="s1">&#39;hour&#39;</span><span class="p">,</span>
         <span class="mi">60</span> <span class="p">:</span> <span class="s1">&#39;minute&#39;</span><span class="p">,</span>
-        <span class="mi">0</span> <span class="p">:</span> <span class="s1">&#39;second&#39;</span>  <span class="c1"># exception (conversion factor should be 1, but set as 0 for looping purpose)</span>
+        <span class="mi">1</span> <span class="p">:</span> <span class="s1">&#39;second&#39;</span>
     <span class="p">}</span>
     <span class="k">if</span> <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">==</span> <span class="nb">int</span> <span class="ow">or</span> <span class="nb">type</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">==</span> <span class="nb">float</span><span class="p">)</span> <span class="ow">and</span> <span class="n">t</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">conv</span> <span class="ow">in</span> <span class="n">conversion_factor_and_unit_dict</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">t</span> <span class="o">&gt;=</span> <span class="n">conv</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">conv</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># second range</span>
-                    <span class="n">t</span> <span class="o">=</span> <span class="n">round_to_n_sf</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">t</span> <span class="o">=</span> <span class="n">round_to_n_sf</span><span class="p">(</span><span class="n">t</span><span class="o">/</span><span class="n">conv</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+                <span class="n">t</span> <span class="o">=</span> <span class="n">round_to_n_sf</span><span class="p">(</span><span class="n">t</span><span class="o">/</span><span class="n">conv</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
                 <span class="k">if</span> <span class="nb">round</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">==</span> <span class="n">t</span><span class="p">:</span>
                     <span class="n">t</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
                 <span class="n">string</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">t</span><span class="si">}</span><span class="s1"> &#39;</span> <span class="o">+</span> <span class="n">conversion_factor_and_unit_dict</span><span class="p">[</span><span class="n">conv</span><span class="p">]</span>
                 <span class="k">if</span> <span class="n">t</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span> 
                     <span class="n">string</span> <span class="o">+=</span> <span class="s1">&#39;s&#39;</span>
                 <span class="k">break</span>
-            
+        <span class="k">if</span> <span class="n">string</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>  <span class="c1"># t &lt; 1 s</span>
+            <span class="n">t</span> <span class="o">=</span> <span class="n">round_to_n_sf</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">string</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">t</span><span class="si">}</span><span class="s1"> second&#39;</span>
     <span class="k">else</span><span class="p">:</span> 
         <span class="n">string</span> <span class="o">+=</span> <span class="s1">&#39;invalid&#39;</span>
     <span class="k">return</span> <span class="n">string</span>
@@ -2032,6 +2038,9 @@ title="Print to PDF"
                     <span class="n">d</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
                 <span class="n">string</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">d</span><span class="si">}</span><span class="s1"> &#39;</span> <span class="o">+</span> <span class="n">conversion_factor_and_unit_dict</span><span class="p">[</span><span class="n">conv</span><span class="p">]</span>
                 <span class="k">break</span>
+        <span class="k">if</span> <span class="n">string</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>  <span class="c1"># d &lt; 1 mm</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="n">round_to_n_sf</span><span class="p">(</span><span class="n">d</span><span class="o">/</span><span class="n">conv</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">string</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">d</span><span class="si">}</span><span class="s1"> mm&#39;</span>                
     <span class="k">else</span><span class="p">:</span> 
         <span class="n">string</span> <span class="o">+=</span> <span class="s1">&#39;invalid&#39;</span>
     <span class="k">return</span> <span class="n">string</span>
@@ -2058,7 +2067,7 @@ title="Print to PDF"
 <p>The plot below shows the thermal change at constant pressure (<span class="math notranslate nohighlight">\(1\,atm\)</span>) of <span class="math notranslate nohighlight">\(100\,g\)</span> of water over time in a kettle with a power of <span class="math notranslate nohighlight">\(700\,W\)</span>. The initial state of water is assumed to be ice at <span class="math notranslate nohighlight">\(-20^\circ C\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot a thermal change of water over time in a kettle with a power of 700 W (J/s)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot the thermal change of 100 g water heated by a kettle with a power of 700 W (J/s) over time</span>
 
 <span class="c1"># function for calculating specific heat</span>
 <span class="k">def</span> <span class="nf">specific_heat</span><span class="p">(</span><span class="n">mass</span><span class="p">,</span> <span class="n">specific_heat_capacity</span><span class="p">,</span> <span class="n">temperature_change</span><span class="p">):</span>
@@ -2186,7 +2195,7 @@ to understanding how the Earth works.</p>
 <li><p>a sphere with a radius <span class="math notranslate nohighlight">\(x\)</span>, or a cylinder with a radius <span class="math notranslate nohighlight">\(x\)</span>, or a plane layer with a half-width <span class="math notranslate nohighlight">\(x\)</span>, can change its temperature significantly by thermal conduction within a time <span class="math notranslate nohighlight">\(t \sim {x^2}/{\kappa}\)</span>;</p></li>
 <li><p>or equivalently, if the boundary of an object is maintained for a time <span class="math notranslate nohighlight">\(t\)</span> at a temperature that is different to the temperature of its interior, then a thermal boundary layer will develop within the body that has a half-width <span class="math notranslate nohighlight">\(x \sim \sqrt{\kappa t}\)</span>.</p></li>
 </ul>
-<p><img alt="" src="d_geosciences/Physical Processes/images/Figure_7_2.png" /></p>
+<p><img alt="" src="../../_images/Figure_7_2.png" /></p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Figure 2: characteristic length scales for heat or mass diffusion for a) a sphere, b) a layer and c) a layer with one face maintained at a constant temperature.
 </pre></div>
 </div>
@@ -2218,56 +2227,56 @@ to understanding how the Earth works.</p>
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html"><style  type="text/css" >
-</style><table id="T_bb25e_" ><thead>    <tr>        <th class="col_heading level0 col0" >Characteristic time $t$</th>        <th class="col_heading level0 col1" >Characteristic length $x$ (radius or half-width)</th>        <th class="col_heading level0 col2" >Context</th>    </tr></thead><tbody>
+</style><table id="T_14fbf_" ><thead>    <tr>        <th class="col_heading level0 col0" >Characteristic time $t$</th>        <th class="col_heading level0 col1" >Characteristic length $x$ (radius or half-width)</th>        <th class="col_heading level0 col2" >Context</th>    </tr></thead><tbody>
                 <tr>
-                                <td id="T_bb25e_row0_col0" class="data row0 col0" ></td>
-                        <td id="T_bb25e_row0_col1" class="data row0 col1" >0.5 mm</td>
-                        <td id="T_bb25e_row0_col2" class="data row0 col2" >sand grain (diameter ~ 1 mm)</td>
+                                <td id="T_14fbf_row0_col0" class="data row0 col0" ></td>
+                        <td id="T_14fbf_row0_col1" class="data row0 col1" >0.5 mm</td>
+                        <td id="T_14fbf_row0_col2" class="data row0 col2" >sand grain (diameter ~ 1 mm)</td>
             </tr>
             <tr>
-                                <td id="T_bb25e_row1_col0" class="data row1 col0" >12 hours</td>
-                        <td id="T_bb25e_row1_col1" class="data row1 col1" ></td>
-                        <td id="T_bb25e_row1_col2" class="data row1 col2" >day to night temperature change</td>
+                                <td id="T_14fbf_row1_col0" class="data row1 col0" >12 hours</td>
+                        <td id="T_14fbf_row1_col1" class="data row1 col1" ></td>
+                        <td id="T_14fbf_row1_col2" class="data row1 col2" >day to night temperature change</td>
             </tr>
             <tr>
-                                <td id="T_bb25e_row2_col0" class="data row2 col0" >6 months</td>
-                        <td id="T_bb25e_row2_col1" class="data row2 col1" ></td>
-                        <td id="T_bb25e_row2_col2" class="data row2 col2" >summer to winter</td>
+                                <td id="T_14fbf_row2_col0" class="data row2 col0" >6 months</td>
+                        <td id="T_14fbf_row2_col1" class="data row2 col1" ></td>
+                        <td id="T_14fbf_row2_col2" class="data row2 col2" >summer to winter</td>
             </tr>
             <tr>
-                                <td id="T_bb25e_row3_col0" class="data row3 col0" ></td>
-                        <td id="T_bb25e_row3_col1" class="data row3 col1" >10 m</td>
-                        <td id="T_bb25e_row3_col2" class="data row3 col2" >dyke or sill (thickness ~ 20 m)</td>
+                                <td id="T_14fbf_row3_col0" class="data row3 col0" ></td>
+                        <td id="T_14fbf_row3_col1" class="data row3 col1" >10 m</td>
+                        <td id="T_14fbf_row3_col2" class="data row3 col2" >dyke or sill (thickness ~ 20 m)</td>
             </tr>
             <tr>
-                                <td id="T_bb25e_row4_col0" class="data row4 col0" >12,000 years</td>
-                        <td id="T_bb25e_row4_col1" class="data row4 col1" ></td>
-                        <td id="T_bb25e_row4_col2" class="data row4 col2" >time since ice age</td>
+                                <td id="T_14fbf_row4_col0" class="data row4 col0" >12,000 years</td>
+                        <td id="T_14fbf_row4_col1" class="data row4 col1" ></td>
+                        <td id="T_14fbf_row4_col2" class="data row4 col2" >time since ice age</td>
             </tr>
             <tr>
-                                <td id="T_bb25e_row5_col0" class="data row5 col0" ></td>
-                        <td id="T_bb25e_row5_col1" class="data row5 col1" >15 km</td>
-                        <td id="T_bb25e_row5_col2" class="data row5 col2" >thickness of continental crust (~ 30 km)</td>
+                                <td id="T_14fbf_row5_col0" class="data row5 col0" ></td>
+                        <td id="T_14fbf_row5_col1" class="data row5 col1" >15 km</td>
+                        <td id="T_14fbf_row5_col2" class="data row5 col2" >thickness of continental crust (~ 30 km)</td>
             </tr>
             <tr>
-                                <td id="T_bb25e_row6_col0" class="data row6 col0" ></td>
-                        <td id="T_bb25e_row6_col1" class="data row6 col1" >50 km</td>
-                        <td id="T_bb25e_row6_col2" class="data row6 col2" >thickness of lithosphere (~ 100 km)</td>
+                                <td id="T_14fbf_row6_col0" class="data row6 col0" ></td>
+                        <td id="T_14fbf_row6_col1" class="data row6 col1" >50 km</td>
+                        <td id="T_14fbf_row6_col2" class="data row6 col2" >thickness of lithosphere (~ 100 km)</td>
             </tr>
             <tr>
-                                <td id="T_bb25e_row7_col0" class="data row7 col0" >4.5 billion years</td>
-                        <td id="T_bb25e_row7_col1" class="data row7 col1" ></td>
-                        <td id="T_bb25e_row7_col2" class="data row7 col2" >age of Earth</td>
+                                <td id="T_14fbf_row7_col0" class="data row7 col0" >4.5 billion years</td>
+                        <td id="T_14fbf_row7_col1" class="data row7 col1" ></td>
+                        <td id="T_14fbf_row7_col2" class="data row7 col2" >age of Earth</td>
             </tr>
             <tr>
-                                <td id="T_bb25e_row8_col0" class="data row8 col0" ></td>
-                        <td id="T_bb25e_row8_col1" class="data row8 col1" >6380 km</td>
-                        <td id="T_bb25e_row8_col2" class="data row8 col2" >radius of Earth</td>
+                                <td id="T_14fbf_row8_col0" class="data row8 col0" ></td>
+                        <td id="T_14fbf_row8_col1" class="data row8 col1" >6380 km</td>
+                        <td id="T_14fbf_row8_col2" class="data row8 col2" >radius of Earth</td>
             </tr>
             <tr>
-                                <td id="T_bb25e_row9_col0" class="data row9 col0" >14 billion years</td>
-                        <td id="T_bb25e_row9_col1" class="data row9 col1" ></td>
-                        <td id="T_bb25e_row9_col2" class="data row9 col2" >age of the universe</td>
+                                <td id="T_14fbf_row9_col0" class="data row9 col0" >14 billion years</td>
+                        <td id="T_14fbf_row9_col1" class="data row9 col1" ></td>
+                        <td id="T_14fbf_row9_col2" class="data row9 col2" >age of the universe</td>
             </tr>
     </tbody></table></div></div>
 </div>
@@ -2326,66 +2335,66 @@ to understanding how the Earth works.</p>
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html"><style  type="text/css" >
-</style><table id="T_b55dd_" ><thead>    <tr>        <th class="col_heading level0 col0" >Characteristic time $t$</th>        <th class="col_heading level0 col1" >Characteristic length $x$ (radius or half-width)</th>        <th class="col_heading level0 col2" >Diameter or width of layer</th>        <th class="col_heading level0 col3" >Context</th>    </tr></thead><tbody>
+</style><table id="T_d1878_" ><thead>    <tr>        <th class="col_heading level0 col0" >Characteristic time $t$</th>        <th class="col_heading level0 col1" >Characteristic length $x$ (radius or half-width)</th>        <th class="col_heading level0 col2" >Diameter or width of layer</th>        <th class="col_heading level0 col3" >Context</th>    </tr></thead><tbody>
                 <tr>
-                                <td id="T_b55dd_row0_col0" class="data row0 col0" >0.25 second</td>
-                        <td id="T_b55dd_row0_col1" class="data row0 col1" >0.5 mm</td>
-                        <td id="T_b55dd_row0_col2" class="data row0 col2" >1 mm</td>
-                        <td id="T_b55dd_row0_col3" class="data row0 col3" >sand grain (diameter ~ 1 mm)</td>
+                                <td id="T_d1878_row0_col0" class="data row0 col0" >0.2 second</td>
+                        <td id="T_d1878_row0_col1" class="data row0 col1" >0.5 mm</td>
+                        <td id="T_d1878_row0_col2" class="data row0 col2" >1 mm</td>
+                        <td id="T_d1878_row0_col3" class="data row0 col3" >sand grain (diameter ~ 1 mm)</td>
             </tr>
             <tr>
-                                <td id="T_b55dd_row1_col0" class="data row1 col0" >12 hours</td>
-                        <td id="T_b55dd_row1_col1" class="data row1 col1" >21 cm</td>
-                        <td id="T_b55dd_row1_col2" class="data row1 col2" >42 cm</td>
-                        <td id="T_b55dd_row1_col3" class="data row1 col3" >day to night temperature change</td>
+                                <td id="T_d1878_row1_col0" class="data row1 col0" >12 hours</td>
+                        <td id="T_d1878_row1_col1" class="data row1 col1" >21 cm</td>
+                        <td id="T_d1878_row1_col2" class="data row1 col2" >42 cm</td>
+                        <td id="T_d1878_row1_col3" class="data row1 col3" >day to night temperature change</td>
             </tr>
             <tr>
-                                <td id="T_b55dd_row2_col0" class="data row2 col0" >6 months</td>
-                        <td id="T_b55dd_row2_col1" class="data row2 col1" >3.9 m</td>
-                        <td id="T_b55dd_row2_col2" class="data row2 col2" >7.8 m</td>
-                        <td id="T_b55dd_row2_col3" class="data row2 col3" >summer to winter</td>
+                                <td id="T_d1878_row2_col0" class="data row2 col0" >6 months</td>
+                        <td id="T_d1878_row2_col1" class="data row2 col1" >3.9 m</td>
+                        <td id="T_d1878_row2_col2" class="data row2 col2" >7.8 m</td>
+                        <td id="T_d1878_row2_col3" class="data row2 col3" >summer to winter</td>
             </tr>
             <tr>
-                                <td id="T_b55dd_row3_col0" class="data row3 col0" >3.2 years</td>
-                        <td id="T_b55dd_row3_col1" class="data row3 col1" >10 m</td>
-                        <td id="T_b55dd_row3_col2" class="data row3 col2" >20 m</td>
-                        <td id="T_b55dd_row3_col3" class="data row3 col3" >dyke or sill (thickness ~ 20 m)</td>
+                                <td id="T_d1878_row3_col0" class="data row3 col0" >3.2 years</td>
+                        <td id="T_d1878_row3_col1" class="data row3 col1" >10 m</td>
+                        <td id="T_d1878_row3_col2" class="data row3 col2" >20 m</td>
+                        <td id="T_d1878_row3_col3" class="data row3 col3" >dyke or sill (thickness ~ 20 m)</td>
             </tr>
             <tr>
-                                <td id="T_b55dd_row4_col0" class="data row4 col0" >12,000 years</td>
-                        <td id="T_b55dd_row4_col1" class="data row4 col1" >620 m</td>
-                        <td id="T_b55dd_row4_col2" class="data row4 col2" >1.2 km</td>
-                        <td id="T_b55dd_row4_col3" class="data row4 col3" >time since ice age</td>
+                                <td id="T_d1878_row4_col0" class="data row4 col0" >12,000 years</td>
+                        <td id="T_d1878_row4_col1" class="data row4 col1" >620 m</td>
+                        <td id="T_d1878_row4_col2" class="data row4 col2" >1.2 km</td>
+                        <td id="T_d1878_row4_col3" class="data row4 col3" >time since ice age</td>
             </tr>
             <tr>
-                                <td id="T_b55dd_row5_col0" class="data row5 col0" >7.1 million years</td>
-                        <td id="T_b55dd_row5_col1" class="data row5 col1" >15 km</td>
-                        <td id="T_b55dd_row5_col2" class="data row5 col2" >30 km</td>
-                        <td id="T_b55dd_row5_col3" class="data row5 col3" >thickness of continental crust (~ 30 km)</td>
+                                <td id="T_d1878_row5_col0" class="data row5 col0" >7.1 million years</td>
+                        <td id="T_d1878_row5_col1" class="data row5 col1" >15 km</td>
+                        <td id="T_d1878_row5_col2" class="data row5 col2" >30 km</td>
+                        <td id="T_d1878_row5_col3" class="data row5 col3" >thickness of continental crust (~ 30 km)</td>
             </tr>
             <tr>
-                                <td id="T_b55dd_row6_col0" class="data row6 col0" >79 million years</td>
-                        <td id="T_b55dd_row6_col1" class="data row6 col1" >50 km</td>
-                        <td id="T_b55dd_row6_col2" class="data row6 col2" >100 km</td>
-                        <td id="T_b55dd_row6_col3" class="data row6 col3" >thickness of lithosphere (~ 100 km)</td>
+                                <td id="T_d1878_row6_col0" class="data row6 col0" >79 million years</td>
+                        <td id="T_d1878_row6_col1" class="data row6 col1" >50 km</td>
+                        <td id="T_d1878_row6_col2" class="data row6 col2" >100 km</td>
+                        <td id="T_d1878_row6_col3" class="data row6 col3" >thickness of lithosphere (~ 100 km)</td>
             </tr>
             <tr>
-                                <td id="T_b55dd_row7_col0" class="data row7 col0" >4.5 billion years</td>
-                        <td id="T_b55dd_row7_col1" class="data row7 col1" >380 km</td>
-                        <td id="T_b55dd_row7_col2" class="data row7 col2" >760 km</td>
-                        <td id="T_b55dd_row7_col3" class="data row7 col3" >age of Earth</td>
+                                <td id="T_d1878_row7_col0" class="data row7 col0" >4.5 billion years</td>
+                        <td id="T_d1878_row7_col1" class="data row7 col1" >380 km</td>
+                        <td id="T_d1878_row7_col2" class="data row7 col2" >760 km</td>
+                        <td id="T_d1878_row7_col3" class="data row7 col3" >age of Earth</td>
             </tr>
             <tr>
-                                <td id="T_b55dd_row8_col0" class="data row8 col0" >1300 billion years</td>
-                        <td id="T_b55dd_row8_col1" class="data row8 col1" >6380 km</td>
-                        <td id="T_b55dd_row8_col2" class="data row8 col2" >13000 km</td>
-                        <td id="T_b55dd_row8_col3" class="data row8 col3" >radius of Earth</td>
+                                <td id="T_d1878_row8_col0" class="data row8 col0" >1300 billion years</td>
+                        <td id="T_d1878_row8_col1" class="data row8 col1" >6380 km</td>
+                        <td id="T_d1878_row8_col2" class="data row8 col2" >13000 km</td>
+                        <td id="T_d1878_row8_col3" class="data row8 col3" >radius of Earth</td>
             </tr>
             <tr>
-                                <td id="T_b55dd_row9_col0" class="data row9 col0" >14 billion years</td>
-                        <td id="T_b55dd_row9_col1" class="data row9 col1" >660 km</td>
-                        <td id="T_b55dd_row9_col2" class="data row9 col2" >1300 km</td>
-                        <td id="T_b55dd_row9_col3" class="data row9 col3" >age of the universe</td>
+                                <td id="T_d1878_row9_col0" class="data row9 col0" >14 billion years</td>
+                        <td id="T_d1878_row9_col1" class="data row9 col1" >660 km</td>
+                        <td id="T_d1878_row9_col2" class="data row9 col2" >1300 km</td>
+                        <td id="T_d1878_row9_col3" class="data row9 col3" >age of the universe</td>
             </tr>
     </tbody></table></div></div>
 </div>
@@ -2396,7 +2405,7 @@ to understanding how the Earth works.</p>
 <section id="diffusion-of-momentum-and-heat-in-viscous-fluids">
 <h3>Diffusion of momentum and heat in viscous fluids<a class="headerlink" href="#diffusion-of-momentum-and-heat-in-viscous-fluids" title="Permalink to this headline">#</a></h3>
 <p id="index-8"><u><em>Kinematic viscosity</em></u> <span class="math notranslate nohighlight">\(\nu \equiv \eta/\rho\)</span> has the dimensions of a diffusion coefficient. In this case it is momentum (= mass <span class="math notranslate nohighlight">\(\times\)</span> velocity) that diffuses. That is, if a fluid contains a region where the flow velocity differs from that of its surroundings, then that anomalous flow velocity will tend to spread out and reduce in magnitude with time in a way that is analogous to the way that heat and chemical species diffuse. The higher the kinematic viscosity, then the faster that momentum will dissipate – hence it is hard to swim through treacle.</p>
-<p>The Prandtl number <span class="math notranslate nohighlight">\(Pr\)</span> is a dimensionless number that measures the relative rate at which momentum and temperature diffuse in a material. It is given by:</p>
+<p>The <u><em>Prandtl number</em></u> <span class="math notranslate nohighlight">\(Pr\)</span> is a dimensionless number that measures the relative rate at which momentum and temperature diffuse in a material. It is given by:</p>
 <div class="math notranslate nohighlight">
 \[Pr = \frac{\eta}{\rho\kappa}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\eta\)</span> is the dynamic viscosity, <span class="math notranslate nohighlight">\(\rho\)</span> is the fluid density and <span class="math notranslate nohighlight">\(\kappa\)</span> is the thermal diffusivity.</p>
@@ -2483,46 +2492,46 @@ Do not make the answers more precise than is warranted by the input data.</p>
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html"><style  type="text/css" >
-</style><table id="T_2d5b7_" ><thead>    <tr>        <th class="col_heading level0 col0" ></th>        <th class="col_heading level0 col1" >mass density $$ρ\,(kg\,m^{-3})$$</th>        <th class="col_heading level0 col2" >specific heat $$c_p\,(J\,kg^{-1}\,K^{-1})$$</th>        <th class="col_heading level0 col3" >thermal conductivity $$k\,(W\,m^{-1}\,K^{-1})$$</th>        <th class="col_heading level0 col4" >dynamic viscosity $$\eta\,(Pa\,s)$$</th>        <th class="col_heading level0 col5" >thermal diffusivity $$\kappa\,(m^2\,s^{-1})$$</th>        <th class="col_heading level0 col6" >kinematic viscosity $$ν\,(m^2\,s^{-1})$$</th>        <th class="col_heading level0 col7" >Prandtl number $$Pr$$</th>    </tr></thead><tbody>
+</style><table id="T_c871b_" ><thead>    <tr>        <th class="col_heading level0 col0" ></th>        <th class="col_heading level0 col1" >mass density $$ρ\,(kg\,m^{-3})$$</th>        <th class="col_heading level0 col2" >specific heat $$c_p\,(J\,kg^{-1}\,K^{-1})$$</th>        <th class="col_heading level0 col3" >thermal conductivity $$k\,(W\,m^{-1}\,K^{-1})$$</th>        <th class="col_heading level0 col4" >dynamic viscosity $$\eta\,(Pa\,s)$$</th>        <th class="col_heading level0 col5" >thermal diffusivity $$\kappa\,(m^2\,s^{-1})$$</th>        <th class="col_heading level0 col6" >kinematic viscosity $$ν\,(m^2\,s^{-1})$$</th>        <th class="col_heading level0 col7" >Prandtl number $$Pr$$</th>    </tr></thead><tbody>
                 <tr>
-                                <td id="T_2d5b7_row0_col0" class="data row0 col0" >air</td>
-                        <td id="T_2d5b7_row0_col1" class="data row0 col1" >1.3</td>
-                        <td id="T_2d5b7_row0_col2" class="data row0 col2" >1000</td>
-                        <td id="T_2d5b7_row0_col3" class="data row0 col3" >0.03</td>
-                        <td id="T_2d5b7_row0_col4" class="data row0 col4" >1.8e-05</td>
-                        <td id="T_2d5b7_row0_col5" class="data row0 col5" ></td>
-                        <td id="T_2d5b7_row0_col6" class="data row0 col6" ></td>
-                        <td id="T_2d5b7_row0_col7" class="data row0 col7" ></td>
+                                <td id="T_c871b_row0_col0" class="data row0 col0" >air</td>
+                        <td id="T_c871b_row0_col1" class="data row0 col1" >1.3</td>
+                        <td id="T_c871b_row0_col2" class="data row0 col2" >1000</td>
+                        <td id="T_c871b_row0_col3" class="data row0 col3" >0.03</td>
+                        <td id="T_c871b_row0_col4" class="data row0 col4" >1.8e-05</td>
+                        <td id="T_c871b_row0_col5" class="data row0 col5" ></td>
+                        <td id="T_c871b_row0_col6" class="data row0 col6" ></td>
+                        <td id="T_c871b_row0_col7" class="data row0 col7" ></td>
             </tr>
             <tr>
-                                <td id="T_2d5b7_row1_col0" class="data row1 col0" >water</td>
-                        <td id="T_2d5b7_row1_col1" class="data row1 col1" >1000.0</td>
-                        <td id="T_2d5b7_row1_col2" class="data row1 col2" >4200</td>
-                        <td id="T_2d5b7_row1_col3" class="data row1 col3" >0.60</td>
-                        <td id="T_2d5b7_row1_col4" class="data row1 col4" >1.0e-03</td>
-                        <td id="T_2d5b7_row1_col5" class="data row1 col5" ></td>
-                        <td id="T_2d5b7_row1_col6" class="data row1 col6" ></td>
-                        <td id="T_2d5b7_row1_col7" class="data row1 col7" ></td>
+                                <td id="T_c871b_row1_col0" class="data row1 col0" >water</td>
+                        <td id="T_c871b_row1_col1" class="data row1 col1" >1000.0</td>
+                        <td id="T_c871b_row1_col2" class="data row1 col2" >4200</td>
+                        <td id="T_c871b_row1_col3" class="data row1 col3" >0.60</td>
+                        <td id="T_c871b_row1_col4" class="data row1 col4" >1.0e-03</td>
+                        <td id="T_c871b_row1_col5" class="data row1 col5" ></td>
+                        <td id="T_c871b_row1_col6" class="data row1 col6" ></td>
+                        <td id="T_c871b_row1_col7" class="data row1 col7" ></td>
             </tr>
             <tr>
-                                <td id="T_2d5b7_row2_col0" class="data row2 col0" >upper mantle</td>
-                        <td id="T_2d5b7_row2_col1" class="data row2 col1" >3500.0</td>
-                        <td id="T_2d5b7_row2_col2" class="data row2 col2" >1000</td>
-                        <td id="T_2d5b7_row2_col3" class="data row2 col3" >3.00</td>
-                        <td id="T_2d5b7_row2_col4" class="data row2 col4" >1.0e+21</td>
-                        <td id="T_2d5b7_row2_col5" class="data row2 col5" ></td>
-                        <td id="T_2d5b7_row2_col6" class="data row2 col6" ></td>
-                        <td id="T_2d5b7_row2_col7" class="data row2 col7" ></td>
+                                <td id="T_c871b_row2_col0" class="data row2 col0" >upper mantle</td>
+                        <td id="T_c871b_row2_col1" class="data row2 col1" >3500.0</td>
+                        <td id="T_c871b_row2_col2" class="data row2 col2" >1000</td>
+                        <td id="T_c871b_row2_col3" class="data row2 col3" >3.00</td>
+                        <td id="T_c871b_row2_col4" class="data row2 col4" >1.0e+21</td>
+                        <td id="T_c871b_row2_col5" class="data row2 col5" ></td>
+                        <td id="T_c871b_row2_col6" class="data row2 col6" ></td>
+                        <td id="T_c871b_row2_col7" class="data row2 col7" ></td>
             </tr>
             <tr>
-                                <td id="T_2d5b7_row3_col0" class="data row3 col0" >outer core</td>
-                        <td id="T_2d5b7_row3_col1" class="data row3 col1" >10000.0</td>
-                        <td id="T_2d5b7_row3_col2" class="data row3 col2" >1700</td>
-                        <td id="T_2d5b7_row3_col3" class="data row3 col3" >30.00</td>
-                        <td id="T_2d5b7_row3_col4" class="data row3 col4" >5.0e-03</td>
-                        <td id="T_2d5b7_row3_col5" class="data row3 col5" ></td>
-                        <td id="T_2d5b7_row3_col6" class="data row3 col6" ></td>
-                        <td id="T_2d5b7_row3_col7" class="data row3 col7" ></td>
+                                <td id="T_c871b_row3_col0" class="data row3 col0" >outer core</td>
+                        <td id="T_c871b_row3_col1" class="data row3 col1" >10000.0</td>
+                        <td id="T_c871b_row3_col2" class="data row3 col2" >1700</td>
+                        <td id="T_c871b_row3_col3" class="data row3 col3" >30.00</td>
+                        <td id="T_c871b_row3_col4" class="data row3 col4" >5.0e-03</td>
+                        <td id="T_c871b_row3_col5" class="data row3 col5" ></td>
+                        <td id="T_c871b_row3_col6" class="data row3 col6" ></td>
+                        <td id="T_c871b_row3_col7" class="data row3 col7" ></td>
             </tr>
     </tbody></table></div></div>
 </div>
@@ -2672,10 +2681,10 @@ Do not make the answers more precise than is warranted by the input data.</p>
             <p class="prev-next-title">Fluids &amp; the Bernoulli effect</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="Reynolds_number.html" title="next page">
+    <a class='right-next' id="next-link" href="Isostasy.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Reynolds number</p>
+        <p class="prev-next-title">Isostasy</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
