@@ -6,8 +6,9 @@
 
 Source: [Wikipedia](https://en.wikipedia.org/wiki/Mathematics)
 ```
-Table of contents:
+### Table of contents:
 
+0. {ref}`mm1_intro_to_modelling`
 1. {ref}`nm_interpolation_curve_fitting`
     * {ref}`nm_interpolation`
     * {ref}`nm_curve_fitting`

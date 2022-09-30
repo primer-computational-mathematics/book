@@ -1,6 +1,6 @@
-# Sets and functions
+# Basic Maths
 
-## Table of contents
+### Table of contents
 
 1. {doc}`1_logic`
     - {ref}`logic_symbols`
@@ -27,8 +27,16 @@
     - {ref}`elfun2_log`
     - {ref}`elfun2_arcus`
     - {ref}`elfun2_area`
+7. {doc}`7_Coordinate_Systems`
+8. {doc}`8_Vectors`
+   
+    
 
 ## References and further reading
+
+Coordinate Systems and Vectors sessions:
+
+- Lecture 1 of the "Mathematics Methods 1" module
 
 A light introduction to topics covered in this section:
 

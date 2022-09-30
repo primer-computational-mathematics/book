@@ -1,6 +1,6 @@
 # Coding
 
-Table of contents:
+### Table of contents:
 
 ```{tableofcontents}
 ```
