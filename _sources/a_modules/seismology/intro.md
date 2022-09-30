@@ -1,4 +1,0 @@
-# Seismology
-
-```{tableofcontents}
-```

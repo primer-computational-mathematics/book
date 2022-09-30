@@ -1,4 +1,0 @@
-# Continental Tectonics
-
-```{tableofcontents}
-```
