@@ -99,7 +99,8 @@ with open('_tmp'+os.sep+'_toc.yml', 'w') as outfile:
                 level = filepath.count(os.sep)
 
                 outfile.write(leveltext[level - 1].substitute(path=fix(filepath)))
-                outfile.write("  " * (level - 1) + 'sections:\n')
+                if 'a_module' not in root:
+                    outfile.write("  " * (level - 1) + 'sections:\n')
 
                 files.remove(intro)
                 for file in natsorted(files):
