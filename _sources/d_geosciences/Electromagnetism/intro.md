@@ -1,5 +1,7 @@
 # Electromagnetism
 
+Below is the list of electromagnetism contents. Although they are mainly acquired from Year 1 and 2 Physics lecture notes, they are useful for the ESE's "Gravity, Magnetism, and Orbital Dynamics" module.
+
 Table of contents:
 
 1. **{doc}`1_electricity_magnetism`**

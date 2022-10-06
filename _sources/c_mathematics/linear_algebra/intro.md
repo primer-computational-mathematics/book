@@ -1,6 +1,8 @@
 # Linear algebra
 
-## Table of contents
+This "Linear Algebra" session is useful for several ESE's maths modules, including "Mathematics Methods 1", "Mathematics for Scientists and Engineers", and "Geophysical Inversion".
+
+### Table of contents
 
 ```{tableofcontents}
 ```

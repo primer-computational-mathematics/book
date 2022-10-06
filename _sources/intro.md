@@ -4,6 +4,7 @@ Welcome to the Department of Earth Science and Engineering, Imperial College Lon
 
 The primer is (currently) split into four sections:
 
+* {doc}`a_modules/intro`
 * {doc}`b_coding/intro`
 * {doc}`c_mathematics/intro`
 * {doc}`d_geosciences/intro`
