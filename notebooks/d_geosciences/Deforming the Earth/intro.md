@@ -1,1 +1,4 @@
 # Deforming the Earth
+
+```{tableofcontents}
+```
