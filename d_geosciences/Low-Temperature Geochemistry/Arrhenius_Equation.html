@@ -1820,6 +1820,30 @@ title="Print to PDF"
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">log10</span><span class="p">,</span> <span class="n">floor</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># create our own functions</span>
+
+<span class="c1"># function to round a value to a certain number of significant figures</span>
+<span class="k">def</span> <span class="nf">round_to_n_sf</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">no_of_significant_figures</span><span class="p">):</span>
+    <span class="n">value_rounded</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">no_of_significant_figures</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="nb">int</span><span class="p">(</span><span class="n">floor</span><span class="p">(</span><span class="n">log10</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">value</span><span class="p">)))))</span>
+    <span class="k">if</span> <span class="n">value_rounded</span> <span class="o">==</span> <span class="nb">int</span><span class="p">(</span><span class="n">value_rounded</span><span class="p">):</span> 
+        <span class="n">value_rounded</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">value_rounded</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">value_rounded</span>
+            
+
+<span class="k">def</span> <span class="nf">show_sign</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+    <span class="n">string</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">value</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">string</span> <span class="o">=</span> <span class="s1">&#39;+&#39;</span><span class="o">+</span><span class="n">string</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">string</span> <span class="o">=</span> <span class="s1">&#39;-&#39;</span><span class="o">+</span><span class="n">string</span>
+    <span class="k">return</span> <span class="n">string</span>
 </pre></div>
 </div>
 </div>
@@ -1830,8 +1854,8 @@ title="Print to PDF"
 <div class="math notranslate nohighlight">
 \[CaAl_{2}Si_{2}O_{8}+8H^{+}\longrightarrow Ca^{2+}+2Al^{3+}+2SiO_{2}+4H_{2}O\]</div>
 <p>In the research paper below, there are experimental data for reaction rate as a function of temperature (Table 4 in the paper):</p>
-<p><img alt="" src="../../_images/AE1.png" /></p>
-<p>The key data are summarised in the following table; you will see that 3 temperatures (in <span class="math notranslate nohighlight">\(^\circ C\)</span>) were tested, each resulting in a different reaction rate (in <span class="math notranslate nohighlight">\(mol\,cm^{3}s^{-1}\)</span>). From these data, it is possible to calculate the activation energy for the reaction.</p>
+<p style="text-align:center;"><img src="images/AE1.png" style= "width: 80%"></p>
+<p>The key data are summarised in the following table; you will see that <span class="math notranslate nohighlight">\(3\)</span> temperatures (in <span class="math notranslate nohighlight">\(^\circ C\)</span>) were tested, each resulting in a different reaction rate (in <span class="math notranslate nohighlight">\(mol\,cm^{3}s^{-1}\)</span>). From these data, it is possible to calculate the activation energy for the reaction.</p>
 <ol class="simple">
 <li><p>In order to do this, we will need to assume that the reaction rate is equal to the rate constant. What order would the reaction have to be in order to make this assumption?</p></li>
 <li><p>The activation energy can be determined by plotting <span class="math notranslate nohighlight">\(\ln (k)\)</span> vs <span class="math notranslate nohighlight">\((1/T)\)</span> and finding the gradient of the straight line.</p></li>
@@ -1846,13 +1870,16 @@ title="Print to PDF"
 <span class="n">rate_45C</span> <span class="o">=</span> <span class="p">[</span><span class="mf">16.1</span><span class="p">,</span> <span class="mf">13.9</span><span class="p">,</span> <span class="mf">8.2</span><span class="p">,</span> <span class="mf">9.8</span><span class="p">,</span> <span class="mf">8.7</span><span class="p">,</span> <span class="mf">10.7</span><span class="p">,</span> <span class="mf">11.4</span><span class="p">]</span>
 <span class="n">rate_75C</span> <span class="o">=</span> <span class="p">[</span><span class="mf">29.3</span><span class="p">,</span> <span class="mf">23.5</span><span class="p">,</span> <span class="mf">11.6</span><span class="p">,</span> <span class="mf">20.2</span><span class="p">,</span> <span class="mf">16.5</span><span class="p">,</span> <span class="mf">13.9</span><span class="p">,</span> <span class="mf">23.2</span><span class="p">,</span> <span class="mf">24.3</span><span class="p">]</span>
 <span class="n">rate_95C</span> <span class="o">=</span> <span class="p">[</span><span class="mf">19.6</span><span class="p">,</span> <span class="mf">24.5</span><span class="p">,</span> <span class="mf">32.8</span><span class="p">,</span> <span class="mf">12.2</span><span class="p">,</span> <span class="mf">25.9</span><span class="p">,</span> <span class="mf">28.8</span><span class="p">,</span> <span class="mf">15.8</span><span class="p">,</span> <span class="mf">22.9</span><span class="p">]</span>
-<span class="n">rate_all</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;$</span><span class="si">{</span><span class="n">r</span><span class="si">}</span><span class="s2">$ &quot;</span> <span class="o">+</span> <span class="s2">&quot;$×\,10^{-12}$&quot;</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="p">(</span><span class="n">rate_45C</span> <span class="o">+</span> <span class="n">rate_75C</span> <span class="o">+</span> <span class="n">rate_95C</span><span class="p">)])</span>
-<span class="n">T_all</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="s2">&quot;$45$&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">rate_45C</span><span class="p">))]</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;$75$&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">rate_75C</span><span class="p">))]</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;$95$&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">rate_95C</span><span class="p">))])</span>
+<span class="n">rate_all</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">r</span><span class="o">*</span><span class="mi">10</span><span class="o">**-</span><span class="mi">12</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="p">(</span><span class="n">rate_45C</span> <span class="o">+</span> <span class="n">rate_75C</span> <span class="o">+</span> <span class="n">rate_95C</span><span class="p">)])</span>
+<span class="n">T_all</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">45</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">rate_45C</span><span class="p">))]</span> <span class="o">+</span> <span class="p">[</span><span class="mi">75</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">rate_75C</span><span class="p">))]</span> <span class="o">+</span> <span class="p">[</span><span class="mi">95</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">rate_95C</span><span class="p">))])</span>
 
 <span class="nb">dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Temperature $(^\circ C)$&#39;</span> <span class="p">:</span> <span class="n">T_all</span><span class="p">,</span>
         <span class="s1">&#39;Reaction rate&#39;</span> <span class="p">:</span> <span class="n">rate_all</span><span class="p">}</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
-  
+
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;Temperature $(^\circ C)$&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Temperature $(^\circ C)$&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:g}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;Reaction rate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Reaction rate&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:.2e}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">)</span>
+
 <span class="c1"># displaying the DataFrame</span>
 <span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">hide_index</span><span class="p">())</span>
 </pre></div>
@@ -1860,98 +1887,98 @@ title="Print to PDF"
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html"><style  type="text/css" >
-</style><table id="T_50ddb_" ><thead>    <tr>        <th class="col_heading level0 col0" >Temperature $(^\circ C)$</th>        <th class="col_heading level0 col1" >Reaction rate</th>    </tr></thead><tbody>
+</style><table id="T_3708e_" ><thead>    <tr>        <th class="col_heading level0 col0" >Temperature $(^\circ C)$</th>        <th class="col_heading level0 col1" >Reaction rate</th>    </tr></thead><tbody>
                 <tr>
-                                <td id="T_50ddb_row0_col0" class="data row0 col0" >$45$</td>
-                        <td id="T_50ddb_row0_col1" class="data row0 col1" >$16.1$ $×\,10^{-12}$</td>
+                                <td id="T_3708e_row0_col0" class="data row0 col0" >45</td>
+                        <td id="T_3708e_row0_col1" class="data row0 col1" >1.61e-11</td>
             </tr>
             <tr>
-                                <td id="T_50ddb_row1_col0" class="data row1 col0" >$45$</td>
-                        <td id="T_50ddb_row1_col1" class="data row1 col1" >$13.9$ $×\,10^{-12}$</td>
+                                <td id="T_3708e_row1_col0" class="data row1 col0" >45</td>
+                        <td id="T_3708e_row1_col1" class="data row1 col1" >1.39e-11</td>
             </tr>
             <tr>
-                                <td id="T_50ddb_row2_col0" class="data row2 col0" >$45$</td>
-                        <td id="T_50ddb_row2_col1" class="data row2 col1" >$8.2$ $×\,10^{-12}$</td>
+                                <td id="T_3708e_row2_col0" class="data row2 col0" >45</td>
+                        <td id="T_3708e_row2_col1" class="data row2 col1" >8.20e-12</td>
             </tr>
             <tr>
-                                <td id="T_50ddb_row3_col0" class="data row3 col0" >$45$</td>
-                        <td id="T_50ddb_row3_col1" class="data row3 col1" >$9.8$ $×\,10^{-12}$</td>
+                                <td id="T_3708e_row3_col0" class="data row3 col0" >45</td>
+                        <td id="T_3708e_row3_col1" class="data row3 col1" >9.80e-12</td>
             </tr>
             <tr>
-                                <td id="T_50ddb_row4_col0" class="data row4 col0" >$45$</td>
-                        <td id="T_50ddb_row4_col1" class="data row4 col1" >$8.7$ $×\,10^{-12}$</td>
+                                <td id="T_3708e_row4_col0" class="data row4 col0" >45</td>
+                        <td id="T_3708e_row4_col1" class="data row4 col1" >8.70e-12</td>
             </tr>
             <tr>
-                                <td id="T_50ddb_row5_col0" class="data row5 col0" >$45$</td>
-                        <td id="T_50ddb_row5_col1" class="data row5 col1" >$10.7$ $×\,10^{-12}$</td>
+                                <td id="T_3708e_row5_col0" class="data row5 col0" >45</td>
+                        <td id="T_3708e_row5_col1" class="data row5 col1" >1.07e-11</td>
             </tr>
             <tr>
-                                <td id="T_50ddb_row6_col0" class="data row6 col0" >$45$</td>
-                        <td id="T_50ddb_row6_col1" class="data row6 col1" >$11.4$ $×\,10^{-12}$</td>
+                                <td id="T_3708e_row6_col0" class="data row6 col0" >45</td>
+                        <td id="T_3708e_row6_col1" class="data row6 col1" >1.14e-11</td>
             </tr>
             <tr>
-                                <td id="T_50ddb_row7_col0" class="data row7 col0" >$75$</td>
-                        <td id="T_50ddb_row7_col1" class="data row7 col1" >$29.3$ $×\,10^{-12}$</td>
+                                <td id="T_3708e_row7_col0" class="data row7 col0" >75</td>
+                        <td id="T_3708e_row7_col1" class="data row7 col1" >2.93e-11</td>
             </tr>
             <tr>
-                                <td id="T_50ddb_row8_col0" class="data row8 col0" >$75$</td>
-                        <td id="T_50ddb_row8_col1" class="data row8 col1" >$23.5$ $×\,10^{-12}$</td>
+                                <td id="T_3708e_row8_col0" class="data row8 col0" >75</td>
+                        <td id="T_3708e_row8_col1" class="data row8 col1" >2.35e-11</td>
             </tr>
             <tr>
-                                <td id="T_50ddb_row9_col0" class="data row9 col0" >$75$</td>
-                        <td id="T_50ddb_row9_col1" class="data row9 col1" >$11.6$ $×\,10^{-12}$</td>
+                                <td id="T_3708e_row9_col0" class="data row9 col0" >75</td>
+                        <td id="T_3708e_row9_col1" class="data row9 col1" >1.16e-11</td>
             </tr>
             <tr>
-                                <td id="T_50ddb_row10_col0" class="data row10 col0" >$75$</td>
-                        <td id="T_50ddb_row10_col1" class="data row10 col1" >$20.2$ $×\,10^{-12}$</td>
+                                <td id="T_3708e_row10_col0" class="data row10 col0" >75</td>
+                        <td id="T_3708e_row10_col1" class="data row10 col1" >2.02e-11</td>
             </tr>
             <tr>
-                                <td id="T_50ddb_row11_col0" class="data row11 col0" >$75$</td>
-                        <td id="T_50ddb_row11_col1" class="data row11 col1" >$16.5$ $×\,10^{-12}$</td>
+                                <td id="T_3708e_row11_col0" class="data row11 col0" >75</td>
+                        <td id="T_3708e_row11_col1" class="data row11 col1" >1.65e-11</td>
             </tr>
             <tr>
-                                <td id="T_50ddb_row12_col0" class="data row12 col0" >$75$</td>
-                        <td id="T_50ddb_row12_col1" class="data row12 col1" >$13.9$ $×\,10^{-12}$</td>
+                                <td id="T_3708e_row12_col0" class="data row12 col0" >75</td>
+                        <td id="T_3708e_row12_col1" class="data row12 col1" >1.39e-11</td>
             </tr>
             <tr>
-                                <td id="T_50ddb_row13_col0" class="data row13 col0" >$75$</td>
-                        <td id="T_50ddb_row13_col1" class="data row13 col1" >$23.2$ $×\,10^{-12}$</td>
+                                <td id="T_3708e_row13_col0" class="data row13 col0" >75</td>
+                        <td id="T_3708e_row13_col1" class="data row13 col1" >2.32e-11</td>
             </tr>
             <tr>
-                                <td id="T_50ddb_row14_col0" class="data row14 col0" >$75$</td>
-                        <td id="T_50ddb_row14_col1" class="data row14 col1" >$24.3$ $×\,10^{-12}$</td>
+                                <td id="T_3708e_row14_col0" class="data row14 col0" >75</td>
+                        <td id="T_3708e_row14_col1" class="data row14 col1" >2.43e-11</td>
             </tr>
             <tr>
-                                <td id="T_50ddb_row15_col0" class="data row15 col0" >$95$</td>
-                        <td id="T_50ddb_row15_col1" class="data row15 col1" >$19.6$ $×\,10^{-12}$</td>
+                                <td id="T_3708e_row15_col0" class="data row15 col0" >95</td>
+                        <td id="T_3708e_row15_col1" class="data row15 col1" >1.96e-11</td>
             </tr>
             <tr>
-                                <td id="T_50ddb_row16_col0" class="data row16 col0" >$95$</td>
-                        <td id="T_50ddb_row16_col1" class="data row16 col1" >$24.5$ $×\,10^{-12}$</td>
+                                <td id="T_3708e_row16_col0" class="data row16 col0" >95</td>
+                        <td id="T_3708e_row16_col1" class="data row16 col1" >2.45e-11</td>
             </tr>
             <tr>
-                                <td id="T_50ddb_row17_col0" class="data row17 col0" >$95$</td>
-                        <td id="T_50ddb_row17_col1" class="data row17 col1" >$32.8$ $×\,10^{-12}$</td>
+                                <td id="T_3708e_row17_col0" class="data row17 col0" >95</td>
+                        <td id="T_3708e_row17_col1" class="data row17 col1" >3.28e-11</td>
             </tr>
             <tr>
-                                <td id="T_50ddb_row18_col0" class="data row18 col0" >$95$</td>
-                        <td id="T_50ddb_row18_col1" class="data row18 col1" >$12.2$ $×\,10^{-12}$</td>
+                                <td id="T_3708e_row18_col0" class="data row18 col0" >95</td>
+                        <td id="T_3708e_row18_col1" class="data row18 col1" >1.22e-11</td>
             </tr>
             <tr>
-                                <td id="T_50ddb_row19_col0" class="data row19 col0" >$95$</td>
-                        <td id="T_50ddb_row19_col1" class="data row19 col1" >$25.9$ $×\,10^{-12}$</td>
+                                <td id="T_3708e_row19_col0" class="data row19 col0" >95</td>
+                        <td id="T_3708e_row19_col1" class="data row19 col1" >2.59e-11</td>
             </tr>
             <tr>
-                                <td id="T_50ddb_row20_col0" class="data row20 col0" >$95$</td>
-                        <td id="T_50ddb_row20_col1" class="data row20 col1" >$28.8$ $×\,10^{-12}$</td>
+                                <td id="T_3708e_row20_col0" class="data row20 col0" >95</td>
+                        <td id="T_3708e_row20_col1" class="data row20 col1" >2.88e-11</td>
             </tr>
             <tr>
-                                <td id="T_50ddb_row21_col0" class="data row21 col0" >$95$</td>
-                        <td id="T_50ddb_row21_col1" class="data row21 col1" >$15.8$ $×\,10^{-12}$</td>
+                                <td id="T_3708e_row21_col0" class="data row21 col0" >95</td>
+                        <td id="T_3708e_row21_col1" class="data row21 col1" >1.58e-11</td>
             </tr>
             <tr>
-                                <td id="T_50ddb_row22_col0" class="data row22 col0" >$95$</td>
-                        <td id="T_50ddb_row22_col1" class="data row22 col1" >$22.9$ $×\,10^{-12}$</td>
+                                <td id="T_3708e_row22_col0" class="data row22 col0" >95</td>
+                        <td id="T_3708e_row22_col1" class="data row22 col1" >2.29e-11</td>
             </tr>
     </tbody></table></div></div>
 </div>
@@ -1987,8 +2014,8 @@ title="Print to PDF"
 <span class="n">p1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">poly1d</span><span class="p">(</span><span class="n">poly_coeffs</span><span class="p">)</span>
 <span class="n">slope</span> <span class="o">=</span> <span class="n">poly_coeffs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>           <span class="c1"># -Ea/R</span>
 <span class="n">y_intercept</span> <span class="o">=</span> <span class="n">poly_coeffs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>   <span class="c1"># ln(A)</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.0027</span><span class="p">,</span> <span class="mf">0.0032</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">p1</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\ln(k) = </span><span class="si">{0:.1f}</span><span class="s1">(1/T)+</span><span class="si">{1:.1f}</span><span class="s1">$&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">slope</span><span class="p">,</span> <span class="n">y_intercept</span><span class="p">))</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.0027</span><span class="p">,</span> <span class="mf">0.0032</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>  <span class="c1"># no need of many x value to plot linear curve</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">p1</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\ln(k) = </span><span class="si">{0}</span><span class="s1">(1/T)</span><span class="si">{1}</span><span class="s1">$&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">round_to_n_sf</span><span class="p">(</span><span class="n">slope</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">show_sign</span><span class="p">(</span><span class="n">round_to_n_sf</span><span class="p">(</span><span class="n">y_intercept</span><span class="p">,</span> <span class="mi">3</span><span class="p">))))</span>
 
 <span class="c1"># label and title the plot</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;1/T $(K^{-1})$&quot;</span><span class="p">)</span>
@@ -1998,22 +2025,22 @@ title="Print to PDF"
 
 <span class="c1"># calculate Ea</span>
 <span class="n">R</span> <span class="o">=</span> <span class="mf">8.314</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The activation energy is </span><span class="si">{</span><span class="o">-</span><span class="n">slope</span><span class="o">*</span><span class="n">R</span><span class="si">:</span><span class="s2">e</span><span class="si">}</span><span class="s2"> J/mol.&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The activation energy is </span><span class="si">{</span><span class="n">round_to_n_sf</span><span class="p">(</span><span class="o">-</span><span class="n">slope</span><span class="o">*</span><span class="n">R</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s2"> J/mol.&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The activation energy is 1.379474e+04 J/mol.
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The activation energy is 13800 J/mol.
 </pre></div>
 </div>
-<img alt="../../_images/Arrhenius_Equation_5_1.png" src="../../_images/Arrhenius_Equation_5_1.png" />
+<img alt="../../_images/Arrhenius_Equation_6_1.png" src="../../_images/Arrhenius_Equation_6_1.png" />
 </div>
 </div>
 <p>From the plot above, so</p>
 <div class="math notranslate nohighlight">
-\[-\frac{E_a}{R} = -1659.2\]</div>
+\[-\frac{E_a}{R} = -1660\]</div>
 <div class="math notranslate nohighlight">
-\[\therefore {E_a} = 1.4\times10^{4}\,J\,mol^{-1}\]</div>
+\[\therefore {E_a} = 1.38\times10^{4}\,J\,mol^{-1}\]</div>
 <ol class="simple">
 <li><p>You can pick a value of <span class="math notranslate nohighlight">\(k\)</span> for each temperature and find <span class="math notranslate nohighlight">\(E_a\)</span> using the same approach as above (plot <span class="math notranslate nohighlight">\(\ln(k)\)</span> VS (<span class="math notranslate nohighlight">\(1/T\)</span>)), but there is also another method to deduce <span class="math notranslate nohighlight">\(E_a\)</span> without plotting. Firstly, two data points <span class="math notranslate nohighlight">\((T, k)\)</span> with different <span class="math notranslate nohighlight">\(T\)</span> have to be chosen. In this case, they will be</p></li>
 </ol>
