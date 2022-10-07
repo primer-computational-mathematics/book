@@ -1803,9 +1803,9 @@ title="Print to PDF"
 </ul>
 <p>Filtering is a neighbourhood operation, in which the value of the pixel in the output image is determined by applying some alogrithm to the values of the pixels in the neighbourhood of the corresponding input pixel. All of the examples found below are linear filtering operations in which the value of an output pixel is a linear combination of the values of the pixels in the input pixels neighbourhood.</p>
 <p>What we aim to achieve is to have a moving window across our image which calculates an average of the values of the input image within the window for the central pixel. This smoothens the contrast between pixels.</p>
-<p style="text-align:center;"><img src="Data_Image_Filtering/convolution_graphical.png" style= "width: 30%"></p>
+<p style="text-align:center;"><img src="Data_Image_Filtering/convolution_graphical.png" style= "width: 50%"></p>
 <p>This can be acccomplished through convolution, which is a neighbourhood operation in which each output pixel is the weighted sum of neighbouring input pixels. The matrix of weights is called the convolution kernel, below we show a <span class="math notranslate nohighlight">\(3\times3\)</span> kernel that we will use for our moving average filter:</p>
-<p style="text-align:center;"><img src="Data_Image_Filtering/kernel.png" style="width:15%"  /></p>
+<p style="text-align:center;"><img src="Data_Image_Filtering/kernel.png" style="width:25%"  /></p>
 <p>To prevent against empty values at the edges of the image we can use padding, for instance we can place zero values in these cells or mirror the available values within our window. If this is not done and we ignore the edge pixels we will reduce the size of our image.</p>
 <section id="moving-average-filter">
 <h2>Moving average filter<a class="headerlink" href="#moving-average-filter" title="Permalink to this headline">#</a></h2>
@@ -1911,7 +1911,7 @@ Image dimension = (390, 556)
 <h2>Sharpening filters<a class="headerlink" href="#sharpening-filters" title="Permalink to this headline">#</a></h2>
 <p id="index-3">These filters work in the same fashion except that their kernel aims to increase the contrast between neighbouring pixels. This effect will be most pronounced at the pixels with the largest difference in digital numbers.</p>
 <p>A simple Kernel that we can use for this would be:</p>
-<p style="text-align:center;"><img src="Data_Image_Filtering/filter_sharpen.png" style="width:10%"/></p>
+<p style="text-align:center;"><img src="Data_Image_Filtering/filter_sharpen.png" style="width:25%"/></p>
 <p>The effect of this filter can be see in the following image:</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
@@ -1970,14 +1970,14 @@ Image dimension = (390, 556)
 </div>
 <p>We could do a Linear Contrast enhancement above to see a larger contrast in colours again. See Image Operations notebook</p>
 <p>In some cases the filters you will be using can be separated into two smaller filters and convolve these one after the other with our image. for instance:</p>
-<p style="text-align:center;"><img src="Data_Image_Filtering/filter_simplified.png"  style="width:30%;"/> </p>
+<p style="text-align:center;"><img src="Data_Image_Filtering/filter_simplified.png"  style="width:60%;"/> </p>
 <p>What this achieves is that it can bring down our computational complexity to <span class="math notranslate nohighlight">\(O(N^2 K)\)</span>, whereas before it was <span class="math notranslate nohighlight">\(O(N^2 K^2)\)</span></p>
 </section>
 <section id="edge-detection-gradient-operators">
 <h2>Edge detection (gradient operators)<a class="headerlink" href="#edge-detection-gradient-operators" title="Permalink to this headline">#</a></h2>
 <p id="index-4">Edges in this context refer to a stark contrast in brightness (DN value) within our image. These can be related to discontinuities in depth, discontinuities in surface orientation (angle), changes in material properties and or variation in scene illumination. These methods are valuable for data extraction in areas such as image processing, computer vision, and machine learning as it allows the extraction of structural properties of an image while reducing the amount of data.</p>
 <p>To find these brightness discontinuities derivatives can be used to characterise these as follows</p>
-<p style="text-align:center;"><img src="Data_Image_Filtering/differential.png" style="width:40%"/></p>
+<p style="text-align:center;"><img src="Data_Image_Filtering/differential.png" style="width:80%"/></p>
 <p>The way to apply this is through finite differencing. We can express this finite differencing in a kernel (h) and convolve this with our image:</p>
 <p>        forward difference: <span class="math notranslate nohighlight">\(f'[x]= f[x+1]-f[x]\)</span>    -&gt;    <span class="math notranslate nohighlight">\(h=[1,-1,0]\)</span></p>
 <p>        backward difference: <span class="math notranslate nohighlight">\(f'[x]= f[x]-f[x-1]\)</span>   -&gt;    <span class="math notranslate nohighlight">\(h=[0,1,-1]\)</span></p>
@@ -2069,7 +2069,7 @@ Image dimension = (390, 556)
 </div>
 </div>
 <p>Our edge detection is not perfect as we do not have ideal large steps in brightness on every edge, but more of a transition.</p>
-<p style="text-align:center;"><img src="Data_Image_Filtering/gradient.png" style="width:30%"/></p>
+<p style="text-align:center;"><img src="Data_Image_Filtering/gradient.png" style="width:50%"/></p>
 <p>Hence it is not always easy to say that there should be an edge between two pixels or not. One simple step we can take to greatly improve edge detection is smoothening out noise using a gaussian filter for instance. This can become very important when taking second derivatives like the laplacian as derivatives are very sensitive to noise.</p>
 </section>
 <section id="references-and-further-reading">
