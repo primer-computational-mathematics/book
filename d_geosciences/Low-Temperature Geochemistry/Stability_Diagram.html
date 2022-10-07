@@ -1379,7 +1379,7 @@ const thebe_selector_output = ".output, .cell_output"
      </li>
      <li class="toctree-l3">
       <a class="reference internal" href="../Waves/Fourier_Series.html">
-       Fourier series
+       Fourier series in Python
       </a>
      </li>
      <li class="toctree-l3">
@@ -1821,17 +1821,17 @@ title="Print to PDF"
              <span class="s2">&quot;$Na^{+}(aq)$&quot;</span><span class="p">,</span>
              <span class="s2">&quot;$H_</span><span class="si">{4}</span><span class="s2">SiO_</span><span class="si">{4}</span><span class="s2">$&quot;</span><span class="p">]</span>
 <span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Albite (low albite)&quot;</span><span class="p">,</span> <span class="s2">&quot;Kaolinite&quot;</span><span class="p">,</span> <span class="s2">&quot;Na-beidellite&quot;</span><span class="p">,</span> <span class="s2">&quot;Gibbsite&quot;</span><span class="p">,</span> <span class="s2">&quot;Hydrogen ion&quot;</span><span class="p">,</span> <span class="s2">&quot;Water&quot;</span><span class="p">,</span> <span class="s2">&quot;Sodium ion&quot;</span><span class="p">,</span> <span class="s2">&quot;Dissolved silica&quot;</span><span class="p">]</span>
-<span class="n">std_Gf_str</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;-3712&quot;</span><span class="p">,</span> <span class="s2">&quot;-3778&quot;</span><span class="p">,</span> <span class="s2">&quot;-5354&quot;</span><span class="p">,</span> <span class="s2">&quot;-1144&quot;</span><span class="p">,</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span> <span class="s2">&quot;-237.2&quot;</span><span class="p">,</span> <span class="s2">&quot;-261.7&quot;</span><span class="p">,</span> <span class="s2">&quot;-1316&quot;</span><span class="p">]</span>
-<span class="n">std_Gf_num</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">G</span><span class="p">)</span> <span class="k">for</span> <span class="n">G</span> <span class="ow">in</span> <span class="n">std_Gf_str</span><span class="p">]</span>  <span class="c1"># kJ/mol</span>
+<span class="n">std_Gf</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">3712</span><span class="p">,</span> <span class="o">-</span><span class="mi">3778</span><span class="p">,</span> <span class="o">-</span><span class="mi">5354</span><span class="p">,</span> <span class="o">-</span><span class="mi">1144</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mf">237.2</span><span class="p">,</span> <span class="o">-</span><span class="mf">261.7</span><span class="p">,</span> <span class="o">-</span><span class="mi">1316</span><span class="p">]</span>  <span class="c1"># kJ/mol</span>
 
-<span class="nb">dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Chemical formula of compound or species&#39;</span> <span class="p">:</span> <span class="n">compounds</span><span class="p">,</span>
+<span class="n">dict1</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Chemical formula of compound or species&#39;</span> <span class="p">:</span> <span class="n">compounds</span><span class="p">,</span>
         <span class="s1">&#39;Name&#39;</span> <span class="p">:</span> <span class="n">names</span><span class="p">,</span>
-       <span class="s1">&#39;$G_</span><span class="si">{f}</span><span class="s1">^</span><span class="si">{o}</span><span class="s1">$&#39;</span> <span class="p">:</span> <span class="n">std_Gf_str</span><span class="p">}</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
+       <span class="s1">&#39;$G_</span><span class="si">{f}</span><span class="s1">^</span><span class="si">{o}</span><span class="s1">$&#39;</span> <span class="p">:</span> <span class="n">std_Gf</span><span class="p">}</span>
+<span class="n">df1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dict1</span><span class="p">)</span>
+<span class="n">df1</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;$G_</span><span class="si">{f}</span><span class="s1">^</span><span class="si">{o}</span><span class="s1">$&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df1</span><span class="p">[</span><span class="s1">&#39;$G_</span><span class="si">{f}</span><span class="s1">^</span><span class="si">{o}</span><span class="s1">$&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:g}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">)</span>
   
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Table 1: Thermodynamic data from P. Ryan&#39;s book, p278.&quot;</span><span class="p">)</span>
 <span class="c1"># displaying the DataFrame</span>
-<span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">hide_index</span><span class="p">())</span>
+<span class="n">display</span><span class="p">(</span><span class="n">df1</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">hide_index</span><span class="p">())</span>
 </pre></div>
 </div>
 </div>
@@ -1840,46 +1840,46 @@ title="Print to PDF"
 </pre></div>
 </div>
 <div class="output text_html"><style  type="text/css" >
-</style><table id="T_2cc4e_" ><thead>    <tr>        <th class="col_heading level0 col0" >Chemical formula of compound or species</th>        <th class="col_heading level0 col1" >Name</th>        <th class="col_heading level0 col2" >$G_{f}^{o}$</th>    </tr></thead><tbody>
+</style><table id="T_cf1c9_" ><thead>    <tr>        <th class="col_heading level0 col0" >Chemical formula of compound or species</th>        <th class="col_heading level0 col1" >Name</th>        <th class="col_heading level0 col2" >$G_{f}^{o}$</th>    </tr></thead><tbody>
                 <tr>
-                                <td id="T_2cc4e_row0_col0" class="data row0 col0" >$NaAlSi_{3}O_{8}$</td>
-                        <td id="T_2cc4e_row0_col1" class="data row0 col1" >Albite (low albite)</td>
-                        <td id="T_2cc4e_row0_col2" class="data row0 col2" >-3712</td>
+                                <td id="T_cf1c9_row0_col0" class="data row0 col0" >$NaAlSi_{3}O_{8}$</td>
+                        <td id="T_cf1c9_row0_col1" class="data row0 col1" >Albite (low albite)</td>
+                        <td id="T_cf1c9_row0_col2" class="data row0 col2" >-3712</td>
             </tr>
             <tr>
-                                <td id="T_2cc4e_row1_col0" class="data row1 col0" >$Al_{2}Si_{2}O_{5}(OH)_{4}$</td>
-                        <td id="T_2cc4e_row1_col1" class="data row1 col1" >Kaolinite</td>
-                        <td id="T_2cc4e_row1_col2" class="data row1 col2" >-3778</td>
+                                <td id="T_cf1c9_row1_col0" class="data row1 col0" >$Al_{2}Si_{2}O_{5}(OH)_{4}$</td>
+                        <td id="T_cf1c9_row1_col1" class="data row1 col1" >Kaolinite</td>
+                        <td id="T_cf1c9_row1_col2" class="data row1 col2" >-3778</td>
             </tr>
             <tr>
-                                <td id="T_2cc4e_row2_col0" class="data row2 col0" >$Na_{0.33}Al_{2}(Si_{3.67}Al_{0.33})O_{10}(OH)_{2}$</td>
-                        <td id="T_2cc4e_row2_col1" class="data row2 col1" >Na-beidellite</td>
-                        <td id="T_2cc4e_row2_col2" class="data row2 col2" >-5354</td>
+                                <td id="T_cf1c9_row2_col0" class="data row2 col0" >$Na_{0.33}Al_{2}(Si_{3.67}Al_{0.33})O_{10}(OH)_{2}$</td>
+                        <td id="T_cf1c9_row2_col1" class="data row2 col1" >Na-beidellite</td>
+                        <td id="T_cf1c9_row2_col2" class="data row2 col2" >-5354</td>
             </tr>
             <tr>
-                                <td id="T_2cc4e_row3_col0" class="data row3 col0" >$Al(OH)_3$</td>
-                        <td id="T_2cc4e_row3_col1" class="data row3 col1" >Gibbsite</td>
-                        <td id="T_2cc4e_row3_col2" class="data row3 col2" >-1144</td>
+                                <td id="T_cf1c9_row3_col0" class="data row3 col0" >$Al(OH)_3$</td>
+                        <td id="T_cf1c9_row3_col1" class="data row3 col1" >Gibbsite</td>
+                        <td id="T_cf1c9_row3_col2" class="data row3 col2" >-1144</td>
             </tr>
             <tr>
-                                <td id="T_2cc4e_row4_col0" class="data row4 col0" >$H^+$</td>
-                        <td id="T_2cc4e_row4_col1" class="data row4 col1" >Hydrogen ion</td>
-                        <td id="T_2cc4e_row4_col2" class="data row4 col2" >0</td>
+                                <td id="T_cf1c9_row4_col0" class="data row4 col0" >$H^+$</td>
+                        <td id="T_cf1c9_row4_col1" class="data row4 col1" >Hydrogen ion</td>
+                        <td id="T_cf1c9_row4_col2" class="data row4 col2" >0</td>
             </tr>
             <tr>
-                                <td id="T_2cc4e_row5_col0" class="data row5 col0" >$H_{2}O(l)$</td>
-                        <td id="T_2cc4e_row5_col1" class="data row5 col1" >Water</td>
-                        <td id="T_2cc4e_row5_col2" class="data row5 col2" >-237.2</td>
+                                <td id="T_cf1c9_row5_col0" class="data row5 col0" >$H_{2}O(l)$</td>
+                        <td id="T_cf1c9_row5_col1" class="data row5 col1" >Water</td>
+                        <td id="T_cf1c9_row5_col2" class="data row5 col2" >-237.2</td>
             </tr>
             <tr>
-                                <td id="T_2cc4e_row6_col0" class="data row6 col0" >$Na^{+}(aq)$</td>
-                        <td id="T_2cc4e_row6_col1" class="data row6 col1" >Sodium ion</td>
-                        <td id="T_2cc4e_row6_col2" class="data row6 col2" >-261.7</td>
+                                <td id="T_cf1c9_row6_col0" class="data row6 col0" >$Na^{+}(aq)$</td>
+                        <td id="T_cf1c9_row6_col1" class="data row6 col1" >Sodium ion</td>
+                        <td id="T_cf1c9_row6_col2" class="data row6 col2" >-261.7</td>
             </tr>
             <tr>
-                                <td id="T_2cc4e_row7_col0" class="data row7 col0" >$H_{4}SiO_{4}$</td>
-                        <td id="T_2cc4e_row7_col1" class="data row7 col1" >Dissolved silica</td>
-                        <td id="T_2cc4e_row7_col2" class="data row7 col2" >-1316</td>
+                                <td id="T_cf1c9_row7_col0" class="data row7 col0" >$H_{4}SiO_{4}$</td>
+                        <td id="T_cf1c9_row7_col1" class="data row7 col1" >Dissolved silica</td>
+                        <td id="T_cf1c9_row7_col2" class="data row7 col2" >-1316</td>
             </tr>
     </tbody></table></div></div>
 </div>
@@ -1892,8 +1892,8 @@ title="Print to PDF"
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Delta_Gr = (kaolinite + 2 Na ion + 4 dissolved silica) - (2 albite + 2 H ion + 9 water)</span>
 
 <span class="c1"># calculate Delta_Gr</span>
-<span class="n">Delta_Gr</span> <span class="o">=</span> <span class="p">((</span><span class="mi">1</span><span class="o">*</span><span class="n">std_Gf_num</span><span class="p">[</span><span class="n">names</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;Kaolinite&quot;</span><span class="p">)]</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">std_Gf_num</span><span class="p">[</span><span class="n">names</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;Sodium ion&quot;</span><span class="p">)]</span> <span class="o">+</span> <span class="mi">4</span><span class="o">*</span><span class="n">std_Gf_num</span><span class="p">[</span><span class="n">names</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;Dissolved silica&quot;</span><span class="p">)])</span> <span class="o">-</span> 
-                 <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">std_Gf_num</span><span class="p">[</span><span class="n">names</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;Albite (low albite)&quot;</span><span class="p">)]</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">std_Gf_num</span><span class="p">[</span><span class="n">names</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;Hydrogen ion&quot;</span><span class="p">)]</span> <span class="o">+</span> <span class="mi">9</span><span class="o">*</span><span class="n">std_Gf_num</span><span class="p">[</span><span class="n">names</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;Water&quot;</span><span class="p">)]))</span>
+<span class="n">Delta_Gr</span> <span class="o">=</span> <span class="p">((</span><span class="mi">1</span><span class="o">*</span><span class="n">std_Gf</span><span class="p">[</span><span class="n">names</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;Kaolinite&quot;</span><span class="p">)]</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">std_Gf</span><span class="p">[</span><span class="n">names</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;Sodium ion&quot;</span><span class="p">)]</span> <span class="o">+</span> <span class="mi">4</span><span class="o">*</span><span class="n">std_Gf</span><span class="p">[</span><span class="n">names</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;Dissolved silica&quot;</span><span class="p">)])</span> <span class="o">-</span> 
+                 <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">std_Gf</span><span class="p">[</span><span class="n">names</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;Albite (low albite)&quot;</span><span class="p">)]</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">std_Gf</span><span class="p">[</span><span class="n">names</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;Hydrogen ion&quot;</span><span class="p">)]</span> <span class="o">+</span> <span class="mi">9</span><span class="o">*</span><span class="n">std_Gf</span><span class="p">[</span><span class="n">names</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;Water&quot;</span><span class="p">)]))</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The Gibbs free energy of the reaction is </span><span class="si">{</span><span class="n">Delta_Gr</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> kJ.&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1946,7 +1946,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x1d5c17052b0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x262a831e310&gt;
 </pre></div>
 </div>
 <img alt="../../_images/Stability_Diagram_8_1.png" src="../../_images/Stability_Diagram_8_1.png" />
@@ -1983,14 +1983,14 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x1d5c16c4a60&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x262a81d1fd0&gt;
 </pre></div>
 </div>
 <img alt="../../_images/Stability_Diagram_10_1.png" src="../../_images/Stability_Diagram_10_1.png" />
 </div>
 </div>
 <p>The stability diagram above is a simplified version, acquired from the given information. A more complex version of it is shown in Figure 1 below.</p>
-<p><img alt="" src="../../_images/SD1.png" /></p>
+<p style="text-align:center;"><img src="images/SD1.png" style= "width: 50%"></p>
 <p><span class="math notranslate nohighlight">\(\quad\)</span>Figure 1: A mineral stability diagram showing stability fields for gibbsite, kaolinite, Na-beidellite (smectite), and albite at <span class="math notranslate nohighlight">\(25^\circ C\)</span> and <span class="math notranslate nohighlight">\(1\,atm\)</span> (Ryan, 2019).</p>
 <section id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>

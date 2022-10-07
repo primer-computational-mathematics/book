@@ -1379,7 +1379,7 @@ const thebe_selector_output = ".output, .cell_output"
      </li>
      <li class="toctree-l3">
       <a class="reference internal" href="Fourier_Series.html">
-       Fourier series
+       Fourier series in Python
       </a>
      </li>
      <li class="toctree-l3">
@@ -1821,19 +1821,17 @@ title="Print to PDF"
 <section id="impedance">
 <h2>Impedance<a class="headerlink" href="#impedance" title="Permalink to this headline">#</a></h2>
 <p id="index-0">Impedance is a measure of how difficult it is for a wave to travel through a certain medium.</p>
-<p>The physical properties characterizing the model are:
-density (<span class="math notranslate nohighlight">\(\rho\)</span>) and
-seismic velocity (<span class="math notranslate nohighlight">\(c\)</span>)
-The acoustic impedance of each layer is: $<span class="math notranslate nohighlight">\( Z = \rho c   \)</span><span class="math notranslate nohighlight">\(
-with units \)</span>[kg s^{-1}]$.</p>
-<p>Consider a reflectivity model and let’s calculate the impedance for all three layers.
-<img src="https://github.com/geoscixyz/geosci-labs/blob/main/images/seismic/Step3FixedMod.png?raw=true" alt="image info" width="300" 
-     height="300"/></p>
-<div class="cell docutils container">
+<p>The physical properties characterizing the model are density (<span class="math notranslate nohighlight">\(\rho\)</span>) and seismic velocity (<span class="math notranslate nohighlight">\(c\)</span>)</p>
+<p>The acoustic impedance of each layer is:</p>
+<div class="math notranslate nohighlight">
+\[ Z = \rho c   \]</div>
+<p>with units <span class="math notranslate nohighlight">\([kg\,s^{-1}]\)</span>.</p>
+<p>Consider a reflectivity model and let’s calculate the impedance for all three layers.</p>
+<p style="text-align:center;"><img src="https://github.com/geoscixyz/geosci-labs/blob/main/images/seismic/Step3FixedMod.png?raw=true" alt="image info" style= "width: 40%"/></p><div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">acoustic_impedance</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">layer_number</span><span class="p">):</span>
     <span class="n">z</span> <span class="o">=</span> <span class="n">rho</span><span class="o">*</span><span class="n">c</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The acoustic impedance of layer&#39;</span><span class="p">,</span> <span class="n">layer_number</span><span class="p">,</span> <span class="s1">&#39;=&#39;</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="s1">&#39;kg s^-1&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The acoustic impedance of layer&#39;</span><span class="p">,</span> <span class="n">layer_number</span><span class="p">,</span> <span class="s1">&#39;=&#39;</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="s1">&#39;kg/s&#39;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">z</span>
 
 <span class="n">rho1</span> <span class="o">=</span> <span class="mi">2000</span>
@@ -1850,9 +1848,9 @@ with units \)</span>[kg s^{-1}]$.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The acoustic impedance of layer 1 = 1000000 kg s^-1
-The acoustic impedance of layer 2 = 2300000 kg s^-1
-The acoustic impedance of layer 3 = 3450000 kg s^-1
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The acoustic impedance of layer 1 = 1000000 kg/s
+The acoustic impedance of layer 2 = 2300000 kg/s
+The acoustic impedance of layer 3 = 3450000 kg/s
 </pre></div>
 </div>
 </div>
@@ -1865,22 +1863,30 @@ The acoustic impedance of layer 3 = 3450000 kg s^-1
 <span id="index-2"></span><h3>Reflection and Transmission (Transverse waves)<a class="headerlink" href="#reflection-and-transmission-transverse-waves" title="Permalink to this headline">#</a></h3>
 <p>Consider acoustic impedance in a different light where a seismic wave travels through a medium. When an incident wave apporaches a boundary of different density and seismic velocity (thus, different impedance), a wave can reflected or transmitted. We make a few assumptions:</p>
 <ul class="simple">
-<li><p>y_i + y_r = y_p (for a continuous string across a boundary and conservation of energy)</p></li>
+<li><p><span class="math notranslate nohighlight">\(y_i + y_r = y_p\)</span> (for a continuous string across a boundary and conservation of energy)</p></li>
 <li><p>tension in the string must be continuous</p></li>
 </ul>
-<p>Consider the subscript i for the incidence wave, r for the reflected wave and p for the propagating/transmitted wave.</p>
+<p>Consider the subscript <span class="math notranslate nohighlight">\(i\)</span> for the incidence wave, <span class="math notranslate nohighlight">\(r\)</span> for the reflected wave and <span class="math notranslate nohighlight">\(p\)</span> for the propagating/transmitted wave.</p>
 <p>Consider coefficients of reflection and transmission now as the ratio between the amplitude of the reflected/transmitted wave and incident wave respectively.</p>
-<p>The reflection coefficient is $<span class="math notranslate nohighlight">\( R = \frac{y_{0r}}{y_{0i}}\)</span><span class="math notranslate nohighlight">\( and the transmission coefficient is \)</span><span class="math notranslate nohighlight">\( P = \frac{y_{0p}}{y_{0i}}\)</span>$.</p>
-<p>For this module, we are assuming that the incident wave travels normal to the boundary. Thus <span class="math notranslate nohighlight">\(\theta i\)</span> is 0, as well as <span class="math notranslate nohighlight">\(\theta r\)</span> and <span class="math notranslate nohighlight">\(\theta p\)</span>.</p>
-<p><img src="https://ars.els-cdn.com/content/image/1-s2.0-S138373031023003X-gr2.gif" alt="image info" width="300" 
-     height="300"/>
-From acoustic impedance, the down-going reflection coefficient for amplitude is given by $<span class="math notranslate nohighlight">\( R = \frac{Z_{1}-Z_2}{Z_1+Z_2} \)</span>$</p>
-<p>and the transmission coefficient is $<span class="math notranslate nohighlight">\( P = \frac{2Z_{1}}{Z_1+Z_2} \)</span>$</p>
-<p>Considering wave energy transfer, where wave total energy per unit string is defined as: <span class="math notranslate nohighlight">\( E = \frac{ \rho \omega^2 {y_0}^2}{2}\)</span>.</p>
+<p>The reflection coefficient is</p>
 <div class="math notranslate nohighlight">
-\[ R = (\frac{Z_{1}-Z_2}{Z_1+Z_2})^2 \]</div>
-<p>and the transmission coefficient is $<span class="math notranslate nohighlight">\( P = \frac{4 Z_{1} Z_2}
-{(Z_1+Z_2)^2} \)</span>$</p>
+\[ R = \frac{y_{0r}}{y_{0i}}\]</div>
+<p>and the transmission coefficient is</p>
+<div class="math notranslate nohighlight">
+\[ P = \frac{y_{0p}}{y_{0i}}\]</div>
+<p>For this module, we are assuming that the incident wave travels normal to the boundary. Thus <span class="math notranslate nohighlight">\(\theta_i = \theta_r = \theta_p = 0\)</span>.</p>
+<p style="text-align:center;"><img src="https://ars.els-cdn.com/content/image/1-s2.0-S138373031023003X-gr2.gif" alt="image info" style= "width: 50%"/></p>
+<p>From acoustic impedance, the down-going reflection coefficient for amplitude is given by</p>
+<div class="math notranslate nohighlight">
+\[ R = \frac{Z_{1}-Z_2}{Z_1+Z_2} \]</div>
+<p>and the transmission coefficient is</p>
+<div class="math notranslate nohighlight">
+\[ P = \frac{2Z_{1}}{Z_1+Z_2} \]</div>
+<p>Considering wave energy transfer, where wave total energy per unit string is defined as <span class="math notranslate nohighlight">\( E = \frac{ \rho \omega^2 {y_0}^2}{2}\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[ R = \left(\frac{Z_{1}-Z_2}{Z_1+Z_2}\right)^2 \]</div>
+<div class="math notranslate nohighlight">
+\[ P = \frac{4 Z_{1} Z_2}{(Z_1+Z_2)^2} \]</div>
 <p><strong>Note that 1 + R = P always, from conservation of energy</strong></p>
 <p>Reflection and transmission coefficients as a function of impedances.</p>
 <div class="cell docutils container">
@@ -1944,9 +1950,9 @@ From acoustic impedance, the down-going reflection coefficient for amplitude is 
 </div>
 </div>
 <ul class="simple">
-<li><p>Note that when Z1 <span class="math notranslate nohighlight">\(\rightarrow 0\)</span> (start of graph 1) and Z2 <span class="math notranslate nohighlight">\(\rightarrow \infty\)</span> (end of graph 2), the reflection coefficient is -1 and transmission coefficient is 0. This means that the wave is completely reflected and has a phase change of <span class="math notranslate nohighlight">\(\pi\)</span></p></li>
-<li><p>If Z2 is zero, the incident wave is reflected, so the reflection coefficient is 1, and the transmission coefficient is 2. No wave can pass through layer 2 if Z2 is zero.</p></li>
-<li><p>If Z1=Z2 (markers on graph 2), the reflection coefficient is 0 and the transmission coefficient is 1. There is virtually no boundary as the properties, density and seismic velocity, of the media are the same.</p></li>
+<li><p>Note that when <span class="math notranslate nohighlight">\(Z_1 \to 0\)</span> (start of graph 1) and <span class="math notranslate nohighlight">\(Z_2 \to \infty\)</span> (end of graph 2), the reflection coefficient is <span class="math notranslate nohighlight">\(-1\)</span> and transmission coefficient is <span class="math notranslate nohighlight">\(0\)</span>. This means that the wave is completely reflected and has a phase change of <span class="math notranslate nohighlight">\(\pi\)</span></p></li>
+<li><p>If <span class="math notranslate nohighlight">\(Z_2\)</span> is zero, the incident wave is reflected, so the reflection coefficient is <span class="math notranslate nohighlight">\(1\)</span>, and the transmission coefficient is <span class="math notranslate nohighlight">\(2\)</span>. No wave can pass through layer 2 if <span class="math notranslate nohighlight">\(Z_2\)</span> is zero.</p></li>
+<li><p>If <span class="math notranslate nohighlight">\(Z_1=Z_2\)</span> (markers on graph 2), the reflection coefficient is <span class="math notranslate nohighlight">\(0\)</span> and the transmission coefficient is <span class="math notranslate nohighlight">\(1\)</span>. There is virtually no boundary as the properties, density and seismic velocity, of the media are the same.</p></li>
 </ul>
 </section>
 <section id="reflection-and-transmission-longitudinal-waves">
@@ -1954,7 +1960,8 @@ From acoustic impedance, the down-going reflection coefficient for amplitude is 
 <p>As longitudinal waves travel through a medium, vibrations lead to pressure waves within the medium, with a phase difference of <span class="math notranslate nohighlight">\(\pi\)</span>. Since the longitudinal wave and pressure wave are in anti-phase, the reflection and transmission coefficients for the pressure wave are as follows:</p>
 <div class="math notranslate nohighlight">
 \[ R = \frac{Z_2-Z_1}{Z_1+Z_2} \]</div>
-<p>and the transmission coefficient is $<span class="math notranslate nohighlight">\( P = \frac{2Z_2}{Z_1+Z_2} \)</span>$</p>
+<div class="math notranslate nohighlight">
+\[ P = \frac{2Z_2}{Z_1+Z_2} \]</div>
 </section>
 <section id="references">
 <h3>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h3>

@@ -1379,7 +1379,7 @@ const thebe_selector_output = ".output, .cell_output"
      </li>
      <li class="toctree-l3">
       <a class="reference internal" href="../Waves/Fourier_Series.html">
-       Fourier series
+       Fourier series in Python
       </a>
      </li>
      <li class="toctree-l3">
@@ -1835,7 +1835,7 @@ title="Print to PDF"
 <p><a class="reference internal" href="../../a_modules/intro.html#module-psdp"><span class="std std-ref"><!-- module-psdp badge --><span class="module module-psdp">Practical Seismic Data Processing</span></span></a> <a class="reference internal" href="../../a_modules/intro.html#module-gagp"><span class="std std-ref"><!-- module-gagp badge --><span class="module module-gagp">Geophysical Analysis Group Project</span></span></a></p>
 <section id="what-is-it">
 <span id="index-0"></span><h2>What is it?<a class="headerlink" href="#what-is-it" title="Permalink to this headline">#</a></h2>
-<p>We have already considered the issue of temporal aliasing, which occurs when the sampling rate of our seismic data is too low to properly sample high-frequencies in the dataset. One of the solution is cutting away the aliased frequencies (&gt; <span class="math notranslate nohighlight">\(f_{notch}\)</span>) using filters.</p>
+<p>We have already considered the issue of temporal aliasing, which occurs when the sampling rate of our seismic data is too low to properly sample high-frequencies in the dataset. One of the solution is cutting away the aliased frequencies (&gt;<span class="math notranslate nohighlight">\(f_{\text{notch}}\)</span>) using filters.</p>
 <p>As seismic data is sampled also in the distance <span class="math notranslate nohighlight">\(x\)</span> dimension, a similar issue of spatial aliasing can occur. Spatial aliasing can result in inaccurate representation of dips in our seismic data, leading to issues with migration and other dip dependant processes.</p>
 </section>
 <section id="spatial-nyquist-frequency">
@@ -1843,27 +1843,26 @@ title="Print to PDF"
 <p>The spatial Nyquist frequency depends on the dip of a given reflector and the trace spacing of our seismic dataset.</p>
 <p>As with regular temporal aliasing, we observe spatial aliasing at frequencies where the wavenumber <span class="math notranslate nohighlight">\(k\)</span> is too high for each cycle to be sampled twice by a given trace interval <span class="math notranslate nohighlight">\(x\)</span>:</p>
 <div class="math notranslate nohighlight">
-\[k_{Nyq}=\frac{1}{2{\Delta}x}\]</div>
+\[k_{\text{Nyq}}=\frac{1}{2{\Delta}x}\]</div>
 <p>Temporal aliasing will occur at the spatial Nyquist frequency when:</p>
 <div class="math notranslate nohighlight">
-\[f_{Nyq}=v*k_{Nyq}\]</div>
-<p>When dealing with gathers in time, <br>
-we can consider velocity <span class="math notranslate nohighlight">\(v\)</span> as a function of dip (<span class="math notranslate nohighlight">\({\alpha}\)</span>, in ms/trace):</p>
+\[f_{\text{Nyq}}=vk_{\text{Nyq}}\]</div>
+<p>When dealing with gathers in time, we can consider velocity <span class="math notranslate nohighlight">\(v\)</span> as a function of dip (<span class="math notranslate nohighlight">\({\alpha}\)</span>, in <span class="math notranslate nohighlight">\(ms\)</span>/trace):</p>
 <div class="math notranslate nohighlight">
 \[v=\frac{1000{\Delta}x}{\alpha}\]</div>
 <p>Which combined give:</p>
 <div class="math notranslate nohighlight">
-\[f_{Nyq}=\frac{500}{\alpha}\]</div>
-<p>Wraparound will occur frequencies are higher than the spatial Nyquist frequency <br>
-<img src="images/wraparound.png" style="width:500px;height:250px" align="center"/></p>
+\[f_{\text{Nyq}}=\frac{500}{\alpha}\]</div>
+<p>Wraparound will occur frequencies are higher than the spatial Nyquist frequency <br></p>
+<p style="text-align:center;"><img src="images/wraparound.png" style= "width: 60%" align="center"/></p>
 <p>If we consider spatial aliasing in terms of true dip (e.g. in a depth converted stack), then calculating the spatial Nyquist becomes a simple calculation involving velocity <span class="math notranslate nohighlight">\(v\)</span>, trace spacing (CMP spacing) <span class="math notranslate nohighlight">\({\Delta}x\)</span> and the dip angle <span class="math notranslate nohighlight">\({\theta}\)</span>:</p>
 <div class="math notranslate nohighlight">
-\[f_{Nyq}=\frac{v}{4\:{\Delta}x\:{\sin}{\theta}}\]</div>
-<img src="images/table.png" style="width:300px;height:240px" align="center"/>
-<p><span class="math notranslate nohighlight">\(12.5m\)</span> CMP spacing is relatively safe at even relatively high dips considering the bandwidth of most conventional marine surveys. At larger trace spacing however even relatively small dips are at risk of aliasing across a significant portion of the typical bandwidth. Large sampling interval/ trace sapcing or highly dipping events are more prone to spatial aliasing.</p>
+\[f_{\text{Nyq}}=\frac{v}{4\:{\Delta}x\:{\sin}{\theta}}\]</div>
+<p style="text-align:center;"><img src="images/table.png" style= "width: 40%" align="center"/></p>
+<p><span class="math notranslate nohighlight">\(12.5\,m\)</span> CMP spacing is relatively safe at even relatively high dips considering the bandwidth of most conventional marine surveys. At larger trace spacing however even relatively small dips are at risk of aliasing across a significant portion of the typical bandwidth. Large sampling interval/trace sapcing or highly dipping events are more prone to spatial aliasing.</p>
 <section id="practice-1">
 <h3>Practice 1<a class="headerlink" href="#practice-1" title="Permalink to this headline">#</a></h3>
-<p>For a linear event in a seismic section, the time dip is measured in terms of milliseconds per trace. A linear dipping event with a slope of 10 ms/trace on a seismic section, at what temporal frequency will the data be spatially aliased?</p>
+<p>For a linear event in a seismic section, the time dip is measured in terms of milliseconds per trace. A linear dipping event with a slope of <span class="math notranslate nohighlight">\(10\)</span> <span class="math notranslate nohighlight">\(ms\)</span>/trace on a seismic section, at what temporal frequency will the data be spatially aliased?</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f_aliasing</span><span class="p">(</span><span class="n">alpha</span><span class="p">):</span>
@@ -1884,15 +1883,13 @@ we can consider velocity <span class="math notranslate nohighlight">\(v\)</span>
 </section>
 <section id="spatial-aliasing-in-t-x-domain">
 <h2>Spatial Aliasing in t-x domain<a class="headerlink" href="#spatial-aliasing-in-t-x-domain" title="Permalink to this headline">#</a></h2>
-<p>Spatial aliasing can be extremely difficult to identify in the t-x domain. Generally, it has a pixelated-like
-appearance, particularly along steeply dipping events.</p>
-<img src="images/txdomain.png" style="width:300px;height:240px" align="center"/></section>
+<p>Spatial aliasing can be extremely difficult to identify in the <span class="math notranslate nohighlight">\(t\)</span>-<span class="math notranslate nohighlight">\(x\)</span> domain. Generally, it has a pixelated-like appearance, particularly along steeply dipping events.</p>
+<p style="text-align:center;"><img src="images/txdomain.png" style= "width: 40%" align="center"/></p></section>
 <section id="spatial-aliasing-in-f-k-domain">
 <h2>Spatial Aliasing in F-K domain<a class="headerlink" href="#spatial-aliasing-in-f-k-domain" title="Permalink to this headline">#</a></h2>
-<p>Spatial Aliasing is significantly easier to observe in the F-K domain, where frequencies above the spatial Nyquist appear as “wrap-around”. We can design a filter to cut out any aliased energy (though this may result in a loss of bandwidth for higher dips) or resample the data at a smaller trace separation (this will make the data volume larger, resulting in more expensive processing). Vice-versa, if there is no spatial aliasing in a dataset, can we increase the trace separation, making further processing cheaper without degrading the image.</p>
-<p>In the figure, the CMP gather is highly affected by wraparound with higher trace separation.<br>
-<img src="images/fkdomain.png" style="width:300px;height:300px" align="center"/></p>
-</section>
+<p>Spatial Aliasing is significantly easier to observe in the <span class="math notranslate nohighlight">\(F\)</span>-<span class="math notranslate nohighlight">\(K\)</span> domain, where frequencies above the spatial Nyquist appear as “wrap-around”. We can design a filter to cut out any aliased energy (though this may result in a loss of bandwidth for higher dips) or resample the data at a smaller trace separation (this will make the data volume larger, resulting in more expensive processing). Vice-versa, if there is no spatial aliasing in a dataset, can we increase the trace separation, making further processing cheaper without degrading the image.</p>
+<p>In the figure, the CMP gather is highly affected by wraparound with higher trace separation.</p>
+<p style="text-align:center;"><img src="images/fkdomain.png" style= "width: 35%" align="center"/></p></section>
 <section id="spatial-aliasing-and-migration-concerns">
 <h2>Spatial Aliasing and Migration Concerns<a class="headerlink" href="#spatial-aliasing-and-migration-concerns" title="Permalink to this headline">#</a></h2>
 <p>Spatial aliasing is of particular concern when it comes to migration:</p>

@@ -1379,7 +1379,7 @@ const thebe_selector_output = ".output, .cell_output"
      </li>
      <li class="toctree-l3">
       <a class="reference internal" href="../Waves/Fourier_Series.html">
-       Fourier series
+       Fourier series in Python
       </a>
      </li>
      <li class="toctree-l3">
@@ -1816,16 +1816,16 @@ title="Print to PDF"
 <section id="what-is-it">
 <span id="index-0"></span><h2>What is it?<a class="headerlink" href="#what-is-it" title="Permalink to this headline">#</a></h2>
 <p>In marine acquisition, the source and receiver are both towed slightly below the sea surface, this leads to a reflection from the sea surface just above the source receiver. This reflection is refered as “ghosting”.</p>
-<img src="images/ghost.png" style="width:300px;height:200px" align="center"/>
+<p style="text-align:center;"><img src="images/ghost.png" style= "width: 30%" align="center"/></p>
 <p>Ghosting results in a noisier trace. The interaction of these two signals also leads to regular “notches” in the frequency spectrum, which can limit the bandwidth. The location of these notches <span class="math notranslate nohighlight">\(f_{n}\)</span> is dependant on the depth <span class="math notranslate nohighlight">\(d\)</span> of the source and receivers.</p>
 <div class="math notranslate nohighlight">
 \[f_{n}=\frac{v}{2d}\]</div>
 <p>When designing survey, we need to achieve a delicate balance between the depth of the sources and receivers (deeper = quieter!) and the expected location of the notch (deeper = notch at lower frequency i.e. more reduced bandwidth!).</p>
-<img src="images/notch.png" style="width:300px;height:400px" align="center"/>
+<p style="text-align:center;"><img src="images/notch.png" style= "width: 50%" align="center"/></p>
 <p>Specific operators can be designed to remove the ghost and balance the amplitude of the frequencies in the ghost notch during processing, Where possible may be more convenient to filter out the notched data.</p>
 <section id="practice-1">
 <h3>Practice 1<a class="headerlink" href="#practice-1" title="Permalink to this headline">#</a></h3>
-<p>Calculate the notch frequency when the receiver is towed at 25 m.</p>
+<p>Calculate the notch frequency when the receiver is towed at <span class="math notranslate nohighlight">\(25\,m\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">v</span> <span class="o">=</span> <span class="mi">1500</span> <span class="c1">#velocity of sound in water</span>
@@ -1849,23 +1849,34 @@ title="Print to PDF"
 <section id="surface-ghost-in-dipole">
 <h2>Surface Ghost in Dipole<a class="headerlink" href="#surface-ghost-in-dipole" title="Permalink to this headline">#</a></h2>
 <p>Ghosting can be described by a two-point filter (dipole). Assumes 1D plane waves (i.e. “far field”):</p>
-<img src="images/dipole.png" style="width:200px;height:150px" align="center"/>
+<p style="text-align:center;"><img src="images/dipole.png" style= "width: 20%" align="center"/></p>
 <div class="math notranslate nohighlight">
-\[ \begin{align}\begin{aligned}G(z)=1+Rz^{\frac{2d}{v{\Delta}t}}$$&lt;br&gt;
-$$n=\frac{2d}{v{\Delta}t};\:\:z=e^{-i{\omega}{\Delta}t};\:\:{\omega}=2{\pi}f $$&lt;br&gt;
-In practice $|R| &lt; 1$. We refer $n$ as time index and $z$ as unit time delay. In the following calculation, we assume $R = -1$.\\$$G(z)=1-z^{\frac{2d}{v{\Delta}t}}$$&lt;br&gt;
-$$G(f)=1-e^{-i\frac{4{\pi}fd}{v}}$$&lt;br&gt;
-$$G(f)=e^{-i\frac{2{\pi}fd}{v}}(e^{i\frac{2{\pi}fd}{v}}-e^{-i\frac{2{\pi}fd}{v}})$$&lt;br&gt;
-$$G(f)=2{\sin}(\frac{2{\pi}fd}{v})e^{-i(\frac{2{\pi}fd}{v}-\frac{{\pi}}{2})}$$&lt;br&gt;
-where $2{\sin}(\frac{2{\pi}fd}{v})$ is the amplitude and $e^{-i(\frac{2{\pi}fd}{v}-\frac{{\pi}}{2})}$ is the phase.\\The amplitude spectrum is 
-$$|G(f)|=2|{\sin}(\frac{2{\pi}fd}{v})|\end{aligned}\end{align} \]</div>
-<img src="images/gf.png" style="width:400px;height:300px" align="center"/><section id="practice-2">
+\[G(z)=1+Rz^{\frac{2d}{v{\Delta}t}}\]</div>
+<div class="math notranslate nohighlight">
+\[n=\frac{2d}{v{\Delta}t} \quad ; \quad z=\exp\left({-i{\omega}{\Delta}t}\right) \quad ; \quad {\omega}=2{\pi}f \]</div>
+<p>In practice <span class="math notranslate nohighlight">\(|R| &lt; 1\)</span>. We refer <span class="math notranslate nohighlight">\(n\)</span> as time index and <span class="math notranslate nohighlight">\(z\)</span> as unit time delay. In the following calculation, we assume <span class="math notranslate nohighlight">\(R = -1\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[G(z)=1-z^{\frac{2d}{v{\Delta}t}}\]</div>
+<div class="math notranslate nohighlight">
+\[G(f)=1-\exp\left(-i\frac{4{\pi}fd}{v}\right)\]</div>
+<div class="math notranslate nohighlight">
+\[G(f)=\exp\left(-i\frac{2{\pi}fd}{v}\right) \left[\exp\left(i\frac{2{\pi}fd}{v}\right) - \exp\left(-i\frac{2{\pi}fd}{v}\right)\right]\]</div>
+<div class="math notranslate nohighlight">
+\[G(f)=2\sin\left(\frac{2{\pi}fd}{v}\right) \exp\left[-i\left(\frac{2{\pi}fd}{v}-\frac{{\pi}}{2}\right)\right]\]</div>
+<p>where <span class="math notranslate nohighlight">\(2\sin\left(\frac{2{\pi}fd}{v}\right)\)</span> is the amplitude and <span class="math notranslate nohighlight">\(\exp\left[-i\left(\frac{2{\pi}fd}{v}-\frac{{\pi}}{2}\right)\right]\)</span> is the phase.</p>
+<p>The amplitude spectrum is</p>
+<div class="math notranslate nohighlight">
+\[|G(f)|=2\left|\sin\left(\frac{2{\pi}fd}{v}\right)\right|\]</div>
+<p style="text-align:center;"><img src="images/gf.png" style= "width: 40%" align="center"/></p><section id="practice-2">
 <h3>Practice 2<a class="headerlink" href="#practice-2" title="Permalink to this headline">#</a></h3>
-<p>If the Fourier Transform of the operator G(z) is</p>
-<p>$<span class="math notranslate nohighlight">\(G(f)=2{\sin}(\frac{2{\pi}fd}{v})e^{-i(\frac{2{\pi}fd}{v}-\frac{{\pi}}{2})}\)</span>$<br>
-Calculate the first and second notch frequency for a streamer at depth 5 m and using a velocity of water of 1500 m/sec.</p>
-<p><span class="math notranslate nohighlight">\(\frac{2{\pi}f_{n}d}{v}=k{\pi},\:\:k=0,1,2...\)</span><br><br>
-<span class="math notranslate nohighlight">\(f_{n}=k\frac{v}{2d}\)</span></p>
+<p>If the Fourier Transform of the operator <span class="math notranslate nohighlight">\(G(z)\)</span> is</p>
+<div class="math notranslate nohighlight">
+\[G(f)=2\sin\left(\frac{2{\pi}fd}{v}\right) \exp\left[-i\left(\frac{2{\pi}fd}{v}-\frac{{\pi}}{2}\right)\right]\]</div>
+<p>Calculate the first and second notch frequency for a streamer at depth <span class="math notranslate nohighlight">\(5\,m\)</span> and using a velocity of water of <span class="math notranslate nohighlight">\(1500\,m/s\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[\frac{2{\pi}f_{n}d}{v}=k{\pi}\quad,\quad k=0,1,2...\]</div>
+<div class="math notranslate nohighlight">
+\[f_{n}=k\frac{v}{2d}\]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">v</span> <span class="o">=</span> <span class="mi">1500</span>

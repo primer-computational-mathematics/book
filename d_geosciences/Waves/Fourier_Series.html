@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Fourier series &#8212; ESE Jupyter Material</title>
+    <title>Fourier series in Python &#8212; ESE Jupyter Material</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -1379,7 +1379,7 @@ const thebe_selector_output = ".output, .cell_output"
      </li>
      <li class="toctree-l3 current active">
       <a class="current reference internal" href="#">
-       Fourier series
+       Fourier series in Python
       </a>
      </li>
      <li class="toctree-l3">
@@ -1747,7 +1747,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Fourier series</h1>
+                <h1>Fourier series in Python</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -1782,16 +1782,21 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="fourier-series">
-<h1>Fourier series<a class="headerlink" href="#fourier-series" title="Permalink to this headline">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="fourier-series-in-python">
+<h1>Fourier series in Python<a class="headerlink" href="#fourier-series-in-python" title="Permalink to this headline">#</a></h1>
 <p><a class="reference internal" href="../../a_modules/intro.html#module-mm2"><span class="std std-ref"><!-- module-mm2 badge --><span class="module module-mm2">Mathematics Methods 2</span></span></a> <a class="reference internal" href="../../a_modules/intro.html#module-mse1"><span class="std std-ref"><!-- module-mse1 badge --><span class="module module-mse1">Mathematics for Scientists and Engineers 1</span></span></a> <a class="reference internal" href="../../a_modules/intro.html#module-wave"><span class="std std-ref"><!-- module-wave badge --><span class="module module-wave">Waves</span></span></a></p>
 <p id="index-0">In this notebook, Python will be used to calculate and generate these Fourier series and transforms.</p>
 <p>Waves of any shape can be modelled and described using Fourier series.</p>
-<p>The general Fourier series is of the form:
-<span class="math notranslate nohighlight">\(y(t) = \frac{a_0}{2} + \sum_{n=1}^{n=\infty} a_n sin(n\omega t) +\sum_{m=1}^{m=\infty} b_m sin(m\omega t) \)</span>.</p>
-<p>Here, $<span class="math notranslate nohighlight">\(a_0 = \frac{2}{\tau} \int_{0}^{\tau} y(t) dt\)</span><span class="math notranslate nohighlight">\(
-\)</span><span class="math notranslate nohighlight">\(a_n = \frac{2}{\tau} \int_{0}^{\tau} y(t)sin(n\omega t) dt\)</span><span class="math notranslate nohighlight">\(
-\)</span><span class="math notranslate nohighlight">\(b_m = \frac{2}{\tau} \int_{0}^{\tau} y(t)cos(m\omega t) dt\)</span>$</p>
+<p>The general Fourier series is of the form:</p>
+<div class="math notranslate nohighlight">
+\[y(t) = \frac{a_0}{2} + \sum_{n=1}^{\infty} a_n \sin(n\omega t) +\sum_{m=1}^{\infty} b_m \sin(m\omega t) \]</div>
+<p>Here,</p>
+<div class="math notranslate nohighlight">
+\[a_0 = \frac{2}{\tau} \int_{0}^{\tau} y(t) \,dt\]</div>
+<div class="math notranslate nohighlight">
+\[a_n = \frac{2}{\tau} \int_{0}^{\tau} y(t)\sin(n\omega t) \,dt\]</div>
+<div class="math notranslate nohighlight">
+\[b_m = \frac{2}{\tau} \int_{0}^{\tau} y(t)\cos(m\omega t) \,dt\]</div>
 <p>Where <span class="math notranslate nohighlight">\(\tau\)</span> is the period.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1882,8 +1887,10 @@ bn =[0. 0. 0.]
 </div>
 </div>
 <p>Figure above:</p>
-<p>n(t) = -1, -<span class="math notranslate nohighlight">\(\pi\)</span> &lt; t &lt; 0</p>
-<p>n(t) = 1, 0&lt; t &lt; <span class="math notranslate nohighlight">\(\pi\)</span></p>
+<div class="math notranslate nohighlight">
+\[n(t) = -1 \quad ; \quad -\pi &lt; t &lt; 0\]</div>
+<div class="math notranslate nohighlight">
+\[n(t) = 1 \quad ; \quad 0&lt; t &lt; \pi\]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Solving Fourier Series in Python</span>
@@ -1900,8 +1907,8 @@ bn =[0. 0. 0.]
 \[\displaystyle \frac{4 \sin{\left(t \right)}}{\pi} + \frac{4 \sin{\left(3 t \right)}}{3 \pi} + \frac{4 \sin{\left(5 t \right)}}{5 \pi} + \frac{4 \sin{\left(7 t \right)}}{7 \pi} + \frac{4 \sin{\left(9 t \right)}}{9 \pi}\]</div>
 </div>
 </div>
-<p>The series are truncated at 10 components, due to Fourier series being infinite. Adding more components will make the plot look more similar to the box plot above.
-<strong>note</strong> that we know the box plot above is an odd function, hence we can assume the Fourier series are made up solely of sine functions, thus the <span class="math notranslate nohighlight">\(b_m\)</span> term is zero. If the function is even, we can expect only cosine functions, thus the <span class="math notranslate nohighlight">\(a_n\)</span> term is zero.</p>
+<p>The series are truncated at <span class="math notranslate nohighlight">\(10\)</span> components, due to Fourier series being infinite. Adding more components will make the plot look more similar to the box plot above.</p>
+<p><strong>Note</strong> that we know the box plot above is an odd function, hence we can assume the Fourier series are made up solely of sine functions, thus the <span class="math notranslate nohighlight">\(b_m\)</span> term is zero. If the function is even, we can expect only cosine functions, thus the <span class="math notranslate nohighlight">\(a_n\)</span> term is zero.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sym</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">series</span><span class="o">.</span><span class="n">truncate</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="o">-</span><span class="n">pi</span><span class="p">,</span> <span class="n">pi</span><span class="p">))</span>
@@ -1919,10 +1926,9 @@ bn =[0. 0. 0.]
 <section id="fourier-transform">
 <h2>Fourier transform<a class="headerlink" href="#fourier-transform" title="Permalink to this headline">#</a></h2>
 <p id="index-1">A fourier tranform changes the domain of a function from time to frequency. Any function can be composed of infinite series like sines and cosines. For example, in the plot above, Fourier series are used to make a box plot out of sine functions.</p>
-<p>In the plot above, the series where truncated at 10 components. In the gif below is shown what happens if more and more components are added.</p>
-<p><img src="https://upload.wikimedia.org/wikipedia/commons/a/af/Fourier_synthesis_square_wave_animated.gif" alt="image info" width="300" 
-     height="300"/></p>
-<p>It can be seen that each component is a new function with a certain amplitud and period. These variables of each component can be displayed on a <strong>frequency spectrum</strong>. Decomposing the amplitudes of the components and the period can be done using a fourier transform. In Python, a ‘Fast Fourier Transform’ can be performed of which a frequency spectrum can be made.</p>
+<p>In the plot above, the series where truncated at <span class="math notranslate nohighlight">\(10\)</span> components. In the gif below is shown what happens if more and more components are added.</p>
+<p style="text-align:center;"><img src="https://upload.wikimedia.org/wikipedia/commons/a/af/Fourier_synthesis_square_wave_animated.gif" alt="image info" style= "width: 30%"/></p>
+<p>It can be seen that each component is a new function with a certain amplitude and period. These variables of each component can be displayed on a <strong>frequency spectrum</strong>. Decomposing the amplitudes of the components and the period can be done using a fourier transform. In Python, a ‘Fast Fourier Transform’ can be performed of which a frequency spectrum can be made.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="mi">10</span>  <span class="c1"># frequency</span>
