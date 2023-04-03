@@ -63,3 +63,4 @@ The notebooks cover all basic topics covered in year 1 programming course:
 18. {ref}`Assert`
 19. {ref}`Classes`
 20. {ref}`Lambdas`
+21. {ref}`NumPy_arrays`
