@@ -15,8 +15,8 @@ def main():
     with open(filename, "r+") as in_file:
         file_txt = in_file.read()
     raw_txt = str(file_txt)
-    file_txt = file_txt.replace("\\\\\\\\[", "$$")
-    file_txt = file_txt.replace("\\\\\\\\]", "$$")
+    file_txt = file_txt.replace("\\\\\\\\[", "\\n$$")
+    file_txt = file_txt.replace("\\\\\\\\]", "$$\\n")
     file_txt = file_txt.replace("\\\\\\\\(", "$")
     file_txt = file_txt.replace("\\\\\\\\)", "$")
     if raw_txt == file_txt:
