@@ -3,24 +3,45 @@ import sys
 
 
 def extract_cells_by_tags(filename, tags, **kwargs):
-    # TODO: parse notebook file and read cells and tags.
-    # Then, extract cells that have the tags we require.
+    """
+    Create a subset of a notebook by extracting cells that match
+    the list of tags ```tags``` provided. Returns a list of cells
+    each of which is tagged by at least one of the tags in the list
+    provided.
+    """
     nb = nbformat.read(filename, nbformat.NO_CONVERT)
     cells = []
     for cell in nb.cells:
         for tag in tags:
             if tag in cell.metadata.tags:
                 cells.append(cell)
-                break
+                break  # Don't double-count cells with multiple tags
     return cells
 
 
 def extract_nb_metadata(filename, **kwargs):
+    """
+    Extracts the metadata from a Jupyter notebook as per the format,
+    described in documentation found at - 
+    https://nbformat.readthedocs.io/en/latest/format_description.html
+
+    This includes nbformat and nbformat_minor which are used by the library
+    to render notebooks defined in different version specs.
+
+    Returns a tuple (metadata, nbformat, nbformat_minor).
+    """
     nb = nbformat.read(filename, nbformat.NO_CONVERT)
     return nb.metadata, nb.nbformat, nb.nbformat_minor
 
 
 def write_nb_from_cells(filename, metadata, cells, **kwargs):
+    """
+    Creates and writes a notebook based on the cells and metadata provided.
+    ```cells``` is a list of cells contained in the notebook and 
+    ```metadata``` is a tuple containing the (metadata, nbformat, nbformat_minor)
+    as per the format described in nbformat documentation - 
+    https://nbformat.readthedocs.io/en/latest/format_description.html
+    """
     nb = nbformat.NotebookNode(
         cells=cells, metadata=metadata[0], nbformat=metadata[1], nbformat_minor=metadata[2])
     nbformat.write(nb, filename)
