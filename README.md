@@ -29,8 +29,10 @@ You will need to do the following pre-setup
 1. Run the following in an Anaconda prompt open inside the repository
    ```
    python scripts/generate_new_toc.py
+   python3 scripts/add_modules.py
    set PYTHONUTF8=1
    cd _tmp
+   jupyter-book toc migrate _toc.yml -o _toc.yml
    jupyter book build .
    ```
 
