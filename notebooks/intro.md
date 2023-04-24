@@ -8,6 +8,7 @@ The primer is (currently) split into four sections:
 * {doc}`b_coding/intro`
 * {doc}`c_mathematics/intro`
 * {doc}`d_geosciences/intro`
+* {doc}`demo/intro`
 
 
 ```{margin} For contributors
