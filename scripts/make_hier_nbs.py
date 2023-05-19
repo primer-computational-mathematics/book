@@ -1,6 +1,10 @@
 import nbformat
 import sys
 
+def add_slideshow_tags(cell, **kwargs):
+    cell["metadata"]["slideshow"] = {"slide_type": "slide"}
+    return cell
+
 
 def extract_cells_by_tags(filename, tags, **kwargs):
     """
@@ -11,9 +15,20 @@ def extract_cells_by_tags(filename, tags, **kwargs):
     """
     nb = nbformat.read(filename, nbformat.NO_CONVERT)
     cells = []
+    tag_slides = kwargs.pop("tag_slides", False)
+    # Add slideshow tags if we are extracting slides
+    for tag in tags:
+        if "type-slide" in tag:
+            tag_slides = True
+            break
+    else:
+        tag_slides = False
+    
     for cell in nb.cells:
         for tag in tags:
             if tag in cell.metadata.tags:
+                if tag_slides:
+                    cell = add_slideshow_tags(cell)
                 cells.append(cell)
                 break  # Don't double-count cells with multiple tags
     return cells
